@@ -1,0 +1,59 @@
+.popup{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background: #000;
+	background: rgba(0,0,0,.5);
+	z-index: 9;
+	text-align: center;
+	font-size: 0;
+	&:before{
+		display: inline-block;
+		content: "";
+		height: 100%;
+		vertical-align: middle;
+	}
+	&__window{
+		display: inline-block;
+		visibility: hidden;
+		position: absolute;
+		vertical-align: middle;
+		width: 100%;
+		padding: 35px 0;
+		font-size: 16px;
+		text-align: left;
+		transform: scale(0);
+		transition: transform .5s;
+		&_visible{
+			position: relative;
+			visibility: visible;
+			transform: scale(1);
+		}
+	}
+	&__inner{
+		background: #FFF;
+		padding: 50px;
+		@include clr;
+	}
+	&__message{
+		font-size: 18px;
+	}
+	&__close{
+		position:absolute;
+		right:-29px;
+		top:4px;
+		z-index:3;
+		cursor:pointer;
+	}
+}
+
+/*fix body*/
+body.is-popup-opened{
+	position: fixed;
+	left: 0;
+	right: 0;
+}

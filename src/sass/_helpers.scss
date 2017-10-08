@@ -1,0 +1,85 @@
+@mixin clr(){
+	&:after{
+		display: block;
+		width: 100%;
+		content: "";
+		clear: both;
+	}
+}
+
+//sprite
+$default-bg-position: 0 0 !default;
+
+@mixin sp($bg-position: $default-bg-position){
+	background-image: url("../../images/sprite.svg");
+	background-repeat: no-repeat;
+	background-position: $bg-position;
+}
+
+@mixin spr($bg-position-x: 0, $bg-position-y: 0){
+	background-image: url("../../images/sprite@2x.png");
+	background-size: 480px auto;
+	background-repeat: no-repeat;
+	@if $bg-position-x != 0 OR $bg-position-y != 0 {
+		background-position: ($bg-position-x / 2) ($bg-position-y / 2);
+	}
+}
+
+//after-before
+@mixin ab(){
+	display: block;
+	content: "";
+}
+
+//fullWidthHeight
+@mixin fwh(){
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+}
+
+//fixProportion
+$def-prop-width: 1;
+$def-prop-height: 1;
+@mixin fixprop($width: $def-prop-width, $height: $def-prop-height){
+	&:after{
+		@include ab;
+		width: 100%;
+		padding-bottom: $height * (100 / $width) * 1%;
+	}
+}
+
+//rem
+$base-font-size: 16;
+@function rem($px, $base: $base-font-size) {
+    @return ($px / $base) * 1rem;
+}
+
+//em
+@function em($px, $base: $base-font-size) {
+    @return ($px / $base) * 1em;
+}
+
+//percent
+@function per($px, $base) {
+    @return $px * (100 / $base) * 1%;
+}
+
+//Fonts
+@mixin ff(){
+	font-family: 'Tahoma', 'Verdana', 'Arial', sans-serif;
+}
+@mixin ff-r(){
+	font-family: 'Roboto', sans-serif;
+}
+@mixin ff-hn(){
+	font-family: 'helveticaneue', sans-serif;
+}
+
+//Colors
+$gray: #797979;
+$l-gray: #dddddd;
+$red: #ff0000;
+$green: #00c000;

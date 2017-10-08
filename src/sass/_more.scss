@@ -1,0 +1,18 @@
+.more{
+	max-height: 97px;
+	&_apply{
+		max-height: none;
+		padding-bottom: 35px;
+		position: relative;
+	}
+	&__inner{
+		overflow: hidden;
+		transition: .5s;
+	}
+	&__button{
+		display: block;
+		position: absolute;
+		bottom: 11px;
+		right: 0;
+	}
+}

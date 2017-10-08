@@ -1,0 +1,44 @@
+.footer{
+	background: #FFF;
+	box-shadow: 0 -6px 13px rgba(0,0,0,.24);
+	position: relative;
+	z-index: 3;
+	border-top: 1px solid #CCBA1D;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	&__wrap{
+		height: 100px;
+		max-width: none;
+	}
+	&__logo{
+		img{
+			width: 100%;
+			max-width: 221px;
+		}
+	}
+	&__txt{
+		text-align: right;
+		font-size: 15px;
+		line-height: (18/15);
+	}
+	
+	@media(max-width: 1600px){
+		box-shadow: 0 -3px 9px rgba(0,0,0,.24);
+		&__wrap{
+			height: 80px;
+		}
+		&__txt{
+			padding-left: 25px;
+			font-size: 10px;
+		}
+	}
+
+	@media(max-width: 1200px){
+		&__wrap{
+			height: 50px;
+		}
+	}
+
+}
