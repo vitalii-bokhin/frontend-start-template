@@ -1,7 +1,8 @@
 <?php
 $mail="lufter21@gmail.com";
-$utext = '<strong>Телефон:</strong> '.$_POST['tel'].'<br />';
-$utext .= '<strong>Сообщение:</strong> '.$_POST['message'].'<br />';
+$utext = '<strong>Имя:</strong> '.$_POST['name'].'<br />';
+$utext .= '<strong>Телефон:</strong> '.$_POST['tel'].'<br />';
+$utext .= '<strong>Сообщение:</strong> '.$_POST['message'];
 $title="Заявка с сайта dealersair.com";
 $header="Content-type: text/html; charset=\"utf-8\"\r\n";
 $header.="From: dealersair.com <info@dealersair.com>\r\n";
