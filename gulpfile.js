@@ -20,7 +20,7 @@ function Sass(src) {
 		.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
 		.pipe(replace('\/..', ''))
-		.pipe(sourcemaps.write('../src'))
+		.pipe(sourcemaps.write('../src/sass'))
 		.pipe(gulp.dest('./css'))
 		.pipe(notify('CSS Compiled!'));
 	}, 521);
