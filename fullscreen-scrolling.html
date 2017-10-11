@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!--[if lt IE 9]><script type="text/javascript" src="js/html5.min.js"></script><![endif]-->
+<link type="text/css" rel="stylesheet" href="css/style.css">
+
+	<title>Fullscreen scrolling | startTemplate</title>
+
+</head>
+<body>
+
+<!--WRAPPER/-->
+<div id="js-fsscroll" class="wrapper wrapper_fsscroll">
+
+<!--HEADER/-->
+<header class="header">
+	<div class="row-col-mid wrap header__wrap">
+		<div class="col-3 x1600-col-2 header__logo">
+			<a href="index.html"><img src="images/dealersair.svg" alt="logo"></a>
+		</div>
+		<div id="header-mob" class="col-9 x1600-col-10 header__mob">
+			<nav class="header__nav">
+				<ul class="menu">
+					<li class="menu__item">
+						<a href="index.html" class="menu__a">Главная</a>
+					</li>
+					<li class="menu__item">
+						<a href="content.html" class="menu__a">Контент</a>
+					</li>
+					<li class="menu__item">
+						<a href="form.html" class="menu__a">Формы</a>
+					</li>
+					<li class="menu__item">
+						<a href="accordion.html" class="menu__a">Акордеон</a>
+					</li>
+					<li class="menu__item">
+						<a href="popup.html" class="menu__a">Попапы</a>
+					</li>
+					<li class="menu__item">
+						<a href="#popup-2" class="js-open-popup menu__a">open popup</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<button class="js-toggle toggle header__toggle" data-target-id="header-mob"><span></span><span></span><span></span><span></span></button>
+	</div>
+</header>
+<!--/HEADER-->
+
+<div class="wrapper__screen" style="background: green">
+	
+</div>
+
+<div class="wrapper__screen" style="background: white">
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dolorum hic officia saepe modi odio optio accusantium, aliquid earum voluptatem sapiente totam, commodi, assumenda, temporibus mollitia. Tempora et repellendus iure?
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dolorum hic officia saepe modi odio optio accusantium, aliquid earum voluptatem sapiente totam, commodi, assumenda, temporibus mollitia. Tempora et repellendus iure?
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dolorum hic officia saepe modi odio optio accusantium, aliquid earum voluptatem sapiente totam, commodi, assumenda, temporibus mollitia. Tempora et repellendus iure?
+	</p>
+</div>
+
+<div class="wrapper__screen" style="background: red">
+	
+</div>
+
+<!--FOOTER/-->
+<footer class="footer">
+	<div class="row-col-mid wrap footer__wrap">
+		<div class="col-3 x1600-col-2">
+			<div class="footer__logo">
+				<a href="#"><img src="images/dealersair.svg" alt="logo"></a>
+			</div>
+		</div>
+		<div class="col-8 x1600-col-10 col-offset-1 x1600-col-offset-0">
+			<div class="footer__txt">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>
+		</div>
+	</div>
+</footer>
+<!--/FOOTER-->
+
+</div>
+<!--/WRAPPER-->
+
+<!--POPUPs/-->
+<div class="popup">
+
+	<div id="popup-1" class="popup__window" style="width: 550px;">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner" style="height: 100px;">
+			<a href="#message-popup" class="js-open-msg-popup">POPUP с сообщением</a>
+		</div> 
+	</div>
+
+	<div id="popup-2" class="popup__window" style="width: 550px;">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner" style="height: 1300px;">
+			
+		</div>
+	</div>
+
+	<div id="message-popup" class="popup__window" style="width: 550px;">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner">
+			
+		</div>
+	</div>
+
+</div>
+<!--/POPUPs-->
+
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/easing.min.js"></script>
+<script type="text/javascript" src="js/slick.min.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/mousewheel.min.js"></script>
+<script type="text/javascript" src="js/scrollpane.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/fsscroll.js"></script>
+
+</body>
+</html>

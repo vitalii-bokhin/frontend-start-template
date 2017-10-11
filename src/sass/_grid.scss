@@ -7,24 +7,27 @@
 	background-image: linear-gradient(to bottom, #ffe716, #fff8ba);
 	background-position: 50% 100px;
 	
+	&_fsscroll{
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+	}
+
 	&__full-height{
 		@include fwh;
 		z-index: 2;
 		padding: 100px 0;
 	}
 
+	&__screen{
+		padding: 100px 0;
+	}
+
 	@media(max-width: 1600px){
-		background-position: 50% 80px;
-		&, &__full-height{
-			padding: 80px 0;
-		}
+		
 	}
 
 	@media(max-width: 1200px){
-		background-position: 50% 50px;
-		&, &__full-height{
-			padding: 50px 0;
-		}
+		
 	}
 
 }
