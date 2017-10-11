@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var winW = $(window).width();
 	var winH = $(window).height();
 
-	$('.wrapper, .wrapper__full-height').css('padding-bottom', $('.footer').innerHeight() + 25);
+	$('.wrapper, .wrapper__full-height').css('padding-bottom', $('.footer').innerHeight());
 
 	$('#slider').slick({
 		infinite: true,
