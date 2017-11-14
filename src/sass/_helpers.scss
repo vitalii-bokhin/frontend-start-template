@@ -8,12 +8,12 @@
 }
 
 //sprite
-$default-bg-position: 0 0 !default;
-
-@mixin sp($bg-position: $default-bg-position){
+@mixin sp($bg-position: ""){
 	background-image: url("../../images/sprite.svg");
 	background-repeat: no-repeat;
-	background-position: $bg-position;
+	@if $bg-position != "" {
+		background-position: $bg-position;
+	}
 }
 
 @mixin spr($bg-position-x: 0, $bg-position-y: 0){
