@@ -168,32 +168,57 @@ var Select = {
 	search: function(el) {
 		var _ = this;
 		_.init(el);
-		var inputValue = _._el.val();
+		var inputValue = _._el.val(),
+		opt = '', 
+		match = false;
+
+		if (_._el.attr('data-opt')) {
+			opt = _._el.attr('data-opt');
+		}
 
 		if(inputValue.length > 0){
 
-			var reg = function(str) {
-				var str = str.trim(),
-				reg = str.replace(/\s/g,'|%');
-				return '%'+reg;
-			}(inputValue);
+			if (opt == 'search-by-name') {
 
-			var wordsCount = reg.split('|').length,
-			_reg = new RegExp(reg, 'gi'),
-			match = false;
+				var inpVal = inputValue[0].toUpperCase() + inputValue.slice(1);
 
-			_._options.find('.form__select-val').each(function() {
+				_._options.find('.form__select-val').each(function() {
 
-				var srcVal = $(this).attr('data-search');
+					var srcVal = $(this).html();
 
-				if(srcVal.match(_reg) && srcVal.match(_reg).length >= wordsCount){
-					$(this).parent().removeClass('hidden');
-					match = true;
-				} else {
-					$(this).parent().addClass('hidden');
-				}
+					if(srcVal.match(inpVal)){
+						$(this).parent().removeClass('hidden');
+						match = true;
+					} else {
+						$(this).parent().addClass('hidden');
+					}
 
-			});
+				});
+
+
+			} else if (opt == 'search-by-search-string') {
+				var reg = function(str) {
+					var str = str.trim(),
+					reg = str.replace(/\s/g,'|%');
+					return '%'+reg;
+				}(inputValue);
+
+				var wordsCount = reg.split('|').length,
+				_reg = new RegExp(reg, 'gi');
+
+				_._options.find('.form__select-val').each(function() {
+
+					var srcVal = $(this).attr('data-search');
+
+					if(srcVal.match(_reg) && srcVal.match(_reg).length >= wordsCount){
+						$(this).parent().removeClass('hidden');
+						match = true;
+					} else {
+						$(this).parent().addClass('hidden');
+					}
+
+				});
+			}
 
 			if (match) {
 				_.change(1);
