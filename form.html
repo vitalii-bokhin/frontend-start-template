@@ -196,8 +196,19 @@
 
 	<div class="form__field">
 		<div class="form__select form__select_search">
+			<label for="i-txt-6s" class="overlabel">Страна (начинайте вводить)</label>
+			<input id="i-txt-6s" type="text" class="form__text-input form__text-input_search" data-opt="search-by-name" value="">
+			<ul class="form__select-options form__select-options_countries">
+				
+			</ul>
+			<input type="hidden" class="form__select-input" value="">
+		</div>
+	</div>
+
+	<div class="form__field">
+		<div class="form__select form__select_search">
 			<label for="i-txt-6" class="overlabel">Улица город (начинайте вводить)</label>
-			<input id="i-txt-6" type="text" class="form__text-input form__text-input_search" value="">
+			<input id="i-txt-6" type="text" class="form__text-input form__text-input_search" data-opt="search-by-search-string" value="">
 			<ul class="form__select-options">
 				<li><button type="button" class="form__select-val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
 				<li><button type="button" class="form__select-val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
