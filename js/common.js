@@ -28,4 +28,9 @@ $(document).ready(function(){
 		return false;
 	});
 
+
+	flexImage(winW);
+
+	ovfImage();
+
 });

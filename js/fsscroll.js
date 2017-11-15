@@ -40,7 +40,7 @@ var Fsscreen = {
 	move: function(moveTo) {
 		var _ = this;
 		_.scrolling = true;
-		$('body,html').stop().animate({scrollTop: moveTo}, 521, 'easeInOutCubic', function() {
+		$('body,html').stop().animate({scrollTop: moveTo}, 900, 'easeOutExpo', function() {
 			_.scrolling = false;
 		});
 	},
@@ -50,7 +50,6 @@ var Fsscreen = {
 		lastPos = $('.wrapper__screen_last').offset().top,
 		_nextScr;
 
-	
 			var winScrTop = $(window).scrollTop();
 
 			if (winScrTop < (lastPos+21)) {
@@ -81,10 +80,6 @@ var Fsscreen = {
 				}
 
 			}
-			
-		
-
-		
 
 	},
 }
@@ -99,7 +94,6 @@ $(document).ready(function() {
 			ev.preventDefault ? ev.preventDefault() : (ev.returnValue = false);
 		});
 	});
-
 
 
 });

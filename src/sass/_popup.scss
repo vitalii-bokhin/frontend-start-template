@@ -57,3 +57,147 @@ body.is-popup-opened{
 	left: 0;
 	right: 0;
 }
+
+/*popup-media*/
+.popup-media{
+	max-width: 1280px;
+	&__iframe{
+		@include fwh;
+		visibility: hidden;
+		border: none;
+	}
+	&__box{
+		position: relative;
+		background: #000;
+		&:before{
+			@include ab;
+			padding-bottom: 35%;
+		}
+		img{
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
+	&__bar{
+		padding-top: 34px;
+		font-size: 14px;
+		&-date{
+			color: #666;
+			margin-bottom: 10px;
+		}
+		&-tit{
+			font-weight: 700;
+		}
+	}
+	&__arr{
+		display: block;
+		position: absolute;
+		width: 12px;
+		height: 20px;
+		top: 50%;
+		margin-top: -10px;
+		z-index: 3;
+		@include sp;
+		&_l{
+			left: 53px;
+			background-position: -24px -72px;
+		}
+		&_r{
+			right: 53px;
+			background-position: -38px -72px;
+		}
+	}
+	&__play{
+		display: block;
+		width: 51px;
+		height: 51px;
+		border-radius: 51px;
+		background: #FFF;
+		position: absolute;
+		z-index: 3;
+		left: 50%;
+		top: 50%;
+		margin: -25px 0 0 -25px;
+		box-shadow: 0 -4px 20px rgba(0,0,0,.21);
+		opacity: .95;
+		visibility: hidden;
+		&:before{
+			@include ab;
+			position: absolute;
+			width: 0;
+			height: 0;
+			border: 7px solid transparent;
+			border-left: 11px solid #5aa75e;
+			top: 50%;
+			left: 50%;
+			margin: -6px 0 0 -3px;
+		}
+	}
+
+	@media(max-width: 1200px){
+		max-width: 904px;
+		.popup__close{
+			right: 32px;
+			top: 80px;
+		}
+		&__box{
+			&:before{
+				padding-bottom: per(553,904);
+			}
+		}
+		&__bar{
+			padding: 28px 50px;
+		}
+		&__arr{
+			&_l{
+				left: 35px;
+			}
+			&_r{
+				right: 35px;
+			}
+		}
+	}
+
+	@media(max-width: 1000px){
+		.popup__close{
+			right: 18px;
+			top: 18px;
+		}
+		&__box{
+			&:before{
+				padding-bottom: per(385,320);
+			}
+		}
+		&__arr{
+			&_l{
+				left: 15px;
+			}
+			&_r{
+				right: 15px;
+			}
+		}
+		&__btn{
+			width: 26px;
+			height: 26px;
+			border-radius: 26px;
+			margin: -13px 0 0 -13px;
+			box-shadow: 0 2px 10px rgba(0,0,0,.49);
+			&:before{ 
+				border: 4px solid transparent;
+				border-left: 7px solid #5aa75e;
+				margin: -4px 0 0 -2px;
+			}
+		}
+		&__bar{
+			padding: 18px;
+			font-size: 13px;
+			&-tit{
+				margin-bottom: 24px;
+			}
+			.ta-r{
+				text-align: left !important;
+			}
+		}
+	}
+}

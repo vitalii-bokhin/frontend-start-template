@@ -1,0 +1,20 @@
+.ovf-image{
+	display: block;
+	opacity: 0;
+	transition: opacity .21s;
+	&_w{
+		width: 100%;
+		height: auto;
+		min-height: 100%;
+		opacity: 1;
+	}
+	&_h{
+		height: 100%;
+		width: auto;
+		min-width: 100%;
+		opacity: 1;
+	}
+	&-wrap{
+		overflow: hidden;
+	}
+}

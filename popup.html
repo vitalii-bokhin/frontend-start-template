@@ -50,25 +50,37 @@
 <!--/HEADER-->
 
 <div class="wrap container">
+
+	<div style="margin-bottom: 30px">
+		<a href="#media-popup" class="js-open-popup-media mediagroup" data-group-class="mediagroup" data-image="images/img1.jpg" data-image-size="[&quot;1320&quot;, &quot;877&quot;]" data-video="" data-data="[&quot;13 августа 2017&quot;, &quot;По дороге в Карпаты&quot;]">Карпаты</a>
+	</div>
+
+	<div style="margin-bottom: 30px">
+		<a href="#media-popup" class="js-open-popup-media mediagroup" data-group-class="mediagroup" data-image="images/img2.jpg" data-image-size="[&quot;559&quot;, &quot;743&quot;]" data-video="https://www.youtube.com/watch?v=G7XiqsXQN0c" data-data="[&quot;13 августа 2017&quot;, &quot;Тустань&quot;]">Карпаты</a>
+	</div>
 	
-	<div style="margin-bottom: 500px">
+	<div style="margin: 100px 0 50px;">
 		<a href="#popup-1" class="js-open-popup">Открыть POPUP 1</a>
 	</div>
 
-	<div style="margin-bottom: 500px">
+	<div style="margin-bottom: 50px">
 		<a href="#popup-2" class="js-open-popup">Открыть POPUP 2</a>
 	</div>
 
-	<div style="margin-bottom: 500px">
+	<div style="margin-bottom: 50px">
 		<a href="#popup-1" class="js-open-popup">Открыть POPUP 1</a>
 	</div>
 
-	<div style="margin-bottom: 500px">
+	<div style="margin-bottom: 50px">
 		<a href="#popup-2" class="js-open-popup">Открыть POPUP 2</a>
 	</div>
 
-	<div style="margin-bottom: 500px">
+	<div style="margin-bottom: 50px">
 		<a href="#message-popup" class="js-open-msg-popup">POPUP с сообщением</a>
+	</div>
+
+	<div style="height: 300px">
+		<img src="images/img2.jpg" class="ovf-image" alt="img">
 	</div>
 	
 </div>
@@ -125,12 +137,36 @@
 		</div>
 	</div>
 
+	<div id="media-popup" class="popup-media popup__window popup-media">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner">
+			<div class="popup-media__box">
+				<img src="#" class="ovf-image popup-media__image" alt="photo">
+				<a href="#" class="popup-media__play"></a>
+				<button class="popup-media__arr popup-media__arr_l" data-dir="prev"></button>
+				<button class="popup-media__arr popup-media__arr_r" data-dir="next"></button>
+				<!--iframe src="#" class="popup-media__iframe" allowfullscreen></iframe-->
+			</div>
+			<div class="popup-media__bar row">
+				<div class="col-6 vw1000-col">
+					<div class="popup-media__bar-date popup-media__data-0">
+						<!--data string 1-->
+					</div>
+					<div class="popup-media__bar-tit popup-media__data-1">
+						<!--data string 2-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 <!--/POPUPs-->
 
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/easing.min.js"></script>
 <script type="text/javascript" src="js/slick.min.js"></script>
+<script type="text/javascript" src="js/images.js"></script>
 <script type="text/javascript" src="js/popup.js"></script>
 <script type="text/javascript" src="js/mousewheel.min.js"></script>
 <script type="text/javascript" src="js/scrollpane.min.js"></script>
