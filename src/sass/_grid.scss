@@ -15,18 +15,7 @@
 		@include fwh;
 		z-index: 2;
 		padding: 100px 0;
-	}
-
-	&__screen{
-		padding: 100px 0;
-	}
-
-	@media(max-width: 1600px){
-		
-	}
-
-	@media(max-width: 1200px){
-		
+		overflow: hidden;
 	}
 
 }
@@ -36,12 +25,6 @@
 	max-width: 1500px;
 	padding-left: 25px;
 	padding-right: 25px;
-
-	@media(max-width: 1200px){
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-
 }
 
 .container{
@@ -51,11 +34,23 @@
 
 
 .row{
-	div[class*="col"]{
+	& > div[class*="col"]{
 		float: left;
+		min-height: 1px;
+	}
+
+	& > div[class*="pull"],
+	& > div[class*="push"],{
+		position: relative;
 	}
 
 	@include clr;
+	
+	&__br{
+		display: block;
+		width: 100%;
+		clear: both;
+	}
 
 	&-col-mid,
 	&-col-bot{
@@ -88,17 +83,32 @@
 	}
 
 	&-col-pad{
-		padding-left: 0 !important;
-		padding-right: 0 !important;
-		div[class*="col"]{
+		& > div[class*="col"]{
 			padding-left: 15px;
 			padding-right: 15px;
+		}
+		&.wrap{
+			padding-left: 10px !important;
+			padding-right: 10px !important;
+		}
+		&[class^="col"]{
+			padding-left: 0 !important;
+			padding-right: 0 !important;
 		}
 	}
 
 	&_full-height{
 		&, div[class*="col"]{
 			height: 100%;
+		}
+	}
+
+	&-tbl{
+		display: table;
+		width: 100%;
+		& > div[class*="col"]{
+			display: table-cell;
+			vertical-align: top;
 		}
 	}
 	
@@ -184,59 +194,102 @@
 		margin-left: 8.33333%;
 	}
 
+	&-offset-3{
+		margin-left: 25%;
+	}
+
+	&-pull-3{
+		right: 25%;
+	}
+
+	&-push-6{
+		left: 50%;
+	}
+
+}
+
+/*middleBlock*/
+.middle{
+	height: 100%;
+	@include va-m;
+	&__block{
+		display: inline-block;
+		width: 100%;
+		vertical-align: middle;
+	}
 }
 
 
-@media(max-width: 1600px){
-	.x1600{
+
+@media(max-width: 1200px){
+	.vw1200{
 		&-col{
+			width: 100%;
 			&-1{
 				width: 8.33333%;
+			}
+			&-1-2{
+				width: 12.499995%;
 			}
 			&-2{
 				width: 16.66666%;
 			}
-			&-23{
+			&-2-3{
 				width: 20.83333%;
 			}
 			&-3{
 				width: 25%;
 			}
-			&-34{
+			&-3-4{
 				width: 29.16666%;
 			}
 			&-4{
 				width: 33.33332%;
 			}
-			&-45{
+			&-4-5{
 				width: 37.499985%;
 			}
 			&-5{
 				width: 41.66665%;
 			}
-			&-56{
+			&-5-6{
 				width: 45.833325%;
 			}
 			&-6{
 				width: 50%;
 			}
+			&-6-7{
+				width: 54.166665%;
+			}
 			&-7{
 				width: 58.33333%;
+			}
+			&-7-8{
+				width: 62.499985%;
 			}
 			&-8{
 				width: 66.66664%;
 			}
-			&-89{
+			&-8-9{
 				width: 70.833305%;
 			}
 			&-9{
 				width: 74.99997%;
 			}
+			&-9-10{
+				width: 79.166635%;
+			}
 			&-10{
 				width: 83.33333%;
 			}
+			&-10-11{
+				width: 87.499995%;
+			}
 			&-11{
 				width: 91.66663%;
+			}
+			&-11-12{
+				width: 95.833295%;
 			}
 			&-offset-0{
 				margin-left: 0;
@@ -245,60 +298,100 @@
 	}
 }
 
-@media(max-width: 1200px){
-	.x1200{
+@media(max-width: 1000px){
+	.vw1000{
+		&-row{
+			&-col{
+				display: block;
+				& > div[class*="col"]{
+					display: block;
+					float: none;
+					width: 100%;
+					left: 0;
+					right: 0;
+				}
+			}
+		}
 		&-col{
+			width: 100%;
 			&-1{
 				width: 8.33333%;
+			}
+			&-1-2{
+				width: 12.499995%;
 			}
 			&-2{
 				width: 16.66666%;
 			}
-			&-23{
+			&-2-3{
 				width: 20.83333%;
 			}
 			&-3{
 				width: 25%;
 			}
-			&-34{
+			&-3-4{
 				width: 29.16666%;
 			}
 			&-4{
 				width: 33.33332%;
 			}
-			&-45{
+			&-4-5{
 				width: 37.499985%;
 			}
 			&-5{
 				width: 41.66665%;
 			}
-			&-56{
+			&-5-6{
 				width: 45.833325%;
 			}
 			&-6{
 				width: 50%;
 			}
+			&-6-7{
+				width: 54.166665%;
+			}
 			&-7{
 				width: 58.33333%;
+			}
+			&-7-8{
+				width: 62.499985%;
 			}
 			&-8{
 				width: 66.66664%;
 			}
-			&-89{
+			&-8-9{
 				width: 70.833305%;
 			}
 			&-9{
 				width: 74.99997%;
 			}
+			&-9-10{
+				width: 79.166635%;
+			}
 			&-10{
 				width: 83.33333%;
 			}
+			&-10-11{
+				width: 87.499995%;
+			}
 			&-11{
 				width: 91.66663%;
+			}
+			&-11-12{
+				width: 95.833295%;
 			}
 			&-offset-0{
 				margin-left: 0;
 			}
 		}
+	}
+}
+
+
+/*full screen scroll*/
+.fsscroll{
+	&__screen{
+		position: relative;
+		padding: 100px 0;
 	}
 }

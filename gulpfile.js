@@ -77,7 +77,7 @@ gulp.task('mincss', function () {
 });
 
 gulp.task('minjs', function () {
-	gulp.src(['./src/js/*.js'])
+	gulp.src(['!./src/js/*.min.js','./src/js/*.js'])
 	.pipe(uglify())
 	.pipe(rename({suffix: '.min'}))
 	.pipe(gulp.dest('./js'));

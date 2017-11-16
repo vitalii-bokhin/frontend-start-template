@@ -50,39 +50,51 @@
 <!--/HEADER-->
 
 <div class="container">
-	<div class="row row_col-p-x-15 wrap">
-		<div class="col-4">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	<div class="row row-col-pad wrap">
+		<div class="col-3">
+			<p style="background: yellow">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</p>
 		</div>
 		<div class="col-4">
 			<div class="more">
+				<p style="background: blue">
 				Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+								</p>
 			</div>
 		</div>
-		<div class="col-4">
-			<div class="more">
+		<div class="col-5">
+			<p style="background: green">
 				Duis aute irure dolor in reprehenderit in voluptate velit esse
 				cillum dolore eu fugiat nulla pariatur.
-			</div>
+			</p>
 		</div>
 	</div>
 </div>
-	
-	
-
 		
 
+<div class="container">
+	<div class="row wrap">
+		<div class="col-6">
+			<div id="diagr-num-0" class="progr__item-num">0</div>
+			<div id="diagr-num-2" class="progr__item-num">0</div>
+			<div id="diagr-num-1" class="progr__item-num">0</div>
+			<div id="diagr-num-3" class="progr__item-num">0</div>
+			<canvas id="diagram" class="progr__diagram" width="160" height="160"></canvas>
+		</div>
+	</div>
+</div>
 
 
 <!--FOOTER/-->
@@ -160,15 +172,24 @@
 </div>
 <!--/POPUPs-->
 
-<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/easing.min.js"></script>
-<script type="text/javascript" src="js/slick.min.js"></script>
-<script type="text/javascript" src="js/images.js"></script>
-<script type="text/javascript" src="js/popup.js"></script>
-<script type="text/javascript" src="js/mousewheel.min.js"></script>
-<script type="text/javascript" src="js/scrollpane.min.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="js/more.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/easing.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/mousewheel.min.js"></script>
+<script src="js/scrollpane.min.js"></script>
+<script src="js/images.js"></script>
+<script src="js/popup.js"></script>
+<script src="js/common.js"></script>
+<script src="js/more.js"></script>
+
+<script type="text/javascript" src="js/diagram.js"></script>
+
+<script>
+	$(document).ready(function() {
+		var main_diagram = [117,111,82,22];
+		diagram('diagram', main_diagram, { animate: true, numId: 'diagr-num-'});
+	});
+</script>
 
 </body>
 </html>
