@@ -4,41 +4,42 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	background: #FFF;
-	box-shadow: 0 4px 9px rgba(0,0,0,.24);
 	z-index: 8;
+	transition: .21s;
+	&_fixed,
+	&.toggled{
+		background: #FFF;
+		box-shadow: 0 2px 5px rgba(0,0,0,.21);
+	}
 	&__wrap{
 		height: 100px;
 		max-width: none;
 	}
 	&__logo{
-		img{
-			width: 100%;
-			max-width: 221px;
-		}
+		height: 100px;
+		padding: 20px 0;
+		@include va-m;
+	}
+	&__right{
+		float: right;
+	}
+	&__menu-wrap{
+		float: left;
 	}
 	&__nav{
-		float: right;
+		float: left;
 	}
 	&__toggle{
 		display: none !important;
 	}
-	@media(max-width: 1600px){
-		
-	}
-	@media(max-width: 1200px){
-		
-	}
+	
 	@media(max-width: 1000px){
-		&__logo{
-			width: 110px;
-		}
-		&__mob{
+		&__menu-wrap{
 			display: block;
 			visibility: hidden;
 			opacity: 0;
 			position: fixed;
-			top: 50px;
+			top: 100px;
 			bottom: 0;
 			left: 0;
 			width: 100%;
@@ -65,56 +66,110 @@
 	}
 }
 
+/*Menu*/
 .menu{
 	@include clr;
 	list-style: none;
 	padding-top: 5px;
 	&__item{
 		float: left;
-		font-size: 25px;
-		margin-left: em(66,25);
+		margin-left: 45px;
 		&:first-child{
 			margin: 0;
 		}
+		&_has-children{
+			position: relative;
+		}
 	}
 	&__a{
-		text-decoration: none;
-		text-transform: uppercase;
+		font-size: 18px;
 		font-weight: 500;
+		text-decoration: none;
 		transition: .5s;
 		&:hover{
 			color: $red;
 		}
-		&_r{
-			color: $red;
+	}
+	&__arr{
+		display: none;
+		width: 12px;
+		height: 8px;
+		position: relative;
+		bottom: 2px;
+		margin-left: 7px;
+		@include sp(-36px -34px);
+		.menu__item_has-children &{
+			display: inline-block;
+		}
+	}
+	&__sub-menu{
+		position: absolute;
+		list-style: none;
+		width: 6000%;
+		padding: 24px 0 16px 3000%;
+		top: 100%;
+		left: -3000%;
+		visibility: hidden;
+		opacity: 0;
+		transition: .3s;
+		.header_fixed &{
+			background: #ffffff;
+			box-shadow: 0 3px 3px rgba(0,0,0,.11);
+		}
+		&-item{
+			float: left;
+			margin-right: 25px;
+		}
+		&-a{
+			font-size: 14px;
+			font-weight: 300;
+			text-decoration: none;
+			display: inline-block;
+			transition: .5s;
 			&:hover{
-				color: #000;
+				color: $red;
 			}
 		}
-	}
-	@media(max-width: 1900px){
-		&__item{
-			font-size: 21px;
+		.menu__item_has-children:hover &{
+			visibility: visible;
+			opacity: 1;
 		}
 	}
-	@media(max-width: 1600px){
-		&__item{
-			font-size: 17px;
-		}
-	}
+
 	@media(max-width: 1200px){
 		&__item{
-			font-size: 15px;
-			margin-left: 23px;
+			font-size: 16px;
 		}
 	}
 	@media(max-width: 1000px){
 		&__item{
 			float: none;
 			text-align: center;
-			font-size: 25px;
 			margin: 0;
 			padding: 15px 0;
+		}
+		&__a{
+			.menu__item_has-children &{
+				margin-left: 21px;
+			}
+		}
+		&__sub-menu{
+			width: auto;
+			left: 0;
+			padding: 14px 0 0;
+			box-shadow: none !important;
+			position: relative;
+			visibility: visible;
+			opacity: 1;
+			display: none;
+			&-item{
+				float: none;
+				margin: 0;
+				padding: 9px 0;
+			}
+			.menu__item_has-children:hover &{
+				display: block;
+			}
 		}
 	}
 }

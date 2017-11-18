@@ -13,24 +13,21 @@ $(document).ready(function(){
 
 	$('.scroll-pane').jScrollPane();
 
-	/*Toggle*/
-	$('body').on('click', '.js-toggle', function() {
-		var _ = $(this),
-		_target = $('#'+ _.attr('data-target-id'));
-		
-		if (!_.hasClass('toggled')) {
-			_target.addClass('toggled');
-			_.addClass('toggled');
-		} else {
-			_target.removeClass('toggled');
-			_.removeClass('toggled');
-		}
-		return false;
-	});
-
-
 	flexImage(winW);
 
 	ovfImage();
+
+
+	//headerFix
+	$(window).scroll(function () {
+		if (!$('body').hasClass('is-popup-opened')) {
+			var winScrTop = $(window).scrollTop();
+			if (winScrTop > 21) {
+				$('.header').addClass('header_fixed');
+			} else {
+				$('.header').removeClass('header_fixed');
+			}
+		}
+	});
 
 });

@@ -40,7 +40,7 @@
 		height: 100%;
 		vertical-align: middle;
 	}
-	& > img{
+	img{
 		max-width: 100%;
 		max-height: 100%;
 		vertical-align: middle;
@@ -84,12 +84,6 @@ $base-font-size: 16;
 }
 
 //Fonts
-@mixin ff(){
-	font-family: 'Tahoma', 'Verdana', 'Arial', sans-serif;
-}
-@mixin ff-r(){
-	font-family: 'Roboto', sans-serif;
-}
 @mixin ff-hn(){
 	font-family: 'helveticaneue', sans-serif;
 }
@@ -98,4 +92,5 @@ $base-font-size: 16;
 $gray: #797979;
 $l-gray: #dddddd;
 $red: #ff0000;
-$green: #00c000;
+$green: #00ff00;
+$blue: #0000ff;

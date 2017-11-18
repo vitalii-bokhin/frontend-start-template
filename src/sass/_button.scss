@@ -1,3 +1,87 @@
+.button{
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 500;
+	width: 100%;
+	max-width: 251px;
+	height: 52px;
+	line-height: 52px;
+	//padding: 19px 20px 17px;
+	text-align: center;
+	color: #FFF;
+	border: 1px solid #fff;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: .5s;
+	&_arr{
+		&:after{
+			display: inline-block;
+			content: "";
+			width: 7px;
+			height: 11px;
+			@include sp(-43px -1px);
+			margin-left: 5px;
+		}
+	}
+	&_blue{
+		border: 1px solid $blue;
+		background: $blue;
+	}
+	&_green{
+		border: 1px solid $green;
+		background: $green;
+	}
+	&_shadow{
+		position: relative;
+	}
+	&:hover{
+		opacity: .6;
+	}
+	&_hov-blue:hover{
+		opacity: 1;
+		border: 1px solid $blue;
+		background: $blue;
+	}
+
+	&_w230{
+		max-width: 230px;
+	}
+	&_w330{
+		max-width: 330px;
+	}
+	
+	&_blue-bord{
+		color: $blue;
+		border: 1px solid $blue;
+		background: #FFF;
+	}
+
+	&_blue-txt{
+		color: $blue;
+		background: #FFF;
+	}
+
+	&_grn-bord{
+		color: $green;
+		border: 1px solid $green;
+		background: #FFF;
+	}
+
+	&_grn-txt{
+		color: $green;
+		background: #FFF;
+	}
+
+	&.lock{
+		display: none;
+	}
+	
+	@media(max-width: 700px){
+		max-width: none !important;
+	}
+}
+
+
 /*toggle*/
 .toggle{
 	display: block;
@@ -43,6 +127,19 @@
 			transform: rotate(45deg);
 			width: 130%;
 			left: -15%;
+		}
+	}
+}
+
+.on-toggled{
+	&-hide{
+		&.toggled{
+			display: none !important;
+		}
+	}
+	&-show{
+		&.toggled{
+			display: block !important;
 		}
 	}
 }

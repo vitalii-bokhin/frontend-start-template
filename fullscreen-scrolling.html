@@ -17,34 +17,53 @@
 <!--HEADER/-->
 <header class="header">
 	<div class="row-col-mid wrap header__wrap">
-		<div class="col-3 x1600-col-2 header__logo">
+		<div class="header__logo col-3">
 			<a href="index.html"><img src="images/dealersair.svg" alt="logo"></a>
 		</div>
-		<div id="header-mob" class="col-9 x1600-col-10 header__mob">
-			<nav class="header__nav">
-				<ul class="menu">
-					<li class="menu__item">
-						<a href="index.html" class="menu__a">Главная</a>
-					</li>
-					<li class="menu__item">
-						<a href="content.html" class="menu__a">Контент</a>
-					</li>
-					<li class="menu__item">
-						<a href="form.html" class="menu__a">Формы</a>
-					</li>
-					<li class="menu__item">
-						<a href="accordion.html" class="menu__a">Акордеон</a>
-					</li>
-					<li class="menu__item">
-						<a href="popup.html" class="menu__a">Попапы</a>
-					</li>
-					<li class="menu__item">
-						<a href="#popup-2" class="js-open-popup menu__a">open popup</a>
-					</li>
-				</ul>
-			</nav>
+		<div class="col-9">
+			<div class="header__right">
+				<div id="header-mob-menu" class="header__menu-wrap">
+					<nav class="header__nav">
+						<ul class="menu">
+							<li class="menu__item menu__item_has-children">
+								<a href="index.html" class="menu__a">Главная</a>
+								<button class="menu__arr"></button>
+								<ul class="menu__sub-menu">
+									<li class="menu__sub-menu-item">
+										<a href="#" class="menu__sub-menu-a">Подменю 1</a>
+									</li>
+									<li class="menu__sub-menu-item">
+										<a href="#" class="menu__sub-menu-a">Подменю 2</a>
+									</li>
+									<li class="menu__sub-menu-item">
+										<a href="#" class="menu__sub-menu-a">Подменю 3</a>
+									</li>
+									<li class="menu__sub-menu-item">
+										<a href="#" class="menu__sub-menu-a">Подменю 4</a>
+									</li>
+								</ul>
+							</li>
+							<li class="menu__item">
+								<a href="content.html" class="menu__a">Контент</a>
+							</li>
+							<li class="menu__item">
+								<a href="form.html" class="menu__a">Формы</a>
+							</li>
+							<li class="menu__item">
+								<a href="accordion.html" class="menu__a">Акордеон</a>
+							</li>
+							<li class="menu__item">
+								<a href="popup.html" class="menu__a">Попапы</a>
+							</li>
+							<li class="menu__item">
+								<a href="#popup-2" class="js-open-popup menu__a">open popup</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
 		</div>
-		<button class="js-toggle toggle header__toggle" data-target-id="header-mob"><span></span><span></span><span></span><span></span></button>
+		<button class="js-toggle toggle header__toggle" data-target-id="header-mob-menu" data-target-class="header"><span></span><span></span><span></span><span></span></button>
 	</div>
 </header>
 <!--/HEADER-->
@@ -155,6 +174,7 @@
 <script src="js/scrollpane.min.js"></script>
 <script src="js/images.js"></script>
 <script src="js/popup.js"></script>
+<script src="js/button.js"></script>
 <script src="js/common.js"></script>
 <script type="text/javascript" src="js/fsscroll.js"></script>
 
