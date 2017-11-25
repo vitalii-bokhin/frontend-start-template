@@ -97,24 +97,37 @@
 .slick-arrow.slick-hidden {
     display: none;
 }
+
 .slick-dots{
-    position: fixed;
-    right: 10px;
-    top: 150px;
     z-index: 5;
+    position: absolute;
+    bottom: -13px;
+    width: 100%;
     li{
         list-style: none;
-        margin-bottom: 10px;
+        display: inline-block;
+        margin-right: 12px;
     }
     button{
         display: block;
         font-size: 0;
-        width: 10px;
-        height: 10px;
-        background: blue;
+        width: 8px;
+        height: 8px;
+        border-radius: 8px;
+        border: 1px solid $blue;
+        transition: .5s;
+        &:hover{
+          background: $red;
+        }
+        .green-slider &{
+            border: 1px solid $green;
+        }
     }
     .slick-active button{
-        background: red;
+        background: $blue;
+        .green-slider &{
+           background: $green;
+        }
     }
 }
 
@@ -122,10 +135,32 @@
     position: absolute;
     top: 50%;
     z-index: 3;
+    width: 42px;
+    height: 42px;
+    margin-top: -21px;
+    font-size: 0;
+    transition: .5s;
+    opacity: .3;
+    &:after{
+      display: inline-block;
+      content: "";
+      width: 12px;
+      height: 20px;
+      @include sp;
+    }
+    &:hover{
+      opacity: .7;
+    }
 }
 .slick-prev{
-    left: 0;
+    left: -42px;
+    &:after{
+      background-position: -24px -72px;
+    }
 }
 .slick-next{
-    right: 0;
+    right: -42px;
+    &:after{
+      background-position: -38px -72px;
+    }
 }

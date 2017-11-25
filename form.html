@@ -78,6 +78,7 @@
 			<button type="button" class="form__file-btn form__file-btn_delete">удалить фото</button>
 			<input id="upl-file" type="file" class="form__file-input" name="">
 		</div>
+		<div class="form__error-tip">Загрузите изображение</div>
 	</div>
 
 	<div class="row">
@@ -85,6 +86,7 @@
 			<div class="form__field">
 				<label for="i-txt-1" class="overlabel">+7(999)999-99-99</label>
 				<input id="i-txt-1" type="text" data-type="tel" data-required="true" class="form__text-input form__text-input_tel" value="">
+				<div class="form__error-tip">Заполните поле</div>
 			</div>
 		</div>
 		<div class="col-6">
@@ -112,6 +114,7 @@
 			<div class="form__field">
 				<label for="i-txt-5" class="overlabel">Поле</label>
 				<input id="i-txt-5" type="text" data-required="true" class="form__text-input" value="">
+				<div class="form__error-tip">Заполните поле</div>
 			</div>
 		</div>
 	</div>
@@ -119,6 +122,7 @@
 	<div class="form__field">
 		<label for="area-1" class="overlabel">Текстовое поле</label>
 		<textarea id="area-1" data-required="true" class="form__textarea"></textarea>
+		<div class="form__error-tip">Заполните поле</div>
 	</div>
 
 	<div class="row">
@@ -126,12 +130,14 @@
 			<div class="form__field">
 				<label for="i-email" class="overlabel">E-mail</label>
 				<input id="i-email" type="text" data-type="email" data-required="true" class="form__text-input" value="">
+				<div class="form__error-tip" data-second-error-text="Не корректный E-mail">Введите E-mail</div>
 			</div>
 		</div>
 		<div class="col-6">
 			<div class="form__field">
 				<label for="i-date" class="overlabel">Дата</label>
 				<input id="i-date" type="text" data-type="date" data-required="true" class="form__text-input form__text-input_date" value="">
+				<div class="form__error-tip">Введите дату</div>
 			</div>
 		</div>
 	</div>
@@ -159,6 +165,7 @@
 					</ul>
 					<input type="hidden" class="form__select-input" data-required="true" value="">
 				</div>
+				<div class="form__error-tip">Сделайте выбор</div>
 			</div>
 		</div>
 		<div class="col-4">
@@ -312,18 +319,21 @@
 			<div class="form__field">
 				<label for="i-txt-7" class="overlabel">Текущий пароль</label>
 				<input id="i-txt-7" type="password" data-type="pass" class="form__text-input" value="">
+				<div class="form__error-tip">Введите текущий пароль</div>
 			</div>
 		</div>
 		<div class="col-4">
 			<div class="form__field">
 				<label for="i-txt-8" class="overlabel">Новый пароль</label>
 				<input id="i-txt-8" type="password" data-type="pass" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
+				<div class="form__error-tip" data-second-error-text="Не менее 6 символов">Введите новый пароль</div>
 			</div>
 		</div>
 		<div class="col-4">
 			<div class="form__field">
 				<label for="i-txt-9" class="overlabel">Повторите пароль</label>
 				<input id="i-txt-9" type="password" data-type="pass" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
+				<div class="form__error-tip" data-second-error-text="Не менее 6 символов">Повторите пароль</div>
 			</div>
 		</div>
 	</div>
@@ -335,6 +345,8 @@
 	<div class="form__loading-icon">
 		<div class="form__loading-icon-img"></div>
 	</div>
+
+	<div class="form__alert">Ошибка заполнения полей формы</div>
 
 </form>
 

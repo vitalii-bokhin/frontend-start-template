@@ -251,23 +251,33 @@ $(document).on('click', 'body', function(e) {
 	}
 });
 
-
 //validateForm
 var Form = {
 	input: null,
-	state: function(state,msg) {
+	error: function(err,sec) {
 		var _f = this.input.closest('.form__field'),
-		_tip = _f.find('.form__error-tip');
-		if (state) {
-			_f.removeClass('form__field_error').find('.form__error-tip').remove();
+		_errTip = _f.find('.form__error-tip');
+
+		if (!err) {
+			_f.removeClass('form__field_error');
 		} else {
 			_f.addClass('form__field_error');
-			if (_f.find('.form__error-tip').length) {
-				_f.find('.form__error-tip').html(msg);
+			if (sec) {
+
+				if (!_errTip.attr('data-first-error-text')) {
+					_errTip.attr('data-first-error-text', _errTip.html());
+				}
+				_errTip.html(_errTip.attr('data-second-error-text'));
+
 			} else {
-				_f.append('<div class="form__error-tip">'+ msg +'</div>');
+
+				if (_errTip.attr('data-first-error-text')) {
+					_errTip.html(_errTip.attr('data-first-error-text'));
+				}
+
 			}
 		}
+
 	},
 	date: function() {
 		var _ = this,
@@ -284,10 +294,10 @@ var Form = {
 		};
 
 		if (!validDate(_.input.val())) {
-			_.state(false,'Введите корректную дату');
+			_.error(true);
 			err = true;
 		} else {
-			_.state(true);
+			_.error(false);
 		}
 		return err;
 	},
@@ -295,10 +305,10 @@ var Form = {
 		var _ = this,
 		err = false;
 		if (!/^[a-z0-9]+[a-z0-9-\.]*@[a-z0-9-]{2,}\.[a-z]{2,6}$/i.test(_.input.val())) {
-			_.state(false,'Введите корректный email');
+			_.error(true, true);
 			err = true;
 		} else {
-			_.state(true);
+			_.error(false);
 		}
 		return err;
 	},
@@ -306,10 +316,10 @@ var Form = {
 		var _ = this,
 		err = false;
 		if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(_.input.val())) {
-			_.state(false,'Введите корректный телефон');
+			_.error(true);
 			err = true;
 		} else {
-			_.state(true);
+			_.error(false);
 		}
 		return err;
 	},
@@ -318,16 +328,14 @@ var Form = {
 		err = false,
 		lng = _.input.attr('data-pass-length');
 
-		console.log(lng);
-
 		if (_.input.val().length < 1) {
-			_.state(false,'Введите пароль');
+			_.error(true);
 			err = true;
 		} else if(lng && _.input.val().length < lng) {
-			_.state(false,'Пароль не менее '+ lng +' символов');
+			_.error(true, true);
 			err = true;
 		} else {
-			_.state(true);
+			_.error(false);
 		}
 		return err;
 	},
@@ -336,10 +344,10 @@ var Form = {
 		err = false;
 		_.input = inp;
 		if (_.input.attr('data-required') && _.input.val().length < 1) {
-			_.state(false,'Сделайте выбор');
+			_.error(true);
 			err = true;
 		} else {
-			_.state(true);
+			_.error(false);
 		}
 		return err;
 	},
@@ -374,7 +382,7 @@ var Form = {
 
 		if (_imgBlock.length) {
 			if (!file.type.match('image.*')) {
-				_.state(false,'Выберите файл с изображением');
+				_.error(true);
 				_.fUploaded = false;
 			} else {
 				var reader = new FileReader();
@@ -382,7 +390,7 @@ var Form = {
 					_imgBlock.html('<img src="'+ e.target.result +'">');
 				};
 				reader.readAsDataURL(file);
-				_.state(true);
+				_.error(false);
 				_.fUploaded = true;
 			}
 		}
@@ -398,10 +406,10 @@ var Form = {
 			_.input.addClass('tested');
 
 			if (_.input.attr('data-required') && _.input.val().length < 1) {
-				_.state(false,'Заполните поле');
+				_.error(true);
 				err++;
 			} else {
-				_.state(true);
+				_.error(false);
 				if (type == 'email' && _.email()) {
 					err++;
 				}
@@ -412,9 +420,11 @@ var Form = {
 					err++;
 				}
 			}
+
 			if (type == 'pass' && _.pass()) {
 				err++;
 			}
+
 		});
 
 		_form.find('.form__select-input').each(function() {
@@ -455,10 +465,10 @@ var Form = {
 		if (_form.find('.form__file-input').length) {
 			_.input = _form.find('.form__file-input');
 			if (!_.fUploaded) {
-				_.state(false,'Выберите файл с изображением');
+				_.error(true);
 				err++;
 			} else {
-				_.state(true);
+				_.error(false);
 			}
 		}
 
@@ -468,22 +478,18 @@ var Form = {
 				_.input = _form.find('.form__text-input[data-pass-compare="'+ gr +'"]');
 				if (!_.pass()) {
 					if (_.input.eq(0).val() != _.input.eq(1).val()) {
-						_.state(false,'Пароли не совпадают');
+						_.error(true);
 					} else {
-						_.state(true);
+						_.error(false);
 					}
 				}
 			});
 		}
 
 		if (!err) {
-			_form.find('.form__alert').remove();
+			_form.removeClass('form_error');
 		} else {
-			if (_form.find('.form__alert').length) {
-				_form.find('.form__alert').html('Ошибка заполнения полей формы');
-			} else {
-				_form.append('<div class="form__alert">Ошибка заполнения полей формы</div>');
-			}
+			_form.addClass('form_error');
 		}
 
 		return !err;
@@ -524,8 +530,6 @@ Form.submit('.form', function(form) {
 	});*/
 
 });
-
-
 		
 
 });

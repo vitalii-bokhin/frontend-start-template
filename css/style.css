@@ -306,11 +306,6 @@ img {
   padding-right: 15px !important;
 }
 
-.row-col-pad[class^="col"] {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
 .row_full-height, .row_full-height > div[class*="col"] {
   height: 100%;
 }
@@ -1083,6 +1078,11 @@ img {
   color: #ff0000;
   text-align: center;
   padding-top: 10px;
+  display: none;
+}
+
+.form_error .form__alert {
+  display: block;
 }
 
 .form__chbox {
@@ -1359,41 +1359,83 @@ img {
 }
 
 .slick-dots {
-  position: fixed;
-  right: 10px;
-  top: 150px;
   z-index: 5;
+  position: absolute;
+  bottom: -13px;
+  width: 100%;
 }
 
 .slick-dots li {
   list-style: none;
-  margin-bottom: 10px;
+  display: inline-block;
+  margin-right: 12px;
 }
 
 .slick-dots button {
   display: block;
   font-size: 0;
-  width: 10px;
-  height: 10px;
-  background: blue;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  border: 1px solid #0000ff;
+  transition: .5s;
+}
+
+.slick-dots button:hover {
+  background: #ff0000;
+}
+
+.green-slider .slick-dots button {
+  border: 1px solid #00ff00;
 }
 
 .slick-dots .slick-active button {
-  background: red;
+  background: #0000ff;
+}
+
+.green-slider .slick-dots .slick-active button {
+  background: #00ff00;
 }
 
 .slick-arrow {
   position: absolute;
   top: 50%;
   z-index: 3;
+  width: 42px;
+  height: 42px;
+  margin-top: -21px;
+  font-size: 0;
+  transition: .5s;
+  opacity: .3;
+}
+
+.slick-arrow:after {
+  display: inline-block;
+  content: "";
+  width: 12px;
+  height: 20px;
+  background-image: url("../images/sprite.svg");
+  background-repeat: no-repeat;
+}
+
+.slick-arrow:hover {
+  opacity: .7;
 }
 
 .slick-prev {
-  left: 0;
+  left: -42px;
+}
+
+.slick-prev:after {
+  background-position: -24px -72px;
 }
 
 .slick-next {
-  right: 0;
+  right: -42px;
+}
+
+.slick-next:after {
+  background-position: -38px -72px;
 }
 
 /*===SCROLL===*/
@@ -1978,6 +2020,33 @@ body.is-popup-opened {
 .btn-close_v1:after, .btn-close_v1:before {
   height: 2px;
   background: #FFF;
+}
+
+/*button play*/
+.btn-play {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  background: #ff0000;
+  transition: .5s;
+}
+
+.btn-play:before {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-left: 11px solid #fff;
+  top: 50%;
+  left: 50%;
+  margin: -6px 0 0 -3px;
+}
+
+.btn-play:hover {
+  opacity: 0.7;
 }
 
 /*===FOOTER===*/
