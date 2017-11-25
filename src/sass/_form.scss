@@ -34,43 +34,18 @@
 		padding: 0 7px;
 	}
 	
-	&__field{
-		position: relative;
-		margin-bottom: 14px;
-		
-		.overlabel,
-		.overlabel-apply{
-			display: block;
-			position: absolute;
-			left: 0;
-			top: 2px;
-			z-index: 2;
-			max-width: 100%;
-			cursor: text;
-			overflow: hidden;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-		}
-
-		&_error{
-			.form__text-input,
-			.form__textarea,
-			.form__select-button{
-				border: 1px solid $red;
-			}
-			.overlabel,
-			.overlabel-apply,
-			.form__select-button{
-				color: $red;
-			}
-			.form__error-tip{
-				display: block;
-			}
-		}
-
-		&_hidden{
-			display: none;
-		}
+	.overlabel,
+	.overlabel-apply{
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 2px;
+		z-index: 2;
+		max-width: 100%;
+		cursor: text;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 
 	&__text-input,
@@ -88,8 +63,8 @@
 
 	&__text-input,
 	&__textarea,
-	&__field .overlabel,
-	&__field .overlabel-apply,
+	.overlabel,
+	.overlabel-apply,
 	&__select-button,
 	&__select-val{
 		padding: 11px 8px;
@@ -174,6 +149,38 @@
 		color: $red;
 		padding-top: 3px;
 		display: none;
+	}
+
+	&__field{
+		position: relative;
+		margin-bottom: 14px;
+		&_error{
+			.form__text-input,
+			.form__textarea,
+			.form__select-button{
+				border: 1px solid $red;
+			}
+			.overlabel,
+			.overlabel-apply,
+			.form__select-button{
+				color: $red;
+			}
+			.form__error-tip{
+				display: block;
+			}
+		}
+
+		&_hidden{
+			display: none;
+		}
+
+		&_btn{
+			.form__text-input,
+			.overlabel,
+			.overlabel-apply{
+				padding-right: 50px;
+			}
+		}
 	}
 
 	&__alert{
@@ -304,7 +311,30 @@
 		}
 	}
 
-	&__button{
+	&__btn{
+		display: block;
+		height: 42px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		&:before{
+			@include ab;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+		}
+		&_search{
+			width: 42px;
+			&:before{
+				width: 17px;
+				height: 17px;
+				@include sp(-33px -15px);
+				margin: -9px 0 0 -8px;
+			}
+		}
+	}
+
+	&__submit{
 		display: block;
 		width: 100%;
 		height: 45px;

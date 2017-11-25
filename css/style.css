@@ -951,13 +951,8 @@ img {
   padding: 0 7px;
 }
 
-.form__field {
-  position: relative;
-  margin-bottom: 14px;
-}
-
-.form__field .overlabel,
-.form__field .overlabel-apply {
+.form .overlabel,
+.form .overlabel-apply {
   display: block;
   position: absolute;
   left: 0;
@@ -968,26 +963,6 @@ img {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.form__field_error .form__text-input,
-.form__field_error .form__textarea,
-.form__field_error .form__select-button {
-  border: 1px solid #ff0000;
-}
-
-.form__field_error .overlabel,
-.form__field_error .overlabel-apply,
-.form__field_error .form__select-button {
-  color: #ff0000;
-}
-
-.form__field_error .form__error-tip {
-  display: block;
-}
-
-.form__field_hidden {
-  display: none;
 }
 
 .form__text-input, .form__textarea, .form__select-button {
@@ -1002,8 +977,8 @@ img {
 }
 
 .form__text-input, .form__textarea,
-.form__field .overlabel,
-.form__field .overlabel-apply, .form__select-button, .form__select-val {
+.form .overlabel,
+.form .overlabel-apply, .form__select-button, .form__select-val {
   padding: 11px 8px;
 }
 
@@ -1094,6 +1069,37 @@ img {
   color: #ff0000;
   padding-top: 3px;
   display: none;
+}
+
+.form__field {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.form__field_error .form__text-input,
+.form__field_error .form__textarea,
+.form__field_error .form__select-button {
+  border: 1px solid #ff0000;
+}
+
+.form__field_error .overlabel,
+.form__field_error .overlabel-apply,
+.form__field_error .form__select-button {
+  color: #ff0000;
+}
+
+.form__field_error .form__error-tip {
+  display: block;
+}
+
+.form__field_hidden {
+  display: none;
+}
+
+.form__field_btn .form__text-input,
+.form__field_btn .overlabel,
+.form__field_btn .overlabel-apply {
+  padding-right: 50px;
 }
 
 .form__alert {
@@ -1246,7 +1252,36 @@ img {
   vertical-align: middle;
 }
 
-.form__button {
+.form__btn {
+  display: block;
+  height: 42px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.form__btn:before {
+  display: block;
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.form__btn_search {
+  width: 42px;
+}
+
+.form__btn_search:before {
+  width: 17px;
+  height: 17px;
+  background-image: url("../images/sprite.svg");
+  background-repeat: no-repeat;
+  background-position: -33px -15px;
+  margin: -9px 0 0 -8px;
+}
+
+.form__submit {
   display: block;
   width: 100%;
   height: 45px;
@@ -1267,7 +1302,7 @@ img {
   transition: .5s;
 }
 
-.form__button:hover {
+.form__submit:hover {
   opacity: .7;
 }
 
