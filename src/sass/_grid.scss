@@ -38,7 +38,7 @@
 	}
 
 	& > div[class*="pull"],
-	& > div[class*="push"],{
+	& > div[class*="push"]{
 		position: relative;
 	}
 
@@ -109,6 +109,9 @@
 }
 
 .col{
+	width: 100%;
+	float: none !important;
+	clear: both;
 	&-1{
 		width: 8.33333%;
 	}
@@ -217,8 +220,22 @@
 
 @media(max-width: 1200px){
 	.vw1200{
+		&-row{
+			&-col{
+				display: block;
+				& > div[class*="col"]{
+					display: block;
+					float: none;
+					width: 100%;
+					left: 0;
+					right: 0;
+				}
+			}
+		}
 		&-col{
 			width: 100%;
+			float: none !important;
+			clear: both;
 			&-1{
 				width: 8.33333%;
 			}
@@ -308,6 +325,8 @@
 		}
 		&-col{
 			width: 100%;
+			float: none !important;
+			clear: both;
 			&-1{
 				width: 8.33333%;
 			}

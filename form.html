@@ -68,6 +68,7 @@
 </header>
 <!--/HEADER-->
 
+<div class="container">
 
 <form action="send.php" method="POST" class="form">
 
@@ -119,10 +120,14 @@
 		</div>
 	</div>
 
-	<div class="form__field">
-		<label for="area-1" class="overlabel">Текстовое поле</label>
-		<textarea id="area-1" data-required="true" class="form__textarea"></textarea>
-		<div class="form__error-tip">Заполните поле</div>
+	<div class="row">
+		<div class="col">
+			<div class="form__field">
+				<label for="area-1" class="overlabel">Текстовое поле</label>
+				<textarea id="area-1" data-required="true" class="form__textarea"></textarea>
+				<div class="form__error-tip">Заполните поле</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
@@ -205,48 +210,51 @@
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col">
+			<div class="form__txt">
+				Данные страны берутся из https://get.dealersair.com/api/geo/
+			</div>
 
-	<div class="form__txt">
-		Данные страны берутся из https://get.dealersair.com/api/geo/
-	</div>
+			<div class="form__field">
+				<div class="form__select">
+					<button type="button" class="form__select-button">Выберите страну</button>
+					<ul class="form__select-options form__select-options_countries">
 
-	<div class="form__field">
-		<div class="form__select">
-		<button type="button" class="form__select-button">Выберите страну</button>
-			<ul class="form__select-options form__select-options_countries">
-				
-			</ul>
-			<input type="hidden" class="form__select-input" value="">
+					</ul>
+					<input type="hidden" class="form__select-input" value="">
+				</div>
+			</div>
+
+			<div class="form__field">
+				<div class="form__select form__select_search">
+					<label for="i-txt-6s" class="overlabel">Страна (начинайте вводить)</label>
+					<input id="i-txt-6s" type="text" class="form__text-input form__text-input_search" data-opt="search-by-name" value="">
+					<ul class="form__select-options form__select-options_countries">
+
+					</ul>
+					<input type="hidden" class="form__select-input" value="">
+				</div>
+			</div>
+
+			<div class="form__field">
+				<div class="form__select form__select_search">
+					<label for="i-txt-6" class="overlabel">Улица город (начинайте вводить)</label>
+					<input id="i-txt-6" type="text" class="form__text-input form__text-input_search" data-opt="search-by-search-string" value="">
+					<ul class="form__select-options">
+						<li><button type="button" class="form__select-val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
+						<li><button type="button" class="form__select-val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
+						<li><button type="button" class="form__select-val" data-search="%львов%шевченка" data-value="v3">ул.Шевченка, г.Львов</button></li>
+						<li><button type="button" class="form__select-val" data-search="%шевченка%киев" data-value="v4">бульвар Шевченка, г.Киев</button></li>
+						<li><button type="button" class="form__select-val" data-search="%крещатик%киев" data-value="v5">ул.Крещатик, г.Киев</button></li>
+						<li><button type="button" class="form__select-val" data-search="%свободы%киев" data-value="v5">пр.Свободы, г.Киев</button></li>
+					</ul>
+					<input type="hidden" class="form__select-input" value="">
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<div class="form__field">
-		<div class="form__select form__select_search">
-			<label for="i-txt-6s" class="overlabel">Страна (начинайте вводить)</label>
-			<input id="i-txt-6s" type="text" class="form__text-input form__text-input_search" data-opt="search-by-name" value="">
-			<ul class="form__select-options form__select-options_countries">
-				
-			</ul>
-			<input type="hidden" class="form__select-input" value="">
-		</div>
-	</div>
-
-	<div class="form__field">
-		<div class="form__select form__select_search">
-			<label for="i-txt-6" class="overlabel">Улица город (начинайте вводить)</label>
-			<input id="i-txt-6" type="text" class="form__text-input form__text-input_search" data-opt="search-by-search-string" value="">
-			<ul class="form__select-options">
-				<li><button type="button" class="form__select-val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
-				<li><button type="button" class="form__select-val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
-				<li><button type="button" class="form__select-val" data-search="%львов%шевченка" data-value="v3">ул.Шевченка, г.Львов</button></li>
-				<li><button type="button" class="form__select-val" data-search="%шевченка%киев" data-value="v4">бульвар Шевченка, г.Киев</button></li>
-				<li><button type="button" class="form__select-val" data-search="%крещатик%киев" data-value="v5">ул.Крещатик, г.Киев</button></li>
-				<li><button type="button" class="form__select-val" data-search="%свободы%киев" data-value="v5">пр.Свободы, г.Киев</button></li>
-			</ul>
-			<input type="hidden" class="form__select-input" value="">
-		</div>
-	</div>
-
+	
 	<div class="row">
 		<div class="col-6">
 			<div class="form__chbox">
@@ -260,9 +268,8 @@
 				<label for="chb-2" class="form__chbox-label">Выбор 2</label>
 			</div>
 		</div>
-	</div>
 
-	
+	</div>
 
 	<div class="row form__chbox-group" data-min="1">
 		<div class="col-3">
@@ -291,13 +298,20 @@
 		</div>
 	</div>
 
-	<div class="form__chbox">
-		<input id="chb-7" type="checkbox" class="form__chbox-input">
-		<label for="chb-7" class="form__chbox-label">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat.</label>
-	</div>
+	
 
 	<div class="row">
+
+		<div class="col">
+			<div class="form__chbox">
+				<input id="chb-7" type="checkbox" class="form__chbox-input">
+				<label for="chb-7" class="form__chbox-label">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat.
+				</label>
+			</div>
+		</div>
+
 		<div class="col-6">
 			<div class="form__radio">
 				<input id="rad-1-1" type="radio" name="rad-1" class="form__radio-input" checked>
@@ -350,7 +364,7 @@
 
 </form>
 
-
+</div>
 
 <!--FOOTER/-->
 <footer class="footer">
