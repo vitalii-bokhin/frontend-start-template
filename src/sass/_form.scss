@@ -317,6 +317,8 @@
 		position: absolute;
 		right: 0;
 		top: 0;
+		z-index: 3;
+		transition: .5s;
 		&:before{
 			@include ab;
 			position: absolute;
@@ -331,6 +333,9 @@
 				@include sp(-33px -15px);
 				margin: -9px 0 0 -8px;
 			}
+		}
+		&:hover{
+			opacity: .5;
 		}
 	}
 

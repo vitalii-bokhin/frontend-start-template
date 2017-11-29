@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
-	var winW = $(window).width();
-	var winH = $(window).height();
+	var winW = $(window).width(),
+	winH = $(window).height();
 
 	$('.wrapper, .wrapper__full-height').css('padding-bottom', $('.footer').innerHeight());
 
