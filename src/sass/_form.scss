@@ -59,6 +59,7 @@
 	&__textarea{
 		height: 70px;
 		resize: none;
+		overflow: auto;
 	}
 
 	&__text-input,
@@ -183,6 +184,21 @@
 		}
 	}
 
+	&__fieldset{
+		transition: .5s;
+		position: static;
+		&_hidden{
+			opacity: 0;
+			visibility: hidden;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		&-wrap{
+			position: relative;
+		}
+	}
+
 	&__alert{
 		font-size: 13px;
 		color: $red;
@@ -250,7 +266,6 @@
 						@include ab;
 						width: 10px;
 						height: 10px;
-						-webkit-border-radius: 10px;
 						border-radius: 10px;
 						background: $red;
 						margin: 4px auto;
@@ -264,7 +279,6 @@
 			top: 0;
 			width: 20px;
 			height: 20px;
-			-webkit-border-radius: 20px;
 			border-radius: 20px;
 			border: 1px solid #C3C3C3;
 			background: #F0F1F2;
@@ -352,9 +366,6 @@
 		text-align: center;
 		color: #FFF;
 		text-transform: uppercase;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
 		cursor: pointer;
 		text-decoration: none;
 		transition: .5s;

@@ -213,6 +213,61 @@
 
 	<div class="row">
 		<div class="col">
+			<div class="form__field">
+				<div class="form__select">
+				<button type="button" class="form__select-button">Выбор</button>
+					<ul class="form__select-options">
+						<li><button type="button" class="form__select-val" data-show-hidden="#fs1" data-value="v1">Выбор 1</button></li>
+						<li><button type="button" class="form__select-val" data-show-hidden="#fs2" data-value="v2">Выбор 2</button></li>
+					</ul>
+					<input type="hidden" class="form__select-input" value="">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form__fieldset-wrap">
+
+		<div id="fs1" class="form__fieldset">
+			<div class="row">
+				<div class="col-6">
+					<div class="form__field">
+						<label for="i-txt-331" class="overlabel">Поле</label>
+						<input id="i-txt-331" type="text" class="form__text-input" value="">
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form__field">
+						<label for="i-txt-332" class="overlabel">Поле</label>
+						<input id="i-txt-332" type="text" class="form__text-input" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="fs2" class="form__fieldset form__fieldset_hidden">
+			<div class="row">
+				<div class="col-4">
+					<div id="f1" class="form__field">
+						<label for="i-txt-333" class="overlabel">Поле</label>
+						<input id="i-txt-333" type="text" class="form__text-input" value="">
+					</div>
+				</div>
+				<div class="col-8">
+					<div id="f1" class="form__field">
+						<label for="i-txt-334" class="overlabel">Поле</label>
+						<input id="i-txt-334" type="text" class="form__text-input" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div class="row">
+		<div class="col">
 			<div class="form__txt">
 				Данные страны берутся из https://get.dealersair.com/api/geo/
 			</div>

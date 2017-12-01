@@ -121,6 +121,7 @@ var Select = {
 		
 
 		if (_f.hasClass('form__select_multiple')) {
+
 			if (!_._el.hasClass('form__select-val_checked')) {
 				_._el.addClass('form__select-val_checked');
 			} else {
@@ -157,8 +158,16 @@ var Select = {
 		}
 
 		if (_._el.attr('data-show-hidden')) {
-			var opt = _._el.attr('data-show-hidden').split(',');
-			$(opt[0].trim()).removeClass('form__field_hidden').find('label').html(opt[1].trim());
+			var opt = _._el.attr('data-show-hidden'),
+			_$ = $(opt);
+
+			if (_$.hasClass('form__field')) {
+				_$.removeClass('form__field_hidden');
+			} else if (_$.hasClass('form__fieldset')) {
+				_$.closest('.form__fieldset-wrap').find('.form__fieldset').addClass('form__fieldset_hidden');
+				_$.removeClass('form__fieldset_hidden');
+			}
+			
 		}
 
 		Form.select(_input);
