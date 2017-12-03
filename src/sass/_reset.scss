@@ -1,13 +1,4 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var, i,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-input, textarea, select, button,
-header, footer, section, nav, article, aside {
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, header, footer, section, nav, article, aside {
   margin: 0;
   padding: 0;
   border: none;
@@ -23,4 +14,26 @@ header, footer, section, nav, article, aside {
   background-position: 0 0;
   box-sizing: border-box;
   -webkit-appearance: none;
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+header, footer, section, nav, article, aside {
+  display: block;
+}
+
+button{
+  overflow: visible;
+}
+
+html, body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+img{
+  vertical-align: bottom;
 }
