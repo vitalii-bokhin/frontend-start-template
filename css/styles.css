@@ -937,8 +937,7 @@ img {
 
 .form__textarea_var-h-wrap .overlabel,
 .form__textarea_var-h-wrap .overlabel-apply {
-  top: 50%;
-  margin-top: -18px;
+  top: 23px;
 }
 
 .form__textarea-shape {
@@ -980,7 +979,7 @@ img {
   list-style: none;
   position: absolute;
   left: 0;
-  top: 42px;
+  top: 100%;
   width: 100%;
   max-height: 186px;
   overflow: auto;
@@ -1027,7 +1026,7 @@ img {
   margin-top: -7px;
 }
 
-.form__select_search:after {
+.form__select_autocomplete:after {
   display: none;
 }
 

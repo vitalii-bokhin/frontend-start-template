@@ -90,7 +90,7 @@ var Select = {
 	change: function(state) {
 		var _ = this;
 		if (state) {
-			if (!_._field.hasClass('form__select_search')) {
+			if (!_._field.hasClass('form__select_autocomplete')) {
 				$('.form__select').removeClass('form__select_opened');
 				$('.form__select-options').slideUp(221);
 			}
@@ -116,7 +116,7 @@ var Select = {
 		_.init(el);
 		var _f = _._field,
 		_button = _f.find('.form__select-button'),
-		_srcInput = _f.find('.form__text-input_search'),
+		_srcInput = (_f.find('.form__text-input_autocomplete').length) ? _f.find('.form__text-input_autocomplete') : _f.find('.form__textarea_autocomplete'),
 		_input = _f.find('.form__select-input');
 		
 
@@ -170,11 +170,15 @@ var Select = {
 			
 		}
 
+		if (_srcInput.hasClass('form__textarea_var-h')) {
+			setTextareaHeight(_srcInput);
+		}
+
 		Form.select(_input);
 
 		return false;
 	},
-	search: function(el) {
+	autocomplete: function(el) {
 		var _ = this;
 		_.init(el);
 		var inputValue = _._el.val(),
@@ -271,8 +275,8 @@ $('body').on('click', '.form__select-button', function() {
 	Select.open(this); 
 });
 
-$('body').on('keyup', '.form__text-input_search', function() { 
-	Select.search(this); 
+$('body').on('keyup', '.form__text-input_autocomplete, .form__textarea_autocomplete', function() { 
+	Select.autocomplete(this); 
 });
 
 $('body').on('click', '.form__select-val', function() { 
@@ -296,15 +300,17 @@ $('.form__textarea_var-h').each(function() {
 
 });
 
-$('body').on('keyup', '.form__textarea_var-h', function() {
-	var _$ = $(this),
-	val = _$.val(),
+function setTextareaHeight(_$) {
+	var val = _$.val(),
 	Shape = _$.parent().find('.form__textarea-shape');
 
 	Shape.html(val);
 
 	_$.css('height', Shape.innerHeight());
+}
 
+$('body').on('keyup', '.form__textarea_var-h', function() {
+	setTextareaHeight($(this));
 });
 
 

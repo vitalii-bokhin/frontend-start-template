@@ -282,9 +282,9 @@
 			</div>
 
 			<div class="form__field">
-				<div class="form__select form__select_search">
+				<div class="form__select form__select_autocomplete">
 					<label for="i-txt-6s" class="overlabel">Страна (начинайте вводить)</label>
-					<input id="i-txt-6s" type="text" class="form__text-input form__text-input_search" data-opt="search-by-name" value="">
+					<input id="i-txt-6s" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-by-name" value="">
 					<ul class="form__select-options form__select-options_countries">
 
 					</ul>
@@ -293,9 +293,9 @@
 			</div>
 
 			<div class="form__field">
-				<div class="form__select form__select_search">
+				<div class="form__select form__select_autocomplete">
 					<label for="i-txt-65s" class="overlabel">Страна (начинайте вводить)</label>
-					<input id="i-txt-65s" type="text" class="form__text-input form__text-input_search" data-opt="search-with-highlight" value="">
+					<input id="i-txt-65s" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-with-highlight" value="">
 					<ul class="form__select-options form__select-options_countries2">
 						
 					</ul>
@@ -304,9 +304,9 @@
 			</div>
 
 			<div class="form__field">
-				<div class="form__select form__select_search">
+				<div class="form__select form__select_autocomplete">
 					<label for="i-txt-6" class="overlabel">Улица город (начинайте вводить)</label>
-					<input id="i-txt-6" type="text" class="form__text-input form__text-input_search" data-opt="search-by-search-string" value="">
+					<input id="i-txt-6" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-by-search-string" value="">
 					<ul class="form__select-options">
 						<li><button type="button" class="form__select-val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
 						<li><button type="button" class="form__select-val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
@@ -449,6 +449,29 @@
 					<textarea id="area-3" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
 				</div>
 				<div class="form__error-tip">Заполните поле</div>
+			</div>
+
+		</div>
+	</div>
+
+	
+
+	<div class="row">
+		<div class="col">
+			<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом:</div>
+
+			<div class="form__field">
+				<div class="form__select form__select_autocomplete">
+					<div class="form__textarea_var-h-wrap">
+						<label for="area-4" class="overlabel">Начинайте вводить</label>
+						<textarea id="area-4" class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
+					</div>
+					<ul class="form__select-options">
+						<li><button type="button" class="form__select-val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
+						<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
+					</ul>
+					<input type="hidden" class="form__select-input" value="">
+				</div>
 			</div>
 
 		</div>
