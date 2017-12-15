@@ -29,7 +29,7 @@ function Sass(src) {
 gulp.task('w', function () {
 
 	gulp.watch('./src/sass/*.scss', function() {
-		Sass('./src/sass/style.scss');
+		Sass('./src/sass/styles.scss');
 	});
 
 	gulp.watch('./src/html/*.html', function(event) {
@@ -67,7 +67,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('mincss', function () {
-	gulp.src('./src/sass/style.scss')
+	gulp.src('./src/sass/styles.scss')
 	.pipe(sass().on('error', sass.logError))
 	.pipe(autoprefixer(['last 121 versions', '> 1%']))
 	.pipe(replace('\/..', ''))

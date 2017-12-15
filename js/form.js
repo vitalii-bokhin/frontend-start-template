@@ -187,15 +187,41 @@ var Select = {
 
 		if(inputValue.length > 0){
 
-			if (opt == 'search-by-name') {
+			/*if (opt == 'search-with-highlight') {
 
-				var inpVal = inputValue[0].toUpperCase() + inputValue.slice(1);
+				var inpVal = inputValue,
+				reg = new RegExp(inpVal, 'gi');
+
+				console.log(reg);
+
+				_._options.find('.form__select-val').each(function() {
+
+					var srcVal = $(this).attr('data-original');
+
+					if(srcVal.match(_reg)){
+						var newStr = srcVal.replace(reg, '<span>$&</span>');
+						$(this).html(newStr);
+						$(this).parent().removeClass('hidden');
+						match = true;
+					} else {
+						$(this).parent().addClass('hidden');
+					}
+
+				});
+
+			} else*/ if (opt == 'search-by-name') {
+
+				var inpVal = inputValue,
+				reg = new RegExp(inpVal, 'gi');
+
+				console.log(reg);
 
 				_._options.find('.form__select-val').each(function() {
 
 					var srcVal = $(this).html();
 
-					if(srcVal.match(inpVal)){
+					if(srcVal.match(reg)){
+
 						$(this).parent().removeClass('hidden');
 						match = true;
 					} else {
@@ -259,6 +285,28 @@ $(document).on('click', 'body', function(e) {
 		$('.form__select-options').slideUp(221);
 	}
 });
+
+//textarea with variable height
+$('.form__textarea_var-h').each(function() {
+	var _$ = $(this),
+	taW = _$.innerWidth(),
+	taH = _$.innerHeight();
+
+	_$.parent().append('<div class="form__textarea-shape" style="width:'+ taW +'px;"></div>');
+
+});
+
+$('body').on('keyup', '.form__textarea_var-h', function() {
+	var _$ = $(this),
+	val = _$.val(),
+	Shape = _$.parent().find('.form__textarea-shape');
+
+	Shape.html(val);
+
+	_$.css('height', Shape.innerHeight());
+
+});
+
 
 //validateForm
 var Form = {
@@ -549,10 +597,12 @@ Form.submit('.form', function(form) {
 function dAirGetInit() {
 	dAirGet.countries(function(c) {
 		var contryObj = $.parseJSON(c),
-		countryOpt = $('.form__select-options_countries');
+		countryOpt = $('.form__select-options_countries'),
+		countryOpt2 = $('.form__select-options_countries2');
 		
 		for (var i = 0; i < contryObj.length; i++) {
 			countryOpt.append('<li><button type="button" class="form__select-val" data-value="'+ contryObj[i].id +'">'+ contryObj[i].name +'</button></li>');
+			countryOpt2.append('<li><button type="button" class="form__select-val" data-value="'+ contryObj[i].id +'" data-original="'+ contryObj[i].name +'">'+ contryObj[i].name +'</button></li>');
 		}
 	});
 }

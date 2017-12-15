@@ -48,6 +48,8 @@ function ovfImage(cnt) {
 			Block.addClass('ovf-image-wrap');
 		}
 
+		Img.removeClass('ovf-image_w ovf-image_h');
+
 		var imgProp = Img.width()/Img.height(),
 		blockProp = Block.width()/Block.height();
 

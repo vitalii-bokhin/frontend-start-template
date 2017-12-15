@@ -12,7 +12,6 @@
 			display: block;
 			width: 40px;
 			height: 40px;
-			-webkit-border-radius: 40px;
 			border-radius: 40px;
 			position: absolute;
 			right: 20px;
@@ -23,9 +22,7 @@
 				@include ab;
 				@include fwh;
 				background: url("../../images/icon-arrow-down.svg") no-repeat 50% 50%;
-				-webkit-background-size: 30% auto;
-				     -o-background-size: 30% auto;
-				        background-size: 30% auto;
+				background-size: 30% auto;
 			}
 		}
 	}

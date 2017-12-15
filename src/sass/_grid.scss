@@ -23,6 +23,10 @@
 	max-width: 980px;
 	padding-left: 30px;
 	padding-right: 30px;
+	@media(max-width: 1000px){
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 
 .container{
@@ -32,9 +36,14 @@
 
 
 .row{
+
+	@include clr;
+
 	& > div[class*="col"]{
 		float: left;
 		min-height: 1px;
+		padding-left: 15px;
+		padding-right: 15px;
 	}
 
 	& > div[class*="pull"],
@@ -42,8 +51,6 @@
 		position: relative;
 	}
 
-	@include clr;
-	
 	&__br{
 		display: block;
 		width: 100%;
@@ -60,7 +67,7 @@
 			height: 100%;
 		}
 
-		div[class*="col"]{
+		& > div[class*="col"]{
 			display: inline-block;
 		}
 
@@ -68,26 +75,24 @@
 
 	&-col-mid{
 		&:before,
-		div[class*="col"]{
+		& > div[class*="col"]{
 			vertical-align: middle;
 		}
 	}
 
 	&-col-bot{
 		&:before,
-		div[class*="col"]{
+		& > div[class*="col"]{
 			vertical-align: bottom;
 		}
 	}
 
-	&-col-pad{
+	&_col-pad-0{
+		padding-left: 15px;
+		padding-right: 15px;
 		& > div[class*="col"]{
-			padding-left: 15px;
-			padding-right: 15px;
-		}
-		&.wrap{
-			padding-left: 15px !important;
-			padding-right: 15px !important;
+			padding-left: 0;
+			padding-right: 0;
 		}
 	}
 
