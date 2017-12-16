@@ -293,8 +293,7 @@ $(document).on('click', 'body', function(e) {
 //textarea with variable height
 $('.form__textarea_var-h').each(function() {
 	var _$ = $(this),
-	taW = _$.innerWidth(),
-	taH = _$.innerHeight();
+	taW = _$.innerWidth();
 
 	_$.parent().append('<div class="form__textarea-shape" style="width:'+ taW +'px;"></div>');
 
@@ -306,7 +305,7 @@ function setTextareaHeight(_$) {
 
 	Shape.html(val);
 
-	_$.css('height', Shape.innerHeight());
+	_$.css('height', Shape.height());
 }
 
 $('body').on('keyup', '.form__textarea_var-h', function() {
