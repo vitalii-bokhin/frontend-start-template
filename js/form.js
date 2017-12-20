@@ -160,8 +160,10 @@ var Select = {
 		if (_._el.attr('data-show-hidden')) {
 			var opt = _._el.attr('data-show-hidden'),
 			_$ = $(opt);
+			console.log(_$);
 
 			if (_$.hasClass('form__field')) {
+				_$.closest('.form__field-wrap').find('.form__field').addClass('form__field_hidden');
 				_$.removeClass('form__field_hidden');
 			} else if (_$.hasClass('form__fieldset')) {
 				_$.closest('.form__fieldset-wrap').find('.form__fieldset').addClass('form__fieldset_hidden');
@@ -418,15 +420,7 @@ var Form = {
 		_.input = $(inp);
 		var type = _.input.attr('data-type');
 		if (_.input.hasClass('tested')) {
-			if (type == 'email') {
-				_.email();
-			}
-			if (type == 'tel') {
-				_.tel();
-			}
-			if (type == 'date') {
-				_.date();
-			}
+			_[type]();
 		}
 	},
 	fUploaded: false,
@@ -472,13 +466,7 @@ var Form = {
 				err++;
 			} else {
 				_.error(false);
-				if (type == 'email' && _.email()) {
-					err++;
-				}
-				if (type == 'tel' && _.tel()) {
-					err++;
-				}
-				if (type == 'date' && _.date()) {
+				if (type && _[type]()) {
 					err++;
 				}
 			}
