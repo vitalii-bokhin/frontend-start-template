@@ -29,6 +29,19 @@
 	}
 }
 
+.pad{
+	padding-left: 15px;
+	padding-right: 15px;
+	&.wrap{
+		padding-left: 45px;
+		padding-right: 45px;
+	}
+	&-0{
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+}
+
 .container{
 	padding-top: 50px;
 	padding-bottom: 50px;
@@ -36,7 +49,6 @@
 
 
 .row{
-
 	@include clr;
 
 	& > div[class*="col"]{
@@ -59,8 +71,7 @@
 
 	&-col-mid,
 	&-col-bot{
-		font-size: 0;
-		
+		font-size: 0 !important;
 		&:before{
 			display: inline-block;
 			content: "";
@@ -69,6 +80,10 @@
 
 		& > div[class*="col"]{
 			display: inline-block;
+			min-height: 1px;
+			padding-left: 15px;
+			padding-right: 15px;
+			font-size: 16px;
 		}
 
 	}
@@ -87,12 +102,15 @@
 		}
 	}
 
-	&_col-pad-0{
-		padding-left: 15px;
-		padding-right: 15px;
+	&-tbl{
+		display: table;
+		width: 100%;
 		& > div[class*="col"]{
-			padding-left: 0;
-			padding-right: 0;
+			display: table-cell;
+			vertical-align: top;
+			min-height: 1px;
+			padding-left: 15px;
+			padding-right: 15px;
 		}
 	}
 
@@ -102,12 +120,16 @@
 		}
 	}
 
-	&-tbl{
-		display: table;
-		width: 100%;
+	&-col-pad-0{
+		padding-left: 15px;
+		padding-right: 15px;
 		& > div[class*="col"]{
-			display: table-cell;
-			vertical-align: top;
+			padding-left: 0;
+			padding-right: 0;
+		}
+		&.wrap{
+			padding-left: 45px;
+			padding-right: 45px;
 		}
 	}
 	

@@ -25,34 +25,37 @@
 					<nav class="header__nav">
 						<ul class="menu">
 							<li class="menu__item menu__item_has-children">
-								<a href="index.html" class="menu__a">Главная</a>
+								<a href="index.html" class="menu__a">Home</a>
 								<button class="menu__arr"></button>
 								<ul class="menu__sub-menu">
 									<li class="menu__sub-menu-item">
-										<a href="#" class="menu__sub-menu-a">Подменю 1</a>
+										<a href="#" class="menu__sub-menu-a">Submenu 1</a>
 									</li>
 									<li class="menu__sub-menu-item">
-										<a href="#" class="menu__sub-menu-a">Подменю 2</a>
+										<a href="#" class="menu__sub-menu-a">Submenu 2</a>
 									</li>
 									<li class="menu__sub-menu-item">
-										<a href="#" class="menu__sub-menu-a">Подменю 3</a>
+										<a href="#" class="menu__sub-menu-a">Submenu 3</a>
 									</li>
 									<li class="menu__sub-menu-item">
-										<a href="#" class="menu__sub-menu-a">Подменю 4</a>
+										<a href="#" class="menu__sub-menu-a">Submenu 4</a>
 									</li>
 								</ul>
 							</li>
 							<li class="menu__item">
-								<a href="content.html" class="menu__a">Контент</a>
+								<a href="grid.html" class="menu__a">Grid</a>
 							</li>
 							<li class="menu__item">
-								<a href="form.html" class="menu__a">Формы</a>
+								<a href="content.html" class="menu__a">Content</a>
 							</li>
 							<li class="menu__item">
-								<a href="accordion.html" class="menu__a">Акордеон</a>
+								<a href="form.html" class="menu__a">Form</a>
 							</li>
 							<li class="menu__item">
-								<a href="popup.html" class="menu__a">Попапы</a>
+								<a href="accordion.html" class="menu__a">Accordeon</a>
+							</li>
+							<li class="menu__item">
+								<a href="popup.html" class="menu__a">Popups</a>
 							</li>
 							<li class="menu__item">
 								<a href="#popup-2" class="js-open-popup menu__a">open popup</a>
@@ -69,21 +72,30 @@
 
 <div class="container">
 
-	<div class="title wrap">Grid</div>
+	<div class="title wrap pad">Grid</div>
 
-	<div class="title-h2 wrap">
+	<div class="title-h2 wrap pad">
+		Wrapper with padding (.wrap.pad)
+	</div>
+
+	<div class="txt wrap pad" style="margin-bottom: 55px; background: gray">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+
+	<div class="title-h2 wrap pad">
 		Default columns
 	</div>
 
 	<div class="row wrap" style="margin-bottom: 55px; background: gray">
 		<div class="col-4" style="background: red;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 		<div class="col-4" style="background: green;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 				consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -91,53 +103,53 @@
 			</div>
 		</div>
 		<div class="col-4" style="background: blue;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 	</div>
 
-	<div class="title-h2 wrap">
-		Default columns with padding
+	<div class="title-h2 wrap pad">
+		Columns without padding (.row-col-pad-0)
 	</div>
 	
-	<div class="row row-col-pad wrap" style="margin-bottom: 55px; background: gray">
-		<div class="col-4" style="background: red;">
-			<div class="txt">
+	<div class="row row-col-pad-0 wrap" style="margin-bottom: 55px; background: gray">
+		<div class="col-4">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
-		<div class="col-4" style="background: green;">
-			<div class="txt">
+		<div class="col-4">
+			<div class="txt" style="background: white;">
 				Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 				consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 			</div>
 		</div>
-		<div class="col-4" style="background: blue;">
-			<div class="txt">
+		<div class="col-4">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 	</div>
 
-	<div class="title-h2 wrap">
+	<div class="title-h2 wrap pad">
 		Columns align middle
 	</div>
 
 	<div class="row-col-mid wrap" style="margin-bottom: 55px; background: gray">
 		<div class="col-4" style="background: red;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 		<div class="col-4" style="background: green;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 				consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -145,26 +157,53 @@
 			</div>
 		</div>
 		<div class="col-4" style="background: blue;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 	</div>
 
-	<div class="title-h2 wrap">
+	<div class="title-h2 wrap pad">
+		Columns align middle without padding (.row-col-pad-0)
+	</div>
+
+	<div class="row-col-mid row-col-pad-0 wrap" style="margin-bottom: 55px; background: gray">
+		<div class="col-4" style="background: red;">
+			<div class="txt" style="background: white;">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>
+		</div>
+		<div class="col-4" style="background: green;">
+			<div class="txt" style="background: white;">
+				Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+			</div>
+		</div>
+		<div class="col-4" style="background: blue;">
+			<div class="txt" style="background: white;">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>
+		</div>
+	</div>
+
+	<div class="title-h2 wrap pad">
 		Columns align bottom 
 	</div>
 
 	<div class="row-col-bot wrap" style="margin-bottom: 55px; background: gray;">
 		<div class="col-4" style="background: red;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 		<div class="col-4" style="background: green;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 				consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -172,27 +211,27 @@
 			</div>
 		</div>
 		<div class="col-4" style="background: blue;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 	</div>
 
-	<div class="title-h2 wrap">
+	<div class="title-h2 wrap pad">
 		Full height columns
 	</div>
 
 	<div style="height: 300px; margin-bottom: 55px;">
 		<div class="row row_full-height wrap" style="background: gray;">
 			<div class="col-4" style="background: red;">
-				<div class="txt">
+				<div class="txt" style="background: white;">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 				</div>
 			</div>
 			<div class="col-4" style="background: green;">
-				<div class="txt">
+				<div class="txt" style="background: white;">
 					Ut enim ad minim veniam,
 					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 					consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -200,7 +239,7 @@
 				</div>
 			</div>
 			<div class="col-4" style="background: blue;">
-				<div class="txt">
+				<div class="txt" style="background: white;">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 				</div>
@@ -208,19 +247,19 @@
 		</div>
 	</div>
 
-	<div class="title-h2 wrap">
-		Tabble grid (with padding columns)
+	<div class="title-h2 wrap pad">
+		Row like a table
 	</div>
 
-	<div class="row-tbl row-col-pad wrap" style="margin-bottom: 55px; background: gray;">
+	<div class="row-tbl wrap" style="margin-bottom: 55px; background: gray;">
 		<div class="col-4" style="background: red;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 		<div class="col-4" style="background: green;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 				consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -228,19 +267,158 @@
 			</div>
 		</div>
 		<div class="col-4" style="background: blue;">
-			<div class="txt">
+			<div class="txt" style="background: white;">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
 	</div>
 
+	<div class="title-h2 wrap pad">
+		Common wrapper (.wrap)
+	</div>
 
+	<div class="wrap container" style="margin-bottom: 55px; background: gray">
+		<div class="pad mb-15">
+			<b>Padding (.pad)</b>
+		</div>
+		<div class="pad" style="background: black; margin-bottom: 35px;">
+			<div class="txt" style="background: white;">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat.
+			</div>
+		</div>
+		<div class="pad mb-15">
+			<b>Default columns</b>
+		</div>
+		<div class="row mb-35">
+			<div class="col-4" style="background: red">
+				<p class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sequi incidunt, totam, veniam numquam earum dignissimos facere deserunt esse illum temporibus. Consectetur repellendus sunt debitis delectus vero aut aliquam culpa.
+				</p>
+			</div>
+			<div class="col-4" style="background: green">
+				<p class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sequi incidunt, totam, veniam numquam earum dignissimos facere deserunt esse illum temporibus. Consectetur repellendus sunt debitis delectus vero aut aliquam culpa.
+				</p>
+			</div>
+			<div class="col-4" style="background: blue">
+				<p class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sequi incidunt, totam, veniam numquam earum dignissimos facere deserunt esse illum temporibus. Consectetur repellendus sunt debitis delectus vero aut aliquam culpa.
+				</p>
+			</div>
+		</div>
 
+		<div class="pad mb-15">
+			<b>Columns without padding (.row-col-pad-0)</b>
+		</div>
+		<div class="row row-col-pad-0 mb-35">
+			<div class="col-4" style="background: red">
+				<p class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sequi incidunt, totam, veniam numquam earum dignissimos facere deserunt esse illum temporibus. Consectetur repellendus sunt debitis delectus vero aut aliquam culpa.
+				</p>
+			</div>
+			<div class="col-4" style="background: green">
+				<p class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sequi incidunt, totam, veniam numquam earum dignissimos facere deserunt esse illum temporibus. Consectetur repellendus sunt debitis delectus vero aut aliquam culpa.
+				</p>
+			</div>
+			<div class="col-4" style="background: blue">
+				<p class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sequi incidunt, totam, veniam numquam earum dignissimos facere deserunt esse illum temporibus. Consectetur repellendus sunt debitis delectus vero aut aliquam culpa.
+				</p>
+			</div>
+		</div>
 
+		<div class="pad mb-15">
+			<b>Columns align middle</b>
+		</div>
+		<div class="row-col-mid" style="margin-bottom: 35px">
+			<div class="col-4" style="background: red;">
+				<div class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
+			</div>
+			<div class="col-4" style="background: green;">
+				<div class="txt" style="background: white;">
+					Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+				</div>
+			</div>
+			<div class="col-4" style="background: blue;">
+				<div class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
+			</div>
+		</div>
 
+		<div class="pad mb-15">
+			<b>Columns align middle without padding (.row-col-pad-0)</b>
+		</div>
+		<div class="row-col-mid row-col-pad-0" style="margin-bottom: 35px">
+			<div class="col-4" style="background: red;">
+				<div class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
+			</div>
+			<div class="col-4" style="background: green;">
+				<div class="txt" style="background: white;">
+					Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+				</div>
+			</div>
+			<div class="col-4" style="background: blue;">
+				<div class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
+			</div>
+		</div>
 
+	</div>
 
+	<div class="title-h2 wrap pad">
+		Nested rows
+	</div>
+
+	<div class="row wrap" style="margin-bottom: 55px; background: gray">
+		<div class="col-4" style="background: red;">
+			<div class="txt" style="background: white;">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>
+		</div>
+		<div class="col-8 pad-0 row" style="border: 1px solid green;">
+			<div class="col-4" style="background: yellow;">
+				<div class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
+			</div>
+			<div class="col-4" style="background: blue;">
+				<div class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
+			</div>
+			<div class="col-4" style="background: orange;">
+				<div class="txt" style="background: white;">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
+			</div>
+		</div>
+		
+	</div>
 
 </div>
 

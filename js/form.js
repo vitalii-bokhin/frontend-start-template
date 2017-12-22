@@ -66,16 +66,6 @@ a.applyDataMask=function(b){b=b||a.jMaskGlobals.maskElements;(b instanceof a?b:a
 S:{pattern:/[a-zA-Z]/}}};a.jMaskGlobals=a.jMaskGlobals||{};h=a.jMaskGlobals=a.extend(!0,{},h,a.jMaskGlobals);h.dataMask&&a.applyDataMask();setInterval(function(){a.jMaskGlobals.watchDataMask&&a.applyDataMask()},h.watchInterval)},window.jQuery,window.Zepto);
 
 
-/*FormHandler*/
-
-$(document).ready(function() {
-
-$('.form__text-input[data-type="tel"]').mask('+7(999)999-99-99');
-$('.form__text-input[data-type="date"]').mask('99.99.9999');
-
-initOverLabels();
-
-
 //Form Select
 var Select = {
 	_el: null,
@@ -273,70 +263,36 @@ var Select = {
 	},
 };
 
-$('body').on('click', '.form__select-button', function() { 
-	Select.open(this); 
-});
-
-$('body').on('keyup', '.form__text-input_autocomplete, .form__textarea_autocomplete', function() { 
-	Select.autocomplete(this); 
-});
-
-$('body').on('click', '.form__select-val', function() { 
-	Select.select(this);
-});
-
-$(document).on('click', 'body', function(e) {
-	if (!$(e.target).closest('.form__select_opened').length) {
-		$('.form__select').removeClass('form__select_opened');
-		$('.form__select-options').slideUp(221);
-	}
-});
-
-//textarea with variable height
-$('.form__textarea_var-h').each(function() {
-	var _$ = $(this),
-	taW = _$.innerWidth();
-
-	_$.parent().append('<div class="form__textarea-shape" style="width:'+ taW +'px;"></div>');
-
-});
-
-function setTextareaHeight(_$) {
-	var val = _$.val(),
-	Shape = _$.parent().find('.form__textarea-shape');
-
-	Shape.html(val);
-
-	_$.css('height', Shape.height());
-}
-
-$('body').on('keyup', '.form__textarea_var-h', function() {
-	setTextareaHeight($(this));
-});
-
 
 //validateForm
 var Form = {
 	input: null,
-	error: function(err,sec) {
-		var _f = this.input.closest('.form__field'),
-		_errTip = _f.find('.form__error-tip');
+	error: function(err,sec,trd) {
+		var Field = this.input.closest('.form__field'),
+		ErrTip = Field.find('.form__error-tip');
 
 		if (!err) {
-			_f.removeClass('form__field_error');
+			Field.removeClass('form__field_error');
 		} else {
-			_f.addClass('form__field_error');
+			Field.addClass('form__field_error');
 			if (sec) {
 
-				if (!_errTip.attr('data-first-error-text')) {
-					_errTip.attr('data-first-error-text', _errTip.html());
+				if (!ErrTip.attr('data-first-error-text')) {
+					ErrTip.attr('data-first-error-text', ErrTip.html());
 				}
-				_errTip.html(_errTip.attr('data-second-error-text'));
+				ErrTip.html(ErrTip.attr('data-second-error-text'));
+
+			} else if (trd) {
+
+				if (!ErrTip.attr('data-first-error-text')) {
+					ErrTip.attr('data-first-error-text', ErrTip.html());
+				}
+				ErrTip.html(ErrTip.attr('data-third-error-text'));
 
 			} else {
 
-				if (_errTip.attr('data-first-error-text')) {
-					_errTip.html(_errTip.attr('data-first-error-text'));
+				if (ErrTip.attr('data-first-error-text')) {
+					ErrTip.html(ErrTip.attr('data-first-error-text'));
 				}
 
 			}
@@ -563,24 +519,73 @@ var Form = {
 
 
 
-Form.submit('.form', function(form) {
-	var _f = $(form);
-	Popup.message('#message-popup', 'Форма отправлена');
-	/*$.ajax({
-		url: _f.attr('action'),
-		type:"POST",
-		dataType:"html",
-		data: _f.serialize(), //new FormData(form),
-		success: function(response){
-			Popup.message('#message-popup', response);
-		},
-		error: function() {
-			alert('Send Error');
-		}
-	});*/
+$(document).ready(function() {
 
-});
-		
+	$('.form__text-input[data-type="tel"]').mask('+7(999)999-99-99');
+	$('.form__text-input[data-type="date"]').mask('99.99.9999');
+
+	initOverLabels();
+
+	$('body').on('click', '.form__select-button', function() { 
+		Select.open(this); 
+	});
+
+	$('body').on('keyup', '.form__text-input_autocomplete, .form__textarea_autocomplete', function() { 
+		Select.autocomplete(this); 
+	});
+
+	$('body').on('click', '.form__select-val', function() { 
+		Select.select(this);
+	});
+
+	$(document).on('click', 'body', function(e) {
+		if (!$(e.target).closest('.form__select_opened').length) {
+			$('.form__select').removeClass('form__select_opened');
+			$('.form__select-options').slideUp(221);
+		}
+	});
+
+	//textarea with variable height
+	$('.form__textarea_var-h').each(function() {
+		var _$ = $(this),
+		taW = _$.innerWidth();
+
+		_$.parent().append('<div class="form__textarea-shape" style="width:'+ taW +'px;"></div>');
+
+	});
+
+	function setTextareaHeight(_$) {
+		var val = _$.val(),
+		Shape = _$.parent().find('.form__textarea-shape');
+
+		Shape.html(val);
+
+		_$.css('height', Shape.height());
+	}
+
+	$('body').on('keyup', '.form__textarea_var-h', function() {
+		setTextareaHeight($(this));
+	});
+
+
+	Form.submit('.form', function(form) {
+		var _f = $(form);
+		Popup.message('#message-popup', 'Форма отправлена');
+		/*$.ajax({
+			url: _f.attr('action'),
+			type:"POST",
+			dataType:"html",
+			data: _f.serialize(), //new FormData(form),
+			success: function(response){
+				Popup.message('#message-popup', response);
+			},
+			error: function() {
+				alert('Send Error');
+			}
+		});*/
+
+	});
+
 
 });
 

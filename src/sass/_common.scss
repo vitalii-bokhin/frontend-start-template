@@ -5,7 +5,7 @@ html, body {
 	height: 100%;
 }
   
-a, button{
+button{
 	cursor: pointer;
 }
 
@@ -14,24 +14,31 @@ a:hover{
 }
 
 .ta-c{
-	text-align: center !important;
+	text-align: center;
 }
 .ta-r{
-	text-align: right !important;
+	text-align: right;
 }
 
 .pos-r{
-	position: relative !important;
+	position: relative;
 }
 
 .c-red{
 	color: $red;
 }
 
+.mb-35{
+	margin-bottom: 35px;
+}
+.mb-15{
+	margin-bottom: 15px;
+}
+
 @media(min-width: 1201px){
 	.vw1201{
 		&-hide{
-			display: none !important;
+			display: none;
 		}
 	}
 }
@@ -39,7 +46,7 @@ a:hover{
 @media(max-width: 1200px){
 	.vw1200{
 		&-hide{
-			display: none !important;
+			display: none;
 		}
 	}
 }
@@ -47,7 +54,7 @@ a:hover{
 @media(min-width: 1001px){
 	.vw1001{
 		&-hide{
-			display: none !important;
+			display: none;
 		}
 	}
 }
@@ -55,21 +62,21 @@ a:hover{
 @media(max-width: 1000px){
 	.vw1000{
 		&-hide{
-			display: none !important;
+			display: none;
 		}
 		&-pad-x-0{
-			padding-left: 0 !important;
-			padding-right: 0 !important;
+			padding-left: 0;
+			padding-right: 0;
 		}
 		&-pad-y-0{
-			padding-top: 0 !important;
-			padding-bottom: 0 !important;
+			padding-top: 0;
+			padding-bottom: 0;
 		}
 		&-m-0{
-			margin: 0 !important;
+			margin: 0;
 		}
 		&-mb-35{
-			margin-bottom: 35px !important;
+			margin-bottom: 35px;
 		}
 	}
 }
@@ -77,7 +84,7 @@ a:hover{
 @media(min-width: 701px){
 	.vw701{
 		&-hide{
-			display: none !important;
+			display: none;
 		}
 	}
 }
@@ -85,7 +92,7 @@ a:hover{
 @media(max-width: 700px){
 	.vw700{
 		&-hide{
-			display: none !important;
+			display: none;
 		}
 	}
 }
