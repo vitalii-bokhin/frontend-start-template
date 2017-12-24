@@ -134,14 +134,21 @@
 	</div>
 
 	<div class="row">
-		<div class="col-6">
+		<div class="col-4">
 			<div class="form__field">
 				<label for="i-email" class="overlabel">E-mail</label>
-				<input id="i-email" type="text" data-type="email" data-required="true" class="form__text-input" value="">
+				<input id="i-email" type="text" data-type="email" class="form__text-input" value="">
 				<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
 			</div>
 		</div>
-		<div class="col-6">
+		<div class="col-4">
+			<div class="form__field">
+				<label for="i-emai-2" class="overlabel">E-mail</label>
+				<input id="i-emai-2" type="text" data-type="email" data-required="true" class="form__text-input" value="">
+				<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
+			</div>
+		</div>
+		<div class="col-4">
 			<div class="form__field">
 				<label for="i-date" class="overlabel">Дата</label>
 				<input id="i-date" type="text" data-type="date" data-required="true" class="form__text-input form__text-input_date" value="">
@@ -209,7 +216,7 @@
 
 			<div id="f1" class="form__field form__field_hidden">
 				<label for="i-txt-33" class="overlabel">Поле1</label>
-				<input id="i-txt-33" type="text" class="form__text-input" value="">
+				<input id="i-txt-33" type="text" data-required="true" class="form__text-input" value="">
 			</div>
 
 			<div id="f2" class="form__field form__field_hidden">
@@ -222,9 +229,12 @@
 
 	<div class="row">
 		<div class="col">
+			<div class="form__txt">
+				Select fieldset
+			</div>
 			<div class="form__field">
 				<div class="form__select">
-				<button type="button" class="form__select-button">Выбор</button>
+				<button type="button" class="form__select-button">Выбор 1</button>
 					<ul class="form__select-options">
 						<li><button type="button" class="form__select-val" data-show-hidden="#fs1" data-value="v1">Выбор 1</button></li>
 						<li><button type="button" class="form__select-val" data-show-hidden="#fs2" data-value="v2">Выбор 2</button></li>
@@ -259,7 +269,7 @@
 				<div class="col-4">
 					<div id="f1" class="form__field">
 						<label for="i-txt-333" class="overlabel">Поле</label>
-						<input id="i-txt-333" type="text" class="form__text-input" value="">
+						<input id="i-txt-333" type="text" data-required="true" class="form__text-input" value="">
 					</div>
 				</div>
 				<div class="col-8">
