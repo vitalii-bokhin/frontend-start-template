@@ -38,8 +38,8 @@ function hideLabel (field_id, hide) {
 	for (var i = 0; i < labels.length; i++) {
 		field_for = labels[i].htmlFor || labels[i].getAttribute('for');
 		if (field_for == field_id) {
-			labels[i].style.textIndent = (hide) ? '-4000px' : '0px';
-			labels[i].style.border = (hide) ? 'none' : '';
+			labels[i].style.textIndent = (hide) ? '-4000px' : '0';
+			labels[i].style.paddingRight = (hide) ? '0' : '';
 			return true;
 		}
 	}
