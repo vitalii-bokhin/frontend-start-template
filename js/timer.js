@@ -2,6 +2,20 @@ var Timer = {
 	min: 0,
 	sec: 0,
 	timer: null,
+	init: function(val) {
+		this.min = val[0];
+		this.sec = val[1];
+		
+		if (document.cookie) {
+			console.log('c-'+ document.cookie);
+		} else {
+			console.log(Date.now());
+			//document.cookie = 'lastTimer='+ Date.now();
+			console.log('sc');
+		}
+
+		this.start();
+	},
 	walk: function() {
 		var _ = this;
 		_.timer = setInterval(function() {
@@ -11,17 +25,19 @@ var Timer = {
 			} else {
 				_.sec--;
 			}
+
+			if (_.min == 0 && _.sec == 0) {
+				_.stop();
+			}
+
 			_.output();
 		}, 1000);
 	},
-	start: function(val) {
-		this.min = val[0];
-		this.sec = val[1];
+	start: function() {
 		this.walk();
 	},
 	stop: function() {
 		this.timer = clearInterval();
-
 	},
 	output: function() {
 		var _ = this, 
@@ -48,11 +64,11 @@ var Timer = {
 		
 		output = [_.min, minTxt, sec, secTxt].join(' '); 
 		
-		console.log(output);
+		$('#timer').html(output);
 	}
 };
 
 
 $(document).ready(function() {
-	Timer.start([5,0]);
+	Timer.init([5,0]);
 });
