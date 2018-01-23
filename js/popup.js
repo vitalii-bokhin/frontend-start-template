@@ -90,7 +90,7 @@ var Popup = {
 			Img.css('visibility', 'visible').attr('src', '');
 			Iframe.css('visibility', 'hidden').attr('src', '#');
 			BtnPlay.css('visibility', 'hidden');
-		};
+		}
 
 	},
 	next: function(dir) {

@@ -39,6 +39,7 @@ function hideLabel (field_id, hide) {
 		field_for = labels[i].htmlFor || labels[i].getAttribute('for');
 		if (field_for == field_id) {
 			labels[i].style.textIndent = (hide) ? '-4000px' : '0';
+			labels[i].style.paddingLeft = (hide) ? '0' : '';
 			labels[i].style.paddingRight = (hide) ? '0' : '';
 			return true;
 		}
@@ -209,8 +210,6 @@ var Select = {
 
 				var inpVal = inputValue,
 				reg = new RegExp(inpVal, 'gi');
-
-				console.log(reg);
 
 				_._options.find('.form__select-val').each(function() {
 

@@ -131,11 +131,11 @@
 
  	_.init(id,values,set);
  	
- }
+ };
 
  var diagramObject = [];
  function diagram(id,values,set) {
  	if (!(diagramObject[id] instanceof Diagram)) {
  		diagramObject[id] = new Diagram(id,values,set);
  	}
- }
+ };
