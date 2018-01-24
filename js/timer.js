@@ -1,55 +1,87 @@
 var Timer = {
 	min: 0,
 	sec: 0,
-	timer: null,
-	init: function(val) {
-		this.min = val[0];
-		this.sec = val[1];
+	Interval: null,
+	onStop: null,
+	init: function(initVal, onStop) {
+
+		this.onStop = onStop || null;
 		
-		if (document.cookie) {
-			console.log('c-'+ document.cookie);
-		} else {
-			console.log(Date.now());
-			//document.cookie = 'lastTimer='+ Date.now();
-			console.log('sc');
+		function setCookies() {
+			var date = new Date(Date.now() + 86400000);
+			document.cookie = 'lastTimer='+ Date.now() +'; expires='+ date.toUTCString();
 		}
+
+		function getCookies() {
+			var val;
+			if (document.cookie) {
+				var cokArr = document.cookie.replace(/(\s)+/g, '').split(';');
+				for (var i = 0; i < cokArr.length; i++) {
+					var keyVal = cokArr[i].split('=');
+					if (keyVal[0] == 'lastTimer') {
+						val = keyVal[1];
+					}
+				}
+			}
+			return val || undefined;
+		}
+
+		var cokValue = getCookies();
+
+		if (cokValue) {
+			var delta = Math.round((Date.now()-cokValue)/1000);
+			if (delta < initVal) {
+				initVal = initVal-delta;
+			} else {
+				setCookies();
+			}
+		} else {
+			setCookies();
+		}
+
+		this.min = (initVal > 60) ? Math.floor(initVal/60) : 0;
+		this.sec = (initVal > 60) ? Math.round(initVal%60) : initVal;
 
 		this.start();
 	},
-	walk: function() {
+	counter: function() {
 		var _ = this;
-		_.timer = setInterval(function() {
+		_.Interval = setInterval(function() {
 			if (_.sec == 0) {
-				_.sec = 59;
-				_.min--;
+				if (_.min == 0) {
+					_.stop();
+				} else {
+					_.sec = 59;
+					_.min--;
+				}
 			} else {
 				_.sec--;
 			}
-
-			if (_.min == 0 && _.sec == 0) {
-				_.stop();
-			}
-
 			_.output();
 		}, 1000);
 	},
 	start: function() {
-		this.walk();
+		this.counter();
 	},
 	stop: function() {
-		this.timer = clearInterval();
+		clearInterval(this.Interval);
+		if (this.onStop) {
+			this.onStop();
+		}
 	},
 	output: function() {
 		var _ = this, 
-		minTxt  = 'минуты',
-		secTxt = 'секунды',
+		minO  = '',
+		secTxt = 'секунд',
 		sec,
 		output;
 
-		if (_.min == 1) {
-			minTxt = 'минуту';
-		} else if (_.min < 5) {
-			minTxt = 'минуты';
+		if (_.min != 0) {
+			if (_.min == 1) {
+				minO = _.min +' минуту';
+			} else if (_.min < 5) {
+				minO = _.min +' минуты';
+			}
 		}
 
 		if (_.sec == 1 || _.sec == 21) {
@@ -62,13 +94,15 @@ var Timer = {
 
 		sec = (_.sec < 10) ? '0'+ _.sec : _.sec;
 		
-		output = [_.min, minTxt, sec, secTxt].join(' '); 
+		output = [minO, sec, secTxt].join(' '); 
 		
-		$('#timer').html(output);
+		var el = document.getElementById('timer');
+		el.innerHTML = output;
 	}
 };
 
 
-$(document).ready(function() {
-	Timer.init([5,0]);
+
+Timer.init(3, function() {
+	window.location.href = '#';
 });
