@@ -136,9 +136,6 @@
 }
 
 .col{
-	width: 100%;
-	float: none !important;
-	clear: both;
 	&-0-1{
 		width: 4.166665%;
 	}
@@ -208,6 +205,11 @@
 	&-11-12{
 		width: 95.833295%;
 	}
+	&, &-12{
+		width: 100%;
+		float: none !important;
+		clear: both;
+	}
 
 	&-right{
 		float: right !important;
@@ -274,9 +276,6 @@
 			}
 		}
 		&-col{
-			width: 100%;
-			float: none !important;
-			clear: both;
 			&-0-1{
 				width: 4.166665%;
 			}
@@ -345,6 +344,11 @@
 			}
 			&-11-12{
 				width: 95.833295%;
+			}
+			&, &-12{
+				width: 100%;
+				float: none !important;
+				clear: both;
 			}
 			&-offset-0{
 				margin-left: 0;
@@ -372,9 +376,6 @@
 			}
 		}
 		&-col{
-			width: 100%;
-			float: none !important;
-			clear: both;
 			&-0-1{
 				width: 4.166665%;
 			}
@@ -443,6 +444,11 @@
 			}
 			&-11-12{
 				width: 95.833295%;
+			}
+			&, &-12{
+				width: 100%;
+				float: none !important;
+				clear: both;
 			}
 			&-offset-0{
 				margin-left: 0;
