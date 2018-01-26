@@ -1,3 +1,5 @@
+var setTextareaHeight;
+
 //label
 function initOverLabels () {
 	if (!document.getElementById) return; 
@@ -151,7 +153,6 @@ var Select = {
 		if (_._el.attr('data-show-hidden')) {
 			var opt = _._el.attr('data-show-hidden'),
 			_$ = $(opt);
-			console.log(_$);
 
 			if (_$.hasClass('form__field')) {
 				_$.closest('.form__field-wrap').find('.form__field').addClass('form__field_hidden');
@@ -160,7 +161,6 @@ var Select = {
 				_$.closest('.form__fieldset-wrap').find('.form__fieldset').addClass('form__fieldset_hidden');
 				_$.removeClass('form__fieldset_hidden');
 			}
-			
 		}
 
 		if (_srcInput.hasClass('form__textarea_var-h')) {
@@ -449,30 +449,58 @@ var Form = {
 
 		_form.find('.form__chbox-input').each(function() {
 			var _inp = $(this),
-			_chbox = _inp.closest('.form__chbox');
-			if(_inp.attr('data-required') && !_inp.prop('checked')){
-				_chbox.addClass('form__chbox_error');
-				err++;
-			} else {
-				_chbox.removeClass('form__chbox_error');
+			_chbox = _inp.closest('.form__chbox'),
+			hidden = _inp.closest('.form__field_hidden, .form__fieldset_hidden');
+			if (!hidden.length) {
+				if(_inp.attr('data-required') && !_inp.prop('checked')){
+					_chbox.addClass('form__chbox_error');
+					err++;
+				} else {
+					_chbox.removeClass('form__chbox_error');
+				}
 			}
+			
 		});
 
 		_form.find('.form__chbox-group').each(function() {
 			var i = 0,
-			_g = $(this);
+			_g = $(this),
+			hidden = _g.closest('.form__field_hidden, .form__fieldset_hidden');
 
-			_g.find('.form__chbox-input').each(function() {
-				if ($(this).prop('checked')) {
-					i++;
+			if (!hidden.length) {
+				_g.find('.form__chbox-input').each(function() {
+					if ($(this).prop('checked')) {
+						i++;
+					}
+				});
+
+				if (i < _g.attr('data-min')) {
+					_g.addClass('form__chbox-group_error');
+					err++;
+				} else {
+					_g.removeClass('form__chbox-group_error');
 				}
-			});
-			
-			if (i < _g.attr('data-min')) {
-				_g.addClass('form__chbox-group_error');
-				err++;
-			} else {
-				_g.removeClass('form__chbox-group_error');
+			}
+		});
+
+		_form.find('.form__radio-group').each(function() {
+			var e = true,
+			_g = $(this),
+			hidden = _g.closest('.form__field_hidden, .form__fieldset_hidden');
+
+			if (!hidden.length) {
+				_g.find('.form__radio-input').each(function() {
+					if ($(this).prop('checked')) {
+						e = false;
+					}
+				});
+
+				if (e) {
+					_g.addClass('form__radio-group_error');
+					err++;
+				} else {
+					_g.removeClass('form__radio-group_error');
+				}
 			}
 		});
 
@@ -508,6 +536,11 @@ var Form = {
 
 		return !err;
 	},
+	step: function(el, fun) {
+		if (this.validate(el)) {
+			fun();
+		}
+	},
 	submit: function(el, form) {
 		var _ = this;
 		$('body').on('change', '.form__file-input', function(e) {
@@ -532,6 +565,19 @@ $(document).ready(function() {
 	$('.form__text-input[data-type="tel"]').mask('+7(999)999-99-99');
 	$('.form__text-input[data-type="date"]').mask('99.99.9999');
 
+	$('label').each(function(i) {
+		var _$ = $(this),
+		sibLabel = _$.siblings('label'),
+		Input = _$.siblings('input, textarea');
+
+		if (!_$.attr('for') && !Input.attr('id')) {
+			_$.attr('for', 'keylabel-'+ i);
+			sibLabel.attr('for', 'keylabel-'+ i);
+			Input.attr('id', 'keylabel-'+ i);
+		}
+
+	});
+
 	initOverLabels();
 
 	$('body').on('click', '.form__select-button', function() { 
@@ -544,6 +590,48 @@ $(document).ready(function() {
 
 	$('body').on('click', '.form__select-val', function() { 
 		Select.select(this);
+	});
+
+	$('body').on('change', '.form__chbox-input', function() { 
+		var _$ = $(this);
+		if (_$.attr('data-show-hidden')) {
+			var Field = $(_$.attr('data-show-hidden'));
+			if (_$.prop('checked')) {
+				Field.removeClass('form__field_hidden');
+			} else {
+				Field.addClass('form__field_hidden');
+			}
+		}
+	});
+
+	$('body').on('change', '.form__radio-input', function() {
+		var _$ = $(this),
+		name = _$.attr('name');
+		$('.form__radio-input[name="'+ name +'"]').each(function() {
+			var _$ = $(this);
+			if (_$.attr('data-show-hidden')) {
+				var Field = $(_$.attr('data-show-hidden'));
+				if (_$.prop('checked')) {
+					Field.removeClass('form__field_hidden');
+				} else {
+					Field.addClass('form__field_hidden');
+				}
+			}
+		});
+	});
+
+	$('body').on('click', '.form__button', function() {
+		var _$ = $(this);
+		if (_$.attr('data-next-step')) {
+			var El = $(_$.attr('data-next-step')),
+			curEl = '#'+ El.closest('.form__fieldset-wrap').find('.form__fieldset:not(.form__fieldset_hidden)').attr('id');
+
+			Form.step(curEl, function() {
+				El.closest('.form__fieldset-wrap').find('.form__fieldset').addClass('form__fieldset_hidden');
+				El.removeClass('form__fieldset_hidden');
+			});
+
+		}
 	});
 
 	$(document).on('click', 'body', function(e) {
@@ -562,13 +650,13 @@ $(document).ready(function() {
 
 	});
 
-	function setTextareaHeight(_$) {
+	setTextareaHeight = function (_$) {
 		var val = _$.val(),
 		Shape = _$.parent().find('.form__textarea-shape');
 
 		Shape.html(val);
 
-		_$.css('height', Shape.height());
+		_$.css('height', Shape.innerHeight());
 	}
 
 	$('body').on('keyup', '.form__textarea_var-h', function() {

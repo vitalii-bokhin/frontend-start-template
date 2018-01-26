@@ -2,11 +2,8 @@
 	display: inline-block;
 	font-size: 14px;
 	font-weight: 500;
-	width: 100%;
-	max-width: 251px;
-	height: 52px;
-	line-height: 52px;
-	//padding: 19px 20px 17px;
+	letter-spacing: 1px;
+	padding: 16px 28px 14px;
 	text-align: center;
 	color: #FFF;
 	border: 1px solid #fff;
@@ -23,6 +20,10 @@
 			margin-left: 5px;
 		}
 	}
+	&_red{
+		border: 1px solid $red;
+		background: $red;
+	}
 	&_blue{
 		border: 1px solid $blue;
 		background: $blue;
@@ -34,20 +35,15 @@
 	&_shadow{
 		position: relative;
 	}
-	&:hover{
-		opacity: .6;
-	}
-	&_hov-blue:hover{
-		opacity: 1;
-		border: 1px solid $blue;
-		background: $blue;
-	}
 
 	&_w230{
-		max-width: 230px;
+		width: 230px;
 	}
 	&_w330{
-		max-width: 330px;
+		width: 330px;
+	}
+	&_w-full{
+		width: 100%;
 	}
 	
 	&_blue-bord{
@@ -75,9 +71,18 @@
 	&.lock{
 		display: none;
 	}
+
+	&:hover{
+		opacity: .6;
+	}
+	&_hov-blue:hover{
+		opacity: 1;
+		border: 1px solid $blue;
+		background: $blue;
+	}
 	
 	@media(max-width: 700px){
-		max-width: none !important;
+		width: 100%;
 	}
 }
 

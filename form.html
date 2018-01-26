@@ -17,7 +17,9 @@
 <header class="header">
 	<div class="row-col-mid wrap header__wrap">
 		<div class="header__logo col-3">
-			<a href="index.html"><img src="images/dealersair.svg" alt="logo"></a>
+			<div class="mid-image-wrap">
+				<a href="index.html"><img src="images/dealersair.svg" alt="logo" class="mid-image"></a>
+			</div>
 		</div>
 		<div class="col-9">
 			<div class="header__right">
@@ -76,10 +78,10 @@
 
 	<div class="form__field">
 		<div class="form__file">
-			<label for="upl-file" class="form__file-image"></label>
-			<label for="upl-file" class="form__file-btn">загрузить фото</label>
+			<label class="form__file-image"></label>
+			<label class="form__file-btn">загрузить фото</label>
 			<button type="button" class="form__file-btn form__file-btn_delete">удалить фото</button>
-			<input id="upl-file" type="file" class="form__file-input" name="">
+			<input type="file" class="form__file-input" name="">
 		</div>
 		<div class="form__error-tip">Загрузите изображение</div>
 	</div>
@@ -87,8 +89,8 @@
 	<div class="row">
 		<div class="col-6">
 			<div class="form__field">
-				<label for="i-txt-1" class="overlabel">+7(999)999-99-99</label>
-				<input id="i-txt-1" type="text" data-type="tel" data-required="true" class="form__text-input form__text-input_tel" value="">
+				<label class="overlabel">+7(999)999-99-99</label>
+				<input type="text" data-type="tel" data-required="true" class="form__text-input form__text-input_tel" value="">
 				<div class="form__error-tip">Заполните поле</div>
 			</div>
 		</div>
@@ -267,15 +269,101 @@
 		<div id="fs2" class="form__fieldset form__fieldset_hidden">
 			<div class="row">
 				<div class="col-4">
-					<div id="f1" class="form__field">
+					<div class="form__field">
 						<label for="i-txt-333" class="overlabel">Поле</label>
 						<input id="i-txt-333" type="text" data-required="true" class="form__text-input" value="">
 					</div>
 				</div>
 				<div class="col-8">
-					<div id="f1" class="form__field">
+					<div class="form__field">
 						<label for="i-txt-334" class="overlabel">Поле</label>
 						<input id="i-txt-334" type="text" class="form__text-input" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<div class="form__txt">
+				Form steps
+			</div>
+		</div>
+	</div>
+
+	<div class="form__fieldset-wrap">
+
+		<div id="step-fs1" class="form__fieldset">
+			<div class="row">
+				<div class="col">
+					<div class="form__txt">
+						Step 1
+					</div>
+				</div>
+			</div>
+			<div class="row form__radio-group">
+				<div class="col-6">
+					<div class="form__radio">
+						<input type="radio" name="rad-fs-1" class="form__radio-input">
+						<label class="form__radio-label">Выбор 1</label>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form__radio">
+						<input type="radio" name="rad-fs-1" class="form__radio-input">
+						<label class="form__radio-label">Выбор 2</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs2">Step 2</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="step-fs2" class="form__fieldset form__fieldset_hidden">
+			<div class="row">
+				<div class="col">
+					<div class="form__txt">
+						Step 2
+					</div>
+				</div>
+			</div>
+			<div class="row form__radio-group">
+				<div class="col-6">
+					<div class="form__radio">
+						<input type="radio" name="rad-fs-2" class="form__radio-input">
+						<label class="form__radio-label">Выбор 1</label>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form__radio">
+						<input type="radio" name="rad-fs-2" class="form__radio-input">
+						<label class="form__radio-label">Выбор 2</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs3">Step 3</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="step-fs3" class="form__fieldset form__fieldset_hidden">
+			<div class="row">
+				<div class="col">
+					<div class="form__txt">
+						Step 3
+					</div>
+				</div>
+				<div class="col">
+					<div class="form__field">
+						<label class="overlabel">Поле</label>
+						<input type="text" class="form__text-input" data-required="true" value="">
 					</div>
 				</div>
 			</div>
@@ -342,6 +430,9 @@
 	</div>
 	
 	<div class="row">
+		<div class="col">
+			<div class="form__txt">Чекбоксы:</div>
+		</div>
 		<div class="col-6">
 			<div class="form__chbox">
 				<input id="chb-1" type="checkbox" data-required="true" class="form__chbox-input">
@@ -350,14 +441,29 @@
 		</div>
 		<div class="col-6">
 			<div class="form__chbox">
-				<input id="chb-2" type="checkbox" class="form__chbox-input">
-				<label for="chb-2" class="form__chbox-label">Выбор 2</label>
+				<input type="checkbox" class="form__chbox-input">
+				<label class="form__chbox-label">Выбор 2</label>
 			</div>
 		</div>
-
+		<div class="col">
+			<div class="form__chbox">
+				<input type="checkbox" data-show-hidden="#field-another-2" class="form__chbox-input">
+				<label class="form__chbox-label">Ваш вариант</label>
+			</div>
+		</div>
+		<div class="col">
+			<div id="field-another-2" class="form__field form__field_hidden">
+				<label class="overlabel">Ваш вариант</label>
+				<input type="text" class="form__text-input" data-required="true" value="">
+				<div class="form__error-tip">Введите свой вариант</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="row form__chbox-group" data-min="1">
+		<div class="col">
+			<div class="form__txt">Группа чекбоксов(валидация):</div>
+		</div>
 		<div class="col-3">
 			<div class="form__chbox">
 				<input id="chb-3" type="checkbox" class="form__chbox-input">
@@ -384,10 +490,10 @@
 		</div>
 	</div>
 
-	
-
 	<div class="row">
-
+		<div class="col">
+			<div class="form__txt">Чекбокс:</div>
+		</div>
 		<div class="col">
 			<div class="form__chbox">
 				<input id="chb-7" type="checkbox" class="form__chbox-input">
@@ -397,6 +503,9 @@
 				</label>
 			</div>
 		</div>
+	</div>
+
+	<div class="row">
 
 		<div class="col">
 			<div class="form__txt">Радио кнопки:</div>
@@ -404,14 +513,46 @@
 
 		<div class="col-6">
 			<div class="form__radio">
-				<input id="rad-1-1" type="radio" name="rad-1" class="form__radio-input" checked>
-				<label for="rad-1-1" class="form__radio-label">Выбор 1</label>
+				<input type="radio" name="rad-1" class="form__radio-input" checked>
+				<label class="form__radio-label">Выбор 1</label>
 			</div>
 		</div>
 		<div class="col-6">
 			<div class="form__radio">
-				<input id="rad-1-2" type="radio" name="rad-1" class="form__radio-input">
-				<label for="rad-1-2" class="form__radio-label">Выбор 2</label>
+				<input type="radio" name="rad-1" class="form__radio-input">
+				<label class="form__radio-label">Выбор 2</label>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form__radio">
+				<input type="radio" name="rad-1" data-show-hidden="#field-another" class="form__radio-input">
+				<label class="form__radio-label">Другое</label>
+			</div>
+		</div>
+		<div class="col">
+			<div id="field-another" class="form__field form__field_hidden">
+				<label class="overlabel">Ваш вариант</label>
+				<input type="text" class="form__text-input" data-required="true" value="">
+				<div class="form__error-tip">Введите свой вариант</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row form__radio-group">
+		<div class="col">
+			<div class="form__txt">Группа Радио кнопок (валидация):</div>
+		</div>
+
+		<div class="col-6">
+			<div class="form__radio">
+				<input type="radio" name="rad-2" class="form__radio-input">
+				<label class="form__radio-label">Выбор 1</label>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="form__radio">
+				<input type="radio" name="rad-2" class="form__radio-input">
+				<label class="form__radio-label">Выбор 2</label>
 			</div>
 		</div>
 	</div>
@@ -451,8 +592,8 @@
 			<div class="form__txt">Текстовое поле с резиновой высотой:</div>
 			
 			<div class="form__field">
-				<label for="area-2" class="overlabel">Текстовое поле</label>
 				<textarea id="area-2" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+				<label for="area-2" class="overlabel">Текстовое поле</label>
 				<div class="form__error-tip">Заполните поле</div>
 			</div>
 
@@ -465,8 +606,8 @@
 			
 			<div class="form__field">
 				<div class="form__textarea_var-h-wrap">
-					<label for="area-3" class="overlabel">Текстовое поле</label>
 					<textarea id="area-3" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+					<label for="area-3" class="overlabel">Текстовое поле</label>
 				</div>
 				<div class="form__error-tip">Заполните поле</div>
 			</div>
@@ -483,8 +624,8 @@
 			<div class="form__field">
 				<div class="form__select form__select_autocomplete">
 					<div class="form__textarea_var-h-wrap">
-						<label for="area-4" class="overlabel">Начинайте вводить</label>
-						<textarea id="area-4" class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
+						<textarea class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
+						<label class="overlabel">Начинайте вводить</label>
 					</div>
 					<ul class="form__select-options">
 						<li><button type="button" class="form__select-val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
@@ -499,7 +640,7 @@
 
 	<div class="row">
 		<div class="col">
-			<button type="submit" class="form__submit">Отправить</button>
+			<button type="submit" class="form__button button button_red">Submit</button>
 		</div>
 	</div>
 	
