@@ -45,10 +45,21 @@ $(document).ready(function() {
 			tId(1);
 			tCl(1);
 			_.addClass('toggled');
+			var secTxt = _.attr('data-second-button-text');
+			if (secTxt) {
+				if (!_.attr('data-first-button-text')) {
+					_.attr('data-first-button-text', _.html());
+				}
+				_.html(secTxt);
+			}
 		} else {
 			tId(0);
 			tCl(0);
 			_.removeClass('toggled');
+			var fstTxt = _.attr('data-first-button-text');
+			if (fstTxt) {
+				_.html(fstTxt);
+			}
 		}
 
 		return false;
