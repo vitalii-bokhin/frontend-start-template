@@ -259,7 +259,7 @@ var Select = {
 		} else {
 			_.change(0);
 		}
-	},
+	}
 };
 
 
@@ -541,21 +541,34 @@ var Form = {
 			fun();
 		}
 	},
+	submitButton: function(f, st) {
+		var Form = $(f),
+		Button = Form.find('button[type="submit"], input[type="submit"]');
+		if (st) {
+			Button.prop('disabled', false).removeClass('form__button_loading');
+		} else {
+			Button.prop('disabled', true).addClass('form__button_loading');
+		}
+	},
 	submit: function(el, form) {
 		var _ = this;
 		$('body').on('change', '.form__file-input', function(e) {
-			_.file(this,e);
+			_.file(this, e);
 		});
 		$('body').on('keyup', '.form__text-input', function() {
 			_.keyup(this);
 		});
 		$('body').on('submit', el, function() {
-			if (_.validate(this)) {
-				form(this);
+			var f = this;
+			if (_.validate(f)) {
+				_.submitButton(f, false);
+				form(f, function(ret) {
+					_.submitButton(f, ret);
+				});
 			}
 			return false;
 		});
-	},
+	}
 };
 
 
@@ -664,9 +677,11 @@ $(document).ready(function() {
 	});
 
 
-	Form.submit('.form', function(form) {
+	Form.submit('#form1', function(form, callback) {
 		var _f = $(form);
-		Popup.message('#message-popup', 'Форма отправлена');
+		Popup.message('#message-popup', 'Форма отправлена', function() {
+			callback(true);
+		});
 		/*$.ajax({
 			url: _f.attr('action'),
 			type:"POST",
@@ -679,7 +694,14 @@ $(document).ready(function() {
 				alert('Send Error');
 			}
 		});*/
+		
+	});
 
+	Form.submit('#form2', function(form, callback) {
+		var _f = $(form);
+		Popup.message('#message-popup', 'Форма отправлена', function() {
+			callback(true);
+		});
 	});
 
 

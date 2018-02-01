@@ -74,584 +74,609 @@
 
 <div class="container">
 
-<form action="send.php" method="POST" class="form">
+	<form id="form1" action="send.php" method="POST" class="form">
 
-	<div class="form__field">
-		<div class="form__file">
-			<label class="form__file-image"></label>
-			<label class="form__file-btn">загрузить фото</label>
-			<button type="button" class="form__file-btn form__file-btn_delete">удалить фото</button>
-			<input type="file" class="form__file-input" name="">
+		<div class="form__field">
+			<div class="form__file">
+				<label class="form__file-image"></label>
+				<label class="form__file-btn">загрузить фото</label>
+				<button type="button" class="form__file-btn form__file-btn_delete">удалить фото</button>
+				<input type="file" class="form__file-input" name="">
+			</div>
+			<div class="form__error-tip">Загрузите изображение</div>
 		</div>
-		<div class="form__error-tip">Загрузите изображение</div>
-	</div>
 
-	<div class="row">
-		<div class="col-6">
-			<div class="form__field">
-				<label class="overlabel">+7(999)999-99-99</label>
-				<input type="text" data-type="tel" data-required="true" class="form__text-input form__text-input_tel" value="">
-				<div class="form__error-tip">Заполните поле</div>
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">+7(999)999-99-99</label>
+					<input type="text" data-type="tel" data-required="true" class="form__text-input form__text-input_tel" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
 			</div>
-		</div>
-		<div class="col-6">
-			<div class="form__field form__field_btn">
-				<label for="i-txt-2" class="overlabel">Поле</label>
-				<input id="i-txt-2" type="text" class="form__text-input" value="">
-				<button class="form__btn form__btn_search"></button>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-txt-3" class="overlabel">Поле</label>
-				<input id="i-txt-3" type="text" class="form__text-input" value="">
-			</div>
-		</div>
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-txt-4" class="overlabel">Поле</label>
-				<input id="i-txt-4" type="text" class="form__text-input" value="">
-			</div>
-		</div>
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-txt-5" class="overlabel">Поле</label>
-				<input id="i-txt-5" type="text" data-required="true" class="form__text-input" value="">
-				<div class="form__error-tip">Заполните поле</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<div class="form__field">
-				<label for="area-1" class="overlabel">Текстовое поле</label>
-				<textarea id="area-1" data-required="true" class="form__textarea"></textarea>
-				<div class="form__error-tip">Заполните поле</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-email" class="overlabel">E-mail</label>
-				<input id="i-email" type="text" data-type="email" class="form__text-input" value="">
-				<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
-			</div>
-		</div>
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-emai-2" class="overlabel">E-mail</label>
-				<input id="i-emai-2" type="text" data-type="email" data-required="true" class="form__text-input" value="">
-				<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
-			</div>
-		</div>
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-date" class="overlabel">Дата</label>
-				<input id="i-date" type="text" data-type="date" data-required="true" class="form__text-input form__text-input_date" value="">
-				<div class="form__error-tip">Введите дату</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-4">
-			<div class="form__field">
-				<div class="form__select">
-				<button type="button" class="form__select-button">Выбор</button>
-					<ul class="form__select-options">
-						<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
-						<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
+			<div class="col-6">
+				<div class="form__field form__field_btn">
+					<label for="i-txt-2" class="overlabel">Поле</label>
+					<input id="i-txt-2" type="text" class="form__text-input" value="">
+					<button class="form__btn form__btn_search"></button>
 				</div>
 			</div>
 		</div>
-		<div class="col-4">
-			<div class="form__field">
-				<div class="form__select">
-					<button type="button" class="form__select-button">Выбор</button>
-					<ul class="form__select-options">
-						<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
-						<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
-					</ul>
-					<input type="hidden" class="form__select-input" data-required="true" value="">
+
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-txt-3" class="overlabel">Поле</label>
+					<input id="i-txt-3" type="text" class="form__text-input" value="">
 				</div>
-				<div class="form__error-tip">Сделайте выбор</div>
 			</div>
-		</div>
-		<div class="col-4">
-			<div class="form__field">
-				<div class="form__select form__select_multiple">
-				<button type="button" class="form__select-button">Множественный выбор</button>
-					<ul class="form__select-options">
-						<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
-						<li><button type="button" class="form__select-val" data-value="v2">Выбор выбор выбор 2</button></li>
-						<li><button type="button" class="form__select-val" data-value="v3">Выбор 3</button></li>
-						<li><button type="button" class="form__select-val" data-value="v4">Выбор 4</button></li>
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-txt-4" class="overlabel">Поле</label>
+					<input id="i-txt-4" type="text" class="form__text-input" value="">
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-txt-5" class="overlabel">Поле</label>
+					<input id="i-txt-5" type="text" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row">
-		<div class="col-4">
-			<div class="form__field">
-				<div class="form__select">
-				<button type="button" class="form__select-button">Выбор</button>
-					<ul class="form__select-options">
-						<li><button type="button" class="form__select-val" data-show-hidden="#f1" data-value="v1">Выбор 1</button></li>
-						<li><button type="button" class="form__select-val" data-show-hidden="#f2" data-value="v2">Выбор 2</button></li>
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
+		<div class="row">
+			<div class="col">
+				<div class="form__field">
+					<label for="area-1" class="overlabel">Текстовое поле</label>
+					<textarea id="area-1" data-required="true" class="form__textarea"></textarea>
+					<div class="form__error-tip">Заполните поле</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-4 form__field-wrap"> 
 
-			<div id="f1" class="form__field form__field_hidden">
-				<label for="i-txt-33" class="overlabel">Поле1</label>
-				<input id="i-txt-33" type="text" data-required="true" class="form__text-input" value="">
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-email" class="overlabel">E-mail</label>
+					<input id="i-email" type="text" data-type="email" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
+				</div>
 			</div>
-
-			<div id="f2" class="form__field form__field_hidden">
-				<label for="i-txt-3333" class="overlabel">Поле2</label>
-				<input id="i-txt-3333" type="text" class="form__text-input" value="">
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-emai-2" class="overlabel">E-mail</label>
+					<input id="i-emai-2" type="text" data-type="email" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
+				</div>
 			</div>
-
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">
-				Select fieldset
-			</div>
-			<div class="form__field">
-				<div class="form__select">
-				<button type="button" class="form__select-button">Выбор 1</button>
-					<ul class="form__select-options">
-						<li><button type="button" class="form__select-val" data-show-hidden="#fs1" data-value="v1">Выбор 1</button></li>
-						<li><button type="button" class="form__select-val" data-show-hidden="#fs2" data-value="v2">Выбор 2</button></li>
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-date" class="overlabel">Дата</label>
+					<input id="i-date" type="text" data-type="date" data-required="true" class="form__text-input form__text-input_date" value="">
+					<div class="form__error-tip">Введите дату</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="form__fieldset-wrap">
-
-		<div id="fs1" class="form__fieldset">
-			<div class="row">
-				<div class="col-6">
-					<div class="form__field">
-						<label for="i-txt-331" class="overlabel">Поле</label>
-						<input id="i-txt-331" type="text" class="form__text-input" value="">
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<div class="form__select">
+						<button type="button" class="form__select-button">Выбор</button>
+						<ul class="form__select-options">
+							<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
 					</div>
 				</div>
-				<div class="col-6">
-					<div class="form__field">
-						<label for="i-txt-332" class="overlabel">Поле</label>
-						<input id="i-txt-332" type="text" class="form__text-input" value="">
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<div class="form__select">
+						<button type="button" class="form__select-button">Выбор</button>
+						<ul class="form__select-options">
+							<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="form__select-input" data-required="true" value="">
+					</div>
+					<div class="form__error-tip">Сделайте выбор</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<div class="form__select form__select_multiple">
+						<button type="button" class="form__select-button">Множественный выбор</button>
+						<ul class="form__select-options">
+							<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="form__select-val" data-value="v2">Выбор выбор выбор 2</button></li>
+							<li><button type="button" class="form__select-val" data-value="v3">Выбор 3</button></li>
+							<li><button type="button" class="form__select-val" data-value="v4">Выбор 4</button></li>
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div id="fs2" class="form__fieldset form__fieldset_hidden">
-			<div class="row">
-				<div class="col-4">
-					<div class="form__field">
-						<label for="i-txt-333" class="overlabel">Поле</label>
-						<input id="i-txt-333" type="text" data-required="true" class="form__text-input" value="">
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<div class="form__select">
+						<button type="button" class="form__select-button">Выбор</button>
+						<ul class="form__select-options">
+							<li><button type="button" class="form__select-val" data-show-hidden="#f1" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="form__select-val" data-show-hidden="#f2" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
 					</div>
 				</div>
-				<div class="col-8">
-					<div class="form__field">
-						<label for="i-txt-334" class="overlabel">Поле</label>
-						<input id="i-txt-334" type="text" class="form__text-input" value="">
-					</div>
+			</div>
+			<div class="col-4 form__field-wrap"> 
+
+				<div id="f1" class="form__field form__field_hidden">
+					<label for="i-txt-33" class="overlabel">Поле1</label>
+					<input id="i-txt-33" type="text" data-required="true" class="form__text-input" value="">
 				</div>
+
+				<div id="f2" class="form__field form__field_hidden">
+					<label for="i-txt-3333" class="overlabel">Поле2</label>
+					<input id="i-txt-3333" type="text" class="form__text-input" value="">
+				</div>
+
 			</div>
 		</div>
 
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">
-				Form steps
-			</div>
-		</div>
-	</div>
-
-	<div class="form__fieldset-wrap">
-
-		<div id="step-fs1" class="form__fieldset">
-			<div class="row">
-				<div class="col">
-					<div class="form__txt">
-						Step 1
-					</div>
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">
+					Select fieldset
 				</div>
-			</div>
-			<div class="row form__radio-group">
-				<div class="col-6">
-					<div class="form__radio">
-						<input type="radio" name="rad-fs-1" class="form__radio-input">
-						<label class="form__radio-label">Выбор 1</label>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="form__radio">
-						<input type="radio" name="rad-fs-1" class="form__radio-input">
-						<label class="form__radio-label">Выбор 2</label>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs2">Step 2</button>
-				</div>
-			</div>
-		</div>
-
-		<div id="step-fs2" class="form__fieldset form__fieldset_hidden">
-			<div class="row">
-				<div class="col">
-					<div class="form__txt">
-						Step 2
-					</div>
-				</div>
-			</div>
-			<div class="row form__radio-group">
-				<div class="col-6">
-					<div class="form__radio">
-						<input type="radio" name="rad-fs-2" class="form__radio-input">
-						<label class="form__radio-label">Выбор 1</label>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="form__radio">
-						<input type="radio" name="rad-fs-2" class="form__radio-input">
-						<label class="form__radio-label">Выбор 2</label>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs3">Step 3</button>
-				</div>
-			</div>
-		</div>
-
-		<div id="step-fs3" class="form__fieldset form__fieldset_hidden">
-			<div class="row">
-				<div class="col">
-					<div class="form__txt">
-						Step 3
-					</div>
-				</div>
-				<div class="col">
-					<div class="form__field">
-						<label class="overlabel">Поле</label>
-						<input type="text" class="form__text-input" data-required="true" value="">
+				<div class="form__field">
+					<div class="form__select">
+						<button type="button" class="form__select-button">Выбор 1</button>
+						<ul class="form__select-options">
+							<li><button type="button" class="form__select-val" data-show-hidden="#fs1" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="form__select-val" data-show-hidden="#fs2" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
 					</div>
 				</div>
 			</div>
 		</div>
 
-	</div>
+		<div class="form__fieldset-wrap">
 
-
-
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">
-				Данные страны берутся из https://get.dealersair.com/api/geo/
-			</div>
-
-			<div class="form__field">
-				<div class="form__select">
-					<button type="button" class="form__select-button">Выберите страну</button>
-					<ul class="form__select-options form__select-options_countries">
-
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
+			<div id="fs1" class="form__fieldset">
+				<div class="row">
+					<div class="col-6">
+						<div class="form__field">
+							<label for="i-txt-331" class="overlabel">Поле</label>
+							<input id="i-txt-331" type="text" class="form__text-input" value="">
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form__field">
+							<label for="i-txt-332" class="overlabel">Поле</label>
+							<input id="i-txt-332" type="text" class="form__text-input" value="">
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<div class="form__field">
-				<div class="form__select form__select_autocomplete">
-					<label for="i-txt-6s" class="overlabel">Страна (начинайте вводить)</label>
-					<input id="i-txt-6s" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-by-name" value="">
-					<ul class="form__select-options form__select-options_countries">
-
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
+			<div id="fs2" class="form__fieldset form__fieldset_hidden">
+				<div class="row">
+					<div class="col-4">
+						<div class="form__field">
+							<label for="i-txt-333" class="overlabel">Поле</label>
+							<input id="i-txt-333" type="text" data-required="true" class="form__text-input" value="">
+						</div>
+					</div>
+					<div class="col-8">
+						<div class="form__field">
+							<label for="i-txt-334" class="overlabel">Поле</label>
+							<input id="i-txt-334" type="text" class="form__text-input" value="">
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<div class="form__field">
-				<div class="form__select form__select_autocomplete">
-					<label for="i-txt-65s" class="overlabel">Страна (начинайте вводить)</label>
-					<input id="i-txt-65s" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-with-highlight" value="">
-					<ul class="form__select-options form__select-options_countries2">
-						
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
-				</div>
-			</div>
+		</div>
 
-			<div class="form__field">
-				<div class="form__select form__select_autocomplete">
-					<label for="i-txt-6" class="overlabel">Улица город (начинайте вводить)</label>
-					<input id="i-txt-6" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-by-search-string" value="">
-					<ul class="form__select-options">
-						<li><button type="button" class="form__select-val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
-						<li><button type="button" class="form__select-val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
-						<li><button type="button" class="form__select-val" data-search="%львов%шевченка" data-value="v3">ул.Шевченка, г.Львов</button></li>
-						<li><button type="button" class="form__select-val" data-search="%шевченка%киев" data-value="v4">бульвар Шевченка, г.Киев</button></li>
-						<li><button type="button" class="form__select-val" data-search="%крещатик%киев" data-value="v5">ул.Крещатик, г.Киев</button></li>
-						<li><button type="button" class="form__select-val" data-search="%свободы%киев" data-value="v5">пр.Свободы, г.Киев</button></li>
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">
+					Form steps
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">Чекбоксы:</div>
-		</div>
-		<div class="col-6">
-			<div class="form__chbox">
-				<input id="chb-1" type="checkbox" data-required="true" class="form__chbox-input">
-				<label for="chb-1" class="form__chbox-label">Выбор 1 <a href="#">условия</a></label>
-			</div>
-		</div>
-		<div class="col-6">
-			<div class="form__chbox">
-				<input type="checkbox" class="form__chbox-input">
-				<label class="form__chbox-label">Выбор 2</label>
-			</div>
-		</div>
-		<div class="col">
-			<div class="form__chbox">
-				<input type="checkbox" data-show-hidden="#field-another-2" class="form__chbox-input">
-				<label class="form__chbox-label">Ваш вариант</label>
-			</div>
-		</div>
-		<div class="col">
-			<div id="field-another-2" class="form__field form__field_hidden">
-				<label class="overlabel">Ваш вариант</label>
-				<input type="text" class="form__text-input" data-required="true" value="">
-				<div class="form__error-tip">Введите свой вариант</div>
-			</div>
-		</div>
-	</div>
 
-	<div class="row form__chbox-group" data-min="1">
-		<div class="col">
-			<div class="form__txt">Группа чекбоксов(валидация):</div>
-		</div>
-		<div class="col-3">
-			<div class="form__chbox">
-				<input id="chb-3" type="checkbox" class="form__chbox-input">
-				<label for="chb-3" class="form__chbox-label">Выбор 1</label>
-			</div>
-		</div>
-		<div class="col-3">
-			<div class="form__chbox">
-				<input id="chb-4" type="checkbox" class="form__chbox-input">
-				<label for="chb-4" class="form__chbox-label">Выбор 2</label>
-			</div>
-		</div>
-		<div class="col-3">
-			<div class="form__chbox">
-				<input id="chb-5" type="checkbox" class="form__chbox-input">
-				<label for="chb-5" class="form__chbox-label">Выбор 1</label>
-			</div>
-		</div>
-		<div class="col-3">
-			<div class="form__chbox">
-				<input id="chb-6" type="checkbox" class="form__chbox-input">
-				<label for="chb-6" class="form__chbox-label">Выбор 2</label>
-			</div>
-		</div>
-	</div>
+		<div class="form__fieldset-wrap">
 
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">Чекбокс:</div>
-		</div>
-		<div class="col">
-			<div class="form__chbox">
-				<input id="chb-7" type="checkbox" class="form__chbox-input">
-				<label for="chb-7" class="form__chbox-label">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat.
-				</label>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-
-		<div class="col">
-			<div class="form__txt">Радио кнопки:</div>
-		</div>
-
-		<div class="col-6">
-			<div class="form__radio">
-				<input type="radio" name="rad-1" class="form__radio-input" checked>
-				<label class="form__radio-label">Выбор 1</label>
-			</div>
-		</div>
-		<div class="col-6">
-			<div class="form__radio">
-				<input type="radio" name="rad-1" class="form__radio-input">
-				<label class="form__radio-label">Выбор 2</label>
-			</div>
-		</div>
-		<div class="col">
-			<div class="form__radio">
-				<input type="radio" name="rad-1" data-show-hidden="#field-another" class="form__radio-input">
-				<label class="form__radio-label">Другое</label>
-			</div>
-		</div>
-		<div class="col">
-			<div id="field-another" class="form__field form__field_hidden">
-				<label class="overlabel">Ваш вариант</label>
-				<input type="text" class="form__text-input" data-required="true" value="">
-				<div class="form__error-tip">Введите свой вариант</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row form__radio-group">
-		<div class="col">
-			<div class="form__txt">Группа Радио кнопок (валидация):</div>
-		</div>
-
-		<div class="col-6">
-			<div class="form__radio">
-				<input type="radio" name="rad-2" class="form__radio-input">
-				<label class="form__radio-label">Выбор 1</label>
-			</div>
-		</div>
-		<div class="col-6">
-			<div class="form__radio">
-				<input type="radio" name="rad-2" class="form__radio-input">
-				<label class="form__radio-label">Выбор 2</label>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">Ввод паролей, сравнение:</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-txt-7" class="overlabel">Текущий пароль</label>
-				<input id="i-txt-7" type="password" data-type="pass" class="form__text-input" value="">
-				<div class="form__error-tip">Введите текущий пароль</div>
-			</div>
-		</div>
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-txt-8" class="overlabel">Новый пароль</label>
-				<input id="i-txt-8" type="password" data-type="pass" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
-				<div class="form__error-tip" data-second-error-text="Не менее 6 символов">Введите новый пароль</div>
-			</div>
-		</div>
-		<div class="col-4">
-			<div class="form__field">
-				<label for="i-txt-9" class="overlabel">Повторите пароль</label>
-				<input id="i-txt-9" type="password" data-type="pass" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
-				<div class="form__error-tip" data-second-error-text="Не менее 6 символов">Повторите пароль</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">Текстовое поле с резиновой высотой:</div>
-			
-			<div class="form__field">
-				<textarea id="area-2" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-				<label for="area-2" class="overlabel">Текстовое поле</label>
-				<div class="form__error-tip">Заполните поле</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием:</div>
-			
-			<div class="form__field">
-				<div class="form__textarea_var-h-wrap">
-					<textarea id="area-3" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-					<label for="area-3" class="overlabel">Текстовое поле</label>
+			<div id="step-fs1" class="form__fieldset">
+				<div class="row">
+					<div class="col">
+						<div class="form__txt">
+							Step 1
+						</div>
+					</div>
 				</div>
-				<div class="form__error-tip">Заполните поле</div>
+				<div class="row form__radio-group">
+					<div class="col-6">
+						<div class="form__radio">
+							<input type="radio" name="rad-fs-1" class="form__radio-input">
+							<label class="form__radio-label">Выбор 1</label>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form__radio">
+							<input type="radio" name="rad-fs-1" class="form__radio-input">
+							<label class="form__radio-label">Выбор 2</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs2">Step 2</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="step-fs2" class="form__fieldset form__fieldset_hidden">
+				<div class="row">
+					<div class="col">
+						<div class="form__txt">
+							Step 2
+						</div>
+					</div>
+				</div>
+				<div class="row form__radio-group">
+					<div class="col-6">
+						<div class="form__radio">
+							<input type="radio" name="rad-fs-2" class="form__radio-input">
+							<label class="form__radio-label">Выбор 1</label>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form__radio">
+							<input type="radio" name="rad-fs-2" class="form__radio-input">
+							<label class="form__radio-label">Выбор 2</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs3">Step 3</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="step-fs3" class="form__fieldset form__fieldset_hidden">
+				<div class="row">
+					<div class="col">
+						<div class="form__txt">
+							Step 3
+						</div>
+					</div>
+					<div class="col">
+						<div class="form__field">
+							<label class="overlabel">Поле</label>
+							<input type="text" class="form__text-input" data-required="true" value="">
+						</div>
+					</div>
+				</div>
 			</div>
 
 		</div>
-	</div>
 
-	
 
-	<div class="row">
-		<div class="col">
-			<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом:</div>
 
-			<div class="form__field">
-				<div class="form__select form__select_autocomplete">
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">
+					Данные страны берутся из https://get.dealersair.com/api/geo/
+				</div>
+
+				<div class="form__field">
+					<div class="form__select">
+						<button type="button" class="form__select-button">Выберите страну</button>
+						<ul class="form__select-options form__select-options_countries">
+
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
+					</div>
+				</div>
+
+				<div class="form__field">
+					<div class="form__select form__select_autocomplete">
+						<label for="i-txt-6s" class="overlabel">Страна (начинайте вводить)</label>
+						<input id="i-txt-6s" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-by-name" value="">
+						<ul class="form__select-options form__select-options_countries">
+
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
+					</div>
+				</div>
+
+				<div class="form__field">
+					<div class="form__select form__select_autocomplete">
+						<label for="i-txt-65s" class="overlabel">Страна (начинайте вводить)</label>
+						<input id="i-txt-65s" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-with-highlight" value="">
+						<ul class="form__select-options form__select-options_countries2">
+
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
+					</div>
+				</div>
+
+				<div class="form__field">
+					<div class="form__select form__select_autocomplete">
+						<label for="i-txt-6" class="overlabel">Улица город (начинайте вводить)</label>
+						<input id="i-txt-6" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-by-search-string" value="">
+						<ul class="form__select-options">
+							<li><button type="button" class="form__select-val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
+							<li><button type="button" class="form__select-val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
+							<li><button type="button" class="form__select-val" data-search="%львов%шевченка" data-value="v3">ул.Шевченка, г.Львов</button></li>
+							<li><button type="button" class="form__select-val" data-search="%шевченка%киев" data-value="v4">бульвар Шевченка, г.Киев</button></li>
+							<li><button type="button" class="form__select-val" data-search="%крещатик%киев" data-value="v5">ул.Крещатик, г.Киев</button></li>
+							<li><button type="button" class="form__select-val" data-search="%свободы%киев" data-value="v5">пр.Свободы, г.Киев</button></li>
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">Чекбоксы:</div>
+			</div>
+			<div class="col-6">
+				<div class="form__chbox">
+					<input id="chb-1" type="checkbox" data-required="true" class="form__chbox-input">
+					<label for="chb-1" class="form__chbox-label">Выбор 1 <a href="#">условия</a></label>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__chbox">
+					<input type="checkbox" class="form__chbox-input">
+					<label class="form__chbox-label">Выбор 2</label>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form__chbox">
+					<input type="checkbox" data-show-hidden="#field-another-2" class="form__chbox-input">
+					<label class="form__chbox-label">Ваш вариант</label>
+				</div>
+			</div>
+			<div class="col">
+				<div id="field-another-2" class="form__field form__field_hidden">
+					<label class="overlabel">Ваш вариант</label>
+					<input type="text" class="form__text-input" data-required="true" value="">
+					<div class="form__error-tip">Введите свой вариант</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row form__chbox-group" data-min="1">
+			<div class="col">
+				<div class="form__txt">Группа чекбоксов(валидация):</div>
+			</div>
+			<div class="col-3">
+				<div class="form__chbox">
+					<input id="chb-3" type="checkbox" class="form__chbox-input">
+					<label for="chb-3" class="form__chbox-label">Выбор 1</label>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="form__chbox">
+					<input id="chb-4" type="checkbox" class="form__chbox-input">
+					<label for="chb-4" class="form__chbox-label">Выбор 2</label>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="form__chbox">
+					<input id="chb-5" type="checkbox" class="form__chbox-input">
+					<label for="chb-5" class="form__chbox-label">Выбор 1</label>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="form__chbox">
+					<input id="chb-6" type="checkbox" class="form__chbox-input">
+					<label for="chb-6" class="form__chbox-label">Выбор 2</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">Чекбокс:</div>
+			</div>
+			<div class="col">
+				<div class="form__chbox">
+					<input id="chb-7" type="checkbox" class="form__chbox-input">
+					<label for="chb-7" class="form__chbox-label">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat.
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col">
+				<div class="form__txt">Радио кнопки:</div>
+			</div>
+
+			<div class="col-6">
+				<div class="form__radio">
+					<input type="radio" name="rad-1" class="form__radio-input" checked>
+					<label class="form__radio-label">Выбор 1</label>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__radio">
+					<input type="radio" name="rad-1" class="form__radio-input">
+					<label class="form__radio-label">Выбор 2</label>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form__radio">
+					<input type="radio" name="rad-1" data-show-hidden="#field-another" class="form__radio-input">
+					<label class="form__radio-label">Другое</label>
+				</div>
+			</div>
+			<div class="col">
+				<div id="field-another" class="form__field form__field_hidden">
+					<label class="overlabel">Ваш вариант</label>
+					<input type="text" class="form__text-input" data-required="true" value="">
+					<div class="form__error-tip">Введите свой вариант</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row form__radio-group">
+			<div class="col">
+				<div class="form__txt">Группа Радио кнопок (валидация):</div>
+			</div>
+
+			<div class="col-6">
+				<div class="form__radio">
+					<input type="radio" name="rad-2" class="form__radio-input">
+					<label class="form__radio-label">Выбор 1</label>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__radio">
+					<input type="radio" name="rad-2" class="form__radio-input">
+					<label class="form__radio-label">Выбор 2</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">Ввод паролей, сравнение:</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-txt-7" class="overlabel">Текущий пароль</label>
+					<input id="i-txt-7" type="password" data-type="pass" class="form__text-input" value="">
+					<div class="form__error-tip">Введите текущий пароль</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-txt-8" class="overlabel">Новый пароль</label>
+					<input id="i-txt-8" type="password" data-type="pass" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Не менее 6 символов">Введите новый пароль</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-txt-9" class="overlabel">Повторите пароль</label>
+					<input id="i-txt-9" type="password" data-type="pass" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Не менее 6 символов">Повторите пароль</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">Текстовое поле с резиновой высотой:</div>
+
+				<div class="form__field">
+					<textarea id="area-2" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+					<label for="area-2" class="overlabel">Текстовое поле</label>
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием:</div>
+
+				<div class="form__field">
 					<div class="form__textarea_var-h-wrap">
-						<textarea class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
-						<label class="overlabel">Начинайте вводить</label>
+						<textarea id="area-3" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+						<label for="area-3" class="overlabel">Текстовое поле</label>
 					</div>
-					<ul class="form__select-options">
-						<li><button type="button" class="form__select-val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
-						<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
-					</ul>
-					<input type="hidden" class="form__select-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<div class="row">
+			<div class="col">
+				<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом:</div>
+
+				<div class="form__field">
+					<div class="form__select form__select_autocomplete">
+						<div class="form__textarea_var-h-wrap">
+							<textarea class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
+							<label class="overlabel">Начинайте вводить</label>
+						</div>
+						<ul class="form__select-options">
+							<li><button type="button" class="form__select-val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
+							<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="form__select-input" value="">
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="form__button button button_red">Submit</button>
+			</div>
+		</div>
+
+		<div class="form__loading-icon">
+			<div class="form__loading-icon-img"></div>
+		</div>
+
+		<div class="form__alert">Ошибка заполнения полей формы</div>
+
+	</form>
+
+</div>
+
+<div class="container">
+	<form id="form2" action="send.php" method="POST" class="form">
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
 				</div>
 			</div>
-
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+			</div>
 		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<button type="submit" class="form__button button button_red">Submit</button>
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="form__button button button_red">Submit</button>
+			</div>
 		</div>
-	</div>
-	
-	<div class="form__loading-icon">
-		<div class="form__loading-icon-img"></div>
-	</div>
-
-	<div class="form__alert">Ошибка заполнения полей формы</div>
-
-</form>
-
+	</form>
 </div>
 
 <!--FOOTER/-->

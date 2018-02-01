@@ -906,6 +906,7 @@ img {
   left: 0;
   top: 0;
   background: url("../images/loading.svg") no-repeat 50% 50%;
+  background-size: 100% 100%;
   animation: form_loading_icon .9s infinite linear;
 }
 
@@ -1308,6 +1309,36 @@ img {
 
 .form__btn:hover {
   opacity: .5;
+}
+
+.form__button_loading {
+  position: relative;
+}
+
+.form__button_loading:before {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #ffffff;
+}
+
+.form__button_loading:after {
+  display: block;
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  margin: -15px 0 0 -15px;
+  width: 30px;
+  height: 30px;
+  background: url("../images/loading.svg") no-repeat 50% 50%;
+  background-size: 100% 100%;
+  animation: form_loading_icon .9s infinite linear;
 }
 
 .form__txt {
