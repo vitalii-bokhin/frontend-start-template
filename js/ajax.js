@@ -25,7 +25,7 @@ var Ajax = {
 			Popup.show(id);
 		} else {
 			Block.append(resp);
-			ovfImage();
+			overfrowImg();
 		}
 	}
 

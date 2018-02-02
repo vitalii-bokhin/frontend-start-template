@@ -30,25 +30,25 @@ function flexImage(winW) {
 	});
 }
 
-function ovfImage(cnt) {
+function overfrowImg(cnt) {
 
 	var cnt = (cnt) ? cnt +' ' : '';
 	
-	$(cnt +'.ovf-image, '+ cnt +'.ovf-image-wrap').each(function() {
+	$(cnt +'.overflow-img, '+ cnt +'.overflow-img-wrap').each(function() {
 
 		var _$ = $(this);
 
-		if (_$.hasClass('ovf-image-wrap')) {
+		if (_$.hasClass('overflow-img-wrap')) {
 			var Img = _$.find('img'),
 			Block = _$;
-			Img.addClass('ovf-image');
-		} else if (_$.hasClass('ovf-image')) {
+			Img.addClass('overflow-img');
+		} else if (_$.hasClass('overflow-img')) {
 			var Img = _$,
 			Block = Img.parent();
-			Block.addClass('ovf-image-wrap');
+			Block.addClass('overflow-img-wrap');
 		}
 
-		Img.removeClass('ovf-image_w ovf-image_h');
+		Img.removeClass('overflow-img_w overflow-img_h');
 
 		var imgProp = Img.width()/Img.height(),
 		blockProp = Block.width()/Block.height();
@@ -56,13 +56,13 @@ function ovfImage(cnt) {
 		if (blockProp != Infinity && blockProp < 21) {
 			if (imgProp <= blockProp) {
 				var marg = Math.round(-(Block.width()/imgProp-Block.height())/2);
-				Img.addClass('ovf-image_w').css({marginTop: marg});
+				Img.addClass('overflow-img_w').css({marginTop: marg});
 			} else {
 				var marg = Math.round(-(Block.height()*imgProp-Block.width())/2);
-				Img.addClass('ovf-image_h').css({marginLeft: marg});
+				Img.addClass('overflow-img_h').css({marginLeft: marg});
 			}
 		} else {
-			Img.addClass('ovf-image_w');
+			Img.addClass('overflow-img_w');
 		}
 
 	});

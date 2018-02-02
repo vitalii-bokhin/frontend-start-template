@@ -15,7 +15,7 @@ var Popup = {
 			$('body').css('top', -pos).attr('data-position', pos).addClass('is-popup-opened');
 
 			setTimeout(function() {
-				ovfImage('#media-popup');
+				overfrowImg('#media-popup');
 			}, 721);
 
 		}
@@ -64,7 +64,7 @@ var Popup = {
 			_.show(id);
 		} else {
 			setTimeout(function() {
-				ovfImage('#media-popup');
+				overfrowImg('#media-popup');
 			}, 721);
 		}
 

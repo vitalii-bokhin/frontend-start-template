@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 	flexImage(winW);
 
-	ovfImage();
+	overfrowImg();
 
 
 	//headerFix
