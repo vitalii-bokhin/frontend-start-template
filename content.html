@@ -125,6 +125,19 @@
 	</div>
 </div>
 
+<div class="container">
+	<div class="row wrap">
+		<div class="col-4">
+			<div class="numspin">55</div>
+		</div>
+		<div class="col-4">
+			<div class="numspin">77</div>
+		</div>
+		<div class="col-4">
+			<div class="numspin2">333</div>
+		</div>
+	</div>
+</div>
 
 <!--FOOTER/-->
 <footer class="footer">
@@ -223,6 +236,28 @@
 </script>
 
 <script src="js/timer.js"></script>
+
+<script>
+	Timer.init(350, function() {
+		window.location.href = '#';
+	});
+</script>
+
+<script src="js/numberspin.js"></script>
+
+<script>
+	$(document).ready(function() {
+		numberspin('.numspin3').start();
+
+		var ns2 = numberspin('.numspin2', {
+			animation: 2
+		});
+
+		$('.numspin2').click(function() {
+			ns2.start();
+		});
+	});
+</script>
 
 </body>
 </html>

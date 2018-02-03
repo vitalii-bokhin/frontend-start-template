@@ -100,9 +100,3 @@ var Timer = {
 		el.innerHTML = output;
 	}
 };
-
-
-
-Timer.init(3, function() {
-	window.location.href = '#';
-});

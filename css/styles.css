@@ -847,43 +847,42 @@ img {
 }
 
 /*===IMAGES===*/
-.ovf-image {
+.overflow-img {
   display: block;
   opacity: 0;
   transition: opacity .21s;
 }
 
-.ovf-image_w {
+.overflow-img_w {
   width: 100%;
   height: auto;
   min-height: 100%;
   opacity: 1;
 }
 
-.ovf-image_h {
+.overflow-img_h {
   height: 100%;
   width: auto;
   min-width: 100%;
   opacity: 1;
 }
 
-.ovf-image-wrap {
+.overflow-img-wrap {
   overflow: hidden;
 }
 
-.mid-image {
+.middle-img {
   max-width: 100%;
   max-height: 100%;
   vertical-align: middle;
-  font-size: 16px;
 }
 
-.mid-image-wrap {
+.middle-img-wrap {
   height: 100%;
   font-size: 0;
 }
 
-.mid-image-wrap:before {
+.middle-img-wrap:before {
   display: inline-block;
   content: "";
   height: 100%;
