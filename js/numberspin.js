@@ -1,61 +1,72 @@
 function Numberspin(elem, opt) {
-	var _ = this;
-
-	var def = {
+	var _ = this,
+	def = {
 		animation: 1
 	},
-	opt = opt || {};
-	_.options = $.extend({}, def, opt);
-
-	_.$Elem = $(elem);
-	_.endVal = [];
-	_.curVal = [];
-
-	_.interval = null;
+	opt = opt || {},
+	options = $.extend({}, def, opt),
+	interval = null,
+	$Elem = $(elem),
+	endVal = [],
+	curVal = [];
 	
-	_.init = function() {
+	$Elem.each(function(j) {
+		var _$ = $(this);
+		endVal[j] = +_$.html().replace(/[\D\s]/g, '');
+		curVal[j] = 0;
+		_$.html(0);
+	});
 
-		_.$Elem.each(function(j) {
-			var _$ = $(this);
-			_.endVal[j] = +_$.html().replace(/[\D\s]/g, '');
-			_.curVal[j] = 0;
-			_$.html(0);
-		});
-
+	this.start = function(targelem) {
+		//console.log($(elem).index(targelem));
+		var ind = (targelem) ? $(elem).index(targelem) : undefined;
+		spin(ind);
 	}
 
-	_.spin = function() {
-		var elCount = $(_.$Elem).length;
+	function spin(ind) {
+		console.log('ind-'+ ind);
 
-		_.interval = setInterval(function() {
+		var $el = $Elem;
 
-			_.$Elem.each(function(j) {
+		if (ind != undefined) {
+			$el = $Elem.eq(ind);
+			console.log($el);
+		}
 
-				var _$ = $(this);
+		var elCount = $el.length;
 
-				if (_.curVal[j] < _.endVal[j]) {
+		console.log(elCount);
 
-					if (_.options.animation == 1) {
+		interval = setInterval(function() {
 
-						var d = _.endVal[j] - _.curVal[j];
+			$el.each(function(j) {
+
+				var _$ = $(this),
+				j = (ind != undefined) ? ind : j;
+
+				if (curVal[j] < endVal[j]) {
+
+					if (options.animation == 1) {
+
+						var d = endVal[j] - curVal[j];
 
 						if (d > 2321) {
-							_.curVal[j] = _.curVal[j] + 2321;
+							curVal[j] = curVal[j] + 2321;
 						} else if (d > 1321) {
-							_.curVal[j] = _.curVal[j] + 1321;
+							curVal[j] = curVal[j] + 1321;
 						} else if (d > 321) {
-							_.curVal[j] = _.curVal[j] + 321;
+							curVal[j] = curVal[j] + 321;
 						} else if (d > 21) {
-							_.curVal[j] = _.curVal[j] + 21;
+							curVal[j] = curVal[j] + 21;
 						} else {
-							_.curVal[j]++;
+							curVal[j]++;
 						}
 
 
-					} else if (_.options.animation == 2) {
+					} else if (options.animation == 2) {
 
-						var endValArr = String(_.endVal[j]).split(''),
-						curValArr = String(_.curVal[j]).split('');
+						var endValArr = String(endVal[j]).split(''),
+						curValArr = String(curVal[j]).split('');
 
 						for (var i = 0; i < endValArr.length; i++) {
 							if (curValArr[i]) {
@@ -68,14 +79,14 @@ function Numberspin(elem, opt) {
 
 						}
 
-						_.curVal[j] = curValArr.join('');
+						curVal[j] = curValArr.join('');
 
 					}
 
-					_$.html(_.curVal[j]);
+					_$.html(curVal[j]);
 
-					if (_.curVal[j] >= _.endVal[j]) {
-						_$.html(_.endVal[j]);
+					if (curVal[j] >= endVal[j]) {
+						_$.html(endVal[j]);
 						elCount--;
 					}
 
@@ -84,7 +95,7 @@ function Numberspin(elem, opt) {
 			});
 
 			if (!elCount) {
-				_.stop();
+				stop();
 			}
 
 			console.log('spin');
@@ -93,15 +104,9 @@ function Numberspin(elem, opt) {
 
 	}
 
-	_.start = function() {
-		_.spin();
+	function stop() {
+		clearInterval(interval);
 	}
-
-	_.stop = function() {
-		clearInterval(_.interval);
-	}
-
-	_.init();
 
 }
 

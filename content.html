@@ -127,14 +127,17 @@
 
 <div class="container">
 	<div class="row wrap">
-		<div class="col-4">
-			<div class="numspin">55</div>
+		<div class="col-3">
+			<div class="numspin">55555</div>
 		</div>
-		<div class="col-4">
-			<div class="numspin">77</div>
+		<div class="col-3">
+			<div class="numspin">77777</div>
 		</div>
-		<div class="col-4">
-			<div class="numspin2">333</div>
+		<div class="col-3">
+			<div id="ns2-1" class="numspin2">222</div>
+		</div>
+		<div class="col-3">
+			<div id="ns2-2" class="numspin2">333</div>
 		</div>
 	</div>
 </div>
@@ -247,14 +250,14 @@
 
 <script>
 	$(document).ready(function() {
-		numberspin('.numspin3').start();
+		numberspin('.numspin').start();
 
 		var ns2 = numberspin('.numspin2', {
 			animation: 2
 		});
-
+		console.log(ns2);
 		$('.numspin2').click(function() {
-			ns2.start();
+			ns2.start(this);
 		});
 	});
 </script>
