@@ -18,24 +18,19 @@ function Numberspin(elem, opt) {
 	});
 
 	this.start = function(targelem) {
-		//console.log($(elem).index(targelem));
 		var ind = (targelem) ? $(elem).index(targelem) : undefined;
 		spin(ind);
 	}
 
 	function spin(ind) {
-		console.log('ind-'+ ind);
 
 		var $el = $Elem;
 
 		if (ind != undefined) {
 			$el = $Elem.eq(ind);
-			console.log($el);
 		}
 
 		var elCount = $el.length;
-
-		console.log(elCount);
 
 		interval = setInterval(function() {
 
@@ -90,6 +85,8 @@ function Numberspin(elem, opt) {
 						elCount--;
 					}
 
+				} else if (ind != undefined) {
+					stop();
 				}
 
 			});
