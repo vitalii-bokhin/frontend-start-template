@@ -8,17 +8,27 @@ function Numberspin(elem, opt) {
 	interval = null,
 	$Elem = $(elem),
 	endVal = [],
-	curVal = [];
+	curVal = [],
+	pattern = [];
 	
 	$Elem.each(function(j) {
-		var _$ = $(this);
-		endVal[j] = +_$.html().replace(/[\D\s]/g, '');
+		var _$ = $(this),
+		val = _$.html().replace(/[\s]/g, '');
+
+		pattern[j] = function(val) {
+			val = val.match(/[\.,]/);
+			return val;
+		}(val);
+
+		console.log(pattern[j]);
+
+		endVal[j] = +val.replace(/[\D]/g, '');
 		curVal[j] = 0;
 		_$.html(0);
 	});
 
-	this.start = function(targelem) {
-		var ind = (targelem) ? $(elem).index(targelem) : undefined;
+	this.start = function(thiselem) {
+		var ind = (thiselem) ? $(elem).index(thiselem) : undefined;
 		spin(ind);
 	}
 
@@ -45,7 +55,13 @@ function Numberspin(elem, opt) {
 
 						var d = endVal[j] - curVal[j];
 
-						if (d > 2321) {
+						if (d > 4321321) {
+							curVal[j] = curVal[j] + 4321321;
+						} else if (d > 321321) {
+							curVal[j] = curVal[j] + 321321;
+						} else if (d > 32321) {
+							curVal[j] = curVal[j] + 32321;
+						} else if (d > 2321) {
 							curVal[j] = curVal[j] + 2321;
 						} else if (d > 1321) {
 							curVal[j] = curVal[j] + 1321;
@@ -78,7 +94,16 @@ function Numberspin(elem, opt) {
 
 					}
 
-					_$.html(curVal[j]);
+					var output = String(curVal[j]);
+
+					if (pattern[j]) {
+						output = output.replace(new RegExp('(\\d{'+ pattern[j].index +'})'), '$1'+ pattern[j][0]);
+						output = output.replace(new RegExp('(\\d)(?=(\\d{3})+\\'+ pattern[j][0] +')', 'g'), '$1 ');
+					} else {
+						output = output.replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
+					}
+					
+					_$.html(output);
 
 					if (curVal[j] >= endVal[j]) {
 						_$.html(endVal[j]);
@@ -114,3 +139,19 @@ function numberspin(elem, opt) {
 	}
 	return numberspinObject[elem];
 }
+
+
+
+var output1 = String(123456789).replace(/(\d)(?=\d{2}$)/, function(m, p1, os) {
+	//console.log(m,p1,os);
+	return p1 +'.';
+});
+
+//console.log('out-'+ output1);
+
+var output2 = String(123456789).replace(/(\d)(?=(\d{3})+(\d{2}$|$))/g, function(m, p1, p2, p3, os) {
+	//console.log(m,p1,p2,p3,os);
+	return p1 +' ';
+});
+
+//console.log('out-'+ output2);
