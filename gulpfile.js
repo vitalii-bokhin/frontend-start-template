@@ -32,6 +32,10 @@ gulp.task('w', function () {
 		Sass('./src/sass/styles.scss');
 	});
 
+	gulp.watch('./src/sass/*.scss', function() {
+		Sass('./src/sass/pd-4-styles.scss');
+	});
+
 	gulp.watch('./src/html/*.html', function(event) {
 		gulp.src(['!./src/html/_*.html', event.path])
 		.pipe(fileinclude())

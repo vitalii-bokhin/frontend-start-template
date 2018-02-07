@@ -1,0 +1,151 @@
+@import "helpers";
+
+/*===RESET===*/
+@import "reset";
+
+/*===STYLES===*/
+
+.ta-c{
+	text-align: center;
+}
+.ta-r{
+	text-align: right;
+}
+
+.fs-11{
+	font-size: 11px !important;
+}
+.fs-13{
+	font-size: 13px !important;
+}
+
+.mb-3{
+	margin-bottom: 3px !important;
+}
+.mb-30{
+	margin-bottom: 30px !important;
+}
+
+.bot,
+.top{
+	position: absolute;
+	left: 0;
+	width: 100%;
+}
+
+.inv{
+	font-family: Arial, sans-serif;
+	width: 752px;
+	border: 1px dashed #000;
+	font-size: 14px;
+	&__part{
+		display: table;
+		border-bottom: 2px solid #000;
+		&:last-child{
+			border-bottom: none;
+		}
+	}
+	&__left-col{
+		position: relative;
+		display: table-cell;
+		width: 200px;
+		border-right: 2px solid #000;
+		text-align: center;
+		color: #aeabaf;
+		font-size: 16px;
+		font-weight: 700;
+		.top{
+			top: 30px;
+		}
+		.bot{
+			bottom: 48px;
+		}
+	}
+	&__right-col{
+		display: table-cell;
+		width: 552px;
+		padding: 15px 10px 10px;
+	}
+	&__row{
+		@include clr;
+		margin-bottom: 10px;
+		&:last-child{
+			margin-bottom: 0;
+		}
+		&-col-mid{
+			font-size: 0;
+		}
+	}
+	&__col{
+		float: left;
+		&_w50{
+			width: per(50, 532);
+		}
+		&_w112{
+			width: per(112, 532);
+		}
+		&_w130{
+			width: per(130, 532);
+		}
+		&_w160{
+			width: per(160, 532);
+		}
+		&_w222{
+			width: per(222, 532);
+		}
+		&_w250{
+			width: per(250, 532);
+		}
+		&_w282{
+			width: per(282, 532);
+		}
+		&_w360{
+			width: per(360, 532);
+		}
+		&_w402{
+			width: per(402, 532);
+		}
+		&_right{
+			float: right;
+		}
+		.inv__row-col-mid &{
+			float: none;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 14px;
+		}
+	}
+	&__line{
+		border-bottom: 1px solid #919191;
+		padding-bottom: 2px;
+		min-height: 17px;
+		&-lab{
+			font-size: 8px;
+			text-align: center;
+			margin-top: 3px;
+		}
+	}
+	&__cells{
+		font-size: 0;
+		span{
+			display: inline-block;
+			font-size: 13px;
+			vertical-align: middle;
+			margin-right: 5px;
+		}
+		p{
+			display: inline-block;
+			width: 15px;
+			height: 17px;
+			line-height: 16px;
+			border: 1px solid #919191;
+			border-right: none;
+			font-size: 14px;
+			vertical-align: middle;
+			text-align: center;
+			&:last-child{
+				border-right: 1px solid #919191;
+			}
+		}
+	}
+}
