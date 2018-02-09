@@ -4,7 +4,8 @@ $(document).ready(function() {
 	$('body').on('click', '.js-toggle', function() {
 		var _ = $(this),
 		targetId = _.attr('data-target-id'),
-		targetClass = _.attr('data-target-class');
+		targetClass = _.attr('data-target-class'),
+		targetElements = _.attr('data-target-elements');
 
 		function tId(st) {
 			if (targetId) {
@@ -40,10 +41,34 @@ $(document).ready(function() {
 
 			}
 		}
+
+		function tEl(st) {
+			if (targetElements) {
+
+				var _$ = $(targetElements),
+				$par = $(_.attr('data-elements-parent'));
+
+				if ($par) {
+					if (st) {
+						$par.find(targetElements).addClass('toggled');
+					} else {
+						$par.find(targetElements).removeClass('toggled');
+					}
+				} else {
+					if (st) {
+						_$.addClass('toggled');
+					} else {
+						_$.removeClass('toggled');
+					}
+				}
+				
+			}
+		}
 		
 		if (!_.hasClass('toggled')) {
 			tId(1);
 			tCl(1);
+			tEl(1);
 			_.addClass('toggled');
 			var secTxt = _.attr('data-second-button-text');
 			if (secTxt) {
@@ -55,6 +80,7 @@ $(document).ready(function() {
 		} else {
 			tId(0);
 			tCl(0);
+			tEl(0);
 			_.removeClass('toggled');
 			var fstTxt = _.attr('data-first-button-text');
 			if (fstTxt) {
