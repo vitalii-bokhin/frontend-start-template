@@ -44,7 +44,7 @@
 $def-prop-width: 1;
 $def-prop-height: 1;
 @mixin fixprop($width: $def-prop-width, $height: $def-prop-height){
-	&:after{
+	&:before{
 		@include ab;
 		width: 100%;
 		padding-bottom: $height * (100 / $width) * 1%;

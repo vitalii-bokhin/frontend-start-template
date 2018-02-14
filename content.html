@@ -137,10 +137,10 @@
 			<div class="numspin">88 888,954</div>
 		</div>
 		<div class="col-3">
-			<div id="ns2-1" class="numspin2">222</div>
+			<div id="ns2-1" class="numspin2">1222555</div>
 		</div>
 		<div class="col-3">
-			<div id="ns2-2" class="numspin2">333</div>
+			<div id="ns2-2" class="numspin2">1333777</div>
 		</div>
 	</div>
 </div>
@@ -253,15 +253,26 @@
 
 <script>
 	$(document).ready(function() {
-		numberspin('.numspin').start();
 
-		var ns2 = numberspin('.numspin2', {
-			animation: 2
+		
+		$('.numspin').each(function() {
+			numberspin(this).start();
+		});
+
+
+		$('.numspin2').each(function() {
+			var ns2 = numberspin(this);
+			$(this).click(function() {
+				ns2.start();
+			});
 		});
 		
-		$('.numspin2').click(function() {
-			ns2.start(this);
-		});
+
+		/*var ns2 = numberspin('.numspin2', {
+			animation: 2
+		});*/
+		
+		
 	});
 </script>
 

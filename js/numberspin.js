@@ -1,83 +1,55 @@
 function Numberspin(elem, opt) {
-	var _ = this,
-	def = {
+	var def = {
 		animation: 1
 	},
 	opt = opt || {},
 	options = $.extend({}, def, opt),
 	interval = null,
 	$Elem = $(elem),
-	endVal = [],
-	curVal = [],
-	pattern = [];
-	
-	$Elem.each(function(j) {
-		var _$ = $(this),
-		val = _$.html().replace(/[\s]/g, '');
+	curVal = 0,
+	val = $Elem.html().replace(/[\s]/g, ''),
+	pattern = val.match(/[\.,]/),
+	endVal = +val.replace(/[\D]/g, '');
 
-		pattern[j] = function(val) {
-			val = val.match(/[\.,]/);
-			return val;
-		}(val);
+	$Elem.html(0);
 
-		console.log(pattern[j]);
-
-		endVal[j] = +val.replace(/[\D]/g, '');
-		curVal[j] = 0;
-		_$.html(0);
-	});
-
-	this.start = function(thiselem) {
-		var ind = (thiselem) ? $(elem).index(thiselem) : undefined;
-		spin(ind);
+	this.start = function() {
+		spin();
 	}
 
-	function spin(ind) {
-
-		var $el = $Elem;
-
-		if (ind != undefined) {
-			$el = $Elem.eq(ind);
-		}
-
-		var elCount = $el.length;
+	function spin() {
 
 		interval = setInterval(function() {
 
-			$el.each(function(j) {
-
-				var _$ = $(this),
-				j = (ind != undefined) ? ind : j;
-
-				if (curVal[j] < endVal[j]) {
+				if (curVal < endVal) {
 
 					if (options.animation == 1) {
 
-						var d = endVal[j] - curVal[j];
+						var d = endVal - curVal;
 
 						if (d > 4321321) {
-							curVal[j] = curVal[j] + 4321321;
+							curVal = curVal + 4321321;
 						} else if (d > 321321) {
-							curVal[j] = curVal[j] + 321321;
+							curVal = curVal + 321321;
 						} else if (d > 32321) {
-							curVal[j] = curVal[j] + 32321;
+							curVal = curVal + 32321;
 						} else if (d > 2321) {
-							curVal[j] = curVal[j] + 2321;
+							curVal = curVal + 2321;
 						} else if (d > 1321) {
-							curVal[j] = curVal[j] + 1321;
+							curVal = curVal + 1321;
 						} else if (d > 321) {
-							curVal[j] = curVal[j] + 321;
+							curVal = curVal + 321;
 						} else if (d > 21) {
-							curVal[j] = curVal[j] + 21;
+							curVal = curVal + 21;
 						} else {
-							curVal[j]++;
+							curVal++;
 						}
 
 
 					} else if (options.animation == 2) {
 
-						var endValArr = String(endVal[j]).split(''),
-						curValArr = String(curVal[j]).split('');
+						var endValArr = String(endVal).split(''),
+						curValArr = String(curVal).split('');
 
 						for (var i = 0; i < endValArr.length; i++) {
 							if (curValArr[i]) {
@@ -90,37 +62,26 @@ function Numberspin(elem, opt) {
 
 						}
 
-						curVal[j] = curValArr.join('');
+						curVal = curValArr.join('');
 
 					}
 
-					var output = String(curVal[j]);
+					var output = String(curVal);
 
-					if (pattern[j]) {
-						output = output.replace(new RegExp('(\\d{'+ pattern[j].index +'})'), '$1'+ pattern[j][0]);
-						output = output.replace(new RegExp('(\\d)(?=(\\d{3})+\\'+ pattern[j][0] +')', 'g'), '$1 ');
+					if (pattern) {
+						output = output.replace(new RegExp('(\\d{'+ pattern.index +'})'), '$1'+ pattern[0]);
+						output = output.replace(new RegExp('(\\d)?(?=(\\d{3})+?\\'+ pattern[0] +')', 'g'), '$1 ');
 					} else {
-						output = output.replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
+						output = output.replace(/(\d)?(?=(\d{3})+$)/g, '$1 ');
 					}
 					
-					_$.html(output);
+					$Elem.html(output);
 
-					if (curVal[j] >= endVal[j]) {
-						_$.html(endVal[j]);
-						elCount--;
-					}
-
-				} else if (ind != undefined) {
+				} else {
 					stop();
 				}
 
-			});
-
-			if (!elCount) {
-				stop();
-			}
-
-			console.log('spin');
+				console.log('spin');
 
 		}, 85);
 
@@ -132,26 +93,18 @@ function Numberspin(elem, opt) {
 
 }
 
-var numberspinObject = [];
+var numberspinObj = [], i = 0, ind;
 function numberspin(elem, opt) {
-	if (!(numberspinObject[elem] instanceof Numberspin)) {
-		numberspinObject[elem] = new Numberspin(elem, opt);
+
+	if ($(elem)[0].ind == undefined) {
+		$(elem)[0].ind = ind = i;
+	} else {
+		ind = $(elem)[0].ind;
 	}
-	return numberspinObject[elem];
+	
+	if (!(numberspinObj[elem+ind] instanceof Numberspin)) {
+		numberspinObj[elem+ind] = new Numberspin(elem, opt);
+	}
+	i++;
+	return numberspinObj[elem+ind];
 }
-
-
-
-var output1 = String(123456789).replace(/(\d)(?=\d{2}$)/, function(m, p1, os) {
-	//console.log(m,p1,os);
-	return p1 +'.';
-});
-
-//console.log('out-'+ output1);
-
-var output2 = String(123456789).replace(/(\d)(?=(\d{3})+(\d{2}$|$))/g, function(m, p1, p2, p3, os) {
-	//console.log(m,p1,p2,p3,os);
-	return p1 +' ';
-});
-
-//console.log('out-'+ output2);
