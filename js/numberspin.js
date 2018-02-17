@@ -5,6 +5,7 @@ function Numberspin(elem, opt) {
 	opt = opt || {},
 	options = $.extend({}, def, opt),
 	interval = null,
+	animate = false,
 	$Elem = $(elem),
 	curVal = 0,
 	val = $Elem.html().replace(/[\s]/g, ''),
@@ -14,20 +15,28 @@ function Numberspin(elem, opt) {
 	$Elem.html(0);
 
 	this.start = function() {
-		spin();
+		
+		if (!animate) {
+			animate = true;
+			spin();
+		}
 	}
 
 	function spin() {
 
-		interval = setInterval(function() {
-
+		interval = setTimeout(function run() {
+console.log(curVal);
 				if (curVal < endVal) {
 
 					if (options.animation == 1) {
 
 						var d = endVal - curVal;
 
-						if (d > 4321321) {
+						if (d > 1213214321321) {
+							curVal = curVal + 1213214321321;
+						} else if (d > 3214321321) {
+							curVal = curVal + 3214321321;
+						} else if (d > 4321321) {
 							curVal = curVal + 4321321;
 						} else if (d > 321321) {
 							curVal = curVal + 321321;
@@ -77,34 +86,34 @@ function Numberspin(elem, opt) {
 					
 					$Elem.html(output);
 
+					setTimeout(run, 85);
+
 				} else {
 					stop();
 				}
 
-				console.log('spin');
-
-		}, 85);
+		}, 1);
 
 	}
 
 	function stop() {
-		clearInterval(interval);
+		clearTimeout(interval);
 	}
 
 }
 
 var numberspinObj = [], i = 0, ind;
 function numberspin(elem, opt) {
-
 	if ($(elem)[0].ind == undefined) {
 		$(elem)[0].ind = ind = i;
 	} else {
 		ind = $(elem)[0].ind;
 	}
-	
+
 	if (!(numberspinObj[elem+ind] instanceof Numberspin)) {
 		numberspinObj[elem+ind] = new Numberspin(elem, opt);
 	}
 	i++;
+
 	return numberspinObj[elem+ind];
 }

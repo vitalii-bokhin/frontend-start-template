@@ -145,6 +145,19 @@
 	</div>
 </div>
 
+<div class="container">
+	<div class="row wrap" style="margin-top: 300px; margin-bottom: 300px">
+		<div class="col">
+			<div class="numspin-s">44 444</div>
+		</div>
+	</div>
+	<div class="row wrap">
+		<div class="col">
+			<div class="numspin-s">55 555</div>
+		</div>
+	</div>
+</div>
+
 <!--FOOTER/-->
 <footer class="footer">
 	<div class="row-col-mid wrap footer__wrap">
@@ -265,6 +278,22 @@
 			$(this).click(function() {
 				ns2.start();
 			});
+		});
+
+
+		$(window).scroll(function() {
+			var winScrTop = $(window).scrollTop();
+
+			$('.numspin-s').each(function() {
+				var _$ = $(this),
+				ofsT = _$.offset().top + 100;
+
+				if ((winScrTop + winH) > ofsT) {
+					numberspin(this).start();
+				}
+
+			});
+
 		});
 		
 
