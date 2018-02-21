@@ -21,16 +21,16 @@
 		}
 	}
 	&_red{
-		border: 1px solid $red;
-		background: $red;
+		border: 1px solid $rd;
+		background: $rd;
 	}
 	&_blue{
-		border: 1px solid $blue;
-		background: $blue;
+		border: 1px solid $be;
+		background: $be;
 	}
 	&_green{
-		border: 1px solid $green;
-		background: $green;
+		border: 1px solid $gn;
+		background: $gn;
 	}
 	&_shadow{
 		position: relative;
@@ -46,25 +46,25 @@
 		width: 100%;
 	}
 	
-	&_blue-bord{
-		color: $blue;
-		border: 1px solid $blue;
+	&_be-bord{
+		color: $be;
+		border: 1px solid $be;
 		background: #FFF;
 	}
 
-	&_blue-txt{
-		color: $blue;
+	&_be-txt{
+		color: $be;
 		background: #FFF;
 	}
 
 	&_grn-bord{
-		color: $green;
-		border: 1px solid $green;
+		color: $gn;
+		border: 1px solid $gn;
 		background: #FFF;
 	}
 
 	&_grn-txt{
-		color: $green;
+		color: $gn;
 		background: #FFF;
 	}
 
@@ -75,10 +75,10 @@
 	&:hover{
 		opacity: .6;
 	}
-	&_hov-blue:hover{
+	&_hov-be:hover{
 		opacity: 1;
-		border: 1px solid $blue;
-		background: $blue;
+		border: 1px solid $be;
+		background: $be;
 	}
 	
 	@media(max-width: 700px){
@@ -97,7 +97,7 @@
 	
 	span{
 		height: 3px;
-		background: $red;
+		background: $rd;
 		position: absolute;
 		left: 0;
 		width: 100%;
@@ -162,7 +162,7 @@
 		@include ab;
 		width: 130%;
 		height: 3px;
-		background: $red;
+		background: $rd;
 		position: absolute;
 		left: -15%;
 		top: 50%;
@@ -199,7 +199,7 @@
 	width: 64px;
 	height: 64px;
 	border-radius: 64px;
-	background: $red;
+	background: $rd;
 	transition: .5s;
 	&:before{
 		@include ab;

@@ -1,5 +1,5 @@
 .accord{
-	border-top: 1px solid $l-gray;
+	border-top: 1px solid $lgy;
 	background: #FFF;
 	&__button{
 		display: block;
@@ -7,7 +7,7 @@
 		position: relative;
 		width: 100%;
 		text-align: left;
-		border-bottom: 1px solid $l-gray;
+		border-bottom: 1px solid $lgy;
 		span{
 			display: block;
 			width: 40px;
@@ -17,7 +17,7 @@
 			right: 20px;
 			top: 50%;
 			margin-top: -20px;
-			border: 1px solid $l-gray;
+			border: 1px solid $lgy;
 			&:after{
 				@include ab;
 				@include fwh;
@@ -28,6 +28,6 @@
 	}
 	&__content{
 		display: none;
-		border-bottom: 1px solid $l-gray;
+		border-bottom: 1px solid $lgy;
 	}
 }

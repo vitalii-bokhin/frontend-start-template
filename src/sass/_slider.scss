@@ -114,19 +114,19 @@
         width: 8px;
         height: 8px;
         border-radius: 8px;
-        border: 1px solid $blue;
+        border: 1px solid $be;
         transition: .5s;
         &:hover{
-          background: $red;
+          background: $rd;
         }
-        .green-slider &{
-            border: 1px solid $green;
+        .gn-slider &{
+            border: 1px solid $gn;
         }
     }
     .slick-active button{
-        background: $blue;
-        .green-slider &{
-           background: $green;
+        background: $be;
+        .gn-slider &{
+           background: $gn;
         }
     }
 }

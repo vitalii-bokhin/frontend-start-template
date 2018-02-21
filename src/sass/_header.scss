@@ -9,7 +9,7 @@
 	&_fixed,
 	&.toggled{
 		background: #FFF;
-		box-shadow: 0 2px 5px rgba(0,0,0,.21);
+		box-shadow: 0 1px 11px rgba(0,0,0,.21);
 	}
 	&__wrap{
 		height: 100px;
@@ -20,41 +20,42 @@
 		padding-top: 20px;
 		padding-bottom: 20px;
 	}
-	&__right{
-		float: right;
-	}
-	&__menu-wrap{
-		float: left;
-	}
 	&__nav{
 		float: left;
+		&-wrap{
+			float: right;
+		}
 	}
 	&__toggle{
 		display: none !important;
 	}
+	&__user{
+		float: left;
+		margin-left: 25px;
+	}
 	
 	@media(max-width: 1000px){
-		&__menu-wrap{
-			display: block;
-			visibility: hidden;
-			opacity: 0;
-			position: fixed;
-			top: 100px;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			overflow: auto;
-			background: #FFF;
-			border-top: 1px solid $l-gray;
-			transition: .5s;
-			&.toggled{
-				visibility: visible;
-				opacity: 1;
-			}
-		}
 		&__nav{
 			float: none;
 			padding: 20px 0;
+			&-wrap{
+				float: none;
+				visibility: hidden;
+				opacity: 0;
+				position: fixed;
+				top: 100px;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				overflow: auto;
+				background: #FFF;
+				border-top: 1px solid $lgy;
+				transition: .5s;
+				&.toggled{
+					visibility: visible;
+					opacity: 1;
+				}
+			}
 		}
 		&__toggle{
 			display: block !important;
@@ -70,7 +71,7 @@
 .menu{
 	@include clr;
 	list-style: none;
-	padding-top: 5px;
+	padding-top: 8px;
 	&__item{
 		float: left;
 		margin-left: 45px;
@@ -87,7 +88,7 @@
 		text-decoration: none;
 		transition: .5s;
 		&:hover{
-			color: $red;
+			color: $rd;
 		}
 	}
 	&__arr{
@@ -127,7 +128,7 @@
 			display: inline-block;
 			transition: .5s;
 			&:hover{
-				color: $red;
+				color: $rd;
 			}
 		}
 		.menu__item_has-children:hover &{
@@ -171,5 +172,45 @@
 				display: block;
 			}
 		}
+	}
+}
+
+/*User*/
+.user{
+	height: 34px;
+	position: relative;
+	&__thumb{
+		display: inline-block;
+		width: 34px;
+		height: 34px;
+		border-radius: 34px;
+		vertical-align: middle;
+		overflow: hidden;
+	}
+	&__name{
+		font-size: 14px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 21px;
+		text-align: right;
+	}
+
+	&__link{
+		text-decoration: none;
+		transition: .5s;
+		&:hover{
+			color: $rd;
+		}
+		&-logout{
+			font-size: 13px;
+			margin-top: 3px;
+			opacity: .8;
+		}
+	}
+	&__bubble{
+		width: 250px;
+		top: 45px;
+		right: 0;
+		padding: 25px;
 	}
 }

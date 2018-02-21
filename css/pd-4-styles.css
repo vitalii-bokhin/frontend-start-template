@@ -14,9 +14,7 @@ html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, a, img, strong, b, i, 
   background: none;
   background-repeat: no-repeat;
   background-position: 0 0;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   -webkit-appearance: none;
 }
 
@@ -223,3 +221,5 @@ img {
 .inv__cells p:last-child {
   border-right: 1px solid #919191;
 }
+
+/*# sourceMappingURL=../src/sass/pd-4-styles.css.map */

@@ -48,7 +48,7 @@ $(document).ready(function() {
 				var _$ = $(targetElements),
 				$par = $(_.attr('data-elements-parent'));
 
-				if ($par) {
+				if ($par.length) {
 					if (st) {
 						$par.find(targetElements).addClass('toggled');
 					} else {

@@ -535,8 +535,9 @@
 				<div class="form__txt">Текстовое поле с резиновой высотой:</div>
 
 				<div class="form__field">
-					<textarea id="area-2" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-					<label for="area-2" class="overlabel">Текстовое поле</label>
+					<div class="form__textarea-mirror"></div>
+					<textarea data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+					<label class="overlabel">Текстовое поле</label>
 					<div class="form__error-tip">Заполните поле</div>
 				</div>
 
@@ -548,9 +549,12 @@
 				<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием:</div>
 
 				<div class="form__field">
-					<div class="form__textarea_var-h-wrap">
-						<textarea id="area-3" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-						<label for="area-3" class="overlabel">Текстовое поле</label>
+					<div class="form__textarea_var-h-wrap middle">
+						<div class="middle__block">
+							<div class="form__textarea-mirror"></div>
+							<textarea data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+							<label class="overlabel">Текстовое поле</label>
+						</div>
 					</div>
 					<div class="form__error-tip">Заполните поле</div>
 				</div>
@@ -566,9 +570,12 @@
 
 				<div class="form__field">
 					<div class="form__select form__select_autocomplete">
-						<div class="form__textarea_var-h-wrap">
-							<textarea class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
-							<label class="overlabel">Начинайте вводить</label>
+						<div class="form__textarea_var-h-wrap middle">
+							<div class="middle__block">
+								<div class="form__textarea-mirror"></div>
+								<textarea data-required="true" class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
+								<label class="overlabel">Начинайте вводить</label>
+							</div>
 						</div>
 						<ul class="form__select-options">
 							<li><button type="button" class="form__select-val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
@@ -599,6 +606,31 @@
 
 <div class="container">
 	<form id="form2" action="send.php" method="POST" class="form">
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="form__button button button_red">Submit</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="container">
+	<form id="form3" action="send.php" method="POST" class="form">
 		<div class="row">
 			<div class="col-6">
 				<div class="form__field">

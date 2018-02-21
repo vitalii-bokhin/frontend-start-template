@@ -26,10 +26,7 @@
 }
 
 .form{
-	display: block;
-	margin: 0 auto;
-	max-width: 700px;
-	font-size: 16px;
+	font-size: 1rem;
 	
 	.overlabel,
 	.overlabel-apply{
@@ -43,7 +40,7 @@
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		line-height: 1;
+		font-weight: 300;
 	}
 
 	&__text-input,
@@ -52,7 +49,7 @@
 	&__select-button{
 		display: block;
 		width: 100%;
-		border: 1px solid #c3c3c3;
+		border: 1px solid $gy;
 	}
 
 	&__textarea{
@@ -61,8 +58,7 @@
 		overflow: auto;
 		line-height: 1.3;
 		&_var-h{
-			height: 42px;
-			min-height: 42px;
+			@include fwh;
 			overflow: hidden;
 			& + .overlabel,
 			& + .overlabel-apply{
@@ -70,21 +66,16 @@
 			}
 			&-wrap{
 				height: 80px;
-				line-height: 73px;
 				.form__textarea_var-h{
 					border: none;
-					display: inline-block;
-					vertical-align: middle;
 				}
-				.overlabel,
-				.overlabel-apply{
-					top: 23px;
+				.middle__block{
+					position: relative;
 				}
 			}
 		}
-		&-shape{
-			position: absolute;
-			left: -9999px;
+		&-mirror{
+			min-height: 42px;
 			white-space: pre-wrap;
 			line-height: 1.3;
 			padding: 10px 15px;
@@ -99,7 +90,7 @@
 			width: 0;
 			height: 0;
 			border: 4px solid transparent;
-			border-top: 6px solid $red;
+			border-top: 6px solid $rd;
 			position: absolute;
 			right: 13px;
 			top: 50%;
@@ -113,6 +104,10 @@
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
+			font-weight: 300;
+			.form__select_changed &{
+				font-weight: 400;
+			}
 		}
 		&-options{
 			list-style: none;
@@ -144,18 +139,18 @@
 			text-align: left;
 			transition: .5s;
 			&:hover{
-				background: $gray;
+				background: $gy;
 				color: #fff;
 			}
 			&_checked{
-				background: $red;
+				background: $rd;
 				color: #fff;
 			}
 		}
 		&_opened{
 			&:after{
 				border: 4px solid transparent;
-				border-bottom: 6px solid $red;
+				border-bottom: 6px solid $rd;
 				margin-top: -7px;
 			}
 		}
@@ -177,7 +172,7 @@
 
 	&__error-tip{
 		font-size: 12px;
-		color: $red;
+		color: $rd;
 		padding-top: 3px;
 		display: none;
 	}
@@ -189,12 +184,12 @@
 			.form__text-input,
 			.form__textarea,
 			.form__select-button{
-				border: 1px solid $red;
+				border: 1px solid $rd;
 			}
 			.overlabel,
 			.overlabel-apply,
 			.form__select-button{
-				color: $red;
+				color: $rd;
 			}
 			.form__error-tip{
 				display: block;
@@ -231,7 +226,7 @@
 
 	&__alert{
 		font-size: 13px;
-		color: $red;
+		color: $rd;
 		text-align: center;
 		padding-top: 10px;
 		display: none;
@@ -271,13 +266,13 @@
 				transition: border-color .5s;
 			}
 			&:hover:before{
-				border: 1px solid $red;
+				border: 1px solid $rd;
 			}
 		}
 		&_error,
 		&-group_error{
 			.form__chbox-label:before{
-				border: 1px solid $red;
+				border: 1px solid $rd;
 			}
 		}
 	}
@@ -298,7 +293,7 @@
 						width: 10px;
 						height: 10px;
 						border-radius: 10px;
-						background: $red;
+						background: $rd;
 					}
 				}
 			}
@@ -322,12 +317,12 @@
 				transition: border-color .5s;
 			}
 			&:hover:before{
-				border: 1px solid $red;
+				border: 1px solid $rd;
 			}
 		}
 		&-group_error{
 			.form__radio-label:before{
-				border: 1px solid $red;
+				border: 1px solid $rd;
 			}
 		}
 	}
@@ -340,8 +335,8 @@
 		}
 		&-btn{
 			font-size: 30px;
-			color: $red;
-			border-bottom: 1px solid $red;
+			color: $rd;
+			border-bottom: 1px solid $rd;
 			cursor: pointer;
 			&_delete{
 				display: none;

@@ -1,94 +1,10 @@
 html, body {
 	@include ff-hn;
-	color: #000000;
+	color: $bk;
 	background: #ffffff;
 	height: 100%;
 }
 
 a:hover{
 	text-decoration: none;
-}
-
-.ta-c{
-	text-align: center;
-}
-.ta-r{
-	text-align: right;
-}
-
-.pos-r{
-	position: relative;
-}
-
-.c-red{
-	color: $red;
-}
-
-.mb-35{
-	margin-bottom: 35px;
-}
-.mb-15{
-	margin-bottom: 15px;
-}
-
-@media(min-width: 1201px){
-	.vw1201{
-		&-hide{
-			display: none;
-		}
-	}
-}
-
-@media(max-width: 1200px){
-	.vw1200{
-		&-hide{
-			display: none;
-		}
-	}
-}
-
-@media(min-width: 1001px){
-	.vw1001{
-		&-hide{
-			display: none;
-		}
-	}
-}
-
-@media(max-width: 1000px){
-	.vw1000{
-		&-hide{
-			display: none;
-		}
-		&-pad-x-0{
-			padding-left: 0;
-			padding-right: 0;
-		}
-		&-pad-y-0{
-			padding-top: 0;
-			padding-bottom: 0;
-		}
-		&-m-0{
-			margin: 0;
-		}
-		&-mb-35{
-			margin-bottom: 35px;
-		}
-	}
-}
-
-@media(min-width: 701px){
-	.vw701{
-		&-hide{
-			display: none;
-		}
-	}
-}
-
-@media(max-width: 700px){
-	.vw700{
-		&-hide{
-			display: none;
-		}
-	}
 }

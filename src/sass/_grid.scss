@@ -4,7 +4,6 @@
 	min-height: 100%;
 	position: relative;
 	padding: 100px 0;
-	background-image: linear-gradient(to bottom, #ffe716, #fff8ba);
 	&_fsscroll{
 		padding-top: 0 !important;
 	}
@@ -215,6 +214,8 @@
 	}
 
 	&-center{
+		float: none !important;
+		clear: both;
 		margin: auto;
 	}
 

@@ -25,7 +25,7 @@ function Numberspin(elem, opt) {
 	function spin() {
 
 		interval = setTimeout(function run() {
-console.log(curVal);
+
 				if (curVal < endVal) {
 
 					if (options.animation == 1) {

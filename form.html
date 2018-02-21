@@ -17,13 +17,13 @@
 <header class="header">
 	<div class="row-col-mid wrap header__wrap">
 		<div class="header__logo col-3">
-			<div class="mid-image-wrap">
-				<a href="index.html"><img src="images/dealersair.svg" alt="logo" class="mid-image"></a>
+			<div class="middle-img-wrap">
+				<a href="index.html"><img src="images/dealersair.svg" alt="logo" class="middle-img"></a>
 			</div>
 		</div>
 		<div class="col-9">
-			<div class="header__right">
-				<div id="header-mob-menu" class="header__menu-wrap">
+			
+				<div id="header-mob-menu" class="header__nav-wrap">
 					<nav class="header__nav">
 						<ul class="menu">
 							<li class="menu__item menu__item_has-children">
@@ -64,10 +64,24 @@
 							</li>
 						</ul>
 					</nav>
+					<div class="header__user user middle">
+						<span class="user__name">
+							<a href="#" class="js-toggle user__link" data-target-elements="#user-menu,.user__thumb a">Lufter</a><br>
+							<a href="#" class="user__link-logout">Выйти</a>
+						</span>
+						<span class="user__thumb">
+							<a href="#" class="js-toggle" data-target-elements="#user-menu,.user__link"><img src="images/avatar.png" alt="avatar" class="cover-img"></a>
+						</span>
+
+						<div id="user-menu" class="user__bubble bubble">
+							
+						</div>
+
+					</div>
 				</div>
-			</div>
+			
 		</div>
-		<button class="js-toggle toggle header__toggle" data-target-id="header-mob-menu" data-target-class="header"><span></span><span></span><span></span><span></span></button>
+		<button class="js-toggle toggle header__toggle" data-target-elements="#header-mob-menu,.header"><span></span><span></span><span></span><span></span></button>
 	</div>
 </header>
 <!--/HEADER-->
@@ -592,8 +606,9 @@
 				<div class="form__txt">Текстовое поле с резиновой высотой:</div>
 
 				<div class="form__field">
-					<textarea id="area-2" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-					<label for="area-2" class="overlabel">Текстовое поле</label>
+					<div class="form__textarea-mirror"></div>
+					<textarea data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+					<label class="overlabel">Текстовое поле</label>
 					<div class="form__error-tip">Заполните поле</div>
 				</div>
 
@@ -605,9 +620,12 @@
 				<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием:</div>
 
 				<div class="form__field">
-					<div class="form__textarea_var-h-wrap">
-						<textarea id="area-3" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-						<label for="area-3" class="overlabel">Текстовое поле</label>
+					<div class="form__textarea_var-h-wrap middle">
+						<div class="middle__block">
+							<div class="form__textarea-mirror"></div>
+							<textarea data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+							<label class="overlabel">Текстовое поле</label>
+						</div>
 					</div>
 					<div class="form__error-tip">Заполните поле</div>
 				</div>
@@ -623,9 +641,12 @@
 
 				<div class="form__field">
 					<div class="form__select form__select_autocomplete">
-						<div class="form__textarea_var-h-wrap">
-							<textarea class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
-							<label class="overlabel">Начинайте вводить</label>
+						<div class="form__textarea_var-h-wrap middle">
+							<div class="middle__block">
+								<div class="form__textarea-mirror"></div>
+								<textarea data-required="true" class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
+								<label class="overlabel">Начинайте вводить</label>
+							</div>
 						</div>
 						<ul class="form__select-options">
 							<li><button type="button" class="form__select-val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
@@ -656,6 +677,31 @@
 
 <div class="container">
 	<form id="form2" action="send.php" method="POST" class="form">
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="form__button button button_red">Submit</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="container">
+	<form id="form3" action="send.php" method="POST" class="form">
 		<div class="row">
 			<div class="col-6">
 				<div class="form__field">
