@@ -50,6 +50,14 @@
 		display: block;
 		width: 100%;
 		border: 1px solid $gy;
+		transition: .5s;
+		&:hover,
+		&:focus{
+			box-shadow: 2px 1px 21px rgba(0,0,0,.21);
+		}
+		&:focus{
+			border-color: $bk;
+		}
 	}
 
 	&__textarea{
@@ -68,6 +76,7 @@
 				height: 80px;
 				.form__textarea_var-h{
 					border: none;
+					box-shadow: none;
 				}
 				.middle__block{
 					position: relative;
@@ -79,6 +88,7 @@
 			white-space: pre-wrap;
 			line-height: 1.3;
 			padding: 10px 15px;
+			visibility: hidden;
 		}
 		
 	}

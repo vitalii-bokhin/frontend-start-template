@@ -1022,6 +1022,15 @@ a:hover {
   display: block;
   width: 100%;
   border: 1px solid #aaaaaa;
+  transition: .5s;
+}
+
+.form__text-input:hover, .form__text-input:focus, .form__textarea:hover, .form__textarea:focus, .form__textarea_var-h-wrap:hover, .form__textarea_var-h-wrap:focus, .form__select-button:hover, .form__select-button:focus {
+  box-shadow: 2px 1px 21px rgba(0, 0, 0, 0.21);
+}
+
+.form__text-input:focus, .form__textarea:focus, .form__textarea_var-h-wrap:focus, .form__select-button:focus {
+  border-color: #212121;
 }
 
 .form__textarea {
@@ -1051,6 +1060,7 @@ a:hover {
 
 .form__textarea_var-h-wrap .form__textarea_var-h {
   border: none;
+  box-shadow: none;
 }
 
 .form__textarea_var-h-wrap .middle__block {
@@ -1062,6 +1072,7 @@ a:hover {
   white-space: pre-wrap;
   line-height: 1.3;
   padding: 10px 15px;
+  visibility: hidden;
 }
 
 .form__select {
