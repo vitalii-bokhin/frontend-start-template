@@ -522,7 +522,7 @@ var Form = {
 				_.input = _form.find('.form__text-input[data-pass-compare="'+ gr +'"]');
 				if (!_.pass()) {
 					if (_.input.eq(0).val() != _.input.eq(1).val()) {
-						_.error(true);
+						_.error(true, true, true);
 					} else {
 						_.error(false);
 					}
