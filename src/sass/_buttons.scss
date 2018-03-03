@@ -7,6 +7,7 @@
 	text-align: center;
 	color: #FFF;
 	border: 1px solid #fff;
+	background: none;
 	text-transform: uppercase;
 	text-decoration: none;
 	transition: .5s;
@@ -94,7 +95,8 @@
 	height:25px;
 	cursor:pointer;
 	position: relative;
-	
+	background: none;
+	border: none;
 	span{
 		height: 3px;
 		background: $rd;
@@ -156,7 +158,8 @@
 	height:25px;
 	cursor:pointer;
 	position: relative;
-	
+	background: none;
+	border: none;
 	&:after,
 	&:before{
 		@include ab;
@@ -200,6 +203,7 @@
 	height: 64px;
 	border-radius: 64px;
 	background: $rd;
+	border: none;
 	transition: .5s;
 	&:before{
 		@include ab;
