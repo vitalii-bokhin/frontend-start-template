@@ -52,7 +52,11 @@ $(document).ready(function(){
 			dataType:"html",
 			data: $f.serialize(), //new FormData(form),
 			success: function(response){
-				Popup.message('#message-popup', response);
+				if (response == 'send') {
+					Popup.message('#message-popup', 'Форма отправлена', function() {
+						callback(true, true);
+					});
+				}
 			},
 			error: function() {
 				alert('Send Error');

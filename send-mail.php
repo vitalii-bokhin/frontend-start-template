@@ -11,8 +11,7 @@ $header = "Content-type: text/html; charset=\"utf-8\"\r\n";
 $header .= "From: dealersair.com <info@dealersair.com>\r\n";
 
 if (mail($mail, $subject, $utext, $header)) {
-	echo "Форма отправлена";
-} else {
-	echo "Server Error";
+	echo 'send';
 }
+
 ?>
