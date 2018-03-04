@@ -1,17 +1,21 @@
 <?php
-$mail = "lufter21@gmail.com";
+$response = array();
 
-$subject = "Заявка с сайта dealersair.com";
+$send_to = (!empty($_POST['send_to'])) ? $_POST['send_to'] : 'dealersair@gmail.com';
+$from = 'dealersair.com <info@dealersair.com>';
 
-$utext = '<strong>Имя:</strong> '.$_POST['name'].'<br />';
-$utext .= '<strong>Телефон:</strong> '.$_POST['tel'].'<br />';
-$utext .= '<strong>Сообщение:</strong> '.$_POST['message'];
+$subject = (!empty($_POST['subject'])) ? $_POST['subject'] : $from;
+
+$body = '<strong>Имя:</strong> '.$_POST['name'].'<br />';
+$body .= '<strong>E-mail:</strong> '.$_POST['email'].'<br />';
+$body .= '<strong>Сообщение:</strong> '.$_POST['message'];
 
 $header = "Content-type: text/html; charset=\"utf-8\"\r\n";
-$header .= "From: dealersair.com <info@dealersair.com>\r\n";
+$header .= "From: ".$from."\r\n";
 
-if (mail($mail, $subject, $utext, $header)) {
-	echo 'send';
+if (mail($send_to, $subject, $body, $header)) {
+	$response['status'] = 'sent';
 }
 
+echo json_encode($response);
 ?>

@@ -49,17 +49,17 @@ $(document).ready(function(){
 		/*$.ajax({
 			url: $f.attr('action'),
 			type:"POST",
-			dataType:"html",
+			dataType:"json",
 			data: $f.serialize(), //new FormData(form),
 			success: function(response){
-				if (response == 'send') {
+				if (response.status == 'sent') {
 					Popup.message('#message-popup', 'Форма отправлена', function() {
 						callback(true, true);
 					});
 				}
 			},
 			error: function() {
-				alert('Send Error');
+				alert('Error');
 			}
 		});*/
 		
