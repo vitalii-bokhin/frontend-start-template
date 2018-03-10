@@ -16,7 +16,7 @@
 <!--/HEADER-->
 
 <div class="container">
-	<div class="row wrap">
+	<div class="row wrap vw1000-row-col">
 		<div class="col-3">
 			<p style="background: yellow">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -50,7 +50,7 @@
 </div>
 
 <div class="container">
-	<div class="row wrap">
+	<div class="row vw1000-row-col wrap">
 		<div class="col-4">
 			<div id="diagr-num-0" class="progr__item-num">0</div>
 			<div id="diagr-num-2" class="progr__item-num">0</div>
@@ -69,7 +69,7 @@
 </div>
 
 <div class="container">
-	<div class="row wrap">
+	<div class="row vw1000-row-col wrap">
 		<div class="col-2">
 			<div class="numspin">55555</div>
 		</div>
@@ -89,14 +89,14 @@
 </div>
 
 <div class="container">
-	<div class="row wrap" style="margin-top: 300px; margin-bottom: 300px">
+	<div class="row wrap" style="margin-top: 100px; margin-bottom: 100px">
 		<div class="col">
-			<div class="numspin-s">44 444</div>
+			<div class="numspin-s">4 444 444</div>
 		</div>
 	</div>
 	<div class="row wrap">
 		<div class="col">
-			<div class="numspin-s">55 555</div>
+			<div class="numspin-s">5 555 555</div>
 		</div>
 	</div>
 </div>
@@ -113,18 +113,21 @@
 <!--/POPUPs-->
 
 @@include('./_javascript.html')
-<script src="js/more.js"></script>
-
-<script src="js/diagram.js"></script>
 
 <script>
-	$(document).ready(function() {
-		var main_diagram = [117,111,82,22];
-		diagram('diagram', main_diagram, { animate: true, numId: 'diagr-num-'});
-	});
-</script>
 
-<script src="js/timer.js"></script>
+	$(document).ready(function() {
+		var main_diagram = [117, 111, 82, 22];
+
+		$(window).scroll(function() {
+			if ( $('#diagram').offset().top < (($(window).height()/2)+$(window).scrollTop()) ) {
+				diagram('diagram', main_diagram, { animate: true, numId: 'diagr-num-'});
+			}
+		});
+
+	});
+
+</script>
 
 <script>
 	Timer.init(350, function() {
@@ -132,7 +135,7 @@
 	});
 </script>
 
-<script src="js/numberspin.js"></script>
+
 
 <script>
 	$(document).ready(function() {
@@ -148,6 +151,11 @@
 			$(this).click(function() {
 				ns2.start();
 			});
+		});
+
+		$('.numspin-s').each(function() {
+			var _$ = $(this);
+			numberspin(this);
 		});
 
 

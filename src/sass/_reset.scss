@@ -1,36 +1,41 @@
 html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, header, footer, section, nav, article, aside {
-  margin: 0;
-  padding: 0;
-  outline: none;
-  font-weight: inherit;
-  font-style: inherit;
-  font-size: inherit;
-  font-family: inherit;
-  line-height: 1;
-  vertical-align: baseline;
-  color: inherit;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-}
-
-b, strong {
-  font-weight: 700;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	color: inherit;
+	line-height: 1;
+	vertical-align: baseline;
+	box-sizing: border-box;
+	-webkit-appearance: none;
 }
 
 header, footer, section, nav, article, aside {
-  display: block;
-}
+	display: block;
+} 
 
 button{
-  overflow: visible;
-  cursor: pointer;
+	overflow: visible;
+	cursor: pointer;
 }
 
 html, body {
-  font-size: 16px;
-  font-weight: 400;
+	font-size: 16px;
+	font-weight: 400;
+	font-style: normal;
 }
 
 img{
-  vertical-align: bottom;
+	vertical-align: bottom;
+}
+
+b, strong {
+	font-weight: 700;
+}
+
+i{
+	font-style: italic;
 }

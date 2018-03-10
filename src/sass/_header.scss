@@ -98,6 +98,8 @@
 		position: relative;
 		bottom: 2px;
 		margin-left: 7px;
+		border: none;
+		background: none;
 		@include sp(-36px -34px);
 		.menu__item_has-children &{
 			display: inline-block;

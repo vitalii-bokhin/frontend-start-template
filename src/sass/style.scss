@@ -1,10 +1,10 @@
-@import "helpers";
+@import "helper";
 
 /*===RESET===*/
 @import "reset";
 
 /*===FONTS===*/
-@import "fonts";
+@import "font";
 
 /*===COMMON===*/
 @import "common";
@@ -19,7 +19,7 @@
 @import "block";
 
 /*===IMAGES===*/
-@import "images";
+@import "image";
 
 /*===FORM===*/
 @import "form";
@@ -36,14 +36,17 @@
 /*===ACCORD===*/
 @import "accord";
 
+/*===TAB===*/
+@import "tab";
+
 /*===MORE===*/
 @import "more";
 
 /*===BUTTONs===*/
-@import "buttons";
+@import "button";
 
 /*===FOOTER===*/
 @import "footer";
 
 /*===CLASSES===*/
-@import "classes";
+@import "class";
