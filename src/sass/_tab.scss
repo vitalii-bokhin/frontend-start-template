@@ -1,0 +1,31 @@
+.tab{
+	&__buttons{
+		list-style: none;
+		@include clr;
+		li{
+			float: left;
+		}
+	}
+	&__button{
+		&_active{
+			color: $bk !important;
+		}
+	}
+	&__container{
+		position: relative;
+		transition: height .5s;
+	}
+	&__item{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		visibility: hidden;
+		opacity: 0;
+		transition: .5s;
+		&_active{
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+}
