@@ -58,7 +58,8 @@ gulp.task('inc', function() {
 	gulp.src(['!./src/html/_*.html', './src/html/*.html'])
 	.pipe(fileinclude())
 	.pipe(replace('..\/..\/', ''))
-	.pipe(gulp.dest('./'));
+	.pipe(gulp.dest('./'))
+	.pipe(notify('HTML Included!'));
 });
 
 gulp.task('css', function () {
@@ -86,3 +87,5 @@ gulp.task('minjs', function () {
 	.pipe(rename({suffix: '.min'}))
 	.pipe(gulp.dest('./js'));
 });
+
+gulp.task('fin', ['inc', 'css']);

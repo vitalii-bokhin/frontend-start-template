@@ -953,10 +953,9 @@ a:hover {
   max-width: none;
 }
 
-.header__logo {
-  height: 100px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+.header__logo img {
+  width: 121px;
+  height: auto;
 }
 
 .header__nav {
