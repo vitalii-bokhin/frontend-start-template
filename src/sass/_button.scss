@@ -220,3 +220,43 @@
 		opacity: 0.7;
 	}
 }
+
+/*Social*/
+.social{
+	list-style: none;
+	@include clr;
+	li{
+		float: left;
+		margin-right: 23px;
+		&:last-child{
+			margin: 0;
+		}
+	}
+	&__a{
+		display: block;
+		width: 20px;
+		height: 20px;
+		transition: .5s;
+		&_vk{
+			
+		}
+		&_fb{
+			
+		}
+		&_ok{
+			
+		}
+		&_tw{
+			
+		}
+		&_ing{
+			
+		}
+		&_ggl{
+			
+		}
+		&:hover{
+			opacity: .6;
+		}
+	}
+}
