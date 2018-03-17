@@ -1,9 +1,4 @@
-var winW, winH;
-
 $(document).ready(function(){
-
-	winW = $(window).width();
-	winH = $(window).height();
 
 	$('.wrapper, .wrapper__full-height').css('padding-bottom', $('.footer').innerHeight());
 
@@ -73,5 +68,9 @@ $(document).ready(function(){
 	});
 
 	Form.submit('#form3');
+
+	$(window).on('winResized', function() {
+		console.log(winW, winH);
+	});
 
 });
