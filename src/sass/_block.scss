@@ -1,0 +1,64 @@
+/*video*/
+.video{
+	position: relative;
+	cursor: pointer;
+	padding-top: 20px;
+	&__thumb{
+		@include fixprop(320, 182);
+		position: relative;
+		img{
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 2;
+		}
+		&:after{
+			@include ab;
+			@include fwh;
+			box-sizing: border-box;
+			z-index: 3;
+			border: 8px solid $vt;
+			opacity: 0;
+		}
+	}
+	&__play{
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 4;
+		margin: -20px 0 0 -29px;
+		visibility: hidden;
+		opacity: 0;
+	}
+	&__chanal{
+		width: 70px;
+		height: 70px;
+		position: relative;
+		bottom: 15px;
+		left: 13px;
+		border: 2px solid $vt;
+		text-align: center;
+		background: #FFF;
+		z-index: 3;
+		float: left;
+	}
+	&__tit{
+		margin: 18px 0 0 108px;
+		font-size: 14px;
+		font-weight: 700;
+		line-height: (19/14);
+	}
+	&_focus{
+		.video{
+			&__thumb{
+				transform: scale(1.1);
+				&:after{
+					opacity: 1;
+				}
+			}
+			&__tit{
+				color: $vt;
+			}
+		}
+	}
+}
