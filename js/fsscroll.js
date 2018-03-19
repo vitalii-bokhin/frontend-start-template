@@ -212,10 +212,7 @@ var FsScroll = {
 
 			initFsS();
 
-			$(window).on('winResized', function() {
-				initFsS();
-			});
-
+			$(window).on('winResized', initFsS);
 
 		}
 

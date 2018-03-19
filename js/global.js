@@ -3,6 +3,9 @@ var winW, winH;
 
 (function() {
 
+//get useragent
+document.documentElement.setAttribute('data-useragent', navigator.userAgent);
+
 //get window sizes
 winW = window.innerWidth;
 winH = window.innerHeight;
