@@ -138,6 +138,7 @@
 }
 
 .col{
+	width: auto;
 	&-0-1{
 		width: 4.166665%;
 	}
@@ -207,7 +208,7 @@
 	&-11-12{
 		width: 95.833295%;
 	}
-	&, &-12{
+	&-12{
 		width: 100%;
 		float: none !important;
 		clear: both;
@@ -272,7 +273,7 @@
 		&-row{
 			&-col{
 				display: block;
-				& > div[class*="col"]{
+				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
@@ -286,6 +287,7 @@
 			}
 		}
 		&-col{
+			width: auto;
 			&-0-1{
 				width: 4.166665%;
 			}
@@ -355,7 +357,7 @@
 			&-11-12{
 				width: 95.833295%;
 			}
-			&, &-12{
+			&-12{
 				width: 100%;
 				float: none !important;
 				clear: both;
@@ -372,7 +374,7 @@
 		&-row{
 			&-col{
 				display: block;
-				& > div[class*="col"]{
+				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
@@ -386,6 +388,7 @@
 			}
 		}
 		&-col{
+			width: auto;
 			&-0-1{
 				width: 4.166665%;
 			}
@@ -455,7 +458,7 @@
 			&-11-12{
 				width: 95.833295%;
 			}
-			&, &-12{
+			&-12{
 				width: 100%;
 				float: none !important;
 				clear: both;
@@ -472,7 +475,7 @@
 		&-row{
 			&-col{
 				display: block;
-				& > div[class*="col"]{
+				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
@@ -486,6 +489,7 @@
 			}
 		}
 		&-col{
+			width: auto;
 			&-0-1{
 				width: 4.166665%;
 			}
@@ -555,7 +559,7 @@
 			&-11-12{
 				width: 95.833295%;
 			}
-			&, &-12{
+			&-12{
 				width: 100%;
 				float: none !important;
 				clear: both;
@@ -572,7 +576,7 @@
 		&-row{
 			&-col{
 				display: block;
-				& > div[class*="col"]{
+				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
@@ -586,6 +590,7 @@
 			}
 		}
 		&-col{
+			width: auto;
 			&-0-1{
 				width: 4.166665%;
 			}
@@ -655,7 +660,7 @@
 			&-11-12{
 				width: 95.833295%;
 			}
-			&, &-12{
+			&-12{
 				width: 100%;
 				float: none !important;
 				clear: both;
@@ -672,7 +677,7 @@
 		&-row{
 			&-col{
 				display: block;
-				& > div[class*="col"]{
+				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
@@ -686,6 +691,7 @@
 			}
 		}
 		&-col{
+			width: auto;
 			&-0-1{
 				width: 4.166665%;
 			}
@@ -755,7 +761,7 @@
 			&-11-12{
 				width: 95.833295%;
 			}
-			&, &-12{
+			&-12{
 				width: 100%;
 				float: none !important;
 				clear: both;
