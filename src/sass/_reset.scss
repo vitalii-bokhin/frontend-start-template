@@ -7,7 +7,7 @@ html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, a, img, strong, b, i, 
 	font-size: inherit;
 	font-family: inherit;
 	color: inherit;
-	line-height: 1;
+	line-height: inherit;
 	vertical-align: baseline;
 	box-sizing: border-box;
 	-webkit-appearance: none;
@@ -26,6 +26,7 @@ html, body {
 	font-size: 16px;
 	font-weight: 400;
 	font-style: normal;
+	line-height: 1;
 }
 
 img{
