@@ -5,6 +5,33 @@ html, body {
 	height: 100%;
 }
 
+.wrapper{
+	min-width: 320px;
+	overflow: hidden;
+	min-height: 100%;
+	position: relative;
+	padding: 100px 0;
+	&_fsscroll{
+		padding-top: 0 !important;
+	}
+
+	&__full-height{
+		@include fwh;
+		z-index: 2;
+		padding: 100px 0;
+		overflow: hidden;
+	}
+
+}
+
+/*full screen scroll*/
+.fsscroll{
+	&__screen{
+		position: relative;
+		padding: 100px 0;
+	}
+}
+
 a:hover{
 	text-decoration: none;
 }

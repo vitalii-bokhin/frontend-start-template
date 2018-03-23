@@ -468,23 +468,16 @@
 <!--POPUPs/-->
 <div class="popup">
 
-	<div id="popup-1" class="popup__window" style="width: 550px;">
+	<div id="popup-1" class="popup__window" style="max-width: 550px;">
 		<button class="popup__close btn-close"></button>
 		<div class="popup__inner" style="height: 100px;">
 			<a href="#message-popup" class="js-open-msg-popup">POPUP с сообщением</a>
 		</div> 
 	</div>
 
-	<div id="popup-2" class="popup__window" style="width: 550px;">
+	<div id="popup-2" class="popup__window" style="max-width: 550px;">
 		<button class="popup__close btn-close"></button>
 		<div class="popup__inner" style="height: 1300px;">
-			
-		</div>
-	</div>
-
-	<div id="message-popup" class="popup__window" style="width: 550px;">
-		<button class="popup__close btn-close"></button>
-		<div class="popup__inner">
 			
 		</div>
 	</div>
@@ -511,6 +504,15 @@
 			</div>
 		</div>
 	</div>
+
+	<!--Message Popup/-->
+	<div id="message-popup" class="popup-message popup__window">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner">
+			<!-- message html -->
+		</div>
+	</div>
+	<!--/Message Popup-->
 
 </div>
 <!--/POPUPs-->

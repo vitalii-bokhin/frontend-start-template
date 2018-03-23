@@ -110,8 +110,8 @@
 			</div>
 			<div class="col-6">
 				<div class="form__field form__field_btn">
-					<label for="i-txt-2" class="overlabel">Поле</label>
-					<input id="i-txt-2" type="text" class="form__text-input" value="">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
 					<button class="form__btn form__btn_search"></button>
 				</div>
 			</div>
@@ -120,14 +120,14 @@
 		<div class="row">
 			<div class="col-4">
 				<div class="form__field">
-					<label for="i-txt-3" class="overlabel">Поле</label>
-					<input id="i-txt-3" type="text" class="form__text-input" value="">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
 				</div>
 			</div>
 			<div class="col-4">
 				<div class="form__field">
-					<label for="i-txt-4" class="overlabel">Поле</label>
-					<input id="i-txt-4" type="text" class="form__text-input" value="">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
 				</div>
 			</div>
 			<div class="col-4">
@@ -153,14 +153,14 @@
 			<div class="col-4">
 				<div class="form__field">
 					<label class="overlabel">E-mail</label>
-					<input type="text" data-type="email" class="form__text-input" value="">
+					<input type="text" data-type="email" data-required="true" class="form__text-input" value="">
 					<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
 				</div>
 			</div>
 			<div class="col-4">
 				<div class="form__field">
-					<label for="i-emai-2" class="overlabel">E-mail</label>
-					<input id="i-emai-2" type="text" data-type="email" data-required="true" class="form__text-input" value="">
+					<label class="overlabel">E-mail</label>
+					<input type="text" data-type="email" data-required="true" class="form__text-input" value="">
 					<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
 				</div>
 			</div>
@@ -755,23 +755,16 @@
 <!--POPUPs/-->
 <div class="popup">
 
-	<div id="popup-1" class="popup__window" style="width: 550px;">
+	<div id="popup-1" class="popup__window" style="max-width: 550px;">
 		<button class="popup__close btn-close"></button>
 		<div class="popup__inner" style="height: 100px;">
 			<a href="#message-popup" class="js-open-msg-popup">POPUP с сообщением</a>
 		</div> 
 	</div>
 
-	<div id="popup-2" class="popup__window" style="width: 550px;">
+	<div id="popup-2" class="popup__window" style="max-width: 550px;">
 		<button class="popup__close btn-close"></button>
 		<div class="popup__inner" style="height: 1300px;">
-			
-		</div>
-	</div>
-
-	<div id="message-popup" class="popup__window" style="width: 550px;">
-		<button class="popup__close btn-close"></button>
-		<div class="popup__inner">
 			
 		</div>
 	</div>
@@ -798,6 +791,15 @@
 			</div>
 		</div>
 	</div>
+
+	<!--Message Popup/-->
+	<div id="message-popup" class="popup-message popup__window">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner">
+			<!-- message html -->
+		</div>
+	</div>
+	<!--/Message Popup-->
 
 </div>
 <!--/POPUPs-->

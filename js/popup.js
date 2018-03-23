@@ -1,8 +1,10 @@
 var Popup = {
-	closeCallback: null,
 	play: null,
 	ind: 0,
 	groupClass: '',
+	
+	closeCallback: function() {},
+
 	show: function(id,fun) {
 		var _ = this,
 		_popup = $(id);
