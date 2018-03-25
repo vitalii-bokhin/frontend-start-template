@@ -75,7 +75,7 @@ $(document).ready(function(){
 	Form.submit('#form3');
 
 	$(window).on('winResized', function() {
-		console.log(winW, winH);
+		console.log('window resized: '+ winW +'x'+ winH);
 	});
 
 });

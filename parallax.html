@@ -5,7 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 
-	<title>Accordion</title>
+	<title>Parallax | Template</title>
+
+	<style>
+		.parallax-element{
+			width: 50px;
+			height: 50px;
+			margin: 100px;
+		}
+	</style>
 
 </head>
 <body>
@@ -86,43 +94,14 @@
 </header>
 <!--/HEADER-->
 
+<div class="container" style="background: gray">
+	
+	<div class="parallax-element" style="background: red"></div>
+	<div class="parallax-element" style="background: blue"></div>
+	<div class="parallax-element" style="background: green"></div>
 
-<div class="accord">
-	<div class="accord__item">
-	<button class="accord__button">Пункт 1<span></span></button>
-		<div class="accord__content">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		</div>
-	</div>
-	<div class="accord__item">
-		<button class="accord__button">Пункт 2<span></span></button>
-		<div class="accord__content">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		</div>
-	</div>
-	<div class="accord__item">
-		<button class="accord__button">Пункт 3<span></span></button>
-		<div class="accord__content">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		</div>
-	</div>
+
 </div>
-
 
 <!--FOOTER/-->
 <footer class="footer">
@@ -222,6 +201,25 @@
 <script src="js/common.js"></script>
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 
- 
+
+<script>
+	$(document).ready(function() {
+
+		
+		$('.parallax-element').each(function() {
+			mouseparallax(this, {
+				listener: '.container',
+				deltaX: 100,
+				deltaY: 20
+			});
+		});
+
+
+		
+		
+		
+	});
+</script>
+
 </body>
 </html>
