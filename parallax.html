@@ -94,11 +94,11 @@
 </header>
 <!--/HEADER-->
 
-<div class="container" style="background: gray">
+<div class="container" style="background: gray; width: 500px; margin: auto;">
 	
-	<div class="parallax-element" style="background: red"></div>
-	<div class="parallax-element" style="background: blue"></div>
-	<div class="parallax-element" style="background: green"></div>
+	<div class="parallax-element el1" data-delta-x="150" style="background: red"></div>
+	<div class="parallax-element el2" style="background: blue"></div>
+	<div class="parallax-element el3" style="background: green"></div>
 
 
 </div>
@@ -208,16 +208,25 @@
 		
 		$('.parallax-element').each(function() {
 			mouseparallax(this, {
-				listener: '.container',
-				deltaX: 100,
-				deltaY: 20
+				listener: '.container'
 			});
 		});
 
 
+		/*mouseparallax('.el1', {
+				listener: '.container',
+				deltaX: 150
+			});
+
+		mouseparallax('.el2', {
+				listener: document,
+				deltaX: 80
+			});
 		
-		
-		
+		mouseparallax('.el3', {
+				listener: '.container'
+			});*/
+
 	});
 </script>
 
