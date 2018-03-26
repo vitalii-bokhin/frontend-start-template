@@ -12,7 +12,9 @@ function Mouseparallax(elem, options) {
 	$elem = $(elem),
 	startMousePos = {X: 0, Y: 0},
 	listenerW = $(opt.listener).innerWidth(),
-	listenerH = $(opt.listener).innerHeight();
+	listenerH = $(opt.listener).innerHeight(),
+	cursorPos = {X: 0, Y: 0},
+	direct = {};
 
 	_.translateElement = {X: 0, Y: 0};
 	_.startElementPos = {X: 0, Y: 0};
@@ -38,12 +40,21 @@ function Mouseparallax(elem, options) {
 		startMousePos.Y = e.clientY;
 	});
 
-	$(document).on('mouseleave', opt.listener, function(e) {
-		_.startElementPos.X = _.translateElement.X;
-		_.startElementPos.Y = _.translateElement.Y;
-	});
-
 	$(document).on('mousemove', opt.listener, function(e) {
+
+		if (e.clientX > cursorPos.X) {
+			direct.X = 'right';
+		} else {
+			direct.X = 'left';
+		}
+		cursorPos.X = e.clientX;
+
+		if (e.clientY > cursorPos.Y) {
+			direct.Y = 'up';
+		} else {
+			direct.Y = 'down';
+		}
+		cursorPos.Y = e.clientY;
 
 		var deltaMouse = {
 			X: e.clientX - startMousePos.X,
@@ -58,41 +69,63 @@ function Mouseparallax(elem, options) {
 		var translateX = _.translateElement.X,
 		translateY = _.translateElement.Y;
 
-		if (opt.rangeX || opt.rangeY) {
-
+		if (opt.rangeX) {
 			if (_.translateElement.X >= opt.rangeX[0]) {
+				if (direct.X == 'left') {
+					startMousePos.X = e.clientX;
+					_.startElementPos.X = +opt.rangeX[0];
+				}
 				translateX = opt.rangeX[0];
 			} else if (_.translateElement.X <= opt.rangeX[1]) {
+				if (direct.X == 'right') {
+					startMousePos.X = e.clientX;
+					_.startElementPos.X = +opt.rangeX[1];
+				}
 				translateX = opt.rangeX[1];
 			}
+		}
 
+		if (opt.rangeY) {
 			if (_.translateElement.Y >= opt.rangeY[0]) {
+				if (direct.Y == 'down') {
+					startMousePos.Y = e.clientY;
+					_.startElementPos.Y = +opt.rangeY[0];
+				}
 				translateY = opt.rangeY[0];
 			} else if (_.translateElement.Y <= opt.rangeY[1]) {
+				if (direct.Y == 'up') {
+					startMousePos.Y = e.clientY;
+					_.startElementPos.Y = +opt.rangeY[1];
+				}
 				translateY = opt.rangeY[1];
 			}
-			
 		}
 
 		$elem.css({transform: 'translate3d('+ translateX +'px, '+ translateY +'px, 0px)'});
 
 	});
 
+	$(document).on('mouseleave', opt.listener, function(e) {
+		_.startElementPos.X = _.translateElement.X;
+		_.startElementPos.Y = _.translateElement.Y;
+	});
+
 }
 
 var mousePlxObj = [], i = 0, ind;
 function mouseparallax(elem, options) {
+
 	if ($(elem)[0].ind == undefined) {
 		$(elem)[0].ind = ind = i;
 	} else {
 		ind = $(elem)[0].ind;
 	}
 
+	i++;
+
 	if (!(mousePlxObj[elem+ind] instanceof Mouseparallax)) {
 		mousePlxObj[elem+ind] = new Mouseparallax(elem, options);
 	}
-
-	i++;
 
 	return mousePlxObj[elem+ind];
 }
