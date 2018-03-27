@@ -18,7 +18,8 @@
 	}
 	&__logo{
 		img{
-			width: 121px;
+			width: 100%;
+			max-width: 121px;
 			height: auto;
 		}
 	}

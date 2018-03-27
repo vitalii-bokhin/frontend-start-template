@@ -1,10 +1,8 @@
 var Popup = {
+	closeCallback: function() {},
 	play: null,
 	ind: 0,
-	groupClass: '',
-	
-	closeCallback: function() {},
-
+	groupClass: null,
 	show: function(id,fun) {
 		var _ = this,
 		_popup = $(id);
@@ -47,6 +45,7 @@ var Popup = {
 		Iframe = Pop.find('.popup-media__iframe');
 
 		if (args.data) {
+			Pop.find('.popup-media__bar').css('display', 'block');
 			var data = JSON.parse( args.data );
 			for (var i = 0; i < data.length; i++) {
 				Pop.find('.popup-media__data-'+ i).html(data[i]);
@@ -57,8 +56,11 @@ var Popup = {
 			var imgSize = JSON.parse(args.imgSize);
 			Img.attr('width', imgSize[0]).attr('height', imgSize[1]);
 		}
+
+		if (args.img) {
+			Img.css({visibility: 'visible', marginLeft: '', marginTop: ''}).removeClass('ovf-image_w ovf-image_h').attr('src', args.img);
+		}
 		
-		Img.css({visibility: 'visible', marginLeft: '', marginTop: ''}).removeClass('ovf-image_w ovf-image_h').attr('src', args.img);
 		Iframe.css('visibility', 'hidden').attr('src', '');
 		BtnPlay.css('visibility', 'hidden');
 		
@@ -72,25 +74,27 @@ var Popup = {
 
 		if (args.vid) {
 			BtnPlay.css('visibility', 'visible').attr('href', args.vid);
-
 			_.play = function() {
-				var ifrSrc = function(vid) {
-					var utm = vid.split('?v=');
-					return 'https://www.youtube.com/embed/'+ utm[1] +'?autoplay=1';
-				}(args.vid);
+				var utm = args.vid.match(/(?:youtu\.be\/|youtube\.com\/watch\?v\=|youtube\.com\/embed\/)+?([\w-]+)/i),
+				ifrSrc = 'https://www.youtube.com/embed/'+ utm[1] +'?autoplay=1';
 				BtnPlay.css('visibility', 'hidden');
 				Img.css('visibility', 'hidden');
 				Iframe.css('visibility', 'visible').attr('src', ifrSrc);
 			}
-
+			if (!args.img) {
+				_.play();
+			}
 		}
 
-		_.groupClass =  '.'+ $(_$).attr('data-group-class');
-		_.ind = $(_.groupClass).index(_$);
+		if (args.group) {
+			Pop.find('.popup-media__arr').css('display', 'block');
+			_.groupClass =  '.'+ $(_$).attr('data-group-class');
+			_.ind = $(_.groupClass).index(_$);
+		}
 
 		_.closeCallback = function() {
-			Img.css('visibility', 'visible').attr('src', '');
-			Iframe.css('visibility', 'hidden').attr('src', '#');
+			Img.css('visibility', 'hidden').attr('src', '');
+			Iframe.css('visibility', 'hidden').attr('src', '');
 			BtnPlay.css('visibility', 'hidden');
 		}
 
@@ -122,7 +126,6 @@ var Popup = {
 			};
 			_.media(Next, args);
 		}
-		
 
 	}
 

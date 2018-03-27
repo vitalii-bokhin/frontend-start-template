@@ -65,7 +65,6 @@ body.is-popup-opened{
 
 /*popup-media*/
 .popup-media{
-	max-width: 1280px;
 	&__iframe{
 		@include fwh;
 		visibility: hidden;
@@ -76,17 +75,19 @@ body.is-popup-opened{
 		background: #000;
 		&:before{
 			@include ab;
-			padding-bottom: 35%;
+			padding-bottom: 50%;
 		}
 		img{
 			position: absolute;
 			left: 0;
 			top: 0;
+			visibility: hidden;
 		}
 	}
 	&__bar{
 		padding-top: 34px;
 		font-size: 14px;
+		display: none;
 		&-date{
 			color: #666;
 			margin-bottom: 10px;
@@ -96,7 +97,6 @@ body.is-popup-opened{
 		}
 	}
 	&__arr{
-		display: block;
 		position: absolute;
 		width: 12px;
 		height: 20px;
@@ -104,6 +104,7 @@ body.is-popup-opened{
 		margin-top: -10px;
 		z-index: 3;
 		@include sp;
+		display: none;
 		&_l{
 			left: 53px;
 			background-position: -24px -72px;

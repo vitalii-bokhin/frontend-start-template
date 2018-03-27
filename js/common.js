@@ -1,11 +1,9 @@
 $(document).ready(function(){
 
-	function setFootPadding() {
+	(function setFootPadding() {
 		$('.wrapper, .wrapper__full-height').css('padding-bottom', $('.footer').innerHeight());
-	}
-	setFootPadding();
-	$(window).on('winResized', setFootPadding);
-
+		$(window).on('winResized', setFootPadding);
+	})();
 
 	$('#slider').slick({
 		infinite: true,

@@ -101,7 +101,7 @@ function Mouseparallax(elem, options) {
 			}
 		}
 
-		$elem.css({transform: 'translate3d('+ translateX +'px, '+ translateY +'px, 0px)'});
+		$elem.css('transform', 'translate('+ translateX +'px, '+ translateY +'px)');
 
 	});
 
