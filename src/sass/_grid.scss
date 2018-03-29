@@ -1,8 +1,8 @@
 .wrap{
 	margin: 0 auto;
-	max-width: 980px;
-	padding-left: 30px;
-	padding-right: 30px;
+	max-width: 1010px;
+	padding-left: 25px;
+	padding-right: 25px;
 	@media(max-width: 1000px){
 		padding-left: 0;
 		padding-right: 0;
@@ -10,26 +10,45 @@
 }
 
 .pad{
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
 	&.wrap{
-		padding-left: 45px;
-		padding-right: 45px;
+		padding-left: 35px;
+		padding-right: 35px;
 	}
 	&-0{
 		padding-left: 0 !important;
 		padding-right: 0 !important;
 	}
+
+	@media(max-width: 1000px){
+		&,
+		&.wrap{
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+
 }
 
 .row{
 	@include clr;
+	
+	&,
+	&-col-mid,
+	&-col-bot,
+	&-tbl{
+		& > div[class*="col"]{
+			padding-left: 10px;
+			padding-right: 10px;
+			min-height: 1px;
+		}
+	}
+	
 
 	& > div[class*="col"]{
 		float: left;
-		min-height: 1px;
-		padding-left: 15px;
-		padding-right: 15px;
+		
 	}
 
 	& > div[class*="col-pull"],
@@ -54,9 +73,6 @@
 
 		& > div[class*="col"]{
 			display: inline-block;
-			min-height: 1px;
-			padding-left: 15px;
-			padding-right: 15px;
 			font-size: 1rem;
 		}
 
@@ -87,29 +103,48 @@
 		& > div[class*="col"]{
 			display: table-cell;
 			vertical-align: top;
-			min-height: 1px;
-			padding-left: 15px;
-			padding-right: 15px;
 		}
 	}
 
 	&_full-height{
-		&, & > div[class*="col"]{
+		&,
+		& > div[class*="col"]{
 			height: 100%;
 		}
 	}
 
-	&-col-pad-0{
-		padding-left: 15px;
-		padding-right: 15px;
+	&_col-pad-0{
+		padding-left: 10px;
+		padding-right: 10px;
 		& > div[class*="col"]{
 			padding-left: 0;
 			padding-right: 0;
 		}
 		&.wrap{
-			padding-left: 45px;
-			padding-right: 45px;
+			padding-left: 35px;
+			padding-right: 35px;
 		}
+	}
+
+	@media(max-width: 1000px){
+		&,
+		&-col-mid,
+		&-col-bot,
+		&-tbl{
+			& > div[class*="col"]{
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+		}
+
+		&-col-pad-0{
+			&,
+			&.wrap{
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+		}
+
 	}
 	
 }

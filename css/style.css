@@ -193,9 +193,9 @@ a:hover {
 /*===GRID===*/
 .wrap {
   margin: 0 auto;
-  max-width: 980px;
-  padding-left: 30px;
-  padding-right: 30px;
+  max-width: 1010px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 @media (max-width: 1000px) {
@@ -206,18 +206,25 @@ a:hover {
 }
 
 .pad {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .pad.wrap {
-  padding-left: 45px;
-  padding-right: 45px;
+  padding-left: 35px;
+  padding-right: 35px;
 }
 
 .pad-0 {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+@media (max-width: 1000px) {
+  .pad, .pad.wrap {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }
 
 .row:after {
@@ -227,11 +234,14 @@ a:hover {
   clear: both;
 }
 
+.row > div[class*="col"], .row-col-mid > div[class*="col"], .row-col-bot > div[class*="col"], .row-tbl > div[class*="col"] {
+  padding-left: 10px;
+  padding-right: 10px;
+  min-height: 1px;
+}
+
 .row > div[class*="col"] {
   float: left;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .row > div[class*="col-pull"],
@@ -257,9 +267,6 @@ a:hover {
 
 .row-col-mid > div[class*="col"], .row-col-bot > div[class*="col"] {
   display: inline-block;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
   font-size: 1rem;
 }
 
@@ -287,28 +294,37 @@ a:hover {
 .row-tbl > div[class*="col"] {
   display: table-cell;
   vertical-align: top;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
-.row_full-height, .row_full-height > div[class*="col"] {
+.row_full-height,
+.row_full-height > div[class*="col"] {
   height: 100%;
 }
 
-.row-col-pad-0 {
-  padding-left: 15px;
-  padding-right: 15px;
+.row_col-pad-0 {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-.row-col-pad-0 > div[class*="col"] {
+.row_col-pad-0 > div[class*="col"] {
   padding-left: 0;
   padding-right: 0;
 }
 
-.row-col-pad-0.wrap {
-  padding-left: 45px;
-  padding-right: 45px;
+.row_col-pad-0.wrap {
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+@media (max-width: 1000px) {
+  .row > div[class*="col"], .row-col-mid > div[class*="col"], .row-col-bot > div[class*="col"], .row-tbl > div[class*="col"] {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .row-col-pad-0, .row-col-pad-0.wrap {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }
 
 .col {

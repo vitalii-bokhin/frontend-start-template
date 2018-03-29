@@ -111,7 +111,7 @@ var FsScroll = {
 				}
 			}
 			
-		} else {
+		} else if (delta > 0) {
 
 			$nextScr = $curScr.prev('.fsscroll__screen');
 
@@ -160,13 +160,24 @@ $(document).ready(function() {
 
 				$('#js-fsscroll').off('mousewheel');
 
-				if (winW > 900) {
+				if (winW > 1000) {
 
 					FsScroll.init();
 
 					$('.wrapper_fsscroll').swipe({
-						swipe: function(event, direction) {
-							console.log(event, direction);
+						swipe: function(e, direct, factor) {
+							var delta;
+							switch (direct) {
+								case 'down': delta = 1;
+								break;
+								case 'up': delta = -1;
+								break;
+								default: delta = 0;
+								break;
+							}
+
+							FsScroll.mouseScroll(delta, factor);
+
 						},
 						allowPageScroll: 'none',
 						excludedElements: '',
