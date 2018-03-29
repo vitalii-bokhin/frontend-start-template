@@ -2,6 +2,8 @@ var FsScroll = {
 	winH: null,
 	scrolling: false,
 	factor: 0,
+	scrChangedEv: null,
+	beforeScrChangeEv: null,
 
 	init: function() {
 		var _ = this;
@@ -23,14 +25,17 @@ var FsScroll = {
 		$('.fsscroll__screen').last().addClass('fsscroll__screen_last');
 
 		setTimeout(function() {
-			$(window).scrollTop(0);
-		}, 1);
+			$('body, html').stop().animate({scrollTop: 0}, 1);
+		}, 21);
 
 		$(window).scroll(function() {
 			if (!_.scrolling) {
 				_.current();
 			}
 		});
+
+		_.scrChangedEv = new CustomEvent('scrChanged');
+		_.beforeScrChangeEv = new CustomEvent('beforeScrChange');
 
 	},
 
@@ -47,6 +52,7 @@ var FsScroll = {
 
 			if (itemOfsTop <= midWinScrollTop && (itemOfsTop + itemH) >= midWinScrollTop) {
 				$item.addClass('fsscroll__screen_current');
+				window.dispatchEvent(_.scrChangedEv);
 			}
 
 		});
@@ -55,8 +61,8 @@ var FsScroll = {
 	
 	move: function(moveTo, scroll) {
 		var _ = this,
-		duration = 900,
-		easing = 'easeOutExpo';
+		duration = 1500,
+		easing = 'easeInOutCubic';
 
 		_.scrolling = true;
 
@@ -64,6 +70,8 @@ var FsScroll = {
 			duration = 900;
 			easing = 'easeInOutCubic';
 		}
+
+		window.dispatchEvent(_.beforeScrChangeEv);
 
 		$('body, html').stop().animate({scrollTop: moveTo}, duration, easing, function() {
 			setTimeout(function() {
@@ -86,7 +94,7 @@ var FsScroll = {
 
 			if ($curScr.length && !$curScr.hasClass('fsscroll__screen_scroll') && !$curScr.hasClass('fsscroll__screen_last')) {
 				if (!_.scrolling) {
-					if (winScrollTop < $curScr.offset().top) {
+					if ((winScrollTop + 21) < $curScr.offset().top) {
 						_.move($curScr.offset().top);
 					} else {
 						_.move($nextScr.offset().top);
@@ -102,14 +110,14 @@ var FsScroll = {
 					_.move(winScrollTop + _.factor, true);
 				}
 			}
-
+			
 		} else {
 
 			$nextScr = $curScr.prev('.fsscroll__screen');
 
 			if ($curScr.length && !$curScr.hasClass('fsscroll__screen_scroll') && !$curScr.hasClass('fsscroll__screen_first')) {
 				if (!_.scrolling) {
-					if (winScrollBottom > ($curScr.offset().top + $curScr.innerHeight())) {
+					if ((winScrollBottom - 21) > ($curScr.offset().top + $curScr.innerHeight())) {
 						_.move($curScr.offset().top + $curScr.innerHeight() - _.winH);
 					} else {
 						_.move($nextScr.offset().top + $nextScr.innerHeight() - _.winH);
@@ -125,7 +133,6 @@ var FsScroll = {
 					_.move(winScrollTop - _.factor, true);
 				}
 			}
-
 		}
 		
 	}
@@ -153,13 +160,20 @@ $(document).ready(function() {
 
 				$('#js-fsscroll').off('mousewheel');
 
-				$('.fsscroll__screen_vw1000').each(function() {
-					var _item = $(this),
-					itemH = _item.innerHeight();
-					if (itemH < winH) {
-						_item.css('height', winH);
-					}
-				});
+				if (winW > 900) {
+
+					FsScroll.init();
+
+					$('.wrapper_fsscroll').swipe({
+						swipe: function(event, direction) {
+							console.log(event, direction);
+						},
+						allowPageScroll: 'none',
+						excludedElements: '',
+						threshold: 21,
+					});
+
+				}
 
 			}
 

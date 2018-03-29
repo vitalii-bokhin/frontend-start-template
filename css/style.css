@@ -1425,10 +1425,6 @@ a:hover {
   }
 }
 
-.form {
-  font-size: 1rem;
-}
-
 .form .row {
   padding-left: 8px;
   padding-right: 8px;
@@ -1912,7 +1908,7 @@ a:hover {
   margin: 35px 0 14px;
 }
 
-/*===SLIDER===*/
+/*===SLICK SLIDER===*/
 .slick-slider {
   position: relative;
   display: block;
@@ -2108,7 +2104,7 @@ a:hover {
   background-position: -38px -72px;
 }
 
-/*===SCROLL===*/
+/*===SCROLLPANE===*/
 .jspContainer {
   overflow: hidden;
   position: relative;
