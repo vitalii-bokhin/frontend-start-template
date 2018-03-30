@@ -25,7 +25,7 @@ var FsScroll = {
 		$('.fsscroll__screen').last().addClass('fsscroll__screen_last');
 
 		setTimeout(function() {
-			$('body, html').stop().animate({scrollTop: 0}, 1);
+			_.current();
 		}, 21);
 
 		$(window).scroll(function() {

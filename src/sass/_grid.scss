@@ -113,12 +113,12 @@
 		}
 	}
 
-	&_col-pad-0{
+	&-col-pad-0{
 		padding-left: 10px;
 		padding-right: 10px;
 		& > div[class*="col"]{
-			padding-left: 0;
-			padding-right: 0;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
 		}
 		&.wrap{
 			padding-left: 35px;
@@ -257,14 +257,17 @@
 @media(max-width: 1600px){
 	.vw1600{
 		&-row{
-			&-col{
+			&-col-12{
 				display: block;
+				height: auto;
 				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
+					height: auto;
 					left: 0;
 					right: 0;
+					margin-left: 0;
 				}
 				&.row-col-mid:before,
 				&.row-col-bot:before{
@@ -358,14 +361,17 @@
 @media(max-width: 1400px){
 	.vw1200{
 		&-row{
-			&-col{
+			&-col-12{
 				display: block;
+				height: auto;
 				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
+					height: auto;
 					left: 0;
 					right: 0;
+					margin-left: 0;
 				}
 				&.row-col-mid:before,
 				&.row-col-bot:before{
@@ -459,14 +465,17 @@
 @media(max-width: 1200px){
 	.vw1200{
 		&-row{
-			&-col{
+			&-col-12{
 				display: block;
+				height: auto;
 				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
+					height: auto;
 					left: 0;
 					right: 0;
+					margin-left: 0;
 				}
 				&.row-col-mid:before,
 				&.row-col-bot:before{
@@ -560,14 +569,17 @@
 @media(max-width: 1000px){
 	.vw1000{
 		&-row{
-			&-col{
+			&-col-12{
 				display: block;
+				height: auto;
 				& > div[class*="col-"]{
 					display: block;
 					float: none;
 					width: 100%;
+					height: auto;
 					left: 0;
 					right: 0;
+					margin-left: 0;
 				}
 				&.row-col-mid:before,
 				&.row-col-bot:before{
@@ -661,7 +673,7 @@
 @media(max-width: 700px){
 	.vw700{
 		&-row{
-			&-col{
+			&-col-12{
 				display: block;
 				& > div[class*="col-"]{
 					display: block;

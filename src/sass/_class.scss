@@ -1,14 +1,20 @@
 /*container*/
 .container{
-	margin-top: 50px;
-	margin-bottom: 50px;
-	&-in{
+	margin-top: 25px;
+	margin-bottom: 25px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	&-outer{
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	&-inner{
 		padding-top: 50px;
 		padding-bottom: 50px;
 	}
 }
 
-/*middle block*/
+/*middle wrap*/
 .middle{
 	height: 100%;
 	font-size: 0;
@@ -26,11 +32,28 @@
 	}
 }
 
+.middle-wrap{
+	height: 100%;
+	font-size: 0;
+	&:before{
+		display: inline-block;
+		content: "";
+		height: 100%;
+		vertical-align: middle;
+	}
+	&__inner{
+		display: inline-block;
+		width: 100%;
+		vertical-align: middle;
+		font-size: 1rem;
+	}
+}
+
 /*proportional block*/
-.proportional{
+.proportional-wrap{
 	@include fixprop;
 	position: relative;
-	&__block{
+	&__inner{
 		@include fwh;
 	}
 }
@@ -58,15 +81,13 @@
 	}
 }
 
-
-
 /*Title*/
 .title{
-	font-size: rem(35);
+	font-size: 35px;
 	font-weight: 700;
 	margin-bottom: 45px;
 	&-h2{
-		font-size: rem(21);
+		font-size: 21px;
 		font-weight: 500;
 		margin-bottom: 28px;
 	}
@@ -74,7 +95,6 @@
 
 /*Text*/
 .txt{
-	font-size: 1rem;
 	line-height: (22/16);
 	p{
 		margin-bottom: 25px;
@@ -88,7 +108,6 @@
 ul.list{
 	list-style: none;
 	li{
-		font-size: 1rem;
 		line-height: (24/16);
 		padding-left: 30px;
 		margin: 30px 0;
@@ -105,8 +124,7 @@ ul.list{
 	}	
 }
 
-
-
+/*align*/
 .ta-c{
 	text-align: center;
 }
@@ -114,10 +132,12 @@ ul.list{
 	text-align: right;
 }
 
+/*position*/
 .pos-r{
 	position: relative;
 }
 
+/*color*/
 .c-rd{
 	color: $rd;
 }
@@ -133,14 +153,9 @@ ul.list{
 	display: none;
 }
 
-.hide-bg-brd{
-	border: none;
-	background: none;
-}
-
 @media(max-width: 1600px){
 	.vw1600{
-		&-hide{
+		&-hidden{
 			display: none;
 		}
 	}
@@ -148,7 +163,7 @@ ul.list{
 
 @media(max-width: 1400px){
 	.vw1400{
-		&-hide{
+		&-hidden{
 			display: none;
 		}
 	}
@@ -156,7 +171,7 @@ ul.list{
 
 @media(min-width: 1201px){
 	.vw1201{
-		&-hide{
+		&-hidden{
 			display: none;
 		}
 	}
@@ -164,7 +179,7 @@ ul.list{
 
 @media(max-width: 1200px){
 	.vw1200{
-		&-hide{
+		&-hidden{
 			display: none;
 		}
 	}
@@ -172,7 +187,7 @@ ul.list{
 
 @media(min-width: 1001px){
 	.vw1001{
-		&-hide{
+		&-hidden{
 			display: none;
 		}
 	}
@@ -180,7 +195,7 @@ ul.list{
 
 @media(max-width: 1000px){
 	.vw1000{
-		&-hide{
+		&-hidden{
 			display: none;
 		}
 		&-pad-x-0{
@@ -202,7 +217,7 @@ ul.list{
 
 @media(min-width: 701px){
 	.vw701{
-		&-hide{
+		&-hidden{
 			display: none;
 		}
 	}
@@ -210,7 +225,7 @@ ul.list{
 
 @media(max-width: 700px){
 	.vw700{
-		&-hide{
+		&-hidden{
 			display: none;
 		}
 	}

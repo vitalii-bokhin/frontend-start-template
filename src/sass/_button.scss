@@ -91,8 +91,8 @@
 /*toggle*/
 .toggle{
 	display: block;
-	width:25px;
-	height:25px;
+	width:28px;
+	height:21px;
 	cursor:pointer;
 	position: relative;
 	background: none;
@@ -107,7 +107,7 @@
 	}
 
 	span:first-child{
-		top: 1px;
+		top: 0;
 	}
 
 	span:last-child{
@@ -116,8 +116,7 @@
 
 	span:nth-child(2),
 	span:nth-child(3){
-		top: 50%;
-		margin-top: -1px;
+		top: 9px;
 	}
 
 	&.toggled{
@@ -127,13 +126,9 @@
 		}
 		span:nth-child(2){
 			transform: rotate(-45deg);
-			width: 130%;
-			left: -15%;
 		}
 		span:nth-child(3){
 			transform: rotate(45deg);
-			width: 130%;
-			left: -15%;
 		}
 	}
 }
