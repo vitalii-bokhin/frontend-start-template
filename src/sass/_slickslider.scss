@@ -134,7 +134,6 @@
     margin-top: -21px;
     font-size: 0;
     transition: .5s;
-    opacity: .7;
     &:after{
       display: inline-block;
       content: "";
@@ -142,8 +141,10 @@
       height: 20px;
       @include sp;
     }
-    &:hover{
-      opacity: 1;
+    @media(min-width: 1201px){
+        &:hover{
+            opacity: .7;
+        }
     }
     &.slick-disabled{
         opacity: .2;
