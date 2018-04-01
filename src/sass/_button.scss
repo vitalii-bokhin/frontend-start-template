@@ -73,13 +73,15 @@
 		display: none;
 	}
 
-	&:hover{
-		opacity: .6;
-	}
-	&_hov-be:hover{
-		opacity: 1;
-		border: 1px solid $be;
-		background: $be;
+	@media(min-width: 1200px){
+		&_hov-be:hover{
+			opacity: 1;
+			border: 1px solid $be;
+			background: $be;
+		}
+		&:hover{
+			opacity: .6;
+		}
 	}
 	
 	@media(max-width: 700px){
@@ -90,10 +92,9 @@
 
 /*toggle*/
 .toggle{
-	display: block;
+	display: inline-block;
 	width:28px;
 	height:21px;
-	cursor:pointer;
 	position: relative;
 	background: none;
 	border: none;
@@ -148,10 +149,9 @@
 
 /*button close*/
 .btn-close{
-	display: block;
+	display: inline-block;
 	width:25px;
 	height:25px;
-	cursor:pointer;
 	position: relative;
 	background: none;
 	border: none;
@@ -193,7 +193,7 @@
 
 /*button play*/
 .btn-play{
-	display: block;
+	display: inline-block;
 	width: 64px;
 	height: 64px;
 	border-radius: 64px;
@@ -228,7 +228,7 @@
 		}
 	}
 	&__a{
-		display: block;
+		display: inline-block;
 		width: 20px;
 		height: 20px;
 		transition: .5s;

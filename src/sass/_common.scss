@@ -19,7 +19,7 @@ body{
 	overflow: hidden;
 	min-height: 100%;
 	position: relative;
-	padding: 100px 0;
+	padding: 100px 0 21px;
 	&_fsscroll{
 		padding-top: 0 !important;
 	}
@@ -27,7 +27,7 @@ body{
 	&__full-height{
 		@include fwh;
 		z-index: 2;
-		padding: 100px 0;
+		padding: 100px 0 21px;
 		overflow: hidden;
 	}
 
@@ -39,7 +39,7 @@ body{
 .fsscroll{
 	&__screen{
 		position: relative;
-		padding: 100px 0;
+		padding: 100px 0 21px;
 	}
 }
 
