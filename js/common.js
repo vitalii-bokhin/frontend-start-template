@@ -13,9 +13,13 @@ $(document).ready(function(){
 
 	$('.scroll-pane').jScrollPane();
 
-	flexImage(winW);
-
+	flexImg();
 	overfrowImg();
+
+	$(window).on('winResized', function() {
+		flexImg();
+		overfrowImg();
+	});
 
 	//headerFix
 	$(window).scroll(function () {

@@ -1,5 +1,5 @@
-function flexImage(winW) {
-	$('.flex-image').each(function() {
+function flexImg() {
+	$('.flex-img').each(function() {
 		var Img = $(this),
 		data = Img.attr('data-images'),
 		images,

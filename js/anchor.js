@@ -1,17 +1,17 @@
 $(document).ready(function() {
 
 	$('body').on('click', '.js-anchor', function () {
-		var anch = $(this).attr('href');
+		var href = $(this).attr('href'),
+		anch = '#'+ href.split('#')[1];
 
 		if($(anch).length){
-
-			var scrTo = $(anch).offset().top - $('#js-top-header').innerHeight() - 21;
+			var scrTo = ($(anch).attr('data-anchor-offset')) ? $(anch).offset().top : ($(anch).offset().top - $('.header').innerHeight() - 35);
 
 			$('html, body').stop().animate({scrollTop: scrTo}, 1021, 'easeInOutQuart');
 
+			return false;
 		}
 
-		return false;
 	});
 
 	if (window.location.hash) {
@@ -23,7 +23,8 @@ $(document).ready(function() {
 			$('html, body').stop().animate({scrollTop: 0}, 1);
 
 			window.onload = function() {
-				var scrTo = $(anch).offset().top - $('.header').innerHeight() - 21;
+				var scrTo = ($(anch).attr('data-anchor-offset')) ? $(anch).offset().top : ($(anch).offset().top - $('.header').innerHeight() - 35);
+
 				$('html, body').stop().animate({scrollTop: scrTo}, 1021, 'easeInOutQuart');
 			}
 
@@ -32,4 +33,3 @@ $(document).ready(function() {
 	}
 	
 });
-
