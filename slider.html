@@ -5,7 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 
-	<title>Tab</title>
+	<title>Parallax | Template</title>
+
+	<style>
+		.parallax-element{
+			width: 50px;
+			height: 50px;
+			margin: 100px;
+		}
+	</style>
 
 </head>
 <body>
@@ -88,32 +96,45 @@
 
 <div class="container wrap">
 	
-	<div class="tab">
-		<ul class="tab__buttons">
-			<li><button type="button" class="tab__button button button_red tab__button_active" data-tab="i1">1</button></li>
-			<li><button type="button" class="tab__button button button_red" data-tab="i2">2</button></li>
-			<li><button type="button" class="tab__button button button_red" data-tab="i3">3</button></li>
-		</ul>
-		<div class="tab__container">
-			<div class="tab__item tab__item_i1 tab__item_active">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni error necessitatibus consequuntur est voluptates vel dolorum, blanditiis saepe quasi adipisci quibusdam pariatur, eos porro doloremque? Dolores mollitia quae assumenda voluptas!
+	<div class="float-slider">
+
+		<div class="float-slider__float">
+
+			<div class="float-slider__float-item" data-index="0">
+				<img src="images/img1.jpg" alt="img" class="overflow-img">
 			</div>
-			<div class="tab__item tab__item_i2">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus sint odio illo perferendis quam odit in laborum deserunt libero eum, iure commodi tempore voluptatibus nihil dicta eveniet magni laudantium consectetur.
+
+			<div class="float-slider__float-item" data-index="1">
+				<img src="images/img2.jpg" alt="img" class="overflow-img">
 			</div>
-			<div class="tab__item tab__item_i3">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus sint odio illo perferendis quam odit in laborum deserunt libero eum, iure commodi tempore voluptatibus nihil dicta eveniet magni laudantium consectetur.
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni error necessitatibus consequuntur est voluptates vel dolorum, blanditiis saepe quasi adipisci quibusdam pariatur, eos porro doloremque? Dolores mollitia quae assumenda voluptas!
+
+			<div class="float-slider__float-item" data-index="2">
+				<img src="images/img1.jpg" alt="img" class="overflow-img">
 			</div>
+
 		</div>
+
+		<div class="float-slider__fade">
+
+			<div class="float-slider__fade-item" data-index="0">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur rerum iusto, architecto quo molestiae perspiciatis est voluptatibus atque consectetur velit quod rem, eum ducimus alias eius assumenda animi. Facere, sit?
+			</div>
+
+			<div class="float-slider__fade-item" data-index="1">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, non est accusamus. Hic reprehenderit facilis, doloribus ea! Odit voluptate ad quos sapiente harum, repudiandae animi nobis deserunt modi, aliquid. Hic.
+			</div>
+
+			<div class="float-slider__fade-item" data-index="2">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur rerum iusto, architecto quo molestiae perspiciatis est voluptatibus atque consectetur velit quod rem, eum ducimus alias eius assumenda animi. Facere, sit?
+			</div>
+
+		</div>
+
+		<button class="float-slider__arrow float-slider__arrow_prev" data-direct="prev"></button>
+		<button class="float-slider__arrow float-slider__arrow_next" data-direct="next"></button>
 	</div>
 
-	<div style="height: 21px; background: blue;"></div>
-
 </div>
-
-
-
 
 <!--FOOTER/-->
 <footer class="footer">
@@ -215,6 +236,34 @@
 <script src="js/common.js"></script>
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 
- 
+
+<script>
+	$(document).ready(function() {
+
+		
+		$('.parallax-element').each(function() {
+			mouseparallax(this, {
+				listener: '.container'
+			});
+		});
+
+
+		/*mouseparallax('.el1', {
+				listener: '.container',
+				deltaX: 150
+			});
+
+		mouseparallax('.el2', {
+				listener: document,
+				deltaX: 80
+			});
+		
+		mouseparallax('.el3', {
+				listener: '.container'
+			});*/
+
+	});
+</script>
+
 </body>
 </html>
