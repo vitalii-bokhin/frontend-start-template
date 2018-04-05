@@ -30,25 +30,25 @@ function flexImg() {
 	});
 }
 
-function overfrowImg(cnt) {
+function coverImg(cnt) {
 
 	var cnt = (cnt) ? cnt +' ' : '';
 	
-	$(cnt +'.overflow-img, '+ cnt +'.overflow-img-wrap').each(function() {
+	$(cnt +'.cover-img, '+ cnt +'.cover-img-wrap').each(function() {
 
 		var _$ = $(this);
 
-		if (_$.hasClass('overflow-img-wrap')) {
+		if (_$.hasClass('cover-img-wrap')) {
 			var Img = _$.find('img'),
 			Block = _$;
-			Img.addClass('overflow-img');
-		} else if (_$.hasClass('overflow-img')) {
+			Img.addClass('cover-img');
+		} else if (_$.hasClass('cover-img')) {
 			var Img = _$,
 			Block = Img.parent();
-			Block.addClass('overflow-img-wrap');
+			Block.addClass('cover-img-wrap');
 		}
 
-		Img.removeClass('overflow-img_w overflow-img_h');
+		Img.removeClass('cover-img_w cover-img_h');
 
 		var imgProp = Img.width()/Img.height(),
 		blockProp = Block.width()/Block.height();
@@ -56,13 +56,13 @@ function overfrowImg(cnt) {
 		if (blockProp != Infinity && blockProp < 21) {
 			if (imgProp <= blockProp) {
 				var marg = Math.round(-(Block.width()/imgProp-Block.height())/2);
-				Img.addClass('overflow-img_w').css({marginTop: marg});
+				Img.addClass('cover-img_w').css({marginTop: marg});
 			} else {
 				var marg = Math.round(-(Block.height()*imgProp-Block.width())/2);
-				Img.addClass('overflow-img_h').css({marginLeft: marg});
+				Img.addClass('cover-img_h').css({marginLeft: marg});
 			}
 		} else {
-			Img.addClass('overflow-img_w');
+			Img.addClass('cover-img_w');
 		}
 
 	});

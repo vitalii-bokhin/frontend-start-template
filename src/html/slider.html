@@ -1,27 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	@@include('./_head.html')
-
-	<title>Parallax | Template</title>
-
-	<style>
-		.parallax-element{
-			width: 50px;
-			height: 50px;
-			margin: 100px;
-		}
-	</style>
-
-</head>
-<body>
-
-<!--WRAPPER/-->
-<div class="wrapper">
+@@include('_head.html', {"title": "Slider"})
 
 <!--HEADER/-->
 <header class="header">
-	@@include('./_header.html')
+	@@include('_header.html')
 </header>
 <!--/HEADER-->
 
@@ -32,15 +13,19 @@
 		<div class="float-slider__float">
 
 			<div class="float-slider__float-item" data-index="0">
-				<img src="../../images/img1.jpg" alt="img" class="overflow-img">
+				<img src="../../images/img1.jpg" alt="img" class="cover-img">
 			</div>
 
 			<div class="float-slider__float-item" data-index="1">
-				<img src="../../images/img2.jpg" alt="img" class="overflow-img">
+				<img src="../../images/img2.jpg" alt="img" class="cover-img">
 			</div>
 
 			<div class="float-slider__float-item" data-index="2">
-				<img src="../../images/img1.jpg" alt="img" class="overflow-img">
+				<img src="../../images/img1.jpg" alt="img" class="cover-img">
+			</div>
+
+			<div class="float-slider__float-item" data-index="3">
+				<img src="../../images/img1.jpg" alt="img" class="cover-img">
 			</div>
 
 		</div>
@@ -59,6 +44,10 @@
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur rerum iusto, architecto quo molestiae perspiciatis est voluptatibus atque consectetur velit quod rem, eum ducimus alias eius assumenda animi. Facere, sit?
 			</div>
 
+			<div class="float-slider__fade-item" data-index="3">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur rerum iusto, architecto quo molestiae perspiciatis est voluptatibus atque consectetur velit quod rem, eum ducimus alias eius assumenda animi. Facere, sit?
+			</div>
+
 		</div>
 
 		<button class="float-slider__arrow float-slider__arrow_prev" data-direct="prev"></button>
@@ -69,7 +58,7 @@
 
 <!--FOOTER/-->
 <footer class="footer">
-	@@include('./_footer.html')
+	@@include('_footer.html')
 </footer>
 <!--/FOOTER-->
 
@@ -77,39 +66,10 @@
 <!--/WRAPPER-->
 
 <!--POPUPs/-->
-@@include('./_popups.html')
+@@include('_popups.html')
 <!--/POPUPs-->
 
-@@include('./_javascript.html')
-
-
-<script>
-	$(document).ready(function() {
-
-		
-		$('.parallax-element').each(function() {
-			mouseparallax(this, {
-				listener: '.container'
-			});
-		});
-
-
-		/*mouseparallax('.el1', {
-				listener: '.container',
-				deltaX: 150
-			});
-
-		mouseparallax('.el2', {
-				listener: document,
-				deltaX: 80
-			});
-		
-		mouseparallax('.el3', {
-				listener: '.container'
-			});*/
-
-	});
-</script>
+@@include('_javascript.html')
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-.overflow-img{
+.cover-img{
 	display: block;
 	opacity: 0;
 	transition: opacity .21s;
@@ -20,9 +20,11 @@
 }
 
 .middle-img{
+	display: inline-block;
 	max-width: 100%;
 	max-height: 100%;
 	vertical-align: middle;
+	font-size: 1rem;
 	&-wrap{
 		height: 100%;
 		font-size: 0;
@@ -36,17 +38,13 @@
 }
 
 .responsive-img{
+	display: inline-block;
 	max-width: 100%;
 	max-height: 100%;
 }
 
-.cover-img{
-	width: 100%;
-	height: auto;
-	min-height: 100%;
-}
-
 .full-width-img{
+	display: block;
 	width: 100%;
 	height: auto;
 }

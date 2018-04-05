@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	@@include('./_head.html')
-
-	<title>Popup</title>
-
-</head>
-<body>
-
-<!--WRAPPER/-->
-<div class="wrapper">
+@@include('_head.html', {"title": "Popup"})
 
 <!--HEADER/-->
 <header class="header">
-	@@include('./_header.html')
+	@@include('_header.html')
 </header>
 <!--/HEADER-->
 
@@ -48,7 +37,7 @@
 	</div>
 
 	<div style="height: 300px">
-		<img src="../../images/img2.jpg" class="overflow-img" alt="img">
+		<img src="../../images/img2.jpg" class="cover-img" alt="img">
 	</div>
 	
 </div>
@@ -58,7 +47,7 @@
 
 <!--FOOTER/-->
 <footer class="footer">
-	@@include('./_footer.html')
+	@@include('_footer.html')
 </footer>
 <!--/FOOTER-->
 
@@ -66,10 +55,10 @@
 <!--/WRAPPER-->
 
 <!--POPUPs/-->
-@@include('./_popups.html')
+@@include('_popups.html')
 <!--/POPUPs-->
 
-@@include('./_javascript.html')
+@@include('_javascript.html')
  
 </body>
 </html>

@@ -14,11 +14,11 @@ $(document).ready(function(){
 	$('.scroll-pane').jScrollPane();
 
 	flexImg();
-	overfrowImg();
+	coverImg();
 
 	$(window).on('winResized', function() {
 		flexImg();
-		overfrowImg();
+		coverImg();
 	});
 
 	//headerFix

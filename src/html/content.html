@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	@@include('./_head.html')
-
-	<title>Content | Template</title>
-
-</head>
-<body>
-
-<!--WRAPPER/-->
-<div class="wrapper">
+@@include('_head.html', {"title": "Content"})
 
 <!--HEADER/-->
 <header class="header">
-	@@include('./_header.html')
+	@@include('_header.html')
 </header>
 <!--/HEADER-->
 
@@ -86,7 +75,7 @@
 
 <div class="container">
 	<div class="video">
-		<div class="video__thumb overflow-img-wrap">
+		<div class="video__thumb cover-img-wrap">
 			<img src="../../images/video/v1.jpg" alt="video">
 			<a href="#media-popup" class="js-open-popup video__play btn-play"></a>
 		</div>
@@ -137,7 +126,7 @@
 
 <!--FOOTER/-->
 <footer class="footer">
-	@@include('./_footer.html')
+	@@include('_footer.html')
 </footer>
 <!--/FOOTER-->
 
@@ -145,10 +134,10 @@
 <!--/WRAPPER-->
 
 <!--POPUPs/-->
-@@include('./_popups.html')
+@@include('_popups.html')
 <!--/POPUPs-->
 
-@@include('./_javascript.html')
+@@include('_javascript.html')
 
 <script>
 
