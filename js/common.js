@@ -42,13 +42,13 @@ $(document).ready(function(){
 		_$.css({width: wd, top: ofsT, left: ofsL}).addClass('fix-block_fixed');
 	});
 
-	//forms
-	ValidateForm.submit('#form1', function(form, callback) {
+	//submit forms
+	/*ValidateForm.submit('#form1', function(form, callback) {
 		var $f = $(form);
 		Popup.message('#message-popup', 'Форма отправлена', function() {
 			callback(true, true);
 		});
-		/*$.ajax({
+		$.ajax({
 			url: $f.attr('action'),
 			type:"POST",
 			dataType:"json",
@@ -63,18 +63,19 @@ $(document).ready(function(){
 			error: function() {
 				alert('Error');
 			}
-		});*/
-		
-	});
-
-	ValidateForm.submit('#form2', function(form, callback) {
-		var $f = $(form);
-		Popup.message('#message-popup', 'Форма отправлена', function() {
-			callback(true, true);
 		});
+		
+	});*/
+
+	ValidateForm('#form2').submit(function() {
+		Popup.message('#message-popup', 'Форма отправлена', function() {
+				//callback(true, true);
+			});
 	});
 
-	ValidateForm.submit('#form3');
+	ValidateForm('#form3');
+
+	
 
 	$(window).on('winResized', function() {
 		console.log('window resized: '+ winW +'x'+ winH);
