@@ -3,7 +3,12 @@ $(document).ready(function() {
 	/*Toggle*/
 	$('body').on('click', '.js-toggle', function() {
 		var _$ = $(this),
-		targetElements = _$.attr('data-target-elements');
+		targetElements = _$.attr('data-target-elements'),
+		initClickOnElements = _$.attr('data-init-click-on-elements');
+
+		if (initClickOnElements) {
+			$(initClickOnElements).not(this).click();
+		}
 
 		function openMenu(st) {
 			if (st) {
@@ -19,23 +24,14 @@ $(document).ready(function() {
 			if (targetElements) {
 
 				var $elem = $(targetElements),
-				$elemParent = $(_$.attr('data-elements-parent')),
 				role = _$.attr('data-role');
 
-				if ($elemParent.length) {
-					if (st) {
-						$elemParent.find(targetElements).addClass('toggled');
-					} else {
-						$elemParent.find(targetElements).removeClass('toggled');
-					}
+				if (st) {
+					$elem.addClass('toggled');
 				} else {
-					if (st) {
-						$elem.addClass('toggled');
-					} else {
-						$elem.removeClass('toggled');
-					}
+					$elem.removeClass('toggled');
 				}
-
+				
 				if (role && role == 'menu') {
 					openMenu(st);
 				}
@@ -61,6 +57,8 @@ $(document).ready(function() {
 				_$.html(fstTxt);
 			}
 		}
+
+		
 
 		return false;
 	});

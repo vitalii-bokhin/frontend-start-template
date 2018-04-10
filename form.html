@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<title>Form | startTemplate</title>
 </head>
 <body>
@@ -85,7 +85,7 @@
 </header>
 <!--/HEADER-->
 
-<div class="container">
+<div class="container wrap">
 
 	<form id="form1" action="send.php" method="POST" class="form">
 
@@ -139,7 +139,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
+			<div class="col-12">
 				<div class="form__field">
 					<label class="overlabel">Текстовое поле</label>
 					<textarea data-required="true" class="form__textarea"></textarea>
@@ -173,42 +173,72 @@
 		</div>
 
 		<div class="row">
+			<div class="col-12">
+				<div class="txt">
+					Custom Select
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<select name="sel">
+						<option value="opt1">Выбор 1</option>
+						<option value="opt2">Выбор 2</option>
+						<option value="opt3">Выбор 3</option>
+						<option value="opt4">Выбор 4</option>
+						<option value="opt5">Выбор 5</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">
+					Select
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
 			<div class="col-4">
 				<div class="form__field">
-					<div class="form__select">
-						<button type="button" class="form__select-button">Выбор</button>
-						<ul class="form__select-options">
-							<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выбор</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 			</div>
 			<div class="col-4">
 				<div class="form__field">
-					<div class="form__select">
-						<button type="button" class="form__select-button">Выбор</button>
-						<ul class="form__select-options">
-							<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выбор</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
 						</ul>
-						<input type="hidden" class="form__select-input" data-required="true" value="">
+						<input type="hidden" class="custom-select__input" data-required="true" value="">
 					</div>
 					<div class="form__error-tip">Сделайте выбор</div>
 				</div>
 			</div>
 			<div class="col-4">
 				<div class="form__field">
-					<div class="form__select form__select_multiple">
-						<button type="button" class="form__select-button">Множественный выбор</button>
-						<ul class="form__select-options">
-							<li><button type="button" class="form__select-val" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="form__select-val" data-value="v2">Выбор выбор выбор 2</button></li>
-							<li><button type="button" class="form__select-val" data-value="v3">Выбор 3</button></li>
-							<li><button type="button" class="form__select-val" data-value="v4">Выбор 4</button></li>
+					<div class="custom-select form__select_multiple">
+						<button type="button" class="custom-select__button">Множественный выбор</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v2">Выбор выбор выбор 2</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v3">Выбор 3</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v4">Выбор 4</button></li>
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 			</div>
@@ -217,13 +247,13 @@
 		<div class="row">
 			<div class="col-4">
 				<div class="form__field">
-					<div class="form__select">
-						<button type="button" class="form__select-button">Выбор</button>
-						<ul class="form__select-options">
-							<li><button type="button" class="form__select-val" data-show-hidden="#f1" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="form__select-val" data-show-hidden="#f2" data-value="v2">Выбор 2</button></li>
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выбор</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-show-hidden="#f1" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-show-hidden="#f2" data-value="v2">Выбор 2</button></li>
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 			</div>
@@ -243,18 +273,18 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">
+			<div class="col-12">
+				<div class="txt">
 					Select fieldset
 				</div>
 				<div class="form__field">
-					<div class="form__select">
-						<button type="button" class="form__select-button">Выбор 1</button>
-						<ul class="form__select-options">
-							<li><button type="button" class="form__select-val" data-show-hidden="#fs1" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="form__select-val" data-show-hidden="#fs2" data-value="v2">Выбор 2</button></li>
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выбор 1</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-show-hidden="#fs1" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-show-hidden="#fs2" data-value="v2">Выбор 2</button></li>
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 			</div>
@@ -299,8 +329,8 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">
+			<div class="col-12">
+				<div class="txt">
 					Form steps
 				</div>
 			</div>
@@ -310,8 +340,8 @@
 
 			<div id="step-fs1" class="form__fieldset">
 				<div class="row">
-					<div class="col">
-						<div class="form__txt">
+					<div class="col-12">
+						<div class="txt">
 							Step 1
 						</div>
 					</div>
@@ -331,7 +361,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="col-12">
 						<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs2">Step 2</button>
 					</div>
 				</div>
@@ -339,8 +369,8 @@
 
 			<div id="step-fs2" class="form__fieldset form__fieldset_hidden">
 				<div class="row">
-					<div class="col">
-						<div class="form__txt">
+					<div class="col-12">
+						<div class="txt">
 							Step 2
 						</div>
 					</div>
@@ -360,7 +390,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="col-12">
 						<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs3">Step 3</button>
 					</div>
 				</div>
@@ -368,12 +398,12 @@
 
 			<div id="step-fs3" class="form__fieldset form__fieldset_hidden">
 				<div class="row">
-					<div class="col">
-						<div class="form__txt">
+					<div class="col-12">
+						<div class="txt">
 							Step 3
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-12">
 						<div class="form__field">
 							<label class="overlabel">Поле</label>
 							<input type="text" class="form__text-input" data-required="true" value="">
@@ -387,64 +417,64 @@
 
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">
+			<div class="col-12">
+				<div class="txt">
 					Данные страны берутся из https://get.dealersair.com/api/geo/
 				</div>
 
 				<div class="form__field">
-					<div class="form__select">
-						<button type="button" class="form__select-button">Выберите страну</button>
-						<ul class="form__select-options form__select-options_countries">
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выберите страну</button>
+						<ul class="custom-select__options custom-select__options_countries">
 
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 
 				<div class="form__field">
-					<div class="form__select form__select_autocomplete">
+					<div class="custom-select form__select_autocomplete">
 						<label for="i-txt-6s" class="overlabel">Страна (начинайте вводить)</label>
 						<input id="i-txt-6s" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-by-name" value="">
-						<ul class="form__select-options form__select-options_countries">
+						<ul class="custom-select__options custom-select__options_countries">
 
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 
 				<div class="form__field">
-					<div class="form__select form__select_autocomplete">
+					<div class="custom-select form__select_autocomplete">
 						<label for="i-txt-65s" class="overlabel">Страна (начинайте вводить)</label>
 						<input id="i-txt-65s" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-with-highlight" value="">
-						<ul class="form__select-options form__select-options_countries2">
+						<ul class="custom-select__options custom-select__options_countries2">
 
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 
 				<div class="form__field">
-					<div class="form__select form__select_autocomplete">
+					<div class="custom-select form__select_autocomplete">
 						<label for="i-txt-6" class="overlabel">Улица город (начинайте вводить)</label>
 						<input id="i-txt-6" type="text" class="form__text-input form__text-input_autocomplete" data-opt="search-by-search-string" value="">
-						<ul class="form__select-options">
-							<li><button type="button" class="form__select-val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
-							<li><button type="button" class="form__select-val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
-							<li><button type="button" class="form__select-val" data-search="%львов%шевченка" data-value="v3">ул.Шевченка, г.Львов</button></li>
-							<li><button type="button" class="form__select-val" data-search="%шевченка%киев" data-value="v4">бульвар Шевченка, г.Киев</button></li>
-							<li><button type="button" class="form__select-val" data-search="%крещатик%киев" data-value="v5">ул.Крещатик, г.Киев</button></li>
-							<li><button type="button" class="form__select-val" data-search="%свободы%киев" data-value="v5">пр.Свободы, г.Киев</button></li>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%львов%шевченка" data-value="v3">ул.Шевченка, г.Львов</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%шевченка%киев" data-value="v4">бульвар Шевченка, г.Киев</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%крещатик%киев" data-value="v5">ул.Крещатик, г.Киев</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%свободы%киев" data-value="v5">пр.Свободы, г.Киев</button></li>
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">Чекбоксы:</div>
+			<div class="col-12">
+				<div class="txt">Чекбоксы:</div>
 			</div>
 			<div class="col-6">
 				<div class="form__chbox">
@@ -458,13 +488,13 @@
 					<label class="form__chbox-label">Выбор 2</label>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-12">
 				<div class="form__chbox">
 					<input type="checkbox" data-show-hidden="#field-another-2" class="form__chbox-input">
 					<label class="form__chbox-label">Ваш вариант</label>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-12">
 				<div id="field-another-2" class="form__field form__field_hidden">
 					<label class="overlabel">Ваш вариант</label>
 					<input type="text" class="form__text-input" data-required="true" value="">
@@ -474,8 +504,8 @@
 		</div>
 
 		<div class="row form__chbox-group" data-min="1">
-			<div class="col">
-				<div class="form__txt">Группа чекбоксов(валидация):</div>
+			<div class="col-12">
+				<div class="txt">Группа чекбоксов(валидация):</div>
 			</div>
 			<div class="col-3">
 				<div class="form__chbox">
@@ -504,10 +534,10 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">Чекбокс:</div>
+			<div class="col-12">
+				<div class="txt">Чекбокс:</div>
 			</div>
-			<div class="col">
+			<div class="col-12">
 				<div class="form__chbox">
 					<input id="chb-7" type="checkbox" class="form__chbox-input">
 					<label for="chb-7" class="form__chbox-label">
@@ -520,8 +550,8 @@
 
 		<div class="row">
 
-			<div class="col">
-				<div class="form__txt">Радио кнопки:</div>
+			<div class="col-12">
+				<div class="txt">Радио кнопки:</div>
 			</div>
 
 			<div class="col-6">
@@ -536,13 +566,13 @@
 					<label class="form__radio-label">Выбор 2</label>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-12">
 				<div class="form__radio">
 					<input type="radio" name="rad-1" data-show-hidden="#field-another" class="form__radio-input">
 					<label class="form__radio-label">Другое</label>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-12">
 				<div id="field-another" class="form__field form__field_hidden">
 					<label class="overlabel">Ваш вариант</label>
 					<input type="text" class="form__text-input" data-required="true" value="">
@@ -552,8 +582,8 @@
 		</div>
 
 		<div class="row form__radio-group">
-			<div class="col">
-				<div class="form__txt">Группа Радио кнопок (валидация):</div>
+			<div class="col-12">
+				<div class="txt">Группа Радио кнопок (валидация):</div>
 			</div>
 
 			<div class="col-6">
@@ -571,8 +601,8 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">Ввод паролей, сравнение:</div>
+			<div class="col-12">
+				<div class="txt">Ввод паролей, сравнение:</div>
 			</div>
 		</div>
 
@@ -601,8 +631,8 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">Текстовое поле с резиновой высотой:</div>
+			<div class="col-12">
+				<div class="txt">Текстовое поле с резиновой высотой:</div>
 
 				<div class="form__field">
 					<div class="pos-r">
@@ -617,8 +647,8 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием:</div>
+			<div class="col-12">
+				<div class="txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием:</div>
 
 				<div class="form__field">
 					<div class="form__textarea_var-h-wrap middle">
@@ -637,11 +667,11 @@
 
 
 		<div class="row">
-			<div class="col">
-				<div class="form__txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом:</div>
+			<div class="col-12">
+				<div class="txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом:</div>
 
 				<div class="form__field">
-					<div class="form__select form__select_autocomplete">
+					<div class="custom-select form__select_autocomplete">
 						<div class="form__textarea_var-h-wrap middle">
 							<div class="middle__block">
 								<div class="form__textarea-mirror"></div>
@@ -649,11 +679,11 @@
 								<label class="overlabel">Начинайте вводить</label>
 							</div>
 						</div>
-						<ul class="form__select-options">
-							<li><button type="button" class="form__select-val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
-							<li><button type="button" class="form__select-val" data-value="v2">Выбор 2</button></li>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
 						</ul>
-						<input type="hidden" class="form__select-input" value="">
+						<input type="hidden" class="custom-select__input" value="">
 					</div>
 				</div>
 
@@ -661,13 +691,9 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<button type="submit" class="button button_red">Submit</button>
+			<div class="col-12">
+				<button type="submit" class="form__button button button_red">Submit</button>
 			</div>
-		</div>
-
-		<div class="form__loading-icon">
-			<div class="form__loading-icon-img"></div>
 		</div>
 
 		<div class="form__alert">Ошибка заполнения полей формы</div>
@@ -676,7 +702,7 @@
 
 </div>
 
-<div class="container">
+<div class="container wrap">
 	<form id="form2" action="send.php" method="POST" class="form">
 		<div class="row">
 			<div class="col-6">
@@ -694,14 +720,14 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
+			<div class="col-12">
 				<button type="submit" class="form__button button button_red">Submit</button>
 			</div>
 		</div>
 	</form>
 </div>
 
-<div class="container">
+<div class="container wrap">
 	<form id="form3" action="send.php" method="POST" class="form">
 		<div class="row">
 			<div class="col-6">
@@ -719,7 +745,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
+			<div class="col-12">
 				<button type="submit" class="form__button button button_red">Submit</button>
 			</div>
 		</div>
@@ -819,6 +845,8 @@
 <script src="js/numberspin.js"></script>
 <script src="js/accord.js"></script>
 <script src="js/tab.js"></script>
+<script src="js/customform.js"></script>
+<script src="js/validateform.js"></script>
 <script src="js/form.js"></script>
 <script src="js/fsscroll.js"></script>
 <script src="js/mouseparallax.js"></script>

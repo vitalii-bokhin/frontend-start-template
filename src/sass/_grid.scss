@@ -1,8 +1,8 @@
 .wrap{
 	margin: 0 auto;
-	max-width: 1010px;
-	padding-left: 25px;
-	padding-right: 25px;
+	max-width: 1020px;
+	padding-left: 30px;
+	padding-right: 30px;
 	@media(max-width: 1000px){
 		padding-left: 0;
 		padding-right: 0;
@@ -13,8 +13,8 @@
 	padding-left: 10px;
 	padding-right: 10px;
 	&.wrap{
-		padding-left: 35px;
-		padding-right: 35px;
+		padding-left: 40px;
+		padding-right: 40px;
 	}
 	&-0{
 		padding-left: 0 !important;
@@ -121,8 +121,8 @@
 			padding-right: 0 !important;
 		}
 		&.wrap{
-			padding-left: 35px;
-			padding-right: 35px;
+			padding-left: 40px;
+			padding-right: 40px;
 		}
 	}
 

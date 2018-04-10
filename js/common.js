@@ -43,7 +43,7 @@ $(document).ready(function(){
 	});
 
 	//forms
-	Form.submit('#form1', function(form, callback) {
+	ValidateForm.submit('#form1', function(form, callback) {
 		var $f = $(form);
 		Popup.message('#message-popup', 'Форма отправлена', function() {
 			callback(true, true);
@@ -67,17 +67,18 @@ $(document).ready(function(){
 		
 	});
 
-	Form.submit('#form2', function(form, callback) {
+	ValidateForm.submit('#form2', function(form, callback) {
 		var $f = $(form);
 		Popup.message('#message-popup', 'Форма отправлена', function() {
 			callback(true, true);
 		});
 	});
 
-	Form.submit('#form3');
+	ValidateForm.submit('#form3');
 
 	$(window).on('winResized', function() {
 		console.log('window resized: '+ winW +'x'+ winH);
 	});
 
 });
+

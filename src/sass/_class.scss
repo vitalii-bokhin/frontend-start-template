@@ -95,9 +95,10 @@
 
 /*Text*/
 .txt{
+	margin: 25px 0;
 	line-height: (22/16);
 	p{
-		margin-bottom: 25px;
+		margin: 25px 0;
 		&:last-child{
 			margin-bottom: 0;
 		}
