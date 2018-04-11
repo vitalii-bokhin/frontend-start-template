@@ -43,16 +43,18 @@ $(document).ready(function(){
 	});
 
 	//submit forms
-	/*ValidateForm.submit('#form1', function(form, callback) {
-		var $f = $(form);
+	ValidateForm('#form1').submit(function(form, callback) {
+		var $form = $(form);
+
 		Popup.message('#message-popup', 'Форма отправлена', function() {
 			callback(true, true);
 		});
-		$.ajax({
-			url: $f.attr('action'),
+
+		/*$.ajax({
+			url: $form.attr('action'),
 			type:"POST",
 			dataType:"json",
-			data: $f.serialize(), //new FormData(form),
+			data: $form.serialize(), //new FormData(form),
 			success: function(response){
 				if (response.status == 'sent') {
 					Popup.message('#message-popup', 'Форма отправлена', function() {
@@ -63,19 +65,39 @@ $(document).ready(function(){
 			error: function() {
 				alert('Error');
 			}
-		});
-		
-	});*/
+		});*/
 
-	ValidateForm('#form2').submit(function() {
-		Popup.message('#message-popup', 'Форма отправлена', function() {
-				//callback(true, true);
-			});
 	});
 
-	ValidateForm('#form3');
+	ValidateForm('#form2').submit(function(form, callback) {
+		var $form = $(form);
 
-	
+		Popup.message('#message-popup', 'Форма отправлена', function() {
+				callback(true, true);
+			});
+
+		/*$.ajax({
+			url: $form.attr('action'),
+			type:"POST",
+			dataType:"json",
+			data: $form.serialize(), //new FormData(form),
+			success: function(response){
+				if (response.status == 'sent') {
+					Popup.message('#message-popup', 'Форма отправлена', function() {
+						callback(true, true);
+					});
+				}
+			},
+			error: function() {
+				alert('Error');
+			}
+		});*/
+
+	});
+
+
+	ValidateForm('#form3').submit();
+
 
 	$(window).on('winResized', function() {
 		console.log('window resized: '+ winW +'x'+ winH);

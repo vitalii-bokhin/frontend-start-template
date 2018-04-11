@@ -111,12 +111,40 @@ function ValidateForm(form) {
 		return err;
 	}
 
-	_.keyup = function(inp) {
+	function validateOnInput(inp) {
+
 		_.$input = $(inp);
+
 		var type = _.$input.attr('data-type');
+
 		if (_.$input.hasClass('tested')) {
-			_[type]();
+			if (_.$input.attr('data-required') && _.$input.val().length < 1) {
+				errorTip(true);
+			} else if (_.$input.val().length > 0 && type) {
+				_[type]();
+			} else {
+				errorTip(false);
+			}
 		}
+
+	}
+
+	function validateOnBlur(inp) {
+
+		_.$input = $(inp);
+
+		_.$input.addClass('tested');
+
+		var type = _.$input.attr('data-type');
+
+		if (_.$input.attr('data-required') && _.$input.val().length < 1) {
+			errorTip(true);
+		} else if (_.$input.val().length > 0 && type) {
+			_[type]();
+		} else {
+			errorTip(false);
+		}
+
 	}
 
 	_.fUploaded = false;
@@ -147,62 +175,34 @@ function ValidateForm(form) {
 				_.fUploaded = true;
 			}
 		}
-	}
+	};
 
 	_.step = function(el, fun) {
 		if (this.validate(el)) {
 			fun();
 		}
-	}
+	};
 
-	_.submitButton = function(f, st) {
-		var ValidateForm = $(f),
-		Button = ValidateForm.find('button[type="submit"], input[type="submit"]');
+	function submitButtonAction(form, st) {
+		var $form = $(form),
+		$button = $form.find('button[type="submit"], input[type="submit"]');
+
 		if (st) {
-			Button.prop('disabled', false).removeClass('form__button_loading');
+			$button.prop('disabled', false).removeClass('form__button_loading');
 		} else {
-			Button.prop('disabled', true).addClass('form__button_loading');
+			$button.prop('disabled', true).addClass('form__button_loading');
 		}
 	}
 
-	_.clearForm = function(form, st) {
+	function clearForm(form, st) {
 		var $form = $(form);
+
 		if (st) {
 			$form.find('.form__text-input, .form__textarea').val('');
 			$form.find('.overlabel-apply').attr('style','');
 			$form.find('.form__textarea-mirror').html('');
 		}
 	}
-
-	_.submit = function(fun) {
-		console.log(fun);
-		return fun;
-	}
-
-	/*_.submit = function(el, form) {
-		var _ = this;
-		$('body').on('change', '.form__file-input', function(e) {
-			_.file(this, e);
-		});
-		$('body').on('keyup', '.form__text-input', function() {
-			_.keyup(this);
-		});
-		$('body').on('submit', el, function() {
-			var f = this;
-			if (_.validate(f)) {
-				_.submitButton(f, false);
-				if (form !== undefined) {
-					form(f, function(unlockBtn, clearForm) {
-						_.submitButton(f, unlockBtn);
-						_.clearForm(f, clearForm);
-					});
-				} else {
-					return true;
-				}
-			}
-			return false;
-		});
-	}*/
 
 	function validate(form) {
 
@@ -212,9 +212,9 @@ function ValidateForm(form) {
 		$form.find('input[type="text"], textarea').each(function() {
 			_.$input = $(this);
 
-			var type = _.$input.attr('data-type');
-
 			if (!_.$input.is(':hidden')) {
+
+				var type = _.$input.attr('data-type');
 				_.$input.addClass('tested');
 
 				if (_.$input.attr('data-required') && _.$input.val().length < 1) {
@@ -232,6 +232,7 @@ function ValidateForm(form) {
 				if (type == 'pass' && _.pass()) {
 					err++;
 				}
+
 			}
 
 		});
@@ -333,16 +334,40 @@ function ValidateForm(form) {
 		return !err;
 	}
 
-	$('body').on('submit', form, function() {
-		if (validate(this)) {
-			if (_.submit() !== undefined) {
-				_.submit();
-			} else {
-				return true;
+	_.submit = function(fun) {
+		var _ = this;
+
+		$('body').on('change', form +' input[type="file"]', function(e) {
+			_.file(this, e);
+		});
+
+		$('body').on('input', form +' input[type="text"], '+ form +' textarea', function() {
+			validateOnInput(this);
+		});
+
+		$('body').on('blur', form +' input[type="text"], '+ form +' textarea', function() {
+			validateOnBlur(this);
+		});
+		
+		$('body').on('submit', form, function() {
+			var _form = this;
+
+			if (validate(_form)) {
+				submitButtonAction(_form, false);
+				if (fun !== undefined) {
+					fun(_form, function(unlBtn, clForm) {
+						submitButtonAction(_form, unlBtn);
+						clearForm(_form, clForm);
+					});
+				} else {
+					return true;
+				}
 			}
-		}
-		return false;
-	});
+
+			return false;
+		});
+
+	};
 
 	return this;
 }
