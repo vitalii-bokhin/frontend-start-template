@@ -53,7 +53,7 @@ function ValidateForm(form) {
 		};
 
 		if (!validDate(_.$input.val())) {
-			errorTip(true);
+			errorTip(true, true);
 			err = true;
 		} else {
 			errorTip(false);
@@ -75,7 +75,7 @@ function ValidateForm(form) {
 	_.tel = function() {
 		var err = false;
 		if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(_.$input.val())) {
-			errorTip(true);
+			errorTip(true, true);
 			err = true;
 		} else {
 			errorTip(false);

@@ -25,7 +25,7 @@
 				<div class="form__field">
 					<label class="overlabel">+7(999)999-99-99</label>
 					<input type="text" data-type="tel" data-required="true" class="form__text-input form__text-input_tel" value="">
-					<div class="form__error-tip">Заполните поле</div>
+					<div class="form__error-tip" data-second-error-text="Некорректный номер">Заполните поле</div>
 				</div>
 			</div>
 			<div class="col-6">
@@ -88,7 +88,7 @@
 				<div class="form__field">
 					<label for="i-date" class="overlabel">Дата</label>
 					<input id="i-date" type="text" data-type="date" data-required="true" class="form__text-input form__text-input_date" value="">
-					<div class="form__error-tip">Введите дату</div>
+					<div class="form__error-tip" data-second-error-text="Некорректная дата">Введите дату</div>
 				</div>
 			</div>
 		</div>
@@ -347,7 +347,7 @@
 					<div class="custom-select">
 						<button type="button" class="custom-select__button">Выберите страну</button>
 						<ul class="custom-select__options custom-select__options_countries">
-
+							<!--items-->
 						</ul>
 						<input type="hidden" class="custom-select__input" value="">
 					</div>

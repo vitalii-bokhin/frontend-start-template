@@ -32,19 +32,19 @@
 
 	$(document).ready(function() {
 
-		$('.social__a_vk').click(function() {
+		$('.js-share-vk').click(function() {
 			Share.vkontakte();
 			return false;
 		});
-		$('.social__a_fb').click(function() {
+		$('.js-share-fb').click(function() {
 			Share.facebook();
 			return false;
 		});
-		$('.social__a_tw').click(function() {
+		$('.js-share-tw').click(function() {
 			Share.twitter();
 			return false;
 		});
-		$('.social__a_ok').click(function() {
+		$('.js-share-ok').click(function() {
 			Share.odnoklasniki();
 			return false;
 		});

@@ -1,18 +1,19 @@
 .custom-select{
 	position: relative;
 	&__button{
-		display: block;
+		display: inline-block;
 		width: 100%;
+		min-height: 42px;
+		padding: 10px 32px 10px 12px;
 		border: 1px solid $gy;
-		padding-right: 30px !important;
 		position: relative;
-		text-align: left;
 		z-index: 3;
-		padding: 10px 15px;
+		font-size: 18px;
+		font-weight: 300;
+		text-align: left;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		font-weight: 300;
 		transition: .5s;
 		&:hover,
 		&:focus{

@@ -14,25 +14,8 @@
 	}
 }
 
-/*middle wrap*/
+/*middle block*/
 .middle{
-	height: 100%;
-	font-size: 0;
-	&:before{
-		display: inline-block;
-		content: "";
-		height: 100%;
-		vertical-align: middle;
-	}
-	&__block{
-		display: inline-block;
-		width: 100%;
-		vertical-align: middle;
-		font-size: 1rem;
-	}
-}
-
-.middle-wrap{
 	height: 100%;
 	font-size: 0;
 	&:before{
@@ -50,7 +33,7 @@
 }
 
 /*proportional block*/
-.proportional-wrap{
+.proportional{
 	@include fixprop;
 	position: relative;
 	&__inner{
