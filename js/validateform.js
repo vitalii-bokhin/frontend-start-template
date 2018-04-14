@@ -209,7 +209,7 @@ function ValidateForm(form) {
 		var $form = $(form),
 		err = 0;
 
-		$form.find('input[type="text"], textarea').each(function() {
+		$form.find('input[type="text"], input[type="password"], textarea').each(function() {
 			_.$input = $(this);
 
 			if (!_.$input.is(':hidden')) {
@@ -227,10 +227,6 @@ function ValidateForm(form) {
 					}
 				} else {
 					errorTip(false);
-				}
-
-				if (type == 'pass' && _.pass()) {
-					err++;
 				}
 
 			}
@@ -301,9 +297,10 @@ function ValidateForm(form) {
 			}
 		});
 
+		
 		if ($form.find('.form__file-input').length) {
 			_.$input = $form.find('.form__file-input');
-			if (!_.fUploaded) {
+			if (_.$input.attr('data-required') && !_.fUploaded) {
 				errorTip(true);
 				err++;
 			} else {
@@ -341,11 +338,11 @@ function ValidateForm(form) {
 			_.file(this, e);
 		});
 
-		$('body').on('input', form +' input[type="text"], '+ form +' textarea', function() {
+		$('body').on('input', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
 			validateOnInput(this);
 		});
 
-		$('body').on('blur', form +' input[type="text"], '+ form +' textarea', function() {
+		$('body').on('blur', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
 			validateOnBlur(this);
 		});
 		

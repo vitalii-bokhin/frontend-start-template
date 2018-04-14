@@ -159,3 +159,61 @@ function dAirGetInit() {
 		}
 	});
 }
+
+$(document).ready(function() {
+//submit forms
+	ValidateForm('#form1').submit(function(form, callback) {
+		var $form = $(form);
+
+		Popup.message('#message-popup', 'Форма отправлена', function() {
+			callback(true, true);
+		});
+
+		/*$.ajax({
+			url: $form.attr('action'),
+			type:"POST",
+			dataType:"json",
+			data: $form.serialize(), //new FormData(form),
+			success: function(response){
+				if (response.status == 'sent') {
+					Popup.message('#message-popup', 'Форма отправлена', function() {
+						callback(true, true);
+					});
+				}
+			},
+			error: function() {
+				alert('Error');
+			}
+		});*/
+
+	});
+
+	ValidateForm('#form2').submit(function(form, callback) {
+		var $form = $(form);
+
+		Popup.message('#message-popup', 'Форма отправлена', function() {
+				callback(true, true);
+			});
+
+		/*$.ajax({
+			url: $form.attr('action'),
+			type:"POST",
+			dataType:"json",
+			data: $form.serialize(), //new FormData(form),
+			success: function(response){
+				if (response.status == 'sent') {
+					Popup.message('#message-popup', 'Форма отправлена', function() {
+						callback(true, true);
+					});
+				}
+			},
+			error: function() {
+				alert('Error');
+			}
+		});*/
+
+	});
+
+
+	ValidateForm('#form3').submit();
+});

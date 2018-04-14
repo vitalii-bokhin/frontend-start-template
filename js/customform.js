@@ -92,7 +92,12 @@ var CustomSelect = {
 
 			_button.html(toButtonValue);
 			_srcInput.val(toButtonValue);
-			_input.val(toInputValue);
+
+			if (toInputValue != undefined) {
+				_input.val(toInputValue);
+			} else {
+				_input.val(toButtonValue);
+			}
 		}
 
 		if (_._el.attr('data-show-hidden')) {
@@ -114,7 +119,7 @@ var CustomSelect = {
 
 		_f.addClass('custom-select_changed')
 
-		ValidateForm.select(_input);
+		ValidateForm().select(_input);
 
 		return false;
 	},
