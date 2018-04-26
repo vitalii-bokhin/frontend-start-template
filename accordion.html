@@ -165,15 +165,18 @@
 		</div>
 	</div>
 
-	<div id="media-popup" class="popup-media popup__window popup-media">
+	<div id="media-popup" class="popup-media popup__window">
+		<button class="popup__close btn-close"></button>
 		<div class="popup__inner">
-			<div class="popup-media__box">
-				<img src="#" class="ovf-image popup-media__image" alt="photo">
+
+			<div class="popup-media__box popup-media__box_prop cover-img-wrap">
+				<img src="#" class="popup-media__image cover-img" alt="photo">
 				<a href="#" class="popup-media__play"></a>
+				<iframe src="" class="popup-media__iframe" allowfullscreen></iframe>
 				<button class="popup-media__arr popup-media__arr_l" data-dir="prev"></button>
 				<button class="popup-media__arr popup-media__arr_r" data-dir="next"></button>
-				<iframe src="" class="popup-media__iframe" allowfullscreen></iframe>
 			</div>
+			
 			<div class="popup-media__bar row">
 				<div class="col-6 vw1000-col">
 					<div class="popup-media__bar-date popup-media__data-0">

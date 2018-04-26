@@ -2,6 +2,20 @@ $(document).ready(function(){
 
 	(function setFootPadding() {
 		$('.wrapper, .wrapper__full-height').css('padding-bottom', $('.footer').innerHeight());
+
+		//fixed block
+		$('.fix-block').each(function() {
+			var _$ = $(this);
+			_$.css({width: 'auto', top: 'auto', left: 'auto'}).removeClass('fix-block_fixed');
+			var ofsT = _$.offset().top,
+			ofsL = _$.offset().left,
+			wd = _$.innerWidth();
+			_$.css({width: wd, top: ofsT, left: ofsL}).addClass('fix-block_fixed');
+		});
+
+		flexImg();
+		coverImg();
+
 		$(window).on('winResized', setFootPadding);
 	})();
 
@@ -12,14 +26,6 @@ $(document).ready(function(){
 	});
 
 	$('.scroll-pane').jScrollPane();
-
-	flexImg();
-	coverImg();
-
-	$(window).on('winResized', function() {
-		flexImg();
-		coverImg();
-	});
 
 	//headerFix
 	$(window).scroll(function () {
@@ -33,21 +39,7 @@ $(document).ready(function(){
 		}
 	});
 
-	//fixed block
-	$('.fix-block').each(function() {
-		var _$ = $(this),
-		ofsT = _$.offset().top,
-		ofsL = _$.offset().left,
-		wd = _$.width();
-		_$.css({width: wd, top: ofsT, left: ofsL}).addClass('fix-block_fixed');
-	});
-
-	
-
-
-	$(window).on('winResized', function() {
-		console.log('window resized: '+ winW +'x'+ winH);
-	});
-
 });
 
+var arrLike = {length: 4, sirko: 'собака', 2: 'мій пес'}; 
+var arr = Array.from(arrLike);

@@ -4,6 +4,7 @@
 	padding-left: 30px;
 	padding-right: 30px;
 	@media(max-width: 1000px){
+		max-width: 421px;
 		padding-left: 0;
 		padding-right: 0;
 	}
@@ -28,7 +29,6 @@
 			padding-right: 15px;
 		}
 	}
-
 }
 
 .row{
@@ -113,19 +113,6 @@
 		}
 	}
 
-	&-col-pad-0{
-		padding-left: 10px;
-		padding-right: 10px;
-		& > div[class*="col"]{
-			padding-left: 0 !important;
-			padding-right: 0 !important;
-		}
-		&.wrap{
-			padding-left: 40px;
-			padding-right: 40px;
-		}
-	}
-
 	@media(max-width: 1000px){
 		&,
 		&-col-mid,
@@ -137,21 +124,13 @@
 			}
 		}
 
-		&-col-pad-0{
-			&,
-			&.wrap{
-				padding-left: 15px;
-				padding-right: 15px;
-			}
-		}
-
 		&,
 		&-col-mid,
 		&-col-bot,
 		&-tbl{
-			& > div[class*="col-"]:not([class*="vw1000-col-"]){
+			& > div[class*="col-"]:not([class*="vw1000-col"]){
 				display: block;
-				float: none;
+				float: none !important;
 				width: 100%;
 				height: auto;
 				left: 0;
@@ -275,105 +254,7 @@
 			&-col-12{
 				& > div[class*="col-"]{
 					display: block;
-					float: none;
-					width: 100%;
-					height: auto;
-					left: 0;
-					right: 0;
-					margin-left: 0;
-				}
-			}
-		}
-		&-col{
-			width: auto;
-			&-0-1{
-				width: 4.166665%;
-			}
-			&-1{
-				width: 8.33333%;
-			}
-			&-1-2{
-				width: 12.499995%;
-			}
-			&-2{
-				width: 16.66666%;
-			}
-			&-2-3{
-				width: 20.83333%;
-			}
-			&-3{
-				width: 25%;
-			}
-			&-3-4{
-				width: 29.16666%;
-			}
-			&-4{
-				width: 33.33332%;
-			}
-			&-4-5{
-				width: 37.499985%;
-			}
-			&-5{
-				width: 41.66665%;
-			}
-			&-5-6{
-				width: 45.833325%;
-			}
-			&-6{
-				width: 50%;
-			}
-			&-6-7{
-				width: 54.166665%;
-			}
-			&-7{
-				width: 58.33333%;
-			}
-			&-7-8{
-				width: 62.499985%;
-			}
-			&-8{
-				width: 66.66664%;
-			}
-			&-8-9{
-				width: 70.833305%;
-			}
-			&-9{
-				width: 74.99997%;
-			}
-			&-9-10{
-				width: 79.166635%;
-			}
-			&-10{
-				width: 83.33333%;
-			}
-			&-10-11{
-				width: 87.499995%;
-			}
-			&-11{
-				width: 91.66663%;
-			}
-			&-11-12{
-				width: 95.833295%;
-			}
-			&-12{
-				width: 100%;
-				float: none !important;
-				clear: both;
-			}
-			&-offset-0{
-				margin-left: 0;
-			}
-		}
-	}
-}
-
-@media(max-width: 1400px){
-	.vw1200{
-		&-row{
-			&-col-12{
-				& > div[class*="col-"]{
-					display: block;
-					float: none;
+					float: none !important;
 					width: 100%;
 					height: auto;
 					left: 0;
@@ -471,7 +352,7 @@
 			&-col-12{
 				& > div[class*="col-"]{
 					display: block;
-					float: none;
+					float: none !important;
 					width: 100%;
 					height: auto;
 					left: 0;
@@ -643,6 +524,14 @@
 			}
 			&-offset-0{
 				margin-left: 0;
+			}
+		}
+		&-pad{
+			padding-left: 15px !important;
+			padding-right: 15px !important;
+			&-0{
+				padding-left: 0 !important;
+				padding-right: 0 !important;
 			}
 		}
 	}

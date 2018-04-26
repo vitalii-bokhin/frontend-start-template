@@ -82,6 +82,9 @@
 	line-height: (22/16);
 	p{
 		margin: 25px 0;
+		&:first-child{
+			margin-top: 0;
+		}
 		&:last-child{
 			margin-bottom: 0;
 		}
@@ -133,20 +136,19 @@ ul.list{
 	margin-bottom: 15px;
 }
 
+.m-0{
+	margin: 0 !important;
+}
+.p-0{
+	padding: 0 !important;
+}
+
 .hidden{
 	display: none;
 }
 
 @media(max-width: 1600px){
 	.vw1600{
-		&-hidden{
-			display: none;
-		}
-	}
-}
-
-@media(max-width: 1400px){
-	.vw1400{
 		&-hidden{
 			display: none;
 		}

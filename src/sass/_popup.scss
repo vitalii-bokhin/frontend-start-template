@@ -57,24 +57,31 @@
 
 /*popup-media*/
 .popup-media{
+	max-width: 1024px;
 	&__iframe{
 		@include fwh;
 		visibility: hidden;
 		border: none;
 	}
 	&__box{
-		position: relative;
 		background: #000;
-		&:before{
-			@include ab;
-			padding-bottom: 50%;
+		position: relative;
+		&_prop{
+			&:before{
+				@include ab;
+				padding-bottom: 50%;
+			}
+			.popup-media__image{
+				position: absolute;
+				left: 0;
+				top: 0;
+				max-width: none;
+			}
 		}
-		img{
-			position: absolute;
-			left: 0;
-			top: 0;
-			visibility: hidden;
-		}
+	}
+	&__image{
+		max-width: 100%;
+		height: auto;
 	}
 	&__bar{
 		padding-top: 34px;
@@ -140,8 +147,10 @@
 			top: 80px;
 		}
 		&__box{
-			&:before{
-				padding-bottom: per(553,904);
+			&_prop{
+				&:before{
+					padding-bottom: per(553,904);
+				}
 			}
 		}
 		&__bar{
@@ -163,8 +172,10 @@
 			top: 18px;
 		}
 		&__box{
-			&:before{
-				padding-bottom: per(385,320);
+			&_prop{
+				&:before{
+					padding-bottom: per(385,320);
+				}
 			}
 		}
 		&__arr{
