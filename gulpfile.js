@@ -9,7 +9,6 @@ autoprefixer = require('gulp-autoprefixer'),
 uglify = require('gulp-uglify'),
 replace = require('gulp-replace');
 
-
 gulp.task('default', function() {
   // place code for your default task here
 });
