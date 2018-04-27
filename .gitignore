@@ -3,3 +3,4 @@
 *.map
 *.pdf
 *.zip
+package-lock.json
