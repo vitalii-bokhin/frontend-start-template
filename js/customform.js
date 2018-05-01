@@ -215,6 +215,31 @@ var CustomSelect = {
 };
 
 
+function CustomFile(_inp) {
+
+	var $input = $(_inp),
+	$imgPreviewBlock = $input.siblings('.form__file-image'),
+	file = $input[0].files[0],
+	fileName = file.name,
+	fileSize = (file.size / 1024 / 1024).toFixed(2),
+	fileExt = (function(fileName){
+		var arr = fileName.split('.');
+		return arr[arr.length-1];
+	})(fileName);
+
+	if ($imgPreviewBlock.length && file.type.match('image.*')) {
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			$imgPreviewBlock.html('<img src="'+ e.target.result +'">');
+		};
+		reader.readAsDataURL(file);
+	}
+
+	ValidateForm().file(_inp);
+
+}
+
+
 $(document).ready(function() {
 
 	CustomSelect.init();
@@ -223,7 +248,7 @@ $(document).ready(function() {
 		CustomSelect.open(this); 
 	});
 
-	$('body').on('keyup', '.custom-select__input_autocomplete, .form__textarea_autocomplete', function() { 
+	$('body').on('input', '.custom-select__input_autocomplete, .form__textarea_autocomplete', function() { 
 		CustomSelect.autocomplete(this); 
 	});
 
@@ -236,6 +261,10 @@ $(document).ready(function() {
 			$('.custom-select').removeClass('custom-select_opened');
 			$('.custom-select__options').slideUp(221);
 		}
+	});
+
+	$('body').on('change', 'input[type="file"]', function() {
+		CustomFile(this);
 	});
 
 });

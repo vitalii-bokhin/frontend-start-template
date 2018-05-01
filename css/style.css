@@ -1133,7 +1133,7 @@ a:hover {
 }
 
 .form__textarea_var-h-wrap {
-  height: 100px;
+  height: 120px !important;
 }
 
 .form__textarea_var-h-wrap .form__textarea_var-h {
@@ -1141,7 +1141,7 @@ a:hover {
   box-shadow: none;
 }
 
-.form__textarea_var-h-wrap .middle__block {
+.form__textarea_var-h-wrap .middle__inner {
   position: relative;
 }
 
@@ -1405,6 +1405,7 @@ a:hover {
   left: 0;
   top: 0;
   background: #ffffff;
+  z-index: 2;
 }
 
 .form__button_loading:after {
@@ -1413,7 +1414,7 @@ a:hover {
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 2;
+  z-index: 3;
   margin: -15px 0 0 -15px;
   width: 30px;
   height: 30px;
@@ -2942,6 +2943,8 @@ a:hover {
 
 .middle-img {
   display: inline-block;
+  width: auto;
+  height: auto;
   max-width: 100%;
   max-height: 100%;
   vertical-align: middle;
@@ -2962,6 +2965,8 @@ a:hover {
 
 .bottom-img {
   display: inline-block;
+  width: auto;
+  height: auto;
   max-width: 100%;
   max-height: 100%;
   vertical-align: bottom;
@@ -2982,6 +2987,8 @@ a:hover {
 
 .responsive-img {
   display: inline-block;
+  width: auto;
+  height: auto;
   max-width: 100%;
   max-height: 100%;
 }
@@ -3408,6 +3415,10 @@ ul.list li:before {
 /*color*/
 .c-rd {
   color: #ff0000;
+}
+
+.mb-70 {
+  margin-bottom: 70px;
 }
 
 .mb-35 {

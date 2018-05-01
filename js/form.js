@@ -142,8 +142,6 @@ $(document).ready(function() {
 		setTextareaHeight($(this));
 	});
 
-	
-
 });
 
 //GetCountriesAndCitiesList
@@ -162,6 +160,16 @@ function dAirGetInit() {
 
 $(document).ready(function() {
 //submit forms
+
+	ValidateForm('#form0').submit(function(form, callback) {
+		var $form = $(form);
+
+		Popup.message('#message-popup', 'Форма отправлена', function() {
+			callback(true, true);
+		});
+
+	});
+
 	ValidateForm('#form1').submit(function(form, callback) {
 		var $form = $(form);
 

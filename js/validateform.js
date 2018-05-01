@@ -149,10 +149,12 @@ function ValidateForm(form) {
 
 	_.fUploaded = false;
 
-	_.file = function(inp,e) {
+	_.file = function(inp) {
 		var _ = this;
+
 		_.$input = $(inp);
-		var _imgBlock = _.$input.closest('.form__field').find('.form__file-image'),
+
+		var $imgPreviewBlock = _.$input.closest('.form__field').find('.form__file-image'),
 		file = e.target.files[0],
 		fileName = file.name,
 		fileSize = (file.size / 1024 / 1024).toFixed(2),
@@ -161,14 +163,14 @@ function ValidateForm(form) {
 			return nArr[nArr.length-1];
 		})(fileName);
 
-		if (_imgBlock.length) {
+		if ($imgPreviewBlock.length) {
 			if (!file.type.match('image.*')) {
 				errorTip(true);
 				_.fUploaded = false;
 			} else {
 				var reader = new FileReader();
 				reader.onload = function(e) {
-					_imgBlock.html('<img src="'+ e.target.result +'">');
+					$imgPreviewBlock.html('<img src="'+ e.target.result +'">');
 				};
 				reader.readAsDataURL(file);
 				errorTip(false);
@@ -297,16 +299,28 @@ function ValidateForm(form) {
 			}
 		});
 
-		
-		if ($form.find('.form__file-input').length) {
-			_.$input = $form.find('.form__file-input');
-			if (_.$input.attr('data-required') && !_.fUploaded) {
-				errorTip(true);
-				err++;
-			} else {
-				errorTip(false);
+
+		$form.find('.form__file-input').each(function() {
+			_.$input = $(this);
+
+			if (!_.$input.is(':hidden')) {
+
+				_.$input.addClass('tested');
+
+				if (_.$input.attr('data-required') && !_.$input[0].files.length) {
+					errorTip(true);
+					err++;
+				} else {
+					errorTip(false);
+					if (_.file()) {
+						err++;
+					}
+				}
+
 			}
-		}
+
+		});
+
 
 		if ($form.find('.form__text-input[data-pass-compare]').length) {
 			$form.find('.form__text-input[data-pass-compare]').each(function() {
@@ -334,8 +348,8 @@ function ValidateForm(form) {
 	_.submit = function(fun) {
 		var _ = this;
 
-		$('body').on('change', form +' input[type="file"]', function(e) {
-			_.file(this, e);
+		$('body').on('change', form +' input[type="file"]', function() {
+			//_.file(this);
 		});
 
 		$('body').on('input', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
