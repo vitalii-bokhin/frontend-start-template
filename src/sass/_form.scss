@@ -153,8 +153,7 @@
 			left: -9999px;
 			&:checked{
 				& + .form__chbox-label:before{
-					background: #F0F1F2 url('../images/chbox-bird.svg') no-repeat 50% 50%;
-					background-size: per(25,29) auto;
+					@include sp(-32px -17px);
 				}
 			}
 		}
@@ -285,10 +284,10 @@
 		&_search{
 			width: 42px;
 			&:before{
-				width: 17px;
+				width: 13px;
 				height: 17px;
-				@include sp(-33px -15px);
-				margin: -9px 0 0 -8px;
+				@include sp;
+				margin: -9px 0 0 -6px;
 			}
 		}
 		&:hover{
