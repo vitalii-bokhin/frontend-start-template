@@ -218,21 +218,30 @@ var CustomSelect = {
 function CustomFile(_inp) {
 
 	var $input = $(_inp),
-	$imgPreviewBlock = $input.siblings('.form__file-image'),
-	file = $input[0].files[0],
-	fileName = file.name,
-	fileSize = (file.size / 1024 / 1024).toFixed(2),
-	fileExt = (function(fileName){
-		var arr = fileName.split('.');
-		return arr[arr.length-1];
-	})(fileName);
+	$imgPreviewBlock = $input.siblings('.custom-file__preview'),
+	$nameBlock = $input.siblings('.custom-file__name'),
+	file = $input[0].files[0];
 
-	if ($imgPreviewBlock.length && file.type.match('image.*')) {
-		var reader = new FileReader();
-		reader.onload = function(e) {
-			$imgPreviewBlock.html('<img src="'+ e.target.result +'">');
-		};
-		reader.readAsDataURL(file);
+	if (file) {
+		var fileName = file.name,
+		fileSize = (file.size / 1024 / 1024).toFixed(2),
+		fileExt = (function(fileName){
+			var arr = fileName.split('.');
+			return arr[arr.length-1];
+		})(fileName);
+
+		$nameBlock.html(fileName);
+
+		if ($imgPreviewBlock.length && file.type.match('image')) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$imgPreviewBlock.html('<img src="'+ e.target.result +'">');
+			};
+			reader.readAsDataURL(file);
+		}
+	} else {
+		$imgPreviewBlock.empty();
+		$nameBlock.empty();
 	}
 
 }

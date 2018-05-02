@@ -151,22 +151,23 @@ function ValidateForm(form) {
 		_.$input = $(inp);
 
 		var err = false,
-		type = _.$input.attr('data-type'),
-		file = $input[0].files[0],
-		fileName = file.name,
-		fileSize = (file.size / 1024 / 1024).toFixed(2),
-		fileExt = (function(fileName){
-			var arr = fileName.split('.');
-			return arr[arr.length-1];
-		})(fileName);
+		file = _.$input[0].files[0];
 
-		console.log(file);
+		if (file) {
+			var type = _.$input.attr('data-type'),
+			fileName = file.name,
+			fileSize = (file.size / 1024 / 1024).toFixed(2),
+			fileExt = (function(fileName){
+				var arr = fileName.split('.');
+				return arr[arr.length-1];
+			})(fileName);
 
-		if (!file.type.match(type)) {
-			errorTip(true, true);
-			err = true;
-		} else {
-			errorTip(false);
+			if (!file.type.match(type)) {
+				errorTip(true, true);
+				err = true;
+			} else {
+				errorTip(false);
+			}
 		}
 
 		return err;
@@ -293,7 +294,7 @@ function ValidateForm(form) {
 		});
 
 
-		$form.find('.form__file-input').each(function() {
+		$form.find('input[type="file"]').each(function() {
 			_.$input = $(this);
 
 			if (!_.$input.is(':hidden')) {
@@ -305,7 +306,7 @@ function ValidateForm(form) {
 					err++;
 				} else {
 					errorTip(false);
-					if (_.file()) {
+					if (_.file(this)) {
 						err++;
 					}
 				}

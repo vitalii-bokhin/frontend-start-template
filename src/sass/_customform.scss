@@ -1,3 +1,4 @@
+/*custom select*/
 .custom-select{
 	position: relative;
 	&__button{
@@ -91,6 +92,38 @@
 	&_autocomplete{
 		&:after{
 			display: none;
+		}
+	}
+}
+
+/*custom file*/
+.custom-file{
+	text-align: center;
+	&__input{
+		position: absolute;
+		left: -9999px;
+	}
+	&__btn{
+		font-size: 30px;
+		color: $rd;
+		border-bottom: 1px solid $rd;
+		cursor: pointer;
+		&_delete{
+			display: none;
+		}
+	}
+	&__preview{
+		display: block;
+		width: 336px;
+		height: 273px;
+		line-height: 273px;
+		margin-bottom: 20px;
+		background: #000;
+		margin: 0 auto 20px;
+		text-align: center;
+		img{
+			max-height: 100%;
+			vertical-align: middle;
 		}
 	}
 }

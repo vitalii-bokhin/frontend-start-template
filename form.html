@@ -92,11 +92,12 @@
 
 		<form id="form0" action="send.php" method="POST" class="form">
 			<div class="form__field">
-				<div class="form__file">
-					<label class="form__file-image"></label>
-					<label class="form__file-btn">загрузить фото</label>
-					<button type="button" class="form__file-btn form__file-btn_delete">удалить фото</button>
-					<input type="file" data-type="image.*" data-required="true" class="form__file-input" name="">
+				<div class="custom-file">
+					<label class="custom-file__preview"></label>
+					<label class="custom-file__name"></label>
+					<label class="custom-file__btn">загрузить фото</label>
+					<button type="button" class="custom-file__btn custom-file__btn_delete">удалить фото</button>
+					<input type="file" data-type="image" data-required="true" class="custom-file__input">
 				</div>
 				<div class="form__error-tip" data-second-error-text="Выберите файл с изображением">Загрузите изображение</div>
 			</div>
@@ -113,7 +114,7 @@
 
 			<div class="row">
 				<div class="col">
-					<button type="submit" class="form__button button button_red">Submit</button>
+					<button type="submit" class="form__submit button button_red">Submit</button>
 				</div>
 			</div>
 		</form>
@@ -716,7 +717,7 @@
 
 		<div class="row">
 			<div class="col-12">
-				<button type="submit" class="form__button button button_red">Submit</button>
+				<button type="submit" class="form__submit button button_red">Submit</button>
 			</div>
 		</div>
 
@@ -760,7 +761,7 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<button type="submit" class="form__button button button_red">Submit</button>
+				<button type="submit" class="form__submit button button_red">Submit</button>
 			</div>
 		</div>
 	</form>
@@ -785,7 +786,7 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<button type="submit" class="form__button button button_red">Submit</button>
+				<button type="submit" class="form__submit button button_red">Submit</button>
 			</div>
 		</div>
 	</form>
