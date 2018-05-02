@@ -147,43 +147,36 @@ function ValidateForm(form) {
 
 	}
 
-	_.fUploaded = false;
-
 	_.file = function(inp) {
-		var _ = this;
-
 		_.$input = $(inp);
 
-		var $imgPreviewBlock = _.$input.closest('.form__field').find('.form__file-image'),
-		file = e.target.files[0],
+		var err = false,
+		type = _.$input.attr('data-type'),
+		file = $input[0].files[0],
 		fileName = file.name,
 		fileSize = (file.size / 1024 / 1024).toFixed(2),
-		ext = (function(fN){
-			var nArr = fN.split('.');
-			return nArr[nArr.length-1];
+		fileExt = (function(fileName){
+			var arr = fileName.split('.');
+			return arr[arr.length-1];
 		})(fileName);
 
-		if ($imgPreviewBlock.length) {
-			if (!file.type.match('image.*')) {
-				errorTip(true);
-				_.fUploaded = false;
-			} else {
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					$imgPreviewBlock.html('<img src="'+ e.target.result +'">');
-				};
-				reader.readAsDataURL(file);
-				errorTip(false);
-				_.fUploaded = true;
-			}
+		console.log(file);
+
+		if (!file.type.match(type)) {
+			errorTip(true, true);
+			err = true;
+		} else {
+			errorTip(false);
 		}
-	};
+
+		return err;
+	}
 
 	_.step = function(el, fun) {
 		if (this.validate(el)) {
 			fun();
 		}
-	};
+	}
 
 	function submitButtonAction(form, st) {
 		var $form = $(form),
@@ -346,11 +339,6 @@ function ValidateForm(form) {
 	}
 
 	_.submit = function(fun) {
-		var _ = this;
-
-		$('body').on('change', form +' input[type="file"]', function() {
-			//_.file(this);
-		});
 
 		$('body').on('input', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
 			validateOnInput(this);
@@ -358,6 +346,10 @@ function ValidateForm(form) {
 
 		$('body').on('blur', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
 			validateOnBlur(this);
+		});
+
+		$('body').on('change', form +' input[type="file"]', function() {
+			_.file(this);
 		});
 		
 		$('body').on('submit', form, function() {
@@ -378,7 +370,7 @@ function ValidateForm(form) {
 			return false;
 		});
 
-	};
+	}
 
 	return this;
 }

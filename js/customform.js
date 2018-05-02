@@ -235,8 +235,6 @@ function CustomFile(_inp) {
 		reader.readAsDataURL(file);
 	}
 
-	ValidateForm().file(_inp);
-
 }
 
 
