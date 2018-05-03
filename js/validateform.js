@@ -115,13 +115,14 @@ function ValidateForm(form) {
 
 		_.$input = $(inp);
 
-		var type = _.$input.attr('data-type');
+		var inpType = _.$input.attr('data-type'),
+		inpVal = _.$input.val();
 
 		if (_.$input.hasClass('tested')) {
-			if (_.$input.attr('data-required') && _.$input.val().length < 1) {
+			if (_.$input.attr('data-required') && !inpVal.length) {
 				errorTip(true);
-			} else if (_.$input.val().length > 0 && type) {
-				_[type]();
+			} else if (inpVal.length.length && inpType) {
+				_[inpType]();
 			} else {
 				errorTip(false);
 			}
@@ -135,12 +136,13 @@ function ValidateForm(form) {
 
 		_.$input.addClass('tested');
 
-		var type = _.$input.attr('data-type');
+		var inpType = _.$input.attr('data-type'),
+		inpVal = _.$input.val();
 
-		if (_.$input.attr('data-required') && _.$input.val().length < 1) {
+		if (_.$input.attr('data-required') && !inpVal.length) {
 			errorTip(true);
-		} else if (_.$input.val().length > 0 && type) {
-			_[type]();
+		} else if (inpVal.length.length && inpType) {
+			_[inpType]();
 		} else {
 			errorTip(false);
 		}
@@ -179,27 +181,6 @@ function ValidateForm(form) {
 		}
 	}
 
-	function submitButtonAction(form, st) {
-		var $form = $(form),
-		$button = $form.find('button[type="submit"], input[type="submit"]');
-
-		if (st) {
-			$button.prop('disabled', false).removeClass('form__button_loading');
-		} else {
-			$button.prop('disabled', true).addClass('form__button_loading');
-		}
-	}
-
-	function clearForm(form, st) {
-		var $form = $(form);
-
-		if (st) {
-			$form.find('.form__text-input, .form__textarea').val('');
-			$form.find('.overlabel-apply').attr('style','');
-			$form.find('.form__textarea-mirror').html('');
-		}
-	}
-
 	function validate(form) {
 
 		var $form = $(form),
@@ -210,13 +191,15 @@ function ValidateForm(form) {
 
 			if (!_.$input.is(':hidden')) {
 
-				var type = _.$input.attr('data-type');
+				var type = _.$input.attr('data-type'),
+				inpVal = _.$input.val();
+
 				_.$input.addClass('tested');
 
-				if (_.$input.attr('data-required') && _.$input.val().length < 1) {
+				if (_.$input.attr('data-required') && !inpVal.length) {
 					errorTip(true);
 					err++;
-				} else if (_.$input.val().length > 0) {
+				} else if (inpVal.length) {
 					errorTip(false);
 					if (type && _[type]()) {
 						err++;
@@ -316,27 +299,51 @@ function ValidateForm(form) {
 		});
 
 
-		if ($form.find('.form__text-input[data-pass-compare]').length) {
-			$form.find('.form__text-input[data-pass-compare]').each(function() {
-				var gr = $(this).attr('data-pass-compare');
-				_.$input = $form.find('.form__text-input[data-pass-compare="'+ gr +'"]');
-				if (!_.pass()) {
-					if (_.$input.eq(0).val() != _.$input.eq(1).val()) {
-						errorTip(true, true, true);
-					} else {
-						errorTip(false);
-					}
-				}
-			});
-		}
+		$form.find('.form__text-input[data-pass-compare-input]').each(function() {
+			_.$input = $(this);
 
-		if (!err) {
-			$form.removeClass('form_error');
-		} else {
+			var inpVal = _.$input.val();
+
+			if (inpVal.length) {
+				if (inpVal !== $(_.$input.attr('data-pass-compare-input')).val()) {
+					errorTip(true, true);
+					err++;
+				} else {
+					errorTip(false);
+				}
+			}
+			
+		});
+		
+
+		if (err) {
 			$form.addClass('form_error');
+		} else {
+			$form.removeClass('form_error');
 		}
 
 		return !err;
+	}
+
+	function actSubmitBtn(form, st) {
+		var $form = $(form),
+		$button = $form.find('button[type="submit"], input[type="submit"]');
+
+		if (st) {
+			$button.prop('disabled', false).removeClass('form__button_loading');
+		} else {
+			$button.prop('disabled', true).addClass('form__button_loading');
+		}
+	}
+
+	function clearForm(form, st) {
+		var $form = $(form);
+
+		if (st) {
+			$form.find('.form__text-input, .form__textarea').val('');
+			$form.find('.overlabel-apply').attr('style','');
+			$form.find('.form__textarea-mirror').html('');
+		}
 	}
 
 	_.submit = function(fun) {
@@ -357,10 +364,10 @@ function ValidateForm(form) {
 			var _form = this;
 
 			if (validate(_form)) {
-				submitButtonAction(_form, false);
+				actSubmitBtn(_form, false);
 				if (fun !== undefined) {
 					fun(_form, function(unlBtn, clForm) {
-						submitButtonAction(_form, unlBtn);
+						actSubmitBtn(_form, unlBtn);
 						clearForm(_form, clForm);
 					});
 				} else {

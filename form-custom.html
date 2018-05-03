@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<title>Form Custom | startTemplate</title>
+</head>
+<body>
+
+<!--WRAPPER/-->
+<div class="wrapper">
+
+<!--HEADER/-->
+<header class="header">
+	
+<div class="row-col-mid wrap header__wrap">
+	<div class="header__logo col-3 vw1000-col-9">
+		<a href="index.html"><img src="images/dealersair.svg" alt="logo"></a>
+	</div>
+	<div class="col-9 vw1000-col-3">
+
+		<div id="header-mob-menu" class="header__nav-wrap">
+			<nav class="header__nav">
+				<ul class="menu">
+					<li class="menu__item menu__item_has-children">
+						<a href="index.html" class="menu__a">Home</a>
+						<button class="menu__arr"></button>
+						<ul class="menu__sub-menu">
+							<li class="menu__sub-menu-item">
+								<a href="#" class="menu__sub-menu-a">Submenu 1</a>
+							</li>
+							<li class="menu__sub-menu-item">
+								<a href="#" class="menu__sub-menu-a">Submenu 2</a>
+							</li>
+							<li class="menu__sub-menu-item">
+								<a href="#" class="menu__sub-menu-a">Submenu 3</a>
+							</li>
+							<li class="menu__sub-menu-item">
+								<a href="#" class="menu__sub-menu-a">Submenu 4</a>
+							</li>
+						</ul>
+					</li>
+					<li class="menu__item">
+						<a href="grid.html" class="menu__a">Grid</a>
+					</li>
+					<li class="menu__item">
+						<a href="content.html" class="menu__a">Content</a>
+					</li>
+					<li class="menu__item">
+						<a href="form.html" class="menu__a">Form</a>
+					</li>
+					<li class="menu__item">
+						<a href="accordion.html" class="menu__a">Accordeon</a>
+					</li>
+					<li class="menu__item">
+						<a href="popup.html" class="menu__a">Popups</a>
+					</li>
+					<li class="menu__item">
+						<a href="#popup-2" class="js-open-popup menu__a">open popup</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="header__user user middle">
+				<span class="user__name">
+					<a href="#" class="js-toggle user__link" data-target-elements="#user-menu,.user__thumb a">Lufter</a><br>
+					<a href="#" class="user__link-logout">Выйти</a>
+				</span>
+				<span class="user__thumb">
+					<a href="#" class="js-toggle" data-target-elements="#user-menu,.user__link"><img src="images/avatar.png" alt="avatar" class="cover-img"></a>
+				</span>
+
+				<div id="user-menu" class="user__bubble bubble">
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<button class="js-toggle toggle header__toggle" data-target-elements="#header-mob-menu,.header" data-role="menu"><span></span><span></span><span></span><span></span></button>
+</div>
+</header>
+<!--/HEADER-->
+
+<div class="container wrap">
+
+	<div class="container">
+
+		<form id="form0" action="send.php" method="POST" class="form">
+			<div class="form__field">
+				<div class="custom-file">
+					<label class="custom-file__preview"></label>
+					<label class="custom-file__name"></label>
+					<label class="custom-file__btn">загрузить фото</label>
+					<button type="button" class="custom-file__btn custom-file__btn_delete">удалить фото</button>
+					<input type="file" data-type="image" data-required="true" class="custom-file__input">
+				</div>
+				<div class="form__error-tip" data-second-error-text="Выберите файл с изображением">Загрузите изображение</div>
+			</div>
+
+			<div class="row">
+				<div class="col-4">
+					<div class="form__field">
+						<label class="overlabel">Поле</label>
+						<input type="text" data-required="true" class="form__text-input" value="">
+						<div class="form__error-tip">Заполните поле</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<button type="submit" class="form__submit button button_red">Submit</button>
+				</div>
+			</div>
+		</form>
+
+	</div>
+	
+
+	<form id="form1" action="send.php" method="POST" class="form">
+
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">+7(999)999-99-99</label>
+					<input type="text" data-type="tel" data-required="true" class="form__text-input form__text-input_tel" value="">
+					<div class="form__error-tip" data-second-error-text="Некорректный номер">Заполните поле</div>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__field form__field_btn">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
+					<button class="form__btn form__btn_search"></button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="form__field">
+					<label class="overlabel">Текстовое поле</label>
+					<textarea data-required="true" class="form__textarea"></textarea>
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<label class="overlabel">E-mail</label>
+					<input type="text" data-type="email" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label class="overlabel">E-mail</label>
+					<input type="text" data-type="email" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label for="i-date" class="overlabel">Дата</label>
+					<input id="i-date" type="text" data-type="date" data-required="true" class="form__text-input form__text-input_date" value="">
+					<div class="form__error-tip" data-second-error-text="Некорректная дата">Введите дату</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">
+					Custom Select
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<select name="sel">
+						<option value="opt1">Выбор 1</option>
+						<option value="opt2">Выбор 2</option>
+						<option value="opt3">Выбор 3</option>
+						<option value="opt4">Выбор 4</option>
+						<option value="opt5">Выбор 5</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">
+					Select
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выбор</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выбор</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="custom-select__input" data-required="true" value="">
+					</div>
+					<div class="form__error-tip">Сделайте выбор</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<div class="custom-select form__select_multiple">
+						<button type="button" class="custom-select__button">Множественный выбор</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v2">Выбор выбор выбор 2</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v3">Выбор 3</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v4">Выбор 4</button></li>
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выбор</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-show-hidden="#f1" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-show-hidden="#f2" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+			</div>
+			<div class="col-4 form__field-wrap"> 
+
+				<div id="f1" class="form__field form__field_hidden">
+					<label for="i-txt-33" class="overlabel">Поле1</label>
+					<input id="i-txt-33" type="text" data-required="true" class="form__text-input" value="">
+				</div>
+
+				<div id="f2" class="form__field form__field_hidden">
+					<label for="i-txt-3333" class="overlabel">Поле2</label>
+					<input id="i-txt-3333" type="text" class="form__text-input" value="">
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">
+					Select fieldset
+				</div>
+				<div class="form__field">
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выбор 1</button>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-show-hidden="#fs1" data-value="v1">Выбор 1</button></li>
+							<li><button type="button" class="custom-select__val" data-show-hidden="#fs2" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form__fieldset-wrap">
+
+			<div id="fs1" class="form__fieldset">
+				<div class="row">
+					<div class="col-6">
+						<div class="form__field">
+							<label for="i-txt-331" class="overlabel">Поле</label>
+							<input id="i-txt-331" type="text" class="form__text-input" value="">
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form__field">
+							<label for="i-txt-332" class="overlabel">Поле</label>
+							<input id="i-txt-332" type="text" class="form__text-input" value="">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="fs2" class="form__fieldset form__fieldset_hidden">
+				<div class="row">
+					<div class="col-4">
+						<div class="form__field">
+							<label for="i-txt-333" class="overlabel">Поле</label>
+							<input id="i-txt-333" type="text" data-required="true" class="form__text-input" value="">
+						</div>
+					</div>
+					<div class="col-8">
+						<div class="form__field">
+							<label for="i-txt-334" class="overlabel">Поле</label>
+							<input id="i-txt-334" type="text" class="form__text-input" value="">
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">
+					Form steps
+				</div>
+			</div>
+		</div>
+
+		<div class="form__fieldset-wrap">
+
+			<div id="step-fs1" class="form__fieldset">
+				<div class="row">
+					<div class="col-12">
+						<div class="txt">
+							Step 1
+						</div>
+					</div>
+				</div>
+				<div class="row form__radio-group">
+					<div class="col-6">
+						<div class="form__radio">
+							<input type="radio" name="rad-fs-1" class="form__radio-input">
+							<label class="form__radio-label">Выбор 1</label>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form__radio">
+							<input type="radio" name="rad-fs-1" class="form__radio-input">
+							<label class="form__radio-label">Выбор 2</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs2">Step 2</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="step-fs2" class="form__fieldset form__fieldset_hidden">
+				<div class="row">
+					<div class="col-12">
+						<div class="txt">
+							Step 2
+						</div>
+					</div>
+				</div>
+				<div class="row form__radio-group">
+					<div class="col-6">
+						<div class="form__radio">
+							<input type="radio" name="rad-fs-2" class="form__radio-input">
+							<label class="form__radio-label">Выбор 1</label>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form__radio">
+							<input type="radio" name="rad-fs-2" class="form__radio-input">
+							<label class="form__radio-label">Выбор 2</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs3">Step 3</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="step-fs3" class="form__fieldset form__fieldset_hidden">
+				<div class="row">
+					<div class="col-12">
+						<div class="txt">
+							Step 3
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form__field">
+							<label class="overlabel">Поле</label>
+							<input type="text" class="form__text-input" data-required="true" value="">
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">
+					Данные страны берутся из https://get.dealersair.com/api/geo/
+				</div>
+
+				<div class="form__field">
+					<div class="custom-select">
+						<button type="button" class="custom-select__button">Выберите страну</button>
+						<ul class="custom-select__options custom-select__options_countries">
+							<!--items-->
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+
+				<div class="form__field">
+					<div class="custom-select">
+						<label class="overlabel">Страна (начинайте вводить)</label>
+						<input type="text" class="custom-select__input_autocomplete form__text-input" data-opt="search-by-name" value="">
+						<ul class="custom-select__options custom-select__options_countries">
+
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+
+				<div class="form__field">
+					<div class="custom-select">
+						<label class="overlabel">Страна с подсветкой (начинайте вводить)</label>
+						<input type="text" class="custom-select__input_autocomplete form__text-input" data-opt="search-with-highlight" value="">
+						<ul class="custom-select__options custom-select__options_countries2">
+
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+
+				<div class="form__field">
+					<div class="custom-select">
+						<label class="overlabel">Улица город (начинайте вводить)</label>
+						<input type="text" class="custom-select__input_autocomplete form__text-input" data-opt="search-by-search-string" value="">
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%львов%шевченка" data-value="v3">ул.Шевченка, г.Львов</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%шевченка%киев" data-value="v4">бульвар Шевченка, г.Киев</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%крещатик%киев" data-value="v5">ул.Крещатик, г.Киев</button></li>
+							<li><button type="button" class="custom-select__val" data-search="%свободы%киев" data-value="v5">пр.Свободы, г.Киев</button></li>
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">Чекбоксы:</div>
+			</div>
+			<div class="col-6">
+				<div class="form__chbox">
+					<input id="chb-1" type="checkbox" data-required="true" class="form__chbox-input">
+					<label for="chb-1" class="form__chbox-label">Выбор 1 <a href="#">условия</a></label>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__chbox">
+					<input type="checkbox" class="form__chbox-input">
+					<label class="form__chbox-label">Выбор 2</label>
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="form__chbox">
+					<input type="checkbox" data-show-hidden="#field-another-2" class="form__chbox-input">
+					<label class="form__chbox-label">Ваш вариант</label>
+				</div>
+			</div>
+			<div class="col-12">
+				<div id="field-another-2" class="form__field form__field_hidden">
+					<label class="overlabel">Ваш вариант</label>
+					<input type="text" class="form__text-input" data-required="true" value="">
+					<div class="form__error-tip">Введите свой вариант</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row form__chbox-group" data-min="1">
+			<div class="col-12">
+				<div class="txt">Группа чекбоксов(валидация):</div>
+			</div>
+			<div class="col-3">
+				<div class="form__chbox">
+					<input id="chb-3" type="checkbox" class="form__chbox-input">
+					<label for="chb-3" class="form__chbox-label">Выбор 1</label>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="form__chbox">
+					<input id="chb-4" type="checkbox" class="form__chbox-input">
+					<label for="chb-4" class="form__chbox-label">Выбор 2</label>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="form__chbox">
+					<input id="chb-5" type="checkbox" class="form__chbox-input">
+					<label for="chb-5" class="form__chbox-label">Выбор 1</label>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="form__chbox">
+					<input id="chb-6" type="checkbox" class="form__chbox-input">
+					<label for="chb-6" class="form__chbox-label">Выбор 2</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">Чекбокс:</div>
+			</div>
+			<div class="col-12">
+				<div class="form__chbox">
+					<input id="chb-7" type="checkbox" class="form__chbox-input">
+					<label for="chb-7" class="form__chbox-label">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat.
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-12">
+				<div class="txt">Радио кнопки:</div>
+			</div>
+
+			<div class="col-6">
+				<div class="form__radio">
+					<input type="radio" name="rad-1" class="form__radio-input" checked>
+					<label class="form__radio-label">Выбор 1</label>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__radio">
+					<input type="radio" name="rad-1" class="form__radio-input">
+					<label class="form__radio-label">Выбор 2</label>
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="form__radio">
+					<input type="radio" name="rad-1" data-show-hidden="#field-another" class="form__radio-input">
+					<label class="form__radio-label">Другое</label>
+				</div>
+			</div>
+			<div class="col-12">
+				<div id="field-another" class="form__field form__field_hidden">
+					<label class="overlabel">Ваш вариант</label>
+					<input type="text" class="form__text-input" data-required="true" value="">
+					<div class="form__error-tip">Введите свой вариант</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row form__radio-group">
+			<div class="col-12">
+				<div class="txt">Группа Радио кнопок (валидация):</div>
+			</div>
+
+			<div class="col-6">
+				<div class="form__radio">
+					<input type="radio" name="rad-2" class="form__radio-input">
+					<label class="form__radio-label">Выбор 1</label>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__radio">
+					<input type="radio" name="rad-2" class="form__radio-input">
+					<label class="form__radio-label">Выбор 2</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">Ввод паролей, сравнение:</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-4">
+				<div class="form__field">
+					<label class="overlabel">Текущий пароль</label>
+					<input type="password" data-type="pass" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Введите текущий пароль</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label class="overlabel">Новый пароль</label>
+					<input type="password" data-type="pass" data-required="true" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Не менее 6 символов" data-third-error-text="Не совпадают">Введите новый пароль</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form__field">
+					<label class="overlabel">Повторите пароль</label>
+					<input type="password" data-type="pass" data-required="true" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Не менее 6 символов" data-third-error-text="Не совпадают">Повторите пароль</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">Текстовое поле с резиновой высотой:</div>
+
+				<div class="form__field">
+					<div class="pos-r">
+						<div class="form__textarea-mirror"></div>
+						<textarea data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+						<label class="overlabel">Текстовое поле</label>
+					</div>
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием:</div>
+
+				<div class="form__field">
+					<div class="form__textarea_var-h-wrap middle">
+						<div class="middle__inner">
+							<div class="form__textarea-mirror"></div>
+							<textarea data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+							<label class="overlabel">Текстовое поле</label>
+						</div>
+					</div>
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<div class="row">
+			<div class="col-12">
+				<div class="txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом:</div>
+
+				<div class="form__field">
+					<div class="custom-select form__select_autocomplete">
+						<div class="form__textarea_var-h-wrap middle">
+							<div class="middle__inner">
+								<div class="form__textarea-mirror"></div>
+								<textarea data-required="true" class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
+								<label class="overlabel">Начинайте вводить</label>
+							</div>
+						</div>
+						<ul class="custom-select__options">
+							<li><button type="button" class="custom-select__val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
+							<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
+						</ul>
+						<input type="hidden" class="custom-select__input" value="">
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<button type="submit" class="form__submit button button_red">Submit</button>
+			</div>
+		</div>
+
+		<div class="form__alert">Ошибка заполнения полей формы</div>
+
+	</form>
+
+</div>
+
+<div class="container wrap">
+	<form id="form2" action="send.php" method="POST" class="form">
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<button type="submit" class="form__submit button button_red">Submit</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="container wrap">
+	<form id="form3" action="send.php" method="POST" class="form">
+		<div class="row">
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" class="form__text-input" value="">
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form__field">
+					<label class="overlabel">Поле</label>
+					<input type="text" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip">Заполните поле</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<button type="submit" class="form__submit button button_red">Submit</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!--FOOTER/-->
+<footer class="footer">
+	<div class="row-col-mid wrap footer__wrap">
+	<div class="col-3 x1600-col-2">
+		<div class="footer__logo">
+			<a href="#"><img src="images/dealersair.svg" alt="logo"></a>
+		</div>
+	</div>
+	<div class="col-8 x1600-col-10 col-offset-1 x1600-col-offset-0">
+		<div class="footer__txt">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</div>
+	</div>
+</div>
+</footer>
+<!--/FOOTER-->
+
+</div>
+<!--/WRAPPER-->
+
+<!--POPUPs/-->
+<div class="popup">
+
+	<div id="popup-1" class="popup__window" style="max-width: 550px;">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner" style="height: 100px;">
+			<a href="#message-popup" class="js-open-msg-popup">POPUP с сообщением</a>
+		</div> 
+	</div>
+
+	<div id="popup-2" class="popup__window" style="max-width: 550px;">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner" style="height: 1300px;">
+			
+		</div>
+	</div>
+
+	<div id="media-popup" class="popup-media popup__window">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner">
+
+			<div class="popup-media__box popup-media__box_prop cover-img-wrap">
+				<img src="#" class="popup-media__image cover-img" alt="photo">
+				<a href="#" class="popup-media__play"></a>
+				<iframe src="" class="popup-media__iframe" allowfullscreen></iframe>
+				<button class="popup-media__arr popup-media__arr_l" data-dir="prev"></button>
+				<button class="popup-media__arr popup-media__arr_r" data-dir="next"></button>
+			</div>
+			
+			<div class="popup-media__bar row">
+				<div class="col-6 vw1000-col">
+					<div class="popup-media__bar-date popup-media__data-0">
+						<!--data string 1-->
+					</div>
+					<div class="popup-media__bar-tit popup-media__data-1">
+						<!--data string 2-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Message Popup/-->
+	<div id="message-popup" class="popup-message popup__window">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner">
+			<!-- message html -->
+		</div>
+	</div>
+	<!--/Message Popup-->
+
+</div>
+<!--/POPUPs-->
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/global.js"></script>
+<script src="js/easing.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/mousewheel.min.js"></script>
+<script src="js/swipe.min.js"></script>
+<script src="js/scrollpane.min.js"></script>
+<script src="js/image.js"></script>
+<script src="js/popup.js"></script>
+<script src="js/anchor.js"></script>
+<script src="js/button.js"></script>
+<script src="js/more.js"></script>
+<script src="js/diagram.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/numberspin.js"></script>
+<script src="js/accord.js"></script>
+<script src="js/tab.js"></script>
+<script src="js/customform.js"></script>
+<script src="js/validateform.js"></script>
+<script src="js/form.js"></script>
+<script src="js/fsscroll.js"></script>
+<script src="js/mouseparallax.js"></script>
+<script src="js/floatslider.js"></script>
+<script src="js/common.js"></script>
+<script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
+
+
+</body>
+</html>

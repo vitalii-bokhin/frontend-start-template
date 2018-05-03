@@ -90,31 +90,39 @@ $(document).ready(function() {
 	initOverLabels();
 
 	$('body').on('change', '.form__chbox-input', function() {
-		var _$ = $(this);
-		if (_$.attr('data-show-hidden')) {
-			var Field = $(_$.attr('data-show-hidden'));
+		var _$ = $(this),
+		targetElements = _$.attr('data-target-elements');
+
+		if (targetElements) {
+			var $elem = $(targetElements);
 			if (_$.prop('checked')) {
-				Field.removeClass('form__field_hidden');
+				$elem.show();
 			} else {
-				Field.addClass('form__field_hidden');
+				$elem.hide();
 			}
 		}
+
 	});
 
 	$('body').on('change', '.form__radio-input', function() {
 		var _$ = $(this),
 		name = _$.attr('name');
+
 		$('.form__radio-input[name="'+ name +'"]').each(function() {
-			var _$ = $(this);
-			if (_$.attr('data-show-hidden')) {
-				var Field = $(_$.attr('data-show-hidden'));
+			var _$ = $(this),
+			targetElements = _$.attr('data-target-elements');
+
+			if (targetElements) {
+				var $elem = $(targetElements);
 				if (_$.prop('checked')) {
-					Field.removeClass('form__field_hidden');
+					$elem.show();
 				} else {
-					Field.addClass('form__field_hidden');
+					$elem.hide();
 				}
 			}
+			
 		});
+
 	});
 
 	$('body').on('click', '.form__button', function() {
@@ -161,42 +169,9 @@ function dAirGetInit() {
 $(document).ready(function() {
 //submit forms
 
-	ValidateForm('#form0').submit(function(form, callback) {
-		var $form = $(form);
+	ValidateForm('#form').submit();
 
-		Popup.message('#message-popup', 'Форма отправлена', function() {
-			callback(true, true);
-		});
-
-	});
-
-	ValidateForm('#form1').submit(function(form, callback) {
-		var $form = $(form);
-
-		Popup.message('#message-popup', 'Форма отправлена', function() {
-			callback(true, true);
-		});
-
-		/*$.ajax({
-			url: $form.attr('action'),
-			type:"POST",
-			dataType:"json",
-			data: $form.serialize(), //new FormData(form),
-			success: function(response){
-				if (response.status == 'sent') {
-					Popup.message('#message-popup', 'Форма отправлена', function() {
-						callback(true, true);
-					});
-				}
-			},
-			error: function() {
-				alert('Error');
-			}
-		});*/
-
-	});
-
-	ValidateForm('#form2').submit(function(form, callback) {
+	ValidateForm('#form-ajax').submit(function(form, callback) {
 		var $form = $(form);
 
 		Popup.message('#message-popup', 'Форма отправлена', function() {
@@ -223,5 +198,5 @@ $(document).ready(function() {
 	});
 
 
-	ValidateForm('#form3').submit();
+	ValidateForm('#form-no-ajax').submit();
 });

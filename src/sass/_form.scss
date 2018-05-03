@@ -1,8 +1,8 @@
 .form{
 	
 	.row{
-		padding-left: 8px;
-		padding-right: 8px;
+		padding-left: 3px;
+		padding-right: 3px;
 		& > div[class*="col"]{
 			padding-left: 7px;
 			padding-right: 7px;
@@ -159,7 +159,8 @@
 		}
 		&-label{
 			display: inline-block;
-			padding: 4px 0 0 33px;
+			line-height: 1.3;
+			padding: 3px 0 0 33px;
 			min-height: 22px;
 			position: relative;
 			cursor: pointer;
@@ -170,12 +171,12 @@
 				left: 0;
 				width: 20px;
 				height: 20px;
-				border: 1px solid #C3C3C3;
-				background: #F0F1F2;
-				transition: border-color .5s;
+				border: 1px solid $gy;
+				background: $lgy;
+				transition: box-shadow .5s;
 			}
 			&:hover:before{
-				border: 1px solid $rd;
+				box-shadow: 2px 1px 21px rgba(0,0,0,.21);
 			}
 		}
 		&_error,
@@ -202,7 +203,7 @@
 						width: 10px;
 						height: 10px;
 						border-radius: 10px;
-						background: $rd;
+						background: $bk;
 					}
 				}
 			}
@@ -221,12 +222,12 @@
 				width: 20px;
 				height: 20px;
 				border-radius: 20px;
-				border: 1px solid #C3C3C3;
-				background: #F0F1F2;
-				transition: border-color .5s;
+				border: 1px solid $gy;
+				background: $lgy;
+				transition: box-shadow .5s;
 			}
 			&:hover:before{
-				border: 1px solid $rd;
+				box-shadow: 2px 1px 21px rgba(0,0,0,.21);
 			}
 		}
 		&-group_error{

@@ -64,32 +64,7 @@
 	}
 }
 
-/*Title*/
-.title{
-	font-size: 35px;
-	font-weight: 700;
-	margin-bottom: 45px;
-	&-h2{
-		font-size: 21px;
-		font-weight: 500;
-		margin-bottom: 28px;
-	}
-}
 
-/*Text*/
-.txt{
-	margin: 25px 0;
-	line-height: (22/16);
-	p{
-		margin: 25px 0;
-		&:first-child{
-			margin-top: 0;
-		}
-		&:last-child{
-			margin-bottom: 0;
-		}
-	}
-}
 
 /*list*/
 ul.list{
@@ -111,32 +86,17 @@ ul.list{
 	}	
 }
 
-/*align*/
-.ta-c{
-	text-align: center;
-}
-.ta-r{
-	text-align: right;
-}
+
 
 /*position*/
 .pos-r{
 	position: relative;
 }
 
-/*color*/
-.c-rd{
-	color: $rd;
-}
 
-.mb-70{
-	margin-bottom: 70px;
-}
-.mb-35{
-	margin-bottom: 35px;
-}
-.mb-15{
-	margin-bottom: 15px;
+/*marging*/
+.mt-25{
+	margin-top: 25px;
 }
 
 .m-0{
