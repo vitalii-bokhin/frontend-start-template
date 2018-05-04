@@ -38,10 +38,12 @@
 	}
 
 	&_w230{
-		width: 230px;
+		width: 100%;
+		max-width: 230px;
 	}
 	&_w330{
-		width: 330px;
+		width: 100%;
+		max-width: 330px;
 	}
 	&_w-full{
 		width: 100%;
@@ -84,8 +86,9 @@
 		}
 	}
 	
-	@media(max-width: 700px){
+	@media(max-width: 1000px){
 		width: 100%;
+		max-width: none;
 	}
 }
 

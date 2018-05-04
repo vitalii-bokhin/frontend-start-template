@@ -5,36 +5,45 @@ function ValidateForm(form) {
 
 	_.$input = null;
 
-	function errorTip(err,sec,trd) {
-		var Field = _.$input.closest('.form__field'),
-		ErrTip = Field.find('.form__error-tip');
+	function errorTip(err, errInd) {
+		var $field = _.$input.closest('.form__field'),
+		$errTip = $field.find('.form__error-tip');
 
-		if (!err) {
-			Field.removeClass('form__field_error');
-		} else {
-			Field.addClass('form__field_error');
+		if (err) {
 
-			if (trd) {
+			$field.addClass('form__field_error');
 
-				if (!ErrTip.attr('data-first-error-text')) {
-					ErrTip.attr('data-first-error-text', ErrTip.html());
+			switch (errInd) {
+				case 2:
+
+				if (!$errTip.attr('data-first-error-text')) {
+					$errTip.attr('data-first-error-text', $errTip.html());
 				}
-				ErrTip.html(ErrTip.attr('data-third-error-text'));
+				$errTip.html($errTip.attr('data-second-error-text'));
 
-			} else if (sec) {
+				break;
 
-				if (!ErrTip.attr('data-first-error-text')) {
-					ErrTip.attr('data-first-error-text', ErrTip.html());
+				case 3:
+
+				if (!$errTip.attr('data-first-error-text')) {
+					$errTip.attr('data-first-error-text', $errTip.html());
 				}
-				ErrTip.html(ErrTip.attr('data-second-error-text'));
+				$errTip.html($errTip.attr('data-third-error-text'));
 
-			} else {
+				break;
 
-				if (ErrTip.attr('data-first-error-text')) {
-					ErrTip.html(ErrTip.attr('data-first-error-text'));
+				default:
+
+				if ($errTip.attr('data-first-error-text')) {
+					$errTip.html($errTip.attr('data-first-error-text'));
 				}
+
+				break;
 
 			}
+
+		} else {
+			$field.removeClass('form__field_error');
 		}
 
 	}
@@ -53,49 +62,52 @@ function ValidateForm(form) {
 		};
 
 		if (!validDate(_.$input.val())) {
-			errorTip(true, true);
+			errorTip(true, 2);
 			err = true;
 		} else {
 			errorTip(false);
 		}
+
 		return err;
 	}
 
 	_.email = function() {
 		var err = false;
+
 		if (!/^[a-z0-9]+[a-z0-9-\.]*@[a-z0-9-]{2,}\.[a-z]{2,6}$/i.test(_.$input.val())) {
-			errorTip(true, true);
+			errorTip(true, 2);
 			err = true;
 		} else {
 			errorTip(false);
 		}
+
 		return err;
 	}
 
 	_.tel = function() {
 		var err = false;
+
 		if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(_.$input.val())) {
-			errorTip(true, true);
+			errorTip(true, 2);
 			err = true;
 		} else {
 			errorTip(false);
 		}
+
 		return err;
 	}
 
 	_.pass = function() {
 		var err = false,
-		lng = _.$input.attr('data-pass-length');
+		minLng = _.$input.attr('data-min-length');
 
-		if (_.$input.val().length < 1) {
-			errorTip(true);
-			err = true;
-		} else if(lng && _.$input.val().length < lng) {
-			errorTip(true, true);
+		if (minLng && _.$input.val().length < minLng) {
+			errorTip(true, 2);
 			err = true;
 		} else {
 			errorTip(false);
 		}
+
 		return err;
 	}
 
@@ -121,7 +133,7 @@ function ValidateForm(form) {
 		if (_.$input.hasClass('tested')) {
 			if (_.$input.attr('data-required') && !inpVal.length) {
 				errorTip(true);
-			} else if (inpVal.length.length && inpType) {
+			} else if (inpVal.length && inpType) {
 				_[inpType]();
 			} else {
 				errorTip(false);
@@ -141,7 +153,7 @@ function ValidateForm(form) {
 
 		if (_.$input.attr('data-required') && !inpVal.length) {
 			errorTip(true);
-		} else if (inpVal.length.length && inpType) {
+		} else if (inpVal.length && inpType) {
 			_[inpType]();
 		} else {
 			errorTip(false);
@@ -165,7 +177,7 @@ function ValidateForm(form) {
 			})(fileName);
 
 			if (!file.type.match(type)) {
-				errorTip(true, true);
+				errorTip(true, 2);
 				err = true;
 			} else {
 				errorTip(false);
@@ -276,7 +288,6 @@ function ValidateForm(form) {
 			}
 		});
 
-
 		$form.find('input[type="file"]').each(function() {
 			_.$input = $(this);
 
@@ -306,7 +317,7 @@ function ValidateForm(form) {
 
 			if (inpVal.length) {
 				if (inpVal !== $(_.$input.attr('data-pass-compare-input')).val()) {
-					errorTip(true, true);
+					errorTip(true, 2);
 					err++;
 				} else {
 					errorTip(false);

@@ -202,7 +202,7 @@
 						left: 6px;
 						width: 10px;
 						height: 10px;
-						border-radius: 10px;
+						border-radius: 50%;
 						background: $bk;
 					}
 				}
@@ -221,7 +221,7 @@
 				left: 0;
 				width: 20px;
 				height: 20px;
-				border-radius: 20px;
+				border-radius: 50%;
 				border: 1px solid $gy;
 				background: $lgy;
 				transition: box-shadow .5s;
