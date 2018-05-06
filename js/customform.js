@@ -6,16 +6,17 @@ var CustomSelect = {
 	init: function() {
 		$('select').each(function() {
 			var $select = $(this),
-			options = $select.find('option'),
+			$options = $select.find('option'),
 			$parent = $select.parent(),
-			sel_val = '';
+			optionsList = '';
 
-			for (var i = 0; i < options.length; i++) {
-				var $option = $(options[i]);
-				sel_val += '<li><button type="button" class="custom-select__val" data-value="'+ $option.val() +'">'+ $option.html() +'</button></li>';
+			for (var i = 0; i < $options.length; i++) {
+				var $option = $($options[i]);
+				optionsList += '<li><button type="button" class="custom-select__val" data-value="'+ $option.val() +'">'+ $option.html() +'</button></li>';
 			}
 
-			$parent.html('<div class="custom-select"><button type="button" class="custom-select__button">Выбор</button><ul class="custom-select__options">'+ sel_val +'</ul><input type="hidden" name="'+ $select.attr('name') +'" class="custom-select__input" value=""></div>');
+			$parent.html('<div class="custom-select'+ ( ($select.attr('multiple') != undefined) ? ' custom-select_multiple' : '' ) +'"><button type="button" data-placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__button">'+ $select.attr('data-placeholder') +'</button><ul class="custom-select__options">'+ optionsList +'</ul><input type="hidden" name="'+ $select.attr('name') +'" class="custom-select__input" value="">'+ ( ($select.attr('multiple') != undefined) ? '<div class="custom-select__multiple-inputs"></div>' : '' ) +'</div>');
+
 			$select.remove();
 		});
 	},
@@ -67,7 +68,8 @@ var CustomSelect = {
 			}
 
 			var toButtonValue = [],
-			toInputValue = [];
+			toInputValue = [],
+			$multInputs = _f.find('.custom-select__multiple-inputs');
 
 			_._options.find('.custom-select__val_checked').each(function(i) {
 				var el = $(this);
@@ -77,10 +79,22 @@ var CustomSelect = {
 
 			if (toButtonValue.length) {
 				_button.html(toButtonValue.join(', '));
-				_input.val(toInputValue.join('+'));
+
+				_input.val(toInputValue[0]);
+
+				$multInputs.html('');
+
+				if (toInputValue.length > 1) {
+
+					for (var i = 1; i < toInputValue.length; i++) {
+						$multInputs.append('<input type="hidden" name="'+ _input.attr('name') +'" value="'+ toInputValue[i] +'">');
+					}
+					
+				}
+				
 			} else {
 				_.change(0);
-				_button.html('Множественный выбор');
+				_button.html(_button.attr('data-placeholder'));
 				_input.val('');
 			}
 

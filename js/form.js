@@ -89,7 +89,7 @@ $(document).ready(function() {
 
 	initOverLabels();
 
-	$('body').on('change', '.form__chbox-input', function() {
+	$('body').on('change', 'input[type="checkbox"]', function() {
 		var _$ = $(this),
 		targetElements = _$.attr('data-target-elements');
 
@@ -104,11 +104,10 @@ $(document).ready(function() {
 
 	});
 
-	$('body').on('change', '.form__radio-input', function() {
-		var _$ = $(this),
-		name = _$.attr('name');
+	$('body').on('change', 'input[type="radio"]', function() {
+		var name = $(this).attr('name');
 
-		$('.form__radio-input[name="'+ name +'"]').each(function() {
+		$('input[type="radio"][name="'+ name +'"]').each(function() {
 			var _$ = $(this),
 			targetElements = _$.attr('data-target-elements');
 

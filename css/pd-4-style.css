@@ -18,10 +18,7 @@ html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, st
   color: inherit;
   line-height: inherit;
   vertical-align: baseline;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-appearance: none;
+  box-sizing: border-box;
 }
 
 header, footer, section, nav, article, aside {
@@ -232,3 +229,5 @@ html, body {
 .inv__cells p:last-child {
   border-right: 1px solid #919191;
 }
+
+/*# sourceMappingURL=../src/sass/pd-4-style.css.map */

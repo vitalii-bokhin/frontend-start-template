@@ -231,59 +231,60 @@ function ValidateForm(form) {
 			}
 		});
 
-		$form.find('.form__chbox-input').each(function() {
-			var _inp = $(this),
-			_chbox = _inp.closest('.form__chbox'),
-			hidden = _inp.closest('.form__field_hidden, .form__fieldset_hidden');
-			if (!hidden.length) {
-				if(_inp.attr('data-required') && !_inp.prop('checked')){
-					_chbox.addClass('form__chbox_error');
+		$form.find('input[type="checkbox"]').each(function() {
+			_.$input = $(this);
+
+			if (!_.$input.is(':hidden')) {
+
+				if (_.$input.attr('data-required') && !_.$input.prop('checked')) {
+					errorTip(true);
 					err++;
 				} else {
-					_chbox.removeClass('form__chbox_error');
+					errorTip(false);
 				}
+
 			}
 
 		});
 
 		$form.find('.form__chbox-group').each(function() {
 			var i = 0,
-			_g = $(this),
-			hidden = _g.closest('.form__field_hidden, .form__fieldset_hidden');
+			_$ = $(this);
 
-			if (!hidden.length) {
-				_g.find('.form__chbox-input').each(function() {
+			if (!_$.is(':hidden')) {
+				_$.find('input[type="checkbox"]').each(function() {
 					if ($(this).prop('checked')) {
 						i++;
 					}
+
 				});
 
-				if (i < _g.attr('data-min')) {
-					_g.addClass('form__chbox-group_error');
+				if (i < _$.attr('data-min')) {
+					_$.addClass('form__chbox-group_error');
 					err++;
 				} else {
-					_g.removeClass('form__chbox-group_error');
+					_$.removeClass('form__chbox-group_error');
 				}
 			}
 		});
 
 		$form.find('.form__radio-group').each(function() {
 			var e = true,
-			_g = $(this),
-			hidden = _g.closest('.form__field_hidden, .form__fieldset_hidden');
+			_$ = $(this),
+			hidden = _$.closest('.form__field_hidden, .form__fieldset_hidden');
 
-			if (!hidden.length) {
-				_g.find('.form__radio-input').each(function() {
+			if (!_$.is(':hidden')) {
+				_$.find('input[type="radio"]').each(function() {
 					if ($(this).prop('checked')) {
 						e = false;
 					}
 				});
 
 				if (e) {
-					_g.addClass('form__radio-group_error');
+					_$.addClass('form__radio-group_error');
 					err++;
 				} else {
-					_g.removeClass('form__radio-group_error');
+					_$.removeClass('form__radio-group_error');
 				}
 			}
 		});
