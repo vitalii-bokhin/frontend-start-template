@@ -1,143 +1,186 @@
+//form custom placeholder
+function CustomPlaceholder(el) {
+
+	//init
+	$(el).each(function(i) {
+		_$ = $(this),
+		placeholder = _$.attr('placeholder'),
+		inpId = _$.attr('id');
+
+		if (placeholder != undefined) {
+			var $parent = _$.parent(),
+			inpFor = (inpId) ? inpId : 'placeholder-index-'+ i;
+
+			$parent.prepend('<label for="'+ inpFor +'" class="custom-placeholder">'+ placeholder +'</label>');
+
+			_$.removeAttr('placeholder').attr('id', inpFor);
+		}
+
+		if (_$.val() != '') {
+			hidePlaceholder(_$, true);
+		}
+
+	});
+
+	function hidePlaceholder(_inp, hide) {
+		var $input = $(_inp),
+		$placeholder = $('label[for="'+ $input.attr('id') +'"]');
+
+		if ($placeholder.length) {
+			if (hide) {
+				$placeholder.css({textIndent: '-9999px', paddingLeft: 0, paddingRight: 0});
+			} else {
+				if ($input.val() == '') {
+					$placeholder.css({textIndent: 0, paddingLeft: '', paddingRight: ''});
+				}
+			}
+		}
+	}
+
+	//events
+	$('body').on('focus', el, function() {
+		hidePlaceholder(this, true);
+	});
+
+	$('body').on('blur', el, function() {
+		hidePlaceholder(this, false);
+	});
+
+}
+
 //Form CustomSelect
-var CustomSelect = {
-	_el: null,
-	_field: null,
-	_options: null,
-	init: function() {
-		$('select').each(function() {
-			var $select = $(this),
-			$options = $select.find('option'),
-			$parent = $select.parent(),
-			optionsList = '';
+function CustomSelect() {
 
-			for (var i = 0; i < $options.length; i++) {
-				var $option = $($options[i]);
-				optionsList += '<li><button type="button" class="custom-select__val" data-value="'+ $option.val() +'">'+ $option.html() +'</button></li>';
-			}
+	var _ = this;
 
-			$parent.html('<div class="custom-select'+ ( ($select.attr('multiple') != undefined) ? ' custom-select_multiple' : '' ) +'"><button type="button" data-placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__button">'+ $select.attr('data-placeholder') +'</button><ul class="custom-select__options">'+ optionsList +'</ul><input type="hidden" name="'+ $select.attr('name') +'" class="custom-select__input" value="">'+ ( ($select.attr('multiple') != undefined) ? '<div class="custom-select__multiple-inputs"></div>' : '' ) +'</div>');
+	_.$field = null;
+	
+	//init
+	$('select').each(function() {
+		var $select = $(this),
+		$options = $select.find('option'),
+		$parent = $select.parent(),
+		optionsList = '';
 
-			$select.remove();
-		});
-	},
-	getField: function(el) {
-		var _ = this;
-		_._el = $(el);
-		_._field = _._el.closest('.custom-select');
-		_._options = _._field.find('.custom-select__options');
-	},
-	change: function(state) {
-		var _ = this;
-		if (state) {
-			if (!_._field.hasClass('custom-select_autocomplete')) {
-				$('.custom-select').removeClass('custom-select_opened');
-				$('.custom-select__options').slideUp(221);
-			}
-			_._field.addClass('custom-select_opened');
-			_._options.slideDown(221);
-		} else {
-			_._field.removeClass('custom-select_opened');
-			_._options.slideUp(221);
+		for (var i = 0; i < $options.length; i++) {
+			var $option = $($options[i]);
+			optionsList += '<li><button type="button" class="custom-select__val" data-value="'+ $option.val() +'"'+ ( ($option.attr('data-target-elements') != undefined) ? ' data-target-elements="'+ $option.attr('data-target-elements') +'"' : '' ) +'>'+ $option.html() +'</button></li>';
 		}
-	},
-	open: function(el) {
-		var _ = this;
-		_.getField(el);
-		if (!_._field.hasClass('custom-select_opened')) {
-			_.change(1);
+
+		$parent.html('<div class="custom-select'+ ( ($select.attr('multiple') != undefined) ? ' custom-select_multiple' : '' ) +'"><button type="button" data-placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__button">'+ $select.attr('data-placeholder') +'</button><ul class="custom-select__options">'+ optionsList +'</ul><input type="hidden" name="'+ $select.attr('name') +'" class="custom-select__input" value="">'+ ( ($select.attr('multiple') != undefined) ? '<div class="custom-select__multiple-inputs"></div>' : '' ) +'</div>');
+
+		$select.remove();
+	});
+
+	function closeSelect() {
+		_.$field.removeClass('custom-select_opened').find('.custom-select__options').slideUp(221);
+	}
+
+	function openSelect(_el) {
+		_.$field = $(_el).closest('.custom-select');
+
+		if (_.$field.hasClass('custom-select_opened')) {
+			closeSelect();
 		} else {
-			_.change(0);
+			_.$field.addClass('custom-select_opened').find('.custom-select__options').slideDown(221);
 		}
-		return false;
-	},
-	select: function(el) {
-		var _ = this;
-		_.getField(el);
-		var _f = _._field,
-		_button = _f.find('.custom-select__button'),
-		_srcInput = (_f.find('.custom-select__input_autocomplete').length) ? _f.find('.custom-select__input_autocomplete') : _f.find('.form__textarea_autocomplete'),
-		_input = _f.find('.custom-select__input');
+	}
+
+	function selectVal(_el) {
+		var $valElem = $(_el);
+
+		_.$field = $valElem.closest('.custom-select');
+
+		var $button = _.$field.find('.custom-select__button'),
+		$input = _.$field.find('.custom-select__input'),
+		$searchInput = (_.$field.find('.custom-select__input_autocomplete').length) ? _.$field.find('.custom-select__input_autocomplete') : _.$field.find('.form__textarea_autocomplete');
 		
 
-		if (_f.hasClass('custom-select_multiple')) {
-
-			if (!_._el.hasClass('custom-select__val_checked')) {
-				_._el.addClass('custom-select__val_checked');
-			} else {
-				_._el.removeClass('custom-select__val_checked');
-			}
+		if (_.$field.hasClass('custom-select_multiple')) {
 
 			var toButtonValue = [],
 			toInputValue = [],
-			$multInputs = _f.find('.custom-select__multiple-inputs');
+			$multInputs = _.$field.find('.custom-select__multiple-inputs');
 
-			_._options.find('.custom-select__val_checked').each(function(i) {
-				var el = $(this);
-				toButtonValue[i] = el.html();
-				toInputValue[i] = el.attr('data-value');
+			if ($valElem.hasClass('custom-select__val_checked')) {
+				$valElem.removeClass('custom-select__val_checked');
+			} else {
+				$valElem.addClass('custom-select__val_checked');
+			}
+
+			_.$field.find('.custom-select__val_checked').each(function(i) {
+				var $el = $(this);
+				toButtonValue[i] = $el.html();
+				toInputValue[i] = $el.attr('data-value');
 			});
 
 			if (toButtonValue.length) {
-				_button.html(toButtonValue.join(', '));
+				$button.html(toButtonValue.join(', '));
 
-				_input.val(toInputValue[0]);
+				$input.val(toInputValue[0]);
 
 				$multInputs.html('');
 
 				if (toInputValue.length > 1) {
 
 					for (var i = 1; i < toInputValue.length; i++) {
-						$multInputs.append('<input type="hidden" name="'+ _input.attr('name') +'" value="'+ toInputValue[i] +'">');
+						$multInputs.append('<input type="hidden" name="'+ $input.attr('name') +'" value="'+ toInputValue[i] +'">');
 					}
 					
 				}
 				
 			} else {
-				_.change(0);
-				_button.html(_button.attr('data-placeholder'));
-				_input.val('');
+				$button.html($button.attr('data-placeholder'));
+				$input.val('');
+				closeSelect();
 			}
 
 		} else {
-			var toButtonValue = _._el.html(),
-			toInputValue = _._el.attr('data-value');
+			var toButtonValue = $valElem.html(),
+			toInputValue = $valElem.attr('data-value');
 
-			_.change(0);
-
-			_button.html(toButtonValue);
-			_srcInput.val(toButtonValue);
+			_.$field.find('.custom-select__val').removeClass('custom-select__val_checked');
+			$valElem.addClass('custom-select__val_checked');
+			$button.html(toButtonValue);
+			$searchInput.val(toButtonValue);
 
 			if (toInputValue != undefined) {
-				_input.val(toInputValue);
+				$input.val(toInputValue);
 			} else {
-				_input.val(toButtonValue);
+				$input.val(toButtonValue);
 			}
+
+			closeSelect();
 		}
 
-		if (_._el.attr('data-show-hidden')) {
-			var opt = _._el.attr('data-show-hidden'),
-			_$ = $(opt);
 
-			if (_$.hasClass('form__field')) {
-				_$.closest('.form__field-wrap').find('.form__field').addClass('form__field_hidden');
-				_$.removeClass('form__field_hidden');
-			} else if (_$.hasClass('form__fieldset')) {
-				_$.closest('.form__fieldset-wrap').find('.form__fieldset').addClass('form__fieldset_hidden');
-				_$.removeClass('form__fieldset_hidden');
+		_.$field.find('.custom-select__val').each(function() {
+			_$ = $(this),
+			targetElements = _$.attr('data-target-elements');
+
+			if (targetElements) {
+				var $elem = $(targetElements);
+				if (_$.hasClass('custom-select__val_checked')) {
+					$elem.show();
+				} else {
+					$elem.hide();
+				}
 			}
+		});
+
+
+		if ($searchInput.hasClass('form__textarea_var-h')) {
+			setTextareaHeight($searchInput);
 		}
 
-		if (_srcInput.hasClass('form__textarea_var-h')) {
-			setTextareaHeight(_srcInput);
-		}
+		_.$field.addClass('custom-select_changed')
 
-		_f.addClass('custom-select_changed')
-
-		ValidateForm().select(_input);
+		ValidateForm().select($input);
 
 		return false;
-	},
-	autocomplete: function(el) {
+	}
+
+	_.autocomplete = function(el) {
 		var _ = this;
 		_.getField(el);
 		var inputValue = _._el.val(),
@@ -226,55 +269,20 @@ var CustomSelect = {
 			_.change(0);
 		}
 	}
-};
 
-
-function CustomFile(_inp) {
-
-	var $input = $(_inp),
-	$imgPreviewBlock = $input.siblings('.custom-file__preview'),
-	$nameBlock = $input.siblings('.custom-file__name'),
-	file = $input[0].files[0];
-
-	if (file) {
-		var fileName = file.name,
-		fileSize = (file.size / 1024 / 1024).toFixed(2),
-		fileExt = (function(fileName){
-			var arr = fileName.split('.');
-			return arr[arr.length-1];
-		})(fileName);
-
-		$nameBlock.html(fileName);
-
-		if ($imgPreviewBlock.length && file.type.match('image')) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$imgPreviewBlock.html('<img src="'+ e.target.result +'">');
-			};
-			reader.readAsDataURL(file);
-		}
-	} else {
-		$imgPreviewBlock.empty();
-		$nameBlock.empty();
-	}
-
-}
-
-
-$(document).ready(function() {
-
-	CustomSelect.init();
-
-	$('body').on('click', '.custom-select__button', function() { 
-		CustomSelect.open(this); 
+	//events
+	$('body').on('click', '.custom-select__button', function() {
+		openSelect(this);
+		return false;
 	});
 
 	$('body').on('input', '.custom-select__input_autocomplete, .form__textarea_autocomplete', function() { 
 		CustomSelect.autocomplete(this); 
 	});
 
-	$('body').on('click', '.custom-select__val', function() { 
-		CustomSelect.select(this);
+	$('body').on('click', '.custom-select__val', function() {
+		selectVal(this);
+		return false;
 	});
 
 	$(document).on('click', 'body', function(e) {
@@ -284,8 +292,67 @@ $(document).ready(function() {
 		}
 	});
 
+}
+
+
+function CustomFile() {
+
+	var _ = this;
+
+	_.$field = null;
+
+	function showPreview(file) {
+		var $imgPreviewBlock = _.$field.find('.custom-file__preview');
+
+		if (file) {
+			if ($imgPreviewBlock.length && file.type.match('image')) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$imgPreviewBlock.html('<img src="'+ e.target.result +'">');
+				};
+				reader.readAsDataURL(file);
+			}
+		} else {
+			$imgPreviewBlock.empty();
+		}
+
+	}
+
+	function showName(file) {
+		var $nameBlock = _.$field.find('.custom-file__name');
+
+		if (file) {
+			if ($nameBlock) {
+				$nameBlock.html(file.name);
+			}
+		} else {
+			$nameBlock.empty();
+		}
+
+	}
+
+	function changeInput(_inp) {
+		var $input = $(_inp);
+
+		_.$field = $input.closest('.custom-file');
+
+		var file = $input[0].files[0];
+
+		showPreview(file);
+		showName(file);
+
+	}
+
+	//event
 	$('body').on('change', 'input[type="file"]', function() {
-		CustomFile(this);
+		changeInput(this);
 	});
 
+}
+
+
+$(document).ready(function() {
+	CustomPlaceholder('input[type="text"], input[type="password"], textarea');
+	CustomSelect();
+	CustomFile();
 });

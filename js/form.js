@@ -18,55 +18,6 @@ t=function(){if(p(this,b,d))return a(this).data("mask",new l(this,b,d))};a(this)
 a.applyDataMask=function(b){b=b||a.jMaskGlobals.maskElements;(b instanceof a?b:a(b)).filter(a.jMaskGlobals.dataMaskAttr).each(d)};h={maskElements:"input,td,span,div",dataMaskAttr:"*[data-mask]",dataMask:!0,watchInterval:300,watchInputs:!0,useInput:!/Chrome\/[2-4][0-9]|SamsungBrowser/.test(window.navigator.userAgent)&&h("input"),watchDataMask:!1,byPassKeys:[9,16,17,18,36,37,38,39,40,91],translation:{0:{pattern:/\d/},9:{pattern:/\d/,optional:!0},"#":{pattern:/\d/,recursive:!0},A:{pattern:/[a-zA-Z0-9]/},
 S:{pattern:/[a-zA-Z]/}}};a.jMaskGlobals=a.jMaskGlobals||{};h=a.jMaskGlobals=a.extend(!0,{},h,a.jMaskGlobals);h.dataMask&&a.applyDataMask();setInterval(function(){a.jMaskGlobals.watchDataMask&&a.applyDataMask()},h.watchInterval)},window.jQuery,window.Zepto);
 
-
-//label
-function initOverLabels () {
-	if (!document.getElementById) return; 
-	var labels, id, field;
-	labels = document.getElementsByTagName('label');
-	for (var i = 0; i < labels.length; i++) {
-		if (labels[i].className == 'overlabel') {
-			id = labels[i].htmlFor || labels[i].getAttribute('for');
-			if (!id || !(field = document.getElementById(id))) {
-				continue;
-			} 
-			labels[i].className = 'overlabel-apply';
-			if (field.value !== '') {
-				hideLabel(field.getAttribute('id'), true);
-			}
-			field.onfocus = function () {
-				hideLabel(this.getAttribute('id'), true);
-			};
-			field.onblur = function () {
-				if (this.value === '') {
-					hideLabel(this.getAttribute('id'), false);
-				}
-			};
-			labels[i].onclick = function () {
-				var id, field;
-				id = this.getAttribute('for');
-				if (id && (field = document.getElementById(id))) {
-					field.focus();
-				}
-			};
-		}
-	}
-}
-
-function hideLabel (field_id, hide) {
-	var field_for;
-	var labels = document.getElementsByTagName('label');
-	for (var i = 0; i < labels.length; i++) {
-		field_for = labels[i].htmlFor || labels[i].getAttribute('for');
-		if (field_for == field_id) {
-			labels[i].style.textIndent = (hide) ? '-4000px' : '0';
-			labels[i].style.paddingLeft = (hide) ? '0' : '';
-			labels[i].style.paddingRight = (hide) ? '0' : '';
-			return true;
-		}
-	}
-}
-
 var setTextareaHeight;
 
 $(document).ready(function() {
@@ -76,18 +27,19 @@ $(document).ready(function() {
 
 	$('label').each(function(i) {
 		var _$ = $(this),
-		sibLabel = _$.siblings('label'),
-		Input = _$.siblings('input, textarea');
+		$sibLabel = _$.siblings('label'),
+		$input = _$.siblings('input, textarea'),
+		inpId = $input.attr('id');
 
-		if (!_$.attr('for') && !Input.attr('id')) {
-			_$.attr('for', 'keylabel-'+ i);
-			sibLabel.attr('for', 'keylabel-'+ i);
-			Input.attr('id', 'keylabel-'+ i);
+		if (!_$.attr('for')) {
+			var inpFor = (Input.attr('id')) ? Input.attr('id') : 'keylabel-'+ i;
+
+			_$.attr('for', inpFor);
+			sibLabel.attr('for', inpFor);
+			Input.attr('id', inpFor);
 		}
 
 	});
-
-	initOverLabels();
 
 	$('body').on('change', 'input[type="checkbox"]', function() {
 		var _$ = $(this),
@@ -125,17 +77,19 @@ $(document).ready(function() {
 	});
 
 	$('body').on('click', '.form__button', function() {
-		var _$ = $(this);
-		if (_$.attr('data-next-step')) {
-			var El = $(_$.attr('data-next-step')),
-			curEl = '#'+ El.closest('.form__fieldset-wrap').find('.form__fieldset:not(.form__fieldset_hidden)').attr('id');
+		var _$ = $(this),
+		nextFsetItem = _$.attr('data-next-fieldset-item');
 
-			ValidateForm.step(curEl, function() {
-				El.closest('.form__fieldset-wrap').find('.form__fieldset').addClass('form__fieldset_hidden');
-				El.removeClass('form__fieldset_hidden');
-			});
+		if (nextFsetItem) {
+			var $nextItem = $(nextFsetItem),
+			$curItem = _$.closest('.fieldset__item');
 
+			if (ValidateForm().fieldset($curItem)) {
+				$curItem.addClass('fieldset__item_hidden');
+				$nextItem.removeClass('fieldset__item_hidden');
+			}
 		}
+
 	});
 
 	setTextareaHeight = function (_$) {

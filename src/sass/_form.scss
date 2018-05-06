@@ -1,5 +1,4 @@
 .form{
-	
 	.row{
 		padding-left: 3px;
 		padding-right: 3px;
@@ -7,21 +6,6 @@
 			padding-left: 7px;
 			padding-right: 7px;
 		}
-	}
-	
-	.overlabel,
-	.overlabel-apply{
-		display: block;
-		position: absolute;
-		left: 0;
-		top: 2px;
-		z-index: 2;
-		max-width: 100%;
-		cursor: text;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		font-weight: 300;
 	}
 
 	&__text-input,
@@ -48,10 +32,6 @@
 		&_var-h{
 			@include fwh;
 			overflow: hidden;
-			& + .overlabel,
-			& + .overlabel-apply{
-				line-height: 1.3;
-			}
 			&-wrap{
 				height: 120px !important;
 				.form__textarea_var-h{
@@ -76,9 +56,7 @@
 	
 
 	&__text-input,
-	&__textarea,
-	.overlabel,
-	.overlabel-apply{
+	&__textarea{
 		padding: 10px 15px;
 	}
 
@@ -97,10 +75,6 @@
 			.form__textarea{
 				border: 1px solid $rd;
 			}
-			.overlabel,
-			.overlabel-apply{
-				color: $rd;
-			}
 			.form__error-tip{
 				display: block;
 			}
@@ -116,21 +90,6 @@
 			.overlabel-apply{
 				padding-right: 50px;
 			}
-		}
-	}
-
-	&__fieldset{
-		transition: .5s;
-		position: static;
-		&_hidden{
-			opacity: 0;
-			visibility: hidden;
-			position: absolute;
-			left: 0;
-			top: 0;
-		}
-		&-wrap{
-			position: relative;
 		}
 	}
 
@@ -209,5 +168,20 @@
 	}
 	100% {
 		transform: rotate(360deg); 
+	}
+}
+
+.fieldset{
+	position: relative;
+	&__item{
+		transition: .5s;
+		position: static;
+		&_hidden{
+			opacity: 0;
+			visibility: hidden;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
 	}
 }

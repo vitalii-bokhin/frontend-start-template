@@ -111,9 +111,9 @@ function ValidateForm(form) {
 		return err;
 	}
 
-	_.select = function(inp) {
+	_.select = function($inp) {
 		var err = false;
-		_.$input = inp;
+		_.$input = $inp;
 		if (_.$input.attr('data-required') && _.$input.val().length < 1) {
 			errorTip(true);
 			err = true;
@@ -123,9 +123,9 @@ function ValidateForm(form) {
 		return err;
 	}
 
-	function validateOnInput(inp) {
+	function validateOnInput(_inp) {
 
-		_.$input = $(inp);
+		_.$input = $(_inp);
 
 		var inpType = _.$input.attr('data-type'),
 		inpVal = _.$input.val();
@@ -142,9 +142,9 @@ function ValidateForm(form) {
 
 	}
 
-	function validateOnBlur(inp) {
+	function validateOnBlur(_inp) {
 
-		_.$input = $(inp);
+		_.$input = $(_inp);
 
 		_.$input.addClass('tested');
 
@@ -161,8 +161,8 @@ function ValidateForm(form) {
 
 	}
 
-	_.file = function(inp) {
-		_.$input = $(inp);
+	_.file = function(_inp) {
+		_.$input = $(_inp);
 
 		var err = false,
 		file = _.$input[0].files[0];
@@ -187,10 +187,8 @@ function ValidateForm(form) {
 		return err;
 	}
 
-	_.step = function(el, fun) {
-		if (this.validate(el)) {
-			fun();
-		}
+	_.fieldset = function($el) {
+		return validate($el);
 	}
 
 	function validate(form) {

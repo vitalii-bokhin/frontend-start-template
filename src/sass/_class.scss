@@ -32,6 +32,24 @@
 	}
 }
 
+/*bottom block*/
+.bottom{
+	height: 100%;
+	font-size: 0;
+	&:before{
+		display: inline-block;
+		content: "";
+		height: 100%;
+		vertical-align: bottom;
+	}
+	&__inner{
+		display: inline-block;
+		width: 100%;
+		vertical-align: bottom;
+		font-size: 1rem;
+	}
+}
+
 /*proportional block*/
 .proportional{
 	@include fixprop;

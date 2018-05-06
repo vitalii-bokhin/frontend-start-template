@@ -13,22 +13,19 @@
 		<div class="row">
 			<div class="col-4">
 				<div class="form__field">
-					<label class="overlabel">Name*</label>
-					<input type="text" data-required="true" class="form__text-input" value="">
+					<input id="some-input-id" type="text" data-required="true" placeholder="Name*" class="form__text-input" value="" >
 					<div class="form__error-tip">Enter your name</div>
 				</div>
 			</div>
 			<div class="col-4">
 				<div class="form__field">
-					<label class="overlabel">E-mail*</label>
-					<input type="text" data-type="email" data-required="true" class="form__text-input" value="">
+					<input type="text" data-type="email" data-required="true" placeholder="E-mail*" class="form__text-input" value="">
 					<div class="form__error-tip" data-second-error-text="Enter a valid e-mail address">Enter your e-mail</div>
 				</div>
 			</div>
 			<div class="col-4">
 				<div class="form__field">
-					<label class="overlabel">Phone number*</label>
-					<input type="text" data-type="tel" data-required="true" class="form__text-input" value="">
+					<input type="text" data-type="tel" data-required="true" placeholder="Phone number*" class="form__text-input" value="">
 					<div class="form__error-tip" data-second-error-text="Enter a valid phone number">Enter your phone number</div>
 				</div>
 			</div>
@@ -37,8 +34,7 @@
 		<div class="row">
 			<div class="col-4">
 				<div class="form__field">
-					<label class="overlabel">Date of birth*</label>
-					<input type="text" data-type="date" data-required="true" class="form__text-input" value="">
+					<input type="text" data-type="date" data-required="true" placeholder="Date of birth*" class="form__text-input" value="">
 					<div class="form__error-tip" data-second-error-text="Enter a valid birth date">Enter your birth date</div>
 				</div>
 			</div>
@@ -47,12 +43,72 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="form__field">
-					<label class="overlabel">Message*</label>
-					<textarea data-required="true" class="form__textarea"></textarea>
+					<textarea data-required="true" placeholder="Message*" class="form__textarea"></textarea>
 					<div class="form__error-tip">Enter message</div>
 				</div>
 			</div>
 		</div>
+		
+		<div class="row mt-25">
+			<div class="col-12">
+				<div class="title-h2">Few questions</div>
+			</div>
+		</div>
+
+		<div class="fieldset">
+
+			<div id="step-fs1" class="fieldset__item">
+
+				<div class="row">
+					<div class="col-4">
+						<div class="form__field">
+							<input type="text" data-required="true" placeholder="Nickname*" class="form__text-input" value="" >
+							<div class="form__error-tip">Enter your nickname</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-12">
+						<button type="button" class="form__button button button_red" data-next-fieldset-item="#step-fs2">Next</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="step-fs2" class="fieldset__item fieldset__item_hidden">
+				<div class="row">
+					<div class="col-4">
+						<div class="form__field">
+							<input type="text" data-required="true" placeholder="Height*" class="form__text-input" value="" >
+							<div class="form__error-tip">Enter your height</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<button type="button" class="form__button button button_red" data-prev-fieldset-item="#step-fs1">Prevent</button>
+					</div>
+					<div class="col">
+						<button type="button" class="form__button button button_red" data-next-fieldset-item="#step-fs3">Next</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="step-fs3" class="fieldset__item fieldset__item_hidden">
+				<div class="row">
+					<div class="col-4">
+						<div class="form__field">
+							<input type="text" data-required="true" placeholder="Weight*" class="form__text-input" value="" >
+							<div class="form__error-tip">Enter your weight</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
 
 		<div class="row mt-25">
 			<div class="col-12">
@@ -63,22 +119,19 @@
 		<div class="row">
 			<div class="col-4">
 				<div class="form__field">
-					<label class="overlabel">Current password</label>
-					<input type="password" data-type="pass" data-required="true" class="form__text-input" value="">
+					<input type="password" data-type="pass" data-required="true" placeholder="Current password" class="form__text-input" value="">
 					<div class="form__error-tip">Enter current password</div>
 				</div>
 			</div>
 			<div class="col-4">
 				<div class="form__field">
-					<label for="new-pass-input" class="overlabel">New password</label>
-					<input id="new-pass-input" type="password" data-type="pass" data-required="true" data-min-length="6" class="form__text-input" value="">
+					<input id="new-pass-input" type="password" data-type="pass" data-required="true" data-min-length="6" placeholder="New password" class="form__text-input" value="">
 					<div class="form__error-tip" data-second-error-text="At least 6 characters">Enter new password</div>
 				</div>
 			</div>
 			<div class="col-4">
 				<div class="form__field">
-					<label class="overlabel">Re-enter new password</label>
-					<input type="password" data-type="pass" data-required="true" data-pass-compare-input="#new-pass-input" class="form__text-input" value="">
+					<input type="password" data-type="pass" data-required="true" data-pass-compare-input="#new-pass-input" placeholder="Re-enter new password" class="form__text-input" value="">
 					<div class="form__error-tip" data-second-error-text="Passwords must match">Re-enter new password</div>
 				</div>
 			</div>
@@ -106,8 +159,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="form__field">
-					<label class="overlabel">Name*</label>
-					<input type="text" data-required="true" class="form__text-input" value="">
+					<input type="text" data-required="true" placeholder="Name*" class="form__text-input" value="">
 					<div class="form__error-tip">Enter your name</div>
 				</div>
 			</div>
@@ -131,8 +183,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="form__field">
-					<label class="overlabel">Name*</label>
-					<input type="text" data-required="true" class="form__text-input" value="">
+					<input type="text" data-required="true" placeholder="Name*" class="form__text-input" value="">
 					<div class="form__error-tip">Enter your name</div>
 				</div>
 			</div>

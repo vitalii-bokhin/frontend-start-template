@@ -1080,21 +1080,6 @@ a:hover {
   padding-right: 7px;
 }
 
-.form .overlabel,
-.form .overlabel-apply {
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 2px;
-  z-index: 2;
-  max-width: 100%;
-  cursor: text;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-weight: 300;
-}
-
 .form__text-input, .form__textarea, .form__textarea_var-h-wrap {
   display: block;
   width: 100%;
@@ -1126,11 +1111,6 @@ a:hover {
   overflow: hidden;
 }
 
-.form__textarea_var-h + .overlabel,
-.form__textarea_var-h + .overlabel-apply {
-  line-height: 1.3;
-}
-
 .form__textarea_var-h-wrap {
   height: 120px !important;
 }
@@ -1152,9 +1132,7 @@ a:hover {
   visibility: hidden;
 }
 
-.form__text-input, .form__textarea,
-.form .overlabel,
-.form .overlabel-apply {
+.form__text-input, .form__textarea {
   padding: 10px 15px;
 }
 
@@ -1175,11 +1153,6 @@ a:hover {
   border: 1px solid #ff0000;
 }
 
-.form__field_error .overlabel,
-.form__field_error .overlabel-apply {
-  color: #ff0000;
-}
-
 .form__field_error .form__error-tip {
   display: block;
 }
@@ -1192,23 +1165,6 @@ a:hover {
 .form__field_btn .overlabel,
 .form__field_btn .overlabel-apply {
   padding-right: 50px;
-}
-
-.form__fieldset {
-  transition: .5s;
-  position: static;
-}
-
-.form__fieldset_hidden {
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.form__fieldset-wrap {
-  position: relative;
 }
 
 .form__alert {
@@ -1303,7 +1259,48 @@ a:hover {
   }
 }
 
+.fieldset {
+  position: relative;
+}
+
+.fieldset__item {
+  transition: .5s;
+  position: static;
+}
+
+.fieldset__item_hidden {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
 /*===CUSTOM-FORM===*/
+/*custom placeholder*/
+.custom-placeholder {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 2px;
+  z-index: 2;
+  max-width: 100%;
+  cursor: text;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  padding: 10px 15px;
+}
+
+.form__textarea_var-h + .custom-placeholder {
+  line-height: 1.3;
+}
+
+.form__field_error .custom-placeholder {
+  color: #ff0000;
+}
+
 /*custom select*/
 .custom-select {
   position: relative;
@@ -3003,7 +3000,7 @@ a:hover {
   overflow: hidden;
 }
 
-.middle-img {
+.middle__img {
   display: inline-block;
   width: auto;
   height: auto;
@@ -3013,19 +3010,7 @@ a:hover {
   font-size: 1rem;
 }
 
-.middle-img-wrap {
-  height: 100%;
-  font-size: 0;
-}
-
-.middle-img-wrap:before {
-  display: inline-block;
-  content: "";
-  height: 100%;
-  vertical-align: middle;
-}
-
-.bottom-img {
+.bottom__img {
   display: inline-block;
   width: auto;
   height: auto;
@@ -3033,18 +3018,6 @@ a:hover {
   max-height: 100%;
   vertical-align: bottom;
   font-size: 1rem;
-}
-
-.bottom-img-wrap {
-  height: 100%;
-  font-size: 0;
-}
-
-.bottom-img-wrap:before {
-  display: inline-block;
-  content: "";
-  height: 100%;
-  vertical-align: bottom;
 }
 
 .responsive-img {
@@ -3361,6 +3334,26 @@ a:hover {
   display: inline-block;
   width: 100%;
   vertical-align: middle;
+  font-size: 1rem;
+}
+
+/*bottom block*/
+.bottom {
+  height: 100%;
+  font-size: 0;
+}
+
+.bottom:before {
+  display: inline-block;
+  content: "";
+  height: 100%;
+  vertical-align: bottom;
+}
+
+.bottom__inner {
+  display: inline-block;
+  width: 100%;
+  vertical-align: bottom;
   font-size: 1rem;
 }
 

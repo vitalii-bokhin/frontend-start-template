@@ -50,8 +50,7 @@
 			</div>
 			<div class="col-12">
 				<div id="other-lang-field" class="form__field hidden">
-					<label class="overlabel">Other programming languages</label>
-					<input type="text" class="form__text-input" data-required="true" value="">
+					<input type="text" data-required="true" placeholder="Other programming languages" class="form__text-input" value="">
 					<div class="form__error-tip">Enter other programming languages</div>
 				</div>
 			</div>
@@ -107,8 +106,7 @@
 			</div>
 			<div class="col-12">
 				<div id="other-color-field" class="form__field hidden">
-					<label class="overlabel">Other color</label>
-					<input type="text" class="form__text-input" data-required="true" value="">
+					<input type="text" data-required="true" placeholder="Other color" class="form__text-input" value="">
 					<div class="form__error-tip">Enter other color</div>
 				</div>
 			</div>
@@ -123,19 +121,24 @@
 		<div class="row">
 			<div class="col-6">
 				<div class="form__field">
-					<select name="day-of-week" data-placeholder="Select a day">
+					<select name="favorite-animal" data-placeholder="Select an animal">
 						<option value="monkey">Monkey</option>
 						<option value="cat">Cat</option>
 						<option value="dog">Dog</option>
 						<option value="lion">Lion</option>
 						<option value="crocodile">Crocodile</option>
 						<option value="elephant">Elephant</option>
-						<option value="other">Other</option>
+						<option value="other" data-target-elements="#other-animal-field">Other</option>
 					</select>
 				</div>
 			</div>
+			<div class="col-6">
+				<div id="other-animal-field" class="form__field hidden">
+					<input type="text" data-required="true" placeholder="Other animal" class="form__text-input" value="">
+					<div class="form__error-tip">Enter other animal</div>
+				</div>
+			</div>
 		</div>
-
 
 		<div class="row mt-25">
 			<div class="col-12">
@@ -156,229 +159,6 @@
 				</div>
 			</div>
 		</div>
-
-
-		<div class="row">
-			<div class="col-12">
-				<div class="txt">
-					Select
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-4">
-				<div class="form__field">
-					<div class="custom-select">
-						<button type="button" class="custom-select__button">Выбор</button>
-						<ul class="custom-select__options">
-							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
-						</ul>
-						<input type="hidden" class="custom-select__input" value="">
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="form__field">
-					<div class="custom-select">
-						<button type="button" class="custom-select__button">Выбор</button>
-						<ul class="custom-select__options">
-							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
-						</ul>
-						<input type="hidden" class="custom-select__input" data-required="true" value="">
-					</div>
-					<div class="form__error-tip">Сделайте выбор</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="form__field">
-					<div class="custom-select custom-select_multiple">
-						<button type="button" class="custom-select__button">Множественный выбор</button>
-						<ul class="custom-select__options">
-							<li><button type="button" class="custom-select__val" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="custom-select__val" data-value="v2">Выбор выбор выбор 2</button></li>
-							<li><button type="button" class="custom-select__val" data-value="v3">Выбор 3</button></li>
-							<li><button type="button" class="custom-select__val" data-value="v4">Выбор 4</button></li>
-						</ul>
-						<input type="hidden" class="custom-select__input" value="">
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-4">
-				<div class="form__field">
-					<div class="custom-select">
-						<button type="button" class="custom-select__button">Выбор</button>
-						<ul class="custom-select__options">
-							<li><button type="button" class="custom-select__val" data-show-hidden="#f1" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="custom-select__val" data-show-hidden="#f2" data-value="v2">Выбор 2</button></li>
-						</ul>
-						<input type="hidden" class="custom-select__input" value="">
-					</div>
-				</div>
-			</div>
-			<div class="col-4 form__field-wrap"> 
-
-				<div id="f1" class="form__field form__field_hidden">
-					<label for="i-txt-33" class="overlabel">Поле1</label>
-					<input id="i-txt-33" type="text" data-required="true" class="form__text-input" value="">
-				</div>
-
-				<div id="f2" class="form__field form__field_hidden">
-					<label for="i-txt-3333" class="overlabel">Поле2</label>
-					<input id="i-txt-3333" type="text" class="form__text-input" value="">
-				</div>
-
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-12">
-				<div class="txt">
-					Select fieldset
-				</div>
-				<div class="form__field">
-					<div class="custom-select">
-						<button type="button" class="custom-select__button">Выбор 1</button>
-						<ul class="custom-select__options">
-							<li><button type="button" class="custom-select__val" data-show-hidden="#fs1" data-value="v1">Выбор 1</button></li>
-							<li><button type="button" class="custom-select__val" data-show-hidden="#fs2" data-value="v2">Выбор 2</button></li>
-						</ul>
-						<input type="hidden" class="custom-select__input" value="">
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="form__fieldset-wrap">
-
-			<div id="fs1" class="form__fieldset">
-				<div class="row">
-					<div class="col-6">
-						<div class="form__field">
-							<label for="i-txt-331" class="overlabel">Поле</label>
-							<input id="i-txt-331" type="text" class="form__text-input" value="">
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="form__field">
-							<label for="i-txt-332" class="overlabel">Поле</label>
-							<input id="i-txt-332" type="text" class="form__text-input" value="">
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div id="fs2" class="form__fieldset form__fieldset_hidden">
-				<div class="row">
-					<div class="col-4">
-						<div class="form__field">
-							<label for="i-txt-333" class="overlabel">Поле</label>
-							<input id="i-txt-333" type="text" data-required="true" class="form__text-input" value="">
-						</div>
-					</div>
-					<div class="col-8">
-						<div class="form__field">
-							<label for="i-txt-334" class="overlabel">Поле</label>
-							<input id="i-txt-334" type="text" class="form__text-input" value="">
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="row">
-			<div class="col-12">
-				<div class="txt">
-					Form steps
-				</div>
-			</div>
-		</div>
-
-		<div class="form__fieldset-wrap">
-
-			<div id="step-fs1" class="form__fieldset">
-				<div class="row">
-					<div class="col-12">
-						<div class="txt">
-							Step 1
-						</div>
-					</div>
-				</div>
-				<div class="row form__radio-group">
-					<div class="col-6">
-						<div class="form__radio">
-							<input type="radio" name="rad-fs-1" class="form__radio-input">
-							<label class="form__radio-label">Выбор 1</label>
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="form__radio">
-							<input type="radio" name="rad-fs-1" class="form__radio-input">
-							<label class="form__radio-label">Выбор 2</label>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs2">Step 2</button>
-					</div>
-				</div>
-			</div>
-
-			<div id="step-fs2" class="form__fieldset form__fieldset_hidden">
-				<div class="row">
-					<div class="col-12">
-						<div class="txt">
-							Step 2
-						</div>
-					</div>
-				</div>
-				<div class="row form__radio-group">
-					<div class="col-6">
-						<div class="form__radio">
-							<input type="radio" name="rad-fs-2" class="form__radio-input">
-							<label class="form__radio-label">Выбор 1</label>
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="form__radio">
-							<input type="radio" name="rad-fs-2" class="form__radio-input">
-							<label class="form__radio-label">Выбор 2</label>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<button type="button" class="form__button button button_red button_arr" data-next-step="#step-fs3">Step 3</button>
-					</div>
-				</div>
-			</div>
-
-			<div id="step-fs3" class="form__fieldset form__fieldset_hidden">
-				<div class="row">
-					<div class="col-12">
-						<div class="txt">
-							Step 3
-						</div>
-					</div>
-					<div class="col-12">
-						<div class="form__field">
-							<label class="overlabel">Поле</label>
-							<input type="text" class="form__text-input" data-required="true" value="">
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-
 
 		<div class="row">
 			<div class="col-12">
