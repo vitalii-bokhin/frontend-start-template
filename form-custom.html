@@ -203,7 +203,7 @@
 					<select name="favorite-animal" data-placeholder="Select an animal">
 						<option value="monkey">Monkey</option>
 						<option value="cat">Cat</option>
-						<option value="dog">Dog</option>
+						<option>Dog</option>
 						<option value="lion">Lion</option>
 						<option value="crocodile">Crocodile</option>
 						<option value="elephant">Elephant</option>
@@ -229,13 +229,26 @@
 			<div class="col-6">
 				<div class="form__field">
 					<select name="pets[]" multiple data-placeholder="Select pets">
-						<option value="Cat">Cat</option>
-						<option value="Dog">Dog</option>
-						<option value="Parrot">Parrot</option>
-						<option value="Cavy">Cavy</option>
-						<option value="Hamster">Hamster</option>
+						<option value="cat">Cat</option>
+						<option value="dog">Dog</option>
+						<option value="parrot">Parrot</option>
+						<option value="cavy">Cavy</option>
+						<option value="hamster">Hamster</option>
+						<option value="other" data-target-elements="#other-pets-field">Other</option>
 					</select>
 				</div>
+			</div>
+			<div class="col-6">
+				<div id="other-pets-field" class="form__field hidden">
+					<input type="text" data-required="true" placeholder="Other pets" class="form__text-input" value="">
+					<div class="form__error-tip">Enter other pets</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-25">
+			<div class="col-12">
+				<div class="title-h2">Where are you from?</div>
 			</div>
 		</div>
 
@@ -295,163 +308,7 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-12">
-				<div class="txt">Чекбоксы:</div>
-			</div>
-			<div class="col-6">
-				<div class="form__chbox">
-					<input id="chb-1" type="checkbox" data-required="true" class="form__chbox-input">
-					<label for="chb-1" class="form__chbox-label">Выбор 1 <a href="#">условия</a></label>
-				</div>
-			</div>
-			<div class="col-6">
-				<div class="form__chbox">
-					<input type="checkbox" class="form__chbox-input">
-					<label class="form__chbox-label">Выбор 2</label>
-				</div>
-			</div>
-			<div class="col-12">
-				<div class="form__chbox">
-					<input type="checkbox" data-show-hidden="#field-another-2" class="form__chbox-input">
-					<label class="form__chbox-label">Ваш вариант</label>
-				</div>
-			</div>
-			<div class="col-12">
-				<div id="field-another-2" class="form__field form__field_hidden">
-					<label class="overlabel">Ваш вариант</label>
-					<input type="text" class="form__text-input" data-required="true" value="">
-					<div class="form__error-tip">Введите свой вариант</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row form__chbox-group" data-min="1">
-			<div class="col-12">
-				<div class="txt">Группа чекбоксов(валидация):</div>
-			</div>
-			<div class="col-3">
-				<div class="form__chbox">
-					<input id="chb-3" type="checkbox" class="form__chbox-input">
-					<label for="chb-3" class="form__chbox-label">Выбор 1</label>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="form__chbox">
-					<input id="chb-4" type="checkbox" class="form__chbox-input">
-					<label for="chb-4" class="form__chbox-label">Выбор 2</label>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="form__chbox">
-					<input id="chb-5" type="checkbox" class="form__chbox-input">
-					<label for="chb-5" class="form__chbox-label">Выбор 1</label>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="form__chbox">
-					<input id="chb-6" type="checkbox" class="form__chbox-input">
-					<label for="chb-6" class="form__chbox-label">Выбор 2</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-12">
-				<div class="txt">Чекбокс:</div>
-			</div>
-			<div class="col-12">
-				<div class="form__chbox">
-					<input id="chb-7" type="checkbox" class="form__chbox-input">
-					<label for="chb-7" class="form__chbox-label">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat.
-					</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-
-			<div class="col-12">
-				<div class="txt">Радио кнопки:</div>
-			</div>
-
-			<div class="col-6">
-				<div class="form__radio">
-					<input type="radio" name="rad-1" class="form__radio-input" checked>
-					<label class="form__radio-label">Выбор 1</label>
-				</div>
-			</div>
-			<div class="col-6">
-				<div class="form__radio">
-					<input type="radio" name="rad-1" class="form__radio-input">
-					<label class="form__radio-label">Выбор 2</label>
-				</div>
-			</div>
-			<div class="col-12">
-				<div class="form__radio">
-					<input type="radio" name="rad-1" data-show-hidden="#field-another" class="form__radio-input">
-					<label class="form__radio-label">Другое</label>
-				</div>
-			</div>
-			<div class="col-12">
-				<div id="field-another" class="form__field form__field_hidden">
-					<label class="overlabel">Ваш вариант</label>
-					<input type="text" class="form__text-input" data-required="true" value="">
-					<div class="form__error-tip">Введите свой вариант</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row form__radio-group">
-			<div class="col-12">
-				<div class="txt">Группа Радио кнопок (валидация):</div>
-			</div>
-
-			<div class="col-6">
-				<div class="form__radio">
-					<input type="radio" name="rad-2" class="form__radio-input">
-					<label class="form__radio-label">Выбор 1</label>
-				</div>
-			</div>
-			<div class="col-6">
-				<div class="form__radio">
-					<input type="radio" name="rad-2" class="form__radio-input">
-					<label class="form__radio-label">Выбор 2</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-12">
-				<div class="txt">Ввод паролей, сравнение:</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-4">
-				<div class="form__field">
-					<label class="overlabel">Текущий пароль</label>
-					<input type="password" data-type="pass" data-required="true" class="form__text-input" value="">
-					<div class="form__error-tip">Введите текущий пароль</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="form__field">
-					<label class="overlabel">Новый пароль</label>
-					<input type="password" data-type="pass" data-required="true" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
-					<div class="form__error-tip" data-second-error-text="Не менее 6 символов" data-third-error-text="Не совпадают">Введите новый пароль</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="form__field">
-					<label class="overlabel">Повторите пароль</label>
-					<input type="password" data-type="pass" data-required="true" data-pass-compare="group" data-pass-length="6" class="form__text-input" value="">
-					<div class="form__error-tip" data-second-error-text="Не менее 6 символов" data-third-error-text="Не совпадают">Повторите пароль</div>
-				</div>
-			</div>
-		</div>
+		
 
 		<div class="row">
 			<div class="col-12">

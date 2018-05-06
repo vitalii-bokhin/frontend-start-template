@@ -64,7 +64,7 @@ function CustomSelect() {
 
 		for (var i = 0; i < $options.length; i++) {
 			var $option = $($options[i]);
-			optionsList += '<li><button type="button" class="custom-select__val" data-value="'+ $option.val() +'"'+ ( ($option.attr('data-target-elements') != undefined) ? ' data-target-elements="'+ $option.attr('data-target-elements') +'"' : '' ) +'>'+ $option.html() +'</button></li>';
+			optionsList += '<li><button type="button" class="custom-select__val"'+ ( ($option.val()) ? ' data-value="'+ $option.val() +'"' : '' ) + ( ($option.attr('data-target-elements') != undefined) ? ' data-target-elements="'+ $option.attr('data-target-elements') +'"' : '' ) +'>'+ $option.html() +'</button></li>';
 		}
 
 		$parent.html('<div class="custom-select'+ ( ($select.attr('multiple') != undefined) ? ' custom-select_multiple' : '' ) +'"><button type="button" data-placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__button">'+ $select.attr('data-placeholder') +'</button><ul class="custom-select__options">'+ optionsList +'</ul><input type="hidden" name="'+ $select.attr('name') +'" class="custom-select__input" value="">'+ ( ($select.attr('multiple') != undefined) ? '<div class="custom-select__multiple-inputs"></div>' : '' ) +'</div>');
@@ -143,13 +143,8 @@ function CustomSelect() {
 			$valElem.addClass('custom-select__val_checked');
 			$button.html(toButtonValue);
 			$searchInput.val(toButtonValue);
-
-			if (toInputValue != undefined) {
-				$input.val(toInputValue);
-			} else {
-				$input.val(toButtonValue);
-			}
-
+			$input.val(toInputValue);
+			
 			closeSelect();
 		}
 

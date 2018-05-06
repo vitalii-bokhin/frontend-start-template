@@ -32,11 +32,11 @@ $(document).ready(function() {
 		inpId = $input.attr('id');
 
 		if (!_$.attr('for')) {
-			var inpFor = (Input.attr('id')) ? Input.attr('id') : 'keylabel-'+ i;
+			var inpFor = (inpId) ? inpId : 'keylabel-'+ i;
 
 			_$.attr('for', inpFor);
-			sibLabel.attr('for', inpFor);
-			Input.attr('id', inpFor);
+			$sibLabel.attr('for', inpFor);
+			$input.attr('id', inpFor);
 		}
 
 	});
