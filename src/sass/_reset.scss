@@ -1,4 +1,4 @@
-html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, header, footer, section, nav, article, aside {
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, header, footer, main, section, nav, article, aside {
 	margin: 0;
 	padding: 0;
 	outline: none;
@@ -12,7 +12,7 @@ html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, st
 	box-sizing: border-box;
 }
 
-header, footer, section, nav, article, aside {
+header, footer, main, section, nav, article, aside {
 	display: block;
 } 
 

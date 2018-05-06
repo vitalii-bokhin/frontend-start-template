@@ -3,24 +3,25 @@ var Popup = {
 	play: null,
 	ind: 0,
 	group: null,
-	show: function(id,fun) {
+	position: 0,
+	show: function(id, fun) {
 		var _ = this,
 		$popWin = $(id),
 		$popup = $popWin.closest('.popup');
 		
 		if ($popWin.length && $popWin.hasClass('popup__window')) {
-			var pos = $(window).scrollTop();
+			_.position = $(window).scrollTop();
 			$popup.fadeIn(321).scrollTop(0);
 			$('.popup__window').removeClass('popup__window_visible');
 			$popWin.addClass('popup__window_visible');
-			$('body').css('top', -pos).attr('data-position', pos).addClass('is-popup-opened');
+			$('body').css('top', -_.position).addClass('is-popup-opened');
 
 			setTimeout(function() {
 				coverImg('#media-popup');
 			}, 721);
 
 		}
-		
+
 		_.closeCallback = fun || function() {};
 	},
 	hide: function() {
@@ -29,7 +30,7 @@ var Popup = {
 		$('.popup').fadeOut(321);
 		$('.popup__message').remove();
 		$('body').removeClass('is-popup-opened').removeAttr('style');
-		$('html,body').scrollTop($('body').attr('data-position'));
+		$('html, body').scrollTop(_.position);
 		_.closeCallback();
 	},
 	message: function(id,msg,fun) {

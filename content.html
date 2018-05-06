@@ -58,7 +58,7 @@
 						<a href="popup.html" class="menu__a">Popups</a>
 					</li>
 					<li class="menu__item">
-						<a href="#popup-2" class="js-open-popup menu__a">open popup</a>
+						<a href="#" data-popup="#popup-2" class="js-open-popup menu__a">open popup</a>
 					</li>
 				</ul>
 			</nav>
@@ -85,123 +85,129 @@
 </header>
 <!--/HEADER-->
 
-<div class="container">
-	<div class="row wrap vw1000-row-col">
-		<div class="col-3">
-			<p style="background: yellow">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			</p>
-		</div>
-		<div class="col-4">
-			<div class="more">
-				<p style="background: blue">
-				Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non
-								proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-								</p>
+<!--MAIN/-->
+<main class="main">
+
+	<div class="container">
+		<div class="row wrap vw1000-row-col">
+			<div class="col-3">
+				<p style="background: yellow">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div class="col-4">
+				<div class="more">
+					<p style="background: blue">
+						Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua.  Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</p>
+				</div>
+			</div>
+			<div class="col-5">
+				<p style="background: green">
+					Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur.
+				</p>
 			</div>
 		</div>
-		<div class="col-5">
-			<p style="background: green">
-				Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur.
-			</p>
-		</div>
 	</div>
-</div>
 
-<div class="container">
-	<div class="row vw1000-row-col wrap">
-		<div class="col-4">
-			<div id="diagr-num-0" class="progr__item-num">0</div>
-			<div id="diagr-num-2" class="progr__item-num">0</div>
-			<div id="diagr-num-1" class="progr__item-num">0</div>
-			<div id="diagr-num-3" class="progr__item-num">0</div>
-			<canvas id="diagram" class="progr__diagram" width="160" height="160"></canvas>
-		</div>
-		<div class="col-4">
-			<div id="timer"></div>
-		</div>
-		<div class="col-4">
-			<button class="js-toggle button button_red" data-second-button-text="Актиная кнопка">Кнопка</button> <br> <br>
-			<button class="js-toggle button button_red">Кнопка</button>
-		</div>
-	</div>
-</div>
-
-<div class="container">
-	<ul class="social">
-		<li>
-			<a href="#" class="social__a social__a_ing"></a>
-		</li>
-		<li>
-			<a href="#" class="social__a social__a_fb"></a>
-		</li>
-		<li>
-			<a href="#" class="social__a social__a_vk"></a>
-		</li>
-	</ul>
-</div>
-
-<div class="container">
-	<div class="video">
-		<div class="video__thumb cover-img-wrap">
-			<img src="images/video/v1.jpg" alt="video">
-			<a href="#media-popup" class="js-open-popup video__play btn-play"></a>
-		</div>
-		<div class="video__chanal">
-			<div class="middle-img-wrap">
-				<img src="images/video/l1.png" alt="video" class="middle-img">
+	<div class="container">
+		<div class="row vw1000-row-col wrap">
+			<div class="col-4">
+				<div id="diagr-num-0" class="progr__item-num">0</div>
+				<div id="diagr-num-2" class="progr__item-num">0</div>
+				<div id="diagr-num-1" class="progr__item-num">0</div>
+				<div id="diagr-num-3" class="progr__item-num">0</div>
+				<canvas id="diagram" class="progr__diagram" width="160" height="160"></canvas>
+			</div>
+			<div class="col-4">
+				<div id="timer"></div>
+			</div>
+			<div class="col-4">
+				<button class="js-toggle button button_red" data-second-button-text="Актиная кнопка">Кнопка</button> <br> <br>
+				<button class="js-toggle button button_red">Кнопка</button>
 			</div>
 		</div>
-		<div class="video__tit">
-			Ижевские VR-очки <br>
-			| Сделано в России
-		</div>
 	</div>
-</div>
 
-<div class="container">
-	<div class="row vw1000-row-col wrap">
-		<div class="col-2">
-			<div class="numspin">55555</div>
-		</div>
-		<div class="col-2">
-			<div class="numspin">77 777.58</div>
-		</div>
-		<div class="col-2">
-			<div class="numspin">88 888,954</div>
-		</div>
-		<div class="col-3">
-			<div id="ns2-1" class="numspin2">1222555</div>
-		</div>
-		<div class="col-3">
-			<div id="ns2-2" class="numspin2">1333777</div>
-		</div>
+	<div class="container">
+		<ul class="social">
+			<li>
+				<a href="#" class="social__a social__a_ing"></a>
+			</li>
+			<li>
+				<a href="#" class="social__a social__a_fb"></a>
+			</li>
+			<li>
+				<a href="#" class="social__a social__a_vk"></a>
+			</li>
+		</ul>
 	</div>
-</div>
 
-<div class="container">
-	<div class="row wrap" style="margin-top: 100px; margin-bottom: 100px">
-		<div class="col">
-			<div class="numspin-s">4 444 444</div>
+	<div class="container">
+		<div class="video">
+			<div class="video__thumb cover-img-wrap">
+				<img src="images/video/v1.jpg" alt="video">
+				<a href="#media-popup" class="js-open-popup video__play btn-play"></a>
+			</div>
+			<div class="video__chanal">
+				<div class="middle-img-wrap">
+					<img src="images/video/l1.png" alt="video" class="middle-img">
+				</div>
+			</div>
+			<div class="video__tit">
+				Ижевские VR-очки <br>
+				| Сделано в России
+			</div>
 		</div>
 	</div>
-	<div class="row wrap">
-		<div class="col">
-			<div class="numspin-s">5 555 555</div>
+
+	<div class="container">
+		<div class="row vw1000-row-col wrap">
+			<div class="col-2">
+				<div class="numspin">55555</div>
+			</div>
+			<div class="col-2">
+				<div class="numspin">77 777.58</div>
+			</div>
+			<div class="col-2">
+				<div class="numspin">88 888,954</div>
+			</div>
+			<div class="col-3">
+				<div id="ns2-1" class="numspin2">1222555</div>
+			</div>
+			<div class="col-3">
+				<div id="ns2-2" class="numspin2">1333777</div>
+			</div>
 		</div>
 	</div>
-</div>
+
+	<div class="container">
+		<div class="row wrap" style="margin-top: 100px; margin-bottom: 100px">
+			<div class="col">
+				<div class="numspin-s">4 444 444</div>
+			</div>
+		</div>
+		<div class="row wrap">
+			<div class="col">
+				<div class="numspin-s">5 555 555</div>
+			</div>
+		</div>
+	</div>
+
+</main>
+<!--/MAIN-->
 
 <!--FOOTER/-->
 <footer class="footer">

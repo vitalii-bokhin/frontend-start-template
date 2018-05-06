@@ -1,8 +1,6 @@
 $(document).ready(function(){
 
-	(function setFootPadding() {
-		$('.wrapper, .wrapper__full-height').css('padding-bottom', $('.footer').innerHeight());
-
+	(function initFun() {
 		//fixed block
 		$('.fix-block').each(function() {
 			var _$ = $(this);
@@ -16,7 +14,7 @@ $(document).ready(function(){
 		flexImg();
 		coverImg();
 
-		$(window).on('winResized', setFootPadding);
+		$(window).on('winResized', initFun);
 	})();
 
 	$('#slider').slick({
@@ -40,6 +38,3 @@ $(document).ready(function(){
 	});
 
 });
-
-var arrLike = {length: 4, sirko: 'собака', 2: 'мій пес'}; 
-var arr = Array.from(arrLike);

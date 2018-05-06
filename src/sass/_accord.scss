@@ -7,7 +7,10 @@
 		position: relative;
 		width: 100%;
 		text-align: left;
+		border: none;
+		background: none;
 		border-bottom: 1px solid $lgy;
+		-webkit-appearance: none;
 		span{
 			display: block;
 			width: 40px;
@@ -21,8 +24,6 @@
 			&:after{
 				@include ab;
 				@include fwh;
-				background: url("../../images/icon-arrow-down.svg") no-repeat 50% 50%;
-				background-size: 30% auto;
 			}
 		}
 	}

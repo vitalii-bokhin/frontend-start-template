@@ -19,7 +19,7 @@
 	margin: 100px;
 }
 </style>
-	
+
 <!--HEADER/-->
 <header class="header">
 	
@@ -66,7 +66,7 @@
 						<a href="popup.html" class="menu__a">Popups</a>
 					</li>
 					<li class="menu__item">
-						<a href="#popup-2" class="js-open-popup menu__a">open popup</a>
+						<a href="#" data-popup="#popup-2" class="js-open-popup menu__a">open popup</a>
 					</li>
 				</ul>
 			</nav>
@@ -93,14 +93,20 @@
 </header>
 <!--/HEADER-->
 
-<div class="container" style="background: gray; width: 500px; margin: auto;">
-	
-	<div class="parallax-element el1" data-delta-x="150" style="background: red"></div>
-	<div class="parallax-element el2" style="background: blue"></div>
-	<div class="parallax-element el3" style="background: green"></div>
+<!--MAIN/-->
+<main class="main">
+
+	<div class="container" style="background: gray; width: 500px; margin: auto;">
+		
+		<div class="parallax-element el1" data-delta-x="150" style="background: red"></div>
+		<div class="parallax-element el2" style="background: blue"></div>
+		<div class="parallax-element el3" style="background: green"></div>
 
 
-</div>
+	</div>
+
+</main>
+<!--/MAIN-->
 
 <!--FOOTER/-->
 <footer class="footer">
@@ -233,8 +239,8 @@
 				listener: '.container'
 			});*/
 
-	});
-</script>
+		});
+	</script>
 
 </body>
 </html>

@@ -7,7 +7,7 @@
 	}
 }*/
 /*===RESET===*/
-html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, header, footer, section, nav, article, aside {
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, header, footer, main, section, nav, article, aside {
   margin: 0;
   padding: 0;
   outline: none;
@@ -21,7 +21,7 @@ html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, st
   box-sizing: border-box;
 }
 
-header, footer, section, nav, article, aside {
+header, footer, main, section, nav, article, aside {
   display: block;
 }
 
@@ -166,6 +166,8 @@ body.is-menu-opened, body.is-popup-opened {
   min-height: 100%;
   position: relative;
   padding-top: 100px;
+  display: flex;
+  flex-direction: column;
 }
 
 .wrapper_fsscroll {
@@ -190,6 +192,14 @@ body.is-menu-opened, body.is-popup-opened {
     padding: 0 !important;
     overflow: visible;
   }
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex: 0 0 auto;
 }
 
 /*full screen scroll*/
@@ -2569,7 +2579,10 @@ a:hover {
   position: relative;
   width: 100%;
   text-align: left;
+  border: none;
+  background: none;
   border-bottom: 1px solid #dddddd;
+  -webkit-appearance: none;
 }
 
 .accord__button span {
@@ -2592,8 +2605,6 @@ a:hover {
   height: 100%;
   left: 0;
   top: 0;
-  background: url("../images/icon-arrow-down.svg") no-repeat 50% 50%;
-  background-size: 30% auto;
 }
 
 .accord__content {
@@ -3273,12 +3284,6 @@ a:hover {
 .footer {
   background: #FFF;
   box-shadow: 0 -1px 11px rgba(0, 0, 0, 0.21);
-  position: relative;
-  z-index: 3;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   padding: 20px 0;
 }
 
