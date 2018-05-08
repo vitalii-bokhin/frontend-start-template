@@ -82,10 +82,19 @@
 		float: left;
 		margin-left: 45px;
 		&:first-child{
-			margin: 0;
+			margin-left: 0;
 		}
 		&_has-children{
 			position: relative;
+			.menu__arr{
+				display: inline-block;
+			}
+			&:hover{
+				.menu__sub-menu{
+					visibility: visible;
+					opacity: 1;
+				}
+			}
 		}
 	}
 	&__a{
@@ -107,9 +116,6 @@
 		border: none;
 		background: none;
 		@include sp(-39px -8px);
-		.menu__item_has-children &{
-			display: inline-block;
-		}
 	}
 	&__sub-menu{
 		position: absolute;
@@ -127,7 +133,10 @@
 		}
 		&-item{
 			float: left;
-			margin-right: 25px;
+			margin-left: 25px;
+			&:first-child{
+				margin-left: 0;
+			}
 		}
 		&-a{
 			font-size: 14px;
@@ -138,10 +147,6 @@
 			&:hover{
 				color: $rd;
 			}
-		}
-		.menu__item_has-children:hover &{
-			visibility: visible;
-			opacity: 1;
 		}
 	}
 

@@ -47,6 +47,20 @@ body{
 
 .main{
 	flex: 1 0 auto;
+	position: relative;
+	&__full-height{
+		@include fwh;
+		z-index: 2;
+		overflow: hidden;
+	}
+	@media(max-width: 1000px){
+		&__full-height{
+			position: static;
+			height: auto;
+			padding: 0 !important;
+			overflow: visible;
+		}
+	}
 }
 
 .footer{

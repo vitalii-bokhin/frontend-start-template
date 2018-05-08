@@ -48,7 +48,7 @@ function coverImg(cnt) {
 			Block.addClass('cover-img-wrap');
 		}
 
-		Img.removeClass('cover-img_w cover-img_h');
+		Img.removeClass('cover-img_w cover-img_h').css({marginTop: '', marginLeft: ''});
 
 		var imgProp = Img.width()/Img.height(),
 		blockProp = Block.width()/Block.height();
@@ -56,10 +56,10 @@ function coverImg(cnt) {
 		if (blockProp != Infinity && blockProp < 21) {
 			if (imgProp <= blockProp) {
 				var marg = Math.round(-(Block.width()/imgProp-Block.height())/2);
-				Img.addClass('cover-img_w').css({marginTop: marg});
+				Img.addClass('cover-img_w').css('margin-top', marg);
 			} else {
 				var marg = Math.round(-(Block.height()*imgProp-Block.width())/2);
-				Img.addClass('cover-img_h').css({marginLeft: marg});
+				Img.addClass('cover-img_h').css('margin-left', marg);
 			}
 		} else {
 			Img.addClass('cover-img_w');

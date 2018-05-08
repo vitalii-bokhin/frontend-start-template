@@ -1,8 +1,8 @@
 <?php
 $response = array();
 
-$send_to = (!empty($_POST['send_to'])) ? $_POST['send_to'] : 'dealersair@gmail.com';
-$from = 'dealersair.com <info@dealersair.com>';
+$send_to = $_POST['send_to'];
+$from = (!empty($_POST['from'])) ? $_POST['from'] : 'site.com <info@site.com>';
 
 $subject = (!empty($_POST['subject'])) ? $_POST['subject'] : $from;
 

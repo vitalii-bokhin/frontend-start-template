@@ -17,6 +17,10 @@ $(document).ready(function(){
 		$(window).on('winResized', initFun);
 	})();
 
+	$('#slider').on('init', function() {
+		coverImg('#slider');
+	});
+
 	$('#slider').slick({
 		infinite: true,
 		slidesToShow: 1,
