@@ -18,69 +18,75 @@ function Sass(src) {
 		gulp.src(src)
 		.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-		.pipe(replace('\/..', ''))
-		.pipe(sourcemaps.write('../src/sass'))
-		.pipe(gulp.dest('./css'))
+		.pipe(replace('\/..\/dist', ''))
+		.pipe(sourcemaps.write('src/sass'))
+		.pipe(gulp.dest('dist/css'))
 		.pipe(notify('CSS Compiled!'));
 	}, 521);
 }
 
 gulp.task('w', function () {
 
-	gulp.watch('./src/sass/*.scss', function() {
-		Sass('./src/sass/style.scss');
+	gulp.watch('src/sass/*.scss', function() {
+		Sass('src/sass/style.scss');
 	});
 
-	gulp.watch('./src/html/*.html', function(event) {
-		gulp.src(['!./src/html/_*.html', event.path])
+	gulp.watch('src/html/*.html', function(event) {
+		gulp.src(['!src/html/_*.html', event.path])
 		.pipe(fileinclude())
-		.pipe(replace('..\/..\/', ''))
-		.pipe(gulp.dest('./'))
+		.pipe(replace('..\/..\/dist\/', ''))
+		.pipe(gulp.dest('dist'))
 		.pipe(notify('HTML Included!'));
 	});
 
-	gulp.watch('./src/html/_*.html', function() {
-		gulp.src(['!./src/html/_*.html', './src/html/*.html'])
+	gulp.watch('src/html/_*.html', function() {
+		gulp.src(['!src/html/_*.html', 'src/html/*.html'])
 		.pipe(fileinclude())
-		.pipe(replace('..\/..\/', ''))
-		.pipe(gulp.dest('./'))
+		.pipe(replace('..\/..\/dist\/', ''))
+		.pipe(gulp.dest('dist'))
 		.pipe(notify('HTML Included!'));
+	});
+
+	gulp.watch('src/js/*.js', function(event) {
+		gulp.src(event.path)
+		.pipe(gulp.dest('dist/js'))
+		.pipe(notify('JS Refreshed!'));
 	});
 
 });
 
 gulp.task('inc', function() {
-	gulp.src(['!./src/html/_*.html', './src/html/*.html'])
+	gulp.src(['!src/html/_*.html', 'src/html/*.html'])
 	.pipe(fileinclude())
-	.pipe(replace('..\/..\/', ''))
-	.pipe(gulp.dest('./'))
+	.pipe(replace('..\/..\/dist\/', ''))
+	.pipe(gulp.dest('dist'))
 	.pipe(notify('HTML Included!'));
 });
 
 gulp.task('css', function () {
-	gulp.src(['!./src/sass/_*.scss', './src/sass/*.scss'])
+	gulp.src(['!src/sass/_*.scss', 'src/sass/*.scss'])
 	.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
 	.pipe(autoprefixer(['last 121 versions', '> 1%']))
-	.pipe(replace('\/..', ''))
-	.pipe(gulp.dest('./css'))
+	.pipe(replace('\/..\/dist', ''))
+	.pipe(gulp.dest('dist/css'))
 	.pipe(notify('CSS with Autoprefixes Compiled!'));
 });
 
 gulp.task('mincss', function () {
-	gulp.src('./src/sass/style.scss')
+	gulp.src('src/sass/style.scss')
 	.pipe(sass().on('error', sass.logError))
 	.pipe(autoprefixer(['last 121 versions', '> 1%']))
-	.pipe(replace('\/..', ''))
+	.pipe(replace('\/..\/dist', ''))
 	.pipe(cssmin()) 
 	.pipe(rename({suffix: '.min'}))
-	.pipe(gulp.dest('./css'));
+	.pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('minjs', function () {
-	gulp.src(['!./src/js/*.min.js','./src/js/*.js'])
+	gulp.src(['!src/js/*.min.js','src/js/*.js'])
 	.pipe(uglify())
 	.pipe(rename({suffix: '.min'}))
-	.pipe(gulp.dest('./js'));
+	.pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('fin', ['inc', 'css']);

@@ -9,7 +9,7 @@
 
 //sprite
 @mixin sp($bg-position: ""){
-	background-image: url("../../images/sprite.svg");
+	background-image: url("../../dist/images/sprite.svg");
 	background-repeat: no-repeat;
 	@if $bg-position != "" {
 		background-position: $bg-position;
