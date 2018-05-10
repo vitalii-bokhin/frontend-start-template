@@ -19,7 +19,7 @@ function Sass(src) {
 		.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
 		.pipe(replace('\/..\/dist', ''))
-		.pipe(sourcemaps.write('src/sass'))
+		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/css'))
 		.pipe(notify('CSS Compiled!'));
 	}, 521);
