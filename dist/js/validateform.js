@@ -335,8 +335,8 @@ function ValidateForm(form) {
 		return !err;
 	}
 
-	function actSubmitBtn(form, st) {
-		var $form = $(form),
+	function actSubmitBtn(_form, st) {
+		var $form = $(_form),
 		$button = $form.find('button[type="submit"], input[type="submit"]');
 
 		if (st) {
@@ -346,14 +346,11 @@ function ValidateForm(form) {
 		}
 	}
 
-	function clearForm(form, st) {
-		var $form = $(form);
-
-		if (st) {
-			$form.find('.form__text-input, .form__textarea').val('');
-			$form.find('.overlabel-apply').attr('style','');
-			$form.find('.form__textarea-mirror').html('');
-		}
+	function clearForm(_form) {
+		var $form = $(_form);
+		$form.find('.form__text-input, .form__textarea').val('');
+		$form.find('.overlabel-apply').attr('style','');
+		$form.find('.form__textarea-mirror').html('');
 	}
 
 	_.submit = function(fun) {
@@ -376,9 +373,11 @@ function ValidateForm(form) {
 			if (validate(_form)) {
 				actSubmitBtn(_form, false);
 				if (fun !== undefined) {
-					fun(_form, function(unlBtn, clForm) {
-						actSubmitBtn(_form, unlBtn);
-						clearForm(_form, clForm);
+					fun(_form, function(obj) {
+						actSubmitBtn(_form, obj.unlockButton);
+						if (obj.clearForm == true) {
+							clearForm(_form);
+						}
 					});
 				} else {
 					return true;

@@ -128,7 +128,7 @@ $(document).ready(function() {
 		var $form = $(form);
 
 		Popup.message('#message-popup', 'Форма отправлена', function() {
-				callback(true, true);
+				callback({unlockButton: true, clearForm: true});
 			});
 
 		/*$.ajax({
@@ -139,7 +139,7 @@ $(document).ready(function() {
 			success: function(response){
 				if (response.status == 'sent') {
 					Popup.message('#message-popup', 'Форма отправлена', function() {
-						callback(true, true);
+						callback({unlockButton: true, clearForm: true});
 					});
 				}
 			},

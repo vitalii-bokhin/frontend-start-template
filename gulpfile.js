@@ -72,6 +72,12 @@ gulp.task('css', function () {
 	.pipe(notify('CSS with Autoprefixes Compiled!'));
 });
 
+gulp.task('js', function () {
+	gulp.src('src/js/*.js')
+	.pipe(gulp.dest('dist/js'))
+	.pipe(notify('JS Refreshed!'));
+});
+
 gulp.task('mincss', function () {
 	gulp.src('src/sass/style.scss')
 	.pipe(sass().on('error', sass.logError))
@@ -89,4 +95,4 @@ gulp.task('minjs', function () {
 	.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('fin', ['inc', 'css']);
+gulp.task('fin', ['inc', 'css', 'js']);
