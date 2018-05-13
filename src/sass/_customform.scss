@@ -223,18 +223,36 @@
 			display: none;
 		}
 	}
+	&__items{
+		@include clr;
+		margin-bottom: 14px;
+	}
+	&__item{
+		float: left;
+		width: 20%;
+		padding: 0 7px;
+	}
 	&__preview{
-		display: block;
-		width: 336px;
-		height: 273px;
-		line-height: 273px;
-		margin-bottom: 20px;
-		background: #000;
-		margin: 0 auto 20px;
-		text-align: center;
+		@include fixprop;
+		position: relative;
+		background: $lgy;
 		img{
-			max-height: 100%;
-			vertical-align: middle;
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 2;
+		}
+		&:after{
+			@include ab;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin: -15px 0 0 -15px;
+			width: 30px;
+			height: 30px;
+			background: url("../images/loading.svg") no-repeat 50% 50%;
+			background-size: 100% 100%;
+			animation: form_loading_icon .9s infinite linear;
 		}
 	}
 }

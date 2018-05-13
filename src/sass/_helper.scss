@@ -7,25 +7,6 @@
 	}
 }
 
-//sprite
-@mixin sp($bg-position: ""){
-	background-image: url("../../dist/images/sprite.svg");
-	background-repeat: no-repeat;
-	@if $bg-position != "" {
-		background-position: $bg-position;
-	}
-	background-size: 50px auto;
-}
-
-/*@mixin spr($bg-position-x: 0, $bg-position-y: 0){
-	background-image: url("../../images/sprite@2x.png");
-	background-size: 480px auto;
-	background-repeat: no-repeat;
-	@if $bg-position-x != 0 OR $bg-position-y != 0 {
-		background-position: ($bg-position-x / 2) ($bg-position-y / 2);
-	}
-}*/
-
 //after-before
 @mixin ab(){
 	display: block;
@@ -71,6 +52,16 @@ $base-font-size: 16;
 //Fonts
 @mixin ff-hn(){
 	font-family: 'helveticaneue', sans-serif;
+}
+
+//sprite
+@mixin sp($bg-position: ""){
+	background-image: url("../../dist/images/sprite.svg");
+	background-repeat: no-repeat;
+	@if $bg-position != "" {
+		background-position: $bg-position;
+	}
+	background-size: rem(50) auto;
 }
 
 //Colors

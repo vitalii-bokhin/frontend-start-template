@@ -336,13 +336,14 @@ function ValidateForm(form) {
 	}
 
 	function actSubmitBtn(_form, st) {
-		var $form = $(_form),
-		$button = $form.find('button[type="submit"], input[type="submit"]');
+		var $button = $(_form).find('button[type="submit"], input[type="submit"]');
 
-		if (st) {
-			$button.prop('disabled', false).removeClass('form__button_loading');
-		} else {
-			$button.prop('disabled', true).addClass('form__button_loading');
+		if (!$button.is(':hidden')) {
+			if (st) {
+				$button.prop('disabled', false).removeClass('form__button_loading');
+			} else {
+				$button.prop('disabled', true).addClass('form__button_loading');
+			}
 		}
 	}
 

@@ -296,14 +296,17 @@
 
 
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12 pad-0">
 					<div class="form__field">
 						<div class="custom-file">
-							<label class="custom-file__preview"></label>
-							<label class="custom-file__name"></label>
+							<div class="custom-file__items">
+								
+							</div>
+							<!--<label class="custom-file__preview"></label>
+							<label class="custom-file__name"></label>-->
 							<label class="custom-file__btn">загрузить фото</label>
 							<button type="button" class="custom-file__btn custom-file__btn_delete">удалить фото</button>
-							<input type="file" data-type="image" data-required="true" class="custom-file__input">
+							<input type="file" data-type="image" data-required="true" class="custom-file__input" multiple>
 						</div>
 						<div class="form__error-tip" data-second-error-text="Выберите файл с изображением">Загрузите изображение</div>
 					</div>
