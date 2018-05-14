@@ -55,6 +55,7 @@ gulp.task('w', function () {
 
 });
 
+//final
 gulp.task('inc', function() {
 	gulp.src(['!src/html/_*.html', 'src/html/*.html'])
 	.pipe(fileinclude())
@@ -78,6 +79,9 @@ gulp.task('js', function () {
 	.pipe(notify('JS Refreshed!'));
 });
 
+gulp.task('fin', ['inc', 'css', 'js']);
+
+//minimize
 gulp.task('mincss', function () {
 	gulp.src('src/sass/style.scss')
 	.pipe(sass().on('error', sass.logError))
@@ -95,4 +99,4 @@ gulp.task('minjs', function () {
 	.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('fin', ['inc', 'css', 'js']);
+gulp.task('finalmin', ['mincss', 'minjs']);

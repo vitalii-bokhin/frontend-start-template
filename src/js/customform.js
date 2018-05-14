@@ -296,50 +296,28 @@ function CustomFile() {
 
 	_.$field = null;
 
-	function showPreview(file, i) {
+	function loadPreview(file, i) {
 		var $imgPreviewBlock = _.$field.find('.custom-file__preview').eq(i);
 
-		if (file) {
-			if ($imgPreviewBlock.length && file.type.match('image')) {
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					$imgPreviewBlock.html('<img src="'+ e.target.result +'" class="cover-img">');
-
-					setTimeout(function() {
-						coverImg('.custom-file__item');
-					}, 721);
-					
-				};
-				reader.readAsDataURL(file);
-			}
-		} else {
-			$imgPreviewBlock.empty();
-		}
-
-	}
-
-	function getThePreview(file) {
 		if (file.type.match('image')) {
 			var reader = new FileReader();
+
 			reader.onload = function(e) {
-				return '<img src="'+ e.target.result +'" class="cover-img">';
+				$imgPreviewBlock.html('<img src="'+ e.target.result +'" class="cover-img">');
+
+				setTimeout(function() {
+					coverImg('.custom-file__item');
+				}, 721);
+
 			}
+
 			reader.readAsDataURL(file);
-		}
-	}
-
-	function showName(file) {
-		var $nameBlock = _.$field.find('.custom-file__name');
-
-		if (file) {
-			if ($nameBlock) {
-				$nameBlock.html(file.name);
-			}
 		} else {
-			$nameBlock.empty();
+			$imgPreviewBlock.html('<img src="images/preview.svg" class="full-width-img">');
 		}
 
 	}
+
 
 	function changeInput(_inp) {
 		var $input = $(_inp),
@@ -349,16 +327,12 @@ function CustomFile() {
 
 		_.$field = $input.closest('.custom-file');
 
+		$fileItems.empty();
+
 		for (var i = 0; i < filesArr.length; i++) {
-			$fileItems.append('<div class="custom-file__item"><div class="custom-file__preview cover-img-wrap"></div></div>');
-			showPreview(filesArr[i], i);
+			$fileItems.append('<div class="custom-file__item"><div class="custom-file__preview cover-img-wrap"></div><div class="custom-file__name">'+ filesArr[i].name +'</div></div>');
+			loadPreview(filesArr[i], i);
 		}
-
-		
-		//getThePreview(file);
-		//showName(file);
-
-		console.log(filesArr);
 
 	}
 

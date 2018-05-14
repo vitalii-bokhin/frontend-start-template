@@ -5,7 +5,7 @@ function ValidateForm(form) {
 
 	_.$input = null;
 
-	function errorTip(err, errInd) {
+	function errorTip(err, errInd, errorTxt) {
 		var $field = _.$input.closest('.form__field'),
 		$errTip = $field.find('.form__error-tip');
 
@@ -13,22 +13,31 @@ function ValidateForm(form) {
 
 			$field.addClass('form__field_error');
 
-			switch (errInd) {
-				case 2:
-
+			function fixFirstErr() {
 				if (!$errTip.attr('data-first-error-text')) {
 					$errTip.attr('data-first-error-text', $errTip.html());
 				}
+			}
+
+			switch (errInd) {
+				case 2:
+
+				fixFirstErr();
 				$errTip.html($errTip.attr('data-second-error-text'));
 
 				break;
 
 				case 3:
 
-				if (!$errTip.attr('data-first-error-text')) {
-					$errTip.attr('data-first-error-text', $errTip.html());
-				}
+				fixFirstErr();
 				$errTip.html($errTip.attr('data-third-error-text'));
+
+				break;
+
+				case 'custom':
+
+				fixFirstErr();
+				$errTip.html(errorTxt);
 
 				break;
 
@@ -46,6 +55,11 @@ function ValidateForm(form) {
 			$field.removeClass('form__field_error');
 		}
 
+	}
+
+	_.customErrorTip = function($inp, errorTxt) {
+		_.$input = $inp;
+		errorTip(true, 'custom', errorTxt);
 	}
 
 	_.date = function() {
@@ -336,13 +350,14 @@ function ValidateForm(form) {
 	}
 
 	function actSubmitBtn(_form, st) {
-		var $form = $(_form),
-		$button = $form.find('button[type="submit"], input[type="submit"]');
+		var $button = $(_form).find('button[type="submit"], input[type="submit"]');
 
-		if (st) {
-			$button.prop('disabled', false).removeClass('form__button_loading');
-		} else {
-			$button.prop('disabled', true).addClass('form__button_loading');
+		if (!$button.is(':hidden')) {
+			if (st) {
+				$button.prop('disabled', false).removeClass('form__button_loading');
+			} else {
+				$button.prop('disabled', true).addClass('form__button_loading');
+			}
 		}
 	}
 
@@ -372,12 +387,15 @@ function ValidateForm(form) {
 
 			if (validate(_form)) {
 				actSubmitBtn(_form, false);
+				$(_form).addClass('form_sending');
 				if (fun !== undefined) {
 					fun(_form, function(obj) {
+						obj = obj || {};
 						actSubmitBtn(_form, obj.unlockButton);
 						if (obj.clearForm == true) {
 							clearForm(_form);
 						}
+						$(_form).removeClass('form_sending');
 					});
 				} else {
 					return true;

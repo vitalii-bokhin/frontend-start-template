@@ -235,7 +235,7 @@
 	&__preview{
 		@include fixprop;
 		position: relative;
-		background: $lgy;
+		border: 1px solid $lgy;
 		img{
 			position: absolute;
 			left: 0;
@@ -254,5 +254,9 @@
 			background-size: 100% 100%;
 			animation: form_loading_icon .9s infinite linear;
 		}
+	}
+	&__name{
+		margin-top: 10px;
+		font-size: 14px;
 	}
 }
