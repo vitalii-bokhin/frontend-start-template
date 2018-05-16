@@ -6,8 +6,8 @@
 	padding: 16px 28px 14px;
 	text-align: center;
 	color: #FFF;
-	border: 1px solid #fff;
-	background: none;
+	border: none;
+	background: $bk;
 	text-transform: uppercase;
 	text-decoration: none;
 	-webkit-appearance: none;
@@ -22,54 +22,14 @@
 			margin-left: 5px;
 		}
 	}
-	&_red{
-		border: 1px solid $rd;
-		background: $rd;
-	}
-	&_blue{
-		border: 1px solid $be;
-		background: $be;
-	}
-	&_green{
-		border: 1px solid $gn;
-		background: $gn;
-	}
-	&_shadow{
-		position: relative;
-	}
 
-	&_w230{
+	&_w220{
 		width: 100%;
-		max-width: 230px;
-	}
-	&_w330{
-		width: 100%;
-		max-width: 330px;
-	}
-	&_w-full{
-		width: 100%;
+		max-width: 220px;
 	}
 	
-	&_be-bord{
-		color: $be;
-		border: 1px solid $be;
-		background: #FFF;
-	}
-
-	&_be-txt{
-		color: $be;
-		background: #FFF;
-	}
-
-	&_grn-bord{
-		color: $gn;
-		border: 1px solid $gn;
-		background: #FFF;
-	}
-
-	&_grn-txt{
-		color: $gn;
-		background: #FFF;
+	&_w-full{
+		width: 100%;
 	}
 
 	&.lock{
@@ -77,11 +37,6 @@
 	}
 
 	@media(min-width: 1200px){
-		&_hov-be:hover{
-			opacity: 1;
-			border: 1px solid $be;
-			background: $be;
-		}
 		&:hover{
 			opacity: .6;
 		}

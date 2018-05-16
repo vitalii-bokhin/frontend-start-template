@@ -216,26 +216,25 @@
 	}
 	&__btn{
 		font-size: 30px;
-		color: $rd;
-		border-bottom: 1px solid $rd;
+		color: $bk;
+		border-bottom: 1px solid $bk;
 		cursor: pointer;
-		&_delete{
-			display: none;
-		}
 	}
 	&__items{
-		@include clr;
+		font-size: 0;
 		margin-bottom: 14px;
 	}
 	&__item{
-		float: left;
+		display: inline-block;
 		width: 20%;
+		vertical-align: top;
 		padding: 0 7px;
 	}
 	&__preview{
 		@include fixprop;
 		position: relative;
 		border: 1px solid $lgy;
+		font-size: 1rem;
 		img{
 			position: absolute;
 			left: 0;
@@ -258,5 +257,6 @@
 	&__name{
 		margin-top: 10px;
 		font-size: 14px;
+		word-wrap: break-word;
 	}
 }

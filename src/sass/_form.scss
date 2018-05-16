@@ -134,53 +134,48 @@
 	}
 
 	&__submit{
-		-webkit-appearance: none;
-		&_loading{
-			position: relative;
-			&:before{
-				@include ab;
-				@include fwh;
-				background: #ffffff;
-				z-index: 2;
-			}
-			&:after{
-				@include ab;
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				z-index: 3;
-				margin: -15px 0 0 -15px;
-				width: 30px;
-				height: 30px;
-				background: url("../images/loading.svg") no-repeat 50% 50%;
-				background-size: 100% 100%;
-				animation: form_loading_icon .9s infinite linear;
-			}
-		}
+		
 	}
+
 	&__loader{
 		height: 50px;
 		position: relative;
 		display: none;
-		&:after{
-			@include ab;
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			z-index: 3;
-			margin: -15px 0 0 -15px;
-			width: 30px;
-			height: 30px;
-			background: url("../images/loading.svg") no-repeat 50% 50%;
-			background-size: 100% 100%;
-			animation: form_loading_icon .9s infinite linear;
-		}
 	}
+
 	&_sending{
-		.form__loader{
-			display: block;
+		.form{
+			&__loader{
+				display: block;
+			}
+			&__submit{
+				position: relative;
+				&:before{
+					@include ab;
+					@include fwh;
+					background: $bk;
+					z-index: 2;
+				}
+			}
+			&__loader,
+			&__submit{
+				&:after{
+					@include ab;
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					z-index: 3;
+					margin: -15px 0 0 -15px;
+					width: 30px;
+					height: 30px;
+					background: url("../images/loading.svg") no-repeat 50% 50%;
+					background-size: 100% 100%;
+					animation: form_loading_icon .9s infinite linear;
+				}
+			}
 		}
 	}
+
 }
 
 

@@ -16,7 +16,7 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form__field">
-						<input id="some-input-id" type="text" data-required="true" placeholder="Name*" class="form__text-input" value="" >
+						<input type="text" data-required="true" placeholder="Name*" class="form__text-input" value="" >
 						<div class="form__error-tip">Enter your name</div>
 					</div>
 				</div>
@@ -28,7 +28,7 @@
 				</div>
 				<div class="col-4">
 					<div class="form__field">
-						<input type="text" data-type="tel" data-required="true" placeholder="Phone number*" class="form__text-input" value="">
+						<input id="some-input-id" type="text" data-type="tel" data-required="true" placeholder="Phone number*" class="form__text-input" value="">
 						<div class="form__error-tip" data-second-error-text="Enter a valid phone number">Enter your phone number</div>
 					</div>
 				</div>
@@ -73,7 +73,7 @@
 					
 					<div class="row">
 						<div class="col-12">
-							<button type="button" class="form__button button button_red" data-next-fieldset-item="#step-fs2">Next</button>
+							<button type="button" class="form__button button" data-next-fieldset-item="#step-fs2">Next</button>
 						</div>
 					</div>
 				</div>
@@ -90,10 +90,10 @@
 
 					<div class="row">
 						<div class="col">
-							<button type="button" class="form__button button button_red" data-prev-fieldset-item="#step-fs1">Prevent</button>
+							<button type="button" class="form__button button" data-prev-fieldset-item="#step-fs1">Prevent</button>
 						</div>
 						<div class="col">
-							<button type="button" class="form__button button button_red" data-next-fieldset-item="#step-fs3">Next</button>
+							<button type="button" class="form__button button" data-next-fieldset-item="#step-fs3">Next</button>
 						</div>
 					</div>
 				</div>
@@ -142,7 +142,7 @@
 
 			<div class="row mt-25">
 				<div class="col-12">
-					<button type="submit" class="form__submit button button_red">Submit</button>
+					<button type="submit" class="form__submit button">Submit</button>
 				</div>
 			</div>
 
@@ -169,7 +169,7 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<button type="submit" class="form__submit button button_red">Submit</button>
+					<button type="submit" class="form__submit button">Submit</button>
 				</div>
 			</div>
 			<div class="form__alert">Ошибка заполнения полей формы</div>
@@ -194,12 +194,33 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<button type="submit" class="form__submit button button_red">Submit</button>
+					<button type="submit" class="form__submit button">Submit</button>
 				</div>
 			</div>
 			<div class="form__alert">Ошибка заполнения полей формы</div>
 		</form>
 	</div>
+
+
+	<div class="container wrap">
+		<div class="row">
+			<div class="col-12">
+				<div class="title">Search field</div>
+			</div>
+		</div>
+		<form id="search-form" action="search.php" method="POST" class="form">
+			<div class="row">
+				<div class="col-12">
+					<div class="form__field form__field_btn">
+						<input type="text" data-required="true" placeholder="Search..." class="form__text-input" value="">
+						<button type="submit" class="form__btn form__btn_search"></button>
+						<div class="form__error-tip">Enter your request</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
 
 </main>
 <!--/MAIN-->
