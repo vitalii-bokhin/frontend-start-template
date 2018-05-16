@@ -84,7 +84,7 @@ $(document).ready(function() {
 			var $nextItem = $(nextFsetItem),
 			$curItem = _$.closest('.fieldset__item');
 
-			if (new ValidateForm().validate($curItem)) {
+			if (ValidateForm().fieldset($curItem)) {
 				$curItem.addClass('fieldset__item_hidden');
 				$nextItem.removeClass('fieldset__item_hidden');
 			}
@@ -123,9 +123,9 @@ $(document).ready(function() {
 //submit forms
 
 
-	new ValidateForm('#form');
+	ValidateForm('#form').submit();
 
-	new ValidateForm('#form-ajax').submit(function(form, callback) {
+	ValidateForm('#form-ajax').submit(function(form, callback) {
 		var $form = $(form);
 
 		Popup.message('#message-popup', 'Форма отправлена', function() {
@@ -151,9 +151,9 @@ $(document).ready(function() {
 
 	});
 
-	new ValidateForm('#form-no-ajax');
+	ValidateForm('#form-no-ajax').submit();
 
-	new ValidateForm('#search-form');
+	ValidateForm('#search-form').submit();
 
 
 
