@@ -229,7 +229,7 @@ var CustomSelect = {
 			}
 
 			return false;
-			
+
 		}).on('click', '.custom-select__val', function() {
 
 			_.selectVal(this);
@@ -307,9 +307,25 @@ function CustomFile() {
 
 }
 
+var varHeightTextarea = {
+	setHeight: function(_ta) {
+		var $tAr = $(_ta),
+		value = $tAr.val(),
+		$mirror = $tAr.parent().find('.var-height-textarea__mirror');
+		newValue = value.replace(/\n/g, '<br>');
+		$mirror.html(newValue +'&nbsp;');
+	},
+	init: function() {
+		var _ = this;
+		$('body').on('input', '.var-height-textarea__textarea', function() {
+			_.setHeight(this);
+		});
+	}
+};
 
 $(document).ready(function() {
 	CustomSelect.init();
 	CustomPlaceholder('input[type="text"], input[type="password"], textarea');
 	CustomFile();
+	varHeightTextarea.init();
 });

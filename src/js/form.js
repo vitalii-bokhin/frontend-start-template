@@ -18,7 +18,6 @@ t=function(){if(p(this,b,d))return a(this).data("mask",new l(this,b,d))};a(this)
 a.applyDataMask=function(b){b=b||a.jMaskGlobals.maskElements;(b instanceof a?b:a(b)).filter(a.jMaskGlobals.dataMaskAttr).each(d)};h={maskElements:"input,td,span,div",dataMaskAttr:"*[data-mask]",dataMask:!0,watchInterval:300,watchInputs:!0,useInput:!/Chrome\/[2-4][0-9]|SamsungBrowser/.test(window.navigator.userAgent)&&h("input"),watchDataMask:!1,byPassKeys:[9,16,17,18,36,37,38,39,40,91],translation:{0:{pattern:/\d/},9:{pattern:/\d/,optional:!0},"#":{pattern:/\d/,recursive:!0},A:{pattern:/[a-zA-Z0-9]/},
 S:{pattern:/[a-zA-Z]/}}};a.jMaskGlobals=a.jMaskGlobals||{};h=a.jMaskGlobals=a.extend(!0,{},h,a.jMaskGlobals);h.dataMask&&a.applyDataMask();setInterval(function(){a.jMaskGlobals.watchDataMask&&a.applyDataMask()},h.watchInterval)},window.jQuery,window.Zepto);
 
-var setTextareaHeight;
 
 $(document).ready(function() {
 
@@ -90,17 +89,6 @@ $(document).ready(function() {
 			}
 		}
 
-	});
-
-	setTextareaHeight = function (_$) {
-		var val = _$.val(),
-		Shape = _$.parent().find('.form__textarea-mirror');
-		val = val.replace(/\n/g, '<br>');
-		Shape.html(val +'&nbsp;');
-	}
-
-	$('body').on('input', '.form__textarea_var-h', function() {
-		setTextareaHeight($(this));
 	});
 
 });

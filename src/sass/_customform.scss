@@ -264,3 +264,19 @@ select{
 		word-wrap: break-word;
 	}
 }
+
+/*variable height textarea*/
+.var-height-textarea{
+	position: relative;
+	&__mirror{
+		min-height: 42px;
+		white-space: pre-wrap;
+		line-height: 1.3;
+		padding: 10px 15px;
+		visibility: hidden;
+	}
+	&__textarea{
+		@include fwh;
+		overflow: hidden;
+	}
+}

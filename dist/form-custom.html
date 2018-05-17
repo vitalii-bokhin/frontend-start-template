@@ -306,68 +306,19 @@
 
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">/////</div>
+					<div class="title-h2">Message</div>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-12">
-
+				<div class="col-4">
 					<div class="form__field">
-						<div class="custom-select">
-							<label class="overlabel">Страна (начинайте вводить)</label>
-							<input type="text" class="custom-select__input_autocomplete form__text-input" data-opt="search-by-name" value="">
-							<ul class="custom-select__options custom-select__options_countries">
-
-							</ul>
-							<input type="hidden" class="custom-select__input" value="">
+						<div class="var-height-textarea">
+							<div class="var-height-textarea__mirror"></div>
+							<textarea name="message" placeholder="Message*" data-required="true" class="var-height-textarea__textarea form__textarea"></textarea>
 						</div>
+						<div class="form__error-tip">Enter your message</div>
 					</div>
-
-					<div class="form__field">
-						<div class="custom-select">
-							<label class="overlabel">Страна с подсветкой (начинайте вводить)</label>
-							<input type="text" class="custom-select__input_autocomplete form__text-input" data-opt="search-with-highlight" value="">
-							<ul class="custom-select__options custom-select__options_countries2">
-
-							</ul>
-							<input type="hidden" class="custom-select__input" value="">
-						</div>
-					</div>
-
-					<div class="form__field">
-						<div class="custom-select">
-							<label class="overlabel">Улица город (начинайте вводить)</label>
-							<input type="text" class="custom-select__input_autocomplete form__text-input" data-opt="search-by-search-string" value="">
-							<ul class="custom-select__options">
-								<li><button type="button" class="custom-select__val" data-search="%гринченка%львов" data-value="v1">ул.Гринченка, г.Львов</button></li>
-								<li><button type="button" class="custom-select__val" data-search="%львов%мазепы" data-value="v2">ул.Мазепы, г.Львов</button></li>
-								<li><button type="button" class="custom-select__val" data-search="%львов%шевченка" data-value="v3">ул.Шевченка, г.Львов</button></li>
-								<li><button type="button" class="custom-select__val" data-search="%шевченка%киев" data-value="v4">бульвар Шевченка, г.Киев</button></li>
-								<li><button type="button" class="custom-select__val" data-search="%крещатик%киев" data-value="v5">ул.Крещатик, г.Киев</button></li>
-								<li><button type="button" class="custom-select__val" data-search="%свободы%киев" data-value="v5">пр.Свободы, г.Киев</button></li>
-							</ul>
-							<input type="hidden" class="custom-select__input" value="">
-						</div>
-					</div>
-				</div>
-			</div>
-
-			
-
-			<div class="row">
-				<div class="col-12">
-					<div class="txt">Текстовое поле с резиновой высотой:</div>
-
-					<div class="form__field">
-						<div class="pos-r">
-							<div class="form__textarea-mirror"></div>
-							<textarea data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-							<label class="overlabel">Текстовое поле</label>
-						</div>
-						<div class="form__error-tip">Заполните поле</div>
-					</div>
-
 				</div>
 			</div>
 
