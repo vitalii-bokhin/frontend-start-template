@@ -138,8 +138,10 @@
 	}
 
 	&__loader{
-		height: 50px;
+		height: 3px;
 		position: relative;
+		margin: 30px 0;
+		overflow: hidden;
 		display: none;
 	}
 
@@ -147,6 +149,13 @@
 		.form{
 			&__loader{
 				display: block;
+				&:before{
+					@include ab;
+					width: 200%;
+					height: 100%;
+					background-image: linear-gradient(to right, transparent 0%, $gn 50%, transparent 100%);
+					animation: form_loading 3s infinite linear;
+				}
 			}
 			&__submit{
 				position: relative;
@@ -156,9 +165,6 @@
 					background: $bk;
 					z-index: 2;
 				}
-			}
-			&__loader,
-			&__submit{
 				&:after{
 					@include ab;
 					position: absolute;
@@ -185,6 +191,18 @@
 	}
 	100% {
 		transform: rotate(360deg); 
+	}
+}
+
+@keyframes form_loading {
+	0% {
+		transform: translate(-100%);
+	}
+	50% {
+		transform: translate(50%);
+	}
+	100% {
+		transform: translate(-100%);
 	}
 }
 

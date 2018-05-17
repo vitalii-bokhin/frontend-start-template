@@ -138,13 +138,18 @@ var ValidateForm;
 		select: function($inp) {
 			var _ = this,
 			err = false;
+
 			_.$input = $inp;
-			if (_.$input.attr('data-required') && _.$input.val().length < 1) {
-				_.errorTip(true);
-				err = true;
-			} else {
-				_.errorTip(false);
+
+			if (_.$input.hasClass('tested')) {
+				if (_.$input.attr('data-required') && !_.$input.val().length) {
+					_.errorTip(true);
+					err = true;
+				} else {
+					_.errorTip(false);
+				}
 			}
+
 			return err;
 		},
 
@@ -194,23 +199,28 @@ var ValidateForm;
 			_.$input = $(_inp);
 
 			var err = false,
-			file = _.$input[0].files[0];
+			errCount = {type: 0, size: 0},
+			filesArr = _.$input[0].files,
+			type = _.$input.attr('data-type'),
+			maxSize = +_.$input.attr('data-max-size');
 
-			if (file) {
-				var type = _.$input.attr('data-type'),
-				fileName = file.name,
-				fileSize = (file.size / 1024 / 1024).toFixed(2),
-				fileExt = (function(fileName){
-					var arr = fileName.split('.');
-					return arr[arr.length-1];
-				})(fileName);
-
-				if (!file.type.match(type)) {
-					_.errorTip(true, 2);
-					err = true;
-				} else {
-					_.errorTip(false);
+			for (var i = 0; i < filesArr.length; i++) {
+				if (!filesArr[i].type.match(type)) {
+					errCount.type++;
 				}
+				if (filesArr[i].size > maxSize) {
+					errCount.size++;
+				}
+			}
+
+			if (errCount.type) {
+				errorTip(_$, true, 2);
+				err = true;
+			} else if (errCount.size) {
+				errorTip(_$, true, 3);
+				err = true;
+			} else {
+				errorTip(_$, false);
 			}
 
 			return err;
@@ -231,14 +241,13 @@ var ValidateForm;
 
 					_.$input.addClass('tested');
 
-					if (_.$input.attr('data-required') && !inpVal.length) {
-						_.errorTip(true);
-						err++;
-					} else if (inpVal.length) {
-						_.errorTip(false);
+					if (inpVal.length) {
 						if (type && _[type]()) {
 							err++;
 						}
+					} else if (_.$input.attr('data-required')) {
+						_.errorTip(true);
+						err++;
 					} else {
 						_.errorTip(false);
 					}
@@ -247,11 +256,21 @@ var ValidateForm;
 
 			});
 
-			$form.find('.form__select-input').each(function() {
-				var hidden = $(this).closest('.form__field_hidden, .form__fieldset_hidden');
-				if (!hidden.length && _.select($(this))) {
-					err++;
+			$form.find('.custom-select__input').each(function() {
+				_.$input = $(this);
+
+				if (!_.$input.parent().is(':hidden')) {
+					_.$input.addClass('tested');
+
+					if (_.$input.attr('data-required') && !_.$input.val().length) {
+						_.errorTip(true);
+						err++;
+					} else {
+						_.errorTip(false);
+					}
+
 				}
+
 			});
 
 			$form.find('input[type="checkbox"]').each(function() {
@@ -317,16 +336,15 @@ var ValidateForm;
 
 				if (!_.$input.is(':hidden')) {
 
-					_.$input.addClass('tested');
-
-					if (_.$input.attr('data-required') && !_.$input[0].files.length) {
+					if (_.$input[0].files.length) {
+						if (_.file(this)) {
+							err++;
+						}
+					} else if (_.$input.attr('data-required')) {
 						_.errorTip(true);
 						err++;
 					} else {
 						_.errorTip(false);
-						if (_.file(this)) {
-							err++;
-						}
 					}
 
 				}
@@ -360,61 +378,61 @@ var ValidateForm;
 
 		actSubmitBtn: function(_form, st) {
 			var $button = $(_form).find('button[type="submit"], input[type="submit"]');
-
-			if (!$button.is(':hidden')) {
-				if (st) {
-					$button.prop('disabled', false).removeClass('form__button_loading');
-				} else {
-					$button.prop('disabled', true).addClass('form__button_loading');
-				}
+			if (st) {
+				$button.prop('disabled', false);
+			} else {
+				$button.prop('disabled', true);
 			}
 		},
 
 		clearForm: function(_form) {
 			var $form = $(_form);
-			$form.find('.form__text-input, .form__textarea').val('');
-			$form.find('.overlabel-apply').attr('style','');
+			$form.find('input[type="text"], input[type="password"], textarea').val('');
+			$form.find('.custom-placeholder').attr('style','');
 			$form.find('.form__textarea-mirror').html('');
 		},
 
-		submit: function(fun) {
+		submit: function(_form, fun) {
+			var _ = this;
 
+			$(_form).addClass('form_sending');
+
+			fun(_form, function(obj) {
+				obj = obj || {};
+
+				_.actSubmitBtn(_form, obj.unlockButton);
+
+				if (obj.clearForm == true) {
+					_.clearForm(_form);
+				}
+
+				$(_form).removeClass('form_sending');
+			});
 		},
 
 		init: function(form, fun) {
-
 			var _ = this;
 
 			$('body').on('input', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
+
 				_.validateOnInput(this);
-			});
 
-			$('body').on('blur', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
+			}).on('blur', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
+
 				_.validateOnBlur(this);
-			});
 
-			$('body').on('change', form +' input[type="file"]', function() {
+			}).on('change', form +' input[type="file"]', function() {
+
 				_.file(this);
-			});
 
-			$('body').on('submit', form, function() {
-				var _form = this;
+			}).on('submit', form, function() {
+				var _$ = this;
 
-				if (_.validate(_form)) {
-					_.actSubmitBtn(_form, false);
+				if (_.validate(_$)) {
+					_.actSubmitBtn(_$, false);
 
 					if (fun !== undefined) {
-						$(_form).addClass('form_sending');
-
-						fun(_form, function(obj) {
-							_.actSubmitBtn(_form, obj.unlockButton);
-
-							if (obj.clearForm == true) {
-								_.clearForm(_form);
-							}
-							$(_form).removeClass('form_sending');
-						});
-
+						_.submit(_$, fun);
 					} else {
 						return true;
 					}
@@ -422,6 +440,7 @@ var ValidateForm;
 
 				return false;
 			});
+
 		}
 
 	};

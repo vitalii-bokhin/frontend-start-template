@@ -108,14 +108,8 @@ $(document).ready(function() {
 //GetCountriesAndCitiesList
 function dAirGetInit() {
 	dAirGet.countries(function(c) {
-		var contryObj = $.parseJSON(c),
-		countryOpt = $('.custom-select__options_countries'),
-		countryOpt2 = $('.custom-select__options_countries2');
-		
-		for (var i = 0; i < contryObj.length; i++) {
-			countryOpt.append('<li><button type="button" class="custom-select__val" data-value="'+ contryObj[i].id +'">'+ contryObj[i].name +'</button></li>');
-			countryOpt2.append('<li><button type="button" class="custom-select__val" data-value="'+ contryObj[i].id +'" data-original="'+ contryObj[i].name +'">'+ contryObj[i].name +'</button></li>');
-		}
+		var contryObj = $.parseJSON(c);
+		CustomSelect.setOptions('.countries', contryObj, 'name', 'name');
 	});
 }
 
@@ -128,8 +122,8 @@ $(document).ready(function() {
 		var $form = $(form);
 
 		Popup.message('#message-popup', 'Форма отправлена', function() {
-				callback({unlockButton: true, clearForm: true});
-			});
+			callback({unlockButton: true, clearForm: true});
+		});
 
 		/*$.ajax({
 			url: $form.attr('action'),
@@ -138,9 +132,8 @@ $(document).ready(function() {
 			data: $form.serialize(), //new FormData(form),
 			success: function(response){
 				if (response.status == 'sent') {
-					Popup.message('#message-popup', 'Форма отправлена', function() {
-						callback({unlockButton: true, clearForm: true});
-					});
+					Popup.message('#message-popup', 'Форма отправлена');
+					callback({unlockButton: true, clearForm: true});
 				}
 			},
 			error: function() {

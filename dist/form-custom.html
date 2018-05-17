@@ -101,7 +101,7 @@
 
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">What programming languages do you know? (at least one language)</div>
+					<div class="title-h2">What programming languages do you know?* (at least one language)</div>
 				</div>
 			</div>
 
@@ -146,7 +146,7 @@
 
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">Do you agree with privacy policy?</div>
+					<div class="title-h2">Do you agree with privacy policy?*</div>
 				</div>
 			</div>
 
@@ -163,7 +163,7 @@
 
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">What is your favorite color?</div>
+					<div class="title-h2">What is your favorite color?*</div>
 				</div>
 			</div>
 
@@ -195,7 +195,7 @@
 				<div class="col-12">
 					<div id="other-color-field" class="form__field hidden">
 						<input type="text" data-required="true" placeholder="Other color" class="form__text-input" value="">
-						<div class="form__error-tip">Enter other color</div>
+						<div class="form__error-tip">Enter color</div>
 					</div>
 				</div>
 			</div>
@@ -209,7 +209,7 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form__field">
-						<select name="favorite-animal" data-placeholder="Select an animal">
+						<select name="favorite-animal" data-placeholder="Select an animal*" data-required="true">
 							<option value="monkey">Monkey</option>
 							<option value="cat">Cat</option>
 							<option>Dog</option>
@@ -218,6 +218,7 @@
 							<option value="elephant">Elephant</option>
 							<option value="other" data-target-elements="#other-animal-field">Other</option>
 						</select>
+						<div class="form__error-tip">Select an animal</div>
 					</div>
 				</div>
 				<div class="col-6">
@@ -237,7 +238,7 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form__field">
-						<select name="pets[]" multiple data-placeholder="Select pets">
+						<select name="pets[]" multiple data-placeholder="Select pets*" data-required="true">
 							<option value="cat">Cat</option>
 							<option value="dog">Dog</option>
 							<option value="parrot">Parrot</option>
@@ -245,6 +246,7 @@
 							<option value="hamster">Hamster</option>
 							<option value="other" data-target-elements="#other-pets-field">Other</option>
 						</select>
+						<div class="form__error-tip">Select pets</div>
 					</div>
 				</div>
 				<div class="col-6">
@@ -258,24 +260,58 @@
 			<div class="row mt-25">
 				<div class="col-12">
 					<div class="title-h2">Where are you from?</div>
+					<div class="txt c-gray mb-25">
+						Get data from https://get.dealersair.com/api/geo/
+					</div>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-12">
-					<div class="txt">
-						Данные страны берутся из https://get.dealersair.com/api/geo/
+					<div class="form__field countries">
+						<select name="country" data-placeholder="Select your country*" data-required="true">
+							<!--options-->
+						</select>
 					</div>
+				</div>
+			</div>
 
-					<div class="form__field">
-						<div class="custom-select">
-							<button type="button" class="custom-select__button">Выберите страну</button>
-							<ul class="custom-select__options custom-select__options_countries">
-								<!--items-->
-							</ul>
-							<input type="hidden" class="custom-select__input" value="">
-						</div>
+			<div class="row mt-25">
+				<div class="col-12">
+					<div class="title-h2">Оn which planet would you like to fly?</div>
+					<div class="txt c-gray mb-25">
+						Start typing
 					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12">
+					<div class="form__field">
+						<select name="planet" data-type="autocomplete" data-placeholder="Select a planet*" data-required="true">
+							<option value="mercury">Mercury</option>
+							<option value="venus">Venus</option>
+							<option>Earth</option>
+							<option value="mars">Mars</option>
+							<option value="jupiter">Jupiter</option>
+							<option value="saturn">Saturn</option>
+							<option value="uranus">Uranus</option>
+							<option value="neptune">Neptune</option>
+							<option value="pluto">Pluto</option>
+						</select>
+						<div class="form__error-tip">Select a planet</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-25">
+				<div class="col-12">
+					<div class="title-h2">/////</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12">
 
 					<div class="form__field">
 						<div class="custom-select">
