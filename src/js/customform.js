@@ -1,28 +1,41 @@
 //form custom placeholder
-function CustomPlaceholder(el) {
+var CustomPlaceholder = {
 
-	//init
-	$(el).each(function(i) {
-		_$ = $(this),
-		placeholder = _$.attr('placeholder'),
-		inpId = _$.attr('id');
+	init: function(el) {
+		var _ = this;
 
-		if (placeholder != undefined) {
-			var $parent = _$.parent(),
-			inpFor = (inpId) ? inpId : 'placeholder-index-'+ i;
+		$(el).each(function(i) {
+			_$ = $(this),
+			placeholder = _$.attr('placeholder'),
+			inpId = _$.attr('id');
 
-			$parent.prepend('<label for="'+ inpFor +'" class="custom-placeholder">'+ placeholder +'</label>');
+			if (placeholder != undefined) {
+				var $parent = _$.parent(),
+				inpFor = (inpId) ? inpId : 'placeholder-index-'+ i;
 
-			_$.removeAttr('placeholder').attr('id', inpFor);
-		}
+				$parent.prepend('<label for="'+ inpFor +'" class="custom-placeholder">'+ placeholder +'</label>');
 
-		if (_$.val() != '') {
-			hidePlaceholder(_$, true);
-		}
+				_$.removeAttr('placeholder').attr('id', inpFor);
+			}
 
-	});
+			if (_$.val() != '') {
+				_.hidePlaceholder(_$, true);
+			}
 
-	function hidePlaceholder(_inp, hide) {
+		});
+
+		//events
+		$('body').on('focus', el, function() {
+			_.hidePlaceholder(this, true);
+		});
+
+		$('body').on('blur', el, function() {
+			_.hidePlaceholder(this, false);
+		});
+
+	},
+	
+	hidePlaceholder: function(_inp, hide) {
 		var $input = $(_inp),
 		$placeholder = $('label[for="'+ $input.attr('id') +'"]');
 
@@ -37,46 +50,34 @@ function CustomPlaceholder(el) {
 		}
 	}
 
-	//events
-	$('body').on('focus', el, function() {
-		hidePlaceholder(this, true);
-	});
-
-	$('body').on('blur', el, function() {
-		hidePlaceholder(this, false);
-	});
-
-}
+};
 
 //Form CustomSelect
 var CustomSelect = {
 
 	$field: null,
-	
+
 	close: function() {
-		this.$field.removeClass('custom-select_opened').find('.custom-select__options').slideUp(221);
+		$('.custom-select').removeClass('custom-select_opened');
+		$('.custom-select__options').slideUp(221);
 	},
 
-	open: function() {
-		this.$field.addClass('custom-select_opened').find('.custom-select__options').slideDown(221);
+	open: function(_el) {
+		$(_el).closest('.custom-select').addClass('custom-select_opened').find('.custom-select__options').slideDown(221);
 	},
 
 	selectVal: function(_el) {
 		var _ = this,
-		$valElem = $(_el);
+		$valElem = $(_el),
+		$field = $valElem.closest('.custom-select'),
+		$headBtn = $field.find('.custom-select__button'),
+		$input = $field.find('.custom-select__input'),
+		$headInp = $field.find('.custom-select__autocomplete');
 
-		_.$field = $valElem.closest('.custom-select');
-
-		var $button = _.$field.find('.custom-select__button'),
-		$input = _.$field.find('.custom-select__input'),
-		$searchInput = (_.$field.find('.custom-select__input_autocomplete').length) ? _.$field.find('.custom-select__input_autocomplete') : _.$field.find('.form__textarea_autocomplete');
-		
-
-		if (_.$field.hasClass('custom-select_multiple')) {
-
+		if ($field.hasClass('custom-select_multiple')) {
 			var toButtonValue = [],
 			toInputValue = [],
-			$multInputs = _.$field.find('.custom-select__multiple-inputs');
+			$multInputs = $field.find('.custom-select__multiple-inputs');
 
 			if ($valElem.hasClass('custom-select__val_checked')) {
 				$valElem.removeClass('custom-select__val_checked');
@@ -84,18 +85,18 @@ var CustomSelect = {
 				$valElem.addClass('custom-select__val_checked');
 			}
 
-			_.$field.find('.custom-select__val_checked').each(function(i) {
+			$field.find('.custom-select__val_checked').each(function(i) {
 				var $el = $(this);
 				toButtonValue[i] = $el.html();
-				toInputValue[i] = $el.attr('data-value');
+				toInputValue[i] = ($el.attr('data-value') != undefined) ? $el.attr('data-value') : $el.html();
 			});
 
 			if (toButtonValue.length) {
-				$button.html(toButtonValue.join(', '));
+				$headBtn.html(toButtonValue.join(', '));
 
 				$input.val(toInputValue[0]);
 
-				$multInputs.html('');
+				$multInputs.empty();
 
 				if (toInputValue.length > 1) {
 
@@ -106,26 +107,30 @@ var CustomSelect = {
 				}
 				
 			} else {
-				$button.html($button.attr('data-placeholder'));
+				$headBtn.html($headBtn.attr('data-placeholder'));
 				$input.val('');
 				_.close();
 			}
 
 		} else {
 			var toButtonValue = $valElem.html(),
-			toInputValue = $valElem.attr('data-value');
+			toInputValue = ($valElem.attr('data-value') != undefined) ? $valElem.attr('data-value') : $valElem.html();
 
-			_.$field.find('.custom-select__val').removeClass('custom-select__val_checked');
+			$field.find('.custom-select__val').removeClass('custom-select__val_checked');
 			$valElem.addClass('custom-select__val_checked');
-			$button.html(toButtonValue);
-			$searchInput.val(toButtonValue);
+			$headBtn.html(toButtonValue);
 			$input.val(toInputValue);
+
+			if ($headInp) {
+				$headInp.val(toButtonValue);
+				CustomPlaceholder.hidePlaceholder($headInp, true);
+			}
 			
 			_.close();
 		}
 
 
-		_.$field.find('.custom-select__val').each(function() {
+		$field.find('.custom-select__val').each(function() {
 			_$ = $(this),
 			targetElements = _$.attr('data-target-elements');
 
@@ -139,49 +144,37 @@ var CustomSelect = {
 			}
 		});
 
-
-		if ($searchInput.hasClass('form__textarea_var-h')) {
-			setTextareaHeight($searchInput);
+		if ($headInp.hasClass('var-height-textarea__textarea')) {
+			varHeightTextarea.setHeight($headInp);
 		}
 
-		_.$field.addClass('custom-select_changed')
+		$field.addClass('custom-select_changed');
 
 		ValidateForm.select($input);
 
-		return false;
 	},
 
 	autocomplete: function(_inp) {
-		var _ = this;
-		
-		_.$field = $(_inp).closest('.custom-select');
-
-		var inpVal = $(_inp).val(),
+		var $field = $(_inp).closest('.custom-select'),
+		inpVal = $(_inp).val(),
 		match = false;
 
-		if (inpVal.length) {
-			var reg = new RegExp(inpVal, 'gi');
+		var reg = new RegExp(inpVal, 'gi');
 
-			_.$field.find('.custom-select__val').each(function() {
-				var $btn = $(this),
-				val = $btn.html();
+		$field.find('.custom-select__val').each(function() {
+			var $btn = $(this),
+			val = $btn.html();
 
-				if (val.match(reg)) {
-					$btn.parent().removeClass('hidden');
-					match = true;
-				} else {
-					$btn.parent().addClass('hidden');
-				}
-			});
-
-			if (!match) {
-				_.$field.find('.custom-select__options li').removeClass('hidden');
+			if (val.match(reg)) {
+				$btn.parent().removeClass('hidden');
+				match = true;
+			} else {
+				$btn.parent().addClass('hidden');
 			}
+		});
 
-			_.open();
-
-		} else {
-			_.close();
+		if (!match) {
+			$field.find('.custom-select__options li').removeClass('hidden');
 		}
 
 	},
@@ -192,6 +185,53 @@ var CustomSelect = {
 		for (var i = 0; i < optObj.length; i++) {
 			$options.append('<li><button type="button" class="custom-select__val" data-value="'+ optObj[i][val] +'">'+ optObj[i][name] +'</button></li>');
 		}
+	},
+
+	keyboard: function(_field, keyCode) {
+		var $options = $(_field).find('.custom-select__options'),
+		$hoverItem = $options.find('li.hover');
+
+		switch (keyCode) {
+			
+			case 40:
+			if ($hoverItem.length) {
+				var $nextItem = $hoverItem.nextAll('li:visible').first();
+				if ($nextItem.length) {
+					$hoverItem.removeClass('hover');
+					$nextItem.addClass('hover');
+					$options.stop().animate({scrollTop: ($options.scrollTop() + $nextItem.position().top)}, 121);
+				}
+			} else {
+				$options.find('li:visible').first().addClass('hover');
+			}
+			break;
+
+			case 38:
+			var $nextItem = $hoverItem.prevAll('li:visible').first();
+			if ($nextItem.length) {
+				$hoverItem.removeClass('hover');
+				$nextItem.addClass('hover');
+				$options.stop().animate({scrollTop: ($options.scrollTop() + $nextItem.position().top)}, 121);
+			}
+			break;
+
+			case 13:
+			this.selectVal($hoverItem.find('.custom-select__val'));
+			break;
+
+		}
+		
+	},
+
+	fillAcHead: function() {
+		var _ = this;
+		$('.custom-select__autocomplete').each(function() {
+			var _$ = $(this),
+			$checkedVal = _$.closest('.custom-select').find('.custom-select__val_checked');
+			if ($checkedVal.length) {
+				_.selectVal($checkedVal);
+			}
+		});
 	},
 
 	init: function() {
@@ -220,12 +260,13 @@ var CustomSelect = {
 		});
 
 		$('body').on('click', '.custom-select__button', function() {
-			_.$field = $(this).closest('.custom-select');
 
-			if (_.$field.hasClass('custom-select_opened')) {
+			if (!$(this).closest('.custom-select').hasClass('custom-select_opened')) {
+				_.fillAcHead();
 				_.close();
+				_.open(this);
 			} else {
-				_.open();
+				_.close();
 			}
 
 			return false;
@@ -236,16 +277,31 @@ var CustomSelect = {
 
 			return false;
 
+		}).on('focus', '.custom-select__autocomplete', function() {
+
+			if (!$(this).closest('.custom-select').hasClass('custom-select_opened')) {
+				_.fillAcHead();
+				_.close();
+				_.open(this);
+			}
+
 		}).on('input', '.custom-select__autocomplete', function() {
 
 			_.autocomplete(this);
+
+		}).on('keydown', '.custom-select_opened', function(e) {
+
+			if (e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 13) {
+				_.keyboard(this, e.keyCode);
+				return false;
+			}
 
 		});
 
 		$(document).on('click', 'body', function(e) {
 			if (!$(e.target).closest('.custom-select_opened').length) {
-				$('.custom-select').removeClass('custom-select_opened');
-				$('.custom-select__options').slideUp(221);
+				_.fillAcHead();
+				_.close();
 			}
 		});
 
@@ -325,7 +381,7 @@ var varHeightTextarea = {
 
 $(document).ready(function() {
 	CustomSelect.init();
-	CustomPlaceholder('input[type="text"], input[type="password"], textarea');
+	CustomPlaceholder.init('input[type="text"], input[type="password"], textarea');
 	CustomFile();
 	varHeightTextarea.init();
 });

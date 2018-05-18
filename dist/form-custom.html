@@ -306,7 +306,7 @@
 
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">Message</div>
+					<div class="title-h2">Messages</div>
 				</div>
 			</div>
 
@@ -320,52 +320,43 @@
 						<div class="form__error-tip">Enter your message</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-12">
-					<div class="txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием:</div>
-
+				<div class="col-4">
 					<div class="form__field">
-						<div class="form__textarea_var-h-wrap middle">
+						<div class="var-height-textarea var-height-textarea_wrap middle">
 							<div class="middle__inner">
-								<div class="form__textarea-mirror"></div>
-								<textarea data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-								<label class="overlabel">Текстовое поле</label>
+								<div class="var-height-textarea__mirror"></div>
+								<textarea name="question" placeholder="Your question*" data-required="true" class="var-height-textarea__textarea form__textarea"></textarea>
 							</div>
 						</div>
-						<div class="form__error-tip">Заполните поле</div>
+						<div class="form__error-tip">Enter your question</div>
 					</div>
-
 				</div>
-			</div>
-
-
-
-			<div class="row">
-				<div class="col-12">
-					<div class="txt">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом:</div>
-
+				<div class="col-4">
 					<div class="form__field">
-						<div class="custom-select form__select_autocomplete">
-							<div class="form__textarea_var-h-wrap middle">
+						<div class="custom-select">
+							<div class="var-height-textarea var-height-textarea_wrap middle">
 								<div class="middle__inner">
-									<div class="form__textarea-mirror"></div>
-									<textarea data-required="true" class="form__textarea form__textarea_autocomplete form__textarea_var-h" data-opt="search-by-name"></textarea>
-									<label class="overlabel">Начинайте вводить</label>
+									<div class="var-height-textarea__mirror"></div>
+									<textarea name="message-autocomplete" placeholder="Variant of the message*" data-required="true" class="custom-select__autocomplete var-height-textarea__textarea form__textarea"></textarea>
 								</div>
 							</div>
 							<ul class="custom-select__options">
-								<li><button type="button" class="custom-select__val" data-value="v1">Текстовое поле с резиновой высотой, с вертикальным выравниванием, с автокомплитом</button></li>
-								<li><button type="button" class="custom-select__val" data-value="v2">Выбор 2</button></li>
+								<li>
+									<button type="button" class="custom-select__val" data-value="val1">I won’t beg for your love: it’s laid Safely to rest, let the earth settle…</button>
+								</li>
+								<li>
+									<button type="button" class="custom-select__val" data-value="val2">Don’t expect my jealous letters Pouring in to plague your bride.</button>
+								</li>
+								<li>
+									<button type="button" class="custom-select__val" data-value="val3">I won’t beg for your love: it’s laid Safely to rest, let the earth settle… Don’t expect my jealous letters Pouring in to plague your bride. But let me, nevertheless, advise you: Give her my poems to read in bed, Give her my portraits to keep — it’s wise to Be kind like that when newly-wed.</button>
+								</li>
 							</ul>
 							<input type="hidden" class="custom-select__input" value="">
 						</div>
+						<div class="form__error-tip">Enter variant of the message</div>
 					</div>
-
 				</div>
 			</div>
-
 
 			<div class="row">
 				<div class="col-12 pad-0">
@@ -381,7 +372,6 @@
 					</div>
 				</div>
 			</div>
-
 
 			<div class="row mt-25">
 				<div class="col-12">
