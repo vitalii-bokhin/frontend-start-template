@@ -141,14 +141,13 @@ var ValidateForm;
 
 			_.$input = $inp;
 
-			if (_.$input.hasClass('tested')) {
-				if (_.$input.attr('data-required') && !_.$input.val().length) {
-					_.errorTip(true);
-					err = true;
-				} else {
-					_.errorTip(false);
-				}
+			if (_.$input.attr('data-required') && !_.$input.val().length) {
+				_.errorTip(true);
+				err = true;
+			} else {
+				_.errorTip(false);
 			}
+			
 
 			return err;
 		},
