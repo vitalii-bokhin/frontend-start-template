@@ -59,30 +59,29 @@ var CustomSelect = {
 
 	close: function() {
 		$('.custom-select').removeClass('custom-select_opened');
-		$('.custom-select__options').slideUp(221);
+		$('.custom-select__options').slideUp(221).find('li').removeClass('hover');
 	},
 
 	open: function(_el) {
-		$(_el).closest('.custom-select').addClass('custom-select_opened').find('.custom-select__options').slideDown(221);
+		$(_el).closest('.custom-select').addClass('custom-select_opened').find('.custom-select__options').slideDown(221).animate({scrollTop: 0}, 0);
 	},
 
 	selectVal: function(_el) {
 		var _ = this,
-		$valElem = $(_el),
-		$field = $valElem.closest('.custom-select'),
-		$headBtn = $field.find('.custom-select__button'),
-		$input = $field.find('.custom-select__input'),
-		$headInp = $field.find('.custom-select__autocomplete');
+		$valueEl = $(_el),
+		$field = $valueEl.closest('.custom-select'),
+		$button = $field.find('.custom-select__button'),
+		$input = $field.find('.custom-select__input');
 
 		if ($field.hasClass('custom-select_multiple')) {
 			var toButtonValue = [],
 			toInputValue = [],
 			$multInputs = $field.find('.custom-select__multiple-inputs');
 
-			if ($valElem.hasClass('custom-select__val_checked')) {
-				$valElem.removeClass('custom-select__val_checked');
+			if ($valueEl.hasClass('custom-select__val_checked')) {
+				$valueEl.removeClass('custom-select__val_checked');
 			} else {
-				$valElem.addClass('custom-select__val_checked');
+				$valueEl.addClass('custom-select__val_checked');
 			}
 
 			$field.find('.custom-select__val_checked').each(function(i) {
@@ -92,7 +91,7 @@ var CustomSelect = {
 			});
 
 			if (toButtonValue.length) {
-				$headBtn.html(toButtonValue.join(', '));
+				$button.html(toButtonValue.join(', '));
 
 				$input.val(toInputValue[0]);
 
@@ -107,24 +106,21 @@ var CustomSelect = {
 				}
 				
 			} else {
-				$headBtn.html($headBtn.attr('data-placeholder'));
+				$button.html($button.attr('data-placeholder'));
 				$input.val('');
 				_.close();
 			}
 
 		} else {
-			var toButtonValue = $valElem.html(),
-			toInputValue = ($valElem.attr('data-value') != undefined) ? $valElem.attr('data-value') : $valElem.html();
+			var toButtonValue = $valueEl.html(),
+			toInputValue = ($valueEl.attr('data-value') != undefined) ? $valueEl.attr('data-value') : $valueEl.html();
 
 			$field.find('.custom-select__val').removeClass('custom-select__val_checked');
-			$valElem.addClass('custom-select__val_checked');
-			$headBtn.html(toButtonValue);
+			$valueEl.addClass('custom-select__val_checked');
+			$button.html(toButtonValue);
 			$input.val(toInputValue);
 
-			if ($headInp) {
-				$headInp.val(toButtonValue);
-				CustomPlaceholder.hidePlaceholder($headInp, true);
-			}
+			CustomPlaceholder.hidePlaceholder($input, true);
 			
 			_.close();
 		}
@@ -144,14 +140,13 @@ var CustomSelect = {
 			}
 		});
 
-		if ($headInp.hasClass('var-height-textarea__textarea')) {
-			varHeightTextarea.setHeight($headInp);
+		if ($input.hasClass('var-height-textarea__textarea')) {
+			varHeightTextarea.setHeight($input);
 		}
 
 		$field.addClass('custom-select_changed');
 
 		ValidateForm.select($input);
-
 	},
 
 	autocomplete: function(_inp) {
@@ -234,27 +229,28 @@ var CustomSelect = {
 		});
 	},
 
-	init: function() {
+	init: function(el) {
 		var _ = this;
 
-		$('select').each(function() {
+		$(el).each(function() {
 			var $select = $(this),
 			$options = $select.find('option'),
 			$parent = $select.parent(),
 			optionsList = '',
-			head = ($select.attr('data-type') == 'autocomplete') ? '<input type="text" placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__autocomplete form__text-input">' : '<button type="button" data-placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__button">'+ $select.attr('data-placeholder') +'</button>',
 			require = ($select.attr('data-required') != undefined) ? ' data-required="'+ $select.attr('data-required') +'" ' : '',
+			head = ($select.attr('data-type') == 'autocomplete') ? '<input type="text" name="'+ $select.attr('name') +'"'+ require +'placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="">' : '<button type="button" data-placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__button">'+ $select.attr('data-placeholder') +'</button>',
 			multiple = {
 				class: ($select.attr('multiple') != undefined) ? ' custom-select_multiple' : '',
 				inpDiv: ($select.attr('multiple') != undefined) ? '<div class="custom-select__multiple-inputs"></div>' : ''
-			};
+			},
+			hiddenInp = ($select.attr('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ $select.attr('name') +'"'+ require +'class="custom-select__input" value="">' : '';
 
 			for (var i = 0; i < $options.length; i++) {
 				var $option = $($options[i]);
-				optionsList += '<li><button type="button" class="custom-select__val"'+ ( ($option.val()) ? ' data-value="'+ $option.val() +'"' : '' ) + ( ($option.attr('data-target-elements') != undefined) ? ' data-target-elements="'+ $option.attr('data-target-elements') +'"' : '' ) +'>'+ $option.html() +'</button></li>';
+				optionsList += '<li><button type="button" class="custom-select__val"'+ ( ($option.attr('value') != undefined) ? ' data-value="'+ $option.attr('value') +'"' : '' ) + ( ($option.attr('data-target-elements') != undefined) ? ' data-target-elements="'+ $option.attr('data-target-elements') +'"' : '' ) +'>'+ $option.html() +'</button></li>';
 			}
 
-			$parent.prepend('<div class="custom-select'+ multiple.class +'">'+ head +'<ul class="custom-select__options">'+ optionsList +'</ul><input type="hidden" name="'+ $select.attr('name') +'"'+ require +'class="custom-select__input" value="">'+ multiple.inpDiv +'</div>');
+			$parent.prepend('<div class="custom-select'+ multiple.class +'">'+ head +'<ul class="custom-select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv +'</div>');
 
 			$select.remove();
 		});
@@ -288,6 +284,10 @@ var CustomSelect = {
 		}).on('input', '.custom-select__autocomplete', function() {
 
 			_.autocomplete(this);
+
+			if (!$(this).closest('.custom-select').hasClass('custom-select_opened')) {
+				_.open(this);
+			}
 
 		}).on('keydown', '.custom-select_opened', function(e) {
 
@@ -380,8 +380,8 @@ var varHeightTextarea = {
 };
 
 $(document).ready(function() {
-	CustomSelect.init();
 	CustomPlaceholder.init('input[type="text"], input[type="password"], textarea');
+	CustomSelect.init('select');
 	CustomFile();
 	varHeightTextarea.init();
 });
