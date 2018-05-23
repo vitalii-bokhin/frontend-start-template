@@ -16,11 +16,10 @@
 		max-width: none;
 	}
 	&__logo{
-		img{
-			width: 100%;
-			max-width: 121px;
-			height: auto;
-		}
+		display: inline-block;
+		width: 100%;
+		max-width: 121px;
+		height: auto;
 	}
 	&__nav{
 		float: left;

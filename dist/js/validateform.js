@@ -96,7 +96,7 @@ var ValidateForm;
 			var _ = this,
 			err = false;
 
-			if (!/^[a-z0-9]+[a-z0-9-\.]*@[a-z0-9-]{2,}\.[a-z]{2,6}$/i.test(_.$input.val())) {
+			if (!/^[a-z0-9]+[\w\-\.]*@[\w\-]{2,}\.[a-z]{2,6}$/i.test(_.$input.val())) {
 				_.errorTip(true, 2);
 				err = true;
 			} else {

@@ -4,6 +4,7 @@ var Popup = {
 	ind: 0,
 	group: null,
 	position: 0,
+
 	show: function(id, fun) {
 		var _ = this,
 		$popWin = $(id),
@@ -24,6 +25,7 @@ var Popup = {
 
 		_.closeCallback = fun || function() {};
 	},
+
 	hide: function() {
 		var _ = this;
 		$('.popup__window').removeClass('popup__window_visible');
@@ -33,12 +35,21 @@ var Popup = {
 		$('html, body').scrollTop(_.position);
 		_.closeCallback();
 	},
+
 	message: function(id,msg,fun) {
 		var _ = this;
 		$(id).find('.popup__inner').prepend('<div class="popup__message">'+ msg +'</div>');
 		_.show(id);
 		_.closeCallback = fun || function() {};
 	},
+
+	/*resize: function($pop, $img) {
+		var popH = $pop.innerHeight();
+		if (popH > winH) {
+			$pop.css('max-width', (winH * ($pop.innerWidth() / popH)));
+		}
+	},*/
+
 	media: function(_$,args,show) {
 		var _ = this,
 		id = $(_$).attr('data-popup'),
@@ -67,13 +78,15 @@ var Popup = {
 			Img.css({visibility: 'visible', marginLeft: '', marginTop: ''}).removeClass('cover-img_w cover-img_h').attr('src', args.img);
 		}
 		
+		//Pop.css('max-width', '');
 		Iframe.css('visibility', 'hidden').attr('src', '');
 		BtnPlay.css('visibility', 'hidden');
 		
 		if (args.vid) {
-			$box.addClass('popup-media__box_prop cover-img-wrap');
-			Img.addClass('cover-img');
+			$box.removeClass('middle').addClass('cover-img-wrap');
+			Img.removeClass('middle__img').addClass('cover-img');
 			BtnPlay.css('visibility', 'visible').attr('href', args.vid);
+
 			_.play = function() {
 				var utm = args.vid.match(/(?:youtu\.be\/|youtube\.com\/watch\?v\=|youtube\.com\/embed\/)+?([\w-]+)/i),
 				ifrSrc = 'https://www.youtube.com/embed/'+ utm[1] +'?autoplay=1';
@@ -81,20 +94,18 @@ var Popup = {
 				Img.css('visibility', 'hidden');
 				Iframe.css('visibility', 'visible').attr('src', ifrSrc);
 			}
+
 			if (!args.img) {
 				_.play();
 			}
-		} else {
-			$box.removeClass('popup-media__box_prop cover-img-wrap');
-			Img.removeClass('cover-img');
-		}
 
-		if (show) {
-			_.show(id);
-		} else {
 			setTimeout(function() {
 				coverImg(id);
 			}, 721);
+
+		} else {
+			$box.removeClass('cover-img-wrap').addClass('middle');
+			Img.removeClass('cover-img').addClass('middle__img');
 		}
 
 		if (args.group) {
@@ -103,6 +114,16 @@ var Popup = {
 			_.ind = $('[data-group="'+ _.group +'"]').index(_$);
 		}
 
+		if (show) {
+			_.show(id);
+		}
+
+		/*if (!args.vid) {
+			setTimeout(function() {
+				_.resize(Pop, Img);
+			}, 721);
+		}*/
+
 		_.closeCallback = function() {
 			Img.css('visibility', 'hidden').attr('src', '');
 			Iframe.css('visibility', 'hidden').attr('src', '');
@@ -110,6 +131,7 @@ var Popup = {
 		}
 
 	},
+
 	next: function(dir) {
 		var _ = this,
 		$next,

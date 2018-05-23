@@ -2,11 +2,11 @@
 .title{
 	font-size: 26px;
 	font-weight: 700;
-	margin-bottom: 25px;
+	margin-bottom: em(25, 26);
 	&-h2{
 		font-size: 18px;
 		font-weight: 500;
-		margin-bottom: 25px;
+		margin-bottom: em(25, 18);
 	}
 }
 
@@ -14,12 +14,12 @@
 .txt{
 	line-height: (22/16);
 	p{
-		margin: 25px 0;
+		margin: em(25) 0;
 		&:first-child{
-			margin-top: 0;
+			margin-top: 0 !important;
 		}
 		&:last-child{
-			margin-bottom: 0;
+			margin-bottom: 0 !important;
 		}
 	}
 }
@@ -30,7 +30,7 @@ ul.list{
 	li{
 		line-height: (24/16);
 		padding-left: 30px;
-		margin: 30px 0;
+		margin: em(30) 0;
 		position: relative;
 		&:before{
 			@include ab;
