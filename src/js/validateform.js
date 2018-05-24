@@ -377,11 +377,15 @@ var ValidateForm;
 
 		actSubmitBtn: function(_form, st) {
 			var $button = $(_form).find('button[type="submit"], input[type="submit"]');
-			if (st) {
-				$button.prop('disabled', false);
-			} else {
-				$button.prop('disabled', true);
+
+			if (!$button.is(':hidden')) {
+				if (st) {
+					$button.prop('disabled', false);
+				} else {
+					$button.prop('disabled', true);
+				}
 			}
+			
 		},
 
 		clearForm: function(_form) {
