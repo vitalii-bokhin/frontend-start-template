@@ -148,7 +148,6 @@ var ValidateForm;
 				_.errorTip(false);
 			}
 			
-
 			return err;
 		},
 
@@ -204,22 +203,25 @@ var ValidateForm;
 			maxSize = +_.$input.attr('data-max-size');
 
 			for (var i = 0; i < filesArr.length; i++) {
+
 				if (!filesArr[i].type.match(type)) {
 					errCount.type++;
 				}
+
 				if (filesArr[i].size > maxSize) {
 					errCount.size++;
 				}
+
 			}
 
 			if (errCount.type) {
-				errorTip(_$, true, 2);
+				_.errorTip(true, 2);
 				err = true;
 			} else if (errCount.size) {
-				errorTip(_$, true, 3);
+				_.errorTip(true, 3);
 				err = true;
 			} else {
-				errorTip(_$, false);
+				_.errorTip(false);
 			}
 
 			return err;
@@ -230,6 +232,7 @@ var ValidateForm;
 			$form = $(form),
 			err = 0;
 
+			//text, password, textarea
 			$form.find('input[type="text"], input[type="password"], textarea').each(function() {
 				_.$input = $(this);
 
@@ -255,6 +258,7 @@ var ValidateForm;
 
 			});
 
+			//select
 			$form.find('.custom-select__input').each(function() {
 				_.$input = $(this);
 
@@ -272,6 +276,7 @@ var ValidateForm;
 
 			});
 
+			//checkboxes
 			$form.find('input[type="checkbox"]').each(function() {
 				_.$input = $(this);
 
@@ -288,6 +293,7 @@ var ValidateForm;
 
 			});
 
+			//checkbox group
 			$form.find('.form__chbox-group').each(function() {
 				var i = 0,
 				_$ = $(this);
@@ -309,6 +315,7 @@ var ValidateForm;
 				}
 			});
 
+			//radio group
 			$form.find('.form__radio-group').each(function() {
 				var e = true,
 				_$ = $(this),
@@ -330,6 +337,7 @@ var ValidateForm;
 				}
 			});
 
+			//file
 			$form.find('input[type="file"]').each(function() {
 				_.$input = $(this);
 
@@ -350,6 +358,7 @@ var ValidateForm;
 
 			});
 
+			//passwords compare
 			$form.find('.form__text-input[data-pass-compare-input]').each(function() {
 				_.$input = $(this);
 
@@ -366,6 +375,7 @@ var ValidateForm;
 
 			});
 
+			//error
 			if (err) {
 				$form.addClass('form_error');
 			} else {
