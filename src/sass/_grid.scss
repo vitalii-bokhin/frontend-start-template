@@ -21,6 +21,12 @@
 		padding-left: 0 !important;
 		padding-right: 0 !important;
 	}
+	@media(max-width: 1000px){
+		&.wrap{
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
 }
 
 .row{
