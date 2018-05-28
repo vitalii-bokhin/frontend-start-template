@@ -1,21 +1,21 @@
 .wrap{
 	margin: 0 auto;
-	max-width: 980px;
-	padding-left: 10px;
-	padding-right: 10px;
+	max-width: 1170px;
+	padding-left: 20px;
+	padding-right: 20px;
 	@media(max-width: 1000px){
-		max-width: 490px;
+		max-width: 460px;
 		padding-left: 0;
 		padding-right: 0;
 	}
 }
 
 .pad{
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
 	&.wrap{
-		padding-left: 20px;
-		padding-right: 20px;
+		padding-left: 35px;
+		padding-right: 35px;
 	}
 	&-0{
 		padding-left: 0 !important;
@@ -23,8 +23,8 @@
 	}
 	@media(max-width: 1000px){
 		&.wrap{
-			padding-left: 10px;
-			padding-right: 10px;
+			padding-left: 15px;
+			padding-right: 15px;
 		}
 	}
 }
@@ -115,15 +115,12 @@
 		&-col-mid,
 		&-col-bot,
 		&-tbl{
+			padding-left: 5px;
+			padding-right: 5px;
 			& > div[class*="col"]{
-				
+				padding-left: 10px;
+				padding-right: 10px;
 			}
-		}
-
-		&,
-		&-col-mid,
-		&-col-bot,
-		&-tbl{
 			& > div[class*="col-"]:not([class*="vw1000-col"]){
 				display: block;
 				float: none !important;
@@ -520,14 +517,6 @@
 			}
 			&-offset-0{
 				margin-left: 0;
-			}
-		}
-		&-pad{
-			padding-left: 15px !important;
-			padding-right: 15px !important;
-			&-0{
-				padding-left: 0 !important;
-				padding-right: 0 !important;
 			}
 		}
 	}
