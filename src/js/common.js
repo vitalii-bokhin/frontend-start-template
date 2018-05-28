@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function(){ 
 
 	(function initFun() {
 		//fixed block
@@ -41,4 +41,49 @@ $(document).ready(function(){
 		}
 	});
 
+	//masked inputs
+	$('input[data-type="tel"]').mask('+7(999)999-99-99');
+	$('input[data-type="date"]').mask('99.99.9999');
+
+	//submit forms
+	ValidateForm.init('#form');
+
+	ValidateForm.init('#form-ajax', function(form, callback) {
+		var $form = $(form);
+
+		Popup.message('#message-popup', 'Форма отправлена', function() {
+			callback({unlockButton: true, clearForm: true});
+		});
+
+		/*$.ajax({
+			url: $form.attr('action'),
+			type:"POST",
+			dataType:"json",
+			data: $form.serialize(), //new FormData(form),
+			success: function(response){
+				if (response.status == 'sent') {
+					Popup.message('#message-popup', 'Форма отправлена');
+					callback({unlockButton: true, clearForm: true});
+				}
+			},
+			error: function() {
+				alert('Error');
+			}
+		});*/
+
+	});
+
+	ValidateForm.init('#form-no-ajax');
+
+	ValidateForm.init('#search-form');
+
 });
+
+
+//GetCountriesAndCitiesList
+function dAirGetInit() {
+	dAirGet.countries(function(c) {
+		var contryObj = $.parseJSON(c);
+		CustomSelect.setOptions('.countries', contryObj, 'name', 'name');
+	});
+}
