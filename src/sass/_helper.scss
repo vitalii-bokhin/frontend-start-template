@@ -61,7 +61,7 @@ $base-font-size: 16;
 	@if $bg-position != "" {
 		background-position: $bg-position;
 	}
-	background-size: rem(50) auto;
+	background-size: 50px auto;
 }
 
 //Colors

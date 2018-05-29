@@ -31,6 +31,7 @@ function JS(src) {
 	gulp.src(src)
 	.pipe(sourcemaps.init())
 	.pipe(uglify())
+	.on('error', notify.onError(function(err) { return err; }))
 	.pipe(concat('script.js'))
 	.pipe(rename({suffix: '.min'}))
 	.pipe(sourcemaps.write('.'))

@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-	console.log('tect');
-
 	$('label').each(function(i) {
 		var _$ = $(this),
 		$sibLabel = _$.siblings('label'),
