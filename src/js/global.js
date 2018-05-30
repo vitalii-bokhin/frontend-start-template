@@ -14,7 +14,7 @@ window.addEventListener('winResized', function() {
 	winH = window.innerHeight;
 });
 
-//add support CustomEvent constructor for IE9+
+//add support CustomEvent constructor for IE
 try {
 	new CustomEvent("IE has CustomEvent, but doesn't support constructor");
 } catch (e) {
@@ -45,6 +45,24 @@ window.addEventListener('resize', function() {
 	}
 });
 
+//closest polyfill
+if (!Element.prototype.closest) {
+	(function(ELEMENT) {
+		ELEMENT.matches = ELEMENT.matches || ELEMENT.mozMatchesSelector || ELEMENT.msMatchesSelector || ELEMENT.oMatchesSelector || ELEMENT.webkitMatchesSelector;
+		ELEMENT.closest = ELEMENT.closest || function closest(selector) {
+			if (!this) {
+				return null;
+			}
+			if (this.matches(selector)) {
+				return this;
+			}
+			if (!this.parentElement) {
+				return null;
+			} else {
+				return this.parentElement.closest(selector);
+			}
+		};
+	}(Element.prototype));
+}
 
-
-})();
+}());
