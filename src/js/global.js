@@ -47,9 +47,9 @@ window.addEventListener('resize', function() {
 
 //closest polyfill
 if (!Element.prototype.closest) {
-	(function(ELEMENT) {
-		ELEMENT.matches = ELEMENT.matches || ELEMENT.mozMatchesSelector || ELEMENT.msMatchesSelector || ELEMENT.oMatchesSelector || ELEMENT.webkitMatchesSelector;
-		ELEMENT.closest = ELEMENT.closest || function closest(selector) {
+	(function(ElProto) {
+		ElProto.matches = ElProto.matches || ElProto.mozMatchesSelector || ElProto.msMatchesSelector || ElProto.oMatchesSelector || ElProto.webkitMatchesSelector;
+		ElProto.closest = ElProto.closest || function closest(selector) {
 			if (!this) {
 				return null;
 			}

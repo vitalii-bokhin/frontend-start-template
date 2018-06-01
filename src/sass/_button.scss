@@ -11,6 +11,7 @@
 	text-transform: uppercase;
 	text-decoration: none;
 	-webkit-appearance: none;
+	user-select: none;
 	transition: .5s;
 	&_arr{
 		&:after{
