@@ -68,3 +68,19 @@ $(document).ready(function() {
 	});
 
 });
+
+//formfactory
+var Form;
+(function() {
+	"use strict";
+
+	Form = function() {
+
+		document.addEventListener('submit', );
+
+
+
+	}
+
+
+}());

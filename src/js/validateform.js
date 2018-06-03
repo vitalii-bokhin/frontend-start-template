@@ -458,4 +458,4 @@ var ValidateForm;
 
 	};
 
-})();
+}());

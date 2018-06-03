@@ -56,7 +56,7 @@ gulp.task('w', function () {
 
 	//watch js
 	gulp.watch('src/js/*.js', function() {
-		JS(['!src/js/common.js', '!src/js/*.min.js', 'src/js/*.js']);
+		JS(['!src/js/common.js', '!src/js/*.min.js', 'src/js/global.js', 'src/js/*.js']);
 	});
 
 	gulp.watch('src/js/common.js', function() {
@@ -86,7 +86,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('js', function () {
-	JS(['!src/js/common.js', '!src/js/*.min.js', 'src/js/*.js']);
+	JS(['!src/js/common.js', '!src/js/*.min.js', 'src/js/global.js', 'src/js/*.js']);
 
 	gulp.src('src/js/common.js')
 	.pipe(gulp.dest('dist/js'))

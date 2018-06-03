@@ -115,11 +115,9 @@
 		&-col-mid,
 		&-col-bot,
 		&-tbl{
-			padding-left: 5px;
-			padding-right: 5px;
 			& > div[class*="col"]{
-				padding-left: 10px;
-				padding-right: 10px;
+				padding-left: 15px;
+				padding-right: 15px;
 			}
 			& > div[class*="col-"]:not([class*="vw1000-col"]){
 				display: block;
@@ -215,6 +213,7 @@
 
 	&-right{
 		float: right !important;
+		clear: right;
 	}
 
 	&-center{

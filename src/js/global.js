@@ -2,6 +2,7 @@
 var winW, winH;
 
 (function() {
+"use strict";
 
 //get useragent
 document.documentElement.setAttribute('data-useragent', navigator.userAgent);
