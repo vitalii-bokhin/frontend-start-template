@@ -80,15 +80,20 @@ var Form;
 
 		var form = document.querySelector(formSelector);
 
+		if (!form) {
+			return;
+		}
+
 		function submit(e) {
 			e.preventDefault();
 			this.onSubmit.bind(form)();
-
 		}
 
 		form.addEventListener('submit', submit.bind(this));
 
 	}
 
+
+	
 
 }());
