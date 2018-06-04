@@ -6,57 +6,24 @@ var ValidateForm;
 
 	ValidateForm = {
 
-		$input: null,
+		input: null,
 
 		errorTip: function(err, errInd) {
-			var _ = this, 
-			$field = _.$input.closest('.form__field'),
-			$errTip = $field.find('.form__error-tip');
+			var field = this.input.closest('.form__field'),
+			errTip = field.querySelector('.form__error-tip');
 
 			if (err) {
 
-				$field.addClass('form__field_error');
+				field.classList.add('form__field_error');
 
-				function fixFirstErr() {
-					if (!$errTip.attr('data-first-error-text')) {
-						$errTip.attr('data-first-error-text', $errTip.html());
-					}
+				if (!errTip.getAttribute('data-error-text')) {
+					errTip.setAttribute('data-error-text', errTip.innerHTML);
 				}
 
-				switch (errInd) {
-					case 2:
-
-					fixFirstErr();
-					$errTip.html($errTip.attr('data-second-error-text'));
-
-					break;
-
-					case 3:
-
-					fixFirstErr();
-					$errTip.html($errTip.attr('data-third-error-text'));
-
-					break;
-
-					case 'custom':
-
-					fixFirstErr();
-					$errTip.html(errorTxt);
-
-					break;
-
-					default:
-
-					if ($errTip.attr('data-first-error-text')) {
-						$errTip.html($errTip.attr('data-first-error-text'));
-					}
-
-					break;
-
-				}
+				errTip.innerHTML = errTip.getAttribute('data-error-text-'+ errInd);
 
 			} else {
-				$field.removeClass('form__field_error');
+				field.classList.remove('form__field_error');
 			}
 
 		},
@@ -151,8 +118,22 @@ var ValidateForm;
 			return err;
 		},
 
-		validateOnInput: function(_inp) {
-			var _ = this;
+		validateOnInput: function(e) {
+
+			this.input = e.target.closest('input[type="text"], input[type="password"], textarea');
+
+			var inpType = this.input.getAttribute('data-type'),
+			inpVal = this.input.value;
+
+			if (this.input.getAttribute('data-required') && !inpVal.length) {
+				this.errorTip(true);
+			} else if (inpVal.length && inpType) {
+				this[inpType]();
+			} else {
+				this.errorTip(false);
+			}
+
+			/*var _ = this;
 
 			_.$input = $(_inp);
 
@@ -167,11 +148,12 @@ var ValidateForm;
 				} else {
 					_.errorTip(false);
 				}
-			}
+			}*/
 
 		},
 
 		validateOnBlur: function(_inp) {
+			console.log('blur');
 			var _ = this;
 
 			_.$input = $(_inp);
@@ -423,7 +405,15 @@ var ValidateForm;
 			});
 		},
 
-		init: function(form, fun) {
+		init: function(form) {
+
+			form.addEventListener('input', this.validateOnInput.bind(this));
+
+			form.addEventListener('blur', this.validateOnBlur.bind(this), true);
+
+		}
+
+		/*init: function(form, fun) {
 			var _ = this;
 
 			$('body').on('input', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
@@ -454,7 +444,7 @@ var ValidateForm;
 				return false;
 			});
 
-		}
+		}*/
 
 	};
 

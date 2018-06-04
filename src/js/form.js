@@ -86,14 +86,14 @@ var Form;
 
 		function submit(e) {
 			e.preventDefault();
-			this.onSubmit.bind(form)();
+			this.onSubmit(form);
 		}
 
 		form.addEventListener('submit', submit.bind(this));
 
+		ValidateForm.init(form);
+
 	}
-
-
 	
 
 }());

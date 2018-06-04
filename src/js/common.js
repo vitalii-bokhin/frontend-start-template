@@ -49,15 +49,15 @@ $(document).ready(function(){
 
 	var form1 = new Form('#form-no-ajax');
 
-	form1.onSubmit = function() {
-		console.log('f1', this);
+	form1.onSubmit = function(form) {
+		console.log('f1', form);
 	}
 
 
 	var srchForm = new Form('#search-form');
 
-	srchForm.onSubmit = function() {
-		console.log('sf', this);
+	srchForm.onSubmit = function(form) {
+		console.log('sf', form);
 	}
 
 	/*
