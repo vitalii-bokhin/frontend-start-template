@@ -74,11 +74,19 @@ var Form;
 (function() {
 	"use strict";
 
-	Form = function() {
+	Form = function(formSelector) {
 
-		document.addEventListener('submit', );
+		this.onSubmit = null;
 
+		var form = document.querySelector(formSelector);
 
+		function submit(e) {
+			e.preventDefault();
+			this.onSubmit.bind(form)();
+
+		}
+
+		form.addEventListener('submit', submit.bind(this));
 
 	}
 

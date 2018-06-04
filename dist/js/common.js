@@ -46,6 +46,20 @@ $(document).ready(function(){
 	$('input[data-type="date"]').mask('99.99.9999');
 
 	//submit forms
+
+	var form1 = new Form('#form-no-ajax');
+
+	form1.onSubmit = function() {
+		console.log('f1', this);
+	}
+
+
+	var srchForm = new Form('#search-form');
+
+	srchForm.onSubmit = function() {
+		console.log('sf', this);
+	}
+
 	/*
 	ValidateForm.init('#form');
 
