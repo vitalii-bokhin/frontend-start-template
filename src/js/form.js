@@ -86,7 +86,11 @@ var Form;
 
 		function submit(e) {
 			e.preventDefault();
-			this.onSubmit(form);
+
+			if (ValidateForm.submit(form)) {
+				this.onSubmit(form);
+			}
+			
 		}
 
 		form.addEventListener('submit', submit.bind(this));

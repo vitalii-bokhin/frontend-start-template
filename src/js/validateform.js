@@ -16,11 +16,12 @@ var ValidateForm;
 
 				field.classList.add('form__field_error');
 
-				if (!errTip.getAttribute('data-error-text')) {
-					errTip.setAttribute('data-error-text', errTip.innerHTML);
+				if (errInd) {
+					if (!errTip.getAttribute('data-error-text')) {
+						errTip.setAttribute('data-error-text', errTip.innerHTML);
+					}
+					errTip.innerHTML = errTip.getAttribute('data-error-text-'+ errInd);
 				}
-
-				errTip.innerHTML = errTip.getAttribute('data-error-text-'+ errInd);
 
 			} else {
 				field.classList.remove('form__field_error');
@@ -36,8 +37,7 @@ var ValidateForm;
 		},
 
 		date: function() {
-			var _ = this,
-			err = false,
+			var err = false,
 			validDate = function(val) {
 				var _reg = new RegExp("^([0-9]{2}).([0-9]{2}).([0-9]{4})$"),
 				matches = _reg.exec(val);
@@ -49,54 +49,51 @@ var ValidateForm;
 				return ((cDate.getMonth() == (matches[2] - 1)) && (cDate.getDate() == matches[1]) && (cDate.getFullYear() == matches[3]) && (cDate.valueOf() < now.valueOf()));
 			};
 
-			if (!validDate(_.$input.val())) {
-				_.errorTip(true, 2);
+			if (!validDate(this.input.value)) {
+				this.errorTip(true, 2);
 				err = true;
 			} else {
-				_.errorTip(false);
+				this.errorTip(false);
 			}
 
 			return err;
 		},
 
 		email: function() {
-			var _ = this,
-			err = false;
+			var err = false;
 
-			if (!/^[a-z0-9]+[\w\-\.]*@[\w\-]{2,}\.[a-z]{2,6}$/i.test(_.$input.val())) {
-				_.errorTip(true, 2);
+			if (!/^[a-z0-9]+[\w\-\.]*@[\w\-]{2,}\.[a-z]{2,6}$/i.test(this.input.value)) {
+				this.errorTip(true, 2);
 				err = true;
 			} else {
-				_.errorTip(false);
+				this.errorTip(false);
 			}
 
 			return err;
 		},
 
 		tel: function() {
-			var _ = this,
-			err = false;
+			var err = false;
 
-			if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(_.$input.val())) {
-				_.errorTip(true, 2);
+			if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
+				this.errorTip(true, 2);
 				err = true;
 			} else {
-				_.errorTip(false);
+				this.errorTip(false);
 			}
 
 			return err;
 		},
 
 		pass: function() {
-			var _ = this,
-			err = false,
-			minLng = _.$input.attr('data-min-length');
+			var err = false,
+			minLng = this.input.getAttribute('data-min-length');
 
-			if (minLng && _.$input.val().length < minLng) {
-				_.errorTip(true, 2);
+			if (minLng && this.input.value.length < minLng) {
+				this.errorTip(true, 2);
 				err = true;
 			} else {
-				_.errorTip(false);
+				this.errorTip(false);
 			}
 
 			return err;
@@ -118,59 +115,33 @@ var ValidateForm;
 			return err;
 		},
 
-		validateOnInput: function(e) {
+		validateOnInputOrBlur: function(e) {
 
-			this.input = e.target.closest('input[type="text"], input[type="password"], textarea');
+			var elem = e.target.closest('input[type="text"], input[type="password"], textarea');
 
-			var inpType = this.input.getAttribute('data-type'),
-			inpVal = this.input.value;
+			if (!elem) {
+				return;
+			}
 
-			if (this.input.getAttribute('data-required') && !inpVal.length) {
+			this.input = elem;
+
+			if (e.type == 'blur') {
+				elem.setAttribute('data-tested', 'true');
+			} else if (e.type == 'input' && !elem.getAttribute('data-tested')) {
+				return;
+			}
+
+			var type = elem.getAttribute('data-type'),
+			val = elem.value;
+
+			if (elem.getAttribute('data-required') && !val.length) {
 				this.errorTip(true);
-			} else if (inpVal.length && inpType) {
-				this[inpType]();
+			} else if (val.length && type) {
+				this[type]();
 			} else {
 				this.errorTip(false);
 			}
-
-			/*var _ = this;
-
-			_.$input = $(_inp);
-
-			var inpType = _.$input.attr('data-type'),
-			inpVal = _.$input.val();
-
-			if (_.$input.hasClass('tested')) {
-				if (_.$input.attr('data-required') && !inpVal.length) {
-					_.errorTip(true);
-				} else if (inpVal.length && inpType) {
-					_[inpType]();
-				} else {
-					_.errorTip(false);
-				}
-			}*/
-
-		},
-
-		validateOnBlur: function(_inp) {
-			console.log('blur');
-			var _ = this;
-
-			_.$input = $(_inp);
-
-			_.$input.addClass('tested');
-
-			var inpType = _.$input.attr('data-type'),
-			inpVal = _.$input.val();
-
-			if (_.$input.attr('data-required') && !inpVal.length) {
-				_.errorTip(true);
-			} else if (inpVal.length && inpType) {
-				_[inpType]();
-			} else {
-				_.errorTip(false);
-			}
-
+			
 		},
 
 		file: function(_inp) {
@@ -210,114 +181,164 @@ var ValidateForm;
 		},
 
 		validate: function(form) {
-			var _ = this,
-			$form = $(form),
-			err = 0;
+			var err = 0;
+
+			//func for check elem is visible
+			function isHidden(elem) {
+				var hidden = false;
+
+				while (elem) {
+
+					if (!elem) {
+						break;
+					}
+
+					var compStyles = getComputedStyle(elem);
+
+					if (compStyles.display == 'none' || compStyles.visibility == 'hidden' || compStyles.opacity == '0') {
+						hidden = true;
+						break;
+					}
+
+					elem = elem.parentElement;
+
+				}
+
+				return hidden;
+			}
 
 			//text, password, textarea
-			$form.find('input[type="text"], input[type="password"], textarea').each(function() {
-				_.$input = $(this);
+			var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
 
-				if (!_.$input.is(':hidden')) {
+			for (var i = 0; i < elements.length; i++) {
 
-					var type = _.$input.attr('data-type'),
-					inpVal = _.$input.val();
+				var elem = elements[i];
 
-					_.$input.addClass('tested');
-
-					if (inpVal.length) {
-						if (type && _[type]()) {
-							err++;
-						}
-					} else if (_.$input.attr('data-required')) {
-						_.errorTip(true);
-						err++;
-					} else {
-						_.errorTip(false);
-					}
-
+				if (isHidden(elem)) {
+					continue;
 				}
 
-			});
+				this.input = elem;
+
+				elem.setAttribute('data-tested', 'true');
+
+				var inpType = elem.getAttribute('data-type');
+
+				if (elem.value.length) {
+					if (inpType && this[inpType]()) {
+						err++;
+					}
+				} else if (elem.getAttribute('data-required')) {
+					this.errorTip(true);
+					err++;
+				} else {
+					this.errorTip(false);
+				}
+
+			}
 
 			//select
-			$form.find('.custom-select__input').each(function() {
-				_.$input = $(this);
+			var elements = form.querySelectorAll('.custom-select__input');
 
-				if (!_.$input.parent().is(':hidden')) {
-					_.$input.addClass('tested');
+			for (var i = 0; i < elements.length; i++) {
 
-					if (_.$input.attr('data-required') && !_.$input.val().length) {
-						_.errorTip(true);
-						err++;
-					} else {
-						_.errorTip(false);
-					}
+				var elem = elements[i];
 
+				if (isHidden(elem)) {
+					continue;
 				}
 
-			});
+				this.input = elem;
+
+				elem.setAttribute('data-tested', 'true');
+
+				if (elem.getAttribute('data-required') && !elem.value.length) {
+					this.errorTip(true);
+					err++;
+				} else {
+					this.errorTip(false);
+				}
+
+			}
 
 			//checkboxes
-			$form.find('input[type="checkbox"]').each(function() {
-				_.$input = $(this);
+			var elements = form.querySelectorAll('input[type="checkbox"]');
 
-				if (!_.$input.is(':hidden')) {
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
 
-					if (_.$input.attr('data-required') && !_.$input.prop('checked')) {
-						_.errorTip(true);
-						err++;
-					} else {
-						_.errorTip(false);
-					}
-
+				if (isHidden(elem)) {
+					continue;
 				}
 
-			});
+				this.input = elem;
+
+				console.dir(elem);
+
+				if (elem.getAttribute('data-required') && !elem.checked) {
+					this.errorTip(true);
+					err++;
+				} else {
+					this.errorTip(false);
+				}
+
+			}
 
 			//checkbox group
-			$form.find('.form__chbox-group').each(function() {
-				var i = 0,
-				_$ = $(this);
+			var groups = form.querySelectorAll('.form__chbox-group');
 
-				if (!_$.is(':hidden')) {
-					_$.find('input[type="checkbox"]').each(function() {
-						if ($(this).prop('checked')) {
-							i++;
-						}
+			for (var i = 0; i < groups.length; i++) {
+				var group = groups[i],
+				checkedElements = 0;
 
-					});
-
-					if (i < _$.attr('data-min')) {
-						_$.addClass('form__chbox-group_error');
-						err++;
-					} else {
-						_$.removeClass('form__chbox-group_error');
-					}
+				if (isHidden(group)) {
+					continue;
 				}
-			});
+
+				var elements = group.querySelectorAll('input[type="checkbox"]');
+
+				elements.forEach(function(elem) {
+					if (elem.checked) {
+						checkedElements++;
+					}
+				});
+
+				if (checkedElements < group.getAttribute('data-min')) {
+					group.classList.add('form__chbox-group_error');
+					err++;
+				} else {
+					group.classList.remove('form__chbox-group_error');
+				}
+
+			}
 
 			//radio group
-			$form.find('.form__radio-group').each(function() {
-				var e = true,
-				_$ = $(this),
-				hidden = _$.closest('.form__field_hidden, .form__fieldset_hidden');
+			var groups = form.querySelectorAll('.form__radio-group');
 
-				if (!_$.is(':hidden')) {
-					_$.find('input[type="radio"]').each(function() {
-						if ($(this).prop('checked')) {
-							e = false;
-						}
-					});
+			for (var i = 0; i < groups.length; i++) {
+				var group = groups[i],
+				checkedElement = false;
 
-					if (e) {
-						_$.addClass('form__radio-group_error');
-						err++;
-					} else {
-						_$.removeClass('form__radio-group_error');
-					}
+				if (isHidden(group)) {
+					continue;
 				}
-			});
+
+				var elements = group.querySelectorAll('input[type="radio"]');
+
+				elements.forEach(function(elem) {
+					if (elem.checked) {
+						checkedElement = true;
+					}
+				});
+
+				if (!checkedElement) {
+					group.classList.add('form__radio-group_error');
+					err++;
+				} else {
+					group.classList.remove('form__radio-group_error');
+				}
+
+			}
 
 			//file
 			$form.find('input[type="file"]').each(function() {
@@ -387,12 +408,15 @@ var ValidateForm;
 			$form.find('.form__textarea-mirror').html('');
 		},
 
-		submit: function(_form, fun) {
-			var _ = this;
+		submit: function(form) {
 
-			$(_form).addClass('form_sending');
+			return this.validate(form);
 
-			fun(_form, function(obj) {
+			//form.addClass('form_sending');
+
+			
+
+			/*fun(_form, function(obj) {
 				obj = obj || {};
 
 				_.actSubmitBtn(_form, obj.unlockButton);
@@ -402,14 +426,14 @@ var ValidateForm;
 				}
 
 				$(_form).removeClass('form_sending');
-			});
+			});*/
 		},
 
 		init: function(form) {
 
-			form.addEventListener('input', this.validateOnInput.bind(this));
+			form.addEventListener('input', this.validateOnInputOrBlur.bind(this));
 
-			form.addEventListener('blur', this.validateOnBlur.bind(this), true);
+			form.addEventListener('blur', this.validateOnInputOrBlur.bind(this), true);
 
 		}
 

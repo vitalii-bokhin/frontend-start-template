@@ -47,19 +47,6 @@ $(document).ready(function(){
 
 	//submit forms
 
-	var form1 = new Form('#form-no-ajax');
-
-	form1.onSubmit = function(form) {
-		console.log('f1', form);
-	}
-
-
-	var srchForm = new Form('#search-form');
-
-	srchForm.onSubmit = function(form) {
-		console.log('sf', form);
-	}
-
 	/*
 	ValidateForm.init('#form');
 
@@ -92,6 +79,32 @@ $(document).ready(function(){
 
 	ValidateForm.init('#search-form');
 	*/
+
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+
+//submit forms
+
+	var form1 = new Form('#form-no-ajax');
+
+	form1.onSubmit = function(form) {
+		console.log('f1', form);
+	}
+
+
+	var srchForm = new Form('#search-form');
+
+	srchForm.onSubmit = function(form) {
+		console.log('sf', form);
+	}
+
+
+	var form2 = new Form('#form');
+
+	form2.onSubmit = function(form) {
+		console.log('form2', form);
+	}
 
 });
 
