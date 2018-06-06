@@ -146,7 +146,7 @@ var CustomSelect = {
 
 		$field.addClass('custom-select_changed');
 
-		ValidateForm.select($input);
+		ValidateForm.select($input.get()[0]);
 	},
 
 	autocomplete: function(_inp) {

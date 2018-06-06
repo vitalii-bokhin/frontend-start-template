@@ -99,17 +99,16 @@ var ValidateForm;
 			return err;
 		},
 
-		select: function($inp) {
-			var _ = this,
-			err = false;
+		select: function(elem) {
+			var err = false;
 
-			_.$input = $inp;
+			this.input = elem;
 
-			if (_.$input.attr('data-required') && !_.$input.val().length) {
-				_.errorTip(true);
+			if (elem.getAttribute('data-required') && !elem.value.length) {
+				this.errorTip(true);
 				err = true;
 			} else {
-				_.errorTip(false);
+				this.errorTip(false);
 			}
 			
 			return err;
@@ -144,37 +143,46 @@ var ValidateForm;
 			
 		},
 
-		file: function(_inp) {
-			var _ = this;
+		file: function(e) {
 
-			_.$input = $(_inp);
+			if (e) {
+				var elem = e.target.closest('input[type="file"]');
+				if (!elem) {
+					return;
+				} else {
+					this.input = elem;
+				}
+			}
 
 			var err = false,
 			errCount = {type: 0, size: 0},
-			filesArr = _.$input[0].files,
-			type = _.$input.attr('data-type'),
-			maxSize = +_.$input.attr('data-max-size');
+			files = this.input.files,
+			type = this.input.getAttribute('data-type'),
+			maxSize = +this.input.getAttribute('data-max-size');
 
-			for (var i = 0; i < filesArr.length; i++) {
+			for (var i = 0; i < files.length; i++) {
 
-				if (!filesArr[i].type.match(type)) {
+				var file = files[i];
+
+				if (!file.type.match(type)) {
 					errCount.type++;
+					continue;
 				}
 
-				if (filesArr[i].size > maxSize) {
+				if (file.size > maxSize) {
 					errCount.size++;
 				}
 
 			}
 
 			if (errCount.type) {
-				_.errorTip(true, 2);
+				this.errorTip(true, 2);
 				err = true;
 			} else if (errCount.size) {
-				_.errorTip(true, 3);
+				this.errorTip(true, 3);
 				err = true;
 			} else {
-				_.errorTip(false);
+				this.errorTip(false);
 			}
 
 			return err;
@@ -244,19 +252,12 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (isHidden(elem)) {
+				if (isHidden(elem.parentElement)) {
 					continue;
 				}
 
-				this.input = elem;
-
-				elem.setAttribute('data-tested', 'true');
-
-				if (elem.getAttribute('data-required') && !elem.value.length) {
-					this.errorTip(true);
+				if (this.select(elem)) {
 					err++;
-				} else {
-					this.errorTip(false);
 				}
 
 			}
@@ -272,8 +273,6 @@ var ValidateForm;
 				}
 
 				this.input = elem;
-
-				console.dir(elem);
 
 				if (elem.getAttribute('data-required') && !elem.checked) {
 					this.errorTip(true);
@@ -341,28 +340,33 @@ var ValidateForm;
 			}
 
 			//file
-			$form.find('input[type="file"]').each(function() {
-				_.$input = $(this);
+			var elements = form.querySelectorAll('input[type="file"]');
 
-				if (!_.$input.is(':hidden')) {
+			for (var i = 0; i < elements.length; i++) {
 
-					if (_.$input[0].files.length) {
-						if (_.file(this)) {
-							err++;
-						}
-					} else if (_.$input.attr('data-required')) {
-						_.errorTip(true);
-						err++;
-					} else {
-						_.errorTip(false);
-					}
+				var elem = elements[i];
 
+				if (isHidden(elem)) {
+					continue;
 				}
 
-			});
+				this.input = elem;
+
+				if (elem.files.length) {
+					if (this.file()) {
+						err++;
+					}
+				} else if (elem.getAttribute('data-required')) {
+					this.errorTip(true);
+					err++;
+				} else {
+					this.errorTip(false);
+				}
+
+			}
 
 			//passwords compare
-			$form.find('.form__text-input[data-pass-compare-input]').each(function() {
+			/*$form.find('.form__text-input[data-pass-compare-input]').each(function() {
 				_.$input = $(this);
 
 				var inpVal = _.$input.val();
@@ -376,13 +380,13 @@ var ValidateForm;
 					}
 				}
 
-			});
+			});*/
 
 			//error
 			if (err) {
-				$form.addClass('form_error');
+				//$form.addClass('form_error');
 			} else {
-				$form.removeClass('form_error');
+				//$form.removeClass('form_error');
 			}
 
 			return (err) ? false : true;
@@ -434,6 +438,8 @@ var ValidateForm;
 			form.addEventListener('input', this.validateOnInputOrBlur.bind(this));
 
 			form.addEventListener('blur', this.validateOnInputOrBlur.bind(this), true);
+
+			form.addEventListener('change', this.file.bind(this));
 
 		}
 

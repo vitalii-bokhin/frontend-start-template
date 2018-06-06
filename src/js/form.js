@@ -84,15 +84,24 @@ var Form;
 			return;
 		}
 
+		//submit
 		function submit(e) {
-			e.preventDefault();
 
 			if (ValidateForm.submit(form)) {
-				this.onSubmit(form);
+
+				if (this.onSubmit) {
+					e.preventDefault();
+
+					this.onSubmit(form);
+				}
+
+			} else {
+				e.preventDefault();
 			}
-			
+
 		}
 
+		//add submit event
 		form.addEventListener('submit', submit.bind(this));
 
 		ValidateForm.init(form);

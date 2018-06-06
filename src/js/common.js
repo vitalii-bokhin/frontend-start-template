@@ -84,27 +84,24 @@ $(document).ready(function(){
 
 document.addEventListener("DOMContentLoaded", function() {
 
-//submit forms
+	//submit forms
 
-	var form1 = new Form('#form-no-ajax');
+	var form = new Form('#form');
 
-	form1.onSubmit = function(form) {
-		console.log('f1', form);
+	form.onSubmit = function(form) {
+		console.log('form submit', form);
 	}
 
 
-	var srchForm = new Form('#search-form');
+	var ajaxForm = new Form('#form-ajax');
 
-	srchForm.onSubmit = function(form) {
-		console.log('sf', form);
+	ajaxForm.onSubmit = function(form) {
+		console.log('ajaxForm submit', form);
 	}
 
+	new Form('#form-no-ajax');
 
-	var form2 = new Form('#form');
-
-	form2.onSubmit = function(form) {
-		console.log('form2', form);
-	}
+	new Form('#search-form');
 
 });
 
