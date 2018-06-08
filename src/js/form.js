@@ -91,13 +91,7 @@ var Form;
 
 			elements.forEach(function(elem) {
 				elem.value = '';
-			});
-
-			//show placeholders
-			var elements = form.querySelectorAll('.custom-placeholder');
-
-			elements.forEach(function(elem) {
-				elem.removeAttribute('style');
+				CustomPlaceholder.hidePlaceholder(elem, false);
 			});
 
 			//$form.querySelector('.form__textarea-mirror').html('');

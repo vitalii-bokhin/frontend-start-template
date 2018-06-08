@@ -1,9 +1,9 @@
 //form custom placeholder
 var CustomPlaceholder = {
 
-	init: function(elements) {
+	init: function(elementsStr) {
 
-		var elements = document.querySelectorAll(elements);
+		var elements = document.querySelectorAll(elementsStr);
 
 		elements.forEach(function(elem, i) {
 
@@ -33,30 +33,53 @@ var CustomPlaceholder = {
 		});
 
 		//events
-		document.addEventListener('focus', this.hidePlaceholder(null, true));
+		document.addEventListener('focus', function(e) {
+			var elem = e.target.closest(elementsStr);
 
-		$('body').on('blur', el, function() {
-			_.hidePlaceholder(this, false);
-		});
+			if (elem) {
+				this.hidePlaceholder(elem, true);
+			}
+
+		}.bind(this), true);
+
+
+		document.addEventListener('blur', function(e) {
+			var elem = e.target.closest(elementsStr);
+
+			if (elem) {
+				this.hidePlaceholder(elem, false);
+			}
+
+		}.bind(this), true);
 
 	},
 	
-	hidePlaceholder: function(e, elem, hide) {
+	hidePlaceholder: function(elem, hide) {
 
-		console.log(e, elem, hide);
+		var label = document.querySelector('label[for="'+ elem.id +'"]');
 
-		var $input = $(e.target),
-		$placeholder = $('label[for="'+ $input.attr('id') +'"]');
-
-		if ($placeholder.length) {
-			if (hide) {
-				$placeholder.css({textIndent: '-9999px', paddingLeft: 0, paddingRight: 0});
-			} else {
-				if ($input.val() == '') {
-					$placeholder.css({textIndent: 0, paddingLeft: '', paddingRight: ''});
-				}
-			}
+		if (!label) {
+			return;
 		}
+
+		var lSt = label.style;
+
+		if (hide) {
+
+			lSt.textIndent = '-9999px';
+			lSt.paddingLeft = '0';
+			lSt.paddingRight = '0';
+
+		} else {
+
+			if (elem.value == '') {
+				lSt.textIndent = '0';
+				lSt.paddingLeft = '';
+				lSt.paddingRight = '';
+			}
+
+		}
+		
 	}
 
 };

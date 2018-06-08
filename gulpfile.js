@@ -17,10 +17,9 @@ function CSS(src) {
 	setTimeout(function() {
 		gulp.src(src)
 		.pipe(sourcemaps.init())
-		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+		.pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
 		.pipe(autoprefixer(['last 21 versions', '> 1%']))
 		.pipe(replace('\/..\/dist', ''))
-		.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/css'))
 		.pipe(notify('Styles has Compiled!'));
