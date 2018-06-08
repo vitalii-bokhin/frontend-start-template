@@ -84,19 +84,73 @@ var Form;
 			return;
 		}
 
+		//clear form
+		function clear() {
+			//clear inputs
+			var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
+
+			elements.forEach(function(elem) {
+				elem.value = '';
+			});
+
+			//show placeholders
+			var elements = form.querySelectorAll('.custom-placeholder');
+
+			elements.forEach(function(elem) {
+				elem.removeAttribute('style');
+			});
+
+			//$form.querySelector('.form__textarea-mirror').html('');
+		}
+
+		//submit button
+		function actSubmitBtn(st) {
+			var elements = form.querySelectorAll('button[type="submit"], input[type="submit"]');
+
+			elements.forEach(function(elem) {
+				if (!isHidden(elem)) {
+					if (st) {
+						elem.removeAttribute('disabled');
+					} else {
+						elem.setAttribute('disabled', 'disable');
+					}
+				}
+			});
+
+		}
+
 		//submit
 		function submit(e) {
 
 			if (ValidateForm.submit(form)) {
 
+				actSubmitBtn(false);
+
+				form.classList.add('form_sending');
+
 				if (this.onSubmit) {
 					e.preventDefault();
 
-					this.onSubmit(form);
+					this.onSubmit(form, function(obj) {
+						obj = obj || {};
+
+						actSubmitBtn(obj.unlockSubmitButton);
+
+						form.classList.remove('form_sending');
+
+						if (obj.clearForm == true) {
+							clear();
+						}
+
+					});
+
 				}
+
+				form.classList.remove('form_error');
 
 			} else {
 				e.preventDefault();
+				form.classList.add('form_error');
 			}
 
 		}

@@ -191,30 +191,6 @@ var ValidateForm;
 		validate: function(form) {
 			var err = 0;
 
-			//func for check elem is visible
-			function isHidden(elem) {
-				var hidden = false;
-
-				while (elem) {
-
-					if (!elem) {
-						break;
-					}
-
-					var compStyles = getComputedStyle(elem);
-
-					if (compStyles.display == 'none' || compStyles.visibility == 'hidden' || compStyles.opacity == '0') {
-						hidden = true;
-						break;
-					}
-
-					elem = elem.parentElement;
-
-				}
-
-				return hidden;
-			}
-
 			//text, password, textarea
 			var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
 
@@ -366,71 +342,41 @@ var ValidateForm;
 			}
 
 			//passwords compare
-			/*$form.find('.form__text-input[data-pass-compare-input]').each(function() {
-				_.$input = $(this);
+			var elements = form.querySelectorAll('input[data-pass-compare-input]');
 
-				var inpVal = _.$input.val();
+			for (var i = 0; i < elements.length; i++) {
 
-				if (inpVal.length) {
-					if (inpVal !== $(_.$input.attr('data-pass-compare-input')).val()) {
-						_.errorTip(true, 2);
-						err++;
-					} else {
-						_.errorTip(false);
-					}
+				var elem = elements[i];
+
+				if (isHidden(elem)) {
+					continue;
 				}
 
-			});*/
+				this.input = elem;
 
-			//error
-			if (err) {
-				//$form.addClass('form_error');
-			} else {
-				//$form.removeClass('form_error');
+				var val = elem.value;
+
+				if (val.length) {
+					var compElemVal = form.querySelector(elem.getAttribute('data-pass-compare-input')).value;
+
+					if (val !== compElemVal) {
+						this.errorTip(true, 2);
+						err++;
+					} else {
+						this.errorTip(false);
+					}
+
+				}
+
 			}
 
 			return (err) ? false : true;
-		},
-
-		actSubmitBtn: function(_form, st) {
-			var $button = $(_form).find('button[type="submit"], input[type="submit"]');
-
-			if (!$button.is(':hidden')) {
-				if (st) {
-					$button.prop('disabled', false);
-				} else {
-					$button.prop('disabled', true);
-				}
-			}
-			
-		},
-
-		clearForm: function(_form) {
-			var $form = $(_form);
-			$form.find('input[type="text"], input[type="password"], textarea').val('');
-			$form.find('.custom-placeholder').attr('style','');
-			$form.find('.form__textarea-mirror').html('');
 		},
 
 		submit: function(form) {
 
 			return this.validate(form);
 
-			//form.addClass('form_sending');
-
-			
-
-			/*fun(_form, function(obj) {
-				obj = obj || {};
-
-				_.actSubmitBtn(_form, obj.unlockButton);
-
-				if (obj.clearForm == true) {
-					_.clearForm(_form);
-				}
-
-				$(_form).removeClass('form_sending');
-			});*/
 		},
 
 		init: function(form) {
@@ -442,39 +388,6 @@ var ValidateForm;
 			form.addEventListener('change', this.file.bind(this));
 
 		}
-
-		/*init: function(form, fun) {
-			var _ = this;
-
-			$('body').on('input', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
-
-				_.validateOnInput(this);
-
-			}).on('blur', form +' input[type="text"],'+ form +' input[type="password"],'+ form +' textarea', function() {
-
-				_.validateOnBlur(this);
-
-			}).on('change', form +' input[type="file"]', function() {
-
-				_.file(this);
-
-			}).on('submit', form, function() {
-				var _$ = this;
-
-				if (_.validate(_$)) {
-					_.actSubmitBtn(_$, false);
-
-					if (fun !== undefined) {
-						_.submit(_$, fun);
-					} else {
-						return true;
-					}
-				}
-
-				return false;
-			});
-
-		}*/
 
 	};
 

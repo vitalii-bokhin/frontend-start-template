@@ -1,33 +1,39 @@
 //form custom placeholder
 var CustomPlaceholder = {
 
-	init: function(el) {
-		var _ = this;
+	init: function(elements) {
 
-		$(el).each(function(i) {
-			_$ = $(this),
-			placeholder = _$.attr('placeholder'),
-			inpId = _$.attr('id');
+		var elements = document.querySelectorAll(elements);
 
-			if (placeholder != undefined) {
-				var $parent = _$.parent(),
-				inpFor = (inpId) ? inpId : 'placeholder-index-'+ i;
+		elements.forEach(function(elem, i) {
 
-				$parent.prepend('<label for="'+ inpFor +'" class="custom-placeholder">'+ placeholder +'</label>');
+			if (elem.placeholder) {
 
-				_$.removeAttr('placeholder').attr('id', inpFor);
+				var elemFor = (elem.id) ? elem.id : 'placeholder-index-'+ i,
+				label = document.createElement('label');
+
+				label.htmlFor = elemFor;
+				label.className = 'custom-placeholder';
+				label.innerHTML = elem.placeholder;
+
+				elem.parentElement.insertBefore(label, elem);
+
+				elem.removeAttribute('placeholder');
+				
+				if (!elem.id) {
+					elem.id = elemFor;
+				}
+
 			}
 
-			if (_$.val() != '') {
-				_.hidePlaceholder(_$, true);
+			if (elem.value != '') {
+				this.hidePlaceholder(elem, true);
 			}
 
 		});
 
 		//events
-		$('body').on('focus', el, function() {
-			_.hidePlaceholder(this, true);
-		});
+		document.addEventListener('focus', this.hidePlaceholder(null, true));
 
 		$('body').on('blur', el, function() {
 			_.hidePlaceholder(this, false);
@@ -35,8 +41,11 @@ var CustomPlaceholder = {
 
 	},
 	
-	hidePlaceholder: function(_inp, hide) {
-		var $input = $(_inp),
+	hidePlaceholder: function(e, elem, hide) {
+
+		console.log(e, elem, hide);
+
+		var $input = $(e.target),
 		$placeholder = $('label[for="'+ $input.attr('id') +'"]');
 
 		if ($placeholder.length) {

@@ -90,13 +90,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	form.onSubmit = function(form) {
 		console.log('form submit', form);
+
+		callback({clearForm: true});
 	}
 
 
 	var ajaxForm = new Form('#form-ajax');
 
-	ajaxForm.onSubmit = function(form) {
+	ajaxForm.onSubmit = function(form, callback) {
 		console.log('ajaxForm submit', form);
+
+		setTimeout(function() {
+			callback({clearForm: true, unlockSubmitButton: true});
+		}, 1000);
+		
 	}
 
 	new Form('#form-no-ajax');
