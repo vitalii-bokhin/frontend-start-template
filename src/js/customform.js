@@ -87,61 +87,88 @@ var CustomPlaceholder = {
 //Form CustomSelect
 var CustomSelect = {
 
-	$field: null,
+	field: null,
 
 	close: function() {
-		$('.custom-select').removeClass('custom-select_opened');
-		$('.custom-select__options').slideUp(221).find('li').removeClass('hover');
+		var fields = document.querySelectorAll('.custom-select');
+
+		fields.forEach(function(field) {
+			field.classList.remove('custom-select_opened');
+		});
+
+		var listItems = document.querySelectorAll('.custom-select__options li');
+
+		listItems.forEach(function(item) {
+			item.classList.remove('hover');
+		});
+
 	},
 
-	open: function(_el) {
-		$(_el).closest('.custom-select').addClass('custom-select_opened').find('.custom-select__options').slideDown(221).animate({scrollTop: 0}, 0);
+	open: function() {
+
+		this.field.classList.add('custom-select_opened');
+
+		this.field.querySelector('.custom-select__options').scrollTop = 0;
+
 	},
 
-	selectVal: function(_el) {
-		var _ = this,
-		$valueEl = $(_el),
-		$field = $valueEl.closest('.custom-select'),
-		$button = $field.find('.custom-select__button'),
-		$input = $field.find('.custom-select__input');
+	selectMultipleVal: function(elem, button, input) {
+		var toButtonValue = [],
+		toInputValue = [],
+		inputsBlock = this.field.querySelector('.custom-select__multiple-inputs');
 
-		if ($field.hasClass('custom-select_multiple')) {
-			var toButtonValue = [],
-			toInputValue = [],
-			$multInputs = $field.find('.custom-select__multiple-inputs');
+		elem.classList.toggle('custom-select__val_checked');
 
-			if ($valueEl.hasClass('custom-select__val_checked')) {
-				$valueEl.removeClass('custom-select__val_checked');
-			} else {
-				$valueEl.addClass('custom-select__val_checked');
-			}
+		var checkedElements = this.field.querySelectorAll('.custom-select__val_checked');
 
-			$field.find('.custom-select__val_checked').each(function(i) {
-				var $el = $(this);
-				toButtonValue[i] = $el.html();
-				toInputValue[i] = ($el.attr('data-value') != undefined) ? $el.attr('data-value') : $el.html();
-			});
+		checkedElements.forEach(function(elem, i) {
+			toButtonValue[i] = elem.innerHTML;
+			toInputValue[i] = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
+		});
 
-			if (toButtonValue.length) {
-				$button.html(toButtonValue.join(', '));
+		if (toButtonValue.length) {
+			button.innerHTML = toButtonValue.join(', ');
 
-				$input.val(toInputValue[0]);
+			input.value = toInputValue[0];
 
-				$multInputs.empty();
+			inputsBlock.innerHTML = '';
 
-				if (toInputValue.length > 1) {
+			if (toInputValue.length > 1) {
 
-					for (var i = 1; i < toInputValue.length; i++) {
-						$multInputs.append('<input type="hidden" name="'+ $input.attr('name') +'" value="'+ toInputValue[i] +'">');
-					}
-					
+				for (var i = 1; i < toInputValue.length; i++) {
+					var yetInput = document.createElement('input');
+
+					yetInput.type = 'hidden';
+					yetInput.name = input.name;
+					yetInput.value = toInputValue[i];
+
+					inputsBlock.appendChild(yetInput);
 				}
-				
-			} else {
-				$button.html($button.attr('data-placeholder'));
-				$input.val('');
-				_.close();
+
 			}
+
+		} else {
+			$button.html($button.attr('data-placeholder'));
+			$input.val('');
+			_.close();
+		}
+	},
+
+	selectVal: function(e) {
+		var elem = e.target.closest('.custom-select__val');
+
+		if (!elem) {
+			return;
+		}
+
+		this.field = elem.closest('.custom-select');
+
+		var button = this.field.querySelector('.custom-select__button'),
+		input = this.field.querySelector('.custom-select__input');
+
+		if (this.field.classList.contains('custom-select_multiple')) {
+			
+			this.selectMultipleVal(elem, button, input);
 
 		} else {
 			var toButtonValue = $valueEl.html(),
@@ -287,25 +314,31 @@ var CustomSelect = {
 			$select.remove();
 		});
 
-		$('body').on('click', '.custom-select__button', function() {
+		//click on select button event
+		document.addEventListener('click', function(e) {
+			var elem = e.target.closest('.custom-select__button');
 
-			if (!$(this).closest('.custom-select').hasClass('custom-select_opened')) {
-				_.fillAcHead();
-				_.close();
-				_.open(this);
-			} else {
-				_.close();
+			if (!elem) {
+				return;
 			}
 
-			return false;
+			this.field = elem.closest('.custom-select');
 
-		}).on('click', '.custom-select__val', function() {
+			if (this.field.classList.contains('custom-select_opened')) {
+				this.close();
+			} else {
+				this.fillAcHead();
+				this.close();
+				this.open();
+			}
 
-			_.selectVal(this);
+		}.bind(this));
 
-			return false;
+		//click on value button event
+		document.addEventListener('click', this.selectVal.bind(this));
 
-		}).on('focus', '.custom-select__autocomplete', function() {
+
+		$('body').on('focus', '.custom-select__autocomplete', function() {
 
 			if (!$(this).closest('.custom-select').hasClass('custom-select_opened')) {
 				_.fillAcHead();
