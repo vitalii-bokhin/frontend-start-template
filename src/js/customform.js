@@ -148,21 +148,28 @@ var CustomSelect = {
 			}
 
 		} else {
-			$button.html($button.attr('data-placeholder'));
-			$input.val('');
-			_.close();
+			button.innerHTML = button.getAttribute('data-placeholder');
+			input.value = '';
+			this.close();
 		}
+
 	},
 
-	selectVal: function(e) {
-		var elem = e.target.closest('.custom-select__val');
+	targetAction: function() {
+		var elements = this.field.querySelectorAll('.custom-select__val');
 
-		if (!elem) {
-			return;
-		}
+		elements.forEach(function(elem) {
+			if (!elem.hasAttribute('data-target-elements')) {
+				return;
+			}
 
-		this.field = elem.closest('.custom-select');
+			var targetElem = document.querySelector(elem.getAttribute('data-target-elements'));
+			targetElem.style.display = (elem.classList.contains('custom-select__val_checked')) ? 'block' : 'none';
+		});
 
+	},
+
+	selectVal: function(elem) {
 		var button = this.field.querySelector('.custom-select__button'),
 		input = this.field.querySelector('.custom-select__input');
 
@@ -171,41 +178,33 @@ var CustomSelect = {
 			this.selectMultipleVal(elem, button, input);
 
 		} else {
-			var toButtonValue = $valueEl.html(),
-			toInputValue = ($valueEl.attr('data-value') != undefined) ? $valueEl.attr('data-value') : $valueEl.html();
+			var toButtonValue = elem.innerHTML,
+			toInputValue = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
 
-			$field.find('.custom-select__val').removeClass('custom-select__val_checked');
-			$valueEl.addClass('custom-select__val_checked');
-			$button.html(toButtonValue);
-			$input.val(toInputValue);
+			this.field.querySelectorAll('.custom-select__val').forEach(function(elem) {
+				elem.classList.remove('custom-select__val_checked');
+			});
 
-			CustomPlaceholder.hidePlaceholder($input, true);
-			
-			_.close();
-		}
+			elem.classList.add('custom-select__val_checked');
 
-
-		$field.find('.custom-select__val').each(function() {
-			_$ = $(this),
-			targetElements = _$.attr('data-target-elements');
-
-			if (targetElements) {
-				var $elem = $(targetElements);
-				if (_$.hasClass('custom-select__val_checked')) {
-					$elem.show();
-				} else {
-					$elem.hide();
-				}
+			if (button) {
+				button.innerHTML = toButtonValue;
 			}
-		});
 
-		if ($input.hasClass('var-height-textarea__textarea')) {
-			varHeightTextarea.setHeight($input);
+			input.value = toInputValue;
+			
+			this.close();
 		}
 
-		$field.addClass('custom-select_changed');
+		this.targetAction();
 
-		ValidateForm.select($input.get()[0]);
+		/*if ($input.hasClass('var-height-textarea__textarea')) {
+			varHeightTextarea.setHeight($input);
+		}*/
+
+		this.field.classList.add('custom-select_changed');
+
+		ValidateForm.select(input);
 	},
 
 	autocomplete: function(_inp) {
@@ -278,13 +277,23 @@ var CustomSelect = {
 	},
 
 	fillAcHead: function() {
-		var _ = this;
-		$('.custom-select__autocomplete').each(function() {
-			var _$ = $(this),
-			$checkedVal = _$.closest('.custom-select').find('.custom-select__val_checked');
-			if ($checkedVal.length) {
-				_.selectVal($checkedVal);
+		var self = this,
+		elements = document.querySelectorAll('.custom-select__autocomplete');
+
+
+		elements.forEach(function(elem) {
+			var checkedValues = elem.closest('.custom-select').querySelectorAll('.custom-select__val_checked');
+
+			if (!checkedValues) {
+				return;
 			}
+
+			checkedValues.forEach(function(elem) {
+
+				self.selectVal(elem);
+
+			});
+
 		});
 	},
 
@@ -335,26 +344,57 @@ var CustomSelect = {
 		}.bind(this));
 
 		//click on value button event
-		document.addEventListener('click', this.selectVal.bind(this));
+		document.addEventListener('click', function(e) {
+			var elem = e.target.closest('.custom-select__val');
 
-
-		$('body').on('focus', '.custom-select__autocomplete', function() {
-
-			if (!$(this).closest('.custom-select').hasClass('custom-select_opened')) {
-				_.fillAcHead();
-				_.close();
-				_.open(this);
+			if (!elem) {
+				return;
 			}
 
-		}).on('input', '.custom-select__autocomplete', function() {
+			this.field = elem.closest('.custom-select');
 
-			_.autocomplete(this);
+			this.selectVal(elem);
 
-			if (!$(this).closest('.custom-select').hasClass('custom-select_opened')) {
-				_.open(this);
+		}.bind(this));
+
+		//focus autocomplete
+		document.addEventListener('focus', function(e) {
+			var elem = e.target.closest('.custom-select__autocomplete');
+
+			if (!elem) {
+				return;
 			}
 
-		}).on('keydown', '.custom-select_opened', function(e) {
+			this.field = elem.closest('.custom-select');
+
+			if (!this.field.classList.contains('custom-select_opened')) {
+				this.fillAcHead();
+				this.close();
+				this.open();
+			}
+
+		}.bind(this), true);
+
+		//input autocomplete
+		document.addEventListener('input', function(e) {
+			var elem = e.target.closest('.custom-select__autocomplete');
+
+			if (!elem) {
+				return;
+			}
+
+			this.field = elem.closest('.custom-select');
+
+			this.autocomplete(elem);
+
+			if (!this.field.classList.contains('custom-select_opened')) {
+				this.open();
+			}
+
+		}.bind(this));
+
+
+		$('body').on('keydown', '.custom-select_opened', function(e) {
 
 			if (e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 13) {
 				_.keyboard(this, e.keyCode);
@@ -374,7 +414,7 @@ var CustomSelect = {
 
 };
 
-
+//custom file
 function CustomFile() {
 
 	var _ = this;
