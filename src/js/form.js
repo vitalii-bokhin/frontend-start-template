@@ -102,7 +102,7 @@ var Form;
 			var elements = form.querySelectorAll('button[type="submit"], input[type="submit"]');
 
 			elements.forEach(function(elem) {
-				if (!isHidden(elem)) {
+				if (!elementIsHidden(elem)) {
 					if (st) {
 						elem.removeAttribute('disabled');
 					} else {

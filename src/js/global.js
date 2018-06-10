@@ -1,5 +1,5 @@
 //global variables
-var winW, winH, isHidden;
+var winW, winH, elementIsHidden;
 
 (function() {
 	"use strict";
@@ -81,13 +81,11 @@ if (!Element.prototype.closest) {
 }
 
 //check element for hidden
-isHidden = function(elem) {
+elementIsHidden = function(elem) {
 
 	if (!elem) {
 		return;
 	}
-
-	var hidden = false;
 
 	while (elem) {
 
@@ -98,15 +96,14 @@ isHidden = function(elem) {
 		var compStyles = getComputedStyle(elem);
 
 		if (compStyles.display == 'none' || compStyles.visibility == 'hidden' || compStyles.opacity == '0') {
-			hidden = true;
-			break;
+			return true;
 		}
 
 		elem = elem.parentElement;
 
 	}
 
-	return hidden;
+	return false;
 }
 
 }());

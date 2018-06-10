@@ -240,36 +240,121 @@ var CustomSelect = {
 		}
 	},
 
-	keyboard: function(_field, keyCode) {
-		var $options = $(_field).find('.custom-select__options'),
-		$hoverItem = $options.find('li.hover');
+	keyboard: function(key) {
+		var options = this.field.querySelector('.custom-select__options'),
+		hoverItem = options.querySelector('li.hover');
 
-		switch (keyCode) {
+		switch (key) {
 			
 			case 40:
-			if ($hoverItem.length) {
-				var $nextItem = $hoverItem.nextAll('li:visible').first();
-				if ($nextItem.length) {
-					$hoverItem.removeClass('hover');
-					$nextItem.addClass('hover');
-					$options.stop().animate({scrollTop: ($options.scrollTop() + $nextItem.position().top)}, 121);
+
+			if (hoverItem) {
+				var nextItem = function(item) {
+
+					var elem = item.nextElementSibling;
+
+					while (elem) {
+
+						if (!elem) {
+							break;
+						}
+
+						if (!elementIsHidden(elem)) {
+							return elem;
+						} else {
+							elem = elem.nextElementSibling;
+						}
+
+					}
+
+				}(hoverItem);
+
+				if (nextItem) {
+					hoverItem.classList.remove('hover');
+					nextItem.classList.add('hover');
+
+					options.scrollTop = options.scrollTop + (nextItem.getBoundingClientRect().top - options.getBoundingClientRect().top);
 				}
+
 			} else {
-				$options.find('li:visible').first().addClass('hover');
+
+				var elem = options.firstElementChild;
+
+				while (elem) {
+
+					if (!elem) {
+						break;
+					}
+
+					if (!elementIsHidden(elem)) {
+						elem.classList.add('hover');
+						break;
+					} else {
+						elem = elem.nextElementSibling;
+					}
+
+				}
+
 			}
+
 			break;
 
 			case 38:
-			var $nextItem = $hoverItem.prevAll('li:visible').first();
-			if ($nextItem.length) {
-				$hoverItem.removeClass('hover');
-				$nextItem.addClass('hover');
-				$options.stop().animate({scrollTop: ($options.scrollTop() + $nextItem.position().top)}, 121);
+
+			if (hoverItem) {
+				var nextItem = function(item) {
+
+					var elem = item.previousElementSibling;
+
+					while (elem) {
+
+						if (!elem) {
+							break;
+						}
+
+						if (!elementIsHidden(elem)) {
+							return elem;
+						} else {
+							elem = elem.previousElementSibling;
+						}
+
+					}
+
+				}(hoverItem);
+
+				if (nextItem) {
+					hoverItem.classList.remove('hover');
+					nextItem.classList.add('hover');
+
+					options.scrollTop = options.scrollTop + (nextItem.getBoundingClientRect().top - options.getBoundingClientRect().top);
+				}
+
+			} else {
+
+				var elem = options.lastElementChild;
+
+				while (elem) {
+
+					if (!elem) {
+						break;
+					}
+
+					if (!elementIsHidden(elem)) {
+						elem.classList.add('hover');
+						options.scrollTop = 9999;
+						break;
+					} else {
+						elem = elem.previousElementSibling;
+					}
+
+				}
+
 			}
+
 			break;
 
 			case 13:
-			this.selectVal($hoverItem.find('.custom-select__val'));
+			this.selectVal(hoverItem.querySelector('.custom-select__val'));
 			break;
 
 		}
@@ -297,31 +382,42 @@ var CustomSelect = {
 		});
 	},
 
-	init: function(el) {
-		var _ = this;
+	build: function(elementStr) {
 
-		$(el).each(function() {
-			var $select = $(this),
-			$options = $select.find('option'),
-			$parent = $select.parent(),
+		var elements = document.querySelectorAll(elementStr);
+
+		if (!elements) {
+			return;
+		}
+
+		elements.forEach(function(elem) {
+
+			var options = elem.querySelectorAll('option'),
+			parent = elem.parentElement,
 			optionsList = '',
-			require = ($select.attr('data-required') != undefined) ? ' data-required="'+ $select.attr('data-required') +'" ' : '',
-			head = ($select.attr('data-type') == 'autocomplete') ? '<input type="text" name="'+ $select.attr('name') +'"'+ require +'placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="">' : '<button type="button" data-placeholder="'+ $select.attr('data-placeholder') +'" class="custom-select__button">'+ $select.attr('data-placeholder') +'</button>',
+			require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
+			head = (elem.getAttribute('data-type') == 'autocomplete') ? '<input type="text" name="'+ elem.name +'"'+ require +'placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="">' : '<button type="button" data-placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__button">'+ elem.getAttribute('data-placeholder') +'</button>',
 			multiple = {
-				class: ($select.attr('multiple') != undefined) ? ' custom-select_multiple' : '',
-				inpDiv: ($select.attr('multiple') != undefined) ? '<div class="custom-select__multiple-inputs"></div>' : ''
+				class: (elem.multiple) ? ' custom-select_multiple' : '',
+				inpDiv: (elem.multiple) ? '<div class="custom-select__multiple-inputs"></div>' : ''
 			},
-			hiddenInp = ($select.attr('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ $select.attr('name') +'"'+ require +'class="custom-select__input" value="">' : '';
+			hiddenInp = (elem.getAttribute('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ elem.name +'"'+ require +'class="custom-select__input" value="">' : '';
 
-			for (var i = 0; i < $options.length; i++) {
-				var $option = $($options[i]);
-				optionsList += '<li><button type="button" class="custom-select__val"'+ ( ($option.attr('value') != undefined) ? ' data-value="'+ $option.attr('value') +'"' : '' ) + ( ($option.attr('data-target-elements') != undefined) ? ' data-target-elements="'+ $option.attr('data-target-elements') +'"' : '' ) +'>'+ $option.html() +'</button></li>';
-			}
+			//option list
+			options.forEach(function(opt) {
+				optionsList += '<li><button type="button" class="custom-select__val"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '' ) + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '' ) +'>'+ opt.innerHTML +'</button></li>';
+			});
 
-			$parent.prepend('<div class="custom-select'+ multiple.class +'">'+ head +'<ul class="custom-select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv +'</div>');
+			//output select
+			parent.innerHTML = '<div class="custom-select'+ multiple.class +'">'+ head +'<ul class="custom-select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv +'</div>';
 
-			$select.remove();
 		});
+
+	},
+
+	init: function(elementStr) {
+
+		this.build(elementStr);
 
 		//click on select button event
 		document.addEventListener('click', function(e) {
@@ -393,22 +489,32 @@ var CustomSelect = {
 
 		}.bind(this));
 
+		//keyboard events
+		document.addEventListener('keydown', function(e) {
+			var elem = e.target.closest('.custom-select_opened');
 
-		$('body').on('keydown', '.custom-select_opened', function(e) {
-
-			if (e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 13) {
-				_.keyboard(this, e.keyCode);
-				return false;
+			if (!elem) {
+				return;
 			}
 
-		});
+			this.field = elem.closest('.custom-select');
 
-		$(document).on('click', 'body', function(e) {
-			if (!$(e.target).closest('.custom-select_opened').length) {
-				_.fillAcHead();
-				_.close();
+			var key = e.which || e.keyCode || 0;
+
+			if (key == 40 || key == 38 || key == 13) {
+				e.preventDefault();
+				this.keyboard(e.keyCode);
 			}
-		});
+
+		}.bind(this));
+
+		//close all
+		document.addEventListener('click', function(e) {
+			if (!e.target.closest('.custom-select_opened')) {
+				this.fillAcHead();
+				this.close();
+			}
+		}.bind(this));
 
 	}
 

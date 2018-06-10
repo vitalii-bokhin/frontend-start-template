@@ -198,7 +198,7 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (isHidden(elem)) {
+				if (elementIsHidden(elem)) {
 					continue;
 				}
 
@@ -228,7 +228,7 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (isHidden(elem.parentElement)) {
+				if (elementIsHidden(elem.parentElement)) {
 					continue;
 				}
 
@@ -244,7 +244,7 @@ var ValidateForm;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 
-				if (isHidden(elem)) {
+				if (elementIsHidden(elem)) {
 					continue;
 				}
 
@@ -266,7 +266,7 @@ var ValidateForm;
 				var group = groups[i],
 				checkedElements = 0;
 
-				if (isHidden(group)) {
+				if (elementIsHidden(group)) {
 					continue;
 				}
 
@@ -294,7 +294,7 @@ var ValidateForm;
 				var group = groups[i],
 				checkedElement = false;
 
-				if (isHidden(group)) {
+				if (elementIsHidden(group)) {
 					continue;
 				}
 
@@ -322,7 +322,7 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (isHidden(elem)) {
+				if (elementIsHidden(elem)) {
 					continue;
 				}
 
@@ -348,7 +348,7 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (isHidden(elem)) {
+				if (elementIsHidden(elem)) {
 					continue;
 				}
 
