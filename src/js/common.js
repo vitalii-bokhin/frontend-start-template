@@ -45,43 +45,10 @@ $(document).ready(function(){
 	$('input[data-type="tel"]').mask('+7(999)999-99-99');
 	$('input[data-type="date"]').mask('99.99.9999');
 
-	//submit forms
-
-	/*
-	ValidateForm.init('#form');
-
-	ValidateForm.init('#form-ajax', function(form, callback) {
-		var $form = $(form);
-
-		Popup.message('#message-popup', 'Форма отправлена', function() {
-			callback({unlockButton: true, clearForm: true});
-		});
-
-		*//*$.ajax({
-			url: $form.attr('action'),
-			type:"POST",
-			dataType:"json",
-			data: $form.serialize(), //new FormData(form),
-			success: function(response){
-				if (response.status == 'sent') {
-					Popup.message('#message-popup', 'Форма отправлена');
-					callback({unlockButton: true, clearForm: true});
-				}
-			},
-			error: function() {
-				alert('Error');
-			}
-		});*//*
-
-	});
-
-	ValidateForm.init('#form-no-ajax');
-
-	ValidateForm.init('#search-form');
-	*/
-
 });
 
+
+//document is ready
 document.addEventListener("DOMContentLoaded", function() {
 
 	//submit forms
@@ -89,8 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	var form = new Form('#form');
 
 	form.onSubmit = function(form) {
-		console.log('form submit', form);
-
 		callback({clearForm: true});
 	}
 
@@ -98,11 +63,27 @@ document.addEventListener("DOMContentLoaded", function() {
 	var ajaxForm = new Form('#form-ajax');
 
 	ajaxForm.onSubmit = function(form, callback) {
-		console.log('ajaxForm submit', form);
 
 		setTimeout(function() {
 			callback({clearForm: true, unlockSubmitButton: true});
 		}, 1000);
+
+
+		/*$.ajax({
+			url: form.action,
+			type:"POST",
+			dataType:"json",
+			data: new FormData(form),
+			success: function(response){
+				if (response.status == 'sent') {
+					Popup.message('#message-popup', 'Форма отправлена');
+					callback({clearForm: true, unlockSubmitButton: true});
+				}
+			},
+			error: function() {
+				alert('Error');
+			}
+		});*/
 		
 	}
 
@@ -116,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //GetCountriesAndCitiesList
 function dAirGetInit() {
 	dAirGet.countries(function(c) {
-		var contryObj = $.parseJSON(c);
+		var contryObj = JSON.parse(c);
 		CustomSelect.setOptions('.countries', contryObj, 'name', 'name');
 	});
 }

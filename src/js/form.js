@@ -1,79 +1,44 @@
-$(document).ready(function() {
-
-	$('label').each(function(i) {
-		var _$ = $(this),
-		$sibLabel = _$.siblings('label'),
-		$input = _$.siblings('input, textarea'),
-		inpId = $input.attr('id');
-
-		if (!_$.attr('for')) {
-			var inpFor = (inpId) ? inpId : 'keylabel-'+ i;
-
-			_$.attr('for', inpFor);
-			$sibLabel.attr('for', inpFor);
-			$input.attr('id', inpFor);
-		}
-
-	});
-
-	$('body').on('change', 'input[type="checkbox"]', function() {
-		var _$ = $(this),
-		targetElements = _$.attr('data-target-elements');
-
-		if (targetElements) {
-			var $elem = $(targetElements);
-			if (_$.prop('checked')) {
-				$elem.show();
-			} else {
-				$elem.hide();
-			}
-		}
-
-	});
-
-	$('body').on('change', 'input[type="radio"]', function() {
-		var name = $(this).attr('name');
-
-		$('input[type="radio"][name="'+ name +'"]').each(function() {
-			var _$ = $(this),
-			targetElements = _$.attr('data-target-elements');
-
-			if (targetElements) {
-				var $elem = $(targetElements);
-				if (_$.prop('checked')) {
-					$elem.show();
-				} else {
-					$elem.hide();
-				}
-			}
-			
-		});
-
-	});
-
-	$('body').on('click', '.form__button', function() {
-		var _$ = $(this),
-		nextFsetItem = _$.attr('data-next-fieldset-item');
-
-		if (nextFsetItem) {
-			var $nextItem = $(nextFsetItem),
-			$curItem = _$.closest('.fieldset__item');
-
-			if (ValidateForm.validate($curItem)) {
-				$curItem.addClass('fieldset__item_hidden');
-				$nextItem.removeClass('fieldset__item_hidden');
-			}
-		}
-
-	});
-
-});
-
-//formfactory
 var Form;
+
 (function() {
 	"use strict";
 
+	//next fieldset
+	var NextFieldset = {
+
+		next: function(elem) {
+			var nextFieldset = (elem.hasAttribute('data-next-fieldset-item')) ? document.querySelector(elem.getAttribute('data-next-fieldset-item')) : false;
+
+			if (!nextFieldset) {
+				return;
+			}
+
+			var currentFieldset = elem.closest('.fieldset__item');
+
+			if (ValidateForm.validate(currentFieldset)) {
+				currentFieldset.classList.add('fieldset__item_hidden');
+				nextFieldset.classList.remove('fieldset__item_hidden');
+			}
+
+		},
+
+		init: function(form, elemStr) {
+
+			form.addEventListener('click', function(e) {
+
+				var elem = e.target.closest(elemStr);
+
+				if (elem) {
+					this.next(elem);
+				}
+
+			}.bind(this));
+
+		}
+
+	};
+
+	//init forms
 	Form = function(formSelector) {
 
 		this.onSubmit = null;
@@ -153,6 +118,8 @@ var Form;
 		form.addEventListener('submit', submit.bind(this));
 
 		ValidateForm.init(form);
+
+		NextFieldset.init(form, '.form__button');
 
 	}
 	

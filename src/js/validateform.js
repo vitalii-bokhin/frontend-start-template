@@ -1,4 +1,3 @@
-//validateForm
 var ValidateForm;
 
 (function() {
