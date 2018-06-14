@@ -68,22 +68,23 @@ document.addEventListener("DOMContentLoaded", function() {
 			callback({clearForm: true, unlockSubmitButton: true});
 		}, 1000);
 
+		/*var xhr = new XMLHttpRequest();
+		xhr.open('POST', form.action);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
 
-		/*$.ajax({
-			url: form.action,
-			type:"POST",
-			dataType:"json",
-			data: new FormData(form),
-			success: function(response){
-				if (response.status == 'sent') {
+				xhr.responseText;  //response
+
+				if (xhr.responseText.status == 'sent') {
+
 					Popup.message('#message-popup', 'Форма отправлена');
 					callback({clearForm: true, unlockSubmitButton: true});
+
 				}
-			},
-			error: function() {
-				alert('Error');
+
 			}
-		});*/
+		}
+		xhr.send(new FormData(form));*/
 		
 	}
 
