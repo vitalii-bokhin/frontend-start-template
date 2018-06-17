@@ -1,3 +1,23 @@
+.cover-img-css{
+	position: relative;
+	border: 1px solid $rd;
+	overflow: hidden;
+	span{
+		display: block;
+		position: absolute;
+		
+	}
+	img{
+		display: inline-block;
+		width: auto;
+		height: auto;
+		max-width: 100%;
+		max-height: 100%;
+	}
+}
+
+
+
 .cover-img{
 	display: block;
 	opacity: 0;
@@ -6,16 +26,20 @@
 		width: 100%;
 		height: auto;
 		min-height: 100%;
-		opacity: 1;
+		opacity: 1 !important;
 	}
 	&_h{
 		height: 100%;
 		width: auto;
 		min-width: 100%;
-		opacity: 1;
+		opacity: 1 !important;
 	}
 	&-wrap{
 		overflow: hidden;
+		img{
+			opacity: 0;
+			transition: opacity .21s;
+		}
 	}
 }
 

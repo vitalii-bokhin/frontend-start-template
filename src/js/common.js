@@ -12,10 +12,13 @@ $(document).ready(function(){
 		});
 
 		flexImg();
-		coverImg();
+
+		CoverImg.reInit();
 
 		$(window).on('winResized', initFun);
 	}());
+
+	CoverImg.init();
 
 	$('#slider').on('init', function() {
 		coverImg('#slider');
@@ -68,23 +71,29 @@ document.addEventListener("DOMContentLoaded", function() {
 			callback({clearForm: true, unlockSubmitButton: true});
 		}, 1000);
 
-		/*var xhr = new XMLHttpRequest();
+		
+		/*
+		var xhr = new XMLHttpRequest();
 		xhr.open('POST', form.action);
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 
-				xhr.responseText;  //response
+				var response = JSON.parse(xhr.response);  //response json
 
-				if (xhr.responseText.status == 'sent') {
+				if (response.status == 'sent') {
 
 					Popup.message('#message-popup', 'Форма отправлена');
 					callback({clearForm: true, unlockSubmitButton: true});
 
+				} else {
+					console.log(response);
 				}
 
 			}
 		}
-		xhr.send(new FormData(form));*/
+		xhr.send(new FormData(form));
+		*/
+
 		
 	}
 

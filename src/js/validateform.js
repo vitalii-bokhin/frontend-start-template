@@ -271,11 +271,11 @@ var ValidateForm;
 
 				var elements = group.querySelectorAll('input[type="checkbox"]');
 
-				elements.forEach(function(elem) {
-					if (elem.checked) {
+				for (var j = 0; j < elements.length; j++) {
+					if (elements[j].checked) {
 						checkedElements++;
 					}
-				});
+				}
 
 				if (checkedElements < group.getAttribute('data-min')) {
 					group.classList.add('form__chbox-group_error');
@@ -299,11 +299,11 @@ var ValidateForm;
 
 				var elements = group.querySelectorAll('input[type="radio"]');
 
-				elements.forEach(function(elem) {
-					if (elem.checked) {
+				for (var j = 0; j < elements.length; j++) {
+					if (elements[j].checked) {
 						checkedElement = true;
 					}
-				});
+				}
 
 				if (!checkedElement) {
 					group.classList.add('form__radio-group_error');

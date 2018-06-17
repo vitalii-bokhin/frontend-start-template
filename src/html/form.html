@@ -158,11 +158,11 @@
 				<div class="title">Ajax submit</div>
 			</div>
 		</div>
-		<form id="form-ajax" action="send.php" method="POST" enctype="multipart/form-data" class="form">
+		<form id="form-ajax" action="send-mail.php" method="POST" enctype="multipart/form-data" class="form">
 			<div class="row">
 				<div class="col-12">
 					<div class="form__field">
-						<input type="text" data-required="true" placeholder="Name*" class="form__text-input" value="">
+						<input type="text" name="name" data-required="true" placeholder="Name*" class="form__text-input" value="">
 						<div class="form__error-tip">Enter your name</div>
 					</div>
 				</div>
@@ -172,7 +172,7 @@
 					<button type="submit" class="form__submit button">Submit</button>
 				</div>
 			</div>
-			<div class="form__alert">Ошибка заполнения полей формы</div>
+			<div class="form__alert">Form error</div>
 			<div class="row">
 				<div class="col-12">
 					<div class="form__loader"></div>

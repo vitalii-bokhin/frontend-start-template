@@ -54,19 +54,28 @@ var Form;
 			//clear inputs
 			var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
 
-			elements.forEach(function(elem) {
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
+
 				elem.value = '';
 				CustomPlaceholder.hidePlaceholder(elem, false);
-			});
+			}
 
-			//$form.querySelector('.form__textarea-mirror').html('');
+			var textareaMirrors = form.querySelectorAll('.form__textarea-mirror');
+
+			for (var i = 0; i < textareaMirrors.length; i++) {
+				textareaMirrors[i].innerHTML = '';
+			}
+
 		}
 
 		//submit button
 		function actSubmitBtn(st) {
 			var elements = form.querySelectorAll('button[type="submit"], input[type="submit"]');
 
-			elements.forEach(function(elem) {
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
+
 				if (!elementIsHidden(elem)) {
 					if (st) {
 						elem.removeAttribute('disabled');
@@ -74,7 +83,7 @@ var Form;
 						elem.setAttribute('disabled', 'disable');
 					}
 				}
-			});
+			}
 
 		}
 
