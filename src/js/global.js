@@ -1,5 +1,5 @@
 //global variables
-var winW, winH, elementIsHidden;
+var winW, winH, elementIsHidden, browser;
 
 (function() {
 	"use strict";
@@ -7,16 +7,24 @@ var winW, winH, elementIsHidden;
 //get useragent
 document.documentElement.setAttribute('data-useragent', navigator.userAgent);
 
+//browser identify
+browser = (function(userAgent) {
+
+	userAgent = userAgent.toLowerCase();
+
+	if (/(msie|rv:11\.0)/.test(userAgent)) {
+		return 'ie';
+	}
+
+}(navigator.userAgent));
+
 //get window sizes
-winW = window.innerWidth;
-winH = window.innerHeight;
-
-window.addEventListener('winResized', function() {
-
+(function getWinSizes() {
 	winW = window.innerWidth;
 	winH = window.innerHeight;
 
-});
+	window.addEventListener('winResized', getWinSizes);
+}());
 
 //add support CustomEvent constructor for IE
 try {

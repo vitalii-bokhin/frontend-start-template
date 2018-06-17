@@ -260,7 +260,9 @@ a:hover { text-decoration: none; }
 
 .header__wrap { height: 100px; max-width: none; }
 
-.header__logo { display: inline-block; width: 100%; max-width: 121px; height: auto; }
+.header__logo { display: inline-block; width: 100%; max-width: 121px; }
+
+.header__logo img { width: 100%; height: auto; }
 
 .header__nav { float: left; }
 

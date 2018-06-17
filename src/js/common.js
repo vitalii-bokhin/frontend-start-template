@@ -1,24 +1,14 @@
 $(document).ready(function(){ 
 
-	(function initFun() {
-		//fixed block
-		$('.fix-block').each(function() {
-			var _$ = $(this);
-			_$.css({width: 'auto', top: 'auto', left: 'auto'}).removeClass('fix-block_fixed');
-			var ofsT = _$.offset().top,
-			ofsL = _$.offset().left,
-			wd = _$.innerWidth();
-			_$.css({width: wd, top: ofsT, left: ofsL}).addClass('fix-block_fixed');
-		});
-
-		flexImg();
-
-		CoverImg.reInit();
-
-		$(window).on('winResized', initFun);
-	}());
-
-	CoverImg.init();
+	//fixed block
+	$('.fix-block').each(function() {
+		var _$ = $(this);
+		_$.css({width: 'auto', top: 'auto', left: 'auto'}).removeClass('fix-block_fixed');
+		var ofsT = _$.offset().top,
+		ofsL = _$.offset().left,
+		wd = _$.innerWidth();
+		_$.css({width: wd, top: ofsT, left: ofsL}).addClass('fix-block_fixed');
+	});
 
 	$('#slider').on('init', function() {
 		coverImg('#slider');
@@ -54,8 +44,19 @@ $(document).ready(function(){
 //document is ready
 document.addEventListener("DOMContentLoaded", function() {
 
-	//submit forms
+	(function initFun() {
 
+		flexImg('.flex-img');
+
+		CoverImg.reInit();
+
+		window.addEventListener('winResized', initFun);
+	}());
+
+	//init cover images
+	CoverImg.init();
+
+	//submit forms
 	var form = new Form('#form');
 
 	form.onSubmit = function(form) {
