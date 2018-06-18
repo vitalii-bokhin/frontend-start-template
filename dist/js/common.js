@@ -56,6 +56,9 @@ document.addEventListener("DOMContentLoaded", function() {
 	//init cover images
 	CoverImg.init();
 
+	//popup init
+	Popup.init('.js-open-popup');
+
 	//submit forms
 	var form = new Form('#form');
 

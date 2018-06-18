@@ -1,4 +1,4 @@
-var FlexImg, CoverImg;
+var flexImg, CoverImg;
 
 (function() {
 	"use strict";
@@ -125,37 +125,3 @@ var FlexImg, CoverImg;
 	};
 
 }());
-
-
-function flexImg() {
-	$('.flex-img').each(function() {
-		var Img = $(this),
-		data = Img.attr('data-images'),
-		images,
-		newImg;
-
-		if (data) {
-			images = data.split(',');
-
-			for (var i = 0; i < images.length; i++) {
-				var imgSpl = images[i].split(':');
-
-				if (winW < imgSpl[0]) {
-					if (imgSpl[1] == 'http' || imgSpl[1] == 'https') {
-						newImg = imgSpl[1]+ ':'+ imgSpl[2];
-					} else {
-						newImg = imgSpl[1];
-					}
-				}
-
-			}
-
-		}
-
-		if (newImg) {
-			Img.attr('src', newImg);
-		}
-		
-	});
-
-}
