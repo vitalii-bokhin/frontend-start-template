@@ -389,7 +389,7 @@ var CustomPlaceholder, CustomSelect;
 								break;
 							}
 
-							if (!elementIsHidden(elem)) {
+							if (!elem.elementIsHidden()) {
 								return elem;
 							} else {
 								elem = elem.nextElementSibling;
@@ -416,7 +416,7 @@ var CustomPlaceholder, CustomSelect;
 							break;
 						}
 
-						if (!elementIsHidden(elem)) {
+						if (!elem.elementIsHidden()) {
 							elem.classList.add('hover');
 							break;
 						} else {
@@ -442,7 +442,7 @@ var CustomPlaceholder, CustomSelect;
 								break;
 							}
 
-							if (!elementIsHidden(elem)) {
+							if (!elem.elementIsHidden()) {
 								return elem;
 							} else {
 								elem = elem.previousElementSibling;
@@ -469,7 +469,7 @@ var CustomPlaceholder, CustomSelect;
 							break;
 						}
 
-						if (!elementIsHidden(elem)) {
+						if (!elem.elementIsHidden()) {
 							elem.classList.add('hover');
 							options.scrollTop = 9999;
 							break;

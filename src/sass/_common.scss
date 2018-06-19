@@ -7,8 +7,7 @@ html, body {
 }
 
 body{
-	&.is-menu-opened,
-	&.is-popup-opened{
+	&.is-menu-opened{
 		position: fixed;
 		left: 0;
 		right: 0;

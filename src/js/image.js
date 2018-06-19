@@ -18,7 +18,7 @@ var flexImg, CoverImg;
 
 				var imageProp = image.split('->');
 
-				if (winW < (+imageProp[0])) {
+				if (window.innerWidth < (+imageProp[0])) {
 					elem.src = imageProp[1];
 				}
 

@@ -7,7 +7,7 @@ var FsScroll = {
 
 	init: function() {
 		var _ = this;
-		_.winH =  winH;
+		_.winH =  window.innerHeight;
 
 		$('.fsscroll__screen').removeClass('fsscroll__screen_scroll').css('height', 'auto');
 
@@ -147,7 +147,7 @@ $(document).ready(function() {
 
 		(function initFsS() {
 
-			if (winW > 1030) {
+			if (window.innerWidth > 1030) {
 
 				FsScroll.init();
 
@@ -160,7 +160,7 @@ $(document).ready(function() {
 
 				$('#js-fsscroll').off('mousewheel');
 
-				if (winW > 1000) {
+				if (window.innerWidth > 1000) {
 
 					FsScroll.init();
 

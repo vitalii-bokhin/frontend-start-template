@@ -1,5 +1,5 @@
 //global variables
-var winW, winH, elementIsHidden, browser;
+var browser;
 
 (function() {
 	"use strict";
@@ -17,14 +17,6 @@ browser = (function(userAgent) {
 	}
 
 }(navigator.userAgent));
-
-//get window sizes
-(function getWinSizes() {
-	winW = window.innerWidth;
-	winH = window.innerHeight;
-
-	window.addEventListener('winResized', getWinSizes);
-}());
 
 //add support CustomEvent constructor for IE
 try {
@@ -89,11 +81,9 @@ if (!Element.prototype.closest) {
 }
 
 //check element for hidden
-elementIsHidden = function(elem) {
+Element.prototype.elementIsHidden = function() {
 
-	if (!elem) {
-		return;
-	}
+	var elem = this;
 
 	while (elem) {
 

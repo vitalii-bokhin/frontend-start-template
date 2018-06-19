@@ -76,7 +76,7 @@ var Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 
-				if (!elementIsHidden(elem)) {
+				if (!elem.elementIsHidden()) {
 					if (st) {
 						elem.removeAttribute('disabled');
 					} else {

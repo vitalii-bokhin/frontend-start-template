@@ -221,7 +221,7 @@ $('document').ready(function() {
 		FlSlider.change(dir);
 	});
 
-	if (winW < 1200) {
+	if (window.innerWidth < 1200) {
 		$('.float-slider').swipe({
 			swipe: function(event, direction) {
 				if (direction == 'right') {

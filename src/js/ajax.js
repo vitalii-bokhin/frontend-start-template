@@ -64,14 +64,13 @@ $(document).ready(function() {
 	});
 
 	if ($('.js-ajax-scroll').length && $(window).width() > 1000) {
-		var winH = $(window).height(),
-		i = 0;
+		var i = 0;
 
 		$(window).scroll(function() {
 			var winScrTop = $(window).scrollTop(),
 			Point = $('.js-ajax-scroll');
 
-			if (Point.offset().top < winH && !Point.hasClass('lock')) {
+			if (Point.offset().top < window.innerHeight && !Point.hasClass('lock')) {
 				Point.addClass('lock');
 
 				var id = '#'+ Point.attr('data-id'),

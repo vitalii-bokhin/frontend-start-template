@@ -5,30 +5,79 @@ var Popup;
 
 	Popup = {
 
-		open: function(elenentStr) {
-			var elenent = document.querySelector(elenentStr);
+		winScrollTop: 0,
 
-			if (!elenent) {
+		fixBody: function(st) {
+
+			if (st) {
+				this.winScrollTop = window.pageYOffset;
+
+				document.body.classList.add('popup-is-opened');
+				document.body.style.top = -this.winScrollTop +'px';
+
+			} else {
+				document.body.classList.remove('popup-is-opened');
+
+				window.scrollTo(0, this.winScrollTop);
+
+			}
+
+		},
+
+		open: function(elenentStr) {
+			var elem = document.querySelector(elenentStr);
+
+			if (!elem || !elem.classList.contains('popup__window')) {
 				return;
 			}
 
-			var elemParent = elenent.parentElement;
+			var elemParent = elem.parentElement;
 
-
+			this.fixBody(true);
 			
+			elemParent.classList.add('popup_visible');
 
+			elem.classList.add('popup__window_visible');
+
+		},
+
+		close: function() {
+
+			var elements = document.querySelectorAll('.popup__window');
+
+			if (!elements.length) {
+				return;
+			}
+
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
+
+				if (!elem.classList.contains('popup__window_visible')) {
+					continue;
+				}
+
+				elem.classList.remove('popup__window_visible');
+				elem.parentElement.classList.remove('popup_visible');
+			}
+
+			this.fixBody(false);
 		},
 
 		init: function(elementStr) {
 
 			document.addEventListener('click', function(e) {
-				var element = e.target.closest(elementStr);
+				var element = e.target.closest(elementStr),
+				closeElem = e.target.closest('.popup__close');
 
 				if (element) {
 
 					e.preventDefault();
 
 					this.open(element.getAttribute('data-popup'));
+
+				} else if (closeElem) {
+
+					this.close();
 
 				}
 
@@ -56,6 +105,7 @@ var pPopup = {
 		$popup = $popWin.closest('.popup');
 		
 		if ($popWin.length && $popWin.hasClass('popup__window')) {
+
 			_.position = $(window).scrollTop();
 			$popup.fadeIn(321).scrollTop(0);
 			$('.popup__window').removeClass('popup__window_visible');
@@ -90,8 +140,8 @@ var pPopup = {
 
 	/*resize: function($pop, $img) {
 		var popH = $pop.innerHeight();
-		if (popH > winH) {
-			$pop.css('max-width', (winH * ($pop.innerWidth() / popH)));
+		if (popH > window.innerHeight) {
+			$pop.css('max-width', (window.innerHeight * ($pop.innerWidth() / popH)));
 		}
 	},*/
 

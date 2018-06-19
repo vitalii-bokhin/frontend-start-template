@@ -197,7 +197,7 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (elementIsHidden(elem)) {
+				if (elem.elementIsHidden()) {
 					continue;
 				}
 
@@ -243,7 +243,7 @@ var ValidateForm;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 
-				if (elementIsHidden(elem)) {
+				if (elem.elementIsHidden()) {
 					continue;
 				}
 
@@ -321,7 +321,7 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (elementIsHidden(elem)) {
+				if (elem.elementIsHidden()) {
 					continue;
 				}
 
@@ -347,7 +347,7 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (elementIsHidden(elem)) {
+				if (elem.elementIsHidden()) {
 					continue;
 				}
 

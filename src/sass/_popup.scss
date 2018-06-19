@@ -1,5 +1,4 @@
 .popup{
-	display: none;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -11,6 +10,13 @@
 	z-index: 9;
 	text-align: center;
 	font-size: 0;
+	visibility: hidden;
+	opacity: 0;
+	transition: .5s;
+	&_visible{
+		visibility: visible;
+		opacity: 1;
+	}
 	&:before{
 		display: inline-block;
 		content: "";
@@ -219,5 +225,14 @@
 				text-align: left !important;
 			}
 		}
+	}
+}
+
+//fix body
+body{
+	&.popup-is-opened{
+		position: fixed;
+		left: 0;
+		right: 0;
 	}
 }

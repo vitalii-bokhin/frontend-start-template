@@ -24,7 +24,7 @@ $(document).ready(function(){
 
 	//headerFix
 	$(window).scroll(function () {
-		if (!$('body').hasClass('is-popup-opened')) {
+		if (!$('body').hasClass('popup-is-opened')) {
 			var winScrTop = $(window).scrollTop();
 			if (winScrTop > 21) {
 				$('.header').addClass('header_fixed');
