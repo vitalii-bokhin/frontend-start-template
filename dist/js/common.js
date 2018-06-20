@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	//popup init
 	Popup.init('.js-open-popup');
+	MediaPopup.init('.js-open-media-popup');
 
 	//submit forms
 	var form = new Form('#form');

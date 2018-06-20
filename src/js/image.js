@@ -71,7 +71,20 @@ var flexImg, CoverImg;
 		},
 
 		reInit: function(parentElementStr) {
-			var elements = (parentElementStr) ? document.querySelectorAll(parentElementStr +' .cover-img') : document.querySelectorAll('.cover-img');
+
+			var elements;
+
+			if (parentElementStr) {
+
+				if ((typeof parentElementStr) == 'object') {
+					elements = parentElementStr.querySelectorAll('.cover-img');
+				} else {
+					elements = document.querySelectorAll(parentElementStr +' .cover-img');
+				}
+
+			} else {
+				elements = document.querySelectorAll('.cover-img');
+			}
 
 			for (var i = 0; i < elements.length; i++) {
 				var img = elements[i];

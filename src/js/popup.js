@@ -1,11 +1,13 @@
-var Popup;
+var Popup, MediaPopup;
 
 (function() {
 	"use strict";
 
+	//popup core
 	Popup = {
 
 		winScrollTop: 0,
+		onClose: null,
 
 		fixBody: function(st) {
 
@@ -24,8 +26,8 @@ var Popup;
 
 		},
 
-		open: function(elenentStr) {
-			var elem = document.querySelector(elenentStr);
+		open: function(elementStr, callback) {
+			var elem = document.querySelector(elementStr);
 
 			if (!elem || !elem.classList.contains('popup__window')) {
 				return;
@@ -39,6 +41,23 @@ var Popup;
 
 			elem.classList.add('popup__window_visible');
 
+			setTimeout(function() {
+				CoverImg.reInit(elem);
+			}, 721);
+
+			if (callback) {
+				this.onClose = callback;
+			}
+
+			return elem;
+
+		},
+
+		message: function(elementStr, msg, callback) {
+			var elem = this.open(elementStr, callback);
+
+			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message">'+ msg +'</div>';
+			
 		},
 
 		close: function() {
@@ -61,6 +80,12 @@ var Popup;
 			}
 
 			this.fixBody(false);
+
+			if (this.onClose) {
+				this.onClose();
+				this.onClose = null;
+			}
+
 		},
 
 		init: function(elementStr) {
@@ -70,12 +95,11 @@ var Popup;
 				closeElem = e.target.closest('.popup__close');
 
 				if (element) {
-
 					e.preventDefault();
 
 					this.open(element.getAttribute('data-popup'));
 
-				} else if (closeElem) {
+				} else if (closeElem || !e.target.closest('.popup__window')) {
 
 					this.close();
 
@@ -87,6 +111,53 @@ var Popup;
 
 	};
 
+	//popup media
+	MediaPopup = {
+
+		image: function(args) {
+			var elemPopup = Popup.open(args.popupStr, function() {
+				
+			}),
+			elemImg = elemPopup.querySelector('.popup-media__image');
+
+			elemImg.src = args.href;
+			elemImg.classList.add('popup-media__image_visible');
+			
+		},
+
+		video: function(args) {
+
+		},
+
+		init: function(elementStr) {
+
+			document.addEventListener('click', function(e) {
+				var element = e.target.closest(elementStr);
+
+				if (element) {
+					e.preventDefault();
+
+					var type = element.getAttribute('data-type'),
+					args = {
+						href: element.href,
+						caption: element.getAttribute('data-caption'),
+						group: element.getAttribute('data-group'),
+						popupStr: element.getAttribute('data-popup')
+					};
+
+					if (type == 'image') {
+						this.image(args);
+					} else if (type == 'video') {
+						this.video(args);
+					}
+
+				}
+
+			}.bind(this));
+
+		}
+
+	};
 
 }());
 
@@ -322,7 +393,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('body').on('click', '.popup__close', function () {
+	/*$('body').on('click', '.popup__close', function () {
 		Popup.hide();
 		return false;
 	});
@@ -331,7 +402,7 @@ $(document).ready(function() {
 		if (!$(e.target).closest('.popup__window').length) {
 			Popup.hide();
 		}
-	});
+	});*/
 
 
 	if (window.location.hash) {

@@ -75,11 +75,6 @@
 			top: 50px;
 		}
 	}
-	&__iframe{
-		@include fwh;
-		visibility: hidden;
-		border: none;
-	}
 	&__box{
 		background: #000;
 		position: relative;
@@ -87,10 +82,26 @@
 		height: 100%;
 	}
 	&__image{
-		&.cover-img{
-			position: absolute;
-			left: 0;
-			top: 0;
+		visibility: hidden;
+		opacity: 0;
+		transition: .5s;
+		&_visible{
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+	&__video{
+		background-position: cover;
+	}
+	&__video,
+	&__iframe{
+		@include fwh;
+		visibility: hidden;
+		border: none;
+		transition: .5s;
+		&_visible{
+			visibility: visible;
+			opacity: 1;
 		}
 	}
 	&__bar{

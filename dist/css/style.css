@@ -1235,11 +1235,17 @@ ul.list li:before { display: block; content: ""; width: 9px; height: 9px; positi
 
 .popup-media .popup__close { right: 10px; top: 50px; }
 
-.popup-media__iframe { position: absolute; width: 100%; height: 100%; left: 0; top: 0; visibility: hidden; border: none; }
-
 .popup-media__box { background: #000; position: relative; text-align: center; height: 100%; }
 
-.popup-media__image.cover-img { position: absolute; left: 0; top: 0; }
+.popup-media__image { visibility: hidden; opacity: 0; -webkit-transition: .5s; transition: .5s; }
+
+.popup-media__image_visible { visibility: visible; opacity: 1; }
+
+.popup-media__video { background-position: cover; }
+
+.popup-media__video, .popup-media__iframe { position: absolute; width: 100%; height: 100%; left: 0; top: 0; visibility: hidden; border: none; -webkit-transition: .5s; transition: .5s; }
+
+.popup-media__video_visible, .popup-media__iframe_visible { visibility: visible; opacity: 1; }
 
 .popup-media__bar { padding-top: 34px; font-size: 14px; display: none; position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; padding: 10px 50px; }
 
