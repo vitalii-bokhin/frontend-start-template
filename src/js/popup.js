@@ -10,20 +10,16 @@ var Popup, MediaPopup;
 		onClose: null,
 
 		fixBody: function(st) {
-
 			if (st) {
 				this.winScrollTop = window.pageYOffset;
 
 				document.body.classList.add('popup-is-opened');
 				document.body.style.top = -this.winScrollTop +'px';
-
 			} else {
 				document.body.classList.remove('popup-is-opened');
 
 				window.scrollTo(0, this.winScrollTop);
-
 			}
-
 		},
 
 		open: function(elementStr, callback) {
@@ -50,18 +46,15 @@ var Popup, MediaPopup;
 			}
 
 			return elem;
-
 		},
 
 		message: function(elementStr, msg, callback) {
 			var elem = this.open(elementStr, callback);
 
 			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message">'+ msg +'</div>';
-			
 		},
 
 		close: function() {
-
 			var elements = document.querySelectorAll('.popup__window');
 
 			if (!elements.length) {
@@ -85,12 +78,10 @@ var Popup, MediaPopup;
 				this.onClose();
 				this.onClose = null;
 			}
-
 		},
 
 		init: function(elementStr) {
-
-			document.addEventListener('click', function(e) {
+			document.addEventListener('click', (e) => {
 				var element = e.target.closest(elementStr),
 				closeElem = e.target.closest('.popup__close');
 
@@ -99,26 +90,27 @@ var Popup, MediaPopup;
 
 					this.open(element.getAttribute('data-popup'));
 
-				} else if (closeElem || !e.target.closest('.popup__window')) {
+				} else if (closeElem || (!e.target.closest('.popup__window') && e.target.closest('.popup'))) {
 
 					this.close();
 
 				}
 
-			}.bind(this));
-
+			});
 		}
 
 	};
 
 	//popup media
 	MediaPopup = {
-
 		image: function(args) {
-			var elemPopup = Popup.open(args.popupStr, function() {
-				
-			}),
+			var elemPopup = Popup.open(args.popupStr),
 			elemImg = elemPopup.querySelector('.popup-media__image');
+
+			Popup.onClose = function() {
+				elemImg.src = '#';
+				elemImg.classList.remove('popup-media__image_visible'); 
+			}
 
 			elemImg.src = args.href;
 			elemImg.classList.add('popup-media__image_visible');
@@ -129,34 +121,45 @@ var Popup, MediaPopup;
 
 		},
 
-		init: function(elementStr) {
+		next: function(elem) {
+			if (!elem.hasAttribute('data-group')) {
+				return;
+			}
 
-			document.addEventListener('click', function(e) {
+			var group = elem.getAttribute('data-group'),
+
+			index = [].slice.call(document.querySelectorAll('[data-group="'+ group +'"]')).indexOf(elem);
+
+			console.log(index);
+		},
+
+		init: function(elementStr) {
+			document.addEventListener('click', (e) => {
 				var element = e.target.closest(elementStr);
 
-				if (element) {
-					e.preventDefault();
-
-					var type = element.getAttribute('data-type'),
-					args = {
-						href: element.href,
-						caption: element.getAttribute('data-caption'),
-						group: element.getAttribute('data-group'),
-						popupStr: element.getAttribute('data-popup')
-					};
-
-					if (type == 'image') {
-						this.image(args);
-					} else if (type == 'video') {
-						this.video(args);
-					}
-
+				if (!element) {
+					return;
 				}
 
-			}.bind(this));
+				e.preventDefault();
 
+				var type = element.getAttribute('data-type'),
+				args = {
+					href: element.href,
+					caption: element.getAttribute('data-caption'),
+					group: element.getAttribute('data-group'),
+					popupStr: element.getAttribute('data-popup')
+				};
+
+				if (type == 'image') {
+					this.image(args);
+				} else if (type == 'video') {
+					this.video(args);
+				}
+
+				this.next(element);
+			});
 		}
-
 	};
 
 }());

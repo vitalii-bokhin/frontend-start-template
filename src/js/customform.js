@@ -40,7 +40,7 @@ var CustomPlaceholder, CustomSelect;
 
 		init: function() {
 
-			document.addEventListener('change', function(e) {
+			document.addEventListener('change', (e) => {
 
 				var elem = e.target.closest('input[type="checkbox"]');
 
@@ -48,7 +48,7 @@ var CustomPlaceholder, CustomSelect;
 					this.change(elem);
 				}
 
-			}.bind(this));
+			});
 
 		}
 
@@ -83,7 +83,7 @@ var CustomPlaceholder, CustomSelect;
 
 		init: function() {
 
-			document.addEventListener('change', function(e) {
+			document.addEventListener('change', (e) => {
 
 				var elem = e.target.closest('input[type="radio"]');
 
@@ -91,7 +91,7 @@ var CustomPlaceholder, CustomSelect;
 					this.change(elem);
 				}
 
-			}.bind(this));
+			});
 
 		}
 
@@ -136,17 +136,17 @@ var CustomPlaceholder, CustomSelect;
 			}
 
 			//events
-			document.addEventListener('focus', function(e) {
+			document.addEventListener('focus', (e) => {
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
 					this.hidePlaceholder(elem, true);
 				}
 
-			}.bind(this), true);
+			}, true);
 
 
-			document.addEventListener('blur', function(e) {
+			document.addEventListener('blur', (e) => {
 
 				var elem = e.target.closest(elementsStr);
 
@@ -154,7 +154,7 @@ var CustomPlaceholder, CustomSelect;
 					this.hidePlaceholder(elem, false);
 				}
 
-			}.bind(this), true);
+			}, true);
 
 		},
 		
@@ -557,7 +557,7 @@ var CustomPlaceholder, CustomSelect;
 			this.build(elementStr);
 
 			//click on select button event
-			document.addEventListener('click', function(e) {
+			document.addEventListener('click', (e) => {
 				var elem = e.target.closest('.custom-select__button');
 
 				if (!elem) {
@@ -574,10 +574,10 @@ var CustomPlaceholder, CustomSelect;
 					this.open();
 				}
 
-			}.bind(this));
+			});
 
 			//click on value button event
-			document.addEventListener('click', function(e) {
+			document.addEventListener('click', (e) => {
 				var elem = e.target.closest('.custom-select__val');
 
 				if (!elem) {
@@ -588,10 +588,10 @@ var CustomPlaceholder, CustomSelect;
 
 				this.selectVal(elem);
 
-			}.bind(this));
+			});
 
 			//focus autocomplete
-			document.addEventListener('focus', function(e) {
+			document.addEventListener('focus', (e) => {
 				var elem = e.target.closest('.custom-select__autocomplete');
 
 				if (!elem) {
@@ -606,10 +606,10 @@ var CustomPlaceholder, CustomSelect;
 					this.open();
 				}
 
-			}.bind(this), true);
+			}, true);
 
 			//input autocomplete
-			document.addEventListener('input', function(e) {
+			document.addEventListener('input', (e) => {
 				var elem = e.target.closest('.custom-select__autocomplete');
 
 				if (!elem) {
@@ -624,10 +624,10 @@ var CustomPlaceholder, CustomSelect;
 					this.open();
 				}
 
-			}.bind(this));
+			});
 
 			//keyboard events
-			document.addEventListener('keydown', function(e) {
+			document.addEventListener('keydown', (e) => {
 				var elem = e.target.closest('.custom-select_opened');
 
 				if (!elem) {
@@ -643,15 +643,15 @@ var CustomPlaceholder, CustomSelect;
 					this.keyboard(key);
 				}
 
-			}.bind(this));
+			});
 
 			//close all
-			document.addEventListener('click', function(e) {
+			document.addEventListener('click', (e) => {
 				if (!e.target.closest('.custom-select_opened')) {
 					this.fillAcHead();
 					this.close();
 				}
-			}.bind(this));
+			});
 
 		}
 
@@ -711,7 +711,7 @@ var CustomPlaceholder, CustomSelect;
 
 		init: function() {
 
-			document.addEventListener('change', function(e) {
+			document.addEventListener('change', (e) => {
 				var elem = e.target.closest('input[type="file"]');
 
 				if (!elem) {
@@ -720,7 +720,7 @@ var CustomPlaceholder, CustomSelect;
 
 				this.changeInput(elem);
 
-			}.bind(this));
+			});
 
 		}
 
@@ -738,7 +738,7 @@ var CustomPlaceholder, CustomSelect;
 
 		init: function() {
 
-			document.addEventListener('input', function(e) {
+			document.addEventListener('input', (e) => {
 				var elem = e.target.closest('.var-height-textarea__textarea');
 
 				if (!elem) {
@@ -747,7 +747,7 @@ var CustomPlaceholder, CustomSelect;
 
 				this.setHeight(elem);
 
-			}.bind(this));
+			});
 
 		}
 

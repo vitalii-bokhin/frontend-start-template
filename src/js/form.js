@@ -24,7 +24,7 @@ var Form;
 
 		init: function(form, elemStr) {
 
-			form.addEventListener('click', function(e) {
+			form.addEventListener('click', (e) => {
 
 				var elem = e.target.closest(elemStr);
 
@@ -32,7 +32,7 @@ var Form;
 					this.next(elem);
 				}
 
-			}.bind(this));
+			});
 
 		}
 
@@ -88,7 +88,7 @@ var Form;
 		}
 
 		//submit
-		function submit(e) {
+		const submit = (e) => {
 
 			if (ValidateForm.submit(form)) {
 
@@ -124,7 +124,7 @@ var Form;
 		}
 
 		//add submit event
-		form.addEventListener('submit', submit.bind(this));
+		form.addEventListener('submit', submit);
 
 		ValidateForm.init(form);
 

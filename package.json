@@ -9,8 +9,13 @@
   "author": "Lufter",
   "license": "CC BY 4.0",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
+    "babel-preset-env": "^1.7.0",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-file-include": "^1.0.0",
     "gulp-notify": "^2.2.0",
@@ -19,5 +24,22 @@
     "gulp-sass": "^3.2.1",
     "gulp-sourcemaps": "^1.12.1",
     "gulp-uglify": "^2.0.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 2 versions"
+            ]
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-remove-strict-mode"
+    ]
   }
 }
