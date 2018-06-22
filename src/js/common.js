@@ -55,11 +55,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	//init cover images
 	CoverImg.init();
-
+     
+	//init toggle button
+	Toggle.init('.js-toggle');
+ 
 	//popup init
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
-
+ 
 	//submit forms
 	var form = new Form('#form');
 
