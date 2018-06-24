@@ -1,0 +1,19 @@
+html, body {
+	font-family: $ff_hn;
+	font-size: 16px;
+	color: $bk;
+	background: #ffffff;
+	height: 100%;
+}
+
+body{
+	&.is-menu-opened{
+		position: fixed;
+		left: 0;
+		right: 0;
+	}
+}
+ 
+a:hover{
+	text-decoration: none;
+}

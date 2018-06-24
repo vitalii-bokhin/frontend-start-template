@@ -1,4 +1,8 @@
-$(document).ready(function(){ 
+/*
+* In common.js use only ECMAScript 5.1
+*/
+
+$(document).ready(function(){
 
 	//fixed block
 	$('.fix-block').each(function() {
