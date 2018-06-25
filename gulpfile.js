@@ -19,13 +19,13 @@ var modulesOn = [
 'form',
 'customform',
 'validateform',
-'accord',
-'more',
+//'accord',
+//'more',
 'popup',
-'floatslider',
-'tab',
-'slickslider',
-'scrollpane',
+//'floatslider',
+//'tab',
+//'slickslider',
+//'scrollpane',
 ];
 
 var modulesPath = {

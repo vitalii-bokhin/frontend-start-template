@@ -2,7 +2,7 @@
 * In common.js use only ECMAScript 5.1
 */
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 
 	//fixed block
 	$('.fix-block').each(function() {
@@ -42,14 +42,13 @@ $(document).ready(function(){
 	$('input[data-type="tel"]').mask('+7(999)999-99-99');
 	$('input[data-type="date"]').mask('99.99.9999');
 
-});
+});*/
 
 
 //document is ready
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
 
 	(function initFun() {
-
 		flexImg('.flex-img');
 
 		CoverImg.reInit();
@@ -114,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	new Form('#search-form');
 
 });
-
 
 //GetCountriesAndCitiesList
 function dAirGetInit() {
