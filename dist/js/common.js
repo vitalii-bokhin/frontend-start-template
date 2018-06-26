@@ -66,8 +66,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
  
+
 	//submit forms
 	var form = new Form('#form');
+
+	NextFieldset.init(form.element, '.form__button');
+
+	ValidateForm.init(form.element);
 
 	form.onSubmit = function(form) {
 		callback({clearForm: true});
@@ -76,41 +81,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	var ajaxForm = new Form('#form-ajax');
 
+	ValidateForm.init(ajaxForm.element);
+
 	ajaxForm.onSubmit = function(form, callback) {
+		if (ValidateForm.submit(form)) {
+			setTimeout(function() {
+				callback({clearForm: true, unlockSubmitButton: true});
+			}, 1000);
 
-		setTimeout(function() {
-			callback({clearForm: true, unlockSubmitButton: true});
-		}, 1000);
+			/*
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', form.action);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
 
-		
-		/*
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST', form.action);
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4 && xhr.status == 200) {
+					var response = JSON.parse(xhr.response);  //response json
 
-				var response = JSON.parse(xhr.response);  //response json
+					if (response.status == 'sent') {
 
-				if (response.status == 'sent') {
+						Popup.message('#message-popup', 'Форма отправлена');
+						callback({clearForm: true, unlockSubmitButton: true});
 
-					Popup.message('#message-popup', 'Форма отправлена');
-					callback({clearForm: true, unlockSubmitButton: true});
+					} else {
+						console.log(response);
+					}
 
-				} else {
-					console.log(response);
 				}
-
 			}
+			xhr.send(new FormData(form));
+			*/
+			return true;
 		}
-		xhr.send(new FormData(form));
-		*/
-
-		
 	}
 
-	new Form('#form-no-ajax');
 
-	new Form('#search-form');
+	var noAjaxForm = new Form('#form-no-ajax');
+
+	ValidateForm.init(noAjaxForm.element);
+
+
+	var searchForm = new Form('#search-form');
+
+	ValidateForm.init(searchForm.element);
 
 });
 

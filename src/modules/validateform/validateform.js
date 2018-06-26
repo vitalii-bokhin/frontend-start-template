@@ -373,19 +373,25 @@ var ValidateForm;
 		},
 
 		submit: function(form) {
-
 			return this.validate(form);
-
 		},
 
 		init: function(form) {
-
 			form.addEventListener('input', this.validateOnInputOrBlur.bind(this));
 
 			form.addEventListener('blur', this.validateOnInputOrBlur.bind(this), true);
 
 			form.addEventListener('change', this.file.bind(this));
 
+			form.addEventListener('submit', (e) => {
+				if (this.validate(form)) {
+					form.classList.remove('form_error');
+				} else {
+					e.preventDefault();
+
+					form.classList.add('form_error');
+				}
+			});
 		}
 
 	};

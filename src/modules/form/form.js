@@ -1,10 +1,10 @@
-var Form;
+var Form, NextFieldset;
 
 (function() {
 	"use strict";
 
 	//next fieldset
-	var NextFieldset = {
+	NextFieldset = {
 
 		next: function(elem) {
 			var nextFieldset = (elem.hasAttribute('data-next-fieldset-item')) ? document.querySelector(elem.getAttribute('data-next-fieldset-item')) : false;
@@ -49,6 +49,8 @@ var Form;
 			return;
 		}
 
+		this.element = form;
+
 		//clear form
 		function clear() {
 			//clear inputs
@@ -88,48 +90,32 @@ var Form;
 		}
 
 		//submit
-		const submit = (e) => {
+		form.addEventListener('submit', (e) => {
+			if (this.onSubmit) {
+				e.preventDefault();
 
-			if (ValidateForm.submit(form)) {
+				var sending = this.onSubmit(form, function(obj) {
+					obj = obj || {};
 
-				actSubmitBtn(false);
+					actSubmitBtn(obj.unlockSubmitButton);
 
-				form.classList.add('form_sending');
+					form.classList.remove('form_sending');
 
-				if (this.onSubmit) {
-					e.preventDefault();
+					if (obj.clearForm == true) {
+						clear();
+					}
+				});
 
-					this.onSubmit(form, function(obj) {
-						obj = obj || {};
+				if (sending) {
+					actSubmitBtn(false);
 
-						actSubmitBtn(obj.unlockSubmitButton);
-
-						form.classList.remove('form_sending');
-
-						if (obj.clearForm == true) {
-							clear();
-						}
-
-					});
-
+					form.classList.add('form_sending');
 				}
 
-				form.classList.remove('form_error');
-
-			} else {
-				e.preventDefault();
-				form.classList.add('form_error');
 			}
+		});
 
-		}
-
-		//add submit event
-		form.addEventListener('submit', submit);
-
-		ValidateForm.init(form);
-
-		NextFieldset.init(form, '.form__button');
-
+		
 	}
 	
 
