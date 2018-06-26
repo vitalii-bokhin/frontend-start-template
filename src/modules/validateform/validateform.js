@@ -8,12 +8,12 @@ var ValidateForm;
 		input: null,
 
 		errorTip: function(err, errInd) {
-			var field = this.input.closest('.form__field'),
-			errTip = field.querySelector('.form__error-tip');
+			var field = this.input.parentElement,
+			errTip = field.querySelector('.field-error-tip');
 
 			if (err) {
 
-				field.classList.add('form__field_error');
+				field.classList.add('field-error');
 
 				if (errInd) {
 					if (!errTip.getAttribute('data-error-text')) {
@@ -23,7 +23,7 @@ var ValidateForm;
 				}
 
 			} else {
-				field.classList.remove('form__field_error');
+				field.classList.remove('field-error');
 			}
 
 		},
@@ -385,11 +385,11 @@ var ValidateForm;
 
 			form.addEventListener('submit', (e) => {
 				if (this.validate(form)) {
-					form.classList.remove('form_error');
+					form.classList.remove('form-error');
 				} else {
 					e.preventDefault();
 
-					form.classList.add('form_error');
+					form.classList.add('form-error');
 				}
 			});
 		}

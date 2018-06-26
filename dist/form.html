@@ -109,19 +109,19 @@
 				<div class="col-4">
 					<div class="form__field">
 						<input type="text" data-required="true" placeholder="Name*" class="form__text-input" value="" >
-						<div class="form__error-tip">Enter your name</div>
+						<div class="field-error-tip">Enter your name</div>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form__field">
 						<input type="text" data-type="email" data-required="true" placeholder="E-mail*" class="form__text-input" value="">
-						<div class="form__error-tip" data-error-text-2="Enter a valid e-mail address">Enter your e-mail</div>
+						<div class="field-error-tip" data-error-text-2="Enter a valid e-mail address">Enter your e-mail</div>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form__field">
 						<input id="some-input-id" type="text" data-type="tel" data-required="true" placeholder="Phone number*" class="form__text-input" value="">
-						<div class="form__error-tip" data-error-text-2="Enter a valid phone number">Enter your phone number</div>
+						<div class="field-error-tip" data-error-text-2="Enter a valid phone number">Enter your phone number</div>
 					</div>
 				</div>
 			</div>
@@ -130,7 +130,7 @@
 				<div class="col-4">
 					<div class="form__field">
 						<input type="text" data-type="date" data-required="true" placeholder="Date of birth*" class="form__text-input" value="">
-						<div class="form__error-tip" data-error-text-2="Enter a valid birth date">Enter your birth date</div>
+						<div class="field-error-tip" data-error-text-2="Enter a valid birth date">Enter your birth date</div>
 					</div>
 				</div>
 			</div>
@@ -139,7 +139,7 @@
 				<div class="col-12">
 					<div class="form__field">
 						<textarea name="message" placeholder="Message*" data-required="true" class="form__textarea"></textarea>
-						<div class="form__error-tip">Enter message</div>
+						<div class="field-error-tip">Enter message</div>
 					</div>
 				</div>
 			</div>
@@ -158,7 +158,7 @@
 						<div class="col-4">
 							<div class="form__field">
 								<input type="text" data-required="true" placeholder="Nickname*" class="form__text-input step-fs1-inp" value="" >
-								<div class="form__error-tip">Enter your nickname</div>
+								<div class="field-error-tip">Enter your nickname</div>
 							</div>
 						</div>
 					</div>
@@ -175,7 +175,7 @@
 						<div class="col-4">
 							<div class="form__field">
 								<input type="text" data-required="true" placeholder="Height*" class="form__text-input step-fs2-inp" value="" >
-								<div class="form__error-tip">Enter your height</div>
+								<div class="field-error-tip">Enter your height</div>
 							</div>
 						</div>
 					</div>
@@ -195,7 +195,7 @@
 						<div class="col-4">
 							<div class="form__field">
 								<input type="text" data-required="true" placeholder="Weight*" class="form__text-input" value="" >
-								<div class="form__error-tip">Enter your weight</div>
+								<div class="field-error-tip">Enter your weight</div>
 							</div>
 						</div>
 					</div>
@@ -215,19 +215,19 @@
 				<div class="col-4">
 					<div class="form__field">
 						<input type="password" data-type="pass" data-required="true" placeholder="Current password" class="form__text-input" value="">
-						<div class="form__error-tip">Enter current password</div>
+						<div class="field-error-tip">Enter current password</div>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form__field">
 						<input id="new-pass-input" type="password" data-type="pass" data-required="true" data-min-length="6" placeholder="New password" class="form__text-input" value="">
-						<div class="form__error-tip" data-error-text-2="At least 6 characters">Enter new password</div>
+						<div class="field-error-tip" data-error-text-2="At least 6 characters">Enter new password</div>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form__field">
 						<input type="password" data-type="pass" data-required="true" data-pass-compare-input="#new-pass-input" placeholder="Re-enter new password" class="form__text-input" value="">
-						<div class="form__error-tip" data-error-text-2="Passwords must match">Re-enter new password</div>
+						<div class="field-error-tip" data-error-text-2="Passwords must match">Re-enter new password</div>
 					</div>
 				</div>
 			</div>
@@ -238,7 +238,7 @@
 				</div>
 			</div>
 
-			<div class="form__alert">Ошибка заполнения полей формы</div>
+			<div class="form-error-tip">Ошибка заполнения полей формы</div>
 
 		</form>
 
@@ -255,7 +255,7 @@
 				<div class="col-12">
 					<div class="form__field">
 						<input type="text" name="name" data-required="true" placeholder="Name*" class="form__text-input" value="">
-						<div class="form__error-tip">Enter your name</div>
+						<div class="field-error-tip">Enter your name</div>
 					</div>
 				</div>
 			</div>
@@ -264,7 +264,7 @@
 					<button type="submit" class="form__submit button">Submit</button>
 				</div>
 			</div>
-			<div class="form__alert">Form error</div>
+			<div class="form-error-tip">Form error</div>
 			<div class="row">
 				<div class="col-12">
 					<div class="form__loader"></div>
@@ -284,7 +284,7 @@
 				<div class="col-12">
 					<div class="form__field">
 						<input type="text" data-required="true" placeholder="Name*" class="form__text-input" value="">
-						<div class="form__error-tip">Enter your name</div>
+						<div class="field-error-tip">Enter your name</div>
 					</div>
 				</div>
 			</div>
@@ -293,7 +293,7 @@
 					<button type="submit" class="form__submit button">Submit</button>
 				</div>
 			</div>
-			<div class="form__alert">Ошибка заполнения полей формы</div>
+			<div class="form-error-tip">Ошибка заполнения полей формы</div>
 		</form>
 	</div>
 
@@ -310,7 +310,7 @@
 					<div class="form__field form__field_btn">
 						<input type="text" data-required="true" placeholder="Search..." class="form__text-input" value="">
 						<button type="submit" class="form__btn form__btn_search"></button>
-						<div class="form__error-tip">Enter your request</div>
+						<div class="field-error-tip">Enter your request</div>
 					</div>
 				</div>
 			</div>
