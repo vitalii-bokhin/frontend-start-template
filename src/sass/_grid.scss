@@ -1,4 +1,4 @@
-.wrap{
+/*.wrap{
 	margin: 0 auto;
 	max-width: 1170px;
 	padding-left: 20px;
@@ -27,10 +27,12 @@
 			padding-right: 15px;
 		}
 	}
-}
+}*/
 
 .row{
 	@include clr;
+	margin: auto;
+	max-width: 1190px;
 	
 	&,
 	&-col-mid,
@@ -43,10 +45,8 @@
 		}
 	}
 	
-
 	& > div[class*="col"]{
 		float: left;
-		
 	}
 
 	& > div[class*="col-pull"],
@@ -206,7 +206,6 @@
 		width: 95.833295%;
 	}
 	&-12{
-		width: 100%;
 		float: none !important;
 		clear: both;
 	}
