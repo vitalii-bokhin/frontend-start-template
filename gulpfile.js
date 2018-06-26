@@ -16,12 +16,13 @@ del = require('del');
 var modulesOn = [
 'button',
 'image',
+'popup',
 'form',
 'customform',
 'validateform',
+//'video',
 //'accord',
 //'more',
-'popup',
 //'floatslider',
 //'tab',
 //'slickslider',
@@ -31,22 +32,23 @@ var modulesOn = [
 var modulesPath = {
 	button: 'src/modules/button/',
 	image: 'src/modules/image/',
+	popup: 'src/modules/popup/',
 	form: 'src/modules/form/',
 	customform: 'src/modules/customform/',
 	validateform: 'src/modules/validateform/',
+	video: 'src/modules/video/',
 	accord: 'src/modules/accord/',
 	more: 'src/modules/more/',
-	popup: 'src/modules/popup/',
 	floatslider: 'src/modules/floatslider/',
 	tab: 'src/modules/tab/',
 	slickslider: 'src/modules/slickslider/',
 	scrollpane: 'src/modules/scrollpane/',
 };
 
-
 //css src
-var cssSrc = ['src/sass/common.scss'].concat(modulesOn.map((m) => modulesPath[m]+ '*.scss'));
+var cssSrc = ['src/sass/common.scss'].concat(modulesOn.map((m) => modulesPath[m]+ '*.scss'), 'src/sass/other.scss', 'src/sass/class.scss');
 
+//js src
 var jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => modulesPath[m]+ '*.js'));
 
 //dev build
