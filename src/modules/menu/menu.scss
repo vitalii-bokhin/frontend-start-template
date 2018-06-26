@@ -1,0 +1,117 @@
+@import "../../sass/_variables.scss";
+@import "../../sass/_mixins.scss";
+
+/*Header Menu*/
+.menu{
+	@include clr;
+	list-style: none;
+	padding-top: 8px;
+	&__item{
+		float: left;
+		margin-left: 45px;
+		&:first-child{
+			margin-left: 0;
+		}
+		&_has-children{
+			position: relative;
+			.menu__arr{
+				display: inline-block;
+			}
+			&:hover{
+				.menu__sub-menu{
+					visibility: visible;
+					opacity: 1;
+				}
+			}
+		}
+	}
+	&__a{
+		font-size: 18px;
+		font-weight: 500;
+		text-decoration: none;
+		transition: .5s;
+		&:hover{
+			color: $rd;
+		}
+	}
+	&__arr{
+		display: none;
+		width: 12px;
+		height: 8px;
+		position: relative;
+		bottom: 2px;
+		margin-left: 7px;
+		border: none;
+		background: none;
+		@include sp(-39px -8px);
+	}
+	&__sub-menu{
+		position: absolute;
+		list-style: none;
+		width: 6000%;
+		padding: 24px 0 16px 3000%;
+		top: 100%;
+		left: -3000%;
+		visibility: hidden;
+		opacity: 0;
+		transition: .3s;
+		.header_fixed &{
+			background: #ffffff;
+			box-shadow: 0 3px 3px rgba(0,0,0,.11);
+		}
+		&-item{
+			float: left;
+			margin-left: 25px;
+			&:first-child{
+				margin-left: 0;
+			}
+		}
+		&-a{
+			font-size: 14px;
+			font-weight: 300;
+			text-decoration: none;
+			display: inline-block;
+			transition: .5s;
+			&:hover{
+				color: $rd;
+			}
+		}
+	}
+
+	@media(max-width: 1200px){
+		&__item{
+			
+		}
+	}
+	@media(max-width: 1000px){
+		padding: 10px 25px;
+		&__item{
+			float: none;
+			text-align: center;
+			margin: 25px 0;
+		}
+		&__a{
+			.menu__item_has-children &{
+				margin-left: 21px;
+			}
+		}
+		&__sub-menu{
+			width: auto;
+			left: 0;
+			padding: 14px 0 0;
+			box-shadow: none !important;
+			position: relative;
+			visibility: visible;
+			opacity: 1;
+			display: none;
+			&-item{
+				float: none;
+				margin: 0;
+				padding: 9px 0;
+			}
+			.menu__item_has-children:hover &{
+				display: block;
+			}
+		}
+	}
+}

@@ -14,12 +14,16 @@ del = require('del');
 
 //modules
 var modulesOn = [
+'header',
+'menu',
+'user',
 'button',
 'image',
 'popup',
 'form',
 'customform',
 'validateform',
+'footer',
 //'video',
 //'accord',
 //'more',
@@ -30,6 +34,8 @@ var modulesOn = [
 ];
 
 var modulesPath = {
+	header: 'src/modules/header/',
+	menu: 'src/modules/menu/',
 	button: 'src/modules/button/',
 	image: 'src/modules/image/',
 	popup: 'src/modules/popup/',
@@ -43,6 +49,8 @@ var modulesPath = {
 	tab: 'src/modules/tab/',
 	slickslider: 'src/modules/slickslider/',
 	scrollpane: 'src/modules/scrollpane/',
+	footer: 'src/modules/footer/',
+	user: 'src/modules/user/'
 };
 
 //css src
