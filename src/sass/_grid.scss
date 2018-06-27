@@ -31,13 +31,14 @@
 
 .row{
 	@include clr;
-	margin: auto;
-	max-width: 1190px;
-	
+
 	&,
 	&-col-mid,
 	&-col-bot,
 	&-tbl{
+		margin: auto;
+		max-width: 1170px;
+
 		& > div[class*="col"]{
 			padding-left: 10px;
 			padding-right: 10px;

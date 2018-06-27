@@ -13,6 +13,27 @@ del = require('del');
 
 
 //modules
+var modules = {
+	accord: 'src/modules/accord/',
+	button: 'src/modules/button/',
+	customform: 'src/modules/customform/',
+	floatslider: 'src/modules/floatslider/',
+	form: 'src/modules/form/',
+	footer: 'src/modules/footer/',
+	header: 'src/modules/header/',
+	image: 'src/modules/image/',
+	menu: 'src/modules/menu/',
+	more: 'src/modules/more/',
+	popup: 'src/modules/popup/',
+	scrollpane: 'src/modules/scrollpane/',
+	slickslider: 'src/modules/slickslider/',
+	tab: 'src/modules/tab/',
+	user: 'src/modules/user/',
+	validateform: 'src/modules/validateform/',
+	video: 'src/modules/video/'
+};
+
+
 var modulesOn = [
 'header',
 'menu',
@@ -33,31 +54,11 @@ var modulesOn = [
 //'scrollpane',
 ];
 
-var modulesPath = {
-	header: 'src/modules/header/',
-	menu: 'src/modules/menu/',
-	button: 'src/modules/button/',
-	image: 'src/modules/image/',
-	popup: 'src/modules/popup/',
-	form: 'src/modules/form/',
-	customform: 'src/modules/customform/',
-	validateform: 'src/modules/validateform/',
-	video: 'src/modules/video/',
-	accord: 'src/modules/accord/',
-	more: 'src/modules/more/',
-	floatslider: 'src/modules/floatslider/',
-	tab: 'src/modules/tab/',
-	slickslider: 'src/modules/slickslider/',
-	scrollpane: 'src/modules/scrollpane/',
-	footer: 'src/modules/footer/',
-	user: 'src/modules/user/'
-};
-
 //css src
-var cssSrc = ['src/sass/common.scss'].concat(modulesOn.map((m) => modulesPath[m]+ '*.scss'), 'src/sass/other.scss', 'src/sass/class.scss');
+var cssSrc = ['src/sass/common.scss'].concat(modulesOn.map((m) => modules[m]+ '*.scss'), 'src/sass/other.scss', 'src/sass/class.scss');
 
 //js src
-var jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => modulesPath[m]+ '*.js'));
+var jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => modules[m]+ '*.js'));
 
 //dev build
 gulp.task('dev', function() {
