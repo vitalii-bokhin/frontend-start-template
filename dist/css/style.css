@@ -683,10 +683,6 @@ a:hover {
   flex-direction: column;
 }
 
-.wrapper_fsscroll {
-  padding-top: 0 !important;
-}
-
 .wrapper__full-height {
   position: absolute;
   width: 100%;
@@ -709,11 +705,11 @@ a:hover {
 
 .header {
   display: block;
-  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 8;
+  width: 100%;
 }
 
 @media (min-width: 1001px) {
@@ -748,12 +744,6 @@ a:hover {
 
 .footer {
   flex: 0 0 auto;
-}
-
-/*full screen scroll*/
-.fsscroll__screen {
-  position: relative;
-  padding-top: 100px;
 }
 
 .header {

@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	ValidateForm.init(ajaxForm.element);
 
-	ajaxForm.onSubmit = function(form, callback) {
+	ajaxForm.onSubmit = function(form, callback) { 
 		if (ValidateForm.submit(form)) {
 			setTimeout(function() {
 				callback({clearForm: true, unlockSubmitButton: true});

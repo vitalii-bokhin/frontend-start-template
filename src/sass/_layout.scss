@@ -6,10 +6,6 @@
 	padding-top: 100px;
 	display: flex;
 	flex-direction: column;
-	
-	&_fsscroll{
-		padding-top: 0 !important;
-	}
 
 	&__full-height{
 		@include fwh;
@@ -30,11 +26,12 @@
 
 .header{
 	display: block;
-	width: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 8;
+	width: 100%;
+	
 	@media(min-width: 1001px){
 		transform: translate3d(0, 0, 0);
 	}
@@ -62,12 +59,4 @@
 
 .footer{
 	flex: 0 0 auto;
-}
-
-/*full screen scroll*/
-.fsscroll{
-	&__screen{
-		position: relative;
-		padding-top: 100px;
-	}
 }

@@ -15,19 +15,27 @@ del = require('del');
 //modules
 var modules = {
 	accord: 'src/modules/accord/',
+	anchor: 'src/modules/anchor/',
 	button: 'src/modules/button/',
 	customform: 'src/modules/customform/',
+	diagram: 'src/modules/diagram/',
 	floatslider: 'src/modules/floatslider/',
 	form: 'src/modules/form/',
 	footer: 'src/modules/footer/',
+	fsscroll: 'src/modules/fsscroll/',
+	getcontentajax: 'src/modules/getcontentajax/',
 	header: 'src/modules/header/',
 	image: 'src/modules/image/',
 	menu: 'src/modules/menu/',
 	more: 'src/modules/more/',
+	mouseparallax: 'src/modules/mouseparallax/',
+	numberspin: 'src/modules/numberspin/',
 	popup: 'src/modules/popup/',
 	scrollpane: 'src/modules/scrollpane/',
+	share: 'src/modules/share/',
 	slickslider: 'src/modules/slickslider/',
 	tab: 'src/modules/tab/',
+	timer: 'src/modules/timer/',
 	user: 'src/modules/user/',
 	validateform: 'src/modules/validateform/',
 	video: 'src/modules/video/'
@@ -45,6 +53,14 @@ var modulesOn = [
 'customform',
 'validateform',
 'footer',
+//'getcontentajax',
+//'share',
+//'numberspin',
+//'anchor',
+//'timer',
+//'fsscroll',
+//'mouseparallax',
+//'diagram',
 //'video',
 //'accord',
 //'more',
@@ -93,18 +109,18 @@ gulp.task('dev', function() {
 	});
 
 	//watch html
-	gulp.watch('src/html/*.html', function(event) {
-		HTML(['!src/html/_*.html', event.path]);
+	gulp.watch(['src/html/*.html', '!src/html/_*.html'], function(event) {
+		HTML(event.path);
 	});
 
 	gulp.watch(['src/html/_*.html', 'src/modules/**/*.html'], function() {
-		HTML(['!src/html/_*.html', 'src/html/*.html']);
+		HTML(['src/html/*.html', '!src/html/_*.html']);
 	});
 });
 
-//final build
-gulp.task('fin', function() {
-	HTML(['!src/html/_*.html', 'src/html/*.html'], true);
+//dist build
+gulp.task('dist', function() {
+	HTML(['src/html/*.html', '!src/html/_*.html'], true);
 
 	CSS(cssSrc, true);
 
@@ -120,9 +136,9 @@ gulp.task('fin', function() {
 });
 
 
-function CSS(src, fin) {
+function CSS(src, dist) {
 	setTimeout(function() {
-		if (fin) {
+		if (dist) {
 			gulp.src(src)
 			.pipe(sourcemaps.init())
 			.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
@@ -144,8 +160,8 @@ function CSS(src, fin) {
 	}, 321);
 }
 
-function JS(src, fin) {
-	if (fin) {
+function JS(src, dist) {
+	if (dist) {
 		gulp.src(src)
 		.pipe(sourcemaps.init())
 		.pipe(babel())
@@ -166,9 +182,9 @@ function JS(src, fin) {
 	}
 }
 
-function HTML(src, fin) {
+function HTML(src, dist) {
 
-	if (fin) {
+	if (dist) {
 		gulp.src(src)
 		.pipe(fileinclude())
 		.pipe(replace('style.css', 'style.min.css'))
