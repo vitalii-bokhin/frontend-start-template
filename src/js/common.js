@@ -70,59 +70,67 @@ document.addEventListener('DOMContentLoaded', function() {
 	//submit forms
 	var form = new Form('#form');
 
-	NextFieldset.init(form.element, '.form__button');
+	if (form.element) {
+		NextFieldset.init(form.element, '.form__button');
 
-	ValidateForm.init(form.element);
+		ValidateForm.init(form.element);
 
-	form.onSubmit = function(form) {
-		callback({clearForm: true});
+		form.onSubmit = function(form) {
+			callback({clearForm: true});
+		}
 	}
 
 
 	var ajaxForm = new Form('#form-ajax');
 
-	ValidateForm.init(ajaxForm.element);
+	if (ajaxForm.element) {
+		ValidateForm.init(ajaxForm.element);
 
-	ajaxForm.onSubmit = function(form, callback) { 
-		if (ValidateForm.submit(form)) {
-			setTimeout(function() {
-				callback({clearForm: true, unlockSubmitButton: true});
-			}, 1000);
+		ajaxForm.onSubmit = function(form, callback) {
+			if (ValidateForm.submit(form)) {
+				setTimeout(function() {
+					callback({clearForm: true, unlockSubmitButton: true});
+				}, 1000);
 
-			/*
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST', form.action);
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4 && xhr.status == 200) {
+				/*
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', form.action);
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4 && xhr.status == 200) {
 
-					var response = JSON.parse(xhr.response);  //response json
+						var response = JSON.parse(xhr.response);  //response json
 
-					if (response.status == 'sent') {
+						if (response.status == 'sent') {
 
-						Popup.message('#message-popup', 'Форма отправлена');
-						callback({clearForm: true, unlockSubmitButton: true});
+							Popup.message('#message-popup', 'Форма отправлена');
+							callback({clearForm: true, unlockSubmitButton: true});
 
-					} else {
-						console.log(response);
+						} else {
+							console.log(response);
+						}
+
 					}
-
 				}
+				xhr.send(new FormData(form));
+				*/
+				return true;
 			}
-			xhr.send(new FormData(form));
-			*/
-			return true;
 		}
 	}
 
 
 	var noAjaxForm = new Form('#form-no-ajax');
 
-	ValidateForm.init(noAjaxForm.element);
-
+	if (noAjaxForm.element) {
+		ValidateForm.init(noAjaxForm.element);
+	}
+	
 
 	var searchForm = new Form('#search-form');
 
-	ValidateForm.init(searchForm.element);
+	if (searchForm.element) {
+		ValidateForm.init(searchForm.element);
+	}
 
 });
 

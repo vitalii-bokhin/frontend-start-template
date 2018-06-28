@@ -23,19 +23,14 @@ var Form, NextFieldset;
 		},
 
 		init: function(form, elemStr) {
-
 			form.addEventListener('click', (e) => {
-
 				var elem = e.target.closest(elemStr);
 
 				if (elem) {
 					this.next(elem);
 				}
-
 			});
-
 		}
-
 	};
 
 	//init forms

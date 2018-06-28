@@ -135,7 +135,8 @@ gulp.task('dist', function() {
 	del(['dist/js/script.js', 'dist/js/script.js.map']);
 });
 
-
+//Functions
+//css
 function CSS(src, dist) {
 	setTimeout(function() {
 		if (dist) {
@@ -160,6 +161,7 @@ function CSS(src, dist) {
 	}, 321);
 }
 
+//javascript
 function JS(src, dist) {
 	if (dist) {
 		gulp.src(src)
@@ -182,8 +184,8 @@ function JS(src, dist) {
 	}
 }
 
+//html
 function HTML(src, dist) {
-
 	if (dist) {
 		gulp.src(src)
 		.pipe(fileinclude())
@@ -199,5 +201,4 @@ function HTML(src, dist) {
 		.pipe(gulp.dest('dist'))
 		.pipe(notify('HTML has Compiled!'));
 	}
-
 }
