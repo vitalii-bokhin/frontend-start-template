@@ -97,7 +97,7 @@ gulp.task('dev', function() {
 		HTML(['!src/html/_*.html', event.path]);
 	});
 
-	gulp.watch('src/html/_*.html', function() {
+	gulp.watch(['src/html/_*.html', 'src/modules/**/*.html'], function() {
 		HTML(['!src/html/_*.html', 'src/html/*.html']);
 	});
 });
