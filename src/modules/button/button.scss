@@ -1,32 +1,26 @@
 @import "../../sass/variables";
 @import "../../sass/mixins";
 
-.button{
+@mixin btn($fs: 14px, $fw: 500, $pt: 16px, $pr: 28px, $pb: 14px, $pl: 28px, $br: 0) {
 	display: inline-block;
-	font-size: 14px;
-	font-weight: 500;
+	font-size: $fs;
+	font-weight: $fw;
 	letter-spacing: 1px;
-	padding: 16px 28px 14px;
-	text-align: center;
 	color: #FFF;
-	border: none;
-	background: $bk;
-	text-transform: uppercase;
+	padding: $pt $pr $pb $pl;
+	text-align: center;
 	text-decoration: none;
+	border: none;
+	border-radius: $br;
+	background: $bk;
 	-webkit-appearance: none;
 	user-select: none;
 	transition: .5s;
-	&_arr{
-		&:after{
-			display: inline-block;
-			content: "";
-			width: 7px;
-			height: 11px;
-			@include sp(-43px -1px);
-			margin-left: 5px;
-		}
-	}
+}
 
+.btn{
+	@include btn;
+	
 	&_w220{
 		width: 100%;
 		max-width: 220px;
@@ -52,6 +46,18 @@
 	}
 }
 
+.arrow-btn{
+	@include btn
+
+	&:after{
+		display: inline-block;
+		content: "";
+		width: 7px;
+		height: 11px;
+		@include sp(-43px -1px);
+		margin-left: 5px;
+	}
+}
 
 /*toggle*/
 .toggle{

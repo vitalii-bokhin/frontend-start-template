@@ -329,6 +329,7 @@ a:hover {
 }
 
 .col-right {
+  float: right !important;
   margin-left: auto;
 }
 
@@ -437,7 +438,7 @@ a:hover {
   }
   .vw1200-col-12 {
     float: none !important;
-    clear: both;
+    margin-left: 0;
     max-width: 100%;
     flex-basis: 100%;
   }
@@ -542,7 +543,7 @@ a:hover {
   }
   .vw1000-col-12 {
     float: none !important;
-    clear: both;
+    margin-left: 0;
     max-width: 100%;
     flex-basis: 100%;
   }
@@ -623,6 +624,7 @@ a:hover {
 .header {
   display: flex;
   height: 100px;
+  align-items: center;
   transition: .21s;
 }
 
@@ -633,7 +635,6 @@ a:hover {
 
 .header__row {
   max-width: none;
-  align-self: center;
 }
 
 .header__logo {
@@ -872,24 +873,67 @@ a:hover {
   padding: 25px;
 }
 
-.button {
+.btn {
   display: inline-block;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;
-  padding: 16px 28px 14px;
-  text-align: center;
   color: #FFF;
-  border: none;
-  background: #212121;
-  text-transform: uppercase;
+  padding: 16px 28px 14px 28px;
+  text-align: center;
   text-decoration: none;
+  border: none;
+  border-radius: 0;
+  background: #212121;
   -webkit-appearance: none;
   user-select: none;
   transition: .5s;
 }
 
-.button_arr:after {
+.btn_w220 {
+  width: 100%;
+  max-width: 220px;
+}
+
+.btn_w-full {
+  width: 100%;
+}
+
+.btn.lock {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .btn:hover {
+    opacity: .6;
+  }
+}
+
+@media (max-width: 1000px) {
+  .btn {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.arrow-btn {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #FFF;
+  padding: 16px 28px 14px 28px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 0;
+  background: #212121;
+  -webkit-appearance: none;
+  user-select: none;
+  transition: .5s;
+}
+
+.arrow-btn:after {
   display: inline-block;
   content: "";
   width: 7px;
@@ -899,32 +943,6 @@ a:hover {
   background-position: -43px -1px;
   background-size: 50px auto;
   margin-left: 5px;
-}
-
-.button_w220 {
-  width: 100%;
-  max-width: 220px;
-}
-
-.button_w-full {
-  width: 100%;
-}
-
-.button.lock {
-  display: none;
-}
-
-@media (min-width: 1200px) {
-  .button:hover {
-    opacity: .6;
-  }
-}
-
-@media (max-width: 1000px) {
-  .button {
-    width: 100%;
-    max-width: none;
-  }
 }
 
 /*toggle*/

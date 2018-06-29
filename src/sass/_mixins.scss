@@ -1,4 +1,4 @@
-@mixin clr(){
+@mixin clr() {
 	&:after{
 		display: block;
 		width: 100%;
@@ -8,13 +8,13 @@
 }
 
 //after-before
-@mixin ab(){
+@mixin ab() {
 	display: block;
 	content: "";
 }
 
 //fullWidthHeight
-@mixin fwh(){
+@mixin fwh() {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -23,9 +23,7 @@
 }
 
 //fixProportion
-$def-prop-width: 1;
-$def-prop-height: 1;
-@mixin fixprop($width: $def-prop-width, $height: $def-prop-height){
+@mixin fixprop($width: 1, $height: 1) {
 	&:before{
 		@include ab;
 		width: 100%;

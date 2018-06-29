@@ -9,7 +9,8 @@ rename = require('gulp-rename'),
 fileinclude = require('gulp-file-include'),
 replace = require('gulp-replace'),
 notify = require("gulp-notify"),
-del = require('del');
+del = require('del'),
+svgSprite = require('gulp-svg-sprite');
 
 
 //modules
@@ -133,6 +134,22 @@ gulp.task('dist', function() {
 	.pipe(notify('Common Script has Refreshed!'));
 
 	del(['dist/js/script.js', 'dist/js/script.js.map']);
+});
+
+//svg sprite
+gulp.task('svgs', function() {
+	gulp.src('src/images/svg/*.svg')
+	.pipe(svgSprite({
+		mode: {
+			view: {
+				sprite: '../dist/images/sprite.svg',
+				render: {
+					scss: {dest: '../src/sass/_sprite.scss'}
+				}
+			}
+		}
+	}))
+	.pipe(gulp.dest('.'));
 });
 
 //Functions

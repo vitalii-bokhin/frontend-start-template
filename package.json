@@ -23,6 +23,7 @@
     "gulp-replace": "^0.5.4",
     "gulp-sass": "^3.2.1",
     "gulp-sourcemaps": "^1.12.1",
+    "gulp-svg-sprite": "^1.4.0",
     "gulp-uglify": "^2.0.0"
   },
   "babel": {
@@ -41,5 +42,8 @@
     "plugins": [
       "transform-remove-strict-mode"
     ]
+  },
+  "dependencies": {
+    "npm": "^6.1.0"
   }
 }

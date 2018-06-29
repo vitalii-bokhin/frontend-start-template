@@ -1,0 +1,64 @@
+%svg-common {
+	background: url("../dist/images/sprite-1e087172.svg") no-repeat;
+}
+
+.svg-alert {
+	@extend %svg-common;
+	background-position: 30.232558139534884% 96%;
+}
+
+.svg-alert-dims {
+	width: 13px;
+	height: 16px;
+}
+
+.svg-exit-icon {
+	@extend %svg-common;
+	background-position: 0 0;
+}
+
+.svg-exit-icon-dims {
+	width: 24px;
+	height: 24px;
+}
+
+.svg-pens {
+	@extend %svg-common;
+	background-position: 65% 96%;
+}
+
+.svg-pens-dims {
+	width: 16px;
+	height: 16px;
+}
+
+.svg-prof {
+	@extend %svg-common;
+	background-position: 0 100%;
+}
+
+.svg-prof-dims {
+	width: 13px;
+	height: 17px;
+}
+
+.svg-settings {
+	@extend %svg-common;
+	background-position: 63.1578947368421% 0;
+}
+
+.svg-settings-dims {
+	width: 18px;
+	height: 18px;
+}
+
+.svg-tip {
+	@extend %svg-common;
+	background-position: 100% 0;
+}
+
+.svg-tip-dims {
+	width: 14px;
+	height: 16px;
+}
+

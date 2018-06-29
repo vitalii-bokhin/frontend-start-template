@@ -143,6 +143,7 @@
 	}
 
 	&-right{
+		float: right !important;
 		margin-left: auto;
 	}
 }
@@ -257,7 +258,7 @@
 			}
 			&-12{
 				float: none !important;
-				clear: both;
+				margin-left: 0;
 				max-width: 100%;
 				flex-basis: 100%;
 			}
@@ -364,7 +365,7 @@
 			}
 			&-12{
 				float: none !important;
-				clear: both;
+				margin-left: 0;
 				max-width: 100%;
 				flex-basis: 100%;
 			}

@@ -4,6 +4,7 @@
 .header{
 	display: flex;
 	height: 100px;
+	align-items: center;
 	transition: .21s;
 	&_fixed,
 	&.toggled{
@@ -12,7 +13,6 @@
 	}
 	&__row{
 		max-width: none;
-		align-self: center;
 	}
 	&__logo{
 		display: inline-block;
