@@ -1,4 +1,6 @@
 @import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
 @import "../../sass/mixins";
 
 .popup{
@@ -98,7 +100,7 @@
 	}
 	&__video,
 	&__iframe{
-		@include fwh;
+		@extend %fwh;
 		visibility: hidden;
 		border: none;
 		transition: .5s;
@@ -159,7 +161,7 @@
 		opacity: .95;
 		visibility: hidden;
 		&:before{
-			@include ab;
+			@extend %ab;
 			position: absolute;
 			width: 0;
 			height: 0;

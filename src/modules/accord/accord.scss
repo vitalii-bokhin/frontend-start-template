@@ -1,4 +1,6 @@
 @import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
 @import "../../sass/mixins";
 
 .accord{
@@ -25,8 +27,8 @@
 			margin-top: -20px;
 			border: 1px solid $lgy;
 			&:after{
-				@include ab;
-				@include fwh;
+				@extend %ab;
+				@extend %fwh;
 			}
 		}
 	}

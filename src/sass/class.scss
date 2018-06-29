@@ -1,4 +1,6 @@
 @import "variables";
+@import "functions";
+@import "extends";
 @import "mixins";
 
 /*container*/
@@ -56,7 +58,7 @@
 	@include fixprop;
 	position: relative;
 	&__inner{
-		@include fwh;
+		@extend %fwh;
 	}
 }
 

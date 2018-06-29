@@ -8,7 +8,7 @@
 	flex-direction: column;
 
 	&__full-height{
-		@include fwh;
+		@extend %fwh;
 		z-index: 2;
 		padding-top: 100px;
 		overflow: hidden;
@@ -41,7 +41,7 @@
 	position: relative;
 	
 	&__full-height{
-		@include fwh;
+		@extend %fwh;
 		z-index: 2;
 		overflow: hidden;
 	}

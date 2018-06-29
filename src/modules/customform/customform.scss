@@ -1,4 +1,6 @@
 @import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
 @import "../../sass/mixins";
 
 /*custom placeholder*/
@@ -53,7 +55,7 @@
 			font-weight: 400;
 		}
 		&:after{
-			@include ab;
+			@extend %ab;
 			width: 0;
 			height: 0;
 			border: 4px solid transparent;
@@ -160,7 +162,7 @@ select{
 		position: relative;
 		cursor: pointer;
 		&:before{
-			@include ab;
+			@extend %ab;
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -189,7 +191,7 @@ select{
 		left: -9999px;
 		&:checked{
 			& + .custom-radio__label:after{
-				@include ab;
+				@extend %ab;
 				position: absolute;
 				top: 6px;
 				left: 6px;
@@ -207,7 +209,7 @@ select{
 		position: relative;
 		cursor: pointer;
 		&:before{
-			@include ab;
+			@extend %ab;
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -262,7 +264,7 @@ select{
 			z-index: 2;
 		}
 		&:after{
-			@include ab;
+			@extend %ab;
 			position: absolute;
 			left: 50%;
 			top: 50%;
@@ -292,7 +294,7 @@ select{
 		visibility: hidden;
 	}
 	&__textarea{
-		@include fwh;
+		@extend %fwh;
 		overflow: hidden;
 	}
 	&_wrap{

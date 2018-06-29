@@ -142,6 +142,7 @@ gulp.task('svgs', function() {
 	.pipe(svgSprite({
 		mode: {
 			view: {
+				bust: false,
 				sprite: '../dist/images/sprite.svg',
 				prefix: '%%svg-%s',
 				render: {

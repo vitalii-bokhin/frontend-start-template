@@ -1,4 +1,6 @@
 @import "variables";
+@import "functions";
+@import "extends";
 @import "mixins";
 
 /*Title*/
@@ -36,7 +38,7 @@ ul.list{
 		margin: em(30) 0;
 		position: relative;
 		&:before{
-			@include ab;
+			@extend %ab;
 			width: 9px;
 			height: 9px;
 			position: absolute;

@@ -1,3 +1,8 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
 /*video*/
 .video{
 	position: relative;
@@ -13,8 +18,8 @@
 			z-index: 2;
 		}
 		&:after{
-			@include ab;
-			@include fwh;
+			@extend %ab;
+			@extend %fwh;
 			box-sizing: border-box;
 			z-index: 3;
 			border: 8px solid $vt;
