@@ -143,12 +143,14 @@ gulp.task('svgs', function() {
 		mode: {
 			view: {
 				sprite: '../dist/images/sprite.svg',
+				prefix: '%%svg-%s',
 				render: {
 					scss: {dest: '../src/sass/_sprite.scss'}
 				}
 			}
 		}
 	}))
+	.pipe(replace('\/dist\/', '/'))
 	.pipe(gulp.dest('.'));
 });
 

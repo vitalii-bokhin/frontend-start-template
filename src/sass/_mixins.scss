@@ -48,11 +48,24 @@ $base-font-size: 16;
 }
 
 //sprite
-@mixin sp($bg-position: ""){
+@mixin sp($bg-position: "") {
 	background-image: url("../images/sprite.svg");
 	background-repeat: no-repeat;
 	@if $bg-position != "" {
 		background-position: $bg-position;
 	}
 	background-size: 50px auto;
+}
+
+@mixin bgs($icon-block-w: 1, $icon-svg-w: 1, $icon-block-h: 0, $icon-svg-h: 0) {
+	$bgsw: (1472 / ($icon-svg-w / $icon-block-w)) * (100 / $icon-block-w) * 1%;
+	
+	@if $icon-block-h == 0 {
+		background-size: $bgsw auto;
+	}
+	@else {
+		$bgsh: (512 / ($icon-svg-h / $icon-block-h)) * (100 / $icon-block-h) * 1%;
+		
+		background-size: $bgsw $bgsh;
+	}
 }

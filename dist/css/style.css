@@ -873,6 +873,14 @@ a:hover {
   padding: 25px;
 }
 
+.arrow-btn:after {
+  background: url("../images/sprite-2e6f4922.svg") no-repeat;
+}
+
+.arrow-btn:after {
+  background-position: 0 0;
+}
+
 .btn {
   display: inline-block;
   font-size: 14px;
@@ -887,6 +895,7 @@ a:hover {
   background: #212121;
   -webkit-appearance: none;
   user-select: none;
+  position: relative;
   transition: .5s;
 }
 
@@ -922,7 +931,7 @@ a:hover {
   font-weight: 500;
   letter-spacing: 1px;
   color: #FFF;
-  padding: 16px 28px 14px 28px;
+  padding: 16px 43px 14px 28px;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -930,19 +939,20 @@ a:hover {
   background: #212121;
   -webkit-appearance: none;
   user-select: none;
+  position: relative;
   transition: .5s;
 }
 
 .arrow-btn:after {
-  display: inline-block;
+  display: block;
   content: "";
-  width: 7px;
-  height: 11px;
-  background-image: url("../images/sprite.svg");
-  background-repeat: no-repeat;
-  background-position: -43px -1px;
-  background-size: 50px auto;
-  margin-left: 5px;
+  width: 15px;
+  height: 16px;
+  background-size: 328.57143% auto;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -8px;
 }
 
 /*toggle*/
