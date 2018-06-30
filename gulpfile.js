@@ -8,10 +8,9 @@ sourcemaps = require('gulp-sourcemaps'),
 rename = require('gulp-rename'),
 fileinclude = require('gulp-file-include'),
 replace = require('gulp-replace'),
-notify = require("gulp-notify"),
+notify = require('gulp-notify'),
 del = require('del'),
 svgSprite = require('gulp-svg-sprite');
-
 
 //modules
 var modules = {
@@ -42,7 +41,6 @@ var modules = {
 	video: 'src/modules/video/'
 };
 
-
 var modulesOn = [
 'header',
 'menu',
@@ -53,6 +51,8 @@ var modulesOn = [
 'form',
 'customform',
 'validateform',
+'accord',
+'more',
 'footer',
 //'getcontentajax',
 //'share',
@@ -63,8 +63,6 @@ var modulesOn = [
 //'mouseparallax',
 //'diagram',
 //'video',
-//'accord',
-//'more',
 //'floatslider',
 //'tab',
 //'slickslider',
@@ -94,12 +92,12 @@ gulp.task('dev', function() {
 	del(['dist/js/script.min.js', 'dist/js/script.min.js.map']);
 
 	//watch css
-	gulp.watch('src/**/*.scss', function() {
+	gulp.watch(['src/sass/*.scss'].concat(modulesOn.map((m) => modules[m]+ '*.scss')), function() {
 		CSS(cssSrc);
 	});
 
 	//watch js
-	gulp.watch(['src/**/*.js', '!src/js/common.js'], function() {
+	gulp.watch(['!src/js/common.js', 'src/js/*.js'].concat(modulesOn.map((m) => modules[m]+ '*.js')), function() {
 		JS(jsSrc);
 	});
 
@@ -110,12 +108,12 @@ gulp.task('dev', function() {
 	});
 
 	//watch html
-	gulp.watch(['src/html/*.html', '!src/html/_*.html'], function(event) {
+	gulp.watch(['!src/html/_*.html', 'src/html/*.html'], function(event) {
 		HTML(event.path);
 	});
 
-	gulp.watch(['src/html/_*.html', 'src/modules/**/*.html'], function() {
-		HTML(['src/html/*.html', '!src/html/_*.html']);
+	gulp.watch(['src/html/_*.html'].concat(modulesOn.map((m) => modules[m]+ '*.html')), function() {
+		HTML(['!src/html/_*.html', 'src/html/*.html']);
 	});
 });
 
@@ -152,7 +150,8 @@ gulp.task('svgs', function() {
 		}
 	}))
 	.pipe(replace('\/dist\/', '/'))
-	.pipe(gulp.dest('.'));
+	.pipe(gulp.dest('.'))
+	.pipe(notify('SVG Sprites has built!'));
 });
 
 //Functions
@@ -168,7 +167,11 @@ function CSS(src, dist) {
 			.pipe(rename({suffix: '.min'}))
 			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest('dist/css'))
-			.pipe(notify('Styles has Compiled!'));
+			.pipe(notify({
+				onLast: true,
+				title: 'CSS',
+				message: 'Styles has Compiled!'
+			}));
 		} else {
 			gulp.src(src)
 			.pipe(sourcemaps.init())
@@ -176,7 +179,11 @@ function CSS(src, dist) {
 			.pipe(concat('style.css'))
 			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest('dist/css'))
-			.pipe(notify('Styles has Compiled!'));
+			.pipe(notify({
+				onLast: true,
+				title: 'CSS',
+				message: 'Styles has Compiled!'
+			}));
 		}
 	}, 321);
 }
@@ -193,14 +200,22 @@ function JS(src, dist) {
 		.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/js'))
-		.pipe(notify('Scripts has Compiled!'));
+		.pipe(notify({
+				onLast: true,
+				title: 'JS',
+				message: 'Scripts has Compiled!'
+			}));
 	} else {
 		gulp.src(src)
 		.pipe(sourcemaps.init())
 		.pipe(concat('script.js'))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/js'))
-		.pipe(notify('Scripts has Concated!'));
+		.pipe(notify({
+			onLast: true,
+			title: 'JS',
+			message: 'Scripts has Concated!'
+		}));
 	}
 }
 
@@ -213,12 +228,20 @@ function HTML(src, dist) {
 		.pipe(replace('script.js', 'script.min.js'))
 		.pipe(replace('..\/..\/dist\/', ''))
 		.pipe(gulp.dest('dist'))
-		.pipe(notify('HTML has Compiled!'));
+		.pipe(notify({
+			onLast: true,
+			title: 'HTML',
+			message: 'HTML has Compiled!'
+		}));
 	} else {
 		gulp.src(src)
 		.pipe(fileinclude())
 		.pipe(replace('..\/..\/dist\/', ''))
 		.pipe(gulp.dest('dist'))
-		.pipe(notify('HTML has Compiled!'));
+		.pipe(notify({
+			onLast: true,
+			title: 'HTML',
+			message: 'HTML has Compiled!'
+		}));
 	}
 }

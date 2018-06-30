@@ -105,7 +105,7 @@ Element.prototype.elementIsHidden = function() {
 }
 
 }());
-(function() {
+;(function() {
 	"use strict";
 
 	//fix header
@@ -114,7 +114,7 @@ Element.prototype.elementIsHidden = function() {
 	window.addEventListener('scroll', function() {
 		if (window.pageYOffset > 21) {
 			headerElem.classList.add('header_fixed');
-		} else {
+		} else if (!document.body.classList.contains('popup-is-opened')) {
 			headerElem.classList.remove('header_fixed');
 		}
 	});
@@ -129,11 +129,9 @@ var Toggle;
 	"use strict";
 
 	Toggle = {
-
 		toggledClass: 'toggled',
 
 		toggle: function(elem) {
-
 			var targetElements = document.querySelectorAll(elem.getAttribute('data-target-elements'));
 
 			if (!targetElements.length) {
@@ -141,14 +139,14 @@ var Toggle;
 			}
 
 			if (elem.classList.contains(this.toggledClass)) {
-				for (let targetElem of targetElements) {
-					targetElem.classList.remove(this.toggledClass);
+				for (var i = 0; i < targetElements.length; i++) {
+					targetElements[i].classList.remove(this.toggledClass);
 				}
 
 				elem.classList.remove(this.toggledClass);
 			} else {
-				for (let targetElem of targetElements) {
-					targetElem.classList.add(this.toggledClass);
+				for (var i = 0; i < targetElements.length; i++) {
+					targetElements[i].classList.add(this.toggledClass);
 				}
 
 				elem.classList.add(this.toggledClass);
@@ -170,7 +168,6 @@ var Toggle;
 				e.preventDefault();
 
 				this.toggle(elem);
-
 			});
 		}
 	};
@@ -2084,5 +2081,100 @@ var ValidateForm;
 
 	};
 
+}());
+/*
+* call Accord.init(Str button selector);
+*/
+var Accord;
+
+(function() {
+	"use strict";
+
+	Accord = {
+		toggle: function(elem) {
+			var contentElem = elem.nextElementSibling;
+
+			if (elem.classList.contains('accord__button_active')) {
+				contentElem.style.height = 0;
+
+				elem.classList.remove('accord__button_active');
+			} else {
+				var mainElem = elem.closest('.accord'),
+				allButtonElem = mainElem.querySelectorAll('.accord__button'),
+				allContentElem = mainElem.querySelectorAll('.accord__content');
+
+				for (var i = 0; i < allButtonElem.length; i++) {
+					allButtonElem[i].classList.remove('accord__button_active');
+					allContentElem[i].style.height = 0;
+				}
+
+				contentElem.style.height = contentElem.scrollHeight +'px';
+
+				elem.classList.add('accord__button_active');
+			}
+		},
+
+		init: function(elementStr) {
+			document.addEventListener('click', (e) => {
+				var elem = e.target.closest(elementStr);
+
+				if (!elem) {
+					return;
+				}
+
+				e.preventDefault();
+
+				this.toggle(elem);
+			});
+		}
+	};
+}());
+/*
+* call More.init(Str button selector);
+*/
+var More;
+
+(function() {
+	"use strict";
+
+	More = {
+		toggle: function(elem) {
+			var contentElem = elem.previousElementSibling;
+
+			if (elem.classList.contains('active')) {
+				contentElem.style.height = contentElem.getAttribute('data-height') +'px';
+
+				elem.classList.remove('active');
+			} else {
+				contentElem.setAttribute('data-height', contentElem.offsetHeight);
+
+				contentElem.style.height = contentElem.scrollHeight +'px';
+
+				elem.classList.add('active');
+			}
+
+			setTimeout(function() {
+				var btnTxt = elem.innerHTML;
+
+				elem.innerHTML = elem.getAttribute('data-btn-text');
+
+				elem.setAttribute('data-btn-text', btnTxt);
+			}, 321);
+		},
+
+		init: function(elementStr) {
+			document.addEventListener('click', (e) => {
+				var elem = e.target.closest(elementStr);
+
+				if (!elem) {
+					return;
+				}
+
+				e.preventDefault();
+
+				this.toggle(elem);
+			});
+		}
+	};
 }());
 //# sourceMappingURL=script.js.map

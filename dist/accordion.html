@@ -47,7 +47,7 @@
 		<a href="grid.html" class="menu__a">Grid</a>
 	</li>
 	<li class="menu__item menu__item_has-children">
-		<a href="content.html" class="menu__a">Elements</a>
+		<a href="#" class="menu__a">Elements</a>
 		<button class="menu__arr"></button>
 		<ul class="menu__sub-menu">
 			<li class="menu__sub-menu-item">
@@ -55,6 +55,12 @@
 			</li>
 			<li class="menu__sub-menu-item">
 				<a href="images.html" class="menu__sub-menu-a">Images</a>
+			</li>
+			<li class="menu__sub-menu-item">
+				<a href="accordion.html" class="menu__sub-menu-a">Accordion</a>
+			</li>
+			<li class="menu__sub-menu-item">
+				<a href="more.html" class="menu__sub-menu-a">More</a>
 			</li>
 		</ul>
 	</li>
@@ -66,9 +72,6 @@
 				<a href="form-custom.html" class="menu__sub-menu-a">Custom Form</a>
 			</li>
 		</ul>
-	</li>
-	<li class="menu__item">
-		<a href="accordion.html" class="menu__a">Accordeon</a>
 	</li>
 	<li class="menu__item">
 		<a href="popup.html" class="menu__a">Popups</a>
@@ -111,41 +114,51 @@
 <!--MAIN/-->
 <main class="main">
 
-	<div class="container wrap">
-		<div class="accord">
-			<div class="accord__item">
-				<button class="accord__button">Пункт 1<span></span></button>
-				<div class="accord__content">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	<div class="container row">
+		<div class="col-12">
+
+			<div class="accord">
+				<div class="accord__item">
+					<button class="accord__button">Пункт 1</button>
+					<div class="accord__content">
+						<div style="padding: 20px;">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</div>
+					</div>
+				</div>
+				<div class="accord__item">
+					<button class="accord__button">Пункт 2</button>
+					<div class="accord__content">
+						<div style="padding: 20px;">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</div>
+					</div>
+				</div>
+				<div class="accord__item">
+					<button class="accord__button">Пункт 3</button>
+					<div class="accord__content">
+						<div style="padding: 20px;">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="accord__item">
-				<button class="accord__button">Пункт 2<span></span></button>
-				<div class="accord__content">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</div>
-			</div>
-			<div class="accord__item">
-				<button class="accord__button">Пункт 3<span></span></button>
-				<div class="accord__content">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</div>
-			</div>
+			
 		</div>
 	</div>
 
@@ -154,20 +167,18 @@
 
 <!--FOOTER/-->
 <footer class="footer">
-	<div class="row-col-mid wrap footer__wrap">
-		<div class="col-3 x1600-col-2">
+	<div class="row footer__row">
+		<div class="col-3">
 			<div class="footer__logo">
 				<a href="#"><img src="images/dealersair.svg" alt="logo"></a>
 			</div>
 		</div>
-		<div class="col-8 x1600-col-10 col-offset-1 x1600-col-offset-0">
+		<div class="col-8">
 			<div class="footer__txt">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				consequat.
 			</div>
 		</div>
 	</div>

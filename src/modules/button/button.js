@@ -7,11 +7,9 @@ var Toggle;
 	"use strict";
 
 	Toggle = {
-
 		toggledClass: 'toggled',
 
 		toggle: function(elem) {
-
 			var targetElements = document.querySelectorAll(elem.getAttribute('data-target-elements'));
 
 			if (!targetElements.length) {
@@ -19,14 +17,14 @@ var Toggle;
 			}
 
 			if (elem.classList.contains(this.toggledClass)) {
-				for (let targetElem of targetElements) {
-					targetElem.classList.remove(this.toggledClass);
+				for (var i = 0; i < targetElements.length; i++) {
+					targetElements[i].classList.remove(this.toggledClass);
 				}
 
 				elem.classList.remove(this.toggledClass);
 			} else {
-				for (let targetElem of targetElements) {
-					targetElem.classList.add(this.toggledClass);
+				for (var i = 0; i < targetElements.length; i++) {
+					targetElements[i].classList.add(this.toggledClass);
 				}
 
 				elem.classList.add(this.toggledClass);
@@ -48,7 +46,6 @@ var Toggle;
 				e.preventDefault();
 
 				this.toggle(elem);
-
 			});
 		}
 	};

@@ -876,11 +876,11 @@ a:hover {
 }
 
 .arrow-btn:after {
-  background-position: 0 0;
+  background-position: 50% 0;
 }
 
 .plus-btn:after {
-  background-position: 46.666666666666664% 0;
+  background-position: 100% 0;
 }
 
 .btn, .arrow-btn, .plus-btn {
@@ -930,13 +930,6 @@ a:hover {
   background-size: 287.5% auto;
   left: 6px;
   margin-top: -16px;
-}
-
-.btn_l2,
-.arrow-btn_l2,
-.plus-btn_l2 {
-  padding-top: 8px;
-  padding-bottom: 7px;
 }
 
 /*toggle*/
@@ -1176,25 +1169,22 @@ a:hover {
 }
 
 .popup {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background: #000;
-  background: rgba(0, 0, 0, 0.5);
   z-index: 9;
   text-align: center;
+  background: #000;
+  background: rgba(0, 0, 0, 0.5);
   font-size: 0;
-  visibility: hidden;
-  opacity: 0;
-  transition: .5s;
 }
 
 .popup_visible {
-  visibility: visible;
-  opacity: 1;
+  display: block;
 }
 
 .popup:before {
@@ -1205,22 +1195,17 @@ a:hover {
 }
 
 .popup__window {
-  display: inline-block;
-  visibility: hidden;
-  position: absolute;
+  display: none;
   vertical-align: middle;
   width: 100%;
   padding: 35px 0;
   font-size: 1rem;
   text-align: left;
-  transform: scale(0);
-  transition: .5s;
+  position: relative;
 }
 
 .popup__window_visible {
-  position: relative;
-  visibility: visible;
-  transform: scale(1);
+  display: inline-block;
 }
 
 .popup__inner {
@@ -1451,6 +1436,14 @@ body.popup-is-opened {
   top: 0;
 }
 
+.form__btn_search:before {
+  background: url("../images/sprite.svg") no-repeat;
+}
+
+.form__btn_search:before {
+  background-position: 0 100%;
+}
+
 .form .row {
   padding-left: 3px;
   padding-right: 3px;
@@ -1496,19 +1489,19 @@ body.popup-is-opened {
   display: none;
 }
 
-.form__field_btn .form__text-input,
-.form__field_btn .overlabel,
-.form__field_btn .overlabel-apply {
+.form__field_btn .form__text-input {
   padding-right: 50px;
 }
 
 .form__btn {
   display: block;
-  height: 100%;
+  height: 41px;
   position: absolute;
   right: 0;
   top: 0;
   z-index: 3;
+  border: none;
+  background: none;
   -webkit-appearance: none;
   transition: .5s;
 }
@@ -1524,12 +1517,10 @@ body.popup-is-opened {
 }
 
 .form__btn_search:before {
-  width: 13px;
-  height: 17px;
-  background-image: url("../images/other-sprite.svg");
-  background-repeat: no-repeat;
-  background-size: 50px auto;
-  margin: -9px 0 0 -6px;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  background-size: 287.5% auto;
 }
 
 .form__btn:hover {
@@ -2009,13 +2000,84 @@ select {
   border-color: #ff0000;
 }
 
+.accord__button:after {
+  display: block;
+  content: "";
+}
+
+.accord__button:after {
+  background: url("../images/sprite.svg") no-repeat;
+}
+
+.accord__button:after {
+  background-position: 0 0;
+}
+
+.accord {
+  border-top: 1px solid #dddddd;
+  background: #FFF;
+}
+
+.accord__button {
+  display: block;
+  padding: 20px 80px 20px 20px;
+  position: relative;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  border-bottom: 1px solid #dddddd;
+  -webkit-appearance: none;
+}
+
+.accord__button:after {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  margin-top: -20px;
+  background-size: 287.5% auto;
+  opacity: .38;
+  transition: .5s;
+}
+
+.accord__button_active:after {
+  transform: rotate(180deg);
+}
+
+.accord__content {
+  height: 0;
+  overflow: hidden;
+  border-bottom: 1px solid #dddddd;
+  transition: .5s;
+}
+
+.more {
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.more__content {
+  height: 97px;
+  overflow: hidden;
+  transition: .5s;
+}
+
+.more__btn {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 .footer {
   background: #FFF;
   box-shadow: 0 -1px 11px rgba(0, 0, 0, 0.21);
   padding: 20px 0;
 }
 
-.footer__wrap {
+.footer__row {
   max-width: none;
 }
 

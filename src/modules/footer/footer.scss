@@ -7,7 +7,7 @@
 	background: #FFF;
 	box-shadow: 0 -1px 11px rgba(0,0,0,.21);
 	padding: 20px 0;
-	&__wrap{
+	&__row{
 		max-width: none;
 	}
 	&__logo{
@@ -20,10 +20,6 @@
 	&__txt{
 		font-size: 15px;
 		line-height: (18/15);
-	}
-	
-	@media(max-width: 1600px){
-		
 	}
 
 	@media(max-width: 1200px){

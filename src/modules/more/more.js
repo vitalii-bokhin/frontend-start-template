@@ -1,35 +1,48 @@
-$(document).ready(function() {
+/*
+* call More.init(Str button selector);
+*/
+var More;
 
-	$('body').find('.more').each(function() {
-		var _ = $(this),
-		moreHeight = _.height(),
-		content = _.html();
+(function() {
+	"use strict";
 
-		_.html('<div class="more__inner">'+ content +'</div>');
+	More = {
+		toggle: function(elem) {
+			var contentElem = elem.previousElementSibling;
 
-		var _inner = _.find('.more__inner'),
-		innerHeight = _inner.innerHeight();
+			if (elem.classList.contains('active')) {
+				contentElem.style.height = contentElem.getAttribute('data-height') +'px';
 
-		if (moreHeight < innerHeight) {
-			_.addClass('more_apply').append('<button class="more__button">Показать</button>');
-			_inner.css({height: moreHeight}).attr('data-min-height', moreHeight).attr('data-max-height', innerHeight);
+				elem.classList.remove('active');
+			} else {
+				contentElem.setAttribute('data-height', contentElem.offsetHeight);
+
+				contentElem.style.height = contentElem.scrollHeight +'px';
+
+				elem.classList.add('active');
+			}
+
+			setTimeout(function() {
+				var btnTxt = elem.innerHTML;
+
+				elem.innerHTML = elem.getAttribute('data-btn-text');
+
+				elem.setAttribute('data-btn-text', btnTxt);
+			}, 321);
+		},
+
+		init: function(elementStr) {
+			document.addEventListener('click', (e) => {
+				var elem = e.target.closest(elementStr);
+
+				if (!elem) {
+					return;
+				}
+
+				e.preventDefault();
+
+				this.toggle(elem);
+			});
 		}
-
-	});
-
-	$('body').on('click', '.more__button', function() {
-		var _ = $(this),
-		_moreInner = _.parent('.more').find('.more__inner'),
-		minH = _moreInner.attr('data-min-height'),
-		maxH = _moreInner.attr('data-max-height');
-		if (!_.hasClass('more__button_active')) {
-			_moreInner.css('height', maxH);
-			_.addClass('more__button_active').html('Скрыть');
-		} else {
-			_moreInner.css('height', minH);
-			_.removeClass('more__button_active').html('Показать');
-		}
-		return false;
-	});
-
-});
+	};
+}());

@@ -47,7 +47,6 @@
 
 //document is ready
 document.addEventListener('DOMContentLoaded', function() {
-
 	(function initFun() {
 		flexImg('.flex-img');
 
@@ -65,7 +64,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	//popup init
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
- 
+
+	//accord
+	Accord.init('.accord__button');
+
+	//more
+	More.init('.more__btn');
 
 	//submit forms
 	var form = new Form('#form');
@@ -75,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		ValidateForm.init(form.element);
 
-		form.onSubmit = function(form) {
+		form.onSubmit = function(form, callback) {
 			callback({clearForm: true});
 		}
 	}

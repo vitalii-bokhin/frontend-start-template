@@ -2,9 +2,19 @@
 	background: url("../images/sprite.svg") no-repeat;
 }
 
-%svg-arrow-right {
+%svg-arrow-alt-circle-down {
 	@extend %svg-common;
 	background-position: 0 0;
+}
+
+%svg-arrow-alt-circle-down-dims {
+	width: 512px;
+	height: 512px;
+}
+
+%svg-arrow-right {
+	@extend %svg-common;
+	background-position: 50% 0;
 }
 
 %svg-arrow-right-dims {
@@ -14,7 +24,7 @@
 
 %svg-plus-circle {
 	@extend %svg-common;
-	background-position: 46.666666666666664% 0;
+	background-position: 100% 0;
 }
 
 %svg-plus-circle-dims {
@@ -24,7 +34,7 @@
 
 %svg-search {
 	@extend %svg-common;
-	background-position: 100% 0;
+	background-position: 0 100%;
 }
 
 %svg-search-dims {

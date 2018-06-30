@@ -1,21 +1,47 @@
-$(document).ready(function() {
+/*
+* call Accord.init(Str button selector);
+*/
+var Accord;
 
-	$('body').on('click', '.accord__button', function() {
-		var _$ = $(this),
-		Content = _$.closest('.accord__item').find('.accord__content');
+(function() {
+	"use strict";
 
-		if (!_$.hasClass('accord__button_active')) {
-			_$.closest('.accord').find('.accord__content').slideUp(321);
-			_$.closest('.accord').find('.accord__button').removeClass('accord__button_active');
-			Content.slideDown(321, function() {
-				$('body,html').animate({scrollTop: (_$.offset().top - $('.header').innerHeight())}, 900, 'easeOutExpo');
+	Accord = {
+		toggle: function(elem) {
+			var contentElem = elem.nextElementSibling;
+
+			if (elem.classList.contains('accord__button_active')) {
+				contentElem.style.height = 0;
+
+				elem.classList.remove('accord__button_active');
+			} else {
+				var mainElem = elem.closest('.accord'),
+				allButtonElem = mainElem.querySelectorAll('.accord__button'),
+				allContentElem = mainElem.querySelectorAll('.accord__content');
+
+				for (var i = 0; i < allButtonElem.length; i++) {
+					allButtonElem[i].classList.remove('accord__button_active');
+					allContentElem[i].style.height = 0;
+				}
+
+				contentElem.style.height = contentElem.scrollHeight +'px';
+
+				elem.classList.add('accord__button_active');
+			}
+		},
+
+		init: function(elementStr) {
+			document.addEventListener('click', (e) => {
+				var elem = e.target.closest(elementStr);
+
+				if (!elem) {
+					return;
+				}
+
+				e.preventDefault();
+
+				this.toggle(elem);
 			});
-			_$.addClass('accord__button_active');
-		} else {
-			Content.slideUp(321);
-			_$.removeClass('accord__button_active');
 		}
-
-		return false;
-	});
-});
+	};
+}());

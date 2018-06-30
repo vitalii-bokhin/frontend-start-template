@@ -2,6 +2,7 @@
 @import "../../sass/functions";
 @import "../../sass/extends";
 @import "../../sass/mixins";
+@import "../../sass/sprite";
 
 .accord{
 	border-top: 1px solid $lgy;
@@ -16,24 +17,29 @@
 		background: none;
 		border-bottom: 1px solid $lgy;
 		-webkit-appearance: none;
-		span{
-			display: block;
+		&:after{
+			@extend %ab;
 			width: 40px;
 			height: 40px;
-			border-radius: 40px;
 			position: absolute;
 			right: 20px;
 			top: 50%;
 			margin-top: -20px;
-			border: 1px solid $lgy;
+			@extend %svg-arrow-alt-circle-down;
+			@include bgs(40,512);
+			opacity: .38;
+			transition: .5s;
+		}
+		&_active{
 			&:after{
-				@extend %ab;
-				@extend %fwh;
+				transform: rotate(180deg);
 			}
 		}
 	}
 	&__content{
-		display: none;
+		height: 0;
+		overflow: hidden;
 		border-bottom: 1px solid $lgy;
+		transition: .5s;
 	}
 }
