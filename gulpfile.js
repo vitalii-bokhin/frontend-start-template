@@ -53,7 +53,8 @@ var modulesOn = [
 'validateform',
 'accord',
 'more',
-'footer',
+'tab',
+'footer'
 //'getcontentajax',
 //'share',
 //'numberspin',
@@ -64,7 +65,6 @@ var modulesOn = [
 //'diagram',
 //'video',
 //'floatslider',
-//'tab',
 //'slickslider',
 //'scrollpane',
 ];

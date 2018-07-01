@@ -1,5 +1,6 @@
 /*
-* call More.init(Str button selector);
+call to init:
+More.init(Str button selector);
 */
 var More;
 

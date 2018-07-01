@@ -71,6 +71,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	//more
 	More.init('.more__btn');
 
+	//tab
+	Tab.init({
+		container: '.tab',
+		button: '.tab__button',
+		item: '.tab__item'
+	});
+
 	//submit forms
 	var form = new Form('#form');
 

@@ -2071,6 +2071,45 @@ select {
   right: 0;
 }
 
+.tab__buttons {
+  list-style: none;
+}
+
+.tab__buttons:after {
+  display: block;
+  content: "";
+  width: 100%;
+  clear: both;
+}
+
+.tab__buttons li {
+  float: left;
+}
+
+.tab__button.active {
+  color: #212121 !important;
+}
+
+.tab__container {
+  position: relative;
+  transition: height .5s;
+}
+
+.tab__item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  transition: .5s;
+}
+
+.tab__item.active {
+  visibility: visible;
+  opacity: 1;
+}
+
 .footer {
   background: #FFF;
   box-shadow: 0 -1px 11px rgba(0, 0, 0, 0.21);

@@ -12,7 +12,7 @@
 		}
 	}
 	&__button{
-		&_active{
+		&.active{
 			color: $bk !important;
 		}
 	}
@@ -28,7 +28,7 @@
 		visibility: hidden;
 		opacity: 0;
 		transition: .5s;
-		&_active{
+		&.active{
 			visibility: visible;
 			opacity: 1;
 		}

@@ -1,46 +1,88 @@
-var Tab = {
-	tabBlock: null,
-	init: function() {
-		var _ = this;
-		$('.tab').each(function() {
-			_.tabBlock = $(this);
-			_.setHeight();
-		});
-	},
-	button: function(_btn) {
-		var _ = this,
-		$btn = $(_btn);
-		tab = $btn.attr('data-tab');
-		_.tabBlock = $(_btn).closest('.tab');
-
-		if (!$btn.hasClass('tab__button_active')) {
-			_.tabBlock.find('.tab__button').removeClass('tab__button_active');
-			$btn.addClass('tab__button_active');
-
-			_.changeItem(tab);
-		}
-		
-	},
-	changeItem: function(tab) {
-		var _ = this,
-		$tabItem = this.tabBlock.find('.tab__item_'+ tab);
-		_.tabBlock.find('.tab__item').removeClass('tab__item_active');
-		_.setHeight($tabItem);
-		setTimeout(function() {
-			$tabItem.addClass('tab__item_active');
-		}, 321);
-	},
-	setHeight: function($tabItem) {
-		var _ = this,
-		$container = this.tabBlock.find('.tab__container'),
-		$activeItem = ($tabItem) ? $tabItem : _.tabBlock.find('.tab__item_active');
-		$container.css('height', $activeItem.innerHeight());
-	}
-};
-
-$(document).ready(function() {
-	Tab.init();
-	$('body').on('click', '.tab__button', function() {
-		Tab.button(this);
-	});
+/*
+call to init:
+Tab.init({
+	container: '.tab',
+	button: '.tab__button',
+	item: '.tab__item'
 });
+*/
+var Tab;
+
+(function() {
+	"use strict";
+
+	Tab = {
+		options: null,
+
+		change: function(btnElem) {
+			if (btnElem.classList.contains('active')) {
+				return;
+			}
+
+			var contElem = btnElem.closest(this.options.container),
+			btnElements = contElem.querySelectorAll(this.options.button),
+			tabItemElements = contElem.querySelectorAll(this.options.item);
+
+			//remove active state
+			for (var i = 0; i < btnElements.length; i++) {
+				btnElements[i].classList.remove('active');
+
+				tabItemElements[i].classList.remove('active');
+			}
+
+			//get current tab item
+			var tabItemElem = contElem.querySelector(this.options.item +'[data-index="'+ btnElem.getAttribute('data-index') +'"]');
+
+			//set active state
+			tabItemElem.classList.add('active');
+
+			btnElem.classList.add('active');
+
+			//set height
+			this.setHeight(tabItemElem);
+		},
+
+		setHeight: function(tabItemElem) {
+			tabItemElem.parentElement.style.height = tabItemElem.offsetHeight +'px';
+		},
+
+		init: function(options) {
+			this.options = options;
+
+			var contElements = document.querySelectorAll(options.container);
+
+			if (!contElements.length) {
+				return;
+			}
+
+			//init tabs
+			for (let i = 0; i < contElements.length; i++) {
+				var contElem = contElements[i],
+				btnElements = contElem.querySelectorAll(options.button),
+				tabItemElements = contElem.querySelectorAll(options.item),
+				tabItemElemActive = contElem.querySelector(this.options.item +'.active');
+
+				this.setHeight(tabItemElemActive);
+
+				for (let i = 0; i < btnElements.length; i++) {
+					btnElements[i].setAttribute('data-index', i);
+
+					tabItemElements[i].setAttribute('data-index', i);
+				}
+			}
+
+			//btn event
+			document.addEventListener('click', (e) => {
+				var btnElem = e.target.closest(options.button);
+
+				if (!btnElem) {
+					return;
+				}
+
+				e.preventDefault();
+
+				this.change(btnElem);
+			});
+		}
+	};
+}());
