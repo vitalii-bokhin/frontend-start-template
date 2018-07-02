@@ -1,6 +1,6 @@
 {
   "name": "startTemplate",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "start template for web development",
   "main": "index.js",
   "scripts": {
@@ -42,8 +42,5 @@
     "plugins": [
       "transform-remove-strict-mode"
     ]
-  },
-  "dependencies": {
-    "npm": "^6.1.0"
   }
 }
