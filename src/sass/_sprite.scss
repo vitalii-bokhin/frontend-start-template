@@ -4,7 +4,7 @@
 
 %svg-arrow-alt-circle-down {
 	@extend %svg-common;
-	background-position: 0 0;
+	background-position: 52.94117647058823% 0;
 }
 
 %svg-arrow-alt-circle-down-dims {
@@ -14,7 +14,7 @@
 
 %svg-arrow-right {
 	@extend %svg-common;
-	background-position: 50% 0;
+	background-position: 0 100%;
 }
 
 %svg-arrow-right-dims {
@@ -24,7 +24,7 @@
 
 %svg-plus-circle {
 	@extend %svg-common;
-	background-position: 100% 0;
+	background-position: 41.1764705882353% 100%;
 }
 
 %svg-plus-circle-dims {
@@ -34,11 +34,21 @@
 
 %svg-search {
 	@extend %svg-common;
-	background-position: 0 100%;
+	background-position: 100% 0;
 }
 
 %svg-search-dims {
 	width: 512px;
+	height: 512px;
+}
+
+%svg-youtube {
+	@extend %svg-common;
+	background-position: 0 0;
+}
+
+%svg-youtube-dims {
+	width: 576px;
 	height: 512px;
 }
 

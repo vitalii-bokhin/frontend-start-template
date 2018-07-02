@@ -12,12 +12,14 @@
 		}
 	}
 	&__button{
+		padding: 5px 10px;
 		&.active{
-			color: $bk !important;
+			color: $rd;
 		}
 	}
 	&__container{
 		position: relative;
+		margin-top: 15px;
 		transition: height .5s;
 	}
 	&__item{

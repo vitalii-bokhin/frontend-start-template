@@ -2,68 +2,68 @@
 @import "../../sass/functions";
 @import "../../sass/extends";
 @import "../../sass/mixins";
+@import "../../sass/sprite";
 
 /*video*/
 .video{
 	position: relative;
-	cursor: pointer;
-	padding-top: 20px;
-	&__thumb{
-		@include fixprop(320, 182);
-		position: relative;
-		img{
-			position: absolute;
-			left: 0;
-			top: 0;
-			z-index: 2;
-		}
-		&:after{
-			@extend %ab;
-			@extend %fwh;
-			box-sizing: border-box;
-			z-index: 3;
-			border: 8px solid $vt;
-			opacity: 0;
-		}
+	@include fixprop(560, 315);
+	
+	&__preview{
+		@extend %fwh;
 	}
-	&__play{
+
+	&__btn-play{
+		display: block;
+		width: per(60,560);
+		height: per(54,315);
 		position: absolute;
 		left: 50%;
 		top: 50%;
-		z-index: 4;
-		margin: -20px 0 0 -29px;
-		visibility: hidden;
-		opacity: 0;
-	}
-	&__chanal{
-		width: 70px;
-		height: 70px;
-		position: relative;
-		bottom: 15px;
-		left: 13px;
-		border: 2px solid $vt;
-		text-align: center;
-		background: #FFF;
-		z-index: 3;
-		float: left;
-	}
-	&__tit{
-		margin: 18px 0 0 108px;
-		font-size: 14px;
-		font-weight: 700;
-		line-height: (19/14);
-	}
-	&_focus{
-		.video{
-			&__thumb{
-				transform: scale(1.1);
-				&:after{
-					opacity: 1;
-				}
-			}
-			&__tit{
-				color: $vt;
-			}
+		z-index: 2;
+		margin: per(-27,560) 0 0 per(-30,560);
+		border: none;
+		-webkit-appearance: none;
+		@extend %svg-youtube;
+		@include bgs(50,576);
+		transition: .5s;
+		&:hover{
+			opacity: .7;
 		}
+	}
+
+	&__frame{
+		@extend %fwh;
+		z-index: 3;
+		background: $bk;
+		&:before{
+			@extend %ab;
+			width: per(60,560);
+			height: per(60,315);
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 2;
+			margin: per(-30,560) 0 0 per(-30,560);
+			background: url("../images/loading.svg") no-repeat 50% 50%;
+			background-size: 100% 100%;
+			animation: video_loading_icon .9s infinite linear;
+		}
+
+		iframe{
+			@extend %fwh;
+			z-index: 2;
+			border: none;
+			background: none;
+		}
+	}
+}
+
+@keyframes video_loading_icon {
+	0% {
+		transform: rotate(0deg); 
+	}
+	100% {
+		transform: rotate(360deg); 
 	}
 }

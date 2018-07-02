@@ -78,6 +78,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		item: '.tab__item'
 	});
 
+	//video
+	Video.init('.video__btn-play');
+
 	//submit forms
 	var form = new Form('#form');
 

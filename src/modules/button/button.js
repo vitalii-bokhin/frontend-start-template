@@ -1,5 +1,6 @@
 /*
-* call Toggle.init(Str button selector[, Str toggle class]);
+call to init:
+Toggle.init(Str button selector[, Str toggle class, default: 'toggled']);
 */
 var Toggle;
 

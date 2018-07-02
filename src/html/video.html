@@ -1,0 +1,59 @@
+@@include('_head.html', {"title": "Video"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html')
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-12">
+				<div class="title">Video</div>
+				<div class="title-h2">
+					Embedded video from youtube
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<!--VIDEO/-->
+				@@include('../modules/video/video.html', {
+					"img_src":"images/img1.jpg",
+					"video_src":"https://www.youtube.com/embed/l6U2qXfdk6I"
+				})
+				<!--/VIDEO-->
+			</div>
+			<div class="col-6">
+				<!--VIDEO/-->
+				@@include('../modules/video/video.html', {
+					"img_src":"images/img2.jpg",
+					"video_src":"https://www.youtube.com/embed/mbguWYnqJtY"
+				})
+				<!--/VIDEO-->
+			</div>
+		</div>
+
+	</div>
+
+</main>
+<!--/MAIN-->
+
+<!--FOOTER/-->
+@@include('../modules/footer/footer.html')
+<!--/FOOTER-->
+
+</div>
+<!--/WRAPPER-->
+
+<!--POPUPs/-->
+@@include('../modules/popup/popup.html')
+<!--/POPUPs-->
+
+@@include('_javascript.html')
+
+</body>
+</html>

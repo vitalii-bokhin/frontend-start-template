@@ -128,10 +128,6 @@ var Popup, MediaPopup;
 
 			var group = elem.getAttribute('data-group'),
 			index = [].slice.call(document.querySelectorAll('[data-group="'+ group +'"]')).indexOf(elem);
-
-			
-
-			console.log(index);
 		},
 
 		init: function(elementStr) {
