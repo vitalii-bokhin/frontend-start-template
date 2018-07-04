@@ -9,7 +9,11 @@
 				<nav class="header__nav">
 
 					<!--Menu/-->
-					@@include('../menu/menu.html')
+					@@include('../menu/menu.html', {
+						"current_1":"@@current_1",
+						"current_2":"@@current_2",
+						"current_3":"@@current_3"
+					})
 					<!--/Menu-->
 
 				</nav>

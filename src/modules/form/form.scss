@@ -81,7 +81,7 @@
 				height: 16px;
 				margin: -8px 0 0 -8px;
 				@extend %svg-search;
-				@include bgs(16,512);
+				@include bgs(512);
 			}
 		}
 		&:hover{

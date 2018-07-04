@@ -43,7 +43,7 @@
 		width: 15px;
 		height: 16px;
 		@extend %svg-arrow-right;
-		@include bgs(15, 448);
+		@include bgs(448);
 		right: 15px;
 		margin-top: -8px;
 	}
@@ -60,7 +60,7 @@
 		width: 32px;
 		height: 32px;
 		@extend %svg-plus-circle;
-		@include bgs(32, 512);
+		@include bgs(512);
 		left: 6px;
 		margin-top: -16px;
 	}

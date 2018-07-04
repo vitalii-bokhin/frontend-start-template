@@ -26,7 +26,7 @@
 			top: 50%;
 			margin-top: -20px;
 			@extend %svg-arrow-alt-circle-down;
-			@include bgs(40,512);
+			@include bgs(512);
 			opacity: .38;
 			transition: .5s;
 		}

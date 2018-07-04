@@ -25,7 +25,7 @@
 		border: none;
 		-webkit-appearance: none;
 		@extend %svg-youtube;
-		@include bgs(50,576);
+		@include bgs(576);
 		transition: .5s;
 		&:hover{
 			opacity: .7;

@@ -108,8 +108,8 @@ gulp.task('dev', function() {
 	});
 
 	//watch html
-	gulp.watch(['!src/html/_*.html', 'src/html/*.html'], function(event) {
-		HTML(event.path);
+	gulp.watch('src/html/*.html', function(event) {
+		HTML(['!src/html/_*.html', event.path]);
 	});
 
 	gulp.watch(['src/html/_*.html'].concat(modulesOn.map((m) => modules[m]+ '*.html')), function() {

@@ -4,32 +4,6 @@
 @import "mixins";
 @import "sprite";
 
-/*Title*/
-.title{
-	font-size: 26px;
-	font-weight: 700;
-	margin-bottom: em(25, 26);
-	&-h2{
-		font-size: 18px;
-		font-weight: 500;
-		margin-bottom: em(25, 18);
-	}
-}
-
-/*Text*/
-.txt{
-	line-height: (22/16);
-	p{
-		margin: em(25) 0;
-		&:first-child{
-			margin-top: 0 !important;
-		}
-		&:last-child{
-			margin-bottom: 0 !important;
-		}
-	}
-}
-
 /*list*/
 ul.list{
 	list-style: none;
