@@ -11,8 +11,7 @@
 		float: left;
 		width: 100%;
 		min-height: 1px;
-		padding-left: 10px;
-		padding-right: 10px;
+		padding: 10px;
 		flex-grow: 0;
 		flex-shrink: 1;
 	}
@@ -27,8 +26,7 @@
 
 	@media(max-width: 1000px){
 		& > [class*="col"]{
-			padding-left: 15px;
-			padding-right: 15px;
+			padding: 15px;
 		}
 
 		& > div[class*="col-"]:not([class*="vw1000-col"]){
