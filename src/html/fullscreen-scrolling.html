@@ -1,11 +1,11 @@
 @@include('_head.html', {"title": "Fullscreen scrolling"})
 
 <!--HEADER/-->
-@@include('../modules/header/header.html')
+@@include('../modules/header/header.html', {"menu_item_current": "fsscroll"})
 <!--/HEADER-->
 
 <!--MAIN/-->
-<main class="main">
+<main class="main fsscroll">
 
 	<div class="fsscroll__screen" style="background: green">
 		
@@ -74,9 +74,6 @@
 <!--FOOTER/-->
 @@include('../modules/footer/footer.html')
 <!--/FOOTER-->
-
-</div>
-<!--/WRAPPER-->
 
 <!--POPUPs/-->
 @@include('../modules/popup/popup.html')

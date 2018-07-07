@@ -39,8 +39,6 @@
 		margin-left: 25px;
 	}
 
-	
-	
 	@media(max-width: 1000px){
 		&__nav{
 			float: none;
@@ -72,4 +70,10 @@
 			margin-top: -12px;
 		}
 	}
+}
+
+.mob-nav-is-opened{
+	position: fixed;
+	left: 0;
+	right: 0;
 }

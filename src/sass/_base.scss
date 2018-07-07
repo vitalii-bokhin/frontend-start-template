@@ -7,11 +7,8 @@ html, body {
 }
 
 body{
-	&.is-menu-opened{
-		position: fixed;
-		left: 0;
-		right: 0;
-	}
+	display: flex;
+	flex-direction: column;
 }
  
 a:hover{

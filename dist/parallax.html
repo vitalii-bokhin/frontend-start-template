@@ -3,14 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<link rel="stylesheet" href="css/style.min.css">
+	<link rel="stylesheet" href="css/style.css">
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	<title>Parallax | startTemplate</title>
 </head>
 <body>
-
-<!--WRAPPER/-->
-<div class="wrapper">
 
 <style>
 .parallax-element{
@@ -30,16 +27,22 @@
 
 			<div id="header-mob-menu" class="header__nav-wrap">
 				<nav class="header__nav">
-
+					
 					<!--Menu/-->
 					<ul class="menu">
-	<li class="menu__item menu__item_has-children @@current_1">
+	<li class="menu__item menu__item_has-children ">
 		<a href="index.html" class="menu__a">Home</a>
+		<button class="menu__arr"></button>
+		<ul class="menu__sub-menu">
+			<li class="menu__sub-menu-item ">
+				<a href="fullscreen-scrolling.html" class="menu__sub-menu-a">Full Screen Scroll</a>
+			</li>
+		</ul>
 	</li>
-	<li class="menu__item @@current_2">
+	<li class="menu__item ">
 		<a href="grid.html" class="menu__a">Grid</a>
 	</li>
-	<li class="menu__item menu__item_has-children @@current_3">
+	<li class="menu__item menu__item_has-children">
 		<a href="#" class="menu__a">Interface</a>
 		<button class="menu__arr"></button>
 		<ul class="menu__sub-menu">
@@ -148,9 +151,6 @@
 </footer>
 <!--/FOOTER-->
 
-</div>
-<!--/WRAPPER-->
-
 <!--POPUPs/-->
 <div class="popup">
 
@@ -215,7 +215,7 @@
 <!--script src="js/easing.min.js"></script-->
 <!--script src="js/maskinput.min.js"></script-->
 
-<script src="js/script.min.js"></script>
+<script src="js/script.js"></script>
 <script src="js/common.js"></script>
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 

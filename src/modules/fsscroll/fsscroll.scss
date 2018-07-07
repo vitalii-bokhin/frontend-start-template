@@ -1,10 +1,7 @@
 .fsscroll{
+	padding: 0;
 	&__screen{
-		position: relative;
+		min-height: 100vh;
 		padding-top: 100px;
 	}
-}
-
-.wrapper_fsscroll{
-	padding-top: 0 !important;
 }

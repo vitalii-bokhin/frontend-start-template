@@ -1,3 +1,116 @@
+var FsScroll;
+
+(function() {
+	"use strict";
+
+	FsScroll = {
+		options: null,
+		contElem: null,
+		scrolling: false,
+
+		move: function(moveTo, scroll) {
+			console.log(moveTo, scroll);
+			
+
+			var duration = 1500,
+			easing = 'easeInOutCubic';
+
+			this.scrolling = true;
+
+			if (scroll) {
+				duration = 900;
+				easing = 'easeInOutCubic';
+			}
+
+			window.scrollBy(0, moveTo);
+
+			setTimeout(function() {
+				//_.current();
+				this.scrolling = false;
+			}, 21);
+		},
+
+		mouseScroll: function(delta) {
+			var currentScreenElem = this.contElem.querySelector('.fsscroll__screen_current'),
+			winScrollBottom = window.pageYOffset + window.offsetHeight,
+			nextScreenElem;
+
+			if (delta > 0) {
+				nextScreenElem = currentScreenElem.nextElementSibling;
+
+				if (currentScreenElem && !currentScreenElem.classList.contains('fsscroll__screen_scroll') && !currentScreenElem.classList.contains('fsscroll__screen_last')) {
+					if (!this.scrolling) {
+						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
+
+						if ((window.pageYOffset + 21) < currentScreenOffsetTop) {
+							this.move(currentScreenOffsetTop);
+						} else {
+							this.move(nextScreenElem.getBoundingClientRect().top + window.pageYOffset);
+						}
+					}
+				} else {
+					var nextScreenOffsetTop = nextScreenElem.getBoundingClientRect().top + window.pageYOffset;
+
+					if (nextScreenElem && winScrollBottom > nextScreenOffsetTop) {
+						if (!this.scrolling) {
+							this.move(nextScreenOffsetTop);
+						}
+					} else {
+						this.move(window.pageYOffset + delta, true);
+					}
+				}
+			} else if (delta < 0) {
+				nextScreenElem = currentScreenElem.previousElementSibling;
+
+				if (nextScreenElem && !currentScreenElem.classList.contains('fsscroll__screen_scroll') && !currentScreenElem.classList.contains('fsscroll__screen_first')) {
+					if (!this.scrolling) {
+						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
+
+						if ((winScrollBottom - 21) > (currentScreenOffsetTop + currentScreenElem.offsetHeight)) {
+							this.move(currentScreenOffsetTop + currentScreenElem.offsetHeight - window.offsetHeight);
+						} else {
+							this.move(nextScreenElem.getBoundingClientRect().top + window.pageYOffset + nextScreenElem.offsetHeight - window.offsetHeight);
+						}
+					}
+				} else {
+					var nextScreenOffsetTop = nextScreenElem.getBoundingClientRect().top + window.pageYOffset;
+
+					if (nextScreenElem && (nextScreenOffsetTop + nextScreenElem.offsetHeight > window.pageYOffset)) {
+						if (!this.scrolling) {
+							this.move(nextScreenOffsetTop);
+						}
+					} else {
+						this.move(window.pageYOffset - delta, true);
+					}
+				}
+			}
+		},
+
+		init: function(options) {
+			this.options = options;
+
+			var contElem = document.querySelector(options.container);
+
+			if (!contElem) {
+				return;
+			}
+
+			this.contElem = contElem;
+
+			contElem.querySelector(options.screen).classList.add('fsscroll__screen_current');
+
+			contElem.addEventListener('wheel', (e) => {
+				e.preventDefault();
+
+				this.mouseScroll(e.deltaY);
+			});
+		}
+	};
+}());
+
+
+
+/*
 var FsScroll = {
 	winH: null,
 	scrolling: false,
@@ -194,4 +307,4 @@ $(document).ready(function() {
 
 	}
 
-});
+});*/

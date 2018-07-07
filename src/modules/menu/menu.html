@@ -1,11 +1,17 @@
 <ul class="menu">
-	<li class="menu__item menu__item_has-children @@current_1">
+	<li class="menu__item menu__item_has-children @@if (menu_item_current === 'home') {menu__item_current}">
 		<a href="index.html" class="menu__a">Home</a>
+		<button class="menu__arr"></button>
+		<ul class="menu__sub-menu">
+			<li class="menu__sub-menu-item @@if (menu_item_current === 'fsscroll') {menu__sub-menu-item_current}">
+				<a href="fullscreen-scrolling.html" class="menu__sub-menu-a">Full Screen Scroll</a>
+			</li>
+		</ul>
 	</li>
-	<li class="menu__item @@current_2">
+	<li class="menu__item @@if (menu_item_current === 'grid') {menu__item_current}">
 		<a href="grid.html" class="menu__a">Grid</a>
 	</li>
-	<li class="menu__item menu__item_has-children @@current_3">
+	<li class="menu__item menu__item_has-children">
 		<a href="#" class="menu__a">Interface</a>
 		<button class="menu__arr"></button>
 		<ul class="menu__sub-menu">

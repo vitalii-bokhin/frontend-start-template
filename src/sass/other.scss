@@ -5,7 +5,7 @@
 @import "sprite";
 
 /*list*/
-ul.list{
+.list{
 	list-style: none;
 	li{
 		line-height: (24/16);
@@ -34,18 +34,17 @@ ul.list{
 	}
 }
 
-/*text color*/
-.c-red{
-	color: $rd;
-}
-.c-gray{
-	color: $gy;
-}
-
-/*text align*/
-.ta-c{
-	text-align: center;
-}
-.ta-r{
-	text-align: right;
+/*bubble*/
+.bubble{
+	display: block;
+	position: absolute;
+	background: #FFF;
+	box-shadow: 2px 1px 21px rgba(0,0,0,.21);
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity .5s;
+	&.toggled{
+		visibility: visible;
+		opacity: 1;
+	}
 }

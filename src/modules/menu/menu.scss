@@ -8,6 +8,7 @@
 	@include clr;
 	list-style: none;
 	padding-top: 8px;
+	
 	&__item{
 		float: left;
 		margin-left: 45px;
@@ -26,16 +27,25 @@
 				}
 			}
 		}
+
+		&_current{
+			.menu__a{
+				border-bottom-color: $bk;
+			}
+		}
 	}
+
 	&__a{
 		font-size: 18px;
 		font-weight: 500;
 		text-decoration: none;
+		border-bottom: 2px solid transparent;
 		transition: .5s;
 		&:hover{
 			color: $rd;
 		}
 	}
+
 	&__arr{
 		display: none;
 		width: 12px;
@@ -47,6 +57,7 @@
 		background: none;
 		@include sp(-39px -8px);
 	}
+
 	&__sub-menu{
 		position: absolute;
 		list-style: none;

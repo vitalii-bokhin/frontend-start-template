@@ -44,6 +44,7 @@ var modules = {
 var modulesOn = [
 'header',
 'menu',
+'fsscroll',
 'user',
 'button',
 'image',
@@ -61,7 +62,6 @@ var modulesOn = [
 //'numberspin',
 //'anchor',
 //'timer',
-//'fsscroll',
 //'mouseparallax',
 //'diagram',
 //'floatslider',

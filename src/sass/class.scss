@@ -3,89 +3,21 @@
 @import "extends";
 @import "mixins";
 
-/*container*/
-.container{
-	margin-top: 25px;
-	margin-bottom: 25px;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	&-outer{
-		margin-top: 50px;
-		margin-bottom: 50px;
-	}
-	&-inner{
-		padding-top: 50px;
-		padding-bottom: 50px;
-	}
+/*text color*/
+.c-red{
+	color: $rd;
+}
+.c-gray{
+	color: $gy;
 }
 
-/*middle block*/
-.middle{
-	height: 100%;
-	font-size: 0;
-	&:before{
-		display: inline-block;
-		content: "";
-		height: 100%;
-		vertical-align: middle;
-	}
-	&__inner{
-		display: inline-block;
-		width: 100%;
-		vertical-align: middle;
-	}
+/*text align*/
+.ta-c{
+	text-align: center;
 }
-
-/*bottom block*/
-.bottom{
-	height: 100%;
-	font-size: 0;
-	&:before{
-		display: inline-block;
-		content: "";
-		height: 100%;
-		vertical-align: bottom;
-	}
-	&__inner{
-		display: inline-block;
-		width: 100%;
-		vertical-align: bottom;
-	}
+.ta-r{
+	text-align: right;
 }
-
-/*proportional block*/
-.proportional{
-	@include fixprop;
-	position: relative;
-	&__inner{
-		@extend %fwh;
-	}
-}
-
-/*fix block*/
-.fix-block{
-	&_fixed{
-		position: fixed !important;
-		z-index: 2;
-	}
-}
-
-/*bubble*/
-.bubble{
-	display: block;
-	position: absolute;
-	background: #FFF;
-	box-shadow: 2px 1px 21px rgba(0,0,0,.21);
-	visibility: hidden;
-	opacity: 0;
-	transition: opacity .5s;
-	&.toggled{
-		visibility: visible;
-		opacity: 1;
-	}
-}
-
-
 
 /*position*/
 .pos-r{
