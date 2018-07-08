@@ -16,6 +16,7 @@ svgSprite = require('gulp-svg-sprite');
 var modules = {
 	accord: 'src/modules/accord/',
 	anchor: 'src/modules/anchor/',
+	animate_js: 'src/modules/animate_js/',
 	button: 'src/modules/button/',
 	customform: 'src/modules/customform/',
 	diagram: 'src/modules/diagram/',
@@ -44,6 +45,7 @@ var modules = {
 var modulesOn = [
 'header',
 'menu',
+'animate_js',
 'fsscroll',
 'user',
 'button',

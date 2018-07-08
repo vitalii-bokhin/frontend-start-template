@@ -27,28 +27,24 @@ var FsScroll;
 			}
 		},
 
-		move: function(moveTo, scroll) {
-			//console.log(moveTo, scroll);
-			
-
-			var duration = 1500,
-			easing = 'easeInOutCubic';
-
+		scroll: function(scrollTo, scroll) {
 			this.scrolling = true;
+			
+			var duration = 1500,
+			easing = 'easeInOutQuad';
 
 			if (scroll) {
 				duration = 900;
-				easing = 'easeInOutCubic';
+				easing = 'easeInOutQuad';
 			}
 
-
-			window.scrollBy(0, moveTo);
-
-			setTimeout(() => {
+			animateJS(function(progress) {
+					window.scrollTo(0, (scrollTo * progress));
+			}, duration, easing, () => {
 				this.current();
 
 				this.scrolling = false;
-			}, 321);
+			});
 		},
 
 		mouseScroll: function(delta) {
@@ -64,9 +60,9 @@ var FsScroll;
 						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
 
 						if ((window.pageYOffset + 21) < currentScreenOffsetTop) {
-							this.move(currentScreenOffsetTop);
+							this.scroll(currentScreenOffsetTop);
 						} else {
-							this.move(nextScreenElem.getBoundingClientRect().top + window.pageYOffset);
+							this.scroll(nextScreenElem.getBoundingClientRect().top + window.pageYOffset);
 						}
 					}
 				} else {
@@ -74,10 +70,10 @@ var FsScroll;
 
 					if (nextScreenElem && winScrollBottom > nextScreenOffsetTop) {
 						if (!this.scrolling) {
-							this.move(nextScreenOffsetTop);
+							this.scroll(nextScreenOffsetTop);
 						}
 					} else {
-						this.move(window.pageYOffset + delta, true);
+						this.scroll(window.pageYOffset + delta, true);
 					}
 				}
 			} else if (delta < 0) {
@@ -88,9 +84,9 @@ var FsScroll;
 						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
 
 						if ((winScrollBottom - 21) > (currentScreenOffsetTop + currentScreenElem.offsetHeight)) {
-							this.move(currentScreenOffsetTop + currentScreenElem.offsetHeight - window.innerHeight);
+							this.scroll(currentScreenOffsetTop + currentScreenElem.offsetHeight - window.innerHeight);
 						} else {
-							this.move(nextScreenElem.getBoundingClientRect().top + window.pageYOffset + nextScreenElem.offsetHeight - window.innerHeight);
+							this.scroll(nextScreenElem.getBoundingClientRect().top + window.pageYOffset + nextScreenElem.offsetHeight - window.innerHeight);
 						}
 					}
 				} else {
@@ -98,10 +94,10 @@ var FsScroll;
 
 					if (nextScreenElem && (nextScreenOffsetTop + nextScreenElem.offsetHeight > window.pageYOffset)) {
 						if (!this.scrolling) {
-							this.move(nextScreenOffsetTop);
+							this.scroll(nextScreenOffsetTop);
 						}
 					} else {
-						this.move(window.pageYOffset - delta, true);
+						this.scroll(window.pageYOffset - delta, true);
 					}
 				}
 			}
@@ -120,7 +116,7 @@ var FsScroll;
 
 			contElem.querySelector(options.screen).classList.add('fsscroll__screen_current');
 
-			contElem.addEventListener('wheel', (e) => {
+			document.body.addEventListener('wheel', (e) => {
 				e.preventDefault();
 
 				this.mouseScroll(e.deltaY);
