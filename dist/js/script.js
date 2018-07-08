@@ -130,8 +130,27 @@ var FsScroll;
 		contElem: null,
 		scrolling: false,
 
+		current: function() {
+			var midWinScrollTop = window.pageYOffset + window.innerHeight / 2,
+			screenElements = this.contElem.querySelectorAll(this.options.screen);
+
+			for (var i = 0; i < screenElements.length; i++) {
+				screenElements[i].classList.remove('fsscroll__screen_current');
+			}
+
+			for (var i = 0; i < screenElements.length; i++) {
+				var screenOffsetTop = screenElements[i].getBoundingClientRect().top + window.pageYOffset;
+				console.log(window.innerHeight);
+
+				if (screenOffsetTop <= midWinScrollTop && (screenOffsetTop + screenElements[i].offsetHeight) >= midWinScrollTop) {
+
+					screenElements[i].classList.add('fsscroll__screen_current');
+				}
+			}
+		},
+
 		move: function(moveTo, scroll) {
-			console.log(moveTo, scroll);
+			//console.log(moveTo, scroll);
 			
 
 			var duration = 1500,
@@ -144,17 +163,19 @@ var FsScroll;
 				easing = 'easeInOutCubic';
 			}
 
+
 			window.scrollBy(0, moveTo);
 
-			setTimeout(function() {
-				//_.current();
+			setTimeout(() => {
+				this.current();
+
 				this.scrolling = false;
-			}, 21);
+			}, 321);
 		},
 
 		mouseScroll: function(delta) {
 			var currentScreenElem = this.contElem.querySelector('.fsscroll__screen_current'),
-			winScrollBottom = window.pageYOffset + window.offsetHeight,
+			winScrollBottom = window.pageYOffset + window.innerHeight,
 			nextScreenElem;
 
 			if (delta > 0) {
@@ -189,9 +210,9 @@ var FsScroll;
 						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
 
 						if ((winScrollBottom - 21) > (currentScreenOffsetTop + currentScreenElem.offsetHeight)) {
-							this.move(currentScreenOffsetTop + currentScreenElem.offsetHeight - window.offsetHeight);
+							this.move(currentScreenOffsetTop + currentScreenElem.offsetHeight - window.innerHeight);
 						} else {
-							this.move(nextScreenElem.getBoundingClientRect().top + window.pageYOffset + nextScreenElem.offsetHeight - window.offsetHeight);
+							this.move(nextScreenElem.getBoundingClientRect().top + window.pageYOffset + nextScreenElem.offsetHeight - window.innerHeight);
 						}
 					}
 				} else {
