@@ -4,131 +4,109 @@ var browser;
 (function() {
 	"use strict";
 
-//get useragent
-document.documentElement.setAttribute('data-useragent', navigator.userAgent);
+	//get useragent
+	document.documentElement.setAttribute('data-useragent', navigator.userAgent);
 
-//browser identify
-browser = (function(userAgent) {
+	//browser identify
+	browser = (function(userAgent) {
+		userAgent = userAgent.toLowerCase();
 
-	userAgent = userAgent.toLowerCase();
+		if (/(msie|rv:11\.0)/.test(userAgent)) {
+			return 'ie';
+		}
+	}(navigator.userAgent));
 
-	if (/(msie|rv:11\.0)/.test(userAgent)) {
-		return 'ie';
-	}
+	//add support CustomEvent constructor for IE
+	try {
+		new CustomEvent("IE has CustomEvent, but doesn't support constructor");
+	} catch (e) {
+		window.CustomEvent = function(event, params) {
+			var evt;
 
-}(navigator.userAgent));
+			params = params || {
+				bubbles: false,
+				cancelable: false,
+				detail: undefined
+			};
 
-//add support CustomEvent constructor for IE
-try {
-	new CustomEvent("IE has CustomEvent, but doesn't support constructor");
-} catch (e) {
+			evt = document.createEvent("CustomEvent");
 
-	window.CustomEvent = function(event, params) {
-		var evt;
+			evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
 
-		params = params || {
-			bubbles: false,
-			cancelable: false,
-			detail: undefined
-		};
-
-		evt = document.createEvent("CustomEvent");
-
-		evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-
-		return evt;
-	}
-
-	CustomEvent.prototype = Object.create(window.Event.prototype);
-}
-
-//window Resized Event
-var winResizedEvent = new CustomEvent('winResized');
-var rsz = true;
-
-window.addEventListener('resize', function() {
-
-	if (rsz) {
-
-		rsz = false;
-		setTimeout(function() {
-			window.dispatchEvent(winResizedEvent);
-			rsz = true;
-		}, 1021);
-
-	}
-
-});
-
-//closest polyfill
-if (!Element.prototype.closest) {
-	(function(ElProto) {
-		ElProto.matches = ElProto.matches || ElProto.mozMatchesSelector || ElProto.msMatchesSelector || ElProto.oMatchesSelector || ElProto.webkitMatchesSelector;
-		ElProto.closest = ElProto.closest || function closest(selector) {
-			if (!this) {
-				return null;
-			}
-			if (this.matches(selector)) {
-				return this;
-			}
-			if (!this.parentElement) {
-				return null;
-			} else {
-				return this.parentElement.closest(selector);
-			}
-		};
-	}(Element.prototype));
-}
-
-//check element for hidden
-Element.prototype.elementIsHidden = function() {
-
-	var elem = this;
-
-	while (elem) {
-
-		if (!elem) {
-			break;
+			return evt;
 		}
 
-		var compStyles = getComputedStyle(elem);
-
-		if (compStyles.display == 'none' || compStyles.visibility == 'hidden' || compStyles.opacity == '0') {
-			return true;
-		}
-
-		elem = elem.parentElement;
-
+		CustomEvent.prototype = Object.create(window.Event.prototype);
 	}
 
-	return false;
-}
+	//window Resized Event
+	var winResizedEvent = new CustomEvent('winResized'),
+	rsz = true;
 
-}());
-;(function() {
-	"use strict";
+	window.addEventListener('resize', function() {
+		if (rsz) {
+			rsz = false;
 
-	//fix header
-	var headerElem = document.querySelector('.header');
-
-	window.addEventListener('scroll', function() {
-		if (window.pageYOffset > 21) {
-			headerElem.classList.add('header_fixed');
-		} else if (!document.body.classList.contains('popup-is-opened')) {
-			headerElem.classList.remove('header_fixed');
+			setTimeout(function() {
+				window.dispatchEvent(winResizedEvent);
+				rsz = true;
+			}, 1021);
 		}
 	});
 
+	//closest polyfill
+	if (!Element.prototype.closest) {
+		(function(ElProto) {
+			ElProto.matches = ElProto.matches || ElProto.mozMatchesSelector || ElProto.msMatchesSelector || ElProto.oMatchesSelector || ElProto.webkitMatchesSelector;
+
+			ElProto.closest = ElProto.closest || function closest(selector) {
+				if (!this) {
+					return null;
+				}
+
+				if (this.matches(selector)) {
+					return this;
+				}
+
+				if (!this.parentElement) {
+					return null;
+				} else {
+					return this.parentElement.closest(selector);
+				}
+			};
+		}(Element.prototype));
+	}
+
+	//check element for hidden
+	Element.prototype.elementIsHidden = function() {
+		var elem = this;
+
+		while (elem) {
+			if (!elem) {
+				break;
+			}
+
+			var compStyles = getComputedStyle(elem);
+
+			if (compStyles.display == 'none' || compStyles.visibility == 'hidden' || compStyles.opacity == '0') {
+				return true;
+			}
+
+			elem = elem.parentElement;
+		}
+
+		return false;
+	}
 }());
 /*
 animateJS(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
 */
-var animateJS;
+var animate;
 
 (function() {
 	"use strict";
 
-	animateJS = function(draw, duration, ease, complete) {
+	animate = function(draw, duration, ease, complete) {
 		var start = performance.now();
 
 		requestAnimationFrame(function anim(time) {
@@ -164,6 +142,21 @@ var animateJS;
 		return Math.pow(timeFraction, 2)
 	}
 }());
+;(function() {
+	"use strict";
+
+	//fix header
+	var headerElem = document.querySelector('.header');
+
+	window.addEventListener('scroll', function() {
+		if (window.pageYOffset > 21) {
+			headerElem.classList.add('header_fixed');
+		} else if (!document.body.classList.contains('popup-is-opened')) {
+			headerElem.classList.remove('header_fixed');
+		}
+	});
+
+}());
 var FsScroll;
 
 (function() {
@@ -173,6 +166,7 @@ var FsScroll;
 		options: null,
 		contElem: null,
 		scrolling: false,
+		delta: 0,
 
 		current: function() {
 			var midWinScrollTop = window.pageYOffset + window.innerHeight / 2,
@@ -184,7 +178,6 @@ var FsScroll;
 
 			for (var i = 0; i < screenElements.length; i++) {
 				var screenOffsetTop = screenElements[i].getBoundingClientRect().top + window.pageYOffset;
-				console.log(window.innerHeight);
 
 				if (screenOffsetTop <= midWinScrollTop && (screenOffsetTop + screenElements[i].offsetHeight) >= midWinScrollTop) {
 
@@ -194,34 +187,38 @@ var FsScroll;
 		},
 
 		scroll: function(scrollTo, scroll) {
+			console.log(this.delta);
 			this.scrolling = true;
 			
-			var duration = 1500,
+			var scrollTopStart = window.pageYOffset,
+			duration = this.options.duration || 1000,
 			easing = 'easeInOutQuad';
 
 			if (scroll) {
-				duration = 900;
+				duration = 500;
 				easing = 'easeInOutQuad';
 			}
 
-			animateJS(function(progress) {
-					window.scrollTo(0, (scrollTo * progress));
+			animate(function(progress) {
+				window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * scrollTopStart)));
 			}, duration, easing, () => {
-				this.current();
+				setTimeout(() => {
+					this.current();
 
-				this.scrolling = false;
+					this.scrolling = false;
+					this.delta = 0;
+				}, 321);
 			});
 		},
 
 		mouseScroll: function(delta) {
 			var currentScreenElem = this.contElem.querySelector('.fsscroll__screen_current'),
-			winScrollBottom = window.pageYOffset + window.innerHeight,
-			nextScreenElem;
+			winScrollBottom = window.pageYOffset + window.innerHeight;
 
 			if (delta > 0) {
-				nextScreenElem = currentScreenElem.nextElementSibling;
+				var nextScreenElem = (currentScreenElem) ? currentScreenElem.nextElementSibling : null;
 
-				if (currentScreenElem && !currentScreenElem.classList.contains('fsscroll__screen_scroll') && !currentScreenElem.classList.contains('fsscroll__screen_last')) {
+				if (currentScreenElem && ((currentScreenElem.offsetHeight - 21) < window.innerHeight) && !currentScreenElem.classList.contains('fsscroll__screen_last')) {
 					if (!this.scrolling) {
 						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
 
@@ -232,20 +229,22 @@ var FsScroll;
 						}
 					}
 				} else {
-					var nextScreenOffsetTop = nextScreenElem.getBoundingClientRect().top + window.pageYOffset;
+					var nextScreenOffsetTop = (nextScreenElem) ? nextScreenElem.getBoundingClientRect().top + window.pageYOffset : undefined;
 
-					if (nextScreenElem && winScrollBottom > nextScreenOffsetTop) {
+					if (nextScreenElem && (winScrollBottom > nextScreenOffsetTop)) {
 						if (!this.scrolling) {
 							this.scroll(nextScreenOffsetTop);
 						}
 					} else {
-						this.scroll(window.pageYOffset + delta, true);
+						this.delta += delta / 3;
+
+						this.scroll(window.pageYOffset + this.delta, true);
 					}
 				}
 			} else if (delta < 0) {
-				nextScreenElem = currentScreenElem.previousElementSibling;
+				var nextScreenElem = (currentScreenElem) ? currentScreenElem.previousElementSibling : null;
 
-				if (nextScreenElem && !currentScreenElem.classList.contains('fsscroll__screen_scroll') && !currentScreenElem.classList.contains('fsscroll__screen_first')) {
+				if (nextScreenElem && ((currentScreenElem.offsetHeight - 21) < window.innerHeight) && !currentScreenElem.classList.contains('fsscroll__screen_first')) {
 					if (!this.scrolling) {
 						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
 
@@ -256,36 +255,48 @@ var FsScroll;
 						}
 					}
 				} else {
-					var nextScreenOffsetTop = nextScreenElem.getBoundingClientRect().top + window.pageYOffset;
+					var nextScreenOffsetTop = (nextScreenElem) ? nextScreenElem.getBoundingClientRect().top + window.pageYOffset : undefined;
 
-					if (nextScreenElem && (nextScreenOffsetTop + nextScreenElem.offsetHeight > window.pageYOffset)) {
+					if (nextScreenElem && ((nextScreenOffsetTop + nextScreenElem.offsetHeight) > window.pageYOffset)) {
 						if (!this.scrolling) {
 							this.scroll(nextScreenOffsetTop);
 						}
 					} else {
-						this.scroll(window.pageYOffset - delta, true);
+						this.delta += delta / 3;
+						this.scroll(window.pageYOffset + this.delta, true);
 					}
 				}
 			}
 		},
 
 		init: function(options) {
-			this.options = options;
-
 			var contElem = document.querySelector(options.container);
 
 			if (!contElem) {
 				return;
 			}
 
+			this.options = options;
 			this.contElem = contElem;
 
-			contElem.querySelector(options.screen).classList.add('fsscroll__screen_current');
+			var screenElements = contElem.querySelectorAll(options.screen);
 
-			document.body.addEventListener('wheel', (e) => {
-				e.preventDefault();
+			screenElements[0].classList.add('fsscroll__screen_first');
+			screenElements[0].classList.add('fsscroll__screen_current');
+			screenElements[screenElements.length - 1].classList.add('fsscroll__screen_last');
 
-				this.mouseScroll(e.deltaY);
+			if ('onwheel' in document) {
+				document.addEventListener('wheel', (e) => {
+					e.preventDefault();
+
+					this.mouseScroll(e.deltaY);
+				});
+			}
+			
+			window.addEventListener('scroll', () => {
+				if (!this.scrolling) {
+					this.current();
+				}
 			});
 		}
 	};

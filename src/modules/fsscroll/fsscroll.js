@@ -7,6 +7,7 @@ var FsScroll;
 		options: null,
 		contElem: null,
 		scrolling: false,
+		delta: 0,
 
 		current: function() {
 			var midWinScrollTop = window.pageYOffset + window.innerHeight / 2,
@@ -18,7 +19,6 @@ var FsScroll;
 
 			for (var i = 0; i < screenElements.length; i++) {
 				var screenOffsetTop = screenElements[i].getBoundingClientRect().top + window.pageYOffset;
-				console.log(window.innerHeight);
 
 				if (screenOffsetTop <= midWinScrollTop && (screenOffsetTop + screenElements[i].offsetHeight) >= midWinScrollTop) {
 
@@ -28,34 +28,38 @@ var FsScroll;
 		},
 
 		scroll: function(scrollTo, scroll) {
+			console.log(this.delta);
 			this.scrolling = true;
 			
-			var duration = 1500,
+			var scrollTopStart = window.pageYOffset,
+			duration = this.options.duration || 1000,
 			easing = 'easeInOutQuad';
 
 			if (scroll) {
-				duration = 900;
+				duration = 500;
 				easing = 'easeInOutQuad';
 			}
 
-			animateJS(function(progress) {
-					window.scrollTo(0, (scrollTo * progress));
+			animate(function(progress) {
+				window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * scrollTopStart)));
 			}, duration, easing, () => {
-				this.current();
+				setTimeout(() => {
+					this.current();
 
-				this.scrolling = false;
+					this.scrolling = false;
+					this.delta = 0;
+				}, 321);
 			});
 		},
 
 		mouseScroll: function(delta) {
 			var currentScreenElem = this.contElem.querySelector('.fsscroll__screen_current'),
-			winScrollBottom = window.pageYOffset + window.innerHeight,
-			nextScreenElem;
+			winScrollBottom = window.pageYOffset + window.innerHeight;
 
 			if (delta > 0) {
-				nextScreenElem = currentScreenElem.nextElementSibling;
+				var nextScreenElem = (currentScreenElem) ? currentScreenElem.nextElementSibling : null;
 
-				if (currentScreenElem && !currentScreenElem.classList.contains('fsscroll__screen_scroll') && !currentScreenElem.classList.contains('fsscroll__screen_last')) {
+				if (currentScreenElem && ((currentScreenElem.offsetHeight - 21) < window.innerHeight) && !currentScreenElem.classList.contains('fsscroll__screen_last')) {
 					if (!this.scrolling) {
 						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
 
@@ -66,20 +70,22 @@ var FsScroll;
 						}
 					}
 				} else {
-					var nextScreenOffsetTop = nextScreenElem.getBoundingClientRect().top + window.pageYOffset;
+					var nextScreenOffsetTop = (nextScreenElem) ? nextScreenElem.getBoundingClientRect().top + window.pageYOffset : undefined;
 
-					if (nextScreenElem && winScrollBottom > nextScreenOffsetTop) {
+					if (nextScreenElem && (winScrollBottom > nextScreenOffsetTop)) {
 						if (!this.scrolling) {
 							this.scroll(nextScreenOffsetTop);
 						}
 					} else {
-						this.scroll(window.pageYOffset + delta, true);
+						this.delta += delta / 3;
+
+						this.scroll(window.pageYOffset + this.delta, true);
 					}
 				}
 			} else if (delta < 0) {
-				nextScreenElem = currentScreenElem.previousElementSibling;
+				var nextScreenElem = (currentScreenElem) ? currentScreenElem.previousElementSibling : null;
 
-				if (nextScreenElem && !currentScreenElem.classList.contains('fsscroll__screen_scroll') && !currentScreenElem.classList.contains('fsscroll__screen_first')) {
+				if (nextScreenElem && ((currentScreenElem.offsetHeight - 21) < window.innerHeight) && !currentScreenElem.classList.contains('fsscroll__screen_first')) {
 					if (!this.scrolling) {
 						var currentScreenOffsetTop = currentScreenElem.getBoundingClientRect().top + window.pageYOffset;
 
@@ -90,36 +96,48 @@ var FsScroll;
 						}
 					}
 				} else {
-					var nextScreenOffsetTop = nextScreenElem.getBoundingClientRect().top + window.pageYOffset;
+					var nextScreenOffsetTop = (nextScreenElem) ? nextScreenElem.getBoundingClientRect().top + window.pageYOffset : undefined;
 
-					if (nextScreenElem && (nextScreenOffsetTop + nextScreenElem.offsetHeight > window.pageYOffset)) {
+					if (nextScreenElem && ((nextScreenOffsetTop + nextScreenElem.offsetHeight) > window.pageYOffset)) {
 						if (!this.scrolling) {
 							this.scroll(nextScreenOffsetTop);
 						}
 					} else {
-						this.scroll(window.pageYOffset - delta, true);
+						this.delta += delta / 3;
+						this.scroll(window.pageYOffset + this.delta, true);
 					}
 				}
 			}
 		},
 
 		init: function(options) {
-			this.options = options;
-
 			var contElem = document.querySelector(options.container);
 
 			if (!contElem) {
 				return;
 			}
 
+			this.options = options;
 			this.contElem = contElem;
 
-			contElem.querySelector(options.screen).classList.add('fsscroll__screen_current');
+			var screenElements = contElem.querySelectorAll(options.screen);
 
-			document.body.addEventListener('wheel', (e) => {
-				e.preventDefault();
+			screenElements[0].classList.add('fsscroll__screen_first');
+			screenElements[0].classList.add('fsscroll__screen_current');
+			screenElements[screenElements.length - 1].classList.add('fsscroll__screen_last');
 
-				this.mouseScroll(e.deltaY);
+			if ('onwheel' in document) {
+				document.addEventListener('wheel', (e) => {
+					e.preventDefault();
+
+					this.mouseScroll(e.deltaY);
+				});
+			}
+			
+			window.addEventListener('scroll', () => {
+				if (!this.scrolling) {
+					this.current();
+				}
 			});
 		}
 	};

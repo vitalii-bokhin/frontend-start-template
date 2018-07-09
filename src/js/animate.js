@@ -1,12 +1,12 @@
 /*
 animateJS(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
 */
-var animateJS;
+var animate;
 
 (function() {
 	"use strict";
 
-	animateJS = function(draw, duration, ease, complete) {
+	animate = function(draw, duration, ease, complete) {
 		var start = performance.now();
 
 		requestAnimationFrame(function anim(time) {

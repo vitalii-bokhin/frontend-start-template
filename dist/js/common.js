@@ -84,7 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	//fullscreen scroll
 	FsScroll.init({
 		container: '.fsscroll',
-		screen: '.fsscroll__screen'
+		screen: '.fsscroll__screen',
+		duration: 700
 	});
 
 	//submit forms
