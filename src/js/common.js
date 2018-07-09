@@ -88,6 +88,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		duration: 700
 	});
 
+	//anchor
+	Anchor.init('.js-anchor', 700, 100);
+
 	//submit forms
 	var form = new Form('#form');
 

@@ -56,11 +56,11 @@ var modulesOn = [
 'accord',
 'more',
 'tab',
+'anchor',
 'footer'
 //'getcontentajax',
 //'share',
 //'numberspin',
-//'anchor',
 //'timer',
 //'mouseparallax',
 //'diagram',

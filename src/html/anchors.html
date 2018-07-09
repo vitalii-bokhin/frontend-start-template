@@ -1,0 +1,73 @@
+@@include('_head.html', {"title": "Anchors"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html', {"menu_item_current": "anchors"})
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-12">
+				<h1>Anchors</h1>
+			</div>
+		</div>
+
+		<div class="row" style="margin-bottom: 500px">
+			<div class="col-3">
+				<a href="#container-1" class="js-anchor">Container 1</a>
+			</div>
+			<div class="col-3">
+				<a href="#container-2" class="js-anchor">Container 2</a>
+			</div>
+			<div class="col-3">
+				<a href="#container-3" class="js-anchor">Container 3</a>
+			</div>
+			<div class="col-3">
+				<a href="#container-4" class="js-anchor">Container 4</a>
+			</div>
+		</div>
+
+		<div id="container-1" class="row" style="margin-bottom: 255px; background: green">
+			<div class="col-12">
+				<h2>Container 1</h2>
+			</div>
+		</div>
+
+		<div id="container-2" class="row" style="margin-bottom: 555px; background: red">
+			<div class="col-12">
+				<h2>Container 2</h2>
+			</div>
+		</div>
+
+		<div id="container-3" class="row" style="margin-bottom: 255px; background: blue">
+			<div class="col-12">
+				<h2>Container 3</h2>
+			</div>
+		</div>
+
+		<div id="container-4" class="row" style="margin-bottom: 355px; background: yellow">
+			<div class="col-12">
+				<h2>Container 4</h2>
+			</div>
+		</div>
+
+	</div>
+
+</main>
+<!--/MAIN-->
+
+<!--FOOTER/-->
+@@include('../modules/footer/footer.html')
+<!--/FOOTER-->
+
+<!--POPUPs/-->
+@@include('../modules/popup/popup.html')
+<!--/POPUPs-->
+
+@@include('_javascript.html')
+
+</body>
+</html>

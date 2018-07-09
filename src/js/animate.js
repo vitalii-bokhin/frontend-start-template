@@ -23,7 +23,9 @@ var animate;
 			if (timeFraction < 1) {
 				requestAnimationFrame(anim);
 			} else {
-				complete();
+				if (complete != undefined) {
+					complete();
+				}
 			}
 		});
 	}
