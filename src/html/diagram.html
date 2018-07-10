@@ -1,4 +1,4 @@
-@@include('_head.html', {"title": "Buttons"})
+@@include('_head.html', {"title": "Diagram"})
 
 <!--HEADER/-->
 @@include('../modules/header/header.html', {"menu_item_current": "diagram"})
@@ -11,23 +11,27 @@
 
 		<div class="row">
 			<div class="col-12">
-				<h1>Buttons</h1>
+				<h1>Diagram</h1>
 			</div>
 		</div>
 
-		<div class="row" style="margin-bottom: 50px">
-			<div class="col-3">
-				<button type="button" class="btn">Button</button>
+		<div class="row">
+			<div class="col-2">
+				<!--Diagram/-->
+				@@include('../modules/diagram/diagram.html', {"id":"diagram"})
+				<!--/Diagram-->
 			</div>
 			<div class="col-3">
-				<button type="button" class="arrow-btn">Arrow Button</button>
+				<!--Diagram/-->
+				@@include('../modules/diagram/diagram.html', {"id":"diagram-2"})
+				<!--/Diagram-->
 			</div>
-			<div class="col-3">
-				<button type="button" class="plus-btn">Add Button</button>
+			<div class="col-2">
+				<!--Diagram/-->
+				@@include('../modules/diagram/diagram.html', {"id":"diagram-3"})
+				<!--/Diagram-->
 			</div>
 		</div>
-
-		
 
 	</div>
 

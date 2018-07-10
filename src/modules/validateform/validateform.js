@@ -377,6 +377,10 @@ var ValidateForm;
 		},
 
 		init: function(form) {
+			if (!form) {
+				return;
+			}
+
 			form.addEventListener('input', this.validateOnInputOrBlur.bind(this));
 
 			form.addEventListener('blur', this.validateOnInputOrBlur.bind(this), true);

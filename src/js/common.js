@@ -57,10 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	//init cover images
 	CoverImg.init();
-     
+
 	//init toggle button
 	Toggle.init('.js-toggle');
- 
+
 	//popup init
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
@@ -91,70 +91,143 @@ document.addEventListener('DOMContentLoaded', function() {
 	//anchor
 	Anchor.init('.js-anchor', 700, 100);
 
-	//submit forms
+	//diagram
+	var diagram = new Diagram({
+		canvasId: 'diagram',
+		charts: [
+		{
+			value: 37,
+			color: 'green',
+			width: 20
+		},
+		{
+			value: 45,
+			color: '#d0295e',
+			width: 10,
+			offset: 2
+		}
+		],
+		maxValue: 100
+	});
+
+
+	//diagram 2
+	var diagram_2 = new Diagram({
+		canvasId: 'diagram-2',
+		charts: [
+		{
+			value: 84,
+			color: '#fd8d40',
+			width: 30
+		},
+		{
+			value: 39,
+			color: '#0000ff',
+			width: 30,
+			offset: 2
+		}
+		],
+		maxValue: 100,
+		animate: true
+	});
+
+	diagram_2.animate(2700);
+
+	//diagram 2
+	var diagram_3 = new Diagram({
+		canvasId: 'diagram-3',
+		charts: [
+		{
+			value: 67,
+			color: '#fd8d40',
+			width: 15
+		},
+		{
+			value: 75,
+			color: '#d0295e',
+			width: 15,
+			offset: 2
+		},
+		{
+			value: 83,
+			color: 'green',
+			width: 15,
+			offset: 2
+		},
+		{
+			value: 91,
+			color: '#0000ff',
+			width: 15,
+			offset: 2
+		}
+		],
+		maxValue: 100,
+		animate: true
+	});
+
+	diagram_3.animate(4200);
+
+	//submit form
 	var form = new Form('#form');
 
-	if (form.element) {
-		NextFieldset.init(form.element, '.form__button');
+	NextFieldset.init(form.element, '.form__button');
 
-		ValidateForm.init(form.element);
+	ValidateForm.init(form.element);
 
-		form.onSubmit = function(form, callback) {
-			callback({clearForm: true});
-		}
-	}
-
-
-	var ajaxForm = new Form('#form-ajax');
-
-	if (ajaxForm.element) {
-		ValidateForm.init(ajaxForm.element);
-
-		ajaxForm.onSubmit = function(form, callback) {
-			if (ValidateForm.submit(form)) {
-				setTimeout(function() {
-					callback({clearForm: true, unlockSubmitButton: true});
-				}, 1000);
-
-				/*
-				var xhr = new XMLHttpRequest();
-				xhr.open('POST', form.action);
-				xhr.onreadystatechange = function() {
-					if (xhr.readyState == 4 && xhr.status == 200) {
-
-						var response = JSON.parse(xhr.response);  //response json
-
-						if (response.status == 'sent') {
-
-							Popup.message('#message-popup', 'Форма отправлена');
-							callback({clearForm: true, unlockSubmitButton: true});
-
-						} else {
-							console.log(response);
-						}
-
-					}
-				}
-				xhr.send(new FormData(form));
-				*/
-				return true;
-			}
-		}
-	}
-
-
-	var noAjaxForm = new Form('#form-no-ajax');
-
-	if (noAjaxForm.element) {
-		ValidateForm.init(noAjaxForm.element);
+	form.onSubmit = function(form, callback) {
+		callback({clearForm: true});
 	}
 	
 
+	//submit ajaxForm
+	var ajaxForm = new Form('#form-ajax');
+
+	ValidateForm.init(ajaxForm.element);
+
+	ajaxForm.onSubmit = function(form, callback) {
+		if (ValidateForm.submit(form)) {
+			setTimeout(function() {
+				callback({clearForm: true, unlockSubmitButton: true});
+			}, 1000);
+
+
+			/*
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', form.action);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+
+					var response = JSON.parse(xhr.response);  //response JSON
+
+					if (response.status == 'sent') {
+
+						Popup.message('#message-popup', 'Форма отправлена');
+						callback({clearForm: true, unlockSubmitButton: true});
+
+					} else {
+						console.log(response);
+					}
+
+				}
+			}
+			xhr.send(new FormData(form));
+			*/
+
+			return true;
+		}
+	}
+
+
+	//submit noAjaxForm
+	var noAjaxForm = new Form('#form-no-ajax');
+
+	ValidateForm.init(noAjaxForm.element);
+
+
+	//submit searchForm
 	var searchForm = new Form('#search-form');
 
-	if (searchForm.element) {
-		ValidateForm.init(searchForm.element);
-	}
+	ValidateForm.init(searchForm.element);
 
 });
 
