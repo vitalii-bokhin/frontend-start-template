@@ -58,10 +58,10 @@ var modulesOn = [
 'tab',
 'anchor',
 'diagram',
+'numberspin',
 'footer'
 //'getcontentajax',
 //'share',
-//'numberspin',
 //'timer',
 //'mouseparallax',
 //'floatslider',
@@ -119,7 +119,7 @@ gulp.task('dev', function() {
 
 //dist build
 gulp.task('dist', function() {
-	HTML(['src/html/*.html', '!src/html/_*.html'], true);
+	HTML(['!src/html/_*.html', 'src/html/*.html'], true);
 
 	CSS(cssSrc, true);
 

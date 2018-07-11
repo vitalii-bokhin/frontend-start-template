@@ -1235,6 +1235,7 @@ p:last-child {
 .video__frame {
   z-index: 3;
   background: #212121;
+  display: none;
 }
 
 .video__frame:before {
@@ -1254,6 +1255,15 @@ p:last-child {
   z-index: 2;
   border: none;
   background: none;
+  display: none;
+}
+
+.video__frame iframe.visible {
+  display: block;
+}
+
+.video__frame_visible {
+  display: block;
 }
 
 @keyframes video_loading_icon {

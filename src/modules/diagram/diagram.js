@@ -1,3 +1,21 @@
+/*
+var diagram = new Diagram({
+	canvasId: Str elem id,
+	charts: [
+	{
+		value: Int,
+		color: Str,
+		width: Int px,
+		numContId: Str elem id
+	}
+	],
+	maxValue: Int,
+	animate: true
+});
+
+diagram.animate(Int duration ms);
+*/
+
 var Diagram;
 
 (function() {
@@ -51,12 +69,22 @@ var Diagram;
 			this.ctx.lineWidth = chart.width;
 			this.ctx.strokeStyle = chart.color;
 			this.ctx.stroke();
+
+			outputNum(chart);
 		}
 
 		if (!options.animate) {
 			options.charts.forEach((chart, i) => {
 				drawChart(chart, i);
 			});
+		}
+
+		function outputNum(chart) {
+			var numElem = document.getElementById(chart.numContId);
+
+			if (numElem) {
+				numElem.innerHTML = chart.value.toFixed(0);
+			}
 		}
 	}
 }());

@@ -1,3 +1,15 @@
+var Numberspin;
+
+(function() {
+	"use strict";
+
+	Numberspin = function(options) {
+		
+	}
+}());
+
+
+/*
 function Numberspin(elem, opt) {
 	var def = {
 		animation: 1
@@ -117,3 +129,4 @@ function numberspin(elem, opt) {
 
 	return numberspinObj[elem+ind];
 }
+*/

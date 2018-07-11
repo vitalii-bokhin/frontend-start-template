@@ -9,18 +9,19 @@ var Video;
 
 	Video = {
 		play: function(elem) {
-			var frameDiv = document.createElement('div'),
-			iFrame = document.createElement('iframe');
+			elem.nextElementSibling.classList.add('video__frame_visible');
 
-			frameDiv.className = 'video__frame';
-			
-			elem.parentElement.appendChild(frameDiv);
+			var iFrame = document.createElement('iframe');
 
 			iFrame.src = elem.getAttribute('data-src') +'?autoplay=1&rel=0&amp;showinfo=0';
 			iFrame.allow = 'autoplay; encrypted-media';
 			iFrame.allowFullscreen = true;
 
-			frameDiv.appendChild(iFrame);
+			iFrame.addEventListener('load', function() {
+				iFrame.classList.add('visible');
+			});
+
+			elem.nextElementSibling.appendChild(iFrame);
 		},
 
 		init: function(elementStr) {

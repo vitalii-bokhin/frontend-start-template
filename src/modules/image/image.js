@@ -75,13 +75,11 @@ var flexImg, CoverImg;
 			var elements;
 
 			if (parentElementStr) {
-
-				if ((typeof parentElementStr) == 'object') {
-					elements = parentElementStr.querySelectorAll('.cover-img');
-				} else {
+				if (typeof parentElementStr == 'string') {
 					elements = document.querySelectorAll(parentElementStr +' .cover-img');
+				} else {
+					elements = parentElementStr.querySelectorAll('.cover-img');
 				}
-
 			} else {
 				elements = document.querySelectorAll('.cover-img');
 			}

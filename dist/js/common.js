@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	(function initFun() {
 		flexImg('.flex-img');
 
-		CoverImg.reInit();
+		CoverImg.reInit('body');
 
 		window.addEventListener('winResized', initFun);
 	}());
@@ -98,13 +98,15 @@ document.addEventListener('DOMContentLoaded', function() {
 		{
 			value: 37,
 			color: 'green',
-			width: 20
+			width: 20,
+			numContId: 'diagram-num-1'
 		},
 		{
 			value: 45,
 			color: '#d0295e',
 			width: 10,
-			offset: 2
+			offset: 2,
+			numContId: 'diagram-num-2'
 		}
 		],
 		maxValue: 100
@@ -118,13 +120,15 @@ document.addEventListener('DOMContentLoaded', function() {
 		{
 			value: 84,
 			color: '#fd8d40',
-			width: 30
+			width: 30,
+			numContId: 'diagram-2-num-1'
 		},
 		{
 			value: 39,
 			color: '#0000ff',
 			width: 30,
-			offset: 2
+			offset: 2,
+			numContId: 'diagram-2-num-2'
 		}
 		],
 		maxValue: 100,
@@ -140,25 +144,29 @@ document.addEventListener('DOMContentLoaded', function() {
 		{
 			value: 67,
 			color: '#fd8d40',
-			width: 15
+			width: 15,
+			numContId: 'diagram-3-num-1'
 		},
 		{
 			value: 75,
 			color: '#d0295e',
 			width: 15,
-			offset: 2
+			offset: 2,
+			numContId: 'diagram-3-num-2'
 		},
 		{
 			value: 83,
 			color: 'green',
 			width: 15,
-			offset: 2
+			offset: 2,
+			numContId: 'diagram-3-num-3'
 		},
 		{
 			value: 91,
 			color: '#0000ff',
 			width: 15,
-			offset: 2
+			offset: 2,
+			numContId: 'diagram-3-num-4'
 		}
 		],
 		maxValue: 100,

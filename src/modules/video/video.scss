@@ -36,6 +36,7 @@
 		@extend %fwh;
 		z-index: 3;
 		background: $bk;
+		display: none;
 		&:before{
 			@extend %ab;
 			width: per(60,560);
@@ -55,6 +56,15 @@
 			z-index: 2;
 			border: none;
 			background: none;
+			display: none;
+			
+			&.visible{
+				display: block;
+			}
+		}
+
+		&_visible{
+			display: block;
 		}
 	}
 }
