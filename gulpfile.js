@@ -165,7 +165,7 @@ function CSS(src, dist) {
 			.pipe(gulp.dest('dist/css'))
 			.pipe(notify({
 				title: 'CSS',
-				message: 'Distribute Styles has Compiled!'
+				message: 'Dist Styles'
 			}));
 		} else {
 			gulp.src(src)
@@ -175,8 +175,9 @@ function CSS(src, dist) {
 			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest('dist/css'))
 			.pipe(notify({
+				onLast: true,
 				title: 'CSS',
-				message: 'Distribute Styles has Compiled!'
+				message: 'Styles has Compiled!'
 			}));
 		}
 	}, 321);
@@ -196,7 +197,7 @@ function JS(src, dist) {
 		.pipe(gulp.dest('dist/js'))
 		.pipe(notify({
 				title: 'JS',
-				message: 'Distribute Scripts has Compiled!'
+				message: 'Dist Scripts'
 			}));
 	} else {
 		gulp.src(src)
@@ -205,6 +206,7 @@ function JS(src, dist) {
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/js'))
 		.pipe(notify({
+				onLast: true,
 				title: 'JS',
 				message: 'Scripts has Compiled!'
 			}));
@@ -223,7 +225,7 @@ function HTML(src, dist) {
 			.pipe(gulp.dest('dist'))
 			.pipe(notify({
 				title: 'HTML',
-				message: 'Distribute HTML has Compiled!'
+				message: 'Dist HTML'
 			}));
 		} else {
 			gulp.src(src)
@@ -231,6 +233,7 @@ function HTML(src, dist) {
 			.on('error', notify.onError(function(err) { return err; }))
 			.pipe(gulp.dest('dist'))
 			.pipe(notify({
+				onLast: true,
 				title: 'HTML',
 				message: 'HTML has Compiled!'
 			}));
