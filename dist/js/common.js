@@ -175,6 +175,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	diagram_3.animate(4200);
 
+	//Numberspin
+	var numberspin = new Numberspin('.numberspin');
+
+	numberspin.animate(4200);
+	
+
 	//submit form
 	var form = new Form('#form');
 

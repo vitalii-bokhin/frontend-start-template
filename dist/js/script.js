@@ -2674,8 +2674,12 @@ var Numberspin;
 (function() {
 	"use strict";
 
-	Numberspin = function(options) {
+	Numberspin = function(elementsStr) {
+		this.elements = document.querySelectorAll(elementsStr);
+
 		
+
+
 	}
 }());
 
