@@ -4,6 +4,8 @@
 	"use strict";
 
 	Timer = function(setTime, elemId) {
+		var elem = document.getElementById(elemId);
+
 		this.time = setTime;
 		this.interval = null;
 		this.onStop = null;
@@ -60,11 +62,7 @@
 
 			var secNum = (sec < 10) ? '0'+ sec : sec;
 
-			var output = [minOut, secNum, secTxt].join(' ');
-
-			console.log(sec);
-
-			document.getElementById(elemId).innerHTML = output;
+			elem.innerHTML = [minOut, secNum, secTxt].join(' ');
 		}
 
 		var stop = () => {
@@ -76,6 +74,10 @@
 		}
 
 		this.start = function() {
+			if (!elem) {
+				return;
+			}
+			
 			this.interval = setInterval(() => {
 				this.time--;
 

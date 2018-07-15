@@ -226,32 +226,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	ajaxForm.onSubmit = function(form, callback) {
 		if (ValidateForm.submit(form)) {
-			setTimeout(function() {
-				callback({clearForm: true, unlockSubmitButton: true});
-			}, 1000);
-
-
-			/*
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST', form.action);
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4 && xhr.status == 200) {
-
-					var response = JSON.parse(xhr.response);  //response JSON
+			ajax({
+				url: form.action,
+				send: new FormData(form),
+				success: function(response) {
+					var response = JSON.parse(response);
 
 					if (response.status == 'sent') {
-
 						Popup.message('#message-popup', 'Форма отправлена');
-						callback({clearForm: true, unlockSubmitButton: true});
 
+						callback({clearForm: true, unlockSubmitButton: true});
 					} else {
 						console.log(response);
 					}
-
 				}
-			}
-			xhr.send(new FormData(form));
-			*/
+			});
 
 			return true;
 		}

@@ -73,7 +73,7 @@ var modulesOn = [
 var cssSrc = ['src/sass/common.scss'].concat(modulesOn.map((m) => modules[m]+ '*.scss'), 'src/sass/other.scss', 'src/sass/class.scss');
 
 //js src
-var jsSrc = ['src/js/global.js', 'src/js/animate.js'].concat(modulesOn.map((m) => modules[m]+ '*.js'));
+var jsSrc = ['src/js/global.js', 'src/js/animate.js', 'src/js/ajax.js'].concat(modulesOn.map((m) => modules[m]+ '*.js'));
 
 //dev build
 gulp.task('dev', function() {

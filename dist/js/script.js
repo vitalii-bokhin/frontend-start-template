@@ -144,6 +144,25 @@ animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animatio
 		return Math.pow(timeFraction, 2)
 	}
 }());
+; var ajax;
+
+(function() {
+	"use strict";
+
+	ajax = function(options) {
+		var xhr = new XMLHttpRequest();
+
+		xhr.open('POST', options.url);
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				options.success(xhr.response);
+			}
+		}
+
+		xhr.send(options.send);
+	}
+}());
 ; var MobNav;
 
 (function() {
@@ -2972,6 +2991,8 @@ Share.init(Str button class);
 	"use strict";
 
 	Timer = function(setTime, elemId) {
+		var elem = document.getElementById(elemId);
+
 		this.time = setTime;
 		this.interval = null;
 		this.onStop = null;
@@ -3028,11 +3049,7 @@ Share.init(Str button class);
 
 			var secNum = (sec < 10) ? '0'+ sec : sec;
 
-			var output = [minOut, secNum, secTxt].join(' ');
-
-			console.log(sec);
-
-			document.getElementById(elemId).innerHTML = output;
+			elem.innerHTML = [minOut, secNum, secTxt].join(' ');
 		}
 
 		var stop = () => {
@@ -3044,6 +3061,10 @@ Share.init(Str button class);
 		}
 
 		this.start = function() {
+			if (!elem) {
+				return;
+			}
+			
 			this.interval = setInterval(() => {
 				this.time--;
 
