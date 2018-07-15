@@ -46,4 +46,17 @@
 		right: 0;
 		padding: 25px;
 	}
+
+	@media(max-width: 1000px){
+		&__bubble{
+			width: 100%;
+			top: 0;
+			margin-top: 20px;
+			box-shadow: none !important;
+			background: $llgy !important;
+			&.toggled{
+				position: static;
+			}
+		}
+	}
 }

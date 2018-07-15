@@ -5,10 +5,20 @@ var Numberspin;
 
 	Numberspin = function(elementsStr) {
 		this.elements = document.querySelectorAll(elementsStr);
+		this.values = [];
 
-		
+		for (var i = 0; i < this.elements.length; i++) {
+			this.values[i] = +this.elements[i].innerHTML;
+			this.elements[i].innerHTML = 0;
+		}
 
-
+		this.animate = function(duration) {
+			animate((progress) => {
+				for (var i = 0; i < this.elements.length; i++) {
+					this.elements[i].innerHTML = Math.round(this.values[i] * progress);
+				}
+			}, duration);
+		}
 	}
 }());
 

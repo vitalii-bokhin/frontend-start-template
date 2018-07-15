@@ -1,17 +1,31 @@
 /*
-call to init:
 Toggle.init(Str button selector[, Str toggle class, default: 'toggled']);
+
+Toggle.role = function() {
+	return {
+		menu: {
+			on: function() {
+				
+			},
+			off: function() {
+					
+			}
+		},
+	};
+}
 */
-var Toggle;
+; var Toggle;
 
 (function() {
 	"use strict";
 
 	Toggle = {
 		toggledClass: 'toggled',
+		role: null,
 
 		toggle: function(elem) {
-			var targetElements = document.querySelectorAll(elem.getAttribute('data-target-elements'));
+			var targetElements = document.querySelectorAll(elem.getAttribute('data-target-elements')),
+			role = elem.getAttribute('data-role');
 
 			if (!targetElements.length) {
 				return;
@@ -23,12 +37,20 @@ var Toggle;
 				}
 
 				elem.classList.remove(this.toggledClass);
+
+				if (role && this.role) {
+					this.role()[role].off();
+				}
 			} else {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.add(this.toggledClass);
 				}
 
 				elem.classList.add(this.toggledClass);
+
+				if (role && this.role) {
+					this.role()[role].on();
+				}
 			}
 		},
 

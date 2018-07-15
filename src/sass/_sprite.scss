@@ -4,7 +4,7 @@
 
 %svg-arrow-alt-circle-down {
 	@extend %svg-common;
-	background-position: 52.94117647058823% 0;
+	background-position: 0 50%;
 }
 
 %svg-arrow-alt-circle-down-dims {
@@ -14,7 +14,7 @@
 
 %svg-arrow-right {
 	@extend %svg-common;
-	background-position: 0 100%;
+	background-position: 44.44444444444444% 50%;
 }
 
 %svg-arrow-right-dims {
@@ -22,9 +22,29 @@
 	height: 512px;
 }
 
+%svg-facebook {
+	@extend %svg-common;
+	background-position: 100% 0;
+}
+
+%svg-facebook-dims {
+	width: 448px;
+	height: 512px;
+}
+
+%svg-odnoklassniki {
+	@extend %svg-common;
+	background-position: 90% 50%;
+}
+
+%svg-odnoklassniki-dims {
+	width: 320px;
+	height: 512px;
+}
+
 %svg-plus-circle {
 	@extend %svg-common;
-	background-position: 41.1764705882353% 100%;
+	background-position: 0 100%;
 }
 
 %svg-plus-circle-dims {
@@ -34,7 +54,7 @@
 
 %svg-search {
 	@extend %svg-common;
-	background-position: 100% 0;
+	background-position: 47.05882352941177% 100%;
 }
 
 %svg-search-dims {
@@ -42,9 +62,29 @@
 	height: 512px;
 }
 
-%svg-youtube {
+%svg-twitter {
+	@extend %svg-common;
+	background-position: 94.11764705882354% 100%;
+}
+
+%svg-twitter-dims {
+	width: 512px;
+	height: 512px;
+}
+
+%svg-vk {
 	@extend %svg-common;
 	background-position: 0 0;
+}
+
+%svg-vk-dims {
+	width: 576px;
+	height: 512px;
+}
+
+%svg-youtube {
+	@extend %svg-common;
+	background-position: 56.25% 0;
 }
 
 %svg-youtube-dims {

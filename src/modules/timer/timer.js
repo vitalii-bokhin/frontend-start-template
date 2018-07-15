@@ -1,4 +1,105 @@
-var Timer = {
+; var Timer;
+
+(function() {
+	"use strict";
+
+	Timer = function(time, elemId) {
+		this.min = 0;
+		this.sec = 0;
+		this.interval = null;
+		this.onStop = null;
+
+		function setCookies() {
+			var date = new Date(Date.now() + 86400000);
+			document.cookie = 'lastTimer='+ Date.now() +'; expires='+ date.toUTCString();
+		}
+
+		var cokValue = (function() {
+			if (document.cookie) {
+				var cokArr = document.cookie.replace(/(\s)+/g, '').split(';');
+
+				for (var i = 0; i < cokArr.length; i++) {
+					var keyVal = cokArr[i].split('=');
+					if (keyVal[0] == 'lastTimer') {
+						return keyVal[1];
+					}
+				}
+			}
+		}());
+
+		if (cokValue) {
+			var delta = Math.round((Date.now() - cokValue) / 1000);
+			if (delta < time) {
+				time = time - delta;
+			} else {
+				setCookies();
+			}
+		} else {
+			setCookies();
+		}
+
+		var output = () => {
+			var minOut  = '',
+			secTxt = 'секунд';
+
+			if (this.min != 0) {
+				if (this.min == 1) {
+					minOut = this.min +' минуту';
+				} else if (this.min < 5) {
+					minOut = this.min +' минуты';
+				}
+			}
+
+			if (this.sec == 1 || this.sec == 21) {
+				secTxt = 'секунду';
+			} else if (this.sec < 5) {
+				secTxt = 'секунды';
+			} else if (this.sec < 21) {
+				secTxt = 'секунд';
+			}
+
+			var sec = (this.sec < 10) ? '0'+ this.sec : this.sec;
+
+			var output = [minOut, sec, secTxt].join(' ');
+
+			console.log(this.sec);
+
+			document.getElementById(elemId).innerHTML = output;
+		}
+
+		var stop = () => {
+			clearInterval(this.interval);
+
+			if (this.onStop) {
+				this.onStop();
+			}
+		}
+
+		this.min = (time > 60) ? Math.floor(time / 60) : 0;
+		this.sec = (time > 60) ? Math.round(time % 60) : time;
+
+		this.start = function() {
+			this.interval = setInterval(() => {
+				if (this.sec == 0) {
+					if (this.min == 0) {
+						stop();
+					} else {
+						this.sec = 59;
+						this.min--;
+					}
+				} else {
+					this.sec--;
+				}
+
+				output();
+			}, 1000);
+		}
+	}
+}());
+
+
+
+var Timerddd = {
 	min: 0,
 	sec: 0,
 	Interval: null,

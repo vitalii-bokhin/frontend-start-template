@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-	<title>Video | startTemplate</title>
+	<title>Share | startTemplate</title>
 </head>
 <body>
 
@@ -34,7 +34,7 @@
 	<li class="menu__item ">
 		<a href="grid.html" class="menu__a">Grid</a>
 	</li>
-	<li class="menu__item menu__item_has-children ">
+	<li class="menu__item menu__item_has-children menu__item_current">
 		<a href="#" class="menu__a">Interface</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
@@ -50,12 +50,12 @@
 			<li class="sub-menu__item ">
 				<a href="more.html" class="sub-menu__a">More</a>
 			</li>
-			<li class="sub-menu__item ">
+			<li class="sub-menu__item sub-menu__item_current">
 				<a href="share.html" class="sub-menu__a">Share</a>
 			</li>
 		</ul>
 	</li> 
-	<li class="menu__item menu__item_has-children menu__item_current">
+	<li class="menu__item menu__item_has-children ">
 		<a href="#" class="menu__a">Elements</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
@@ -65,7 +65,7 @@
 			<li class="sub-menu__item ">
 				<a href="images.html" class="sub-menu__a">Images</a>
 			</li>
-			<li class="sub-menu__item sub-menu__item_current">
+			<li class="sub-menu__item ">
 				<a href="video.html" class="sub-menu__a">Video</a>
 			</li>
 			<li class="sub-menu__item ">
@@ -131,35 +131,22 @@
 
 		<div class="row">
 			<div class="col-12">
-				<div class="title">Video</div>
-				<div class="title-h2">
-					Embedded video from youtube
-				</div>
+				<h1>Share</h1>
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-6">
-				<!--VIDEO/-->
-				<div class="video">
-	<div class="video__preview cover-img-wrap">
-		<img src="images/img1.jpg" class="cover-img" alt="thumbnail">
-	</div>
-	<button type="button" data-src="https://www.youtube.com/embed/l6U2qXfdk6I" class="video__btn-play"></button>
-	<div class="video__frame"></div>
-</div>
-				<!--/VIDEO-->
+		<div class="row row_col-middle" style="margin-bottom: 50px">
+			<div class="col">
+				<button type="button" data-network="vk" class="js-share-btn vk-btn"></button>
 			</div>
-			<div class="col-6">
-				<!--VIDEO/-->
-				<div class="video">
-	<div class="video__preview cover-img-wrap">
-		<img src="images/img2.jpg" class="cover-img" alt="thumbnail">
-	</div>
-	<button type="button" data-src="https://www.youtube.com/embed/mbguWYnqJtY" class="video__btn-play"></button>
-	<div class="video__frame"></div>
-</div>
-				<!--/VIDEO-->
+			<div class="col">
+				<button type="button" data-network="fb" class="js-share-btn fb-btn"></button>
+			</div>
+			<div class="col">
+				<button type="button" data-network="tw" class="js-share-btn tw-btn"></button>
+			</div>
+			<div class="col">
+				<button type="button" data-network="ok" class="js-share-btn ok-btn"></button>
 			</div>
 		</div>
 

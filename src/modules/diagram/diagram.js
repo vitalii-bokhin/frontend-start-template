@@ -16,7 +16,7 @@ var diagram = new Diagram({
 diagram.animate(Int duration ms);
 */
 
-var Diagram;
+; var Diagram;
 
 (function() {
 	"use strict";

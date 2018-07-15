@@ -1,7 +1,7 @@
 /*
-animateJS(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
+animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
 */
-var animate;
+; var animate;
 
 (function() {
 	"use strict";

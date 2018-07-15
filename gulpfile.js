@@ -59,10 +59,10 @@ var modulesOn = [
 'anchor',
 'diagram',
 'numberspin',
+'share',
+'timer',
 'footer'
 //'getcontentajax',
-//'share',
-//'timer',
 //'mouseparallax',
 //'floatslider',
 //'slickslider',

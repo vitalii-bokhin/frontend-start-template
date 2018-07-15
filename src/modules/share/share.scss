@@ -1,0 +1,47 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+@import "../../sass/sprite";
+
+%share-btn{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	border: none;
+	-webkit-appearance: none;
+	user-select: none;
+	transition: .5s;
+	&:hover{
+		opacity: .55;
+	}
+}
+
+.vk-btn{
+	@extend %share-btn;
+	width: 46px;
+	height: 37px;
+	@extend %svg-vk;
+	@include bgs(576);
+}
+
+.fb-btn{
+	@extend %share-btn;
+	width: 32px;
+	height: 36px;
+	@extend %svg-facebook;
+	@include bgs(448);
+}
+
+.tw-btn{
+	@extend %share-btn;
+	@extend %svg-twitter;
+	@include bgs(512);
+}
+
+.ok-btn{
+	@extend %share-btn;
+	width: 21px;
+	@extend %svg-odnoklassniki;
+	@include bgs(320);
+}

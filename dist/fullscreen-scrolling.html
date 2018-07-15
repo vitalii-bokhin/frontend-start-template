@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<link rel="stylesheet" href="css/style.min.css">
+	<link rel="stylesheet" href="css/style.css">
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	<title>Fullscreen scrolling | startTemplate</title>
 </head>
@@ -34,21 +34,24 @@
 	<li class="menu__item ">
 		<a href="grid.html" class="menu__a">Grid</a>
 	</li>
-	<li class="menu__item menu__item_has-children">
+	<li class="menu__item menu__item_has-children ">
 		<a href="#" class="menu__a">Interface</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
-			<li class="sub-menu__item">
+			<li class="sub-menu__item ">
 				<a href="accordion.html" class="sub-menu__a">Accordion</a>
 			</li>
 			<li class="sub-menu__item ">
 				<a href="anchors.html" class="sub-menu__a">Anchors</a>
 			</li>
-			<li class="sub-menu__item">
+			<li class="sub-menu__item ">
 				<a href="tab.html" class="sub-menu__a">Tabs</a>
 			</li>
-			<li class="sub-menu__item">
+			<li class="sub-menu__item ">
 				<a href="more.html" class="sub-menu__a">More</a>
+			</li>
+			<li class="sub-menu__item ">
+				<a href="share.html" class="sub-menu__a">Share</a>
 			</li>
 		</ul>
 	</li> 
@@ -70,6 +73,9 @@
 			</li>
 			<li class="sub-menu__item ">
 				<a href="numbers.html" class="sub-menu__a">Numbers</a>
+			</li>
+			<li class="sub-menu__item ">
+				<a href="timer.html" class="sub-menu__a">Timer</a>
 			</li>
 		</ul>
 	</li>
@@ -108,11 +114,12 @@
 </div>
 				<!--/User-->
 
+				<button class="js-close-menu menu-close-btn"></button>
 			</div>
 			
 		</div> 
 
-		<button class="js-toggle toggle header__toggle" data-target-elements="#header-mob-menu,.header" data-role="menu"><span></span><span></span><span></span><span></span></button>
+		<button class="js-open-menu open-menu-btn"><span></span><span></span><span></span><span></span></button>
 	</div>
 </header>
 <!--/HEADER-->
@@ -216,14 +223,14 @@
 <div class="popup">
 
 	<div id="popup-1" class="popup__window" style="max-width: 550px;">
-		<button class="popup__close btn-close"></button>
+		<button class="js-popup-close popup-close-btn"></button>
 		<div class="popup__inner" style="height: 100px;">
 			<a href="#message-popup" class="js-open-msg-popup">POPUP с сообщением</a>
 		</div> 
 	</div>
 
 	<div id="popup-2" class="popup__window" style="max-width: 550px;">
-		<button class="popup__close btn-close"></button>
+		<button class="js-popup-close popup-close-btn"></button>
 		<div class="popup__inner" style="height: 1300px;">
 			
 		</div>
@@ -231,7 +238,7 @@
 
 	<!--Media Popup/-->
 	<div id="media-popup" class="popup-media popup__window">
-		<button class="popup__close btn-close"></button>
+		<button class="js-popup-close popup-close-btn"></button>
 		<div class="popup__inner">
 
 			<div class="popup-media__box middle">
@@ -262,7 +269,7 @@
 
 	<!--Message Popup/-->
 	<div id="message-popup" class="popup-message popup__window">
-		<button class="popup__close btn-close"></button>
+		<button class="js-popup-close popup-close-btn"></button>
 		<div class="popup__inner">
 			<!-- message html -->
 		</div>
@@ -276,7 +283,7 @@
 <!--script src="js/easing.min.js"></script-->
 <!--script src="js/maskinput.min.js"></script-->
 
-<script src="js/script.min.js"></script>
+<script src="js/script.js"></script>
 <script src="js/common.js"></script>
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 

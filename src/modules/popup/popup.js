@@ -83,22 +83,17 @@ var Popup, MediaPopup;
 		init: function(elementStr) {
 			document.addEventListener('click', (e) => {
 				var element = e.target.closest(elementStr),
-				closeElem = e.target.closest('.popup__close');
+				closeElem = e.target.closest('.js-popup-close');
 
 				if (element) {
 					e.preventDefault();
 
 					this.open(element.getAttribute('data-popup'));
-
 				} else if (closeElem || (!e.target.closest('.popup__window') && e.target.closest('.popup'))) {
-
 					this.close();
-
 				}
-
 			});
 		}
-
 	};
 
 	//popup media

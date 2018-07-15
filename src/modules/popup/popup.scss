@@ -48,11 +48,43 @@
 	&__message{
 		font-size: 18px;
 	}
-	&__close{
-		position:absolute !important;
+	&-close-btn{
+		display: block;
+		width:25px;
+		height:25px;
+		position:absolute;
 		right:-29px;
 		top:4px;
 		z-index:3;
+		background: none;
+		border: none;
+		-webkit-appearance: none;
+		&:after,
+		&:before{
+			@extend %ab;
+			width: 130%;
+			height: 3px;
+			background: $rd;
+			position: absolute;
+			left: -15%;
+			top: 50%;
+			margin-top: -1px;
+			transition: .5s;
+		}
+		&:after{
+			transform: rotate(-45deg);
+		}
+		&:before{
+			transform: rotate(45deg);
+		}
+		&:hover{
+			&:after,
+			&:before{
+				background: #000;
+			}
+		}
+
+
 	}
 }
 

@@ -65,6 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
 
+	//mobile nav
+	MobNav.init({
+		openBtn: '.js-open-menu',
+		closeBtn: '.js-close-menu',
+		navId: 'header-mob-menu'
+	});
+
 	//accord
 	Accord.init('.accord__button');
 
@@ -175,11 +182,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	diagram_3.animate(4200);
 
-	//Numberspin
+	//numberspin
 	var numberspin = new Numberspin('.numberspin');
 
 	numberspin.animate(4200);
+
+	//share
+	Share.init('.js-share-btn');
+
+	//timer
+	var timer = new Timer(350, 'timer');
 	
+	timer.onStop = function() {
+		alert('Timer Stopped');
+	}
+
+	timer.start();
 
 	//submit form
 	var form = new Form('#form');
