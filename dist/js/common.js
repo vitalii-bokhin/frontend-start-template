@@ -191,13 +191,21 @@ document.addEventListener('DOMContentLoaded', function() {
 	Share.init('.js-share-btn');
 
 	//timer
-	var timer = new Timer(350, 'timer');
-	
+	var timer = new Timer(55, 'timer');
+
 	timer.onStop = function() {
 		alert('Timer Stopped');
 	}
 
 	timer.start();
+
+	var timer2 = new Timer(30, 'timer-2');
+
+	timer2.onStop = function() {
+		alert('Timer 2 Stopped');
+	}
+
+	timer2.start();
 
 	//submit form
 	var form = new Form('#form');

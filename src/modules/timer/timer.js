@@ -3,34 +3,32 @@
 (function() {
 	"use strict";
 
-	Timer = function(time, elemId) {
-		this.min = 0;
-		this.sec = 0;
+	Timer = function(setTime, elemId) {
+		this.time = setTime;
 		this.interval = null;
 		this.onStop = null;
 
 		function setCookies() {
-			var date = new Date(Date.now() + 86400000);
-			document.cookie = 'lastTimer='+ Date.now() +'; expires='+ date.toUTCString();
+			document.cookie = 'lastTimer'+ elemId +'='+ Date.now() +'; expires='+ new Date(Date.now() + 86400000).toUTCString();
 		}
 
-		var cokValue = (function() {
+		var timerCookieValue = (function() {
 			if (document.cookie) {
 				var cokArr = document.cookie.replace(/(\s)+/g, '').split(';');
 
 				for (var i = 0; i < cokArr.length; i++) {
 					var keyVal = cokArr[i].split('=');
-					if (keyVal[0] == 'lastTimer') {
+					if (keyVal[0] == 'lastTimer'+ elemId) {
 						return keyVal[1];
 					}
 				}
 			}
 		}());
 
-		if (cokValue) {
-			var delta = Math.round((Date.now() - cokValue) / 1000);
-			if (delta < time) {
-				time = time - delta;
+		if (timerCookieValue) {
+			var delta = Math.round((Date.now() - timerCookieValue) / 1000);
+			if (delta < this.time) {
+				this.time = this.time - delta;
 			} else {
 				setCookies();
 			}
@@ -38,31 +36,33 @@
 			setCookies();
 		}
 
-		var output = () => {
-			var minOut  = '',
+		function output(time) {
+			var min = (time > 60) ? Math.floor(time / 60) : 0,
+			sec = (time > 60) ? Math.round(time % 60) : time,
+			minOut  = '',
 			secTxt = 'секунд';
 
-			if (this.min != 0) {
-				if (this.min == 1) {
-					minOut = this.min +' минуту';
-				} else if (this.min < 5) {
-					minOut = this.min +' минуты';
+			if (min != 0) {
+				if (min == 1) {
+					minOut = min +' минуту';
+				} else if (min < 5) {
+					minOut = min +' минуты';
 				}
 			}
 
-			if (this.sec == 1 || this.sec == 21) {
+			if (sec == 1 || sec == 21) {
 				secTxt = 'секунду';
-			} else if (this.sec < 5) {
+			} else if (sec < 5) {
 				secTxt = 'секунды';
-			} else if (this.sec < 21) {
+			} else if (sec < 21) {
 				secTxt = 'секунд';
 			}
 
-			var sec = (this.sec < 10) ? '0'+ this.sec : this.sec;
+			var secNum = (sec < 10) ? '0'+ sec : sec;
 
-			var output = [minOut, sec, secTxt].join(' ');
+			var output = [minOut, secNum, secTxt].join(' ');
 
-			console.log(this.sec);
+			console.log(sec);
 
 			document.getElementById(elemId).innerHTML = output;
 		}
@@ -71,133 +71,20 @@
 			clearInterval(this.interval);
 
 			if (this.onStop) {
-				this.onStop();
+				setTimeout(this.onStop);
 			}
 		}
 
-		this.min = (time > 60) ? Math.floor(time / 60) : 0;
-		this.sec = (time > 60) ? Math.round(time % 60) : time;
-
 		this.start = function() {
 			this.interval = setInterval(() => {
-				if (this.sec == 0) {
-					if (this.min == 0) {
-						stop();
-					} else {
-						this.sec = 59;
-						this.min--;
-					}
-				} else {
-					this.sec--;
-				}
+				this.time--;
 
-				output();
+				output(this.time);
+
+				if (this.time == 0) {
+					stop();
+				}
 			}, 1000);
 		}
 	}
 }());
-
-
-
-var Timerddd = {
-	min: 0,
-	sec: 0,
-	Interval: null,
-	onStop: null,
-	init: function(initVal, onStop) {
-
-		this.onStop = onStop || null;
-		
-		function setCookies() {
-			var date = new Date(Date.now() + 86400000);
-			document.cookie = 'lastTimer='+ Date.now() +'; expires='+ date.toUTCString();
-		}
-
-		function getCookies() {
-			var val;
-			if (document.cookie) {
-				var cokArr = document.cookie.replace(/(\s)+/g, '').split(';');
-				for (var i = 0; i < cokArr.length; i++) {
-					var keyVal = cokArr[i].split('=');
-					if (keyVal[0] == 'lastTimer') {
-						val = keyVal[1];
-					}
-				}
-			}
-			return val || undefined;
-		}
-
-		var cokValue = getCookies();
-
-		if (cokValue) {
-			var delta = Math.round((Date.now()-cokValue)/1000);
-			if (delta < initVal) {
-				initVal = initVal-delta;
-			} else {
-				setCookies();
-			}
-		} else {
-			setCookies();
-		}
-
-		this.min = (initVal > 60) ? Math.floor(initVal/60) : 0;
-		this.sec = (initVal > 60) ? Math.round(initVal%60) : initVal;
-
-		this.start();
-	},
-	counter: function() {
-		var _ = this;
-		_.Interval = setInterval(function() {
-			if (_.sec == 0) {
-				if (_.min == 0) {
-					_.stop();
-				} else {
-					_.sec = 59;
-					_.min--;
-				}
-			} else {
-				_.sec--;
-			}
-			_.output();
-		}, 1000);
-	},
-	start: function() {
-		this.counter();
-	},
-	stop: function() {
-		clearInterval(this.Interval);
-		if (this.onStop) {
-			this.onStop();
-		}
-	},
-	output: function() {
-		var _ = this, 
-		minO  = '',
-		secTxt = 'секунд',
-		sec,
-		output;
-
-		if (_.min != 0) {
-			if (_.min == 1) {
-				minO = _.min +' минуту';
-			} else if (_.min < 5) {
-				minO = _.min +' минуты';
-			}
-		}
-
-		if (_.sec == 1 || _.sec == 21) {
-			secTxt = 'секунду';
-		} else if (_.sec < 5) {
-			secTxt = 'секунды';
-		} else if (_.sec < 21) {
-			secTxt = 'секунд';
-		}
-
-		sec = (_.sec < 10) ? '0'+ _.sec : _.sec;
-		
-		output = [minO, sec, secTxt].join(' '); 
-		
-		var el = document.getElementById('timer');
-		el.innerHTML = output;
-	}
-};
