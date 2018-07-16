@@ -154,6 +154,10 @@ animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animatio
 
 		xhr.open('POST', options.url);
 
+		if (typeof options.send == 'string') {
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		}
+		
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				options.success(xhr.response);

@@ -2,50 +2,6 @@
 * In common.js use only ECMAScript 5.1
 */
 
-/*$(document).ready(function(){
-
-	//fixed block
-	$('.fix-block').each(function() {
-		var _$ = $(this);
-		_$.css({width: 'auto', top: 'auto', left: 'auto'}).removeClass('fix-block_fixed');
-		var ofsT = _$.offset().top,
-		ofsL = _$.offset().left,
-		wd = _$.innerWidth();
-		_$.css({width: wd, top: ofsT, left: ofsL}).addClass('fix-block_fixed');
-	});
-
-	$('#slider').on('init', function() {
-		coverImg('#slider');
-	});
-
-	$('#slider').slick({
-		infinite: true,
-		slidesToShow: 1,
-		slidesToScroll: 1
-	});
-
-	$('.scroll-pane').jScrollPane();
-
-	//headerFix
-	$(window).scroll(function () {
-		if (!$('body').hasClass('popup-is-opened')) {
-			var winScrTop = $(window).scrollTop();
-			if (winScrTop > 21) {
-				$('.header').addClass('header_fixed');
-			} else {
-				$('.header').removeClass('header_fixed');
-			}
-		}
-	});
-
-	//masked inputs
-	$('input[data-type="tel"]').mask('+7(999)999-99-99');
-	$('input[data-type="date"]').mask('99.99.9999');
-
-});*/
-
-
-//document is ready
 document.addEventListener('DOMContentLoaded', function() {
 	(function initFun() {
 		flexImg('.flex-img');
@@ -267,3 +223,36 @@ function dAirGetInit() {
 		CustomSelect.setOptions('.countries', contryObj, 'name', 'name');
 	});
 }
+
+/*
+ajax({
+	url: 'test-ajax.php',
+	send: 'data=return1',
+	success: function(response) {
+		console.log(response);
+	}
+});
+*/
+
+/*
+//jQuery plugins
+$(document).ready(function(){
+	//slick slider
+	$('#slider').on('init', function() {
+		CoverImg.reInit('#slider');
+	});
+
+	$('#slider').slick({
+		infinite: true,
+		slidesToShow: 1,
+		slidesToScroll: 1
+	});
+
+	//scroll pane
+	$('.scroll-pane').jScrollPane();
+
+	//masked inputs
+	$('input[data-type="tel"]').mask('+7(999)999-99-99');
+	$('input[data-type="date"]').mask('99.99.9999');
+});
+*/
