@@ -28,48 +28,6 @@
 	}
 }
 
-.middle-img,
-.bottom-img{
-	height: 100%;
-	font-size: 0;
-
-	&:before {
-		display: inline-block;
-		content: "";
-		height: 100%;
-	}
-
-	img{
-		display: inline-block;
-		width: auto;
-		height: auto;
-		max-width: 100%;
-		max-height: 100%;
-	}
-}
-
-.middle-img{
-	&:before,
-	img{
-		vertical-align: middle;
-	}
-}
-
-.bottom-img{
-	&:before,
-	img{
-		vertical-align: bottom;
-	}
-}
-
-.responsive-img{
-	display: inline-block;
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	max-height: 100%;
-}
-
 .full-width-img{
 	display: block;
 	width: 100%;

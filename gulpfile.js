@@ -158,7 +158,7 @@ function CSS(src, dist) {
 			gulp.src(src)
 			.pipe(sourcemaps.init())
 			.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-			.pipe(autoprefixer(['last 2 versions', '> 1%']))
+			.pipe(autoprefixer(['last 3 versions']))
 			.pipe(concat('style.css'))
 			.pipe(rename({suffix: '.min'}))
 			.pipe(sourcemaps.write('.'))
