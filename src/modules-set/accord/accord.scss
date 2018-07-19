@@ -1,0 +1,45 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+@import "../../sass/sprite";
+
+.accord{
+	border-top: 1px solid $lgy;
+	background: #FFF;
+	&__button{
+		display: block;
+		padding: 20px 80px 20px 20px;
+		position: relative;
+		width: 100%;
+		text-align: left;
+		border: none;
+		background: none;
+		border-bottom: 1px solid $lgy;
+		-webkit-appearance: none;
+		&:after{
+			@extend %ab;
+			width: 40px;
+			height: 40px;
+			position: absolute;
+			right: 20px;
+			top: 50%;
+			margin-top: -20px;
+			@extend %svg-arrow-alt-circle-down;
+			@include bgs(512);
+			opacity: .38;
+			transition: .5s;
+		}
+		&_active{
+			&:after{
+				transform: rotate(180deg);
+			}
+		}
+	}
+	&__content{
+		height: 0;
+		overflow: hidden;
+		border-bottom: 1px solid $lgy;
+		transition: .5s;
+	}
+}

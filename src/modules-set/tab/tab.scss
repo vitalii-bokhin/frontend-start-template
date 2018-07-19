@@ -1,0 +1,38 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.tab{
+	&__buttons{
+		list-style: none;
+		@include clr;
+		li{
+			float: left;
+		}
+	}
+	&__button{
+		padding: 5px 10px;
+		&.active{
+			color: $rd;
+		}
+	}
+	&__container{
+		position: relative;
+		margin-top: 15px;
+		transition: height .5s;
+	}
+	&__item{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		visibility: hidden;
+		opacity: 0;
+		transition: .5s;
+		&.active{
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+}

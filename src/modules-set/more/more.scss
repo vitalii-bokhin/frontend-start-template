@@ -1,0 +1,20 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.more{
+	position: relative;
+	padding-bottom: 30px;
+	&__content{
+		height: 97px;
+		overflow: hidden;
+		transition: .5s;
+	}
+	&__btn{
+		display: block;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	}
+}

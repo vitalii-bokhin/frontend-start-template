@@ -1,0 +1,13 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.diagram{
+	@include fixprop;
+	position: relative;
+	
+	&__canvas{
+		@extend %fwh;
+	}
+}

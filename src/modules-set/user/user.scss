@@ -1,0 +1,62 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+/*User*/
+.user{
+	height: 34px;
+	position: relative;
+	
+	&__thumb{
+		display: inline-block;
+		width: 34px;
+		height: 34px;
+		border-radius: 34px;
+		vertical-align: middle;
+		overflow: hidden;
+	}
+
+	&__name{
+		font-size: 14px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 21px;
+		text-align: right;
+	}
+
+	&__link{
+		text-decoration: none;
+		transition: .5s;
+		
+		&:hover{
+			color: $rd;
+		}
+
+		&-logout{
+			font-size: 13px;
+			margin-top: 3px;
+			opacity: .8;
+		}
+	}
+
+	&__bubble{
+		width: 250px;
+		top: 45px;
+		right: 0;
+		padding: 25px;
+	}
+
+	@media(max-width: 1000px){
+		&__bubble{
+			width: 100%;
+			top: 0;
+			margin-top: 20px;
+			box-shadow: none !important;
+			background: $llgy !important;
+			&.toggled{
+				position: static;
+			}
+		}
+	}
+}

@@ -1,0 +1,179 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+@import "../../sass/sprite";
+
+.form{
+	.row{
+		padding-left: 3px;
+		padding-right: 3px;
+		& > div[class*="col"]{
+			padding-left: 7px;
+			padding-right: 7px;
+		}
+	}
+
+	&__text-input,
+	&__textarea,
+	&__textarea_var-h-wrap{
+		display: block;
+		width: 100%;
+		border: 1px solid $gy;
+		transition: .5s;
+		&:hover,
+		&:focus{
+			box-shadow: 2px 1px 21px rgba(0,0,0,.21);
+		}
+		&:focus{
+			border-color: $bk;
+		}
+	}
+
+	&__textarea{
+		height: 80px;
+		resize: none;
+		overflow: auto;
+		line-height: 1.3;
+	}
+
+	&__text-input,
+	&__textarea{
+		padding: 10px 15px;
+	}
+
+	&__field{
+		position: relative;
+		margin-bottom: 14px;
+
+		&_hidden{
+			display: none;
+		}
+
+		&_btn{
+			.form__text-input{
+				padding-right: 50px;
+			}
+		}
+	}
+
+	&__btn{
+		display: block;
+		height: 41px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 3;
+		border: none;
+		background: none;
+		-webkit-appearance: none;
+		transition: .5s;
+		&:before{
+			@extend %ab;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+		}
+		&_search{
+			width: 42px;
+			&:before{
+				width: 16px;
+				height: 16px;
+				margin: -8px 0 0 -8px;
+				@extend %svg-search;
+				@include bgs(512);
+			}
+		}
+		&:hover{
+			opacity: .5;
+		}
+	}
+
+	&__submit{
+		
+	}
+
+	&__loader{
+		height: 3px;
+		position: relative;
+		margin: 30px 0;
+		overflow: hidden;
+		display: none;
+	}
+
+	&_sending{
+		.form{
+			&__loader{
+				display: block;
+				&:before{
+					@extend %ab;
+					width: 200%;
+					height: 100%;
+					background-image: linear-gradient(to right, transparent 0%, $gn 50%, transparent 100%);
+					animation: form_loading 3s infinite linear;
+				}
+			}
+			&__submit{
+				position: relative;
+				&:before{
+					@extend %ab;
+					@extend %fwh;
+					background: $bk;
+					z-index: 2;
+				}
+				&:after{
+					@extend %ab;
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					z-index: 3;
+					margin: -15px 0 0 -15px;
+					width: 30px;
+					height: 30px;
+					background: url("../images/loading.svg") no-repeat 50% 50%;
+					background-size: 100% 100%;
+					animation: form_loading_icon .9s infinite linear;
+				}
+			}
+		}
+	}
+
+}
+
+
+@keyframes form_loading_icon {
+	0% {
+		transform: rotate(0deg); 
+	}
+	100% {
+		transform: rotate(360deg); 
+	}
+}
+
+@keyframes form_loading {
+	0% {
+		transform: translate(-100%);
+	}
+	50% {
+		transform: translate(50%);
+	}
+	100% {
+		transform: translate(-100%);
+	}
+}
+
+.fieldset{
+	position: relative;
+	&__item{
+		transition: .5s;
+		position: static;
+		&_hidden{
+			opacity: 0;
+			visibility: hidden;
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,35 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.cover-img{
+	display: block;
+	opacity: 0;
+	transition: opacity .21s;
+	&_w{
+		width: 100%;
+		height: auto;
+		min-height: 100%;
+		opacity: 1 !important;
+	}
+	&_h{
+		height: 100%;
+		width: auto;
+		min-width: 100%;
+		opacity: 1 !important;
+	}
+	&-wrap{
+		overflow: hidden;
+		img{
+			opacity: 0;
+			transition: opacity .21s;
+		}
+	}
+}
+
+.full-width-img{
+	display: block;
+	width: 100%;
+	height: auto;
+}

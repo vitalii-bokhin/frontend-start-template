@@ -1,0 +1,29 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.footer{
+	background: #FFF;
+	box-shadow: 0 -1px 11px rgba(0,0,0,.21);
+	padding: 20px 0;
+	&__row{
+		max-width: none;
+	}
+	&__logo{
+		img{
+			width: 100%;
+			max-width: 121px;
+			height: auto;
+		}
+	}
+	&__txt{
+		font-size: 15px;
+		line-height: (18/15);
+	}
+
+	@media(max-width: 1200px){
+		
+	}
+
+}

@@ -13,34 +13,6 @@ del = require('del'),
 svgSprite = require('gulp-svg-sprite');
 
 //modules
-var modules = {
-	accord: 'src/modules/accord/',
-	anchor: 'src/modules/anchor/',
-	button: 'src/modules/button/',
-	customform: 'src/modules/customform/',
-	diagram: 'src/modules/diagram/',
-	floatslider: 'src/modules/floatslider/',
-	form: 'src/modules/form/',
-	footer: 'src/modules/footer/',
-	fsscroll: 'src/modules/fsscroll/',
-	getcontentajax: 'src/modules/getcontentajax/',
-	header: 'src/modules/header/',
-	image: 'src/modules/image/',
-	menu: 'src/modules/menu/',
-	more: 'src/modules/more/',
-	mouseparallax: 'src/modules/mouseparallax/',
-	numberspin: 'src/modules/numberspin/',
-	popup: 'src/modules/popup/',
-	scrollpane: 'src/modules/scrollpane/',
-	share: 'src/modules/share/',
-	slickslider: 'src/modules/slickslider/',
-	tab: 'src/modules/tab/',
-	timer: 'src/modules/timer/',
-	user: 'src/modules/user/',
-	validateform: 'src/modules/validateform/',
-	video: 'src/modules/video/'
-};
-
 var modulesOn = [
 'header',
 'menu',
@@ -61,7 +33,7 @@ var modulesOn = [
 'numberspin',
 'share',
 'timer',
-'footer'
+'footer',
 //'getcontentajax',
 //'mouseparallax',
 //'floatslider',
@@ -70,13 +42,30 @@ var modulesOn = [
 ];
 
 //css src
-var cssSrc = ['src/sass/common.scss'].concat(modulesOn.map((m) => modules[m]+ '*.scss'), 'src/sass/other.scss', 'src/sass/class.scss');
+var cssSrc = ['src/sass/common.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/other.scss', 'src/sass/class.scss');
 
 //js src
-var jsSrc = ['src/js/global.js', 'src/js/animate.js', 'src/js/ajax.js'].concat(modulesOn.map((m) => modules[m]+ '*.js'));
+var jsSrc = ['src/js/global.js', 'src/js/animate.js', 'src/js/ajax.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));
 
-//dev build
-gulp.task('dev', function() {
+//DEV MODE
+//copy module folders
+gulp.task('copy_modules', function() {
+	return gulp.src(['src/modules/*/*'], {base: 'src/modules/'})
+	.pipe(gulp.dest('src/modules-set/'));
+});
+
+gulp.task('clean_modules_folder', ['copy_modules'], function() {
+	return del(['src/modules/*']);
+});
+
+gulp.task('include_modules', ['clean_modules_folder'], function() {
+	return gulp.src(modulesOn.map((m) => 'src/modules-set/'+ m +'/*'), {base: 'src/modules-set/'})
+	.pipe(gulp.dest('src/modules/'))
+	.pipe(notify('Module included!'));
+});
+
+gulp.task('dev', ['include_modules'], function() {
+	//html dev
 	HTML(['!src/html/_*.html', 'src/html/*.html']);
 
 	CSS(cssSrc);
@@ -85,22 +74,26 @@ gulp.task('dev', function() {
 
 	JS(jsSrc);
 
-	gulp.src('src/js/common.js').pipe(gulp.dest('dist/js')).pipe(notify('Common Script has Refreshed!'));
+	gulp.src('src/js/common.js')
+	.pipe(gulp.dest('dist/js'))
+	.pipe(notify('Common Script has Refreshed!'));
 
 	del(['dist/js/script.min.js', 'dist/js/script.min.js.map']);
 
 	//watch css
-	gulp.watch(['src/sass/*.scss'].concat(modulesOn.map((m) => modules[m]+ '*.scss')), function() {
+	gulp.watch(['src/sass/*.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss')), function() {
 		CSS(cssSrc);
 	});
 
 	//watch js
-	gulp.watch(['!src/js/common.js', 'src/js/*.js'].concat(modulesOn.map((m) => modules[m]+ '*.js')), function() {
+	gulp.watch(['!src/js/common.js', 'src/js/*.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js')), function() {
 		JS(jsSrc);
 	});
 
 	gulp.watch('src/js/common.js', function() {
-		gulp.src('src/js/common.js').pipe(gulp.dest('dist/js')).pipe(notify('Common Script has Refreshed!'));;
+		gulp.src('src/js/common.js')
+		.pipe(gulp.dest('dist/js'))
+		.pipe(notify('Common Script has Refreshed!'));;
 	});
 
 	//watch html
@@ -108,26 +101,9 @@ gulp.task('dev', function() {
 		HTML(['!src/html/_*.html', event.path]);
 	});
 
-	gulp.watch(['src/html/_*.html'].concat(modulesOn.map((m) => modules[m]+ '*.html')), function() {
+	gulp.watch(['src/html/_*.html'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.html')), function() {
 		HTML(['!src/html/_*.html', 'src/html/*.html']);
 	});
-});
-
-//dist build
-gulp.task('dist', function() {
-	HTML(['src/html/*.html', '!src/html/_*.html'], true);
-
-	CSS(cssSrc, true);
-
-	del(['dist/css/style.css', 'dist/css/style.css.map']);
-
-	JS(jsSrc, true);
-
-	gulp.src('src/js/common.js')
-	.pipe(gulp.dest('dist/js'))
-	.pipe(notify('Common Script has Refreshed!'));
-
-	del(['dist/js/script.js', 'dist/js/script.js.map']);
 });
 
 //svg sprite
@@ -148,6 +124,23 @@ gulp.task('svgs', function() {
 	.pipe(replace('\/dist\/', '/'))
 	.pipe(gulp.dest('.'))
 	.pipe(notify('SVG Sprites has built!'));
+});
+
+//DISTRIBUTION
+gulp.task('dist', function() {
+	HTML(['src/html/*.html', '!src/html/_*.html'], true);
+
+	CSS(cssSrc, true);
+
+	del(['dist/css/style.css', 'dist/css/style.css.map']);
+
+	JS(jsSrc, true);
+
+	gulp.src('src/js/common.js')
+	.pipe(gulp.dest('dist/js'))
+	.pipe(notify('Common Script has Refreshed!'));
+
+	del(['dist/js/script.js', 'dist/js/script.js.map']);
 });
 
 //Functions

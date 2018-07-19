@@ -1,0 +1,88 @@
+/*
+call to init:
+Tab.init({
+	container: '.tab',
+	button: '.tab__button',
+	item: '.tab__item'
+});
+*/
+var Tab;
+
+(function() {
+	"use strict";
+
+	Tab = {
+		options: null,
+
+		change: function(btnElem) {
+			if (btnElem.classList.contains('active')) {
+				return;
+			}
+
+			var contElem = btnElem.closest(this.options.container),
+			btnElements = contElem.querySelectorAll(this.options.button),
+			tabItemElements = contElem.querySelectorAll(this.options.item);
+
+			//remove active state
+			for (var i = 0; i < btnElements.length; i++) {
+				btnElements[i].classList.remove('active');
+
+				tabItemElements[i].classList.remove('active');
+			}
+
+			//get current tab item
+			var tabItemElem = contElem.querySelector(this.options.item +'[data-index="'+ btnElem.getAttribute('data-index') +'"]');
+
+			//set active state
+			tabItemElem.classList.add('active');
+
+			btnElem.classList.add('active');
+
+			//set height
+			this.setHeight(tabItemElem);
+		},
+
+		setHeight: function(tabItemElem) {
+			tabItemElem.parentElement.style.height = tabItemElem.offsetHeight +'px';
+		},
+
+		init: function(options) {
+			this.options = options;
+
+			var contElements = document.querySelectorAll(options.container);
+
+			if (!contElements.length) {
+				return;
+			}
+
+			//init tabs
+			for (let i = 0; i < contElements.length; i++) {
+				var contElem = contElements[i],
+				btnElements = contElem.querySelectorAll(options.button),
+				tabItemElements = contElem.querySelectorAll(options.item),
+				tabItemElemActive = contElem.querySelector(this.options.item +'.active');
+
+				this.setHeight(tabItemElemActive);
+
+				for (let i = 0; i < btnElements.length; i++) {
+					btnElements[i].setAttribute('data-index', i);
+
+					tabItemElements[i].setAttribute('data-index', i);
+				}
+			}
+
+			//btn event
+			document.addEventListener('click', (e) => {
+				var btnElem = e.target.closest(options.button);
+
+				if (!btnElem) {
+					return;
+				}
+
+				e.preventDefault();
+
+				this.change(btnElem);
+			});
+		}
+	};
+}());
