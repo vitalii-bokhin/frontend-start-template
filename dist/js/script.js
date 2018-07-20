@@ -410,7 +410,7 @@ Toggle.init(Str button selector[, Str toggle class, default: 'toggled']);
 
 Toggle.role = function() {
 	return {
-		menu: {
+		[data-role]: {
 			on: function() {
 				
 			},
@@ -448,6 +448,10 @@ Toggle.role = function() {
 				if (role && this.role) {
 					this.role()[role].off();
 				}
+
+				if (elem.hasAttribute('data-first-text')) {
+					elem.innerHTML = elem.getAttribute('data-first-text');
+				}
 			} else {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.add(this.toggledClass);
@@ -457,6 +461,12 @@ Toggle.role = function() {
 
 				if (role && this.role) {
 					this.role()[role].on();
+				}
+
+				if (elem.hasAttribute('data-secont-text')) {
+					elem.setAttribute('data-first-text', elem.innerHTML);
+
+					elem.innerHTML = elem.getAttribute('data-secont-text');
 				}
 			}
 		},
@@ -480,81 +490,12 @@ Toggle.role = function() {
 		}
 	};
 }());
-
-
-/*$(document).ready(function() {
-
-	//Toggle
-	$('body').on('click', '.js-toggle', function() {
-		var _$ = $(this),
-		targetElements = _$.attr('data-target-elements'),
-		initClickOnElements = _$.attr('data-init-click-on-elements');
-
-		if (initClickOnElements) {
-			$(initClickOnElements).not(this).click();
-		}
-
-		function openMenu(st) {
-			if (st) {
-				var pos = $(window).scrollTop();
-				$('body').css('top', -pos).attr('data-position', pos).addClass('is-menu-opened');
-			} else {
-				$('body').removeClass('is-menu-opened').removeAttr('style');
-				$('html,body').scrollTop($('body').attr('data-position'));
-			}
-		}
-
-		function actElements(st) {
-			if (targetElements) {
-
-				var $elem = $(targetElements),
-				role = _$.attr('data-role');
-
-				if (st) {
-					$elem.addClass(this.toggledClass);
-				} else {
-					$elem.removeClass(this.toggledClass);
-				}
-				
-				if (role && role == 'menu') {
-					openMenu(st);
-				}
-				
-			}
-		}
-		
-		if (!_$.hasClass(this.toggledClass)) {
-			actElements(1);
-			_$.addClass(this.toggledClass);
-			var secTxt = _$.attr('data-second-button-text');
-			if (secTxt) {
-				if (!_$.attr('data-first-button-text')) {
-					_$.attr('data-first-button-text', _$.html());
-				}
-				_$.html(secTxt);
-			}
-		} else {
-			actElements(0);
-			_$.removeClass(this.toggledClass);
-			var fstTxt = _$.attr('data-first-button-text');
-			if (fstTxt) {
-				_$.html(fstTxt);
-			}
-		}
-
-		
-
-		return false;
-	});
-
-});*/
-var flexImg, CoverImg;
+var FlexImg;
 
 (function() {
 	"use strict";
 
-	//flexible image
-	flexImg = function(elementsStr) {
+	FlexImg = function(elementsStr) {
 
 		function load(elem) {
 
@@ -588,10 +529,13 @@ var flexImg, CoverImg;
 		}
 
 	}
+}());
+var CoverImg;
 
-	//cover image
+(function() {
+	"use strict";
+
 	CoverImg = {
-
 		cover: function(e) {
 			var img = e.currentTarget,
 			imgWrap = img.closest('.cover-img-wrap'),
@@ -1176,7 +1120,6 @@ var Form, NextFieldset;
 
 	//init forms
 	Form = function(formSelector) {
-
 		this.onSubmit = null;
 
 		var form = document.querySelector(formSelector);
@@ -1185,11 +1128,10 @@ var Form, NextFieldset;
 			return;
 		}
 
-		this.element = form;
+		this.form = form;
 
 		//clear form
 		function clear() {
-			//clear inputs
 			var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
 
 			for (var i = 0; i < elements.length; i++) {
@@ -1204,7 +1146,6 @@ var Form, NextFieldset;
 			for (var i = 0; i < textareaMirrors.length; i++) {
 				textareaMirrors[i].innerHTML = '';
 			}
-
 		}
 
 		//submit button
@@ -1222,36 +1163,34 @@ var Form, NextFieldset;
 					}
 				}
 			}
-
 		}
 
 		//submit
 		form.addEventListener('submit', (e) => {
-			if (this.onSubmit) {
-				e.preventDefault();
+			if (!this.onSubmit) {
+				return;
+			}
 
-				var sending = this.onSubmit(form, function(obj) {
-					obj = obj || {};
+			e.preventDefault();
 
-					actSubmitBtn(obj.unlockSubmitButton);
+			var sending = this.onSubmit(form, function(obj) {
+				obj = obj || {};
 
-					form.classList.remove('form_sending');
+				actSubmitBtn(obj.unlockSubmitButton);
 
-					if (obj.clearForm == true) {
-						clear();
-					}
-				});
+				form.classList.remove('form_sending');
 
-				if (sending) {
-					actSubmitBtn(false);
-
-					form.classList.add('form_sending');
+				if (obj.clearForm == true) {
+					clear();
 				}
+			});
 
+			if (sending) {
+				actSubmitBtn(false);
+
+				form.classList.add('form_sending');
 			}
 		});
-
-		
 	}
 	
 

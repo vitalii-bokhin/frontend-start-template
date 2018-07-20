@@ -349,8 +349,6 @@ p:last-child {
 }
 
 .col-12 {
-  float: none !important;
-  clear: both;
   max-width: 100%;
   flex-basis: 100%;
 }
@@ -1100,12 +1098,6 @@ p:last-child {
 .cover-img-wrap img {
   opacity: 0;
   transition: opacity .21s;
-}
-
-.full-width-img {
-  display: block;
-  width: 100%;
-  height: auto;
 }
 
 .video__frame:before {

@@ -37,7 +37,6 @@ var Form, NextFieldset;
 
 	//init forms
 	Form = function(formSelector) {
-
 		this.onSubmit = null;
 
 		var form = document.querySelector(formSelector);
@@ -46,11 +45,10 @@ var Form, NextFieldset;
 			return;
 		}
 
-		this.element = form;
+		this.form = form;
 
 		//clear form
 		function clear() {
-			//clear inputs
 			var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
 
 			for (var i = 0; i < elements.length; i++) {
@@ -65,7 +63,6 @@ var Form, NextFieldset;
 			for (var i = 0; i < textareaMirrors.length; i++) {
 				textareaMirrors[i].innerHTML = '';
 			}
-
 		}
 
 		//submit button
@@ -83,36 +80,34 @@ var Form, NextFieldset;
 					}
 				}
 			}
-
 		}
 
 		//submit
 		form.addEventListener('submit', (e) => {
-			if (this.onSubmit) {
-				e.preventDefault();
+			if (!this.onSubmit) {
+				return;
+			}
 
-				var sending = this.onSubmit(form, function(obj) {
-					obj = obj || {};
+			e.preventDefault();
 
-					actSubmitBtn(obj.unlockSubmitButton);
+			var sending = this.onSubmit(form, function(obj) {
+				obj = obj || {};
 
-					form.classList.remove('form_sending');
+				actSubmitBtn(obj.unlockSubmitButton);
 
-					if (obj.clearForm == true) {
-						clear();
-					}
-				});
+				form.classList.remove('form_sending');
 
-				if (sending) {
-					actSubmitBtn(false);
-
-					form.classList.add('form_sending');
+				if (obj.clearForm == true) {
+					clear();
 				}
+			});
 
+			if (sending) {
+				actSubmitBtn(false);
+
+				form.classList.add('form_sending');
 			}
 		});
-
-		
 	}
 	
 

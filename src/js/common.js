@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 	(function initFun() {
-		flexImg('.flex-img');
+		FlexImg('.flex-img');
 
 		CoverImg.reInit('body');
 
@@ -178,10 +178,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	//submit ajaxForm
 	var ajaxForm = new Form('#form-ajax');
 
-	ValidateForm.init(ajaxForm.element);
+	ValidateForm.init(ajaxForm.form);
 
 	ajaxForm.onSubmit = function(form, callback) {
 		if (ValidateForm.submit(form)) {
+
 			ajax({
 				url: form.action,
 				send: new FormData(form),
@@ -206,13 +207,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	//submit noAjaxForm
 	var noAjaxForm = new Form('#form-no-ajax');
 
-	ValidateForm.init(noAjaxForm.element);
+	ValidateForm.init(noAjaxForm.form);
 
 
 	//submit searchForm
 	var searchForm = new Form('#search-form');
 
-	ValidateForm.init(searchForm.element);
+	ValidateForm.init(searchForm.form);
 
 });
 
