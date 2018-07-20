@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
 
+	//menu
+	if (window.innerWidth < 1000) {
+		Menu.init('.menu__item_has-children', '.menu__sub-menu');
+	}
+
 	//mobile nav
 	MobNav.init({
 		openBtn: '.js-open-menu',

@@ -195,13 +195,6 @@ p:last-child {
   max-width: 1366px;
 }
 
-.row:after {
-  display: block;
-  content: "";
-  width: 100%;
-  clear: both;
-}
-
 .row > [class*="col"] {
   width: 100%;
   padding: 10px;
@@ -709,22 +702,11 @@ p:last-child {
   position: absolute;
   right: 15px;
   top: 50%;
+  z-index: 4;
   margin-top: -10px;
   background: none;
   border: none;
   -webkit-appearance: none;
-  /*&.opened{
-		span:first-child,
-		span:last-child{
-			opacity: 0;
-		}
-		span:nth-child(2){
-			transform: rotate(-45deg);
-		}
-		span:nth-child(3){
-			transform: rotate(45deg);
-		}
-	}*/
 }
 
 .open-menu-btn span {
@@ -749,6 +731,19 @@ p:last-child {
   top: 9px;
 }
 
+.open-menu-btn.opened span:first-child,
+.open-menu-btn.opened span:last-child {
+  opacity: 0;
+}
+
+.open-menu-btn.opened span:nth-child(2) {
+  transform: rotate(-45deg);
+}
+
+.open-menu-btn.opened span:nth-child(3) {
+  transform: rotate(45deg);
+}
+
 @media (max-width: 1000px) {
   .open-menu-btn {
     display: block;
@@ -758,10 +753,10 @@ p:last-child {
 /*close menu*/
 .menu-close-btn {
   display: none;
-  width: 25px;
-  height: 25px;
+  width: 21px;
+  height: 21px;
   position: absolute;
-  right: 15px;
+  left: 17px;
   top: 19px;
   background: none;
   border: none;
@@ -828,9 +823,11 @@ p:last-child {
   display: inline-block;
 }
 
-.menu__item_has-children:hover .menu__sub-menu {
-  visibility: visible;
-  opacity: 1;
+@media (min-width: 1001px) {
+  .menu__item_has-children:hover .menu__sub-menu {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .menu__item_current .menu__a {
@@ -845,8 +842,10 @@ p:last-child {
   transition: .5s;
 }
 
-.menu__a:hover {
-  color: #ff0000;
+@media (min-width: 1001px) {
+  .menu__a:hover {
+    color: #ff0000;
+  }
 }
 
 .menu__arr {
@@ -873,9 +872,6 @@ p:last-child {
     text-align: center;
     margin: 25px 0;
   }
-  .menu__item_has-children:hover .menu__sub-menu {
-    display: block;
-  }
   .menu__item_has-children .menu__a {
     margin-left: 21px;
   }
@@ -883,15 +879,20 @@ p:last-child {
 
 /*sub menu*/
 .sub-menu {
-  position: absolute;
   list-style: none;
   width: 6000%;
   padding: 24px 0 16px 3000%;
   top: 100%;
   left: -3000%;
-  visibility: hidden;
-  opacity: 0;
   transition: .3s;
+}
+
+@media (min-width: 1001px) {
+  .sub-menu {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+  }
 }
 
 .header_fixed .sub-menu {
@@ -932,9 +933,8 @@ p:last-child {
     padding: 14px 0 0;
     box-shadow: none !important;
     position: relative;
-    visibility: visible;
-    opacity: 1;
-    display: none;
+    height: 0;
+    overflow: hidden;
   }
   .sub-menu__item {
     float: none;

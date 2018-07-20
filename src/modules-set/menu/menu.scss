@@ -24,10 +24,12 @@
 				display: inline-block;
 			}
 
-			&:hover{
-				.menu__sub-menu{
-					visibility: visible;
-					opacity: 1;
+			@media(min-width: 1001px){
+				&:hover{
+					.menu__sub-menu{
+						visibility: visible;
+						opacity: 1;
+					}
 				}
 			}
 		}
@@ -46,8 +48,10 @@
 		border-bottom: 2px solid transparent;
 		transition: .5s;
 		
-		&:hover{
-			color: $rd;
+		@media(min-width: 1001px){
+			&:hover{
+				color: $rd;
+			}
 		}
 	}
 
@@ -71,12 +75,6 @@
 			margin: 25px 0;
 			
 			&_has-children{
-				&:hover{
-					.menu__sub-menu{
-						display: block;
-					}
-				}
-				
 				.menu__a{
 					margin-left: 21px;
 				}
@@ -87,15 +85,18 @@
 
 /*sub menu*/
 .sub-menu{
-	position: absolute;
 	list-style: none;
 	width: 6000%;
 	padding: 24px 0 16px 3000%;
 	top: 100%;
 	left: -3000%;
-	visibility: hidden;
-	opacity: 0;
 	transition: .3s;
+	
+	@media(min-width: 1001px){
+		position: absolute;
+		visibility: hidden;
+		opacity: 0;
+	}
 
 	.header_fixed &{
 		background: #ffffff;
@@ -136,9 +137,8 @@
 		padding: 14px 0 0;
 		box-shadow: none !important;
 		position: relative;
-		visibility: visible;
-		opacity: 1;
-		display: none;
+		height: 0;
+		overflow: hidden;
 
 		&__item{
 			float: none;
