@@ -44,7 +44,7 @@ var modulesOn = [
 ];
 
 //css src
-var cssSrc = ['src/sass/common.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/other.scss', 'src/sass/class.scss');
+var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/class.scss');
 
 //js src
 var jsSrc = ['src/js/global.js', 'src/js/animate.js', 'src/js/ajax.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));

@@ -1,4 +1,24 @@
-.header{
+@import "variables";
+@import "extends";
+
+html, body {
+	font-family: $ff_hn;
+	font-size: 16px;
+	color: $bk;
+	background: #ffffff;
+	height: 100%;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+body{
+	display: flex;
+	flex-direction: column;
+}
+
+header{
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -10,7 +30,7 @@
 	}
 }
 
-.main{
+main{
 	flex: 1 0 auto;
 	position: relative;
 	padding-top: 100px;
@@ -31,21 +51,14 @@
 	}
 }
 
-.footer{
+footer{
 	flex: 0 0 auto;
 }
 
-.section{
-	margin-top: 25px;
-	margin-bottom: 25px;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	&-outer{
-		margin-top: 50px;
-		margin-bottom: 50px;
-	}
-	&-inner{
-		padding-top: 50px;
-		padding-bottom: 50px;
-	}
+h1, h2{
+	margin-bottom: 20px;
+}
+
+h1{
+	font-size: 25px;
 }
