@@ -210,28 +210,26 @@ function JS(src, dist) {
 
 //html
 function HTML(src, dist) {
-	setTimeout(function() {
-		if (dist) {
-			gulp.src(src)
-			.pipe(fileinclude())
-			.on('error', notify.onError(function(err) { return err; }))
-			.pipe(replace('style.css', 'style.min.css'))
-			.pipe(replace('script.js', 'script.min.js'))
-			.pipe(gulp.dest('dist'))
-			.pipe(notify({
-				title: 'HTML',
-				message: 'Dist HTML'
-			}));
-		} else {
-			gulp.src(src)
-			.pipe(fileinclude())
-			.on('error', notify.onError(function(err) { return err; }))
-			.pipe(gulp.dest('dist'))
-			.pipe(notify({
-				onLast: true,
-				title: 'HTML',
-				message: 'HTML has Compiled!'
-			}));
-		}
-	},1000);
+	if (dist) {
+		gulp.src(src)
+		.pipe(fileinclude())
+		.on('error', notify.onError(function(err) { return err; }))
+		.pipe(replace('style.css', 'style.min.css'))
+		.pipe(replace('script.js', 'script.min.js'))
+		.pipe(gulp.dest('dist'))
+		.pipe(notify({
+			title: 'HTML',
+			message: 'Dist HTML'
+		}));
+	} else {
+		gulp.src(src)
+		.pipe(fileinclude())
+		.on('error', notify.onError(function(err) { return err; }))
+		.pipe(gulp.dest('dist'))
+		.pipe(notify({
+			onLast: true,
+			title: 'HTML',
+			message: 'HTML has Compiled!'
+		}));
+	}
 }
