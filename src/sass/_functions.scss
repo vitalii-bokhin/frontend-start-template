@@ -13,3 +13,8 @@ $base-font-size: 16;
 @function per($px, $base) {
     @return $px * (100 / $base) * 1%;
 }
+
+//vh
+@function vh($px, $base) {
+    @return $px * (100 / $base) * 1vh;
+}

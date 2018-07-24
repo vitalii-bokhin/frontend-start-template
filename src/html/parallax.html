@@ -15,7 +15,7 @@
 <!--MAIN/-->
 <main class="main">
 
-	<div class="container" style="background: gray; width: 500px; margin: auto;">
+	<div class="section" style="background: gray; width: 500px; margin: auto;">
 		
 		<div class="parallax-element el1" data-delta-x="150" style="background: red"></div>
 		<div class="parallax-element el2" style="background: blue"></div>
@@ -44,13 +44,13 @@
 		
 		$('.parallax-element').each(function() {
 			mouseparallax(this, {
-				listener: '.container'
+				listener: '.section'
 			});
 		});
 
 
 		/*mouseparallax('.el1', {
-				listener: '.container',
+				listener: '.section',
 				deltaX: 150
 			});
 
@@ -60,7 +60,7 @@
 			});
 		
 		mouseparallax('.el3', {
-				listener: '.container'
+				listener: '.section'
 			});*/
 
 		});

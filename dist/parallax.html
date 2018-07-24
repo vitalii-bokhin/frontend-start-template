@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style.min.css">
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	<title>Parallax | startTemplate</title>
 </head>
@@ -135,7 +135,7 @@
 <!--MAIN/-->
 <main class="main">
 
-	<div class="container" style="background: gray; width: 500px; margin: auto;">
+	<div class="section" style="background: gray; width: 500px; margin: auto;">
 		
 		<div class="parallax-element el1" data-delta-x="150" style="background: red"></div>
 		<div class="parallax-element el2" style="background: blue"></div>
@@ -231,7 +231,7 @@
 <!--script src="js/easing.min.js"></script-->
 <!--script src="js/maskinput.min.js"></script-->
 
-<script src="js/script.js"></script>
+<script src="js/script.min.js"></script>
 <script src="js/common.js"></script>
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 
@@ -242,13 +242,13 @@
 		
 		$('.parallax-element').each(function() {
 			mouseparallax(this, {
-				listener: '.container'
+				listener: '.section'
 			});
 		});
 
 
 		/*mouseparallax('.el1', {
-				listener: '.container',
+				listener: '.section',
 				deltaX: 150
 			});
 
@@ -258,7 +258,7 @@
 			});
 		
 		mouseparallax('.el3', {
-				listener: '.container'
+				listener: '.section'
 			});*/
 
 		});
