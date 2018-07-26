@@ -26,7 +26,8 @@
 }
 
 .field-error{
-	.field-error-tip{
+	.field-error-tip,
+	& + .field-error-tip{
 		display: block;
 	}
 	input,

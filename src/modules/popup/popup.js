@@ -88,6 +88,8 @@ var Popup, MediaPopup;
 				if (element) {
 					e.preventDefault();
 
+					this.close();
+
 					this.open(element.getAttribute('data-popup'));
 				} else if (closeElem || (!e.target.closest('.popup__window') && e.target.closest('.popup'))) {
 					this.close();

@@ -547,7 +547,11 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 				//output select
-				parent.innerHTML = '<div class="custom-select'+ multiple.class +'">'+ head +'<ul class="custom-select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv +'</div>';
+				var customElem = document.createElement('div');
+				customElem.className = 'custom-select'+ multiple.class;
+				customElem.innerHTML = head +'<ul class="custom-select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv;
+				parent.insertBefore(customElem, parent.firstChild);
+				parent.removeChild(parent.children[1]);
 			}
 
 		},

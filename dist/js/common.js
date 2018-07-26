@@ -171,9 +171,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	//submit form
 	var form = new Form('#form');
 
-	NextFieldset.init(form.element, '.form__button');
+	NextFieldset.init(form.form, '.form__button');
 
-	ValidateForm.init(form.element);
+	ValidateForm.init(form.form);
 
 	form.onSubmit = function(form, callback) {
 		callback({clearForm: true});

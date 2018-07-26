@@ -227,7 +227,7 @@ var ValidateForm;
 
 				var elem = elements[i];
 
-				if (elementIsHidden(elem.parentElement)) {
+				if (elem.parentElement.elementIsHidden()) {
 					continue;
 				}
 
@@ -265,7 +265,7 @@ var ValidateForm;
 				var group = groups[i],
 				checkedElements = 0;
 
-				if (elementIsHidden(group)) {
+				if (group.elementIsHidden()) {
 					continue;
 				}
 
@@ -293,7 +293,7 @@ var ValidateForm;
 				var group = groups[i],
 				checkedElement = false;
 
-				if (elementIsHidden(group)) {
+				if (group.elementIsHidden()) {
 					continue;
 				}
 

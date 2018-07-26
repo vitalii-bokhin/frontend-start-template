@@ -51,7 +51,7 @@
 		&:focus{
 			border-color: $bk;
 		}
-		.form__select_changed &{
+		.custom-select_changed &{
 			font-weight: 400;
 		}
 		&:after{
@@ -65,7 +65,7 @@
 			top: 50%;
 			margin-top: -2px;
 		}
-		.form__field_error &{
+		.field-error &{
 			border: 1px solid $rd;
 			color: $rd;
 		}
