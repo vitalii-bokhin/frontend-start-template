@@ -526,29 +526,35 @@ var CustomPlaceholder, CustomSelect;
 				return;
 			}
 
-			for (var i = 0; i < elements.length; i++) {
+			for (let i = 0; i < elements.length; i++) {
 				var elem = elements[i],
 				options = elem.querySelectorAll('option'),
 				parent = elem.parentElement,
 				optionsList = '',
-				require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
-				head = (elem.getAttribute('data-type') == 'autocomplete') ? '<input type="text" name="'+ elem.name +'"'+ require +'placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="">' : '<button type="button" data-placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__button">'+ elem.getAttribute('data-placeholder') +'</button>',
+				selectedOption = null;
+				
+				//option list
+				for (let i = 0; i < options.length; i++) {
+					var opt = options[i];
+
+					if (opt.selected) {
+						selectedOption = opt;
+					}
+
+					optionsList += '<li><button type="button" class="custom-select__val'+ ((selectedOption) ? ' custom-select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '' ) + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '' ) +'>'+ opt.innerHTML +'</button></li>';
+				}
+
+				var require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
+				head = (elem.getAttribute('data-type') == 'autocomplete') ? '<input type="text" name="'+ elem.name +'"'+ require +'placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="">' : '<button type="button" data-placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : elem.getAttribute('data-placeholder')) +'</button>',
 				multiple = {
 					class: (elem.multiple) ? ' custom-select_multiple' : '',
 					inpDiv: (elem.multiple) ? '<div class="custom-select__multiple-inputs"></div>' : ''
 				},
-				hiddenInp = (elem.getAttribute('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ elem.name +'"'+ require +'class="custom-select__input" value="">' : '';
-
-				//option list
-				for (var j = 0; j < options.length; j++) {
-					var opt = options[j];
-
-					optionsList += '<li><button type="button" class="custom-select__val"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '' ) + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '' ) +'>'+ opt.innerHTML +'</button></li>';
-				}
+				hiddenInp = (elem.getAttribute('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ elem.name +'"'+ require +'class="custom-select__input" value="'+ ((selectedOption) ? selectedOption.value : '') +'">' : '';
 
 				//output select
 				var customElem = document.createElement('div');
-				customElem.className = 'custom-select'+ multiple.class;
+				customElem.className = 'custom-select'+ multiple.class + ((selectedOption) ? ' custom-select_changed' : '');
 				customElem.innerHTML = head +'<ul class="custom-select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv;
 				parent.insertBefore(customElem, parent.firstChild);
 				parent.removeChild(parent.children[1]);
