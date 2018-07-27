@@ -10,12 +10,12 @@ var Popup, MediaPopup;
 		onClose: null,
 
 		fixBody: function(st) {
-			if (st) {
+			if (st && !document.body.classList.contains('popup-is-opened')) {
 				this.winScrollTop = window.pageYOffset;
 
 				document.body.classList.add('popup-is-opened');
 				document.body.style.top = -this.winScrollTop +'px';
-			} else {
+			} else if (!st) {
 				document.body.classList.remove('popup-is-opened');
 
 				window.scrollTo(0, this.winScrollTop);
@@ -29,21 +29,19 @@ var Popup, MediaPopup;
 				return;
 			}
 
-			var elemParent = elem.parentElement;
+			this.close();
 
-			this.fixBody(true);
+			var elemParent = elem.parentElement;
 			
 			elemParent.classList.add('popup_visible');
 
 			elem.classList.add('popup__window_visible');
 
-			setTimeout(function() {
-				CoverImg.reInit(elem);
-			}, 721);
-
 			if (callback) {
 				this.onClose = callback;
 			}
+
+			this.fixBody(true);
 
 			return elem;
 		},
@@ -72,8 +70,6 @@ var Popup, MediaPopup;
 				elem.parentElement.classList.remove('popup_visible');
 			}
 
-			this.fixBody(false);
-
 			if (this.onClose) {
 				this.onClose();
 				this.onClose = null;
@@ -88,10 +84,10 @@ var Popup, MediaPopup;
 				if (element) {
 					e.preventDefault();
 
-					this.close();
-
 					this.open(element.getAttribute('data-popup'));
 				} else if (closeElem || (!e.target.closest('.popup__window') && e.target.closest('.popup'))) {
+					this.fixBody(false);
+
 					this.close();
 				}
 			});
