@@ -2,7 +2,7 @@
 @import "../../sass/functions";
 @import "../../sass/extends";
 @import "../../sass/mixins";
-@import "../../sass/sprite";
+
 
 /*video*/
 .video{
@@ -23,9 +23,6 @@
 		z-index: 2;
 		margin: per(-27,560) 0 0 per(-30,560);
 		border: none;
-		-webkit-appearance: none;
-		@extend %svg-youtube;
-		@include bgs(576);
 		transition: .5s;
 		&:hover{
 			opacity: .7;

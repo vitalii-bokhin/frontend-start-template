@@ -150,7 +150,7 @@ select{
 		left: -9999px;
 		&:checked{
 			& + .custom-checkbox__label:before{
-				@include sp(-32px -17px);
+				
 			}
 		}
 	}

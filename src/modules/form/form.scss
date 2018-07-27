@@ -2,7 +2,7 @@
 @import "../../sass/functions";
 @import "../../sass/extends";
 @import "../../sass/mixins";
-@import "../../sass/sprite";
+
 
 .form{
 	.row{
@@ -80,8 +80,6 @@
 				width: 16px;
 				height: 16px;
 				margin: -8px 0 0 -8px;
-				@extend %svg-search;
-				@include bgs(512);
 			}
 		}
 		&:hover{

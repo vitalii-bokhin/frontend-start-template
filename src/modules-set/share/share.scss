@@ -2,7 +2,6 @@
 @import "../../sass/functions";
 @import "../../sass/extends";
 @import "../../sass/mixins";
-@import "../../sass/sprite";
 
 %share-btn{
 	display: inline-block;
@@ -21,27 +20,19 @@
 	@extend %share-btn;
 	width: 46px;
 	height: 37px;
-	@extend %svg-vk;
-	@include bgs(576);
 }
 
 .fb-btn{
 	@extend %share-btn;
 	width: 32px;
 	height: 36px;
-	@extend %svg-facebook;
-	@include bgs(448);
 }
 
 .tw-btn{
 	@extend %share-btn;
-	@extend %svg-twitter;
-	@include bgs(512);
 }
 
 .ok-btn{
 	@extend %share-btn;
 	width: 21px;
-	@extend %svg-odnoklassniki;
-	@include bgs(320);
 }

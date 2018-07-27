@@ -1,0 +1,47 @@
+@import "sprite-extends";
+@import "mixins";
+
+.accord__button{
+	@extend %svg-arrow-alt-circle-down;
+	@include bgs(512);
+}
+
+.arrow-btn:after{
+	@extend %svg-arrow-right;
+	@include bgs(448);
+}
+
+.plus-btn:after{
+	@extend %svg-plus-circle;
+	@include bgs(512);
+}
+
+.form__btn_search{
+	@extend %svg-search;
+	@include bgs(512);
+}
+
+.vk-btn{
+	@extend %svg-vk;
+	@include bgs(576);
+}
+
+.fb-btn{
+	@extend %svg-facebook;
+	@include bgs(448);
+}
+
+.tw-btn{
+	@extend %svg-twitter;
+	@include bgs(512);
+}
+
+.ok-btn{
+	@extend %svg-odnoklassniki;
+	@include bgs(320);
+}
+
+.video__btn-play{
+	@extend %svg-youtube;
+	@include bgs(576);
+}

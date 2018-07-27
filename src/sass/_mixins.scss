@@ -17,18 +17,8 @@
 	}
 }
 
-//gulp svg sprite
+//gulp svg sprite bg size
 $sprite-width: 1600;
 @mixin bgs($icon-svg-w: 1) {
 	background-size: ($sprite-width / $icon-svg-w) * 100% auto;
-}
-
-//other sprite
-@mixin sp($bg-position: "") {
-	background-image: url("../images/other-sprite.svg");
-	background-repeat: no-repeat;
-	@if $bg-position != "" {
-		background-position: $bg-position;
-	}
-	background-size: 50px auto;
 }
