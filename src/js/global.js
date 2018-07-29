@@ -1,13 +1,13 @@
 //global variables
-var browser;
+; var browser, ajax, animate;
 
 (function() {
 	"use strict";
 
-	//get useragent
+	//Get useragent
 	document.documentElement.setAttribute('data-useragent', navigator.userAgent);
 
-	//browser identify
+	//Browser identify
 	browser = (function(userAgent) {
 		userAgent = userAgent.toLowerCase();
 
@@ -16,7 +16,7 @@ var browser;
 		}
 	}(navigator.userAgent));
 
-	//add support CustomEvent constructor for IE
+	//Add support CustomEvent constructor for IE
 	try {
 		new CustomEvent("IE has CustomEvent, but doesn't support constructor");
 	} catch (e) {
@@ -39,7 +39,7 @@ var browser;
 		CustomEvent.prototype = Object.create(window.Event.prototype);
 	}
 
-	//window Resized Event
+	//Window Resized Event
 	var winResizedEvent = new CustomEvent('winResized'),
 	rsz = true;
 
@@ -54,7 +54,7 @@ var browser;
 		}
 	});
 
-	//closest polyfill
+	//Closest polyfill
 	if (!Element.prototype.closest) {
 		(function(ElProto) {
 			ElProto.matches = ElProto.matches || ElProto.mozMatchesSelector || ElProto.msMatchesSelector || ElProto.oMatchesSelector || ElProto.webkitMatchesSelector;
@@ -77,7 +77,7 @@ var browser;
 		}(Element.prototype));
 	}
 
-	//check element for hidden
+	//Check element for hidden
 	Element.prototype.elementIsHidden = function() {
 		var elem = this;
 
@@ -97,4 +97,66 @@ var browser;
 
 		return false;
 	}
+
+	//Ajax
+	ajax = function(options) {
+		var xhr = new XMLHttpRequest();
+
+		xhr.open('POST', options.url);
+
+		if (typeof options.send == 'string') {
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		}
+		
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				options.success(xhr.response);
+			}
+		}
+
+		xhr.send(options.send);
+	}
+
+	/*
+	Animation
+	animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
+	*/
+	animate = function(draw, duration, ease, complete) {
+		var start = performance.now();
+
+		requestAnimationFrame(function anim(time) {
+			var timeFraction = (time - start) / duration;
+
+			if (timeFraction > 1) {
+				timeFraction = 1;
+			}
+
+			var progress = (ease) ? easing(timeFraction, ease) : timeFraction;
+
+			draw(progress);
+
+			if (timeFraction < 1) {
+				requestAnimationFrame(anim);
+			} else {
+				if (complete != undefined) {
+					complete();
+				}
+			}
+		});
+	}
+
+	function easing(timeFraction, ease) {
+		if (ease == 'easeInOutQuad') {
+			if (timeFraction <= 0.5) {
+				return quad(2 * timeFraction) / 2;
+			} else {
+				return (2 - quad(2 * (1 - timeFraction))) / 2;
+			}
+		}
+	}
+
+	function quad(timeFraction) {
+		return Math.pow(timeFraction, 2)
+	}
+
 }());

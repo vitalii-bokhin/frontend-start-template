@@ -47,7 +47,7 @@ var modulesOn = [
 var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/class.scss');
 
 //js src
-var jsSrc = ['src/js/global.js', 'src/js/animate.js', 'src/js/ajax.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));
+var jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));
 
 //DEV MODE
 //copy module folders
