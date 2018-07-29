@@ -91,6 +91,10 @@ var Popup, MediaPopup;
 					this.close();
 				}
 			});
+
+			if (window.location.hash) {
+				this.open(window.location.hash);
+			}
 		}
 	};
 

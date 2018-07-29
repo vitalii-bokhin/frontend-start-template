@@ -2049,7 +2049,7 @@ select {
   color: #ff0000;
 }
 
-.tab__container {
+.tab__section {
   position: relative;
   margin-top: 15px;
   transition: height .5s;

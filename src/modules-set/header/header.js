@@ -40,14 +40,12 @@
 			}
 
 			if (elem.classList.contains('opened')) {
-				elem.classList.remove('opened');
-				navElem.classList.remove('opened');
+				this.close();
 			} else {
 				elem.classList.add('opened');
 				navElem.classList.add('opened');
+				this.fixBody(true);
 			}
-
-			this.fixBody(true);
 		},
 
 		close: function() {
