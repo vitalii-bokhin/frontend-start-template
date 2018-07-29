@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		CoverImg.reInit('body');
 
+		Tab.reInit();
+
 		window.addEventListener('winResized', initFun);
 	}());
 

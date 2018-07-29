@@ -46,6 +46,18 @@ var Tab;
 			tabItemElem.parentElement.style.height = tabItemElem.offsetHeight +'px';
 		},
 
+		reInit: function() {
+			if (!this.options) {
+				return;
+			}
+			
+			var contElements = document.querySelectorAll(this.options.container);
+			
+			for (var i = 0; i < contElements.length; i++) {
+				this.setHeight(contElements[i].querySelector(this.options.item +'.active'));
+			}
+		},
+
 		init: function(options) {
 			this.options = options;
 
