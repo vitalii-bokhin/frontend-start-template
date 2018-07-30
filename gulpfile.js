@@ -43,6 +43,19 @@ var modulesOn = [
 //'scrollpane',
 ];
 
+var assets = {
+	form: ['src/assets/maskinput.min.js'],
+	slickslider: ['src/assets/slick.min.js', 'src/assets/jquery-3.1.1.min.js']
+}
+
+var jsAssets = [];
+
+modulesOn.forEach(function(val) {
+	if (assets[val]) {
+		jsAssets = jsAssets.concat(assets[val]);
+	}
+});
+
 //css src
 var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/class.scss');
 
@@ -66,21 +79,32 @@ gulp.task('include_modules', ['clean_modules_folder'], function() {
 	.pipe(notify('Module included!'));
 });
 
-gulp.task('dev', ['include_modules'], function() {
+gulp.task('clean_js_folder', ['include_modules'], function() {
+	return del(['dist/js/*']);
+});
+
+gulp.task('dev', ['clean_js_folder'], function() {
 	//html dev
 	HTML(['!src/html/_*.html', 'src/html/*.html']);
 
+	//build style.css
 	CSS(cssSrc);
 
+	//delete style.min.css
 	del(['dist/css/style.min.css', 'dist/css/style.min.css.map']);
 
+	//build script.js
 	JS(jsSrc);
 
+	//refresh common script
 	gulp.src('src/js/common.js')
 	.pipe(gulp.dest('dist/js'))
 	.pipe(notify('Common Script has Refreshed!'));
 
-	del(['dist/js/script.min.js', 'dist/js/script.min.js.map']);
+	//import js assets
+	gulp.src(jsAssets)
+	.pipe(gulp.dest('dist/js'))
+	.pipe(notify('JS Assets had imported!'));
 
 	//watch css
 	gulp.watch(['src/sass/*.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss')), function() {
