@@ -222,6 +222,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	ValidateForm.init(searchForm.form);
 
+	//custom form
+	var custForm = new Form('#custom-form');
+
+	ValidateForm.init(custForm.form);
+
 });
 
 //GetCountriesAndCitiesList

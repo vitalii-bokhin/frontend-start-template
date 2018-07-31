@@ -11,11 +11,15 @@ var Anchor;
 		duration: 1000,
 		shift: 0,
 
-		scroll: function(anchorSectionStr) {
-			var anchorSectionElem = document.querySelector(anchorSectionStr);
+		scroll: function(anchorId, e) {
+			var anchorSectionElem = document.getElementById(anchorId);
 
 			if (!anchorSectionElem) {
 				return;
+			}
+
+			if (e) {
+				e.preventDefault();
 			}
 
 			var scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
@@ -38,17 +42,13 @@ var Anchor;
 			document.addEventListener('click', (e) => {
 				var elem = e.target.closest(elementStr);
 
-				if (!elem) {
-					return;
+				if (elem) {
+					this.scroll(elem.getAttribute('href').split('#')[1], e);
 				}
-
-				e.preventDefault();
-
-				this.scroll(elem.getAttribute('href'));
 			});
 
 			if (window.location.hash) {
-				this.scroll(window.location.hash);
+				this.scroll(window.location.hash.split('#')[1]);
 			}
 		}
 	};

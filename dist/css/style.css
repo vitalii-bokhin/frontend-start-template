@@ -17,12 +17,14 @@ header, footer, main, section, nav, article, aside {
 }
 
 button {
+  display: inline-block;
   overflow: visible;
   cursor: pointer;
   -webkit-appearance: none;
 }
 
 img {
+  display: inline-block;
   vertical-align: bottom;
   border: none;
 }

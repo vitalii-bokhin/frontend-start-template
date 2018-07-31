@@ -10,7 +10,7 @@
 	<div class="section wrap">
 
 
-		<form id="form" action="send.php" method="POST" enctype="multipart/form-data" class="form">
+		<form id="custom-form" action="send.php" method="POST" enctype="multipart/form-data" class="form">
 
 			<div class="row mt-25">
 				<div class="col-12">
@@ -213,6 +213,37 @@
 							<option>Pluto</option>
 						</select>
 						<div class="field-error-tip">Select a planet</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-25">
+				<div class="col-12">
+					<div class="title-h2">What is your zodiac sign? (Latin)</div>
+					<div class="txt c-gray mb-25">
+						Default Virgo
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12">
+					<div class="form__field">
+						<select name="zodiac_sign" data-type="autocomplete" data-placeholder="Select a Zodiac sign*" data-required="true">
+							<option>Aries</option>
+							<option>Taurus</option>
+							<option>Gemini</option>
+							<option>Cancer</option>
+							<option>Leo</option>
+							<option selected>Virgo</option>
+							<option>Libra</option>
+							<option>Scorpio</option>
+							<option>Sagittarius</option>
+							<option>Capricorn</option>
+							<option>Aquarius</option>
+							<option>Pisces</option>
+						</select>
+						<div class="field-error-tip">Select a Zodiac sign</div>
 					</div>
 				</div>
 			</div>
