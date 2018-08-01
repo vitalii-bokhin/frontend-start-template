@@ -10,9 +10,8 @@ var ValidateForm;
 		errorTip: function(err, errInd) {
 			var field = this.input.parentElement,
 			errTip = field.querySelector('.field-error-tip') || field.parentElement.querySelector('.field-error-tip');
-
 			if (err) {
-
+				field.classList.remove('field-success');
 				field.classList.add('field-error');
 
 				if (errInd) {
@@ -21,11 +20,10 @@ var ValidateForm;
 					}
 					errTip.innerHTML = errTip.getAttribute('data-error-text-'+ errInd);
 				}
-
 			} else {
 				field.classList.remove('field-error');
+				field.classList.add('field-success');
 			}
-
 		},
 
 		customErrorTip: function($inp, errorTxt) {

@@ -5,17 +5,32 @@ var Popup, MediaPopup;
 
 	//popup core
 	Popup = {
-
 		winScrollTop: 0,
 		onClose: null,
+		headerSelector: '.header',
 
 		fixBody: function(st) {
+			var headerElem = document.querySelector(this.headerSelector);
+
 			if (st && !document.body.classList.contains('popup-is-opened')) {
 				this.winScrollTop = window.pageYOffset;
 
+				var offset = window.innerWidth - document.documentElement.clientWidth;
+
 				document.body.classList.add('popup-is-opened');
-				document.body.style.top = -this.winScrollTop +'px';
+
+				if (headerElem) {
+					headerElem.style.right = offset +'px';
+				}
+
+				document.body.style.right = offset +'px';
+
+				document.body.style.top = (-this.winScrollTop) +'px';
 			} else if (!st) {
+				if (headerElem) {
+					headerElem.style.right = '';
+				}
+				
 				document.body.classList.remove('popup-is-opened');
 
 				window.scrollTo(0, this.winScrollTop);

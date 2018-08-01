@@ -190,30 +190,26 @@ var CustomPlaceholder, CustomSelect;
 
 	//Form CustomSelect
 	CustomSelect = {
-
 		field: null,
 
 		close: function() {
-			var fields = document.querySelectorAll('.custom-select');
+			var fieldElements = document.querySelectorAll('.custom-select');
 
-			for (var i = 0; i < fields.length; i++) {
-				fields[i].classList.remove('custom-select_opened');
+			for (var i = 0; i < fieldElements.length; i++) {
+				fieldElements[i].classList.remove('custom-select_opened');
 			}
 
-			var listItems = document.querySelectorAll('.custom-select__options li');
+			var listItemElements = document.querySelectorAll('.custom-select__options li');
 
-			for (var i = 0; i < listItems.length; i++) {
-				listItems[i].classList.remove('hover');
+			for (var i = 0; i < listItemElements.length; i++) {
+				listItemElements[i].classList.remove('hover');
 			}
-
 		},
 
 		open: function() {
-
 			this.field.classList.add('custom-select_opened');
 
 			this.field.querySelector('.custom-select__options').scrollTop = 0;
-
 		},
 
 		selectMultipleVal: function(elem, button, input) {
@@ -328,21 +324,20 @@ var CustomPlaceholder, CustomSelect;
 			reg = new RegExp(elem.value, 'gi'),
 			valueElements = this.field.querySelectorAll('.custom-select__val');
 
-			for (var i = 0; i < valueElements.length; i++) {
-				var valueElem = valueElements[i];
+			if (elem.value.length) {
+				for (var i = 0; i < valueElements.length; i++) {
+					var valueElem = valueElements[i];
 
-				if (!elem.value.length) {
 					valueElem.classList.remove('custom-select__val_checked');
-					continue;
-				}
+						
+					if (valueElem.innerHTML.match(reg)) {
+						valueElem.parentElement.classList.remove('hidden');
 
-				if (valueElem.innerHTML.match(reg)) {
-					valueElem.parentElement.classList.remove('hidden');
-					match = true;
-				} else {
-					valueElem.parentElement.classList.add('hidden');
+						match = true;
+					} else {
+						valueElem.parentElement.classList.add('hidden');
+					}
 				}
-
 			}
 
 			if (!match) {
@@ -350,7 +345,6 @@ var CustomPlaceholder, CustomSelect;
 					valueElements[i].parentElement.classList.remove('hidden');
 				}
 			}
-
 		},
 
 		setOptions: function(fieldStr, optObj, val, name) {
@@ -375,16 +369,12 @@ var CustomPlaceholder, CustomSelect;
 			hoverItem = options.querySelector('li.hover');
 
 			switch (key) {
-				
 				case 40:
-
 				if (hoverItem) {
 					var nextItem = function(item) {
-
 						var elem = item.nextElementSibling;
 
 						while (elem) {
-
 							if (!elem) {
 								break;
 							}
@@ -394,9 +384,7 @@ var CustomPlaceholder, CustomSelect;
 							} else {
 								elem = elem.nextElementSibling;
 							}
-
 						}
-
 					}(hoverItem);
 
 					if (nextItem) {
@@ -405,13 +393,10 @@ var CustomPlaceholder, CustomSelect;
 
 						options.scrollTop = options.scrollTop + (nextItem.getBoundingClientRect().top - options.getBoundingClientRect().top);
 					}
-
 				} else {
-
 					var elem = options.firstElementChild;
 
 					while (elem) {
-
 						if (!elem) {
 							break;
 						}
@@ -422,22 +407,16 @@ var CustomPlaceholder, CustomSelect;
 						} else {
 							elem = elem.nextElementSibling;
 						}
-
 					}
-
 				}
-
 				break;
 
 				case 38:
-
 				if (hoverItem) {
 					var nextItem = function(item) {
-
 						var elem = item.previousElementSibling;
 
 						while (elem) {
-
 							if (!elem) {
 								break;
 							}
@@ -447,9 +426,7 @@ var CustomPlaceholder, CustomSelect;
 							} else {
 								elem = elem.previousElementSibling;
 							}
-
 						}
-
 					}(hoverItem);
 
 					if (nextItem) {
@@ -458,13 +435,10 @@ var CustomPlaceholder, CustomSelect;
 
 						options.scrollTop = options.scrollTop + (nextItem.getBoundingClientRect().top - options.getBoundingClientRect().top);
 					}
-
 				} else {
-
 					var elem = options.lastElementChild;
 
 					while (elem) {
-
 						if (!elem) {
 							break;
 						}
@@ -476,47 +450,14 @@ var CustomPlaceholder, CustomSelect;
 						} else {
 							elem = elem.previousElementSibling;
 						}
-
 					}
-
 				}
-
 				break;
 
 				case 13:
 				this.selectVal(hoverItem.querySelector('.custom-select__val'));
 				break;
-
 			}
-			
-		},
-
-		fillAcHead: function() {
-			var elements = document.querySelectorAll('.custom-select__autocomplete');
-
-			for (var i = 0; i < elements.length; i++) {
-				var elem = elements[i],
-				checkedValues = elem.closest('.custom-select').querySelectorAll('.custom-select__val_checked');
-
-				if (!checkedValues) {
-					return;
-				}
-
-				if (elem.value.length) {
-
-					for (var j = 0; j < checkedValues.length; j++) {
-						this.selectVal(checkedValues[j]);
-					}
-
-				} else {
-
-					for (var j = 0; j < checkedValues.length; j++) {
-						checkedValues[j].classList.remove('custom-select__val_checked');
-					}
-
-				}
-			}
-
 		},
 
 		build: function(elementStr) {
@@ -545,7 +486,7 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 				var require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
-				head = (elem.getAttribute('data-type') == 'autocomplete') ? '<input type="text" name="'+ elem.name +'"'+ require +'placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="">' : '<button type="button" data-placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : elem.getAttribute('data-placeholder')) +'</button>',
+				head = (elem.getAttribute('data-type') == 'autocomplete') ? '<input type="text" name="'+ elem.name +'"'+ require +'placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">' : '<button type="button" data-placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : elem.getAttribute('data-placeholder')) +'</button>',
 				multiple = {
 					class: (elem.multiple) ? ' custom-select_multiple' : '',
 					inpDiv: (elem.multiple) ? '<div class="custom-select__multiple-inputs"></div>' : ''
@@ -559,11 +500,9 @@ var CustomPlaceholder, CustomSelect;
 				parent.insertBefore(customElem, parent.firstChild);
 				parent.removeChild(parent.children[1]);
 			}
-
 		},
 
 		init: function(elementStr) {
-
 			this.build(elementStr);
 
 			//click on select button event
@@ -579,11 +518,10 @@ var CustomPlaceholder, CustomSelect;
 				if (this.field.classList.contains('custom-select_opened')) {
 					this.close();
 				} else {
-					this.fillAcHead();
 					this.close();
+
 					this.open();
 				}
-
 			});
 
 			//click on value button event
@@ -597,7 +535,6 @@ var CustomPlaceholder, CustomSelect;
 				this.field = elem.closest('.custom-select');
 
 				this.selectVal(elem);
-
 			});
 
 			//focus autocomplete
@@ -610,12 +547,9 @@ var CustomPlaceholder, CustomSelect;
 
 				this.field = elem.closest('.custom-select');
 
-				if (!this.field.classList.contains('custom-select_opened')) {
-					this.fillAcHead();
-					this.close();
-					this.open();
-				}
+				this.close();
 
+				this.open();
 			}, true);
 
 			//input autocomplete
@@ -633,7 +567,6 @@ var CustomPlaceholder, CustomSelect;
 				if (!this.field.classList.contains('custom-select_opened')) {
 					this.open();
 				}
-
 			});
 
 			//keyboard events
@@ -650,21 +583,18 @@ var CustomPlaceholder, CustomSelect;
 
 				if (key == 40 || key == 38 || key == 13) {
 					e.preventDefault();
+
 					this.keyboard(key);
 				}
-
 			});
 
 			//close all
 			document.addEventListener('click', (e) => {
 				if (!e.target.closest('.custom-select_opened')) {
-					this.fillAcHead();
 					this.close();
 				}
 			});
-
 		}
-
 	};
 
 	//custom file

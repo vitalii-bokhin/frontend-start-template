@@ -90,6 +90,7 @@ var Form, NextFieldset;
 
 			e.preventDefault();
 
+			//call external method onSubmit
 			var sending = this.onSubmit(form, function(obj) {
 				obj = obj || {};
 

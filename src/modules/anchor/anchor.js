@@ -12,7 +12,7 @@ var Anchor;
 		shift: 0,
 
 		scroll: function(anchorId, e) {
-			var anchorSectionElem = document.getElementById(anchorId);
+			var anchorSectionElem = document.getElementById(anchorId +'-anchor');
 
 			if (!anchorSectionElem) {
 				return;
@@ -39,6 +39,7 @@ var Anchor;
 				this.shift = shift;
 			}
 
+			//click anchor
 			document.addEventListener('click', (e) => {
 				var elem = e.target.closest(elementStr);
 
@@ -47,8 +48,11 @@ var Anchor;
 				}
 			});
 
+			//hash anchor
 			if (window.location.hash) {
-				this.scroll(window.location.hash.split('#')[1]);
+				window.addEventListener('load', () => {
+					this.scroll(window.location.hash.split('#')[1]);
+				});
 			}
 		}
 	};
