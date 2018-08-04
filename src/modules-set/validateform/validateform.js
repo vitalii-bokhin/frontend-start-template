@@ -7,7 +7,7 @@ var ValidateForm;
 
 		input: null,
 
-		errorTip: function(err, errInd) {
+		errorTip: function(err, errInd, errorTxt) {
 			var field = this.input.parentElement,
 			errTip = field.querySelector('.field-error-tip') || field.parentElement.querySelector('.field-error-tip');
 			if (err) {
@@ -15,10 +15,10 @@ var ValidateForm;
 				field.classList.add('field-error');
 
 				if (errInd) {
-					if (!errTip.getAttribute('data-error-text')) {
+					if (!errTip.hasAttribute('data-error-text')) {
 						errTip.setAttribute('data-error-text', errTip.innerHTML);
 					}
-					errTip.innerHTML = errTip.getAttribute('data-error-text-'+ errInd);
+					errTip.innerHTML = (errInd != 'custom') ? errTip.getAttribute('data-error-text-'+ errInd) : errorTxt;
 				}
 			} else {
 				field.classList.remove('field-error');
@@ -26,28 +26,60 @@ var ValidateForm;
 			}
 		},
 
-		customErrorTip: function($inp, errorTxt) {
-			var _ = this;
+		customErrorTip: function(input, errorTxt) {
+			if (!input) {
+				return;
+			}
 
-			_.$input = $inp;
-			_.errorTip(true, 'custom', errorTxt);
+			this.input = input;
+
+			this.errorTip(true, 'custom', errorTxt);
+		},
+
+		name: function() {
+			var err = false;
+
+			if (!/^[a-zа-яё]{3,21}(\s[a-zа-яё]{3,21})?(\s[a-zа-яё]{3,21})?$/i.test(this.input.value)) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
 		},
 
 		date: function() {
-			var err = false,
-			validDate = function(val) {
-				var _reg = new RegExp("^([0-9]{2}).([0-9]{2}).([0-9]{4})$"),
-				matches = _reg.exec(val);
-				if (!matches) {
-					return false;
-				}
-				var now = new Date(),
-				cDate = new Date(matches[3], (matches[2] - 1), matches[1]);
-				return ((cDate.getMonth() == (matches[2] - 1)) && (cDate.getDate() == matches[1]) && (cDate.getFullYear() == matches[3]) && (cDate.valueOf() < now.valueOf()));
-			};
+			var err = false, 
+			errDate = false, 
+			matches = this.input.value.match(/^(\d{2}).(\d{2}).(\d{4})$/);
 
-			if (!validDate(this.input.value)) {
+			if (!matches) {
+				errDate = 1;
+			} else {
+				var compDate = new Date(matches[3], (matches[2] - 1), matches[1]),
+				curDate = new Date();
+
+				if (this.input.hasAttribute('data-min-years-passed')) {
+					var interval = curDate.valueOf() - new Date(curDate.getFullYear() - (+this.input.getAttribute('data-min-years-passed')), curDate.getMonth(), curDate.getDate()).valueOf();
+
+					if (curDate.valueOf() < compDate.valueOf() || (curDate.getFullYear() - matches[3]) > 100) {
+						errDate = 1;
+					} else if ((curDate.valueOf() - compDate.valueOf()) < interval) {
+						errDate = 2;
+					}
+				}
+
+				if (compDate.getFullYear() != matches[3] || compDate.getMonth() != (matches[2] - 1) || compDate.getDate() != matches[1]) {
+					errDate = 1;
+				}
+			}
+
+			if (errDate == 1) {
 				this.errorTip(true, 2);
+				err = true;
+			} else if (errDate == 2) {
+				this.errorTip(true, 3);
 				err = true;
 			} else {
 				this.errorTip(false);
@@ -111,35 +143,6 @@ var ValidateForm;
 			return err;
 		},
 
-		validateOnInputOrBlur: function(e) {
-
-			var elem = e.target.closest('input[type="text"], input[type="password"], textarea');
-
-			if (!elem) {
-				return;
-			}
-
-			this.input = elem;
-
-			if (e.type == 'blur') {
-				elem.setAttribute('data-tested', 'true');
-			} else if (e.type == 'input' && !elem.getAttribute('data-tested')) {
-				return;
-			}
-
-			var type = elem.getAttribute('data-type'),
-			val = elem.value;
-
-			if (elem.getAttribute('data-required') && !val.length) {
-				this.errorTip(true);
-			} else if (val.length && type) {
-				this[type]();
-			} else {
-				this.errorTip(false);
-			}
-			
-		},
-
 		file: function(e) {
 
 			if (e) {
@@ -183,6 +186,35 @@ var ValidateForm;
 			}
 
 			return err;
+		},
+
+		validateOnInputOrBlur: function(e) {
+
+			var elem = e.target.closest('input[type="text"], input[type="password"], textarea');
+
+			if (!elem) {
+				return;
+			}
+
+			this.input = elem;
+
+			if (e.type == 'blur') {
+				elem.setAttribute('data-tested', 'true');
+			} else if (e.type == 'input' && !elem.getAttribute('data-tested')) {
+				return;
+			}
+
+			var type = elem.getAttribute('data-type'),
+			val = elem.value;
+
+			if (elem.getAttribute('data-required') && !val.length) {
+				this.errorTip(true);
+			} else if (val.length && type) {
+				this[type]();
+			} else {
+				this.errorTip(false);
+			}
+			
 		},
 
 		validate: function(form) {

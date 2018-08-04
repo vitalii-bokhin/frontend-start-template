@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	ValidateForm.init(form.form);
 
 	form.onSubmit = function(form, callback) {
-		callback({clearForm: true});
+		return false;
 	}
 	
 
@@ -247,11 +247,11 @@ ajax({
 });
 */
 
-/*
+
 //jQuery plugins
 $(document).ready(function(){
 	//slick slider
-	$('#slider').on('init', function() {
+	/*$('#slider').on('init', function() {
 		CoverImg.reInit('#slider');
 	});
 
@@ -259,13 +259,12 @@ $(document).ready(function(){
 		infinite: true,
 		slidesToShow: 1,
 		slidesToScroll: 1
-	});
+	});*/
 
 	//scroll pane
-	$('.scroll-pane').jScrollPane();
+	//$('.scroll-pane').jScrollPane();
 
 	//masked inputs
 	$('input[data-type="tel"]').mask('+7(999)999-99-99');
-	$('input[data-type="date"]').mask('99.99.9999');
+	//$('input[data-type="date"]').mask('99.99.9999');
 });
-*/

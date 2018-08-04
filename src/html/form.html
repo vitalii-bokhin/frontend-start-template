@@ -14,8 +14,8 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form__field">
-						<input type="text" data-required="true" placeholder="Name*" class="form__text-input" value="" >
-						<div class="field-error-tip">Enter your name</div>
+						<input type="text" data-type="name" data-required="true" placeholder="Name*" class="form__text-input" value="" >
+						<div class="field-error-tip" data-error-text-2="Enter a valid name">Enter your name</div>
 					</div>
 				</div>
 				<div class="col-4">
@@ -35,8 +35,8 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form__field">
-						<input type="text" data-type="date" data-required="true" placeholder="Date of birth*" class="form__text-input" value="">
-						<div class="field-error-tip" data-error-text-2="Enter a valid birth date">Enter your birth date</div>
+						<input type="text" data-type="date" data-min-years-passed="18" data-required="true" placeholder="Date of birth*" class="form__text-input" value="">
+						<div class="field-error-tip" data-error-text-2="Enter a valid birth date" data-error-text-3="You must be of legal age">Enter your birth date</div>
 					</div>
 				</div>
 			</div>
