@@ -157,11 +157,11 @@ var ValidateForm;
 			var err = false,
 			errCount = {type: 0, size: 0},
 			files = this.input.files,
+			maxFiles = +this.input.getAttribute('data-max-files'),
 			type = this.input.getAttribute('data-type'),
 			maxSize = +this.input.getAttribute('data-max-size');
 
 			for (var i = 0; i < files.length; i++) {
-
 				var file = files[i];
 
 				if (!file.type.match(type)) {
@@ -172,10 +172,12 @@ var ValidateForm;
 				if (file.size > maxSize) {
 					errCount.size++;
 				}
-
 			}
-
-			if (errCount.type) {
+			
+			if (maxFiles && files.length > maxFiles) {
+				this.errorTip(true, 4);
+				err = true;
+			} else if (errCount.type) {
 				this.errorTip(true, 2);
 				err = true;
 			} else if (errCount.size) {

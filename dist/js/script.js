@@ -1864,44 +1864,44 @@ var CustomPlaceholder, CustomSelect;
 				var reader = new FileReader();
 
 				reader.onload = function(e) {
-					imgPreviewBlock.innerHTML = '<img src="'+ e.target.result +'" class="cover-img">';
-
 					setTimeout(function() {
-						coverImg('.custom-file__item');
-					}, 721);
-
+						var img = document.createElement('img');
+						img.src = e.target.result;
+						imgPreviewBlock.appendChild(img);
+					}, 121);
 				}
 
 				reader.readAsDataURL(file);
 			} else {
-				imgPreviewBlock.innerHTML = '<img src="images/preview.svg" class="full-width-img">';
+				imgPreviewBlock.innerHTML = '<img src="images/preview.svg">';
 			}
 
 		},
 
 		changeInput: function(elem) {
+			var maxFiles = +elem.getAttribute('data-max-files');
+
+			if (maxFiles && elem.files.length > maxFiles) {
+				return;
+			}
 
 			this.field = elem.closest('.custom-file');
 
-			var self = this,
-			fileItems = this.field.querySelector('.custom-file__items');
+			var fileItems = this.field.querySelector('.custom-file__items');
 
 			fileItems.innerHTML = '';
-
-			console.log(elem.files);
 
 			for (var i = 0; i < elem.files.length; i++) {
 				var file = elem.files[i],
 				fileItem = document.createElement('div');
 
 				fileItem.className = 'custom-file__item';
-				fileItem.innerHTML = '<div class="custom-file__preview cover-img-wrap"></div><div class="custom-file__name">'+ file.name +'</div>';
+				fileItem.innerHTML = '<div class="custom-file__preview"></div><div class="custom-file__name">'+ file.name +'</div>';
 
 				fileItems.appendChild(fileItem);
 
-				self.loadPreview(file, i);
+				this.loadPreview(file, i);
 			}
-
 		},
 
 		init: function() {
@@ -2119,11 +2119,11 @@ var ValidateForm;
 			var err = false,
 			errCount = {type: 0, size: 0},
 			files = this.input.files,
+			maxFiles = +this.input.getAttribute('data-max-files'),
 			type = this.input.getAttribute('data-type'),
 			maxSize = +this.input.getAttribute('data-max-size');
 
 			for (var i = 0; i < files.length; i++) {
-
 				var file = files[i];
 
 				if (!file.type.match(type)) {
@@ -2134,10 +2134,12 @@ var ValidateForm;
 				if (file.size > maxSize) {
 					errCount.size++;
 				}
-
 			}
-
-			if (errCount.type) {
+			
+			if (maxFiles && files.length > maxFiles) {
+				this.errorTip(true, 4);
+				err = true;
+			} else if (errCount.type) {
 				this.errorTip(true, 2);
 				err = true;
 			} else if (errCount.size) {
