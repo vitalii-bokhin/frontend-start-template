@@ -6,7 +6,7 @@ FsScroll.init({
 });
 */
 
-var FsScroll;
+; var FsScroll;
 
 (function() {
 	"use strict";
