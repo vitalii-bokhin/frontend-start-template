@@ -39,7 +39,7 @@ var ValidateForm;
 		name: function() {
 			var err = false;
 
-			if (!/^[a-zа-яё]{3,21}(\s[a-zа-яё]{3,21})?(\s[a-zа-яё]{3,21})?$/i.test(this.input.value)) {
+			if (!/^[a-zа-яё-]{3,21}(\s[a-zа-яё-]{3,21})?(\s[a-zа-яё-]{3,21})?$/i.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {
@@ -157,7 +157,7 @@ var ValidateForm;
 			var err = false,
 			errCount = {type: 0, size: 0},
 			files = this.input.files,
-			maxFiles = this.input.getAttribute('data-max-files'),
+			maxFiles = +this.input.getAttribute('data-max-files'),
 			type = this.input.getAttribute('data-type'),
 			maxSize = +this.input.getAttribute('data-max-size');
 

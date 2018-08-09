@@ -160,7 +160,7 @@ var CustomPlaceholder, CustomSelect;
 		
 		hidePlaceholder: function(elem, hide) {
 
-			var label = document.querySelector('label[for="'+ elem.id +'"]');
+			var label = document.querySelector('label.custom-placeholder[for="'+ elem.id +'"]');
 
 			if (!label) {
 				return;
@@ -486,8 +486,16 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 				var require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
-				head = (elem.getAttribute('data-type') == 'autocomplete') ? '<input type="text" name="'+ elem.name +'"'+ require +'placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">' : '<button type="button" data-placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : elem.getAttribute('data-placeholder')) +'</button>',
-				multiple = {
+				placeholder = elem.getAttribute('data-placeholder'),
+				head;
+
+				if (elem.getAttribute('data-type') == 'autocomplete') {
+					head = '<input type="text" name="'+ elem.name +'"'+ require + ((placeholder) ? ' placeholder="'+ placeholder +'" ' : '') +'class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">';
+				} else {
+					head = '<button type="button"'+ ((placeholder) ? ' data-placeholder="'+ placeholder +'"' : '') +' class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') +'</button>';
+				}
+
+				var multiple = {
 					class: (elem.multiple) ? ' custom-select_multiple' : '',
 					inpDiv: (elem.multiple) ? '<div class="custom-select__multiple-inputs"></div>' : ''
 				},
@@ -609,44 +617,44 @@ var CustomPlaceholder, CustomSelect;
 				var reader = new FileReader();
 
 				reader.onload = function(e) {
-					imgPreviewBlock.innerHTML = '<img src="'+ e.target.result +'" class="cover-img">';
-
 					setTimeout(function() {
-						coverImg('.custom-file__item');
-					}, 721);
-
+						var img = document.createElement('img');
+						img.src = e.target.result;
+						imgPreviewBlock.appendChild(img);
+					}, 121);
 				}
 
 				reader.readAsDataURL(file);
 			} else {
-				imgPreviewBlock.innerHTML = '<img src="images/preview.svg" class="full-width-img">';
+				imgPreviewBlock.innerHTML = '<img src="images/preview.svg">';
 			}
 
 		},
 
 		changeInput: function(elem) {
+			var maxFiles = +elem.getAttribute('data-max-files');
+
+			if (maxFiles && elem.files.length > maxFiles) {
+				return;
+			}
 
 			this.field = elem.closest('.custom-file');
 
-			var self = this,
-			fileItems = this.field.querySelector('.custom-file__items');
+			var fileItems = this.field.querySelector('.custom-file__items');
 
 			fileItems.innerHTML = '';
-
-			console.log(elem.files);
 
 			for (var i = 0; i < elem.files.length; i++) {
 				var file = elem.files[i],
 				fileItem = document.createElement('div');
 
 				fileItem.className = 'custom-file__item';
-				fileItem.innerHTML = '<div class="custom-file__preview cover-img-wrap"></div><div class="custom-file__name">'+ file.name +'</div>';
+				fileItem.innerHTML = '<div class="custom-file__preview"></div><div class="custom-file__name">'+ file.name +'</div>';
 
 				fileItems.appendChild(fileItem);
 
-				self.loadPreview(file, i);
+				this.loadPreview(file, i);
 			}
-
 		},
 
 		init: function() {
