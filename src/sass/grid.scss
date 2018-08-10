@@ -8,7 +8,7 @@
 	
 	& > [class*="col"]{
 		width: 100%;
-		padding: 10px;
+		padding: 15px;
 		flex-grow: 0;
 		flex-shrink: 1;
 	}
@@ -22,10 +22,6 @@
 	}
 
 	@media(max-width: 1000px){
-		& > [class*="col"]{
-			padding: 15px;
-		}
-
 		& > div[class*="col-"]:not([class*="vw1000-col"]){
 			margin-left: 0;
 			max-width: 100%;

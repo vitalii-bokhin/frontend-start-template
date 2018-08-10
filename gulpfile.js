@@ -18,7 +18,6 @@ var modulesOn = [
 'menu',
 'fsscroll',
 'user',
-'button',
 'toggle',
 'flex-image',
 'cover-image',
@@ -56,7 +55,7 @@ modulesOn.forEach(function(val) {
 });
 
 //src
-var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/class.scss'),
+var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/class.scss'),
 jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));
 
 //DEV MODE
