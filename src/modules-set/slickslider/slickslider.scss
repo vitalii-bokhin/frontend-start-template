@@ -109,7 +109,6 @@
 		margin-right: 12px;
 	}
 	button{
-		display: block;
 		font-size: 0;
 		width: 8px;
 		height: 8px;
@@ -119,15 +118,9 @@
 		&:hover{
 			background: $rd;
 		}
-		.gn-slider &{
-			border: 1px solid $gn;
-		}
 	}
 	.slick-active button{
 		background: $be;
-		.gn-slider &{
-			background: $gn;
-		}
 	}
 }
 
@@ -145,7 +138,6 @@
 		content: "";
 		width: 12px;
 		height: 20px;
-		@include sp;
 	}
 	@media(min-width: 1201px){
 		&:hover{
@@ -159,12 +151,12 @@
 .slick-prev{
 	left: -42px;
 	&:after{
-		background-position: -24px -72px;
+		
 	}
 }
 .slick-next{
 	right: -42px;
 	&:after{
-		background-position: -38px -72px;
+		
 	}
 }

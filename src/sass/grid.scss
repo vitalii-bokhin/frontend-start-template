@@ -139,7 +139,7 @@
 	.vw1200{
 		&-row{
 			&-col-12{
-				& > div[class*="col-"]{
+				& > [class*="col-"]{
 					margin-left: 0;
 					max-width: 100%;
 					flex-basis: 100%;
