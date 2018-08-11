@@ -26,7 +26,7 @@
 			padding: 15px;
 		}
 
-		& > div[class*="col-"]:not([class*="vw1000-col"]){
+		& > [class*="col-"]:not([class*="vw1000-col"]){
 			margin-left: 0;
 			max-width: 100%;
 			flex-basis: 100%;
@@ -143,7 +143,7 @@
 	.vw1200{
 		&-row{
 			&-col-12{
-				& > div[class*="col-"]{
+				& > [class*="col-"]{
 					margin-left: 0;
 					max-width: 100%;
 					flex-basis: 100%;
