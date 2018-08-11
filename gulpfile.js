@@ -18,7 +18,6 @@ var modulesOn = [
 'menu',
 'fsscroll',
 'user',
-'button',
 'toggle',
 'flex-image',
 'cover-image',
@@ -56,7 +55,7 @@ modulesOn.forEach(function(val) {
 });
 
 //src
-var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/class.scss'),
+var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/class.scss'),
 jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));
 
 //DEV MODE
@@ -94,9 +93,9 @@ gulp.task('dev', ['clean_js_folder'], function() {
 	JS(jsSrc);
 
 	//refresh common script
-	gulp.src('src/js/common.js')
+	gulp.src(['!src/js/global.js', 'src/js/*.js'])
 	.pipe(gulp.dest('dist/js'))
-	.pipe(notify('Common Script has Refreshed!'));
+	.pipe(notify('Script has Refreshed!'));
 
 	//import js assets
 	gulp.src(jsAssets)
@@ -109,14 +108,14 @@ gulp.task('dev', ['clean_js_folder'], function() {
 	});
 
 	//watch js
-	gulp.watch(['!src/js/common.js', 'src/js/*.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js')), function() {
+	gulp.watch(['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js')), function() {
 		JS(jsSrc);
 	});
 
-	gulp.watch('src/js/common.js', function() {
-		gulp.src('src/js/common.js')
+	gulp.watch(['!src/js/global.js', 'src/js/*.js'], function() {
+		gulp.src(['!src/js/global.js', 'src/js/*.js'])
 		.pipe(gulp.dest('dist/js'))
-		.pipe(notify('Common Script has Refreshed!'));;
+		.pipe(notify('Script has Refreshed!'));;
 	});
 
 	//watch html
@@ -133,6 +132,11 @@ gulp.task('dev', ['clean_js_folder'], function() {
 gulp.task('svgs', function() {
 	gulp.src('src/images/svg/*.svg')
 	.pipe(svgSprite({
+		shape: {
+			spacing: {
+				padding: 10
+			}
+		},
 		mode: {
 			view: {
 				bust: false,
@@ -159,11 +163,11 @@ gulp.task('dist', function() {
 
 	JS(jsSrc, true);
 
-	gulp.src('src/js/common.js')
+	gulp.src(['!src/js/global.js', 'src/js/*.js'])
 	.pipe(gulp.dest('dist/js'))
 	.pipe(notify('Common Script has Refreshed!'));
 
-	del(['dist/js/script.js', 'dist/js/script.js.map']);
+	//del(['dist/js/script.js', 'dist/js/script.js.map']);
 });
 
 //Functions
@@ -205,10 +209,10 @@ function JS(src, dist) {
 		gulp.src(src)
 		.pipe(sourcemaps.init())
 		.pipe(babel())
-		.pipe(uglify())
+		//.pipe(uglify())
 		.on('error', notify.onError(function(err) { return err; }))
 		.pipe(concat('script.js'))
-		.pipe(rename({suffix: '.min'}))
+		//.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/js'))
 		.pipe(notify({
@@ -236,7 +240,7 @@ function HTML(src, dist) {
 		.pipe(fileinclude())
 		.on('error', notify.onError(function(err) { return err; }))
 		.pipe(replace('style.css', 'style.min.css'))
-		.pipe(replace('script.js', 'script.min.js'))
+		//.pipe(replace('script.js', 'script.min.js'))
 		.pipe(gulp.dest('dist'))
 		.pipe(notify({
 			title: 'HTML',

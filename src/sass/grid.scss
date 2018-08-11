@@ -8,7 +8,7 @@
 	
 	& > [class*="col"]{
 		width: 100%;
-		padding: 10px;
+		padding: 15px;
 		flex-grow: 0;
 		flex-shrink: 1;
 	}
@@ -22,11 +22,7 @@
 	}
 
 	@media(max-width: 1000px){
-		& > [class*="col"]{
-			padding: 15px;
-		}
-
-		& > [class*="col-"]:not([class*="vw1000-col"]){
+		& > div[class*="col-"]:not([class*="vw1000-col"]){
 			margin-left: 0;
 			max-width: 100%;
 			flex-basis: 100%;
@@ -154,6 +150,7 @@
 		&-col{
 			width: auto !important;
 			flex-basis: auto;
+			max-width: 100%;
 			&-0-1{
 				max-width: 4.166665%;
 				flex-basis: 4.166665%;
@@ -260,6 +257,7 @@
 		&-col{
 			width: auto !important;
 			flex-basis: auto;
+			max-width: 100%;
 			&-0-1{
 				max-width: 4.166665%;
 				flex-basis: 4.166665%;

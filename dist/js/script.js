@@ -303,7 +303,7 @@ FsScroll.init({
 });
 */
 
-var FsScroll;
+; var FsScroll;
 
 (function() {
 	"use strict";
@@ -1415,7 +1415,7 @@ var CustomPlaceholder, CustomSelect;
 		
 		hidePlaceholder: function(elem, hide) {
 
-			var label = document.querySelector('label[for="'+ elem.id +'"]');
+			var label = document.querySelector('label.custom-placeholder[for="'+ elem.id +'"]');
 
 			if (!label) {
 				return;
@@ -1741,8 +1741,16 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 				var require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
-				head = (elem.getAttribute('data-type') == 'autocomplete') ? '<input type="text" name="'+ elem.name +'"'+ require +'placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">' : '<button type="button" data-placeholder="'+ elem.getAttribute('data-placeholder') +'" class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : elem.getAttribute('data-placeholder')) +'</button>',
-				multiple = {
+				placeholder = elem.getAttribute('data-placeholder'),
+				head;
+
+				if (elem.getAttribute('data-type') == 'autocomplete') {
+					head = '<input type="text" name="'+ elem.name +'"'+ require + ((placeholder) ? ' placeholder="'+ placeholder +'" ' : '') +'class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">';
+				} else {
+					head = '<button type="button"'+ ((placeholder) ? ' data-placeholder="'+ placeholder +'"' : '') +' class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') +'</button>';
+				}
+
+				var multiple = {
 					class: (elem.multiple) ? ' custom-select_multiple' : '',
 					inpDiv: (elem.multiple) ? '<div class="custom-select__multiple-inputs"></div>' : ''
 				},
@@ -1854,58 +1862,53 @@ var CustomPlaceholder, CustomSelect;
 
 	//custom file
 	var CustomFile = {
-
 		field: null,
 
 		loadPreview: function(file, i) {
-			var imgPreviewBlock = this.field.querySelectorAll('.custom-file__preview')[i];
+			var itemBlock = this.field.querySelectorAll('.custom-file__item')[i],
+			reader = new FileReader();
 
-			if (file.type.match('image')) {
-				var reader = new FileReader();
+			reader.onload = function(e) {
+				var preview = document.createElement('div');
 
-				reader.onload = function(e) {
-					imgPreviewBlock.innerHTML = '<img src="'+ e.target.result +'" class="cover-img">';
+				preview.className = 'custom-file__preview';
+				preview.innerHTML = '<img src="'+ e.target.result +'">';
 
-					setTimeout(function() {
-						coverImg('.custom-file__item');
-					}, 721);
-
-				}
-
-				reader.readAsDataURL(file);
-			} else {
-				imgPreviewBlock.innerHTML = '<img src="images/preview.svg" class="full-width-img">';
+				itemBlock.insertBefore(preview, itemBlock.firstChild);
 			}
 
+			reader.readAsDataURL(file);
 		},
 
 		changeInput: function(elem) {
+			var maxFiles = +elem.getAttribute('data-max-files');
+
+			if (maxFiles && elem.files.length > maxFiles) {
+				return;
+			}
 
 			this.field = elem.closest('.custom-file');
 
-			var self = this,
-			fileItems = this.field.querySelector('.custom-file__items');
+			var fileItems = this.field.querySelector('.custom-file__items');
 
 			fileItems.innerHTML = '';
-
-			console.log(elem.files);
 
 			for (var i = 0; i < elem.files.length; i++) {
 				var file = elem.files[i],
 				fileItem = document.createElement('div');
 
 				fileItem.className = 'custom-file__item';
-				fileItem.innerHTML = '<div class="custom-file__preview cover-img-wrap"></div><div class="custom-file__name">'+ file.name +'</div>';
+				fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div>';
 
 				fileItems.appendChild(fileItem);
 
-				self.loadPreview(file, i);
+				if (file.type.match(/image.*/)) {
+					this.loadPreview(file, i);
+				}
 			}
-
 		},
 
 		init: function() {
-
 			document.addEventListener('change', (e) => {
 				var elem = e.target.closest('input[type="file"]');
 
@@ -1914,11 +1917,8 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 				this.changeInput(elem);
-
 			});
-
 		}
-
 	};
 
 	//variable height textarea
@@ -1969,7 +1969,7 @@ var ValidateForm;
 
 		input: null,
 
-		errorTip: function(err, errInd) {
+		errorTip: function(err, errInd, errorTxt) {
 			var field = this.input.parentElement,
 			errTip = field.querySelector('.field-error-tip') || field.parentElement.querySelector('.field-error-tip');
 			if (err) {
@@ -1977,10 +1977,10 @@ var ValidateForm;
 				field.classList.add('field-error');
 
 				if (errInd) {
-					if (!errTip.getAttribute('data-error-text')) {
+					if (!errTip.hasAttribute('data-error-text')) {
 						errTip.setAttribute('data-error-text', errTip.innerHTML);
 					}
-					errTip.innerHTML = errTip.getAttribute('data-error-text-'+ errInd);
+					errTip.innerHTML = (errInd != 'custom') ? errTip.getAttribute('data-error-text-'+ errInd) : errorTxt;
 				}
 			} else {
 				field.classList.remove('field-error');
@@ -1988,28 +1988,60 @@ var ValidateForm;
 			}
 		},
 
-		customErrorTip: function($inp, errorTxt) {
-			var _ = this;
+		customErrorTip: function(input, errorTxt) {
+			if (!input) {
+				return;
+			}
 
-			_.$input = $inp;
-			_.errorTip(true, 'custom', errorTxt);
+			this.input = input;
+
+			this.errorTip(true, 'custom', errorTxt);
+		},
+
+		name: function() {
+			var err = false;
+
+			if (!/^[a-zа-яё-]{3,21}(\s[a-zа-яё-]{3,21})?(\s[a-zа-яё-]{3,21})?$/i.test(this.input.value)) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
 		},
 
 		date: function() {
-			var err = false,
-			validDate = function(val) {
-				var _reg = new RegExp("^([0-9]{2}).([0-9]{2}).([0-9]{4})$"),
-				matches = _reg.exec(val);
-				if (!matches) {
-					return false;
-				}
-				var now = new Date(),
-				cDate = new Date(matches[3], (matches[2] - 1), matches[1]);
-				return ((cDate.getMonth() == (matches[2] - 1)) && (cDate.getDate() == matches[1]) && (cDate.getFullYear() == matches[3]) && (cDate.valueOf() < now.valueOf()));
-			};
+			var err = false, 
+			errDate = false, 
+			matches = this.input.value.match(/^(\d{2}).(\d{2}).(\d{4})$/);
 
-			if (!validDate(this.input.value)) {
+			if (!matches) {
+				errDate = 1;
+			} else {
+				var compDate = new Date(matches[3], (matches[2] - 1), matches[1]),
+				curDate = new Date();
+
+				if (this.input.hasAttribute('data-min-years-passed')) {
+					var interval = curDate.valueOf() - new Date(curDate.getFullYear() - (+this.input.getAttribute('data-min-years-passed')), curDate.getMonth(), curDate.getDate()).valueOf();
+
+					if (curDate.valueOf() < compDate.valueOf() || (curDate.getFullYear() - matches[3]) > 100) {
+						errDate = 1;
+					} else if ((curDate.valueOf() - compDate.valueOf()) < interval) {
+						errDate = 2;
+					}
+				}
+
+				if (compDate.getFullYear() != matches[3] || compDate.getMonth() != (matches[2] - 1) || compDate.getDate() != matches[1]) {
+					errDate = 1;
+				}
+			}
+
+			if (errDate == 1) {
 				this.errorTip(true, 2);
+				err = true;
+			} else if (errDate == 2) {
+				this.errorTip(true, 3);
 				err = true;
 			} else {
 				this.errorTip(false);
@@ -2073,6 +2105,53 @@ var ValidateForm;
 			return err;
 		},
 
+		file: function(e) {
+			if (e) {
+				var elem = e.target.closest('input[type="file"]');
+				if (!elem) {
+					return;
+				} else {
+					this.input = elem;
+				}
+			}
+
+			var err = false,
+			errCount = {ext: 0, size: 0},
+			files = this.input.files,
+			maxFiles = +this.input.getAttribute('data-max-files'),
+			extensions = this.input.getAttribute('data-ext'),
+			extRegExp = new RegExp('(?:\\.'+ extensions.replace(/,/g, '|\\.') +')$'),
+			maxSize = +this.input.getAttribute('data-max-size');
+
+			for (var i = 0; i < files.length; i++) {
+				var file = files[i];
+
+				if (!file.name.match(extRegExp)) {
+					errCount.ext++;
+					continue;
+				}
+
+				if (file.size > maxSize) {
+					errCount.size++;
+				}
+			}
+			
+			if (maxFiles && files.length > maxFiles) {
+				this.errorTip(true, 4);
+				err = true;
+			} else if (errCount.ext) {
+				this.errorTip(true, 2);
+				err = true;
+			} else if (errCount.size) {
+				this.errorTip(true, 3);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+
 		validateOnInputOrBlur: function(e) {
 
 			var elem = e.target.closest('input[type="text"], input[type="password"], textarea');
@@ -2100,51 +2179,6 @@ var ValidateForm;
 				this.errorTip(false);
 			}
 			
-		},
-
-		file: function(e) {
-
-			if (e) {
-				var elem = e.target.closest('input[type="file"]');
-				if (!elem) {
-					return;
-				} else {
-					this.input = elem;
-				}
-			}
-
-			var err = false,
-			errCount = {type: 0, size: 0},
-			files = this.input.files,
-			type = this.input.getAttribute('data-type'),
-			maxSize = +this.input.getAttribute('data-max-size');
-
-			for (var i = 0; i < files.length; i++) {
-
-				var file = files[i];
-
-				if (!file.type.match(type)) {
-					errCount.type++;
-					continue;
-				}
-
-				if (file.size > maxSize) {
-					errCount.size++;
-				}
-
-			}
-
-			if (errCount.type) {
-				this.errorTip(true, 2);
-				err = true;
-			} else if (errCount.size) {
-				this.errorTip(true, 3);
-				err = true;
-			} else {
-				this.errorTip(false);
-			}
-
-			return err;
 		},
 
 		validate: function(form) {

@@ -171,7 +171,7 @@ select{
 			border: 1px solid $gy;
 			background: $lgy;
 			transition: box-shadow .5s;
-			.form__field_error &,
+			.field-error &,
 			.form__chbox-group_error &{
 				border-color: $rd;
 			}
@@ -253,14 +253,14 @@ select{
 		padding: 0 7px;
 	}
 	&__preview{
-		@include fixprop;
 		position: relative;
 		border: 1px solid $lgy;
-		font-size: 1rem;
+		min-height: 100px;
 		img{
-			position: absolute;
-			left: 0;
-			top: 0;
+			display: block;
+			width: 100%;
+			height: auto;
+			position: relative;
 			z-index: 2;
 		}
 		&:after{
