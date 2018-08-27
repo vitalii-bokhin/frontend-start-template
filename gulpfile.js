@@ -55,7 +55,7 @@ modulesOn.forEach(function(val) {
 });
 
 //src
-var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/class.scss'),
+var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/animation.scss', 'src/sass/decor.scss', 'src/sass/class.scss'),
 jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));
 
 //DEV MODE
@@ -87,7 +87,7 @@ gulp.task('dev', ['clean_js_folder'], function() {
 	CSS(cssSrc);
 
 	//delete style.min.css
-	del(['dist/css/style.min.css', 'dist/css/style.min.css.map']);
+	//del(['dist/css/style.min.css', 'dist/css/style.min.css.map']);
 
 	//build script.js
 	JS(jsSrc);
@@ -159,7 +159,7 @@ gulp.task('dist', function() {
 
 	CSS(cssSrc, true);
 
-	del(['dist/css/style.css', 'dist/css/style.css.map']);
+	//del(['dist/css/style.css', 'dist/css/style.css.map']);
 
 	JS(jsSrc, true);
 
@@ -180,7 +180,7 @@ function CSS(src, dist) {
 			.pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
 			.pipe(autoprefixer(['last 3 versions']))
 			.pipe(concat('style.css'))
-			.pipe(rename({suffix: '.min'}))
+			//.pipe(rename({suffix: '.min'}))
 			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest('dist/css'))
 			.pipe(notify({
@@ -239,7 +239,7 @@ function HTML(src, dist) {
 		gulp.src(src)
 		.pipe(fileinclude())
 		.on('error', notify.onError(function(err) { return err; }))
-		.pipe(replace('style.css', 'style.min.css'))
+		//.pipe(replace('style.css', 'style.min.css'))
 		//.pipe(replace('script.js', 'script.min.js'))
 		.pipe(gulp.dest('dist'))
 		.pipe(notify({
