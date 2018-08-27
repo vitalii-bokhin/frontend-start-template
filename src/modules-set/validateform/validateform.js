@@ -144,7 +144,6 @@ var ValidateForm;
 		},
 
 		file: function(e) {
-
 			if (e) {
 				var elem = e.target.closest('input[type="file"]');
 				if (!elem) {
@@ -155,17 +154,18 @@ var ValidateForm;
 			}
 
 			var err = false,
-			errCount = {type: 0, size: 0},
+			errCount = {ext: 0, size: 0},
 			files = this.input.files,
 			maxFiles = +this.input.getAttribute('data-max-files'),
-			type = this.input.getAttribute('data-type'),
+			extensions = this.input.getAttribute('data-ext'),
+			extRegExp = new RegExp('(?:\\.'+ extensions.replace(/,/g, '|\\.') +')$'),
 			maxSize = +this.input.getAttribute('data-max-size');
 
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 
-				if (!file.type.match(type)) {
-					errCount.type++;
+				if (!file.name.match(extRegExp)) {
+					errCount.ext++;
 					continue;
 				}
 
@@ -177,7 +177,7 @@ var ValidateForm;
 			if (maxFiles && files.length > maxFiles) {
 				this.errorTip(true, 4);
 				err = true;
-			} else if (errCount.type) {
+			} else if (errCount.ext) {
 				this.errorTip(true, 2);
 				err = true;
 			} else if (errCount.size) {

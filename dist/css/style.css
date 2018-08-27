@@ -350,7 +350,7 @@ h1 {
 }
 
 @media (max-width: 1200px) {
-  .vw1200-row-col-12 > div[class*="col-"] {
+  .vw1200-row-col-12 > [class*="col-"] {
     margin-left: 0;
     max-width: 100%;
     flex-basis: 100%;
@@ -2280,6 +2280,8 @@ select {
   background-size: 277.77778% auto;
 }
 
+
+
 /*text color*/
 .c-red {
   color: #ff0000;
@@ -2392,14 +2394,14 @@ select {
   }
 }
 
-@media (min-width: 701px) {
-  .vw701-hidden {
+@media (min-width: 751px) {
+  .vw751-hidden {
     display: none;
   }
 }
 
-@media (max-width: 700px) {
-  .vw700-hidden {
+@media (max-width: 750px) {
+  .vw750-hidden {
     display: none;
   }
 }

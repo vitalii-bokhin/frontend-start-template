@@ -607,28 +607,22 @@ var CustomPlaceholder, CustomSelect;
 
 	//custom file
 	var CustomFile = {
-
 		field: null,
 
 		loadPreview: function(file, i) {
-			var imgPreviewBlock = this.field.querySelectorAll('.custom-file__preview')[i];
+			var itemBlock = this.field.querySelectorAll('.custom-file__item')[i],
+			reader = new FileReader();
 
-			if (file.type.match('image')) {
-				var reader = new FileReader();
+			reader.onload = function(e) {
+				var preview = document.createElement('div');
 
-				reader.onload = function(e) {
-					setTimeout(function() {
-						var img = document.createElement('img');
-						img.src = e.target.result;
-						imgPreviewBlock.appendChild(img);
-					}, 121);
-				}
+				preview.className = 'custom-file__preview';
+				preview.innerHTML = '<img src="'+ e.target.result +'">';
 
-				reader.readAsDataURL(file);
-			} else {
-				imgPreviewBlock.innerHTML = '<img src="images/preview.svg">';
+				itemBlock.insertBefore(preview, itemBlock.firstChild);
 			}
 
+			reader.readAsDataURL(file);
 		},
 
 		changeInput: function(elem) {
@@ -649,16 +643,17 @@ var CustomPlaceholder, CustomSelect;
 				fileItem = document.createElement('div');
 
 				fileItem.className = 'custom-file__item';
-				fileItem.innerHTML = '<div class="custom-file__preview"></div><div class="custom-file__name">'+ file.name +'</div>';
+				fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div>';
 
 				fileItems.appendChild(fileItem);
 
-				this.loadPreview(file, i);
+				if (file.type.match(/image.*/)) {
+					this.loadPreview(file, i);
+				}
 			}
 		},
 
 		init: function() {
-
 			document.addEventListener('change', (e) => {
 				var elem = e.target.closest('input[type="file"]');
 
@@ -667,11 +662,8 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 				this.changeInput(elem);
-
 			});
-
 		}
-
 	};
 
 	//variable height textarea
