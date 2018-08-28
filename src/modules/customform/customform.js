@@ -265,12 +265,22 @@ var CustomPlaceholder, CustomSelect;
 				var elem = elements[i];
 
 				if (!elem.hasAttribute('data-target-elements')) {
-					return;
+					continue;
 				}
 
 				var targetElem = document.querySelector(elem.getAttribute('data-target-elements'));
-				targetElem.style.display = (elem.classList.contains('custom-select__val_checked')) ? 'block' : 'none';
 
+				if (elem.classList.contains('custom-select__val_checked')) {
+					targetElem.style.display = 'block';
+
+					var textInputElement = targetElem.querySelector('input[type="text"]');
+
+					if (textInputElement) {
+						textInputElement.focus();
+					}
+				} else {
+					targetElem.style.display = 'none';
+				}
 			}
 
 		},

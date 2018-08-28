@@ -265,10 +265,11 @@ var CustomPlaceholder, CustomSelect;
 				var elem = elements[i];
 
 				if (!elem.hasAttribute('data-target-elements')) {
-					return;
+					continue;
 				}
 
 				var targetElem = document.querySelector(elem.getAttribute('data-target-elements'));
+
 				targetElem.style.display = (elem.classList.contains('custom-select__val_checked')) ? 'block' : 'none';
 
 			}

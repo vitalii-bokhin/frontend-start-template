@@ -111,6 +111,8 @@
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				options.success(xhr.response);
+			} else if (xhr.readyState == 4 && xhr.status != 200) {
+				options.error(xhr.response);
 			}
 		}
 
