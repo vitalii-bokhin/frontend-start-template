@@ -51,7 +51,7 @@
 		close: function() {
 			var navElem = document.getElementById(this.options.navId);
 
-			if (!navElem) {
+			if (!navElem || !navElem.classList.contains('opened')) {
 				return;
 			}
 
@@ -78,6 +78,10 @@
 					this.open(openElem);
 				} else if (closeElem) {
 					e.preventDefault();
+					this.close();
+				}
+
+				if (!openElem && !e.target.closest('#'+ options.navId)) {
 					this.close();
 				}
 			});
