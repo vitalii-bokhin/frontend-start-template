@@ -2047,6 +2047,7 @@ select {
 
 .tab__section {
   position: relative;
+  overflow: hidden;
   margin-top: 15px;
   transition: height .5s;
 }
