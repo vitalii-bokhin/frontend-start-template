@@ -2220,6 +2220,8 @@ var ValidateForm;
 				if (elem.value.length) {
 					if (inpType && this[inpType]()) {
 						err++;
+					} else {
+						this.errorTip(false);
 					}
 				} else if (elem.getAttribute('data-required')) {
 					this.errorTip(true);

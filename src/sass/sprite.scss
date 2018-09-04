@@ -21,6 +21,11 @@
 	@include bgs(512);
 }
 
+.custom-checkbox__input:checked + .custom-checkbox__label:before{
+	@extend %svg-check;
+	@include bgs(432);
+}
+
 .vk-btn{
 	@extend %svg-vk;
 	@include bgs(576);
