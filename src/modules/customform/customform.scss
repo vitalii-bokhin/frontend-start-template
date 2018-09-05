@@ -151,7 +151,7 @@ select{
 		left: -9999px;
 		&:checked{
 			& + .custom-checkbox__label:before{
-				
+				border-color: $gy !important;
 			}
 		}
 	}
@@ -298,14 +298,16 @@ select{
 		@extend %fwh;
 		overflow: hidden;
 	}
-	&_wrap{
+	&_middle{
 		height: 120px !important;
 		border: 1px solid $gy;
 		overflow: hidden;
-		.middle__inner{
+		display: flex;
+		align-items: center;
+		& > div{
+			width: 100%;
 			position: relative;
 			max-height: 120px;
-			font-size: 16px;
 		}
 		.var-height-textarea__textarea{
 			border: none;

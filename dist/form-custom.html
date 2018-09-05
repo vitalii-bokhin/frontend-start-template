@@ -134,11 +134,11 @@
 
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">What programming languages do you know?* (at least one language)</div>
+					<div class="title-h2">What programming languages do you know?* (at least two language)</div>
 				</div>
 			</div>
 
-			<div class="row form__chbox-group" data-min="1">
+			<div class="row form__chbox-group" data-min="2">
 				<div class="col-2">
 					<div class="form__field custom-checkbox">
 						<input type="checkbox" class="custom-checkbox__input">
@@ -172,7 +172,7 @@
 				<div class="col-12">
 					<div id="other-lang-field" class="form__field hidden">
 						<input type="text" data-required="true" placeholder="Other programming languages" class="form__text-input" value="">
-						<div class="field-error-tip">Enter other programming languages</div>
+						<div class="field-error-tip" data-error-text-2="Unacceptable symbols">Enter other programming languages</div>
 					</div>
 				</div>
 			</div>
@@ -414,18 +414,18 @@
 							<div class="var-height-textarea__mirror"></div>
 							<textarea name="message" placeholder="Message*" data-required="true" class="var-height-textarea__textarea form__textarea"></textarea>
 						</div>
-						<div class="field-error-tip">Enter your message</div>
+						<div class="field-error-tip" data-error-text-2="Unacceptable symbols">Enter your message</div>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form__field">
-						<div class="var-height-textarea var-height-textarea_wrap middle">
-							<div class="middle__inner">
+						<div class="var-height-textarea var-height-textarea_middle">
+							<div>
 								<div class="var-height-textarea__mirror"></div>
 								<textarea name="question" placeholder="Your question*" data-required="true" class="var-height-textarea__textarea form__textarea"></textarea>
 							</div>
 						</div>
-						<div class="field-error-tip">Enter your question</div>
+						<div class="field-error-tip" data-error-text-2="Unacceptable symbols">Enter your question</div>
 					</div>
 				</div>
 				<div class="col-4">

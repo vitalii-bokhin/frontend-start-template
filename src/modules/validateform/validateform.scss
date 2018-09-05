@@ -31,7 +31,8 @@
 		display: block;
 	}
 	input,
-	textarea{
+	textarea,
+	.var-height-textarea_middle{
 		border-color: $rd;
 	}
 }

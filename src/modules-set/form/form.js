@@ -58,6 +58,8 @@ var Form, NextFieldset;
 				CustomPlaceholder.hidePlaceholder(elem, false);
 			}
 
+			CustomSelect.reset();
+
 			var textareaMirrors = form.querySelectorAll('.form__textarea-mirror');
 
 			for (var i = 0; i < textareaMirrors.length; i++) {

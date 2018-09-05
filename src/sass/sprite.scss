@@ -16,7 +16,7 @@
 	@include bgs(512);
 }
 
-.form__btn_search{
+.form__btn_search:before{
 	@extend %svg-search;
 	@include bgs(512);
 }

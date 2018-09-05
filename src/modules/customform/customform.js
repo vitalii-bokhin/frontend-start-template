@@ -16,16 +16,12 @@ var CustomPlaceholder, CustomSelect;
 				label.htmlFor = forID;
 				elem.id = forID;
 			}
-
 		}
-
 	}
 
 	//show element on checkbox change
 	var ChangeCheckbox = {
-
 		change: function(elem) {
-
 			var targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
 
 			if (!targetElements.length) {
@@ -35,30 +31,22 @@ var CustomPlaceholder, CustomSelect;
 			for (var i = 0; i < targetElements.length; i++) {
 				targetElements[i].style.display = (elem.checked) ? 'block' : 'none';
 			}
-
 		},
 
 		init: function() {
-
 			document.addEventListener('change', (e) => {
-
 				var elem = e.target.closest('input[type="checkbox"]');
 
 				if (elem) {
 					this.change(elem);
 				}
-
 			});
-
 		}
-
 	};
 
 	//show element on radio button change
 	var ChangeRadio = {
-
 		change: function(checkedElem) {
-
 			var elements = document.querySelectorAll('input[type="radio"][name="'+ checkedElem.name +'"]');
 
 			if (!elements.length) {
@@ -76,30 +64,22 @@ var CustomPlaceholder, CustomSelect;
 				for (var j = 0; j < targetElements.length; j++) {
 					targetElements[j].style.display = (elem.checked) ? 'block' : 'none';
 				}
-
 			}
-
 		},
 
 		init: function() {
-
 			document.addEventListener('change', (e) => {
-
 				var elem = e.target.closest('input[type="radio"]');
 
 				if (elem) {
 					this.change(elem);
 				}
-
 			});
-
 		}
-
 	};
 
 	//form custom placeholder
 	CustomPlaceholder = {
-
 		init: function(elementsStr) {
 			var elements = document.querySelectorAll(elementsStr);
 
@@ -132,7 +112,6 @@ var CustomPlaceholder, CustomSelect;
 				if (elem.value.length) {
 					this.hidePlaceholder(elem, true);
 				}
-
 			}
 
 			//events
@@ -142,24 +121,18 @@ var CustomPlaceholder, CustomSelect;
 				if (elem) {
 					this.hidePlaceholder(elem, true);
 				}
-
 			}, true);
 
-
 			document.addEventListener('blur', (e) => {
-
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
 					this.hidePlaceholder(elem, false);
 				}
-
 			}, true);
-
 		},
 		
 		hidePlaceholder: function(elem, hide) {
-
 			var label = document.querySelector('label.custom-placeholder[for="'+ elem.id +'"]');
 
 			if (!label) {
@@ -183,14 +156,30 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 			}
-			
 		}
-
 	};
 
 	//Form CustomSelect
 	CustomSelect = {
 		field: null,
+
+		reset: function() {
+			var buttonElements = document.querySelectorAll('.custom-select__button'),
+			inputElements = document.querySelectorAll('.custom-select__input'),
+			valueElements = document.querySelectorAll('.custom-select__val');
+
+			for (var i = 0; i < buttonElements.length; i++) {
+				buttonElements[i].innerHTML = buttonElements[i].getAttribute('data-placeholder');
+			}
+
+			for (var i = 0; i < inputElements.length; i++) {
+				inputElements[i].value = '';
+			}
+
+			for (var i = 0; i < valueElements.length; i++) {
+				valueElements[i].classList.remove('custom-select__val_checked');
+			}
+		},
 
 		close: function() {
 			var fieldElements = document.querySelectorAll('.custom-select');
@@ -255,7 +244,6 @@ var CustomPlaceholder, CustomSelect;
 				input.value = '';
 				this.close();
 			}
-
 		},
 
 		targetAction: function() {
@@ -282,7 +270,6 @@ var CustomPlaceholder, CustomSelect;
 					targetElem.style.display = 'none';
 				}
 			}
-
 		},
 
 		selectVal: function(elem) {
@@ -297,10 +284,10 @@ var CustomPlaceholder, CustomSelect;
 				var toButtonValue = elem.innerHTML,
 				toInputValue = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
 
-				var lalueElements = this.field.querySelectorAll('.custom-select__val');
+				var valueElements = this.field.querySelectorAll('.custom-select__val');
 
-				for (var i = 0; i < lalueElements.length; i++) {
-					lalueElements[i].classList.remove('custom-select__val_checked');
+				for (var i = 0; i < valueElements.length; i++) {
+					valueElements[i].classList.remove('custom-select__val_checked');
 				}
 
 				elem.classList.add('custom-select__val_checked');
@@ -314,7 +301,6 @@ var CustomPlaceholder, CustomSelect;
 				this.close();
 
 				CustomPlaceholder.hidePlaceholder(input, true);
-
 			}
 
 			this.targetAction();
@@ -326,7 +312,6 @@ var CustomPlaceholder, CustomSelect;
 			this.field.classList.add('custom-select_changed');
 
 			ValidateForm.select(input);
-
 		},
 
 		autocomplete: function(elem) {
@@ -339,7 +324,7 @@ var CustomPlaceholder, CustomSelect;
 					var valueElem = valueElements[i];
 
 					valueElem.classList.remove('custom-select__val_checked');
-						
+					
 					if (valueElem.innerHTML.match(reg)) {
 						valueElem.parentElement.classList.remove('hidden');
 
@@ -371,7 +356,6 @@ var CustomPlaceholder, CustomSelect;
 					options.appendChild(li);
 				}
 			}
-
 		},
 
 		keyboard: function(key) {
@@ -700,7 +684,6 @@ var CustomPlaceholder, CustomSelect;
 			});
 
 		}
-
 	};
 
 	//init scripts
@@ -713,5 +696,4 @@ var CustomPlaceholder, CustomSelect;
 		ChangeCheckbox.init();
 		ChangeRadio.init();
 	});
-
 }());

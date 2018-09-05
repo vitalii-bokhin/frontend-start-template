@@ -1204,6 +1204,8 @@ var Form, NextFieldset;
 				CustomPlaceholder.hidePlaceholder(elem, false);
 			}
 
+			CustomSelect.reset();
+
 			var textareaMirrors = form.querySelectorAll('.form__textarea-mirror');
 
 			for (var i = 0; i < textareaMirrors.length; i++) {
@@ -1277,16 +1279,12 @@ var CustomPlaceholder, CustomSelect;
 				label.htmlFor = forID;
 				elem.id = forID;
 			}
-
 		}
-
 	}
 
 	//show element on checkbox change
 	var ChangeCheckbox = {
-
 		change: function(elem) {
-
 			var targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
 
 			if (!targetElements.length) {
@@ -1296,30 +1294,22 @@ var CustomPlaceholder, CustomSelect;
 			for (var i = 0; i < targetElements.length; i++) {
 				targetElements[i].style.display = (elem.checked) ? 'block' : 'none';
 			}
-
 		},
 
 		init: function() {
-
 			document.addEventListener('change', (e) => {
-
 				var elem = e.target.closest('input[type="checkbox"]');
 
 				if (elem) {
 					this.change(elem);
 				}
-
 			});
-
 		}
-
 	};
 
 	//show element on radio button change
 	var ChangeRadio = {
-
 		change: function(checkedElem) {
-
 			var elements = document.querySelectorAll('input[type="radio"][name="'+ checkedElem.name +'"]');
 
 			if (!elements.length) {
@@ -1337,30 +1327,22 @@ var CustomPlaceholder, CustomSelect;
 				for (var j = 0; j < targetElements.length; j++) {
 					targetElements[j].style.display = (elem.checked) ? 'block' : 'none';
 				}
-
 			}
-
 		},
 
 		init: function() {
-
 			document.addEventListener('change', (e) => {
-
 				var elem = e.target.closest('input[type="radio"]');
 
 				if (elem) {
 					this.change(elem);
 				}
-
 			});
-
 		}
-
 	};
 
 	//form custom placeholder
 	CustomPlaceholder = {
-
 		init: function(elementsStr) {
 			var elements = document.querySelectorAll(elementsStr);
 
@@ -1393,7 +1375,6 @@ var CustomPlaceholder, CustomSelect;
 				if (elem.value.length) {
 					this.hidePlaceholder(elem, true);
 				}
-
 			}
 
 			//events
@@ -1403,24 +1384,18 @@ var CustomPlaceholder, CustomSelect;
 				if (elem) {
 					this.hidePlaceholder(elem, true);
 				}
-
 			}, true);
 
-
 			document.addEventListener('blur', (e) => {
-
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
 					this.hidePlaceholder(elem, false);
 				}
-
 			}, true);
-
 		},
 		
 		hidePlaceholder: function(elem, hide) {
-
 			var label = document.querySelector('label.custom-placeholder[for="'+ elem.id +'"]');
 
 			if (!label) {
@@ -1444,14 +1419,30 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 			}
-			
 		}
-
 	};
 
 	//Form CustomSelect
 	CustomSelect = {
 		field: null,
+
+		reset: function() {
+			var buttonElements = document.querySelectorAll('.custom-select__button'),
+			inputElements = document.querySelectorAll('.custom-select__input'),
+			valueElements = document.querySelectorAll('.custom-select__val');
+
+			for (var i = 0; i < buttonElements.length; i++) {
+				buttonElements[i].innerHTML = buttonElements[i].getAttribute('data-placeholder');
+			}
+
+			for (var i = 0; i < inputElements.length; i++) {
+				inputElements[i].value = '';
+			}
+
+			for (var i = 0; i < valueElements.length; i++) {
+				valueElements[i].classList.remove('custom-select__val_checked');
+			}
+		},
 
 		close: function() {
 			var fieldElements = document.querySelectorAll('.custom-select');
@@ -1516,7 +1507,6 @@ var CustomPlaceholder, CustomSelect;
 				input.value = '';
 				this.close();
 			}
-
 		},
 
 		targetAction: function() {
@@ -1543,7 +1533,6 @@ var CustomPlaceholder, CustomSelect;
 					targetElem.style.display = 'none';
 				}
 			}
-
 		},
 
 		selectVal: function(elem) {
@@ -1558,10 +1547,10 @@ var CustomPlaceholder, CustomSelect;
 				var toButtonValue = elem.innerHTML,
 				toInputValue = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
 
-				var lalueElements = this.field.querySelectorAll('.custom-select__val');
+				var valueElements = this.field.querySelectorAll('.custom-select__val');
 
-				for (var i = 0; i < lalueElements.length; i++) {
-					lalueElements[i].classList.remove('custom-select__val_checked');
+				for (var i = 0; i < valueElements.length; i++) {
+					valueElements[i].classList.remove('custom-select__val_checked');
 				}
 
 				elem.classList.add('custom-select__val_checked');
@@ -1575,7 +1564,6 @@ var CustomPlaceholder, CustomSelect;
 				this.close();
 
 				CustomPlaceholder.hidePlaceholder(input, true);
-
 			}
 
 			this.targetAction();
@@ -1587,7 +1575,6 @@ var CustomPlaceholder, CustomSelect;
 			this.field.classList.add('custom-select_changed');
 
 			ValidateForm.select(input);
-
 		},
 
 		autocomplete: function(elem) {
@@ -1600,7 +1587,7 @@ var CustomPlaceholder, CustomSelect;
 					var valueElem = valueElements[i];
 
 					valueElem.classList.remove('custom-select__val_checked');
-						
+					
 					if (valueElem.innerHTML.match(reg)) {
 						valueElem.parentElement.classList.remove('hidden');
 
@@ -1632,7 +1619,6 @@ var CustomPlaceholder, CustomSelect;
 					options.appendChild(li);
 				}
 			}
-
 		},
 
 		keyboard: function(key) {
@@ -1961,7 +1947,6 @@ var CustomPlaceholder, CustomSelect;
 			});
 
 		}
-
 	};
 
 	//init scripts
@@ -1974,7 +1959,6 @@ var CustomPlaceholder, CustomSelect;
 		ChangeCheckbox.init();
 		ChangeRadio.init();
 	});
-
 }());
 var ValidateForm;
 
@@ -1982,21 +1966,27 @@ var ValidateForm;
 	"use strict";
 
 	ValidateForm = {
-
 		input: null,
 
 		errorTip: function(err, errInd, errorTxt) {
-			var field = this.input.parentElement,
-			errTip = field.querySelector('.field-error-tip') || field.parentElement.querySelector('.field-error-tip');
+			var field = this.input.closest('.form__field') || this.input.parentElement,
+			errTip = field.querySelector('.field-error-tip');
+
 			if (err) {
 				field.classList.remove('field-success');
 				field.classList.add('field-error');
+
+				if (!errTip) {
+					return;
+				}
 
 				if (errInd) {
 					if (!errTip.hasAttribute('data-error-text')) {
 						errTip.setAttribute('data-error-text', errTip.innerHTML);
 					}
 					errTip.innerHTML = (errInd != 'custom') ? errTip.getAttribute('data-error-text-'+ errInd) : errorTxt;
+				} else if (errTip.hasAttribute('data-error-text')) {
+					errTip.innerHTML = errTip.getAttribute('data-error-text');
 				}
 			} else {
 				field.classList.remove('field-error');
@@ -2014,10 +2004,23 @@ var ValidateForm;
 			this.errorTip(true, 'custom', errorTxt);
 		},
 
+		noType: function() {
+			var err = false;
+
+			if (!/^[0-9a-zа-яё_,.:-\s]*$/i.test(this.input.value)) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+
 		name: function() {
 			var err = false;
 
-			if (!/^[a-zа-яё-]{3,21}(\s[a-zа-яё-]{3,21})?(\s[a-zа-яё-]{3,21})?$/i.test(this.input.value)) {
+			if (!/^[a-zа-яё'-]{3,21}(\s[a-zа-яё'-]{3,21})?(\s[a-zа-яё'-]{3,21})?$/i.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {
@@ -2121,6 +2124,68 @@ var ValidateForm;
 			return err;
 		},
 
+		checkbox: function(e) {
+			var elem = e.target.closest('input[type="checkbox"]');
+
+			if (!elem) {
+				return;
+			}
+
+			this.input = elem;
+
+			var group = elem.closest('.form__chbox-group');
+
+			if (group && group.getAttribute('data-tested')) {
+				var checkedElements = 0,
+				elements = group.querySelectorAll('input[type="checkbox"]');
+
+				for (var i = 0; i < elements.length; i++) {
+					if (elements[i].checked) {
+						checkedElements++;
+					}
+				}
+
+				if (checkedElements < group.getAttribute('data-min')) {
+					group.classList.add('form__chbox-group_error');
+				} else {
+					group.classList.remove('form__chbox-group_error');
+				}
+
+			} else if (elem.getAttribute('data-tested')) {
+				if (elem.getAttribute('data-required') && !elem.checked) {
+					this.errorTip(true);
+				} else {
+					this.errorTip(false);
+				}
+			}
+		},
+
+		radio: function(e) {
+			var elem = e.target.closest('input[type="radio"]');
+
+			if (!elem) {
+				return;
+			}
+
+			this.input = elem;
+
+			var checkedElement = false,
+			group = elem.closest('.form__radio-group'),
+			elements = group.querySelectorAll('input[type="radio"]');
+
+			for (var i = 0; i < elements.length; i++) {
+				if (elements[i].checked) {
+					checkedElement = true;
+				}
+			}
+
+			if (!checkedElement) {
+				group.classList.add('form__radio-group_error');
+			} else {
+				group.classList.remove('form__radio-group_error');
+			}
+		},
+
 		file: function(e) {
 			if (e) {
 				var elem = e.target.closest('input[type="file"]');
@@ -2168,33 +2233,31 @@ var ValidateForm;
 			return err;
 		},
 
-		validateOnInputOrBlur: function(e) {
-
+		validateOnInput: function(e) {
 			var elem = e.target.closest('input[type="text"], input[type="password"], textarea');
 
-			if (!elem) {
+			if (!elem || !elem.getAttribute('data-tested')) {
 				return;
 			}
 
 			this.input = elem;
 
-			if (e.type == 'blur') {
-				elem.setAttribute('data-tested', 'true');
-			} else if (e.type == 'input' && !elem.getAttribute('data-tested')) {
-				return;
-			}
-
 			var type = elem.getAttribute('data-type'),
 			val = elem.value;
 
+			
+
 			if (elem.getAttribute('data-required') && !val.length) {
 				this.errorTip(true);
-			} else if (val.length && type) {
-				this[type]();
+			} else if (val.length) {
+				if (type) {
+					this[type]();
+				} else if (elem.type != 'password') {
+					this.noType();
+				}
 			} else {
 				this.errorTip(false);
 			}
-			
 		},
 
 		validate: function(form) {
@@ -2217,19 +2280,20 @@ var ValidateForm;
 
 				var inpType = elem.getAttribute('data-type');
 
-				if (elem.value.length) {
+				if (elem.getAttribute('data-required') && !elem.value.length) {
+					this.errorTip(true);
+					err++;
+				} else if (elem.value.length) {
 					if (inpType && this[inpType]()) {
+						err++;
+					} else if (!inpType && elem.type != 'password' && this.noType()) {
 						err++;
 					} else {
 						this.errorTip(false);
 					}
-				} else if (elem.getAttribute('data-required')) {
-					this.errorTip(true);
-					err++;
 				} else {
 					this.errorTip(false);
 				}
-
 			}
 
 			//select
@@ -2246,7 +2310,6 @@ var ValidateForm;
 				if (this.select(elem)) {
 					err++;
 				}
-
 			}
 
 			//checkboxes
@@ -2261,19 +2324,20 @@ var ValidateForm;
 
 				this.input = elem;
 
+				elem.setAttribute('data-tested', 'true');
+
 				if (elem.getAttribute('data-required') && !elem.checked) {
 					this.errorTip(true);
 					err++;
 				} else {
 					this.errorTip(false);
 				}
-
 			}
 
 			//checkbox group
 			var groups = form.querySelectorAll('.form__chbox-group');
 
-			for (var i = 0; i < groups.length; i++) {
+			for (let i = 0; i < groups.length; i++) {
 				var group = groups[i],
 				checkedElements = 0;
 
@@ -2281,10 +2345,12 @@ var ValidateForm;
 					continue;
 				}
 
+				group.setAttribute('data-tested', 'true');
+
 				var elements = group.querySelectorAll('input[type="checkbox"]');
 
-				for (var j = 0; j < elements.length; j++) {
-					if (elements[j].checked) {
+				for (let i = 0; i < elements.length; i++) {
+					if (elements[i].checked) {
 						checkedElements++;
 					}
 				}
@@ -2295,13 +2361,12 @@ var ValidateForm;
 				} else {
 					group.classList.remove('form__chbox-group_error');
 				}
-
 			}
 
 			//radio group
 			var groups = form.querySelectorAll('.form__radio-group');
 
-			for (var i = 0; i < groups.length; i++) {
+			for (let i = 0; i < groups.length; i++) {
 				var group = groups[i],
 				checkedElement = false;
 
@@ -2309,10 +2374,12 @@ var ValidateForm;
 					continue;
 				}
 
+				group.setAttribute('data-tested', 'true');
+
 				var elements = group.querySelectorAll('input[type="radio"]');
 
-				for (var j = 0; j < elements.length; j++) {
-					if (elements[j].checked) {
+				for (let i = 0; i < elements.length; i++) {
+					if (elements[i].checked) {
 						checkedElement = true;
 					}
 				}
@@ -2323,7 +2390,6 @@ var ValidateForm;
 				} else {
 					group.classList.remove('form__radio-group_error');
 				}
-
 			}
 
 			//file
@@ -2349,7 +2415,6 @@ var ValidateForm;
 				} else {
 					this.errorTip(false);
 				}
-
 			}
 
 			//passwords compare
@@ -2393,11 +2458,17 @@ var ValidateForm;
 				return;
 			}
 
-			form.addEventListener('input', this.validateOnInputOrBlur.bind(this));
+			form.addEventListener('input', (e) => {
+				this.validateOnInput(e);
+			});
 
-			form.addEventListener('blur', this.validateOnInputOrBlur.bind(this), true);
+			form.addEventListener('change', (e) => {
+				var inpType = e.target.type;
 
-			form.addEventListener('change', this.file.bind(this));
+				if (inpType == 'checkbox' || inpType == 'radio' || inpType == 'file') {
+					this[inpType](e);
+				}
+			});
 
 			form.addEventListener('submit', (e) => {
 				if (this.validate(form)) {
