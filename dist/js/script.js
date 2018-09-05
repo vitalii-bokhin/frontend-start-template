@@ -1151,7 +1151,6 @@ var Form, NextFieldset;
 
 	//next fieldset
 	NextFieldset = {
-
 		next: function(elem) {
 			var nextFieldset = (elem.hasAttribute('data-next-fieldset-item')) ? document.querySelector(elem.getAttribute('data-next-fieldset-item')) : false;
 
@@ -1165,7 +1164,6 @@ var Form, NextFieldset;
 				currentFieldset.classList.add('fieldset__item_hidden');
 				nextFieldset.classList.remove('fieldset__item_hidden');
 			}
-
 		},
 
 		init: function(form, elemStr) {
@@ -1258,13 +1256,6 @@ var Form, NextFieldset;
 			}
 		});
 	}
-	
-
-}());
-var CustomPlaceholder, CustomSelect;
-
-(function() {
-	"use strict";
 
 	//bind labels
 	function BindLabels(elementsStr) {
@@ -1275,15 +1266,41 @@ var CustomPlaceholder, CustomSelect;
 			label = elem.parentElement.querySelector('label'),
 			forID = (elem.hasAttribute('id')) ? elem.id : 'keylabel-'+ i;
 
-			if (!label.hasAttribute('for')) {
+			if (label && !label.hasAttribute('for')) {
 				label.htmlFor = forID;
 				elem.id = forID;
 			}
 		}
 	}
 
+	//set tabindex
+	/*function SetTabindex(elementsStr) {
+		var elements = document.querySelectorAll(elementsStr);
+
+		for (let i = 0; i < elements.length; i++) {
+			var elem = elements[i];
+
+			if (!elem.elementIsHidden()) {
+				elem.setAttribute('tabindex', i + 1);
+			}
+		}
+	}*/
+
+	//init scripts
+	document.addEventListener("DOMContentLoaded", function() {
+		BindLabels('input[type="checkbox"], input[type="radio"]');
+		//SetTabindex('input[type="text"], input[type="password"], textarea');
+	});
+}());
+var CustomPlaceholder, CustomSelect;
+
+(function() {
+	"use strict";
+
 	//show element on checkbox change
 	var ChangeCheckbox = {
+		hideCssClass: 'hidden',
+
 		change: function(elem) {
 			var targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
 
@@ -1292,7 +1309,15 @@ var CustomPlaceholder, CustomSelect;
 			}
 
 			for (var i = 0; i < targetElements.length; i++) {
-				targetElements[i].style.display = (elem.checked) ? 'block' : 'none';
+				var targetElem = targetElements[i];
+
+				targetElem.style.display = (elem.checked) ? 'block' : 'none';
+				
+				if (elem.checked) {
+					targetElem.classList.remove(this.hideCssClass);
+				} else {
+					targetElem.classList.add(this.hideCssClass);
+				}
 			}
 		},
 
@@ -1309,6 +1334,8 @@ var CustomPlaceholder, CustomSelect;
 
 	//show element on radio button change
 	var ChangeRadio = {
+		hideCssClass: 'hidden',
+		
 		change: function(checkedElem) {
 			var elements = document.querySelectorAll('input[type="radio"][name="'+ checkedElem.name +'"]');
 
@@ -1316,7 +1343,7 @@ var CustomPlaceholder, CustomSelect;
 				return;
 			}
 
-			for (var i = 0; i < elements.length; i++) {
+			for (let i = 0; i < elements.length; i++) {
 				var elem = elements[i],
 				targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
 
@@ -1324,8 +1351,16 @@ var CustomPlaceholder, CustomSelect;
 					continue;
 				}
 
-				for (var j = 0; j < targetElements.length; j++) {
-					targetElements[j].style.display = (elem.checked) ? 'block' : 'none';
+				for (let i = 0; i < targetElements.length; i++) {
+					var targetElem = targetElements[i];
+
+					targetElem.style.display = (elem.checked) ? 'block' : 'none';
+
+					if (elem.checked) {
+						targetElem.classList.remove(this.hideCssClass);
+					} else {
+						targetElem.classList.add(this.hideCssClass);
+					}
 				}
 			}
 		},
@@ -1425,6 +1460,7 @@ var CustomPlaceholder, CustomSelect;
 	//Form CustomSelect
 	CustomSelect = {
 		field: null,
+		hideCssClass: 'hidden',
 
 		reset: function() {
 			var buttonElements = document.querySelectorAll('.custom-select__button'),
@@ -1523,6 +1559,7 @@ var CustomPlaceholder, CustomSelect;
 
 				if (elem.classList.contains('custom-select__val_checked')) {
 					targetElem.style.display = 'block';
+					targetElem.classList.remove(this.hideCssClass);
 
 					var textInputElement = targetElem.querySelector('input[type="text"]');
 
@@ -1531,6 +1568,7 @@ var CustomPlaceholder, CustomSelect;
 					}
 				} else {
 					targetElem.style.display = 'none';
+					targetElem.classList.add(this.hideCssClass);
 				}
 			}
 		},
@@ -1955,7 +1993,6 @@ var CustomPlaceholder, CustomSelect;
 		CustomFile.init();
 		varHeightTextarea.init();
 		CustomPlaceholder.init('input[type="text"], input[type="password"], textarea');
-		BindLabels('input[type="checkbox"], input[type="radio"]');
 		ChangeCheckbox.init();
 		ChangeRadio.init();
 	});

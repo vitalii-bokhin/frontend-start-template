@@ -5,7 +5,6 @@ var Form, NextFieldset;
 
 	//next fieldset
 	NextFieldset = {
-
 		next: function(elem) {
 			var nextFieldset = (elem.hasAttribute('data-next-fieldset-item')) ? document.querySelector(elem.getAttribute('data-next-fieldset-item')) : false;
 
@@ -19,7 +18,6 @@ var Form, NextFieldset;
 				currentFieldset.classList.add('fieldset__item_hidden');
 				nextFieldset.classList.remove('fieldset__item_hidden');
 			}
-
 		},
 
 		init: function(form, elemStr) {
@@ -112,6 +110,39 @@ var Form, NextFieldset;
 			}
 		});
 	}
-	
 
+	//bind labels
+	function BindLabels(elementsStr) {
+		var elements = document.querySelectorAll(elementsStr);
+
+		for (var i = 0; i < elements.length; i++) {
+			var elem = elements[i],
+			label = elem.parentElement.querySelector('label'),
+			forID = (elem.hasAttribute('id')) ? elem.id : 'keylabel-'+ i;
+
+			if (label && !label.hasAttribute('for')) {
+				label.htmlFor = forID;
+				elem.id = forID;
+			}
+		}
+	}
+
+	//set tabindex
+	/*function SetTabindex(elementsStr) {
+		var elements = document.querySelectorAll(elementsStr);
+
+		for (let i = 0; i < elements.length; i++) {
+			var elem = elements[i];
+
+			if (!elem.elementIsHidden()) {
+				elem.setAttribute('tabindex', i + 1);
+			}
+		}
+	}*/
+
+	//init scripts
+	document.addEventListener("DOMContentLoaded", function() {
+		BindLabels('input[type="checkbox"], input[type="radio"]');
+		//SetTabindex('input[type="text"], input[type="password"], textarea');
+	});
 }());

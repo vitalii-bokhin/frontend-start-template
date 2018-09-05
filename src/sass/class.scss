@@ -2,56 +2,45 @@
 
 /*text color*/
 .c-red{
-	color: $rd;
+	color: $rd !important;
 }
 .c-gray{
-	color: $gy;
+	color: $gy !important;
 }
 
 /*text align*/
+.ta-l{
+	text-align: left !important;
+}
 .ta-c{
-	text-align: center;
+	text-align: center !important;
 }
 .ta-r{
-	text-align: right;
+	text-align: right !important;
 }
 
 /*position*/
 .pos-r{
-	position: relative;
+	position: relative !important;
 }
 
 
 /*marging*/
-.mt-25{
-	margin-top: 25px;
-}
-
-.mb-25{
-	margin-bottom: 25px;
-}
-
-.m-0{
-	margin: 0 !important;
+.m{
+	&-0{
+		margin: 0 !important;
+	}
 }
 
 /*padding*/
 .p{
 	&-x{
-		&-10{
-			padding-left: 10px !important;
-			padding-right: 10px !important;
-		}
 		&-0{
 			padding-left: 0 !important;
 			padding-right: 0 !important;
 		}
 	}
 	&-y{
-		&-10{
-			padding-top: 10px !important;
-			padding-bottom: 10px !important;
-		}
 		&-0{
 			padding-top: 0 !important;
 			padding-bottom: 0 !important;
@@ -64,13 +53,13 @@
 
 /*display*/
 .hidden{
-	display: none;
+	display: none !important;
 }
 
 @media(max-width: 1600px){
 	.vw1600{
 		&-hidden{
-			display: none;
+			display: none !important;
 		}
 	}
 }
@@ -78,7 +67,7 @@
 @media(min-width: 1201px){
 	.vw1201{
 		&-hidden{
-			display: none;
+			display: none !important;
 		}
 	}
 }
@@ -86,7 +75,7 @@
 @media(max-width: 1200px){
 	.vw1200{
 		&-hidden{
-			display: none;
+			display: none !important;
 		}
 	}
 }
@@ -94,7 +83,7 @@
 @media(min-width: 1001px){
 	.vw1001{
 		&-hidden{
-			display: none;
+			display: none !important;
 		}
 	}
 }
@@ -102,14 +91,14 @@
 @media(max-width: 1000px){
 	.vw1000{
 		&-hidden{
-			display: none;
+			display: none !important;
 		}
 
 		&-p{
 			&-x{
 				&-15{
-					padding-left: 15px;
-					padding-right: 15px;
+					padding-left: 15px !important;
+					padding-right: 15px !important;
 				}
 				&-0{
 					padding-left: 0 !important;
@@ -138,14 +127,13 @@
 		&-m-0{
 			margin: 0 !important;
 		}
-		
 	}
 }
 
 @media(min-width: 751px){
 	.vw751{
 		&-hidden{
-			display: none;
+			display: none !important;
 		}
 	}
 }
@@ -153,7 +141,7 @@
 @media(max-width: 750px){
 	.vw750{
 		&-hidden{
-			display: none;
+			display: none !important;
 		}
 	}
 }
