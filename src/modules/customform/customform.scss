@@ -71,6 +71,29 @@
 			color: $rd;
 		}
 	}
+	&__arr{
+		display: block;
+		width: 40px;
+		height: 40px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 3;
+		&:after{
+			@extend %ab;
+			width: 0;
+			height: 0;
+			border: 4px solid transparent;
+			border-top: 6px solid $rd;
+			position: absolute;
+			right: 13px;
+			top: 50%;
+			margin-top: -2px;
+		}
+		& ~ .custom-select__input{
+			padding-right: 40px;
+		}
+	}
 	&__options{
 		list-style: none;
 		position: absolute;

@@ -142,7 +142,7 @@ var Form, NextFieldset;
 
 	//init scripts
 	document.addEventListener("DOMContentLoaded", function() {
-		BindLabels('input[type="checkbox"], input[type="radio"]');
+		BindLabels('input[type="text"], input[type="checkbox"], input[type="radio"]');
 		//SetTabindex('input[type="text"], input[type="password"], textarea');
 	});
 }());
