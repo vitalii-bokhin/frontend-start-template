@@ -227,6 +227,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	ValidateForm.init(custForm.form);
 
+	custForm.onSubmit = function(form, callback) {
+		
+		for (var i = 0; i < CustomFile.files.length; i++) {
+			if (CustomFile.files[i]) {
+				console.log(CustomFile.files[i]);
+			}
+		}
+
+		if (ValidateForm.submit(form)) {
+
+			ajax({
+				url: form.action,
+				send: new FormData(form),
+				success: function(response) {
+					var response = JSON.parse(response);
+
+					if (response.status == 'sent') {
+						Popup.message('#message-popup', 'Форма отправлена');
+
+						callback({clearForm: true, unlockSubmitButton: true});
+					} else {
+						console.log(response);
+					}
+				}
+			});
+
+			return true;
+		}
+	}
+
 });
 
 //GetCountriesAndCitiesList

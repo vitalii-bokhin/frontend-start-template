@@ -1750,6 +1750,7 @@ select {
   width: 20%;
   vertical-align: top;
   padding: 0 7px;
+  position: relative;
 }
 
 .custom-file__preview {
@@ -1782,6 +1783,15 @@ select {
   margin-top: 10px;
   font-size: 14px;
   word-wrap: break-word;
+}
+
+.custom-file__del-btn {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 0;
+  right: 0;
+  z-index: 2;
 }
 
 /*variable height textarea*/

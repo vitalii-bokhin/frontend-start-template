@@ -1668,7 +1668,7 @@ var ValidateForm;
 	};
 
 }());
-var CustomPlaceholder, CustomSelect;
+var CustomPlaceholder, CustomSelect, CustomFile;
 
 (function() {
 	"use strict";
@@ -2277,20 +2277,26 @@ var CustomPlaceholder, CustomSelect;
 	};
 
 	//custom file
-	var CustomFile = {
+	CustomFile = {
 		field: null,
+		files: [],
 
-		loadPreview: function(file, i) {
-			var itemBlock = this.field.querySelectorAll('.custom-file__item')[i],
-			reader = new FileReader();
+		loadPreview: function(file, fileItem) {
+			var reader = new FileReader(),
+			previewDiv = document.createElement('div');
+
+			previewDiv.className = 'custom-file__preview';
+
+			fileItem.insertBefore(previewDiv, fileItem.firstChild);
 
 			reader.onload = function(e) {
-				var preview = document.createElement('div');
+				setTimeout(function() {
+					var img = document.createElement('img');
 
-				preview.className = 'custom-file__preview';
-				preview.innerHTML = '<img src="'+ e.target.result +'">';
+					img.src = e.target.result;
 
-				itemBlock.insertBefore(preview, itemBlock.firstChild);
+					previewDiv.appendChild(img);
+				}, 121);
 			}
 
 			reader.readAsDataURL(file);
@@ -2314,13 +2320,15 @@ var CustomPlaceholder, CustomSelect;
 				fileItem = document.createElement('div');
 
 				fileItem.className = 'custom-file__item';
-				fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div>';
+				fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div><button type="button" class="custom-file__del-btn" data-ind="'+ i +'"></button>';
 
 				fileItems.appendChild(fileItem);
 
 				if (file.type.match(/image.*/)) {
-					this.loadPreview(file, i);
+					this.loadPreview(file, fileItem);
 				}
+
+				this.files[i] = file;
 			}
 		},
 
@@ -2333,6 +2341,19 @@ var CustomPlaceholder, CustomSelect;
 				}
 
 				this.changeInput(elem);
+			});
+
+			document.addEventListener('click', (e) => {
+				var elem = e.target.closest('.custom-file__del-btn');
+
+				if (!elem) {
+					return;
+				}
+
+				elem.closest('.custom-file__item').style.display = 'none';
+				elem.closest('.custom-file__item').classList.add('hidden');
+
+				this.files[+elem.getAttribute('data-ind')] = null;
 			});
 		}
 	};
