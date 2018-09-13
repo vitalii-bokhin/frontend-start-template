@@ -275,6 +275,7 @@ select{
 		width: 20%;
 		vertical-align: top;
 		padding: 0 7px;
+		position: relative;
 	}
 	&__preview{
 		position: relative;
@@ -304,6 +305,14 @@ select{
 		margin-top: 10px;
 		font-size: 14px;
 		word-wrap: break-word;
+	}
+	&__del-btn{
+		position: absolute;
+		width: 15px;
+		height: 15px;
+		top: 0;
+		right: 0;
+		z-index: 2;
 	}
 }
 

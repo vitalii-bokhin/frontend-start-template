@@ -125,11 +125,9 @@
 <!--/HEADER-->
 
 <!--MAIN/-->
-<main class="main">
+<main>
 
-	<div class="section wrap">
-
-
+	<div class="section">
 		<form id="custom-form" action="send.php" method="POST" enctype="multipart/form-data" class="form">
 
 			<div class="row mt-25">
@@ -462,7 +460,7 @@
 								<!--items-->
 							</div>
 							<label for="upload-file-input" class="custom-file__btn">Upload images (less 1Mb)</label>
-							<input id="upload-file-input" type="file" data-ext="jpg,png,gif" data-max-size="1000000" data-required="true" class="custom-file__input" multiple data-max-files="3">
+							<input id="upload-file-input" type="file" name="uploads-1" data-ext="jpg,png,gif" data-max-size="1000000" data-required="true" class="custom-file__input" multiple data-max-files="3">
 						</div>
 						<div class="field-error-tip ta-c mt-25" data-error-text-2="Upload images (jpg, png, gif)" data-error-text-3="Upload files less 1Mb" data-error-text-4="Maximum number of files is 3">Upload images</div>
 					</div>
@@ -478,7 +476,50 @@
 			<div class="form-error-tip">Ошибка заполнения полей формы</div>
 
 		</form>
+	</div>
 
+	<div class="section">
+		<form id="custom-form-2" action="test-ajax.php" method="POST" enctype="multipart/form-data" class="form">
+
+			<div class="row">
+				<div class="col-12 pad-0">
+					<div class="form__field">
+						<div class="custom-file">
+							<div class="custom-file__items">
+								<!--items-->
+							</div>
+							<label for="upload-file-input-2" class="custom-file__btn">Upload images (less 1Mb)</label>
+							<input id="upload-file-input-2" type="file" name="uploads-2" data-ext="jpg,png,gif" data-max-size="1000000" data-required="true" class="custom-file__input" multiple data-max-files="5">
+						</div>
+						<div class="field-error-tip ta-c mt-25" data-error-text-2="Upload images (jpg, png, gif)" data-error-text-3="Upload files less 1Mb" data-error-text-4="Maximum number of files is 5">Upload images</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12 pad-0">
+					<div class="form__field">
+						<div class="custom-file">
+							<div class="custom-file__items">
+								<!--items-->
+							</div>
+							<label for="upload-file-input-3" class="custom-file__btn">Upload documents (less 1Mb)</label>
+							<input id="upload-file-input-3" type="file" name="uploads-3" data-ext="doc,docx,pdf" data-max-size="1000000" data-required="true" class="custom-file__input" multiple data-max-files="3">
+						</div>
+						<div class="field-error-tip ta-c mt-25" data-error-text-2="Upload documents (doc, docx, pdf)" data-error-text-3="Upload files less 1Mb" data-error-text-4="Maximum number of files is 3">Upload documents</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-25">
+				<div class="col-12">
+					<button type="submit" class="form__submit button">Submit</button>
+				</div>
+			</div>
+
+			<div class="form-error-tip">Ошибка заполнения полей формы</div>
+
+		</form>
 	</div>
 
 </main>

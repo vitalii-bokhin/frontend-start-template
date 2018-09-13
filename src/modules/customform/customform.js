@@ -608,8 +608,10 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 
 	//custom file
 	CustomFile = {
-		field: null,
-		files: [],
+		input: null,
+		formFilesObj: {},
+		filesObj: {},
+		filesArrayObj: {},
 
 		loadPreview: function(file, fileItem) {
 			var reader = new FileReader(),
@@ -621,11 +623,11 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 
 			reader.onload = function(e) {
 				setTimeout(function() {
-					var img = document.createElement('img');
+					var imgDiv = document.createElement('div');
 
-					img.src = e.target.result;
+					imgDiv.innerHTML = '<img src="'+ e.target.result +'">';
 
-					previewDiv.appendChild(img);
+					previewDiv.appendChild(imgDiv);
 				}, 121);
 			}
 
@@ -639,9 +641,7 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 				return;
 			}
 
-			this.field = elem.closest('.custom-file');
-
-			var fileItems = this.field.querySelector('.custom-file__items');
+			var fileItems = elem.closest('.custom-file').querySelector('.custom-file__items');
 
 			fileItems.innerHTML = '';
 
@@ -650,16 +650,65 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 				fileItem = document.createElement('div');
 
 				fileItem.className = 'custom-file__item';
-				fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div><button type="button" class="custom-file__del-btn" data-ind="'+ i +'"></button>';
+				fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div><button type="button" class="custom-file__del-btn" data-ind="'+ file.name +'"></button>';
 
 				fileItems.appendChild(fileItem);
 
 				if (file.type.match(/image.*/)) {
 					this.loadPreview(file, fileItem);
 				}
-
-				this.files[i] = file;
 			}
+
+			this.setFilesObj(elem.files);
+		},
+
+		setFilesObj: function(filesList, objKey) {
+			var formElem = this.input.closest('form'),
+			inputElem = this.input;
+
+			if (!formElem.id.length) {
+				formElem.id = 'custom-form-'+ new Date().valueOf();
+			}
+
+			if (!inputElem.id.length) {
+				inputElem.id = 'custom-file-input-'+ new Date().valueOf();
+			}
+
+			if (filesList) {
+				this.filesObj[inputElem.id] = {};
+
+				for (var i = 0; i < filesList.length; i++) {
+					this.filesObj[inputElem.id][filesList[i].name] = filesList[i];
+				}
+			} else {
+				delete this.filesObj[inputElem.id][objKey];
+			}
+
+			this.filesArrayObj[inputElem.id] = [];
+
+			for (var key in this.filesObj[inputElem.id]) {
+				this.filesArrayObj[inputElem.id].push(this.filesObj[inputElem.id][key]);
+			}
+
+			/*
+			ValidateForm.file(false, this.input);*/
+		},
+
+		files: function(formElem) {
+			var inputFileElements = formElem.querySelectorAll('.custom-file__input'),
+			filesArr = [];
+
+			if (inputFileElements.length == 1) {
+				filesArr = this.filesArrayObj[inputFileElements[0].id];
+			} else {
+				for (var i = 0; i < inputFileElements.length; i++) {
+					if (this.filesArrayObj[inputFileElements[i].id]) {
+						filesArr.push({name: inputFileElements[i].name, files: this.filesArrayObj[inputFileElements[i].id]});
+					}
+				}
+			}
+
+			return filesArr;
 		},
 
 		init: function() {
@@ -669,6 +718,8 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 				if (!elem) {
 					return;
 				}
+
+				this.input = elem;
 
 				this.changeInput(elem);
 			});
@@ -680,10 +731,11 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 					return;
 				}
 
-				elem.closest('.custom-file__item').style.display = 'none';
-				elem.closest('.custom-file__item').classList.add('hidden');
+				this.input = elem.closest('.custom-file').querySelector('.custom-file__input');
 
-				this.files[+elem.getAttribute('data-ind')] = null;
+				elem.closest('.custom-file__items').removeChild(elem.closest('.custom-file__item'));
+
+				this.setFilesObj(false, elem.getAttribute('data-ind'));
 			});
 		}
 	};

@@ -1444,12 +1444,20 @@ h1 {
   content: "";
 }
 
-.var-height-textarea__textarea {
+.custom-file__preview > div, .var-height-textarea__textarea {
   position: absolute;
   width: 100%;
   height: 100%;
   left: 0;
   top: 0;
+}
+
+.custom-file__preview img {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /*custom placeholder*/
@@ -1741,30 +1749,38 @@ select {
 }
 
 .custom-file__items {
-  font-size: 0;
+  display: flex;
+  justify-content: space-around;
   margin-bottom: 14px;
 }
 
 .custom-file__item {
-  display: inline-block;
-  width: 20%;
-  vertical-align: top;
-  padding: 0 7px;
+  max-width: 221px;
+  flex: 0 1 221px;
+  padding: 0 15px;
   position: relative;
 }
 
 .custom-file__preview {
   position: relative;
   border: 1px solid #dddddd;
-  min-height: 100px;
+}
+
+.custom-file__preview:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.custom-file__preview > div {
+  display: flex;
+  align-items: center;
+  z-index: 2;
 }
 
 .custom-file__preview img {
-  display: block;
-  width: 100%;
-  height: auto;
-  position: relative;
-  z-index: 2;
+  margin: 0 auto;
 }
 
 .custom-file__preview:after {
@@ -1787,10 +1803,10 @@ select {
 
 .custom-file__del-btn {
   position: absolute;
-  width: 15px;
-  height: 15px;
-  top: 0;
-  right: 0;
+  width: 20px;
+  height: 20px;
+  top: -10px;
+  right: 5px;
   z-index: 2;
 }
 

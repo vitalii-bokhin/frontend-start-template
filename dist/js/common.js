@@ -228,12 +228,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	ValidateForm.init(custForm.form);
 
 	custForm.onSubmit = function(form, callback) {
+
+		console.log(CustomFile.files);
 		
-		for (var i = 0; i < CustomFile.files.length; i++) {
-			if (CustomFile.files[i]) {
-				console.log(CustomFile.files[i]);
-			}
-		}
+	}
+
+	//custom form 2
+	var custForm2 = new Form('#custom-form-2');
+
+	ValidateForm.init(custForm2.form);
+
+	custForm2.onSubmit = function(form, callback) {
+		console.log(CustomFile.files(form));
 
 		if (ValidateForm.submit(form)) {
 
@@ -241,21 +247,25 @@ document.addEventListener('DOMContentLoaded', function() {
 				url: form.action,
 				send: new FormData(form),
 				success: function(response) {
-					var response = JSON.parse(response);
+					console.log(response);
 
-					if (response.status == 'sent') {
-						Popup.message('#message-popup', 'Форма отправлена');
-
-						callback({clearForm: true, unlockSubmitButton: true});
-					} else {
-						console.log(response);
-					}
+					callback({clearForm: true, unlockSubmitButton: true});
+				},
+				error: function(response) {
+					console.log(response);
+					callback({unlockSubmitButton: true});
 				}
 			});
 
 			return true;
 		}
 	}
+
+	document.addEventListener('click', function(e) {
+		if (e.target.closest('form')) {
+			console.log( CustomFile.files(e.target.closest('form')) );
+		}
+	});
 
 });
 
