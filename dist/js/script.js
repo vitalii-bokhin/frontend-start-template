@@ -1144,12 +1144,13 @@ var Popup, MediaPopup;
 	}
 
 });*/
-var ValidateForm;
+var CustomSelect, CustomFile, NextFieldset, Form;
 
 (function() {
 	"use strict";
 
-	ValidateForm = {
+	//validate form
+	var ValidateForm = {
 		input: null,
 
 		errorTip: function(err, errInd, errorTxt) {
@@ -1635,11 +1636,13 @@ var ValidateForm;
 
 			}
 
-			return (err) ? false : true;
-		},
+			if (err) {
+				form.classList.add('form-error');
+			} else {
+				form.classList.remove('form-error');
+			}
 
-		submit: function(form) {
-			return this.validate(form);
+			return (err) ? false : true;
 		},
 
 		init: function(form) {
@@ -1658,25 +1661,8 @@ var ValidateForm;
 					this[inpType](e);
 				}
 			});
-
-			form.addEventListener('submit', (e) => {
-				if (this.validate(form)) {
-					form.classList.remove('form-error');
-				} else {
-					e.preventDefault();
-
-					form.classList.add('form-error');
-				}
-			});
 		}
-
 	};
-
-}());
-var CustomPlaceholder, CustomSelect, CustomFile;
-
-(function() {
-	"use strict";
 
 	//show element on checkbox change
 	var ChangeCheckbox = {
@@ -1758,7 +1744,7 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 	};
 
 	//form custom placeholder
-	CustomPlaceholder = {
+	var CustomPlaceholder = {
 		init: function(elementsStr) {
 			var elements = document.querySelectorAll(elementsStr);
 
@@ -2432,21 +2418,6 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 		}
 	};
 
-	//init scripts
-	document.addEventListener("DOMContentLoaded", function() {
-		CustomSelect.init('select');
-		CustomFile.init();
-		varHeightTextarea.init();
-		CustomPlaceholder.init('input[type="text"], input[type="password"], textarea');
-		ChangeCheckbox.init();
-		ChangeRadio.init();
-	});
-}());
-var Form, NextFieldset;
-
-(function() {
-	"use strict";
-
 	//next fieldset
 	NextFieldset = {
 		next: function(elem) {
@@ -2487,7 +2458,7 @@ var Form, NextFieldset;
 			return;
 		}
 
-		this.form = form;
+		ValidateForm.init(form);
 
 		//clear form
 		function clear() {
@@ -2528,14 +2499,19 @@ var Form, NextFieldset;
 
 		//submit
 		form.addEventListener('submit', (e) => {
-			if (!this.onSubmit) {
+			if (!ValidateForm.validate(form)) {
+				e.preventDefault();
+				return;
+			}
+
+			if (this.onSubmit === null) {
 				return;
 			}
 
 			e.preventDefault();
 
-			//call external method onSubmit
-			var sending = this.onSubmit(form, function(obj) {
+			//call onSubmit
+			this.onSubmit(form, function(obj) {
 				obj = obj || {};
 
 				actSubmitBtn(obj.unlockSubmitButton);
@@ -2547,11 +2523,9 @@ var Form, NextFieldset;
 				}
 			});
 
-			if (sending) {
-				actSubmitBtn(false);
+			actSubmitBtn(false);
 
-				form.classList.add('form_sending');
-			}
+			form.classList.add('form_sending');
 		});
 	}
 
@@ -2588,6 +2562,12 @@ var Form, NextFieldset;
 	document.addEventListener("DOMContentLoaded", function() {
 		BindLabels('input[type="text"], input[type="checkbox"], input[type="radio"]');
 		//SetTabindex('input[type="text"], input[type="password"], textarea');
+		CustomSelect.init('select');
+		CustomFile.init();
+		varHeightTextarea.init();
+		CustomPlaceholder.init('input[type="text"], input[type="password"], textarea');
+		ChangeCheckbox.init();
+		ChangeRadio.init();
 	});
 }());
 /*

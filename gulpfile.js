@@ -23,8 +23,6 @@ var modulesOn = [
 'cover-image',
 'video',
 'popup',
-'validateform',
-'customform',
 'form',
 'accord',
 'more',

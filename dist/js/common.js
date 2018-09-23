@@ -188,90 +188,65 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	NextFieldset.init(form.form, '.form__button');
 
-	ValidateForm.init(form.form);
-
 	form.onSubmit = function(form, callback) {
-		return false;
+		
 	}
 	
-
 	//submit ajaxForm
 	var ajaxForm = new Form('#form-ajax');
 
-	ValidateForm.init(ajaxForm.form);
-
 	ajaxForm.onSubmit = function(form, callback) {
-		if (ValidateForm.submit(form)) {
+		ajax({
+			url: form.action,
+			send: new FormData(form),
+			success: function(response) {
+				var response = JSON.parse(response);
 
-			ajax({
-				url: form.action,
-				send: new FormData(form),
-				success: function(response) {
-					var response = JSON.parse(response);
+				if (response.status == 'sent') {
+					Popup.message('#message-popup', 'Форма отправлена');
 
-					if (response.status == 'sent') {
-						Popup.message('#message-popup', 'Форма отправлена');
-
-						callback({clearForm: true, unlockSubmitButton: true});
-					} else {
-						console.log(response);
-					}
+					callback({clearForm: true, unlockSubmitButton: true});
+				} else {
+					console.log(response);
 				}
-			});
-
-			return true;
-		}
+			},
+			error: function(response) {
+				console.log(response);
+			}
+		});
 	}
 
 
 	//submit noAjaxForm
 	var noAjaxForm = new Form('#form-no-ajax');
 
-	ValidateForm.init(noAjaxForm.form);
-
-
 	//submit searchForm
 	var searchForm = new Form('#search-form');
-
-	ValidateForm.init(searchForm.form);
 
 	//custom form
 	var custForm = new Form('#custom-form');
 
-	ValidateForm.init(custForm.form);
-
-	custForm.onSubmit = function(form, callback) {
-
-		console.log(CustomFile.files(form));
-		
-	}
-
 	//custom form 2
 	var custForm2 = new Form('#custom-form-2');
-
-	ValidateForm.init(custForm2.form);
 
 	custForm2.onSubmit = function(form, callback) {
 		var files = CustomFile.files(form);
 
-		if (ValidateForm.submit(form)) {
+		console.log(files);
 
-			ajax({
-				url: form.action,
-				send: new FormData(form),
-				success: function(response) {
-					console.log(response);
+		ajax({
+			url: form.action,
+			send: new FormData(form),
+			success: function(response) {
+				console.log(response);
 
-					callback({clearForm: true, unlockSubmitButton: true});
-				},
-				error: function(response) {
-					console.log(response);
-					callback({unlockSubmitButton: true});
-				}
-			});
-
-			return true;
-		}
+				callback({clearForm: true, unlockSubmitButton: true});
+			},
+			error: function(response) {
+				console.log(response);
+				callback({unlockSubmitButton: true});
+			}
+		});
 	}
 
 	document.addEventListener('click', function(e) {
