@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	custForm.onSubmit = function(form, callback) {
 
-		console.log(CustomFile.files);
+		console.log(CustomFile.files(form));
 		
 	}
 

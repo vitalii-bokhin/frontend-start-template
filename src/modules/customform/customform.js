@@ -634,12 +634,6 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 		},
 
 		changeInput: function(elem) {
-			var maxFiles = +elem.getAttribute('data-max-files');
-
-			if (maxFiles && elem.files.length > maxFiles) {
-				return;
-			}
-
 			var fileItems = elem.closest('.custom-file').querySelector('.custom-file__items');
 
 			fileItems.innerHTML = '';

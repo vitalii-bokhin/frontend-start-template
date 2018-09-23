@@ -6,112 +6,147 @@ var ValidateForm;
 	ValidateForm = {
 		input: null,
 
-		validType: {
-			def: function() {
-				var err = false;
+		errorTip: function(err, errInd, errorTxt) {
+			var field = this.input.closest('.form__field') || this.input.parentElement,
+			errTip = field.querySelector('.field-error-tip');
 
-				if (!/^[0-9a-zа-яё_,.:-\s]*$/i.test(this.input.value)) {
-					this.errorTip(true, 2);
-					err = true;
-				} else {
-					this.errorTip(false);
+			if (err) {
+				field.classList.remove('field-success');
+				field.classList.add('field-error');
+
+				if (!errTip) {
+					return;
 				}
 
-				return err;
-			},
-
-			name: function() {
-				var err = false;
-
-				if (!/^[a-zа-яё'-]{3,21}(\s[a-zа-яё'-]{3,21})?(\s[a-zа-яё'-]{3,21})?$/i.test(this.input.value)) {
-					this.errorTip(true, 2);
-					err = true;
-				} else {
-					this.errorTip(false);
-				}
-
-				return err;
-			},
-
-			date: function() {
-				var err = false, 
-				errDate = false, 
-				matches = this.input.value.match(/^(\d{2}).(\d{2}).(\d{4})$/);
-
-				if (!matches) {
-					errDate = 1;
-				} else {
-					var compDate = new Date(matches[3], (matches[2] - 1), matches[1]),
-					curDate = new Date();
-
-					if (this.input.hasAttribute('data-min-years-passed')) {
-						var interval = curDate.valueOf() - new Date(curDate.getFullYear() - (+this.input.getAttribute('data-min-years-passed')), curDate.getMonth(), curDate.getDate()).valueOf();
-
-						if (curDate.valueOf() < compDate.valueOf() || (curDate.getFullYear() - matches[3]) > 100) {
-							errDate = 1;
-						} else if ((curDate.valueOf() - compDate.valueOf()) < interval) {
-							errDate = 2;
-						}
+				if (errInd) {
+					if (!errTip.hasAttribute('data-error-text')) {
+						errTip.setAttribute('data-error-text', errTip.innerHTML);
 					}
-
-					if (compDate.getFullYear() != matches[3] || compDate.getMonth() != (matches[2] - 1) || compDate.getDate() != matches[1]) {
-						errDate = 1;
-					}
+					errTip.innerHTML = (errInd != 'custom') ? errTip.getAttribute('data-error-text-'+ errInd) : errorTxt;
+				} else if (errTip.hasAttribute('data-error-text')) {
+					errTip.innerHTML = errTip.getAttribute('data-error-text');
 				}
-
-				if (errDate == 1) {
-					this.errorTip(true, 2);
-					err = true;
-				} else if (errDate == 2) {
-					this.errorTip(true, 3);
-					err = true;
-				} else {
-					this.errorTip(false);
-				}
-
-				return err;
-			},
-
-			email: function() {
-				var err = false;
-
-				if (!/^[a-z0-9]+[\w\-\.]*@[\w\-]{2,}\.[a-z]{2,6}$/i.test(this.input.value)) {
-					this.errorTip(true, 2);
-					err = true;
-				} else {
-					this.errorTip(false);
-				}
-
-				return err;
-			},
-
-			tel: function() {
-				var err = false;
-
-				if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
-					this.errorTip(true, 2);
-					err = true;
-				} else {
-					this.errorTip(false);
-				}
-
-				return err;
-			},
-
-			pass: function() {
-				var err = false,
-				minLng = this.input.getAttribute('data-min-length');
-
-				if (minLng && this.input.value.length < minLng) {
-					this.errorTip(true, 2);
-					err = true;
-				} else {
-					this.errorTip(false);
-				}
-
-				return err;
+			} else {
+				field.classList.remove('field-error');
+				field.classList.add('field-success');
 			}
 		},
+
+		customErrorTip: function(input, errorTxt) {
+			if (!input) {
+				return;
+			}
+
+			this.input = input;
+
+			this.errorTip(true, 'custom', errorTxt);
+		},
+
+		def: function() {
+			var err = false;
+
+			if (!/^[0-9a-zа-яё_,.:-\s]*$/i.test(this.input.value)) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+
+		name: function() {
+			var err = false;
+
+			if (!/^[a-zа-яё'-]{3,21}(\s[a-zа-яё'-]{3,21})?(\s[a-zа-яё'-]{3,21})?$/i.test(this.input.value)) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+
+		date: function() {
+			var err = false, 
+			errDate = false, 
+			matches = this.input.value.match(/^(\d{2}).(\d{2}).(\d{4})$/);
+
+			if (!matches) {
+				errDate = 1;
+			} else {
+				var compDate = new Date(matches[3], (matches[2] - 1), matches[1]),
+				curDate = new Date();
+
+				if (this.input.hasAttribute('data-min-years-passed')) {
+					var interval = curDate.valueOf() - new Date(curDate.getFullYear() - (+this.input.getAttribute('data-min-years-passed')), curDate.getMonth(), curDate.getDate()).valueOf();
+
+					if (curDate.valueOf() < compDate.valueOf() || (curDate.getFullYear() - matches[3]) > 100) {
+						errDate = 1;
+					} else if ((curDate.valueOf() - compDate.valueOf()) < interval) {
+						errDate = 2;
+					}
+				}
+
+				if (compDate.getFullYear() != matches[3] || compDate.getMonth() != (matches[2] - 1) || compDate.getDate() != matches[1]) {
+					errDate = 1;
+				}
+			}
+
+			if (errDate == 1) {
+				this.errorTip(true, 2);
+				err = true;
+			} else if (errDate == 2) {
+				this.errorTip(true, 3);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+
+		email: function() {
+			var err = false;
+
+			if (!/^[a-z0-9]+[\w\-\.]*@[\w\-]{2,}\.[a-z]{2,6}$/i.test(this.input.value)) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+
+		tel: function() {
+			var err = false;
+
+			if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+
+		pass: function() {
+			var err = false,
+			minLng = this.input.getAttribute('data-min-length');
+
+			if (minLng && this.input.value.length < minLng) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+		
 
 		checkbox: function(e) {
 			var elem = e.target.closest('input[type="checkbox"]');
@@ -238,42 +273,6 @@ var ValidateForm;
 			return err;
 		},
 
-		errorTip: function(err, errInd, errorTxt) {
-			var field = this.input.closest('.form__field') || this.input.parentElement,
-			errTip = field.querySelector('.field-error-tip');
-
-			if (err) {
-				field.classList.remove('field-success');
-				field.classList.add('field-error');
-
-				if (!errTip) {
-					return;
-				}
-
-				if (errInd) {
-					if (!errTip.hasAttribute('data-error-text')) {
-						errTip.setAttribute('data-error-text', errTip.innerHTML);
-					}
-					errTip.innerHTML = (errInd != 'custom') ? errTip.getAttribute('data-error-text-'+ errInd) : errorTxt;
-				} else if (errTip.hasAttribute('data-error-text')) {
-					errTip.innerHTML = errTip.getAttribute('data-error-text');
-				}
-			} else {
-				field.classList.remove('field-error');
-				field.classList.add('field-success');
-			}
-		},
-
-		customErrorTip: function(input, errorTxt) {
-			if (!input) {
-				return;
-			}
-
-			this.input = input;
-
-			this.errorTip(true, 'custom', errorTxt);
-		},
-
 		validateOnInput: function(e) {
 			var elem = e.target.closest('input[type="text"], input[type="password"], textarea');
 
@@ -283,16 +282,17 @@ var ValidateForm;
 
 			this.input = elem;
 
-			var dataType = elem.getAttribute('data-type'),
-			val = elem.value;
+			var dataType = elem.getAttribute('data-type');
 
-			if (elem.getAttribute('data-required') && !val.length) {
+			if (elem.getAttribute('data-required') && !elem.value.length) {
 				this.errorTip(true);
-			} else if (val.length) {
+			} else if (elem.value.length) {
 				if (dataType) {
-					this.validType[dataType]();
+					this[dataType]();
 				} else if (elem.type != 'password') {
-					this.validType.def();
+					this.def();
+				} else {
+					this.errorTip(false);
 				}
 			} else {
 				this.errorTip(false);
@@ -323,10 +323,14 @@ var ValidateForm;
 					this.errorTip(true);
 					err++;
 				} else if (elem.value.length) {
-					if (dataType && this.validType[dataType]()) {
-						err++;
-					} else if (!dataType && elem.type != 'password' && this.validType.def()) {
-						err++;
+					if (dataType) {
+						if (this[dataType]()) {
+							err++;
+						}
+					} else if (elem.type != 'password') {
+						if (this.def()) {
+							err++;
+						}
 					} else {
 						this.errorTip(false);
 					}
