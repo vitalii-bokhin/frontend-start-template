@@ -2836,7 +2836,7 @@ Bubble.init({
 
 		hide: function() {
 			this.bubbleDiv.classList.remove('bubble_visible');
-			this.bubbleDiv.style = '';
+			this.bubbleDiv.removeAttribute('style');
 			this.bubbleDiv.innerHTML = '';
 
 			if (this.bubbleClass) {
