@@ -244,7 +244,7 @@
 				} else if (closeElem) {
 					e.preventDefault();
 					this.close();
-				} else if (menuLinkElem || !e.target.closest('#'+ options.navId)) {
+				} else if (menuLinkElem || (!e.target.closest('#'+ options.navId) && document.getElementById(options.navId).classList.contains('opened'))) {
 					this.close();
 				}
 			});
@@ -2802,6 +2802,7 @@ Bubble.init({
 	Bubble = {
 		bubbleDiv: null,
 		bubbleClass: null,
+		canBeHidden: true,
 
 		show: function(elem) {
 			this.bubbleDiv.innerHTML = elem.getAttribute('data-bubble');
@@ -2851,13 +2852,19 @@ Bubble.init({
 
 				if (elem) {
 					this.show(elem);
+				} else if (e.target.closest('.bubble')) {
+					this.canBeHidden = false;
 				}
 			});
 
 			document.addEventListener('mouseout', (e) => {
-				if (e.target.closest(opt.element)) {
-					this.hide();
-				}
+				setTimeout(() => {
+					if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.bubble')) {
+						this.hide();
+
+						this.canBeHidden = true;
+					}
+				}, 21);
 			});
 
 			//add bubble to DOM

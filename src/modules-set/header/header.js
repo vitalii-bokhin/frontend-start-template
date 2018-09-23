@@ -80,7 +80,7 @@
 				} else if (closeElem) {
 					e.preventDefault();
 					this.close();
-				} else if (menuLinkElem || !e.target.closest('#'+ options.navId)) {
+				} else if (menuLinkElem || (!e.target.closest('#'+ options.navId) && document.getElementById(options.navId).classList.contains('opened'))) {
 					this.close();
 				}
 			});
