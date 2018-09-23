@@ -4,6 +4,10 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 	(function initFun() {
+		if (window.innerWidth < 1200) {
+			document.querySelector('.first-screen').style.height = window.innerHeight +'px';
+		}
+		
 		FlexImg('.flex-img');
 
 		CoverImg.reInit('body');
@@ -239,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	ValidateForm.init(custForm2.form);
 
 	custForm2.onSubmit = function(form, callback) {
-		console.log(CustomFile.files(form));
+		var files = CustomFile.files(form);
 
 		if (ValidateForm.submit(form)) {
 
@@ -263,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	document.addEventListener('click', function(e) {
 		if (e.target.closest('form')) {
-			console.log( CustomFile.files(e.target.closest('form')) );
+			//console.log( CustomFile.files(e.target.closest('form')) );
 		}
 	});
 

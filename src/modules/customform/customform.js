@@ -609,7 +609,6 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 	//custom file
 	CustomFile = {
 		input: null,
-		formFilesObj: {},
 		filesObj: {},
 		filesArrayObj: {},
 
@@ -663,12 +662,7 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 		},
 
 		setFilesObj: function(filesList, objKey) {
-			var formElem = this.input.closest('form'),
-			inputElem = this.input;
-
-			if (!formElem.id.length) {
-				formElem.id = 'custom-form-'+ new Date().valueOf();
-			}
+			var inputElem = this.input;
 
 			if (!inputElem.id.length) {
 				inputElem.id = 'custom-file-input-'+ new Date().valueOf();
@@ -690,8 +684,11 @@ var CustomPlaceholder, CustomSelect, CustomFile;
 				this.filesArrayObj[inputElem.id].push(this.filesObj[inputElem.id][key]);
 			}
 
-			/*
-			ValidateForm.file(false, this.input);*/
+			ValidateForm.file(inputElem, this.filesArrayObj[inputElem.id]);
+		},
+
+		inputFiles: function(inputElem) {
+			return this.filesArrayObj[inputElem.id] || [];
 		},
 
 		files: function(formElem) {

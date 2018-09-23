@@ -288,8 +288,8 @@ select{
 			z-index: 2;
 		}
 		img{
-			@extend %r-img;
-			margin: 0 auto;
+			width: 100%;
+			height: auto;
 		}
 		&:after{
 			@extend %ab;

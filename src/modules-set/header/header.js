@@ -71,7 +71,8 @@
 
 			document.addEventListener('click', (e) => {
 				var openElem = e.target.closest(options.openBtn),
-				closeElem = e.target.closest(options.closeBtn);
+				closeElem = e.target.closest(options.closeBtn),
+				menuLinkElem = e.target.closest('#'+ options.navId +' a');
 
 				if (openElem) {
 					e.preventDefault();
@@ -79,9 +80,7 @@
 				} else if (closeElem) {
 					e.preventDefault();
 					this.close();
-				}
-
-				if (!openElem && !e.target.closest('#'+ options.navId)) {
+				} else if (menuLinkElem || !e.target.closest('#'+ options.navId)) {
 					this.close();
 				}
 			});
