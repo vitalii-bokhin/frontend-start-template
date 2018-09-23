@@ -2847,7 +2847,7 @@ Bubble.init({
 		},
 
 		init: function(opt) {
-			document.addEventListener('mouseover', (e) => {
+			var mouseOver = (e) => {
 				var elem = e.target.closest(opt.element);
 
 				if (elem) {
@@ -2855,9 +2855,9 @@ Bubble.init({
 				} else if (e.target.closest('.bubble')) {
 					this.canBeHidden = false;
 				}
-			});
+			}
 
-			document.addEventListener('mouseout', (e) => {
+			var mouseOut = (e) => {
 				setTimeout(() => {
 					if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.bubble')) {
 						this.hide();
@@ -2865,7 +2865,15 @@ Bubble.init({
 						this.canBeHidden = true;
 					}
 				}, 21);
-			});
+			}
+
+			if (document.ontouchstart !== undefined) {
+				document.addEventListener('touchstart', mouseOver);
+				document.addEventListener('touchend', mouseOut);
+			} else {
+				document.addEventListener('mouseover', mouseOver);
+				document.addEventListener('mouseout', mouseOut);
+			}
 
 			//add bubble to DOM
 			this.bubbleDiv = document.createElement('div');
