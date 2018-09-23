@@ -5,14 +5,15 @@
 
 .bubble{
 	position: absolute;
-	z-index: 5;
-	background: $rd;
+	z-index: 8;
+	background: $be;
 	padding: 15px;
-	width: 378px;
+	width: 0;
+	max-width: 378px;
 	margin-top: -10px;
 	border-radius: 2px !important;
 	color: #fff;
-	line-height: (17/13);
+	line-height: 1.2;
 	visibility: hidden;
 	opacity: 0;
 	transition: opacity .5s;
@@ -21,7 +22,7 @@
 		width: 0;
 		height: 0;
 		border: 10px solid transparent;
-		border-left: 10px solid $rd;
+		border-left: 10px solid $be;
 		position: absolute;
 		bottom: -9px;
 		left: 5px;
@@ -30,5 +31,14 @@
 		display: block;
 		visibility: visible;
 		opacity: 1;
+	}
+	&_rd{
+		background: $rd;
+		&:after{
+			border-left-color: $rd;
+		}
+	}
+	@media(max-width: 750px){
+		font-size: 13px;
 	}
 }

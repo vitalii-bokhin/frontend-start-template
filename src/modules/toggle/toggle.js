@@ -14,6 +14,7 @@ Toggle.role = function() {
 	};
 }
 */
+
 ; var Toggle;
 
 (function() {
