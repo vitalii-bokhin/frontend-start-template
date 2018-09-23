@@ -29,6 +29,7 @@ var modulesOn = [
 'accord',
 'more',
 'tab',
+'bubble',
 'anchor',
 'diagram',
 'numberspin',

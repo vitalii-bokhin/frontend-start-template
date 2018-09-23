@@ -48,18 +48,3 @@
 		border-bottom-color: transparent;
 	}
 }
-
-/*bubble*/
-.bubble{
-	display: block;
-	position: absolute;
-	background: #FFF;
-	box-shadow: 2px 1px 21px rgba(0,0,0,.21);
-	visibility: hidden;
-	opacity: 0;
-	transition: opacity .5s;
-	&.toggled{
-		visibility: visible;
-		opacity: 1;
-	}
-}

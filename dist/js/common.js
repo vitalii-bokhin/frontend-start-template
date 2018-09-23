@@ -5,7 +5,11 @@
 document.addEventListener('DOMContentLoaded', function() {
 	(function initFun() {
 		if (window.innerWidth < 1200) {
-			document.querySelector('.first-screen').style.height = window.innerHeight +'px';
+			var fsElem = document.querySelector('.first-screen');
+
+			if (fsElem) {
+				fsElem.style.height = window.innerHeight +'px';
+			}
 		}
 		
 		FlexImg('.flex-img');
@@ -37,6 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		openBtn: '.js-open-menu',
 		closeBtn: '.js-close-menu',
 		navId: 'header-mob-menu'
+	});
+
+	//bubble
+	Bubble.init({
+		element: '.js-bubble'
 	});
 
 	//accord

@@ -1,0 +1,34 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.bubble{
+	position: absolute;
+	z-index: 5;
+	background: $rd;
+	padding: 15px;
+	width: 378px;
+	margin-top: -10px;
+	border-radius: 2px !important;
+	color: #fff;
+	line-height: (17/13);
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity .5s;
+	&:after{
+		@extend %ab;
+		width: 0;
+		height: 0;
+		border: 10px solid transparent;
+		border-left: 10px solid $rd;
+		position: absolute;
+		bottom: -9px;
+		left: 5px;
+	}
+	&_visible{
+		display: block;
+		visibility: visible;
+		opacity: 1;
+	}
+}
