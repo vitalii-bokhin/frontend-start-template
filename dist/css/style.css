@@ -2152,6 +2152,8 @@ select {
 
 .bubble {
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 8;
   background: #0000ff;
   padding: 15px;
