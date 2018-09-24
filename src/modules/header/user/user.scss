@@ -1,14 +1,14 @@
-@import "../../sass/variables";
-@import "../../sass/functions";
-@import "../../sass/extends";
-@import "../../sass/mixins";
+@import "../../../sass/variables";
+@import "../../../sass/functions";
+@import "../../../sass/extends";
+@import "../../../sass/mixins";
 
 /*User*/
 .user{
 	height: 34px;
 	position: relative;
 	float: right;
-	
+	margin-left: 50px;
 	&__thumb{
 		display: inline-block;
 		width: 34px;
@@ -22,7 +22,7 @@
 		font-size: 14px;
 		display: inline-block;
 		vertical-align: middle;
-		margin-right: 21px;
+		margin-right: 10px;
 		text-align: right;
 	}
 

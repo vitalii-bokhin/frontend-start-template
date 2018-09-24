@@ -248,13 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 	}
-
-	document.addEventListener('click', function(e) {
-		if (e.target.closest('form')) {
-			//console.log( CustomFile.files(e.target.closest('form')) );
-		}
-	});
-
 });
 
 //GetCountriesAndCitiesList

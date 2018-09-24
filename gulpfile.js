@@ -15,14 +15,18 @@ svgSprite = require('gulp-svg-sprite');
 //modules
 var modulesOn = [
 'header',
-'menu',
+'header/user',
+'header/menu',
 'fsscroll',
-'user',
 'toggle',
 'flex-image',
 'cover-image',
 'video',
 'popup',
+'form/checkbox',
+'form/radio',
+'form/select',
+'form/file',
 'form',
 'accord',
 'more',
@@ -61,7 +65,7 @@ jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*
 //DEV MODE
 //copy module folders
 gulp.task('copy_modules', function() {
-	return gulp.src(['src/modules/*/*'], {base: 'src/modules/'})
+	return gulp.src(['src/modules/**/*'], {base: 'src/modules/'})
 	.pipe(gulp.dest('src/modules-set/'));
 });
 
@@ -70,7 +74,7 @@ gulp.task('clean_modules_folder', ['copy_modules'], function() {
 });
 
 gulp.task('include_modules', ['clean_modules_folder'], function() {
-	return gulp.src(modulesOn.map((m) => 'src/modules-set/'+ m +'/*'), {base: 'src/modules-set/'})
+	return gulp.src(modulesOn.map((m) => 'src/modules-set/'+ m +'/*.*'), {base: 'src/modules-set/'})
 	.pipe(gulp.dest('src/modules/'))
 	.pipe(notify('Module included!'));
 });

@@ -1,1 +1,1 @@
-<?php echo $_POST['data']; ?>
+<?php echo $_FILES['file']; ?>

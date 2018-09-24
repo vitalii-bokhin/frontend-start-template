@@ -1,0 +1,143 @@
+@import "../../../sass/variables";
+@import "../../../sass/functions";
+@import "../../../sass/extends";
+@import "../../../sass/mixins";
+
+.custom-select{
+	position: relative;
+	&__button{
+		display: inline-block;
+		width: 100%;
+		min-height: 40px;
+		padding: 10px 35px 10px 15px;
+		border: 1px solid $gy;
+		position: relative;
+		z-index: 3;
+		font-weight: 300;
+		text-align: left;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		background: none;
+		-webkit-appearance: none;
+		transition: .5s;
+		&:hover,
+		&:focus{
+			box-shadow: 2px 1px 21px rgba(0,0,0,.21);
+		}
+		&:focus{
+			border-color: $bk;
+		}
+		.custom-select_changed &{
+			font-weight: 400;
+		}
+		&:after{
+			@extend %ab;
+			width: 0;
+			height: 0;
+			border: 4px solid transparent;
+			border-top: 6px solid $rd;
+			position: absolute;
+			right: 13px;
+			top: 50%;
+			margin-top: -2px;
+		}
+		.field-error &{
+			border: 1px solid $rd;
+			color: $rd;
+		}
+	}
+	&__arr{
+		display: block;
+		width: 40px;
+		height: 40px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 3;
+		&:after{
+			@extend %ab;
+			width: 0;
+			height: 0;
+			border: 4px solid transparent;
+			border-top: 6px solid $rd;
+			position: absolute;
+			right: 13px;
+			top: 50%;
+			margin-top: -2px;
+		}
+		& ~ .custom-select__input{
+			padding-right: 40px;
+		}
+	}
+	&__options{
+		list-style: none;
+		position: absolute;
+		left: 0;
+		top: 100%;
+		width: 100%;
+		max-height: 222px;
+		overflow: auto;
+		z-index: 5;
+		border: 1px solid #c3c3c3;
+		border-top: none;
+		background: #F0F1F2;
+		visibility: hidden;
+		opacity: 0;
+		transition: .5s;
+		li{
+			border-top: 1px solid #c3c3c3;
+			&.hidden{
+				display: none;
+			}
+			&:first-child{
+				border: none;
+			}
+			&.hover{
+				.custom-select__val{
+					background: $gy;
+					color: #fff;
+				}
+				.custom-select__val_checked{
+					background: #c31d1d;
+				}
+			}
+		}
+	}
+	&__val{
+		display: block;
+		width: 100%;
+		padding: 10px 15px;
+		font-weight: 300;
+		text-decoration: none;
+		text-align: left;
+		border: none;
+		transition: .5s;
+		&:hover{
+			background: $gy;
+			color: #fff;
+		}
+		&_checked{
+			background: $rd;
+			color: #fff;
+			&:hover{
+				background: #c31d1d;
+			}
+		}
+	}
+	&_opened{
+		&:after{
+			border: 4px solid transparent;
+			border-bottom: 6px solid $rd;
+			margin-top: -7px;
+		}
+		.custom-select__options{
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+}
+
+select{
+	visibility: hidden;
+}
