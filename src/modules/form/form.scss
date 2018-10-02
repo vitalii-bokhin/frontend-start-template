@@ -175,29 +175,6 @@
 	}
 }
 
-/*custom placeholder*/
-.custom-placeholder{
-	display: block;
-	position: absolute;
-	left: 0;
-	top: 0;
-	z-index: 2;
-	max-width: 100%;
-	cursor: text;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	font-weight: 300;
-	padding: 10px 15px;
-	line-height: 1.3;
-	.form__textarea_var-h + &{
-		line-height: 1.3;
-	}
-	.form__field_error &{
-		color: $rd;
-	}
-}
-
 
 
 

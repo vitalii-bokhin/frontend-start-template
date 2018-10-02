@@ -286,6 +286,9 @@ $(document).ready(function(){
 	//$('.scroll-pane').jScrollPane();
 
 	//masked inputs
-	$('input[data-type="tel"]').mask('+7(999)999-99-99');
+	//$('input[data-type="tel"]').mask('+7(999)999-99-99');
+	$('input[data-type="tel"]').each(function() {
+		new Maskinput(this, 'tel');
+	});
 	//$('input[data-type="date"]').mask('99.99.9999');
 });

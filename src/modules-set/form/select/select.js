@@ -147,7 +147,7 @@ var CustomSelect;
 				
 				this.close();
 
-				CustomPlaceholder.hidePlaceholder(input, true);
+				Placeholder.hidePlaceholder(input, true);
 			}
 
 			this.targetAction();
@@ -331,7 +331,7 @@ var CustomSelect;
 				head;
 
 				if (elem.getAttribute('data-type') == 'autocomplete') {
-					head = '<label class="custom-select__arr"></label><input type="text" name="'+ elem.name +'"'+ require + ((placeholder) ? ' placeholder="'+ placeholder +'" ' : '') +'class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">';
+					head = '<button type="button" class="custom-select__arr"></button><input type="text" name="'+ elem.name +'"'+ require + ((placeholder) ? ' placeholder="'+ placeholder +'" ' : '') +'class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">';
 				} else {
 					head = '<button type="button"'+ ((placeholder) ? ' data-placeholder="'+ placeholder +'"' : '') +' class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') +'</button>';
 				}
@@ -354,36 +354,33 @@ var CustomSelect;
 		init: function(elementStr) {
 			this.build(elementStr);
 
-			//click on select button event
+			//click on select or value or arrow button
 			document.addEventListener('click', (e) => {
-				var elem = e.target.closest('.custom-select__button');
+				var btnElem = e.target.closest('.custom-select__button'),
+				valElem = e.target.closest('.custom-select__val'),
+				arrElem = e.target.closest('.custom-select__arr');
 
-				if (!elem) {
-					return;
+				if (btnElem) {
+					this.field = btnElem.closest('.custom-select');
+
+					if (this.field.classList.contains('custom-select_opened')) {
+						this.close();
+					} else {
+						this.close();
+
+						this.open();
+					}
+				} else if (valElem) {
+					this.field = valElem.closest('.custom-select');
+
+					this.selectVal(valElem);
+				} else if (arrElem) {
+					if (!arrElem.closest('.custom-select_opened')) {
+						arrElem.closest('.custom-select').querySelector('.custom-select__autocomplete').focus();
+					} else {
+						this.close();
+					}
 				}
-
-				this.field = elem.closest('.custom-select');
-
-				if (this.field.classList.contains('custom-select_opened')) {
-					this.close();
-				} else {
-					this.close();
-
-					this.open();
-				}
-			});
-
-			//click on value button event
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest('.custom-select__val');
-
-				if (!elem) {
-					return;
-				}
-
-				this.field = elem.closest('.custom-select');
-
-				this.selectVal(elem);
 			});
 
 			//focus autocomplete

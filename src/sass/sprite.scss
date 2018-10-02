@@ -1,7 +1,7 @@
 @import "sprite-extends";
 @import "mixins";
 
-.accord__button{
+.accord__button:after{
 	@extend %svg-arrow-alt-circle-down;
 	@include bgs(512);
 }

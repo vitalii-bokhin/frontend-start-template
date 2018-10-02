@@ -27,6 +27,8 @@ var modulesOn = [
 'form/radio',
 'form/select',
 'form/file',
+'form/placeholder',
+'form/maskinput',
 'form',
 'accord',
 'more',

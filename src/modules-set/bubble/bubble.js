@@ -57,29 +57,47 @@ Bubble.init({
 		},
 
 		init: function(opt) {
-			var mouseOver = (e) => {
-				var elem = e.target.closest(opt.element);
+			var mouseOver, mouseOut;
 
-				if (elem) {
-					this.show(elem);
-				} else if (e.target.closest('.bubble')) {
-					this.canBeHidden = false;
-				}
-			}
-
-			var mouseOut = (e) => {
+			mouseOut = (e) => {
 				setTimeout(() => {
-					if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.bubble')) {
+					if (document.ontouchstart !== undefined) {
 						this.hide();
 
-						this.canBeHidden = true;
+						document.removeEventListener('touchstart', mouseOut);
+					} else {
+						if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.bubble')) {
+							this.hide();
+
+							this.canBeHidden = true;
+						}
 					}
 				}, 21);
 			}
 
+			mouseOver = (e) => {
+				var elem = e.target.closest(opt.element);
+				
+				if (!elem) {
+					return;
+				}
+
+				if (document.ontouchstart !== undefined) {
+					
+					this.show(elem);
+
+					document.addEventListener('touchstart', mouseOut);
+				} else {
+					if (elem) {
+						this.show(elem);
+					} else if (e.target.closest('.bubble')) {
+						this.canBeHidden = false;
+					}
+				}
+			}
+
 			if (document.ontouchstart !== undefined) {
-				document.addEventListener('touchstart', mouseOver);
-				document.addEventListener('touchend', mouseOut);
+				document.addEventListener('click', mouseOver);
 			} else {
 				document.addEventListener('mouseover', mouseOver);
 				document.addEventListener('mouseout', mouseOut);

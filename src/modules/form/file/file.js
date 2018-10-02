@@ -113,17 +113,22 @@ var CustomFile;
 			});
 
 			document.addEventListener('click', (e) => {
-				var elem = e.target.closest('.custom-file__del-btn');
+				var delBtnElem = e.target.closest('.custom-file__del-btn'),
+				inputElem = e.target.closest('input[type="file"]');
 
-				if (!elem) {
+				if (inputElem) {
+					inputElem.value = null;
+				}
+
+				if (!delBtnElem) {
 					return;
 				}
 
-				this.input = elem.closest('.custom-file').querySelector('.custom-file__input');
+				this.input = delBtnElem.closest('.custom-file').querySelector('.custom-file__input');
 
-				elem.closest('.custom-file__items').removeChild(elem.closest('.custom-file__item'));
+				delBtnElem.closest('.custom-file__items').removeChild(delBtnElem.closest('.custom-file__item'));
 
-				this.setFilesObj(false, elem.getAttribute('data-ind'));
+				this.setFilesObj(false, delBtnElem.getAttribute('data-ind'));
 			});
 		}
 	};

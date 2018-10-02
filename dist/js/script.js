@@ -1388,7 +1388,7 @@ var CustomSelect;
 				
 				this.close();
 
-				CustomPlaceholder.hidePlaceholder(input, true);
+				Placeholder.hidePlaceholder(input, true);
 			}
 
 			this.targetAction();
@@ -1572,7 +1572,7 @@ var CustomSelect;
 				head;
 
 				if (elem.getAttribute('data-type') == 'autocomplete') {
-					head = '<label class="custom-select__arr"></label><input type="text" name="'+ elem.name +'"'+ require + ((placeholder) ? ' placeholder="'+ placeholder +'" ' : '') +'class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">';
+					head = '<button type="button" class="custom-select__arr"></button><input type="text" name="'+ elem.name +'"'+ require + ((placeholder) ? ' placeholder="'+ placeholder +'" ' : '') +'class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">';
 				} else {
 					head = '<button type="button"'+ ((placeholder) ? ' data-placeholder="'+ placeholder +'"' : '') +' class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') +'</button>';
 				}
@@ -1595,36 +1595,33 @@ var CustomSelect;
 		init: function(elementStr) {
 			this.build(elementStr);
 
-			//click on select button event
+			//click on select or value or arrow button
 			document.addEventListener('click', (e) => {
-				var elem = e.target.closest('.custom-select__button');
+				var btnElem = e.target.closest('.custom-select__button'),
+				valElem = e.target.closest('.custom-select__val'),
+				arrElem = e.target.closest('.custom-select__arr');
 
-				if (!elem) {
-					return;
+				if (btnElem) {
+					this.field = btnElem.closest('.custom-select');
+
+					if (this.field.classList.contains('custom-select_opened')) {
+						this.close();
+					} else {
+						this.close();
+
+						this.open();
+					}
+				} else if (valElem) {
+					this.field = valElem.closest('.custom-select');
+
+					this.selectVal(valElem);
+				} else if (arrElem) {
+					if (!arrElem.closest('.custom-select_opened')) {
+						arrElem.closest('.custom-select').querySelector('.custom-select__autocomplete').focus();
+					} else {
+						this.close();
+					}
 				}
-
-				this.field = elem.closest('.custom-select');
-
-				if (this.field.classList.contains('custom-select_opened')) {
-					this.close();
-				} else {
-					this.close();
-
-					this.open();
-				}
-			});
-
-			//click on value button event
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest('.custom-select__val');
-
-				if (!elem) {
-					return;
-				}
-
-				this.field = elem.closest('.custom-select');
-
-				this.selectVal(elem);
 			});
 
 			//focus autocomplete
@@ -1807,17 +1804,22 @@ var CustomFile;
 			});
 
 			document.addEventListener('click', (e) => {
-				var elem = e.target.closest('.custom-file__del-btn');
+				var delBtnElem = e.target.closest('.custom-file__del-btn'),
+				inputElem = e.target.closest('input[type="file"]');
 
-				if (!elem) {
+				if (inputElem) {
+					inputElem.value = null;
+				}
+
+				if (!delBtnElem) {
 					return;
 				}
 
-				this.input = elem.closest('.custom-file').querySelector('.custom-file__input');
+				this.input = delBtnElem.closest('.custom-file').querySelector('.custom-file__input');
 
-				elem.closest('.custom-file__items').removeChild(elem.closest('.custom-file__item'));
+				delBtnElem.closest('.custom-file__items').removeChild(delBtnElem.closest('.custom-file__item'));
 
-				this.setFilesObj(false, elem.getAttribute('data-ind'));
+				this.setFilesObj(false, delBtnElem.getAttribute('data-ind'));
 			});
 		}
 	};
@@ -1826,6 +1828,146 @@ var CustomFile;
 	document.addEventListener('DOMContentLoaded', function() {
 		CustomFile.init();
 	});
+}());
+var Placeholder;
+
+(function() {
+	"use strict";
+
+	Placeholder = {
+		init: function(elementsStr) {
+			var elements = document.querySelectorAll(elementsStr);
+
+			if (!elements.length) {
+				return;
+			}
+
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
+
+				if (elem.placeholder) {
+
+					var elemFor = (elem.id) ? elem.id : 'placeholder-index-'+ i,
+					label = document.createElement('label');
+
+					label.htmlFor = elemFor;
+					label.className = 'placeholder';
+					label.innerHTML = elem.placeholder;
+
+					elem.parentElement.insertBefore(label, elem);
+
+					elem.removeAttribute('placeholder');
+					
+					if (!elem.id) {
+						elem.id = elemFor;
+					}
+
+				}
+
+				if (elem.value.length) {
+					this.hidePlaceholder(elem, true);
+				}
+			}
+
+			//events
+			document.addEventListener('focus', (e) => {
+				var elem = e.target.closest(elementsStr);
+
+				if (elem) {
+					this.hidePlaceholder(elem, true);
+				}
+			}, true);
+
+			document.addEventListener('blur', (e) => {
+				var elem = e.target.closest(elementsStr);
+
+				if (elem) {
+					this.hidePlaceholder(elem, false);
+				}
+			}, true);
+		},
+		
+		hidePlaceholder: function(elem, hide) {
+			var label = document.querySelector('label.placeholder[for="'+ elem.id +'"]');
+
+			if (!label) {
+				return;
+			}
+
+			var lSt = label.style;
+
+			if (hide) {
+
+				lSt.textIndent = '-9999px';
+				lSt.paddingLeft = '0px';
+				lSt.paddingRight = '0px';
+
+			} else {
+
+				if (!elem.value.length) {
+					lSt.textIndent = '';
+					lSt.paddingLeft = '';
+					lSt.paddingRight = '';
+				}
+
+			}
+		}
+	};
+
+	//init scripts
+	document.addEventListener('DOMContentLoaded', function() {
+		Placeholder.init('input[type="text"], input[type="password"], textarea');
+	});
+}());
+var Maskinput;
+
+(function() {
+	"use strict";
+
+	Maskinput = function(inputElem, type) {
+		if (!inputElem) {
+			return;
+		}
+
+		var defValue = null,
+		inpValue = null;
+
+		this.tel = function() {
+			if (!/^[\+\(\)\d\-]{0,16}$/.test(inputElem.value)) {
+				inpValue = defValue;
+				console.log('input default');
+			} else {
+				inpValue = inputElem.value;
+				defValue = inputElem.value;
+			}
+
+
+			var rawValue = inpValue.replace(/(\+7|\D)+/g, ''),
+			replacedValue = rawValue.replace(/^(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/, function(str, p1, p2, p3, p4) {
+				var repl = '';
+
+				if (p4 != '') {
+					repl = '+7('+ p1 +')'+ p2 +'-'+ p3 +'-'+ p4;
+				} else if (p3 != '') {
+					repl = '+7('+ p1 +')'+ p2 +'-'+ p3;
+				} else if (p2 != '') {
+					repl = '+7('+ p1 +')'+ p2;
+				} else if (p1 != '') {
+					repl = '+7('+ p1;
+				}
+
+				return repl;
+			});
+
+			console.log(replacedValue, rawValue);
+			
+			inputElem.value = replacedValue;
+		}
+
+		inputElem.addEventListener('input', () => {
+			this[type]();
+		});
+	}
 }());
 var ValidateForm, NextFieldset, Form;
 
@@ -2351,89 +2493,6 @@ var ValidateForm, NextFieldset, Form;
 
 	
 
-	//form custom placeholder
-	var CustomPlaceholder = {
-		init: function(elementsStr) {
-			var elements = document.querySelectorAll(elementsStr);
-
-			if (!elements.length) {
-				return;
-			}
-
-			for (var i = 0; i < elements.length; i++) {
-				var elem = elements[i];
-
-				if (elem.placeholder) {
-
-					var elemFor = (elem.id) ? elem.id : 'placeholder-index-'+ i,
-					label = document.createElement('label');
-
-					label.htmlFor = elemFor;
-					label.className = 'custom-placeholder';
-					label.innerHTML = elem.placeholder;
-
-					elem.parentElement.insertBefore(label, elem);
-
-					elem.removeAttribute('placeholder');
-					
-					if (!elem.id) {
-						elem.id = elemFor;
-					}
-
-				}
-
-				if (elem.value.length) {
-					this.hidePlaceholder(elem, true);
-				}
-			}
-
-			//events
-			document.addEventListener('focus', (e) => {
-				var elem = e.target.closest(elementsStr);
-
-				if (elem) {
-					this.hidePlaceholder(elem, true);
-				}
-			}, true);
-
-			document.addEventListener('blur', (e) => {
-				var elem = e.target.closest(elementsStr);
-
-				if (elem) {
-					this.hidePlaceholder(elem, false);
-				}
-			}, true);
-		},
-		
-		hidePlaceholder: function(elem, hide) {
-			var label = document.querySelector('label.custom-placeholder[for="'+ elem.id +'"]');
-
-			if (!label) {
-				return;
-			}
-
-			var lSt = label.style;
-
-			if (hide) {
-
-				lSt.textIndent = '-9999px';
-				lSt.paddingLeft = '0px';
-				lSt.paddingRight = '0px';
-
-			} else {
-
-				if (!elem.value.length) {
-					lSt.textIndent = '';
-					lSt.paddingLeft = '';
-					lSt.paddingRight = '';
-				}
-
-			}
-		}
-	};
-
-	
-
 	//variable height textarea
 	var varHeightTextarea = {
 
@@ -2607,7 +2666,6 @@ var ValidateForm, NextFieldset, Form;
 		
 		
 		varHeightTextarea.init();
-		CustomPlaceholder.init('input[type="text"], input[type="password"], textarea');
 		
 	});
 }());
@@ -2866,29 +2924,47 @@ Bubble.init({
 		},
 
 		init: function(opt) {
-			var mouseOver = (e) => {
-				var elem = e.target.closest(opt.element);
+			var mouseOver, mouseOut;
 
-				if (elem) {
-					this.show(elem);
-				} else if (e.target.closest('.bubble')) {
-					this.canBeHidden = false;
-				}
-			}
-
-			var mouseOut = (e) => {
+			mouseOut = (e) => {
 				setTimeout(() => {
-					if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.bubble')) {
+					if (document.ontouchstart !== undefined) {
 						this.hide();
 
-						this.canBeHidden = true;
+						document.removeEventListener('touchstart', mouseOut);
+					} else {
+						if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.bubble')) {
+							this.hide();
+
+							this.canBeHidden = true;
+						}
 					}
 				}, 21);
 			}
 
+			mouseOver = (e) => {
+				var elem = e.target.closest(opt.element);
+				
+				if (!elem) {
+					return;
+				}
+
+				if (document.ontouchstart !== undefined) {
+					
+					this.show(elem);
+
+					document.addEventListener('touchstart', mouseOut);
+				} else {
+					if (elem) {
+						this.show(elem);
+					} else if (e.target.closest('.bubble')) {
+						this.canBeHidden = false;
+					}
+				}
+			}
+
 			if (document.ontouchstart !== undefined) {
-				document.addEventListener('touchstart', mouseOver);
-				document.addEventListener('touchend', mouseOut);
+				document.addEventListener('click', mouseOver);
 			} else {
 				document.addEventListener('mouseover', mouseOver);
 				document.addEventListener('mouseout', mouseOut);
