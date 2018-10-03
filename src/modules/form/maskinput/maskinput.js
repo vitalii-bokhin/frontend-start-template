@@ -8,22 +8,25 @@ var Maskinput;
 			return;
 		}
 
-		var defValue = null,
-		inpValue = null;
+		var defValue = '';
 
 		this.tel = function() {
-			if (!/^[\+\(\)\d\-]{0,16}$/.test(inputElem.value)) {
-				inpValue = defValue;
+			if (!/^\+7?((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$/.test(inputElem.value)) {
+				inputElem.value = defValue;
 				console.log('input default');
 			} else {
-				inpValue = inputElem.value;
 				defValue = inputElem.value;
+				console.log('input normal');
 			}
 
+			//console.log('curs pos before', inputElem.selectionStart, inputElem.selectionEnd);
 
-			var rawValue = inpValue.replace(/(\+7|\D)+/g, ''),
-			replacedValue = rawValue.replace(/^(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/, function(str, p1, p2, p3, p4) {
+			/*var cursPos = inputElem.selectionStart,
+			//rawValue = inpValue.replace(/(\+7|\D)+/g, ''),
+			replacedValue = inpValue.replace(/^(?:\+7)?\(?(\d{0,3})\)?(\d{0,3})\-?(\d{0,2})\-?(\d{0,2})$/, function(str, p1, p2, p3, p4) {
 				var repl = '';
+
+				console.log(arguments);
 
 				if (p4 != '') {
 					repl = '+7('+ p1 +')'+ p2 +'-'+ p3 +'-'+ p4;
@@ -36,11 +39,21 @@ var Maskinput;
 				}
 
 				return repl;
-			});
+			});*/
 
-			console.log(replacedValue, rawValue);
+			//console.log(replacedValue, rawValue);
 			
-			inputElem.value = replacedValue;
+			//inputElem.value = replacedValue;
+
+			//console.log('curs pos after', inputElem.selectionStart, inputElem.selectionEnd);
+
+			if (/^\+7\(\d{0,3}\)\d{0,3}\-\d{0,2}\-\d{2}$/.test(inputElem.value)) {
+				//inputElem.selectionStart = inputElem.selectionEnd = cursPos;
+			}
+
+			
+
+			
 		}
 
 		inputElem.addEventListener('input', () => {

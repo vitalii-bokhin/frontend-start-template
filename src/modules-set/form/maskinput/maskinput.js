@@ -8,11 +8,21 @@ var Maskinput;
 			return;
 		}
 
-		var defValue = null;
+		var defValue = null,
+		inpValue = null;
 
-		function tel() {
-			var rawValue = inputElem.value.replace(/(\+7|\D)+/g, ''),
-			replacedValue = rawValue.replace(/^(?:[\+7]{0,2}?)(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/, function(str, p1, p2, p3, p4) {
+		this.tel = function() {
+			if (!/^[\+\(\)\d\-]{0,16}$/.test(inputElem.value)) {
+				inpValue = defValue;
+				console.log('input default');
+			} else {
+				inpValue = inputElem.value;
+				defValue = inputElem.value;
+			}
+
+
+			var rawValue = inpValue.replace(/(\+7|\D)+/g, ''),
+			replacedValue = rawValue.replace(/^(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/, function(str, p1, p2, p3, p4) {
 				var repl = '';
 
 				if (p4 != '') {
@@ -29,20 +39,12 @@ var Maskinput;
 			});
 
 			console.log(replacedValue, rawValue);
-
-			if (!/^\+7\(?\d{0,3}?\)?\d{0,3}?\-?\d{0,2}?\-?\d{0,2}?$/.test(replacedValue)) {
-				inputElem.value = defValue;
-				console.log('stop');
-			} else {
-				inputElem.value = replacedValue;
-				defValue = replacedValue;
-			}
 			
-			//console.log(this.inputValue);
+			inputElem.value = replacedValue;
 		}
 
 		inputElem.addEventListener('input', () => {
-			[type]();
+			this[type]();
 		});
 	}
 }());
