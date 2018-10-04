@@ -8,39 +8,49 @@ var Maskinput;
 			return;
 		}
 
-		var defValue = null,
-		inpValue = null;
+		var defValue = '';
 
 		this.tel = function() {
-			if (!/^[\+\(\)\d\-]{0,16}$/.test(inputElem.value)) {
-				inpValue = defValue;
-				console.log('input default');
+			if (!/^[\+\d\(\)\-]*$/.test(inputElem.value)) {
+				inputElem.value = defValue;
+				//console.log('Default', inputElem.value);
 			} else {
-				inpValue = inputElem.value;
-				defValue = inputElem.value;
-			}
+				var reg = /^(\+7?)?((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$/,
+				cursPos = inputElem.selectionStart;
 
+				if (!reg.test(inputElem.value)) {
+					inputElem.value = inputElem.value.replace(/^(?:\+7?)?\(?(\d{0,3})\)?(\d{0,3})\-?(\d{0,2})\-?(\d{0,2})$/, function(str, p1, p2, p3, p4) {
+						var res = '';
 
-			var rawValue = inpValue.replace(/(\+7|\D)+/g, ''),
-			replacedValue = rawValue.replace(/^(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/, function(str, p1, p2, p3, p4) {
-				var repl = '';
+						//console.log(arguments);
 
-				if (p4 != '') {
-					repl = '+7('+ p1 +')'+ p2 +'-'+ p3 +'-'+ p4;
-				} else if (p3 != '') {
-					repl = '+7('+ p1 +')'+ p2 +'-'+ p3;
-				} else if (p2 != '') {
-					repl = '+7('+ p1 +')'+ p2;
-				} else if (p1 != '') {
-					repl = '+7('+ p1;
+						if (p4 != '') {
+							res = '+7('+ p1 +')'+ p2 +'-'+ p3 +'-'+ p4;
+						} else if (p3 != '') {
+							res = '+7('+ p1 +')'+ p2 +'-'+ p3;
+						} else if (p2 != '') {
+							res = '+7('+ p1 +')'+ p2;
+						} else if (p1 != '') {
+							res = '+7('+ p1;
+						}
+
+						return res;
+					});
+
+					//console.log('Replace', inputElem.value);
+					//inputElem.selectionStart = inputElem.selectionEnd = cursPos;
 				}
 
-				return repl;
-			});
+				if (!reg.test(inputElem.value)) {
+					inputElem.value = defValue;
+					//console.log('Default 2', inputElem.value);
+				} else {
+					defValue = inputElem.value;
+					//console.log('Not default', defValue);
+				}
 
-			console.log(replacedValue, rawValue);
+			}
 			
-			inputElem.value = replacedValue;
 		}
 
 		inputElem.addEventListener('input', () => {
