@@ -15,7 +15,8 @@ var Maskinput;
 				inputElem.value = defValue;
 				console.log('Default');
 			} else {
-				if (!/^\+7((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$/.test(inputElem.value)) {
+				var reg = /^\+7?((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$/;
+				if (!reg.test(inputElem.value)) {
 					inputElem.value = inputElem.value.replace(/^(?:\+7)?\(?(\d{0,3})\)?(\d{0,3})\-?(\d{0,2})\-?(\d{0,2})$/, function(str, p1, p2, p3, p4) {
 						var res = '';
 
@@ -37,7 +38,7 @@ var Maskinput;
 					console.log('Replace');
 				}
 
-				if (!/^\+7((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$/.test(inputElem.value)) {
+				if (!reg.test(inputElem.value)) {
 					inputElem.value = defValue;
 					console.log('Default 2');
 				} else {
