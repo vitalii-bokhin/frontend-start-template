@@ -1969,9 +1969,7 @@ var Maskinput;
 					defValue = inputElem.value;
 					//console.log('Not default', defValue);
 				}
-
 			}
-			
 		}
 
 		inputElem.addEventListener('input', () => {
