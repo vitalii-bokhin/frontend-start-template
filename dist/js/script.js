@@ -451,7 +451,7 @@ FsScroll.init({
 	};
 }());
 /*
-Toggle.init(Str button selector[, Str toggle class, default: 'toggled']);
+Toggle.init(Str button selector[, Str toggle class, (default - 'toggled') );
 
 Toggle.role = function() {
 	return {
@@ -513,6 +513,14 @@ Toggle.role = function() {
 					elem.setAttribute('data-first-text', elem.innerHTML);
 
 					elem.innerHTML = elem.getAttribute('data-secont-text');
+				}
+
+				if (elem.hasAttribute('data-dependence-target-elements')) {
+					var dependenceTargetElements = document.querySelectorAll(elem.getAttribute('data-dependence-target-elements'));
+
+					for (var i = 0; i < dependenceTargetElements.length; i++) {
+						dependenceTargetElements[i].classList.remove(this.toggledClass);
+					}
 				}
 			}
 		},
