@@ -5,17 +5,9 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-	<title>Parallax | startTemplate</title>
+	<title>Home page | startTemplate</title>
 </head>
 <body>
-
-<style>
-.parallax-element{
-	width: 50px;
-	height: 50px;
-	margin: 100px;
-}
-</style>
 
 <!--HEADER/-->
 <header class="header">
@@ -30,7 +22,7 @@
 					
 					<!--Menu/-->
 					<ul class="menu">
-	<li class="menu__item menu__item_has-children ">
+	<li class="menu__item menu__item_has-children menu__item_current">
 		<a href="home.html" class="menu__a">Home</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
@@ -138,13 +130,21 @@
 <!--MAIN/-->
 <main>
 
-	<div class="section" style="background: gray; width: 500px; margin: auto;">
-		
-		<div class="parallax-element el1" data-delta-x="150" style="background: red"></div>
-		<div class="parallax-element el2" style="background: blue"></div>
-		<div class="parallax-element el3" style="background: green"></div>
+	<div class="full-page full-page_middle">
+		<div class="full-page_middle__inner">
 
+			<div class="row">
+				<div class="col-12">
+					<h1>Grid</h1>
 
+					<h2>
+						Default columns
+					</h2>
+
+				</div>
+			</div>
+
+		</div>
 	</div>
 
 </main>
@@ -237,35 +237,6 @@
 <script src="js/script.js"></script>
 <script src="js/common.js"></script>
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
-
-
-<script>
-	$(document).ready(function() {
-
-		
-		$('.parallax-element').each(function() {
-			mouseparallax(this, {
-				listener: '.section'
-			});
-		});
-
-
-		/*mouseparallax('.el1', {
-				listener: '.section',
-				deltaX: 150
-			});
-
-		mouseparallax('.el2', {
-				listener: document,
-				deltaX: 80
-			});
-		
-		mouseparallax('.el3', {
-				listener: '.section'
-			});*/
-
-		});
-	</script>
 
 </body>
 </html>

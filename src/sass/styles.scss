@@ -3,6 +3,20 @@
 @import "extends";
 @import "mixins";
 
+/*full-page*/
+.full-page{
+	@extend %fwh;
+	padding-top: 100px;
+	overflow: hidden;
+	&_middle{
+		display: flex;
+		align-items: center;
+		&__inner{
+			width: 100%;
+		}
+	}
+}
+
 /*section*/
 .section{
 	margin-top: 25px;
