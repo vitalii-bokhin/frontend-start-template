@@ -167,21 +167,53 @@ document.addEventListener('DOMContentLoaded', function() {
 	Share.init('.js-share-btn');
 
 	//timer
-	var timer = new Timer(55, 'timer');
+	var timer = new Timer({
+		elemId: 'timer'
+	});
 
 	timer.onStop = function() {
-		alert('Timer Stopped');
+		Popup.message('#message-popup', 'Timer Stopped');
 	}
 
-	timer.start();
+	timer.start(50);
 
-	var timer2 = new Timer(30, 'timer-2');
+
+	var timer2 = new Timer({
+		elemId: 'timer-2',
+		format: 'extended'
+	});
 
 	timer2.onStop = function() {
-		alert('Timer 2 Stopped');
+		Popup.message('#message-popup', 'Timer 2 Stopped');
 	}
 
-	timer2.start();
+	timer2.start(130);
+
+
+	var stopwatch = new Timer({
+		elemId: 'stopwatch', 
+		stopwatch: true
+	});
+
+	stopwatch.onStop = function() {
+		Popup.message('#message-popup', 'Stopwatch Stopped');
+	}
+
+	stopwatch.start(0);
+
+
+	var stopwatch2 = new Timer({
+		elemId: 'stopwatch-1', 
+		stopwatch: true,
+		format: 'extended'
+	});
+
+	stopwatch2.onStop = function() {
+		Popup.message('#message-popup', 'Stopwatch Stopped');
+	}
+
+	stopwatch2.start(0);
+
 
 	//submit form
 	var form = new Form('#form');
