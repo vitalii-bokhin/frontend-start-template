@@ -31,6 +31,7 @@ var modulesOn = [
 'form/maskinput',
 'form',
 'accord',
+'ajax',
 'more',
 'tab',
 'bubble',

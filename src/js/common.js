@@ -27,6 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	//init toggle button
 	Toggle.init('.js-toggle');
 
+	//ajax button
+	Ajax.init('.js-ajax');
+
+	Ajax.success = function(response) {
+		// code...
+	}
+
 	//popup init
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');

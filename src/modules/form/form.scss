@@ -13,7 +13,6 @@
 			padding-right: 7px;
 		}
 	}
-
 	&__text-input,
 	&__textarea,
 	&__textarea_var-h-wrap{
@@ -30,34 +29,27 @@
 			border-color: $bk;
 		}
 	}
-
 	&__textarea{
 		height: 80px;
 		resize: none;
 		overflow: auto;
 		line-height: 1.3;
 	}
-
 	&__text-input,
 	&__textarea{
 		padding: 10px 15px;
 	}
-
 	&__field{
 		position: relative;
-		margin-bottom: 14px;
-
 		&_hidden{
 			display: none;
 		}
-
 		&_btn{
 			.form__text-input{
 				padding-right: 50px;
 			}
 		}
 	}
-
 	&__btn{
 		display: block;
 		height: 41px;
@@ -87,11 +79,9 @@
 			opacity: .5;
 		}
 	}
-
 	&__submit{
 		background: $rd;
 	}
-
 	&__loader{
 		height: 3px;
 		position: relative;
@@ -99,7 +89,6 @@
 		overflow: hidden;
 		display: none;
 	}
-
 	&_sending{
 		.form{
 			&__loader{

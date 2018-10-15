@@ -451,7 +451,7 @@ FsScroll.init({
 	};
 }());
 /*
-Toggle.init(Str button selector[, Str toggle class, default: 'toggled']);
+Toggle.init(Str button selector[, Str toggle class, (default - 'toggled') );
 
 Toggle.role = function() {
 	return {
@@ -513,6 +513,14 @@ Toggle.role = function() {
 					elem.setAttribute('data-first-text', elem.innerHTML);
 
 					elem.innerHTML = elem.getAttribute('data-secont-text');
+				}
+
+				if (elem.hasAttribute('data-dependence-target-elements')) {
+					var dependenceTargetElements = document.querySelectorAll(elem.getAttribute('data-dependence-target-elements'));
+
+					for (var i = 0; i < dependenceTargetElements.length; i++) {
+						dependenceTargetElements[i].classList.remove(this.toggledClass);
+					}
 				}
 			}
 		},
@@ -1936,7 +1944,7 @@ var Maskinput;
 				inputElem.value = defValue;
 				//console.log('Default', inputElem.value);
 			} else {
-				var reg = /^(\+7?)?((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$/,
+				var reg = new RegExp('^(\+7?)?((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$'),
 				cursPos = inputElem.selectionStart;
 
 				if (!reg.test(inputElem.value)) {
@@ -2720,6 +2728,52 @@ var Accord;
 				e.preventDefault();
 
 				this.toggle(elem);
+			});
+		}
+	};
+}());
+/*
+Ajax.init(Str button selector);
+
+Ajax.success = function(response) {
+	// code...
+}
+*/
+
+; var Ajax;
+
+(function() {
+	"use strict";
+
+	Ajax = {
+		success: null,
+		
+		send: function(elem) {
+			ajax({
+				url: elem.getAttribute('data-action'),
+				send: elem.getAttribute('data-send'),
+				success: function(response) {
+					if (this.success) {
+						this.success(response);
+					}
+				},
+				error: function(response) {
+					
+				}
+			});
+		},
+
+		init: function(elementStr) {
+			document.addEventListener('click', (e) => {
+				var elem = e.target.closest(elementStr);
+
+				if (!elem) {
+					return;
+				}
+
+				e.preventDefault();
+
+				this.send(elem);
 			});
 		}
 	};

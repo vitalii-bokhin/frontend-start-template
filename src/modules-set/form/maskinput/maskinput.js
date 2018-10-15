@@ -15,7 +15,7 @@ var Maskinput;
 				inputElem.value = defValue;
 				//console.log('Default', inputElem.value);
 			} else {
-				var reg = /^(\+7?)?((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$/,
+				var reg = new RegExp('^(\+7?)?((?<=\d)\(\d{0,3})?((?<=[\d\(])\)\d{0,3})?((?<=\)[\d\-]*)(\-\d{0,2})){0,2}$'),
 				cursPos = inputElem.selectionStart;
 
 				if (!reg.test(inputElem.value)) {

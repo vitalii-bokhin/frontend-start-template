@@ -23,7 +23,7 @@
 					<!--Menu/-->
 					<ul class="menu">
 	<li class="menu__item menu__item_has-children ">
-		<a href="index.html" class="menu__a">Home</a>
+		<a href="home.html" class="menu__a">Home</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
 			<li class="sub-menu__item ">
@@ -107,13 +107,24 @@
 	</span>
 
 	<a href="#" data-target-elements="#user-menu,.user__link" class="js-toggle user__thumb">
-		<img src="images/avatar.png" alt="avatar" class="cover-img">
+		<img src="images/avatar.png" alt="avatar">
 	</a>
 
-	<div id="user-menu" class="user__bubble bubble">
+	<div id="user-menu" class="user__bubble">
 
 	</div>
+</div>
 
+<div class="user user_l">
+	<a id="log-user-link" href="#" class="js-toggle user__link" data-target-elements="#user-menu-log" data-dependence-target-elements="#user-menu-reg,#reg-user-link">Вход</a> / <a id="reg-user-link" href="#" class="js-toggle user__link" data-target-elements="#user-menu-reg,#log-user-link"  data-dependence-target-elements="#user-menu-log,#log-user-link">Регистрация</a>
+	
+	<div id="user-menu-log" class="user__bubble">
+		Вход
+	</div>
+
+	<div id="user-menu-reg" class="user__bubble">
+		Регистрация
+	</div>
 </div>
 				<!--/User-->
 

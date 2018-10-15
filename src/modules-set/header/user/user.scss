@@ -16,8 +16,12 @@
 		border-radius: 34px;
 		vertical-align: middle;
 		overflow: hidden;
+		img{
+			width: 100%;
+			height: auto;
+			min-height: 100%;
+		}
 	}
-
 	&__name{
 		font-size: 14px;
 		display: inline-block;
@@ -25,29 +29,37 @@
 		margin-right: 10px;
 		text-align: right;
 	}
-
 	&__link{
 		text-decoration: none;
 		transition: .5s;
-		
 		&:hover{
 			color: $rd;
 		}
-
 		&-logout{
 			font-size: 13px;
 			margin-top: 3px;
 			opacity: .8;
 		}
 	}
-
 	&__bubble{
+		position: absolute;
 		width: 250px;
 		top: 45px;
 		right: 0;
 		padding: 25px;
+		background: #FFF;
+		box-shadow: 0 1px 11px rgba(0,0,0,.21);
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity .5s;
+		&.toggled{
+			visibility: visible;
+			opacity: 1;
+		}
 	}
-
+	&_l{
+		padding-top: 10px;
+	}
 	@media(max-width: 1000px){
 		&__bubble{
 			width: 100%;
