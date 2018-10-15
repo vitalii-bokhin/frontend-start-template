@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		Tab.reInit();
 
 		window.addEventListener('winResized', initFun);
-	}());
+	})();
 
 	//init cover images
 	CoverImg.init();

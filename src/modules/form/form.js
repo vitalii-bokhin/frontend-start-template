@@ -697,4 +697,4 @@ var ValidateForm, NextFieldset, Form;
 		varHeightTextarea.init();
 		
 	});
-}());
+})();

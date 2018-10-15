@@ -137,4 +137,4 @@ var CustomFile;
 	document.addEventListener('DOMContentLoaded', function() {
 		CustomFile.init();
 	});
-}());
+})();

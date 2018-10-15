@@ -87,4 +87,4 @@ var Placeholder;
 	document.addEventListener('DOMContentLoaded', function() {
 		Placeholder.init('input[type="text"], input[type="password"], textarea');
 	});
-}());
+})();

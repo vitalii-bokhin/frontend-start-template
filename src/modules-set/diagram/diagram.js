@@ -87,4 +87,4 @@ diagram.animate(Int duration ms);
 			}
 		}
 	}
-}());
+})();

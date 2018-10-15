@@ -171,7 +171,7 @@ var Popup, MediaPopup;
 		}
 	};
 
-}());
+})();
 
 
 

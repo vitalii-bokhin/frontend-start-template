@@ -110,4 +110,4 @@ Bubble.init({
 			document.body.appendChild(this.bubbleDiv);
 		}
 	};
-}());
+})();

@@ -14,7 +14,7 @@
 		if (/(msie|rv:11\.0)/.test(userAgent)) {
 			return 'ie';
 		}
-	}(navigator.userAgent));
+	})(navigator.userAgent);
 
 	//Add support CustomEvent constructor for IE
 	try {
@@ -74,7 +74,7 @@
 					return this.parentElement.closest(selector);
 				}
 			};
-		}(Element.prototype));
+		})(Element.prototype);
 	}
 
 	//Check element for hidden
@@ -161,7 +161,7 @@
 		return Math.pow(timeFraction, 2)
 	}
 
-}());
+})();
 ; var MobNav;
 
 (function() {
@@ -250,7 +250,7 @@
 			});
 		}
 	};
-}());
+})();
 /*
 * call Menu.init(Str menu item selector, Str sub menu selector);
 */
@@ -299,7 +299,7 @@ var Menu;
 			});
 		}
 	};
-}());
+})();
 /*
 FsScroll.init({
 	container: Str selector,
@@ -449,7 +449,7 @@ FsScroll.init({
 			});
 		}
 	};
-}());
+})();
 /*
 Toggle.init(Str button selector[, Str toggle class, (default - 'toggled') );
 
@@ -543,7 +543,7 @@ Toggle.role = function() {
 			});
 		}
 	};
-}());
+})();
 var FlexImg;
 
 (function() {
@@ -583,7 +583,7 @@ var FlexImg;
 		}
 
 	}
-}());
+})();
 var CoverImg;
 
 (function() {
@@ -683,7 +683,7 @@ var CoverImg;
 
 	};
 
-}());
+})();
 /*
 call to init:
 Video.init(Str button selector);
@@ -724,7 +724,7 @@ var Video;
 			});
 		}
 	};
-}());
+})();
 var Popup, MediaPopup;
 
 (function() {
@@ -898,7 +898,7 @@ var Popup, MediaPopup;
 		}
 	};
 
-}());
+})();
 
 
 
@@ -1194,7 +1194,7 @@ var Popup, MediaPopup;
 	document.addEventListener('DOMContentLoaded', function() {
 		ChangeCheckbox.init();
 	});
-}());
+})();
 (function() {
 	"use strict";
 
@@ -1246,7 +1246,7 @@ var Popup, MediaPopup;
 	document.addEventListener('DOMContentLoaded', function() {
 		ChangeRadio.init();
 	});
-}());
+})();
 var CustomSelect;
 
 (function() {
@@ -1696,7 +1696,7 @@ var CustomSelect;
 	document.addEventListener('DOMContentLoaded', function() {
 		CustomSelect.init('select');
 	});
-}());
+})();
 var CustomFile;
 
 (function() {
@@ -1836,7 +1836,7 @@ var CustomFile;
 	document.addEventListener('DOMContentLoaded', function() {
 		CustomFile.init();
 	});
-}());
+})();
 var Placeholder;
 
 (function() {
@@ -1926,7 +1926,7 @@ var Placeholder;
 	document.addEventListener('DOMContentLoaded', function() {
 		Placeholder.init('input[type="text"], input[type="password"], textarea');
 	});
-}());
+})();
 var Maskinput;
 
 (function() {
@@ -1984,7 +1984,7 @@ var Maskinput;
 			this[type]();
 		});
 	}
-}());
+})();
 var ValidateForm, NextFieldset, Form;
 
 (function() {
@@ -2684,7 +2684,7 @@ var ValidateForm, NextFieldset, Form;
 		varHeightTextarea.init();
 		
 	});
-}());
+})();
 /*
 * call Accord.init(Str button selector);
 */
@@ -2731,7 +2731,7 @@ var Accord;
 			});
 		}
 	};
-}());
+})();
 /*
 Ajax.init(Str button selector);
 
@@ -2777,7 +2777,7 @@ Ajax.success = function(response) {
 			});
 		}
 	};
-}());
+})();
 /*
 call to init:
 More.init(Str button selector);
@@ -2826,7 +2826,7 @@ var More;
 			});
 		}
 	};
-}());
+})();
 /*
 call to init:
 Tab.init({
@@ -2926,7 +2926,7 @@ var Tab;
 			});
 		}
 	};
-}());
+})();
 /*
 Bubble.init({
 	element: '.js-bubble'
@@ -3039,7 +3039,7 @@ Bubble.init({
 			document.body.appendChild(this.bubbleDiv);
 		}
 	};
-}());
+})();
 /*
 Anchor.init(Str anchor selector[, Int duration ms[, Int shift px]]);
 */
@@ -3098,7 +3098,7 @@ var Anchor;
 			}
 		}
 	};
-}());
+})();
 /*
 var diagram = new Diagram({
 	canvasId: Str elem id,
@@ -3188,7 +3188,7 @@ diagram.animate(Int duration ms);
 			}
 		}
 	}
-}());
+})();
 var Numberspin;
 
 (function() {
@@ -3211,7 +3211,7 @@ var Numberspin;
 			}, duration);
 		}
 	}
-}());
+})();
 
 
 /*
@@ -3395,7 +3395,7 @@ Share.init(Str button class);
 			});
 		}
 	};
-}());
+})();
 ; var Timer;
 
 (function() {
@@ -3403,10 +3403,6 @@ Share.init(Str button class);
 
 	Timer = function(options) {
 		var elem = document.getElementById(options.elemId);
-
-		if (!elem) {
-			return;
-		}
 
 		function setCookie() {
 			document.cookie = 'lastTimestampValue-'+ options.elemId +'='+ Date.now() +'; expires='+ new Date(Date.now() + 259200000).toUTCString();
@@ -3465,6 +3461,10 @@ Share.init(Str button class);
 		}
 
 		this.start = function(startTime) {
+			if (!elem) {
+				return;
+			}
+			
 			this.time = startTime;
 
 			var lastTimestampValue = (function(cookie) {
@@ -3509,5 +3509,5 @@ Share.init(Str button class);
 			}, 1000);
 		}
 	}
-}());
+})();
 //# sourceMappingURL=script.js.map

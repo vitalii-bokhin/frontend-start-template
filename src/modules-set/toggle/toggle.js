@@ -91,4 +91,4 @@ Toggle.role = function() {
 			});
 		}
 	};
-}());
+})();

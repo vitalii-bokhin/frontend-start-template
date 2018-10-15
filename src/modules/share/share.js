@@ -58,4 +58,4 @@ Share.init(Str button class);
 			});
 		}
 	};
-}());
+})();

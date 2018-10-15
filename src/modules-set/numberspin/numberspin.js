@@ -20,7 +20,7 @@ var Numberspin;
 			}, duration);
 		}
 	}
-}());
+})();
 
 
 /*

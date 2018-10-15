@@ -447,4 +447,4 @@ var CustomSelect;
 	document.addEventListener('DOMContentLoaded', function() {
 		CustomSelect.init('select');
 	});
-}());
+})();

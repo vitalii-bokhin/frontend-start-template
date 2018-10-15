@@ -55,4 +55,4 @@ var Maskinput;
 			this[type]();
 		});
 	}
-}());
+})();

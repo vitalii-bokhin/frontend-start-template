@@ -43,4 +43,4 @@ Ajax.success = function(response) {
 			});
 		}
 	};
-}());
+})();

@@ -40,4 +40,4 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		ChangeCheckbox.init();
 	});
-}());
+})();

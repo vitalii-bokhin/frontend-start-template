@@ -6,10 +6,6 @@
 	Timer = function(options) {
 		var elem = document.getElementById(options.elemId);
 
-		if (!elem) {
-			return;
-		}
-
 		function setCookie() {
 			document.cookie = 'lastTimestampValue-'+ options.elemId +'='+ Date.now() +'; expires='+ new Date(Date.now() + 259200000).toUTCString();
 		}
@@ -67,6 +63,10 @@
 		}
 
 		this.start = function(startTime) {
+			if (!elem) {
+				return;
+			}
+			
 			this.time = startTime;
 
 			var lastTimestampValue = (function(cookie) {
@@ -111,4 +111,4 @@
 			}, 1000);
 		}
 	}
-}());
+})();

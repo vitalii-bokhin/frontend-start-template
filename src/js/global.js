@@ -14,7 +14,7 @@
 		if (/(msie|rv:11\.0)/.test(userAgent)) {
 			return 'ie';
 		}
-	}(navigator.userAgent));
+	})(navigator.userAgent);
 
 	//Add support CustomEvent constructor for IE
 	try {
@@ -74,7 +74,7 @@
 					return this.parentElement.closest(selector);
 				}
 			};
-		}(Element.prototype));
+		})(Element.prototype);
 	}
 
 	//Check element for hidden
@@ -161,4 +161,4 @@
 		return Math.pow(timeFraction, 2)
 	}
 
-}());
+})();
