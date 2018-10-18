@@ -57,10 +57,10 @@ Toggle.role = function() {
 					this.role()[role].on();
 				}
 
-				if (elem.hasAttribute('data-secont-text')) {
+				if (elem.hasAttribute('data-second-text')) {
 					elem.setAttribute('data-first-text', elem.innerHTML);
 
-					elem.innerHTML = elem.getAttribute('data-secont-text');
+					elem.innerHTML = elem.getAttribute('data-second-text');
 				}
 
 				if (elem.hasAttribute('data-dependence-target-elements')) {

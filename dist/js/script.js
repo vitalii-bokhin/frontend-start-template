@@ -509,10 +509,10 @@ Toggle.role = function() {
 					this.role()[role].on();
 				}
 
-				if (elem.hasAttribute('data-secont-text')) {
+				if (elem.hasAttribute('data-second-text')) {
 					elem.setAttribute('data-first-text', elem.innerHTML);
 
-					elem.innerHTML = elem.getAttribute('data-secont-text');
+					elem.innerHTML = elem.getAttribute('data-second-text');
 				}
 
 				if (elem.hasAttribute('data-dependence-target-elements')) {
@@ -2030,7 +2030,7 @@ var ValidateForm, NextFieldset, Form;
 			this.errorTip(true, 'custom', errorTxt);
 		},
 
-		def: function() {
+		txt: function() {
 			var err = false;
 
 			if (!/^[0-9a-zа-яё_,.:-\s]*$/i.test(this.input.value)) {
@@ -2277,8 +2277,6 @@ var ValidateForm, NextFieldset, Form;
 			} else if (elem.value.length) {
 				if (dataType) {
 					this[dataType]();
-				} else if (elem.type != 'password') {
-					this.def();
 				} else {
 					this.errorTip(false);
 				}
@@ -2313,10 +2311,6 @@ var ValidateForm, NextFieldset, Form;
 				} else if (elem.value.length) {
 					if (dataType) {
 						if (this[dataType]()) {
-							err++;
-						}
-					} else if (elem.type != 'password') {
-						if (this.def()) {
 							err++;
 						}
 					} else {
@@ -2621,6 +2615,10 @@ var ValidateForm, NextFieldset, Form;
 				return;
 			}
 
+			actSubmitBtn(false);
+
+			form.classList.add('form_sending');
+
 			if (this.onSubmit === null) {
 				return;
 			}
@@ -2639,10 +2637,6 @@ var ValidateForm, NextFieldset, Form;
 					clear();
 				}
 			});
-
-			actSubmitBtn(false);
-
-			form.classList.add('form_sending');
 		});
 	}
 

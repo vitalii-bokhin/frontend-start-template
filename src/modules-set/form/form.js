@@ -634,6 +634,10 @@ var ValidateForm, NextFieldset, Form;
 				return;
 			}
 
+			actSubmitBtn(false);
+
+			form.classList.add('form_sending');
+
 			if (this.onSubmit === null) {
 				return;
 			}
@@ -652,10 +656,6 @@ var ValidateForm, NextFieldset, Form;
 					clear();
 				}
 			});
-
-			actSubmitBtn(false);
-
-			form.classList.add('form_sending');
 		});
 	}
 

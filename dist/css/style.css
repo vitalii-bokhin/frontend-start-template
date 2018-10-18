@@ -797,7 +797,7 @@ h1 {
   display: inline-block;
   width: 34px;
   height: 34px;
-  border-radius: 34px;
+  border-radius: 50%;
   vertical-align: middle;
   overflow: hidden;
 }
@@ -1819,8 +1819,8 @@ select {
 
 /*form*/
 .form .row {
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .form .row > div[class*="col"] {
@@ -1998,6 +1998,7 @@ select {
 }
 
 .var-height-textarea__textarea {
+  height: 100%;
   overflow: hidden;
 }
 
@@ -2314,20 +2315,20 @@ select {
 
 /*section*/
 .section {
-  margin-top: 25px;
-  margin-bottom: 25px;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .section-outer {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .section-inner {
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 /*list*/
