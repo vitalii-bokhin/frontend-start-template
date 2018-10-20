@@ -180,6 +180,7 @@
 	}
 	&__textarea{
 		@extend %fwh;
+		height: 100%;
 		overflow: hidden;
 	}
 	&_middle{
