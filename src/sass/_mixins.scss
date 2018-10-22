@@ -16,9 +16,3 @@
 		padding-bottom: $height * (100 / $width) * 1%;
 	}
 }
-
-//gulp svg sprite bg size
-$sprite-width: 2092;
-@mixin bgs($icon-svg-w: 1) {
-	background-size: ($sprite-width / $icon-svg-w) * 100% auto;
-}

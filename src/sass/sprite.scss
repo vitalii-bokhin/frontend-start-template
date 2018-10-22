@@ -1,5 +1,16 @@
 @import "sprite-extends";
-@import "mixins";
+
+//gulp svg sprite bg size mixin
+$sprite-width: 2192;
+@mixin bgs($icon-svg-w: 1) {
+	background-size: ($sprite-width / $icon-svg-w) * 100% auto;
+}
+
+/*sprites*/
+.menu__arr{
+	@extend %svg-angle-down;
+	@include bgs(340);
+}
 
 .accord__button:after{
 	@extend %svg-arrow-alt-circle-down;

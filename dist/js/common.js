@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	Toggle.init('.js-toggle');
 
 	//ajax button
-	Ajax.init('.js-ajax');
+	/*Ajax.init('.js-ajax');
 
 	Ajax.success = function(response) {
 		// code...
-	}
+	}*/
 
 	//popup init
 	Popup.init('.js-open-popup');
@@ -220,6 +220,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	stopwatch2.start(0);
+
+	//get content via Ajax
+	var getCont = new GetContentAjax({
+		eventBtn: '.js-get-content-ajax',
+		event: 'click',
+		outputDiv: '#output-ajax',
+		sourceFile: '/get-content-ajax.php'
+	});
+
+	getCont.output = function(content) {
+		return content;
+	}
 
 
 	//submit form

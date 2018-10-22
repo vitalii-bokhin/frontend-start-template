@@ -574,13 +574,13 @@ var ValidateForm, NextFieldset, Form;
 
 	//forms
 	Form = function(formSelector) {
-		this.onSubmit = null;
-
 		var form = document.querySelector(formSelector);
 
 		if (!form) {
 			return;
 		}
+
+		this.onSubmit = null;
 
 		ValidateForm.init(form);
 

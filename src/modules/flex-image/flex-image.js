@@ -1,4 +1,4 @@
-var FlexImg;
+; var FlexImg;
 
 (function() {
 	"use strict";
