@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "dealersAir and other contributors",
+  "author": "Lufter",
   "license": "MIT License",
   "devDependencies": {
     "babel-core": "^6.26.3",
