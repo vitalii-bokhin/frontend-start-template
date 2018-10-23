@@ -93,9 +93,6 @@ gulp.task('dev', ['clean_js_folder'], function() {
 	//build style.css
 	CSS(cssSrc);
 
-	//delete style.min.css
-	//del(['dist/css/style.min.css', 'dist/css/style.min.css.map']);
-
 	//build script.js
 	JS(jsSrc);
 
@@ -166,15 +163,11 @@ gulp.task('dist', function() {
 
 	CSS(cssSrc, true);
 
-	//del(['dist/css/style.css', 'dist/css/style.css.map']);
-
 	JS(jsSrc, true);
 
 	gulp.src(['!src/js/global.js', 'src/js/*.js'])
 	.pipe(gulp.dest('dist/js'))
 	.pipe(notify('Common Script has Refreshed!'));
-
-	//del(['dist/js/script.js', 'dist/js/script.js.map']);
 });
 
 //Functions
@@ -216,10 +209,8 @@ function JS(src, dist) {
 		gulp.src(src)
 		.pipe(sourcemaps.init())
 		.pipe(babel())
-		//.pipe(uglify())
 		.on('error', notify.onError(function(err) { return err; }))
 		.pipe(concat('script.js'))
-		//.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/js'))
 		.pipe(notify({
@@ -246,8 +237,6 @@ function HTML(src, dist) {
 		gulp.src(src)
 		.pipe(fileinclude())
 		.on('error', notify.onError(function(err) { return err; }))
-		//.pipe(replace('style.css', 'style.min.css'))
-		//.pipe(replace('script.js', 'script.min.js'))
 		.pipe(gulp.dest('dist'))
 		.pipe(notify({
 			title: 'HTML',
