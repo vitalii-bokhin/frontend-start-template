@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Lufter",
-  "license": "ISC",
+  "author": "dealersAir and other contributors",
+  "license": "MIT License",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-transform-remove-strict-mode": "0.0.2",
