@@ -1,2 +1,2 @@
-# startTemplate
-Start template for web development
+# Frontend Start Template
+Start template for frontend development
