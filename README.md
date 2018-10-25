@@ -1,7 +1,7 @@
 # Frontend Start Template
 Start template for frontend development
 
-### Browser support
+### Browsers support
 
 Chrome, Firefox, Opera, Safari, IE10+
 
