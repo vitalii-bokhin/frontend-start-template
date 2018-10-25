@@ -1,10 +1,14 @@
 # Frontend Start Template
 Start template for frontend development
 
-##### Includes
+### Includes
+
 jQuery - Copyright JS Foundation and other contributors, https://js.foundation/
+
 jQuery Mask Plugin - Copyright (c) 2012 Igor Escobar http://blog.igorescobar.com
+
 jScrollPane - Copyright (c) 2010 Kelvin Luck
+
 Slick slider - Copyright (c) 2017 Ken Wheeler
 
 ### License
