@@ -13,7 +13,7 @@ jQuery Mask Plugin - Copyright (c) 2012 Igor Escobar http://blog.igorescobar.com
 
 jScrollPane - Copyright (c) 2010 Kelvin Luck
 
-Slick slider - Copyright (c) 2017 Ken Wheeler
+Slick Slider - Copyright (c) 2017 Ken Wheeler
 
 ### License
 
