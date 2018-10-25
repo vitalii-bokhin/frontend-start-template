@@ -1,6 +1,9 @@
 # Frontend Start Template
 Start template for frontend development
 
+### Browser support
+Chrome, Firefox, Opera, Safari, IE10+
+
 ### Includes
 
 jQuery - Copyright JS Foundation and other contributors, https://js.foundation/
