@@ -1,4 +1,46 @@
-var Ajax = {
+; var GetContentAjax;
+
+(function() {
+	"use strict";
+
+	GetContentAjax = function(options) {
+		var eventBtnElem = document.querySelector(options.eventBtn);
+
+		if (!eventBtnElem) {
+			return;
+		}
+
+		this.output = null;
+
+		if (options.event == 'click') {
+			eventBtnElem.addEventListener('click', (e) => {
+				e.preventDefault();
+
+				var outputDivElem = document.querySelector(options.outputDiv);
+
+				ajax({
+					url: options.sourceFile,
+					send: eventBtnElem.getAttribute('data-send'),
+					success: (response) => {
+						if (this.output === null) {
+							outputDivElem.innerHTML = response;
+						} else {
+							outputDivElem.innerHTML = this.output(response);
+						}
+
+
+					},
+					error: (response) => {
+						console.log(response);
+					}
+				});
+			});
+		}
+	}
+})();
+
+
+/*var Ajax = {
 	take: function(url,data,id,fun) {
 		var _ = this;
 
@@ -93,4 +135,4 @@ $(document).ready(function() {
 
 	
 
-});
+});*/
