@@ -231,13 +231,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	getCont.output = function(response) {
 		var result = response.match(/\<div id\="source"\>([\s\S]*?)\<\/div\>/);
-		
+
 		return result[1];
 	}
 
 
 	//submit form
-	var form = new Form('#form');
+	Form.init('.form');
+
+	Form.onSubmit = function(form, callback) {
+		
+	}
+
+	/*var form = new Form('#form');
 
 	NextFieldset.init(form.form, '.form__button');
 
@@ -300,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				callback({unlockSubmitButton: true});
 			}
 		});
-	}
+	}*/
 });
 
 //GetCountriesAndCitiesList

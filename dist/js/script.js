@@ -2253,13 +2253,7 @@ var ValidateForm, NextFieldset, Form;
 			return err;
 		},
 
-		validateOnInput: function(e) {
-			var elem = e.target.closest('input[type="text"], input[type="password"], textarea');
-
-			if (!elem || !elem.getAttribute('data-tested')) {
-				return;
-			}
-
+		validateOnInput: function(elem) {
 			this.input = elem;
 
 			var dataType = elem.getAttribute('data-type');
@@ -2472,13 +2466,13 @@ var ValidateForm, NextFieldset, Form;
 			return (err) ? false : true;
 		},
 
-		init: function(form) {
-			if (!form) {
-				return;
-			}
+		init: function(formSelector) {
+			document.addEventListener('input', (e) => {
+				var elem = e.target.closest(formSelector +' input[type="text"], input[type="password"], textarea');
 
-			form.addEventListener('input', (e) => {
-				this.validateOnInput(e);
+				if (elem && elem.hasAttribute('data-tested')) {
+					this.validateOnInput(elem);
+				}
 			});
 
 			form.addEventListener('change', (e) => {
@@ -2491,13 +2485,8 @@ var ValidateForm, NextFieldset, Form;
 		}
 	};
 
-	
-
-	
-
 	//variable height textarea
 	var varHeightTextarea = {
-
 		setHeight: function(elem) {
 			var mirror = elem.parentElement.querySelector('.var-height-textarea__mirror'),
 			mirrorOutput = elem.value.replace(/\n/g, '<br>');
@@ -2506,7 +2495,6 @@ var ValidateForm, NextFieldset, Form;
 		},
 
 		init: function() {
-
 			document.addEventListener('input', (e) => {
 				var elem = e.target.closest('.var-height-textarea__textarea');
 
@@ -2515,9 +2503,7 @@ var ValidateForm, NextFieldset, Form;
 				}
 
 				this.setHeight(elem);
-
 			});
-
 		}
 	};
 
@@ -2551,8 +2537,97 @@ var ValidateForm, NextFieldset, Form;
 		}
 	};
 
-	//forms
-	Form = function(formSelector) {
+	//form
+	Form = {
+		onSubmit: null,
+
+		submit: function(e, formElem) {
+			formElem.classList.add('form_sending');
+
+			if (!onSubmit) {
+				return;
+			}
+
+			//clear form
+			function clear() {
+				var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
+
+				for (var i = 0; i < elements.length; i++) {
+					var elem = elements[i];
+
+					elem.value = '';
+					CustomPlaceholder.hidePlaceholder(elem, false);
+				}
+
+				CustomSelect.reset();
+
+				var textareaMirrors = form.querySelectorAll('.form__textarea-mirror');
+
+				for (var i = 0; i < textareaMirrors.length; i++) {
+					textareaMirrors[i].innerHTML = '';
+				}
+			}
+
+			//submit button
+			function actSubmitBtn(st) {
+				var elements = form.querySelectorAll('button[type="submit"], input[type="submit"]');
+
+				for (var i = 0; i < elements.length; i++) {
+					var elem = elements[i];
+
+					if (!elem.elementIsHidden()) {
+						if (st) {
+							elem.removeAttribute('disabled');
+						} else {
+							elem.setAttribute('disabled', 'disable');
+						}
+					}
+				}
+			}
+
+			//call onSubmit
+			var ret = onSubmit(form, function(obj) {
+				obj = obj || {};
+
+				actSubmitBtn(obj.unlockSubmitButton);
+
+				form.classList.remove('form_sending');
+
+				if (obj.clearForm == true) {
+					clear();
+				}
+			});
+
+			if (ret === false) {
+				e.preventDefault();
+			}
+		},
+
+		init: function(formSelector) {
+			if (!document.querySelector(formSelector)) {
+				return;
+			}
+
+			ValidateForm.init(formSelector);
+
+			document.addEventListener('submit', (e) => {
+				var formElem = e.target.closest(formSelector);
+
+				if (!formElem) {
+					return;
+				}
+
+				if (ValidateForm.validate(formElem)) {
+					this.submit(e, formElem);
+				} else {
+					e.preventDefault();
+				}
+			});
+		}
+	};
+
+
+	/*Form = function(formSelector) {
 		var form = document.querySelector(formSelector);
 
 		if (!form) {
@@ -2630,7 +2705,7 @@ var ValidateForm, NextFieldset, Form;
 				}
 			});
 		});
-	}
+	}*/
 
 	//bind labels
 	function BindLabels(elementsStr) {
@@ -2665,10 +2740,7 @@ var ValidateForm, NextFieldset, Form;
 	document.addEventListener('DOMContentLoaded', function() {
 		BindLabels('input[type="text"], input[type="checkbox"], input[type="radio"]');
 		//SetTabindex('input[type="text"], input[type="password"], textarea');
-		
-		
 		varHeightTextarea.init();
-		
 	});
 })();
 /*
