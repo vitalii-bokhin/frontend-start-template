@@ -3456,36 +3456,40 @@ Share.init(Str button class);
 	"use strict";
 
 	GetContentAjax = function(options) {
-		var eventBtnElem = document.querySelector(options.eventBtn);
-
-		if (!eventBtnElem) {
+		if (!document.querySelector(options.eventBtn)) {
 			return;
 		}
 
 		this.output = null;
 
-		if (options.event == 'click') {
-			eventBtnElem.addEventListener('click', (e) => {
-				e.preventDefault();
+		var getContent = (eventBtnElem) => {
+			var outputDivElem = document.querySelector(options.outputDiv);
 
-				var outputDivElem = document.querySelector(options.outputDiv);
-
-				ajax({
-					url: options.sourceFile,
-					send: eventBtnElem.getAttribute('data-send'),
-					success: (response) => {
-						if (this.output === null) {
-							outputDivElem.innerHTML = response;
-						} else {
-							outputDivElem.innerHTML = this.output(response);
-						}
-
-
-					},
-					error: (response) => {
-						console.log(response);
+			ajax({
+				url: options.sourceFile,
+				send: eventBtnElem.getAttribute('data-send'),
+				success: (response) => {
+					if (this.output === null) {
+						outputDivElem.innerHTML = response;
+					} else {
+						outputDivElem.innerHTML = this.output(response);
 					}
-				});
+				},
+				error: (response) => {
+					console.log(response);
+				}
+			});
+		}
+
+		if (options.event == 'click') {
+			document.addEventListener('click', (e) => {
+				var eventBtnElem = e.target.closest(options.eventBtn);
+
+				if (eventBtnElem) {
+					e.preventDefault();
+
+					getContent(eventBtnElem);
+				}
 			});
 		}
 	}

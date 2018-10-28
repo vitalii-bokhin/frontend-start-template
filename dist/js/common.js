@@ -229,8 +229,10 @@ document.addEventListener('DOMContentLoaded', function() {
 		sourceFile: '/get-content-ajax.php'
 	});
 
-	getCont.output = function(content) {
-		return content;
+	getCont.output = function(response) {
+		var result = response.match(/\<div id\="source"\>([\s\S]*?)\<\/div\>/);
+		
+		return result[1];
 	}
 
 
