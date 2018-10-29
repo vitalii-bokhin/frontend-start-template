@@ -5,7 +5,7 @@
 
 
 .accord{
-	border-top: 1px solid $lgy;
+	border-top: 1px solid $gy;
 	background: #FFF;
 	&__button{
 		display: block;
@@ -15,7 +15,7 @@
 		text-align: left;
 		border: none;
 		background: none;
-		border-bottom: 1px solid $lgy;
+		border-bottom: 1px solid $gy;
 		-webkit-appearance: none;
 		&:after{
 			@extend %ab;
@@ -37,7 +37,7 @@
 	&__content{
 		height: 0;
 		overflow: hidden;
-		border-bottom: 1px solid $lgy;
+		border-bottom: 1px solid $gy;
 		transition: .5s;
 	}
 }
