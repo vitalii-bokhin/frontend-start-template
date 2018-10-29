@@ -1,17 +1,12 @@
 /*
-Toggle.init(Str button selector[, Str toggle class, (default - 'toggled') );
+Toggle.init(Str toggleSelector[, Str toggledClass (default - 'toggled')]);
 
-Toggle.role = function() {
-	return {
-		[data-role]: {
-			on: function() {
-				
-			},
-			off: function() {
-					
-			}
-		},
-	};
+Toggle.on = function(tglElem) {
+	// code...
+}
+
+Toggle.off = function(tglElem) {
+	// code...
 }
 */
 
@@ -22,49 +17,49 @@ Toggle.role = function() {
 
 	Toggle = {
 		toggledClass: 'toggled',
-		role: null,
+		on: null,
+		off: null,
 
-		toggle: function(elem) {
-			var targetElements = document.querySelectorAll(elem.getAttribute('data-target-elements')),
-			role = elem.getAttribute('data-role');
+		toggle: function(toggleElem) {
+			var targetElements = document.querySelectorAll(toggleElem.getAttribute('data-target-elements'));
 
 			if (!targetElements.length) {
 				return;
 			}
 
-			if (elem.classList.contains(this.toggledClass)) {
+			if (toggleElem.classList.contains(this.toggledClass)) {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.remove(this.toggledClass);
 				}
 
-				elem.classList.remove(this.toggledClass);
+				toggleElem.classList.remove(this.toggledClass);
 
-				if (role && this.role) {
-					this.role()[role].off();
+				if (this.off) {
+					this.off(toggleElem);
 				}
 
-				if (elem.hasAttribute('data-first-text')) {
-					elem.innerHTML = elem.getAttribute('data-first-text');
+				if (toggleElem.hasAttribute('data-first-text')) {
+					toggleElem.innerHTML = toggleElem.getAttribute('data-first-text');
 				}
 			} else {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.add(this.toggledClass);
 				}
 
-				elem.classList.add(this.toggledClass);
+				toggleElem.classList.add(this.toggledClass);
 
-				if (role && this.role) {
-					this.role()[role].on();
+				if (this.on) {
+					this.on(toggleElem);
 				}
 
-				if (elem.hasAttribute('data-second-text')) {
-					elem.setAttribute('data-first-text', elem.innerHTML);
+				if (toggleElem.hasAttribute('data-second-text')) {
+					toggleElem.setAttribute('data-first-text', toggleElem.innerHTML);
 
-					elem.innerHTML = elem.getAttribute('data-second-text');
+					toggleElem.innerHTML = toggleElem.getAttribute('data-second-text');
 				}
 
-				if (elem.hasAttribute('data-dependence-target-elements')) {
-					var dependenceTargetElements = document.querySelectorAll(elem.getAttribute('data-dependence-target-elements'));
+				if (toggleElem.hasAttribute('data-dependence-target-elements')) {
+					var dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
 
 					for (var i = 0; i < dependenceTargetElements.length; i++) {
 						dependenceTargetElements[i].classList.remove(this.toggledClass);
@@ -73,21 +68,19 @@ Toggle.role = function() {
 			}
 		},
 
-		init: function(elementStr, toggledClass) {
+		init: function(toggleSelector, toggledClass) {
 			if (toggledClass) {
 				this.toggledClass = toggledClass;
 			}
 			
 			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
+				var toggleElem = e.target.closest(toggleSelector);
 
-				if (!elem) {
-					return;
+				if (toggleElem) {
+					e.preventDefault();
+
+					this.toggle(toggleElem);
 				}
-
-				e.preventDefault();
-
-				this.toggle(elem);
 			});
 		}
 	};
