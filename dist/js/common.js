@@ -27,6 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	//init toggle button
 	Toggle.init('.js-toggle');
 
+	Toggle.onChange = function(tgl, state) {
+		console.log(state);
+		console.dir(tgl);
+	}
+
 	//ajax button
 	/*Ajax.init('.js-ajax');
 
