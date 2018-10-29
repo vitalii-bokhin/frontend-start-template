@@ -574,12 +574,15 @@ h2 {
 }
 
 .btn, .arrow-btn, .plus-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;
   color: #FFF;
-  padding: 15px 28px 14px;
+  padding: 0 15px;
+  height: 43px;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -589,11 +592,20 @@ h2 {
   transition: .5s;
 }
 
+.btn span, .arrow-btn span, .plus-btn span {
+  display: block;
+  width: 100%;
+}
+
 .arrow-btn:after, .plus-btn:after {
   display: block;
   content: "";
   position: absolute;
   top: 50%;
+}
+
+.btn {
+  width: 150px;
 }
 
 .arrow-btn {
