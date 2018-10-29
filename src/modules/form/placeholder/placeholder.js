@@ -34,7 +34,7 @@ var Placeholder;
 				}
 
 				if (elem.value.length) {
-					this.hidePlaceholder(elem, true);
+					this.hide(elem, true);
 				}
 			}
 
@@ -43,7 +43,7 @@ var Placeholder;
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
-					this.hidePlaceholder(elem, true);
+					this.hide(elem, true);
 				}
 			}, true);
 
@@ -51,12 +51,12 @@ var Placeholder;
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
-					this.hidePlaceholder(elem, false);
+					this.hide(elem, false);
 				}
 			}, true);
 		},
 		
-		hidePlaceholder: function(elem, hide) {
+		hide: function(elem, hide) {
 			var label = document.querySelector('label.placeholder[for="'+ elem.id +'"]');
 
 			if (!label) {

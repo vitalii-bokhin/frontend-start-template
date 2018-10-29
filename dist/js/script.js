@@ -1873,7 +1873,7 @@ var Placeholder;
 				}
 
 				if (elem.value.length) {
-					this.hidePlaceholder(elem, true);
+					this.hide(elem, true);
 				}
 			}
 
@@ -1882,7 +1882,7 @@ var Placeholder;
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
-					this.hidePlaceholder(elem, true);
+					this.hide(elem, true);
 				}
 			}, true);
 
@@ -1890,12 +1890,12 @@ var Placeholder;
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
-					this.hidePlaceholder(elem, false);
+					this.hide(elem, false);
 				}
 			}, true);
 		},
 		
-		hidePlaceholder: function(elem, hide) {
+		hide: function(elem, hide) {
 			var label = document.querySelector('label.placeholder[for="'+ elem.id +'"]');
 
 			if (!label) {
@@ -2128,13 +2128,7 @@ var ValidateForm, NextFieldset, Form;
 		},
 		
 
-		checkbox: function(e) {
-			var elem = e.target.closest('input[type="checkbox"]');
-
-			if (!elem) {
-				return;
-			}
-
+		checkbox: function(elem) {
 			this.input = elem;
 
 			var group = elem.closest('.form__chbox-group');
@@ -2164,13 +2158,7 @@ var ValidateForm, NextFieldset, Form;
 			}
 		},
 
-		radio: function(e) {
-			var elem = e.target.closest('input[type="radio"]');
-
-			if (!elem) {
-				return;
-			}
-
+		radio: function(elem) {
 			this.input = elem;
 
 			var checkedElement = false,
@@ -2271,14 +2259,13 @@ var ValidateForm, NextFieldset, Form;
 			}
 		},
 
-		validate: function(form) {
+		validate: function(formElem) {
 			var err = 0;
 
 			//text, password, textarea
-			var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
+			var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], textarea');
 
 			for (var i = 0; i < elements.length; i++) {
-
 				var elem = elements[i];
 
 				if (elem.elementIsHidden()) {
@@ -2308,10 +2295,9 @@ var ValidateForm, NextFieldset, Form;
 			}
 
 			//select
-			var elements = form.querySelectorAll('.custom-select__input');
+			var elements = formElem.querySelectorAll('.custom-select__input');
 
 			for (var i = 0; i < elements.length; i++) {
-
 				var elem = elements[i];
 
 				if (elem.parentElement.elementIsHidden()) {
@@ -2324,7 +2310,7 @@ var ValidateForm, NextFieldset, Form;
 			}
 
 			//checkboxes
-			var elements = form.querySelectorAll('input[type="checkbox"]');
+			var elements = formElem.querySelectorAll('input[type="checkbox"]');
 
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
@@ -2346,7 +2332,7 @@ var ValidateForm, NextFieldset, Form;
 			}
 
 			//checkbox group
-			var groups = form.querySelectorAll('.form__chbox-group');
+			var groups = formElem.querySelectorAll('.form__chbox-group');
 
 			for (let i = 0; i < groups.length; i++) {
 				var group = groups[i],
@@ -2375,7 +2361,7 @@ var ValidateForm, NextFieldset, Form;
 			}
 
 			//radio group
-			var groups = form.querySelectorAll('.form__radio-group');
+			var groups = formElem.querySelectorAll('.form__radio-group');
 
 			for (let i = 0; i < groups.length; i++) {
 				var group = groups[i],
@@ -2404,10 +2390,9 @@ var ValidateForm, NextFieldset, Form;
 			}
 
 			//file
-			var elements = form.querySelectorAll('input[type="file"]');
+			var elements = formElem.querySelectorAll('input[type="file"]');
 
 			for (var i = 0; i < elements.length; i++) {
-
 				var elem = elements[i];
 
 				if (elem.elementIsHidden()) {
@@ -2429,10 +2414,9 @@ var ValidateForm, NextFieldset, Form;
 			}
 
 			//passwords compare
-			var elements = form.querySelectorAll('input[data-pass-compare-input]');
+			var elements = formElem.querySelectorAll('input[data-pass-compare-input]');
 
 			for (var i = 0; i < elements.length; i++) {
-
 				var elem = elements[i];
 
 				if (elem.elementIsHidden()) {
@@ -2444,7 +2428,7 @@ var ValidateForm, NextFieldset, Form;
 				var val = elem.value;
 
 				if (val.length) {
-					var compElemVal = form.querySelector(elem.getAttribute('data-pass-compare-input')).value;
+					var compElemVal = formElem.querySelector(elem.getAttribute('data-pass-compare-input')).value;
 
 					if (val !== compElemVal) {
 						this.errorTip(true, 2);
@@ -2452,15 +2436,13 @@ var ValidateForm, NextFieldset, Form;
 					} else {
 						this.errorTip(false);
 					}
-
 				}
-
 			}
 
 			if (err) {
-				form.classList.add('form-error');
+				formElem.classList.add('form-error');
 			} else {
-				form.classList.remove('form-error');
+				formElem.classList.remove('form-error');
 			}
 
 			return (err) ? false : true;
@@ -2468,18 +2450,18 @@ var ValidateForm, NextFieldset, Form;
 
 		init: function(formSelector) {
 			document.addEventListener('input', (e) => {
-				var elem = e.target.closest(formSelector +' input[type="text"], input[type="password"], textarea');
+				var elem = e.target.closest(formSelector +' input[type="text"],'+ formSelector +' input[type="password"],'+ formSelector +' textarea');
 
 				if (elem && elem.hasAttribute('data-tested')) {
 					this.validateOnInput(elem);
 				}
 			});
 
-			form.addEventListener('change', (e) => {
-				var inpType = e.target.type;
+			document.addEventListener('change', (e) => {
+				var elem = e.target.closest(formSelector +' input[type="radio"],'+ formSelector +' input[type="checkbox"]');
 
-				if (inpType == 'checkbox' || inpType == 'radio') {
-					this[inpType](e);
+				if (elem) {
+					this[elem.type](elem);
 				}
 			});
 		}
@@ -2544,24 +2526,29 @@ var ValidateForm, NextFieldset, Form;
 		submit: function(e, formElem) {
 			formElem.classList.add('form_sending');
 
-			if (!onSubmit) {
+			if (!this.onSubmit) {
 				return;
 			}
 
 			//clear form
 			function clear() {
-				var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
+				var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], textarea');
 
 				for (var i = 0; i < elements.length; i++) {
 					var elem = elements[i];
 
 					elem.value = '';
-					CustomPlaceholder.hidePlaceholder(elem, false);
+
+					if (window.Placeholder) {
+						Placeholder.hide(elem, false);
+					}
 				}
 
-				CustomSelect.reset();
+				if (window.CustomSelect) {
+					CustomSelect.reset();
+				}
 
-				var textareaMirrors = form.querySelectorAll('.form__textarea-mirror');
+				var textareaMirrors = formElem.querySelectorAll('.form__textarea-mirror');
 
 				for (var i = 0; i < textareaMirrors.length; i++) {
 					textareaMirrors[i].innerHTML = '';
@@ -2570,7 +2557,7 @@ var ValidateForm, NextFieldset, Form;
 
 			//submit button
 			function actSubmitBtn(st) {
-				var elements = form.querySelectorAll('button[type="submit"], input[type="submit"]');
+				var elements = formElem.querySelectorAll('button[type="submit"], input[type="submit"]');
 
 				for (var i = 0; i < elements.length; i++) {
 					var elem = elements[i];
@@ -2586,12 +2573,12 @@ var ValidateForm, NextFieldset, Form;
 			}
 
 			//call onSubmit
-			var ret = onSubmit(form, function(obj) {
+			var ret = this.onSubmit(formElem, function(obj) {
 				obj = obj || {};
 
 				actSubmitBtn(obj.unlockSubmitButton);
 
-				form.classList.remove('form_sending');
+				formElem.classList.remove('form_sending');
 
 				if (obj.clearForm == true) {
 					clear();
@@ -2625,87 +2612,6 @@ var ValidateForm, NextFieldset, Form;
 			});
 		}
 	};
-
-
-	/*Form = function(formSelector) {
-		var form = document.querySelector(formSelector);
-
-		if (!form) {
-			return;
-		}
-
-		this.onSubmit = null;
-
-		ValidateForm.init(form);
-
-		//clear form
-		function clear() {
-			var elements = form.querySelectorAll('input[type="text"], input[type="password"], textarea');
-
-			for (var i = 0; i < elements.length; i++) {
-				var elem = elements[i];
-
-				elem.value = '';
-				CustomPlaceholder.hidePlaceholder(elem, false);
-			}
-
-			CustomSelect.reset();
-
-			var textareaMirrors = form.querySelectorAll('.form__textarea-mirror');
-
-			for (var i = 0; i < textareaMirrors.length; i++) {
-				textareaMirrors[i].innerHTML = '';
-			}
-		}
-
-		//submit button
-		function actSubmitBtn(st) {
-			var elements = form.querySelectorAll('button[type="submit"], input[type="submit"]');
-
-			for (var i = 0; i < elements.length; i++) {
-				var elem = elements[i];
-
-				if (!elem.elementIsHidden()) {
-					if (st) {
-						elem.removeAttribute('disabled');
-					} else {
-						elem.setAttribute('disabled', 'disable');
-					}
-				}
-			}
-		}
-
-		//submit
-		form.addEventListener('submit', (e) => {
-			if (!ValidateForm.validate(form)) {
-				e.preventDefault();
-				return;
-			}
-
-			actSubmitBtn(false);
-
-			form.classList.add('form_sending');
-
-			if (this.onSubmit === null) {
-				return;
-			}
-
-			e.preventDefault();
-
-			//call onSubmit
-			this.onSubmit(form, function(obj) {
-				obj = obj || {};
-
-				actSubmitBtn(obj.unlockSubmitButton);
-
-				form.classList.remove('form_sending');
-
-				if (obj.clearForm == true) {
-					clear();
-				}
-			});
-		});
-	}*/
 
 	//bind labels
 	function BindLabels(elementsStr) {

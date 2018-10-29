@@ -240,73 +240,35 @@ document.addEventListener('DOMContentLoaded', function() {
 	Form.init('.form');
 
 	Form.onSubmit = function(form, callback) {
-		
-	}
+		switch (form.id) {
+			case 'form-no-ajax':
+			case 'search-form':
+			return true;
+			break;
 
-	/*var form = new Form('#form');
+			default:
+			ajax({
+				url: form.action,
+				send: new FormData(form),
+				success: function(response) {
+					var response = JSON.parse(response);
 
-	NextFieldset.init(form.form, '.form__button');
+					if (response.status == 'sent') {
+						Popup.message('#message-popup', 'Форма отправлена');
 
-	form.onSubmit = function(form, callback) {
-		
-	}
-	
-	//submit ajaxForm
-	var ajaxForm = new Form('#form-ajax');
-
-	ajaxForm.onSubmit = function(form, callback) {
-		ajax({
-			url: form.action,
-			send: new FormData(form),
-			success: function(response) {
-				var response = JSON.parse(response);
-
-				if (response.status == 'sent') {
-					Popup.message('#message-popup', 'Форма отправлена');
-
-					callback({clearForm: true, unlockSubmitButton: true});
-				} else {
+						callback({clearForm: true, unlockSubmitButton: true});
+					} else {
+						console.log(response);
+					}
+				},
+				error: function(response) {
 					console.log(response);
 				}
-			},
-			error: function(response) {
-				console.log(response);
-			}
-		});
+			});
+
+			return false;
+		}
 	}
-
-
-	//submit noAjaxForm
-	var noAjaxForm = new Form('#form-no-ajax');
-
-	//submit searchForm
-	var searchForm = new Form('#search-form');
-
-	//custom form
-	var custForm = new Form('#custom-form');
-
-	//custom form 2
-	var custForm2 = new Form('#custom-form-2');
-
-	custForm2.onSubmit = function(form, callback) {
-		var files = CustomFile.files(form);
-
-		console.log(files);
-
-		ajax({
-			url: form.action,
-			send: new FormData(form),
-			success: function(response) {
-				console.log(response);
-
-				callback({clearForm: true, unlockSubmitButton: true});
-			},
-			error: function(response) {
-				console.log(response);
-				callback({unlockSubmitButton: true});
-			}
-		});
-	}*/
 });
 
 //GetCountriesAndCitiesList
