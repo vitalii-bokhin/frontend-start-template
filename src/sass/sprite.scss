@@ -57,7 +57,8 @@ $sprite-width: 2192;
 	@include bgs(320);
 }
 
-.video__btn-play{
+.video__btn-play,
+.icon:before{
 	@extend %svg-youtube;
 	@include bgs(576);
 }
