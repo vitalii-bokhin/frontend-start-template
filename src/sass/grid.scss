@@ -24,7 +24,9 @@
 			padding-left: 10px;
 			padding-right: 10px;
 		}
-		&:not(.row_nscol) > [class*="col-"]{
+	}
+	@media(max-width: 750px){
+		&:not(.row_no-str-col) > [class*="col-"]{
 			margin-left: 0;
 			max-width: 100%;
 			flex-basis: 100%;
@@ -148,7 +150,6 @@
 				}
 			}
 		}
-
 		&-col{
 			width: auto !important;
 			flex-basis: auto;
@@ -256,9 +257,125 @@
 
 @media(max-width: 1000px){
 	.vw1000{
+		&-row{
+			&-col-12{
+				& > [class*="col-"]{
+					margin-left: 0;
+					max-width: 100%;
+					flex-basis: 100%;
+				}
+			}
+		}
 		&-col{
 			width: auto !important;
 			flex-basis: auto;
+			max-width: 100%;
+			&-0-1{
+				max-width: 4.166665%;
+				flex-basis: 4.166665%;
+			}
+			&-1{
+				max-width: 8.33333%;
+				flex-basis: 8.33333%;
+			}
+			&-1-2{
+				max-width: 12.499995%;
+				flex-basis: 12.499995%;
+			}
+			&-2{
+				max-width: 16.66666%;
+				flex-basis: 16.66666%;
+			}
+			&-2-3{
+				max-width: 20.83333%;
+				flex-basis: 20.83333%;
+			}
+			&-3{
+				max-width: 25%;
+				flex-basis: 25%;
+			}
+			&-3-4{
+				max-width: 29.16666%;
+				flex-basis: 29.16666%;
+			}
+			&-4{
+				max-width: 33.33332%;
+				flex-basis: 33.33332%;
+			}
+			&-4-5{
+				max-width: 37.499985%;
+				flex-basis: 37.499985%;
+			}
+			&-5{
+				max-width: 41.66665%;
+				flex-basis: 41.66665%;
+			}
+			&-5-6{
+				max-width: 45.833325%;
+				flex-basis: 45.833325%;
+			}
+			&-6{
+				max-width: 50%;
+				flex-basis: 50%;
+			}
+			&-6-7{
+				max-width: 54.166665%;
+				flex-basis: 54.166665%;
+			}
+			&-7{
+				max-width: 58.33333%;
+				flex-basis: 58.33333%;
+			}
+			&-7-8{
+				max-width: 62.499985%;
+				flex-basis: 62.499985%;
+			}
+			&-8{
+				max-width: 66.66664%;
+				flex-basis: 66.66664%;
+			}
+			&-8-9{
+				max-width: 70.833305%;
+				flex-basis: 70.833305%;
+			}
+			&-9{
+				max-width: 74.99997%;
+				flex-basis: 74.99997%;
+			}
+			&-9-10{
+				max-width: 79.166635%;
+				flex-basis: 79.166635%;
+			}
+			&-10{
+				max-width: 83.33333%;
+				flex-basis: 83.33333%;
+			}
+			&-10-11{
+				max-width: 87.499995%;
+				flex-basis: 87.499995%;
+			}
+			&-11{
+				max-width: 91.66663%;
+				flex-basis: 91.66663%;
+			}
+			&-11-12{
+				max-width: 95.833295%;
+				flex-basis: 95.833295%;
+			}
+			&-12{
+				margin-left: 0;
+				max-width: 100%;
+				flex-basis: 100%;
+			}
+		}
+	}
+}
+
+@media(max-width: 750px){
+	.vw750{
+		&-col{
+			width: auto !important;
+			flex-basis: auto !important;
 			max-width: 100%;
 			&-0-1{
 				max-width: 4.166665%;
