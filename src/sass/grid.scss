@@ -4,25 +4,27 @@
 	display: flex;
 	flex-wrap: wrap;
 	flex-basis: 100%;
-	max-width: 1366px;
-	
+	&_wrp{
+		max-width: 1366px;
+	}
 	& > [class*="col"]{
 		width: 100%;
 		padding: 15px;
 		flex-grow: 0;
 		flex-shrink: 1;
 	}
-
 	&_col-middle{
 		align-items: center;
 	}
-
 	&_col-bottom{
 		align-items: flex-end;
 	}
-
 	@media(max-width: 1000px){
-		& > [class*="col-"]:not([class*="vw1000-col"]){
+		&_wpr{
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		&:not(.row_nscol) > [class*="col-"]{
 			margin-left: 0;
 			max-width: 100%;
 			flex-basis: 100%;
