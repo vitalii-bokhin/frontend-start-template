@@ -15,9 +15,7 @@ var Tab;
 		options: null,
 
 		change: function(btnElem) {
-			if (btnElem.classList.contains('active')) {
-				return;
-			}
+			if (btnElem.classList.contains('active')) return;
 
 			var contElem = btnElem.closest(this.options.container),
 			btnElements = contElem.querySelectorAll(this.options.button),
@@ -47,10 +45,8 @@ var Tab;
 		},
 
 		reInit: function() {
-			if (!this.options) {
-				return;
-			}
-			
+			if (!this.options) return;
+
 			var contElements = document.querySelectorAll(this.options.container);
 			
 			for (var i = 0; i < contElements.length; i++) {
@@ -59,13 +55,11 @@ var Tab;
 		},
 
 		init: function(options) {
-			this.options = options;
-
 			var contElements = document.querySelectorAll(options.container);
 
-			if (!contElements.length) {
-				return;
-			}
+			if (!contElements.length) return;
+
+			this.options = options;
 
 			//init tabs
 			for (let i = 0; i < contElements.length; i++) {
@@ -87,9 +81,7 @@ var Tab;
 			document.addEventListener('click', (e) => {
 				var btnElem = e.target.closest(options.button);
 
-				if (!btnElem) {
-					return;
-				}
+				if (!btnElem) return;
 
 				e.preventDefault();
 
