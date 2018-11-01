@@ -22,7 +22,7 @@
 	}
 
 	@media(max-width: 1000px){
-		& > div[class*="col-"]:not([class*="vw1000-col"]){
+		& > [class*="col-"]:not([class*="vw1000-col"]){
 			margin-left: 0;
 			max-width: 100%;
 			flex-basis: 100%;

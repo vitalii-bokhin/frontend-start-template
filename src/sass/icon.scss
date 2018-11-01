@@ -6,21 +6,21 @@
 %ico{
 	display: inline-block;
 	position: relative;
-	min-height: em(13);
 	&:before{
 		display: block;
 		content: "";
 		position: absolute;
 		left: 0;
-		top: em(-5);
 	}
 }
 
 .icon{
 	@extend %ico;
+	min-height: em(13);
 	padding-left: em(30);
 	&:before{
 		width: em(25);
 		height: em(21);
+		top: em(-5);
 	}
 }
