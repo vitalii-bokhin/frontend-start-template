@@ -133,9 +133,12 @@
 		max-width: 100%;
 		flex-basis: 100%;
 	}
-
 	&-right{
 		margin-left: auto;
+	}
+	&_grow{
+		flex-grow: 1 !important;
+		flex-shrink: 0 !important;
 	}
 }
 
