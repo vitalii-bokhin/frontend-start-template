@@ -19,18 +19,8 @@
 
 /*section*/
 .section{
-	margin-top: 15px;
-	margin-bottom: 15px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	&-outer{
-		margin-top: 30px;
-		margin-bottom: 30px;
-	}
-	&-inner{
-		padding-top: 30px;
-		padding-bottom: 30px;
-	}
+	padding-top: 30px;
+	padding-bottom: 30px;
 }
 
 /*list*/
@@ -56,7 +46,7 @@
 /*link*/
 .link{
 	text-decoration: none;
-	border-bottom: 2px solid $gn;
+	border-bottom: 2px solid $be;
 	transition: .5s;
 	&:hover{
 		border-bottom-color: transparent;

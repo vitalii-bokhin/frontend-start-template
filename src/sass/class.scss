@@ -19,13 +19,52 @@
 	text-align: right !important;
 }
 
+/*background*/
+.bg-gray{
+	background: $gy;
+}
+
+/*border*/
+.brad-5{
+	border-radius: 5px;
+}
+
+/*width*/
+.maxw-100{
+	max-width: 100px;
+}
+
+/*height*/
+.minh-100per{
+	min-height: 100%;
+}
+
 /*position*/
 .pos-r{
 	position: relative !important;
 }
 
-
 /*marging*/
+.mt{
+	&-0{
+		margin-top: 0 !important;
+	}
+}
+.mb{
+	&-0{
+		margin-bottom: 0 !important;
+	}
+}
+.ml{
+	&-0{
+		margin-left: 0 !important;
+	}
+}
+.mr{
+	&-0{
+		margin-right: 0 !important;
+	}
+}
 .m{
 	&-0{
 		margin: 0 !important;
@@ -33,6 +72,26 @@
 }
 
 /*padding*/
+.pt{
+	&-0{
+		padding-top: 0 !important;
+	}
+}
+.pb{
+	&-0{
+		padding-bottom: 0 !important;
+	}
+}
+.pl{
+	&-0{
+		padding-left: 0 !important;
+	}
+}
+.pr{
+	&-0{
+		padding-right: 0 !important;
+	}
+}
 .p{
 	&-x{
 		&-0{

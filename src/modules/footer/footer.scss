@@ -6,9 +6,6 @@
 .footer{
 	background: #FFF;
 	box-shadow: 0 -1px 11px rgba(0,0,0,.21);
-	&__row{
-		max-width: none;
-	}
 	&__logo{
 		img{
 			width: 100%;
@@ -20,9 +17,29 @@
 		font-size: 15px;
 		line-height: (18/15);
 	}
-
 	@media(max-width: 1200px){
 		
 	}
+}
 
+.foot-nav{
+	@include clr;
+	list-style: none;
+	&__item{
+		float: left;
+		margin-left: 35px;
+		&:first-child{
+			margin-left: 0;
+		}
+	}
+	&__a{
+		color: $be;
+		letter-spacing: 0.8px;
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		transition: .5s;
+		&:hover{
+			border-bottom-color: $be;
+		}
+	}
 }

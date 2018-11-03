@@ -8,17 +8,11 @@
 	height: 100px;
 	align-items: center;
 	transition: .21s;
-	
 	&_fixed,
 	.mob-nav-is-opened &{
 		background: #FFF;
 		box-shadow: 0 1px 11px rgba(0,0,0,.21);
 	}
-
-	&__row{
-		max-width: none;
-	}
-
 	&__logo{
 		display: inline-block;
 		width: 100%;
@@ -29,7 +23,6 @@
 			height: auto;
 		}
 	}
-
 	&__nav{
 		float: left;
 		
@@ -37,10 +30,8 @@
 			float: right;
 		}
 	}
-
 	@media(max-width: 1000px){
 		height: 65px;
-		
 		&__nav{
 			float: none;
 			padding: 20px 0;
@@ -62,7 +53,6 @@
 				}
 			}
 		}
-
 		&__user{
 			float: none;
 			margin: 0;
