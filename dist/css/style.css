@@ -137,6 +137,11 @@ i {
   font-style: italic;
 }
 
+hr {
+  margin: 0;
+  border: none;
+}
+
 html, body {
   font-weight: 400;
   font-style: normal;
@@ -195,6 +200,12 @@ h2 {
 
 h1, h2 {
   margin-bottom: 1em;
+}
+
+hr {
+  margin: 5px 0;
+  border: none;
+  border-bottom: 1px solid #aaaaaa;
 }
 
 .row {
@@ -2066,6 +2077,14 @@ select {
 
 .form__field_btn .form__text-input {
   padding-right: 50px;
+}
+
+.form__label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 10px;
 }
 
 .form__btn {
