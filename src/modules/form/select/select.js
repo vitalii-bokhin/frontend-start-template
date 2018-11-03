@@ -60,7 +60,6 @@ var CustomSelect;
 
 				toButtonValue[i] = elem.innerHTML;
 				toInputValue[i] = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
-
 			}
 
 			if (toButtonValue.length) {
@@ -71,7 +70,6 @@ var CustomSelect;
 				inputsBlock.innerHTML = '';
 
 				if (toInputValue.length > 1) {
-
 					for (var i = 1; i < toInputValue.length; i++) {
 						var yetInput = document.createElement('input');
 
@@ -81,9 +79,7 @@ var CustomSelect;
 
 						inputsBlock.appendChild(yetInput);
 					}
-
 				}
-
 			} else {
 				button.innerHTML = button.getAttribute('data-placeholder');
 				input.value = '';
@@ -97,9 +93,7 @@ var CustomSelect;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 
-				if (!elem.hasAttribute('data-target-elements')) {
-					continue;
-				}
+				if (!elem.hasAttribute('data-target-elements')) continue;
 
 				var targetElem = document.querySelector(elem.getAttribute('data-target-elements'));
 
@@ -147,7 +141,7 @@ var CustomSelect;
 				
 				this.close();
 
-				Placeholder.hidePlaceholder(input, true);
+				Placeholder.hide(input, true);
 			}
 
 			this.targetAction();
@@ -216,9 +210,7 @@ var CustomSelect;
 						var elem = item.nextElementSibling;
 
 						while (elem) {
-							if (!elem) {
-								break;
-							}
+							if (!elem) break;
 
 							if (!elem.elementIsHidden()) {
 								return elem;
@@ -238,9 +230,7 @@ var CustomSelect;
 					var elem = options.firstElementChild;
 
 					while (elem) {
-						if (!elem) {
-							break;
-						}
+						if (!elem) break;
 
 						if (!elem.elementIsHidden()) {
 							elem.classList.add('hover');
@@ -258,9 +248,7 @@ var CustomSelect;
 						var elem = item.previousElementSibling;
 
 						while (elem) {
-							if (!elem) {
-								break;
-							}
+							if (!elem) break;
 
 							if (!elem.elementIsHidden()) {
 								return elem;
@@ -280,9 +268,7 @@ var CustomSelect;
 					var elem = options.lastElementChild;
 
 					while (elem) {
-						if (!elem) {
-							break;
-						}
+						if (!elem) break;
 
 						if (!elem.elementIsHidden()) {
 							elem.classList.add('hover');
@@ -297,16 +283,13 @@ var CustomSelect;
 
 				case 13:
 				this.selectVal(hoverItem.querySelector('.custom-select__val'));
-				break;
 			}
 		},
 
 		build: function(elementStr) {
 			var elements = document.querySelectorAll(elementStr);
 
-			if (!elements.length) {
-				return;
-			}
+			if (!elements.length) return;
 
 			for (let i = 0; i < elements.length; i++) {
 				var elem = elements[i],
@@ -387,9 +370,7 @@ var CustomSelect;
 			document.addEventListener('focus', (e) => {
 				var elem = e.target.closest('.custom-select__autocomplete');
 
-				if (!elem) {
-					return;
-				}
+				if (!elem) return;
 
 				this.field = elem.closest('.custom-select');
 
@@ -402,9 +383,7 @@ var CustomSelect;
 			document.addEventListener('input', (e) => {
 				var elem = e.target.closest('.custom-select__autocomplete');
 
-				if (!elem) {
-					return;
-				}
+				if (!elem) return;
 
 				this.field = elem.closest('.custom-select');
 
@@ -419,9 +398,7 @@ var CustomSelect;
 			document.addEventListener('keydown', (e) => {
 				var elem = e.target.closest('.custom-select_opened');
 
-				if (!elem) {
-					return;
-				}
+				if (!elem) return;
 
 				this.field = elem.closest('.custom-select');
 
