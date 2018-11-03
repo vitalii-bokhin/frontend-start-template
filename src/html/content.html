@@ -1,14 +1,14 @@
 @@include('_head.html', {"title": "Content"})
 
 <!--HEADER/-->
-@@include('../modules/header/header.html')
+@@include('../modules/header/header.html', {"menu_item_current": "content"})
 <!--/HEADER-->
   
 <!--MAIN/-->
 <main>
 
 	<div class="section">
-		<div class="row wrap vw1000-row-col">
+		<div class="row row_wrp">
 			<div class="col-3">
 				<p style="background: yellow"> 
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -42,7 +42,7 @@
 	</div>
 
 	<div class="section">
-		<div class="row vw1000-row-col wrap">
+		<div class="row row_wrp">
 			<div class="col-4">
 				@@include('../modules/diagram/diagram.html')
 			</div>
@@ -89,7 +89,7 @@
 	</div>
 
 	<div class="section">
-		<div class="row vw1000-row-col wrap">
+		<div class="row row_wrp">
 			<div class="col-2">
 				<div class="numspin">55555</div>
 			</div>
@@ -117,6 +117,33 @@
 		<div class="row wrap">
 			<div class="col">
 				<div class="numspin-s">5 555 555</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row row_wrp" style="margin-top: 100px; margin-bottom: 100px">
+			<div class="col-12">
+				<ul class="paginate">
+					<li class="paginate__item">
+						<a href="#" class="paginate__prev paginate__prev_disabled">&lt;</a>
+					</li>
+					<li class="paginate__item">
+						<span class="paginate__curr">1</span>
+					</li>
+					<li class="paginate__item">
+						<a href="#" class="paginate__a">2</a>
+					</li>
+					<li class="paginate__item">
+						<a href="#" class="paginate__a">3</a>
+					</li>
+					<li class="paginate__item">
+						<a href="#" class="paginate__a">4</a>
+					</li>
+					<li class="paginate__item">
+						<a href="#" class="paginate__next">&gt;</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>

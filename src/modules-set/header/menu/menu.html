@@ -1,5 +1,5 @@
 <ul class="menu">
-	<li class="menu__item menu__item_has-children @@if (menu_item_current === 'home' || menu_item_current === 'fsscroll' || menu_item_current === 'getcontentajax') {menu__item_current}">
+	<li class="menu__item menu__item_has-children @@if (menu_item_current === 'home' || menu_item_current === 'fsscroll' || menu_item_current === 'getcontentajax' || menu_item_current === 'content') {menu__item_current}">
 		<a href="home.html" class="menu__a">Home</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
@@ -8,6 +8,9 @@
 			</li>
 			<li class="sub-menu__item @@if (menu_item_current === 'getcontentajax') {sub-menu__item_current}">
 				<a href="getcontentajax.html" class="sub-menu__a">Get Content Ajax</a>
+			</li>
+			<li class="sub-menu__item @@if (menu_item_current === 'content') {sub-menu__item_current}">
+				<a href="content.html" class="sub-menu__a">Content</a>
 			</li>
 		</ul>
 	</li>

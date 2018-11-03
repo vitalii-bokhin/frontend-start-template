@@ -2587,6 +2587,50 @@ select {
   height: auto;
 }
 
+/*paginate*/
+.paginate {
+  list-style: none;
+  text-align: center;
+}
+
+.paginate__item {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 3px;
+}
+
+.paginate__a, .paginate__curr {
+  display: block;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 21px;
+  color: #000000;
+  text-align: center;
+  text-decoration: none;
+}
+
+.paginate__a {
+  opacity: .3;
+  transition: .5s;
+}
+
+.paginate__a:hover {
+  opacity: .7;
+}
+
+.paginate__prev, .paginate__next {
+  display: block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 7px;
+}
+
+.paginate__prev_disabled, .paginate__next_disabled {
+  opacity: .2;
+}
+
 .menu__arr, .accord__button:after, .arrow-btn:after, .custom-checkbox__input:checked + .custom-checkbox__label:before, .fb-btn, .ok-btn, .plus-btn:after, .form__btn_search:before, .tw-btn, .vk-btn, .video__btn-play,
 .icon:before {
   background: url("../images/sprite.svg") no-repeat;
