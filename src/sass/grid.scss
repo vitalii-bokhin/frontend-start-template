@@ -7,6 +7,9 @@
 		margin: 0 auto;
 		max-width: 1366px;
 	}
+	&_nw{
+		flex-wrap: nowrap;
+	}
 	& > [class*="col"]{
 		width: 100%;
 		padding: 15px;
@@ -25,8 +28,13 @@
 			padding-right: 10px;
 		}
 	}
+	@media(min-width: 751px){
+		&_vw751-nw{
+			flex-wrap: nowrap;
+		}
+	}
 	@media(max-width: 750px){
-		&:not(.row_no-str-col) > [class*="col-"]{
+		&:not(.row_nw) > [class*="col-"]:not([class*="vw750-col-"]){
 			margin-left: 0;
 			max-width: 100%;
 			flex-basis: 100%;
@@ -138,7 +146,6 @@
 	}
 	&_grow{
 		flex-grow: 1 !important;
-		flex-shrink: 0 !important;
 	}
 }
 
