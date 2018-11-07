@@ -3,4 +3,5 @@
 *.pdf
 *.zip
 package-lock.json
-*.sublime*
+*.*-workspace
+*.*-project
