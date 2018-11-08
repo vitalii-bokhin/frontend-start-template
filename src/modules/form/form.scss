@@ -35,6 +35,11 @@
 		overflow: auto;
 		line-height: 1.3;
 	}
+	&__text-input{
+		html[data-useragent*="firefox"] &{
+			line-height: 1.187;
+		}
+	}
 	&__text-input,
 	&__textarea{
 		padding: 10px 15px;
