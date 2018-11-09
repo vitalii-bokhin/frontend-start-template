@@ -14,8 +14,7 @@
 		}
 	}
 	&__text-input,
-	&__textarea,
-	&__textarea_var-h-wrap{
+	&__textarea{
 		display: block;
 		width: 100%;
 		border: 1px solid $gy;
@@ -31,17 +30,16 @@
 	}
 	&__text-input{
 		height: 44px;
-		line-height: normal;
 	}
 	&__textarea{
-		height: 80px;
+		height: 100px;
 		resize: none;
 		overflow: auto;
 		line-height: 1.3;
 	}
 	&__text-input,
 	&__textarea{
-		padding: em(12) em(20);
+		padding: 12px 15px;
 	}
 	&__field{
 		position: relative;
@@ -63,12 +61,12 @@
 	}
 	&__btn{
 		display: block;
-		height: 41px;
+		height: 44px;
 		position: absolute;
 		right: 0;
 		top: 0;
 		z-index: 3;
-		border: none;
+		border: 1px solid transparent;
 		background: none;
 		-webkit-appearance: none;
 		transition: .5s;
@@ -175,18 +173,15 @@
 	}
 }
 
-
-
-
-
 /*variable height textarea*/
 .var-height-textarea{
 	position: relative;
 	&__mirror{
-		min-height: 42px;
+		min-height: 44px;
 		white-space: pre-wrap;
 		line-height: 1.3;
-		padding: 10px 15px;
+		padding: 12px 15px;
+		border: 1px solid transparent;
 		visibility: hidden;
 	}
 	&__textarea{
