@@ -730,6 +730,7 @@ hr {
   color: #FFF;
   padding: 0 15px;
   height: 43px;
+  line-height: normal;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -2676,7 +2677,6 @@ select {
 
 /*image*/
 .fullwidth-img {
-  display: block;
   width: 100%;
   height: auto;
 }

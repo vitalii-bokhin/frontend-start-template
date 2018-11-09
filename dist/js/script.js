@@ -2008,7 +2008,20 @@ var ValidateForm, NextFieldset, Form;
 		txt: function() {
 			var err = false;
 
-			if (!/^[0-9a-zа-яё_,.:-\s]*$/i.test(this.input.value)) {
+			if (!/^[0-9a-zа-яё_,.:;@-\s]*$/i.test(this.input.value)) {
+				this.errorTip(true, 2);
+				err = true;
+			} else {
+				this.errorTip(false);
+			}
+
+			return err;
+		},
+
+		num: function() {
+			var err = false;
+
+			if (!/^[0-9.,-]*$/.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {
