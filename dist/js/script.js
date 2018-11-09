@@ -5,7 +5,7 @@
 	"use strict";
 
 	//Get useragent
-	document.documentElement.setAttribute('data-useragent', navigator.userAgent);
+	document.documentElement.setAttribute('data-useragent', navigator.userAgent.toLowerCase());
 
 	//Browser identify
 	browser = (function(userAgent) {
