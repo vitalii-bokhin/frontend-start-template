@@ -5,15 +5,15 @@
 
 .custom-select{
 	position: relative;
+	height: 44px;
 	&__button{
 		display: inline-flex;
 		align-items: center;
 		justify-content: flex-start;
 		width: 100%;
 		height: 44px;
-		padding: 0 em(43) 0 em(20);
+		padding: 0 43px 0 15px;
 		border: 1px solid $gy;
-		line-height: normal;
 		text-align: left;
 		position: relative;
 		z-index: 3;
@@ -52,11 +52,14 @@
 	&__arr{
 		display: block;
 		width: 40px;
-		height: 40px;
+		height: 44px;
 		position: absolute;
 		right: 0;
 		top: 0;
 		z-index: 3;
+		border: none;
+		border: 1px solid transparent;
+		background: none;
 		&:after{
 			@extend %ab;
 			width: 0;
@@ -69,7 +72,7 @@
 			margin-top: -2px;
 		}
 		& ~ .custom-select__input{
-			padding-right: 40px;
+			padding-right: 43px;
 		}
 	}
 	&__options{

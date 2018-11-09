@@ -18,12 +18,14 @@ header, footer, main, section, nav, article, aside {
 
 button{
 	display: inline-block;
+	line-height: normal;
 	overflow: visible;
 	cursor: pointer;
 	-webkit-appearance: none;
 }
 
-input { 
+input {
+	line-height: normal;
 	-webkit-appearance: none;
 }
 
