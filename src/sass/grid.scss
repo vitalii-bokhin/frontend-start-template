@@ -1,8 +1,9 @@
+@import "mixins";
+
 .row{
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
-	flex-basis: 100%;
 	&_wrp{
 		margin: 0 auto;
 		max-width: 1366px;
@@ -10,17 +11,37 @@
 	&_nw{
 		flex-wrap: nowrap;
 	}
-	& > [class*="col"]{
-		width: 100%;
-		padding: 15px;
-		flex-grow: 0;
-		flex-shrink: 1;
-	}
 	&_col-middle{
 		align-items: center;
 	}
 	&_col-bottom{
 		align-items: flex-end;
+	}
+	& > [class*="col"]{
+		padding: 15px;
+		flex-grow: 0;
+		flex-shrink: 1;
+	}
+	&_block{
+		display: block;
+		@include clr;
+		& > [class*="col"]{
+			float: left;
+			width: 100%;
+		}
+	}
+	@media(min-width: 1001px){
+		&_vw1001-nw{
+			flex-wrap: nowrap;
+		}
+		&_vw1001-block{
+			display: block;
+			@include clr;
+			& > [class*="col"]{
+				float: left;
+				width: 100%;
+			}
+		}
 	}
 	@media(max-width: 1000px){
 		&_wpr{
@@ -32,12 +53,21 @@
 		&_vw751-nw{
 			flex-wrap: nowrap;
 		}
+		&_vw751-block{
+			display: block;
+			@include clr;
+			& > [class*="col"]{
+				float: left;
+				width: 100%;
+			}
+		}
 	}
 	@media(max-width: 750px){
 		&:not(.row_nw) > [class*="col-"]:not([class*="vw750-col-"]){
-			margin-left: 0;
 			max-width: 100%;
 			flex-basis: 100%;
+			margin-left: 0;
+			float: none !important;
 		}
 	}
 }
@@ -143,6 +173,7 @@
 	}
 	&-right{
 		margin-left: auto;
+		float: right !important;
 	}
 	&_grow{
 		flex-grow: 1 !important;
@@ -154,16 +185,17 @@
 		&-row{
 			&-col-12{
 				& > [class*="col-"]{
-					margin-left: 0;
 					max-width: 100%;
 					flex-basis: 100%;
+					margin-left: 0;
+					float: none !important;
 				}
 			}
 		}
 		&-col{
 			width: auto !important;
-			flex-basis: auto;
 			max-width: 100%;
+			flex-basis: auto;
 			&-0-1{
 				max-width: 4.166665%;
 				flex-basis: 4.166665%;
@@ -257,9 +289,10 @@
 				flex-basis: 95.833295%;
 			}
 			&-12{
-				margin-left: 0;
 				max-width: 100%;
 				flex-basis: 100%;
+				margin-left: 0;
+				float: none !important;
 			}
 		}
 	}
@@ -270,16 +303,17 @@
 		&-row{
 			&-col-12{
 				& > [class*="col-"]{
-					margin-left: 0;
 					max-width: 100%;
 					flex-basis: 100%;
+					margin-left: 0;
+					float: none !important;
 				}
 			}
 		}
 		&-col{
 			width: auto !important;
-			flex-basis: auto;
 			max-width: 100%;
+			flex-basis: auto;
 			&-0-1{
 				max-width: 4.166665%;
 				flex-basis: 4.166665%;
@@ -373,9 +407,10 @@
 				flex-basis: 95.833295%;
 			}
 			&-12{
-				margin-left: 0;
 				max-width: 100%;
 				flex-basis: 100%;
+				margin-left: 0;
+				float: none !important;
 			}
 		}
 	}
@@ -385,8 +420,8 @@
 	.vw750{
 		&-col{
 			width: auto !important;
-			flex-basis: auto !important;
 			max-width: 100%;
+			flex-basis: auto;
 			&-0-1{
 				max-width: 4.166665%;
 				flex-basis: 4.166665%;
@@ -480,9 +515,10 @@
 				flex-basis: 95.833295%;
 			}
 			&-12{
-				margin-left: 0;
 				max-width: 100%;
 				flex-basis: 100%;
+				margin-left: 0;
+				float: none !important;
 			}
 		}
 	}
