@@ -1,1 +1,1 @@
-<?php echo $_FILES['file']; ?>
+<?php echo json_encode($_POST); ?>
