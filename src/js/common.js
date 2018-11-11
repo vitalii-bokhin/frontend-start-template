@@ -251,6 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			case 'custom-form-2':
 			case 'custom-form-3':
+			case 'custom-form-4':
 			var files = CustomFile.files(form);
 			
 			console.log(files);
@@ -284,9 +285,20 @@ document.addEventListener('DOMContentLoaded', function() {
 //GetCountriesAndCitiesList
 function dAirGetInit() {
 	dAirGet.countries(function(c) {
-		var contryObj = JSON.parse(c);
-		CustomSelect.setOptions('.countries', contryObj, 'name', 'name');
+		var contryObjArr = JSON.parse(c);
+
+		CustomSelect.setOptions('.countries', contryObjArr, 'name', 'name', 'id');
 	});
+
+	CustomSelect.onSelect = function (inpElem, val, secVal) {
+		if (inpElem.name == 'country') {
+			dAirGet.region(secVal, function(c) {
+				var regionObjArr = JSON.parse(c);
+				
+				CustomSelect.setOptions('.cities', regionObjArr, 'name', 'name');
+			});
+		}
+	}
 }
 
 /*

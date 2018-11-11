@@ -94,7 +94,7 @@
   font-style: italic;
 }
 
-html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, header, footer, main, section, nav, article, aside {
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, hr, header, footer, main, section, nav, article, aside {
   margin: 0;
   padding: 0;
   outline: none;
@@ -114,6 +114,7 @@ header, footer, main, section, nav, article, aside {
 
 button {
   display: inline-block;
+  vertical-align: bottom;
   line-height: normal;
   overflow: visible;
   cursor: pointer;
@@ -137,11 +138,6 @@ b, strong {
 
 i {
   font-style: italic;
-}
-
-hr {
-  margin: 0;
-  border: none;
 }
 
 html, body {
@@ -1761,7 +1757,6 @@ hr {
 
 .custom-radio {
   position: relative;
-  margin-bottom: 14px;
 }
 
 .custom-radio__input {
@@ -1814,7 +1809,6 @@ hr {
 
 .custom-select {
   position: relative;
-  height: 44px;
 }
 
 .custom-select__button {

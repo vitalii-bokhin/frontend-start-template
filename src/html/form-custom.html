@@ -184,22 +184,32 @@
 			
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">Where are you from?</div>
-					<div class="txt c-gray mb-25">
+					<div class="title-h2 mb-25">Where are you from?</div>
+					<div class="txt c-gray">
 						Get data from https://get.dealersair.com/api/geo/
 					</div>
 				</div>
 			</div>
 			
 			<div class="row">
-				<div class="col-12">
+				<div class="col-6">
 					<div class="form__field countries">
 						<select name="country" data-placeholder="Select your country*" data-required="true">
 							<!--options-->
 						</select>
 					</div>
 				</div>
+				<div class="col-6">
+					<div class="form__field cities">
+						<select name="city" data-placeholder="Select your city*" data-required="true">
+							<!--options-->
+							<option value="0">Select country first</option>
+						</select>
+					</div>
+				</div>
 			</div>
+
+
 			
 			<div class="row mt-25">
 				<div class="col-12">
@@ -431,6 +441,38 @@
 			<div class="row row_wrp mt-25">
 				<div class="col-12">
 					<button type="submit" class="form__submit btn">Submit</button>
+				</div>
+			</div>
+			
+			<div class="form-error-tip">Ошибка заполнения полей формы</div>
+			
+		</form>
+	</div>
+
+	<div class="section">
+		<form id="custom-form-4" action="test-ajax.php" method="POST" enctype="multipart/form-data" class="form">
+			
+			<div class="row">
+				<div class="col-12 pad-0">
+					<div class="form__field">
+						<div class="custom-file">
+							<div class="custom-file__items custom-file__items_flex">
+								<!--items-->
+							</div>
+							<div class="ta-c">
+								<label for="upload-file-input-5" class="custom-file__lab">Upload image (less 1Mb)</label>
+								<button type="button" class="custom-file__clear-btn">Сбросить</button>
+							</div>
+							<input id="upload-file-input-5" type="file" name="uploads-2" data-ext="jpg,png,gif" data-max-size="1000000" data-required="true" class="custom-file__input">
+						</div>
+						<div class="field-error-tip ta-c mt-25" data-error-text-2="Upload image (jpg, png, gif)" data-error-text-3="Upload file less 1Mb">Upload image</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row mt-25">
+				<div class="col-12">
+					<button type="submit" class="form__submit button">Submit</button>
 				</div>
 			</div>
 			
