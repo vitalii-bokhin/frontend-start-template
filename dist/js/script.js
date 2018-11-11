@@ -1697,21 +1697,29 @@ var CustomFile;
 		filesArrayObj: {},
 		
 		clear: function(elem) {
+			if (elem.hasAttribute('data-preview-elem')) {
+				document.querySelector(elem.getAttribute('data-preview-elem')).innerHTML = '';
+			}
+
 			elem.closest('.custom-file').querySelector('.custom-file__items').innerHTML = '';
 			
 			this.filesObj[elem.id] = {};
 			this.filesArrayObj[elem.id] = [];
-			
-			elem.value = null;
 		},
 		
 		loadPreview: function(file, fileItem) {
 			var reader = new FileReader(),
-			previewDiv = document.createElement('div');
+			previewDiv;
 			
-			previewDiv.className = 'custom-file__preview';
-			
-			fileItem.insertBefore(previewDiv, fileItem.firstChild);
+			if (this.input.hasAttribute('data-preview-elem')) {
+				previewDiv = document.querySelector(this.input.getAttribute('data-preview-elem'));
+			} else {
+				previewDiv = document.createElement('div');
+				
+				previewDiv.className = 'custom-file__preview';
+				
+				fileItem.insertBefore(previewDiv, fileItem.firstChild);
+			}
 			
 			reader.onload = function(e) {
 				setTimeout(function() {
@@ -1730,8 +1738,7 @@ var CustomFile;
 			var fileItems = elem.closest('.custom-file').querySelector('.custom-file__items');
 			
 			if (elem.getAttribute('data-action') == 'clear' || !elem.multiple) {
-				fileItems.innerHTML = '';
-				this.filesObj[elem.id] = {};
+				this.clear(elem);
 			}
 			
 			for (var i = 0; i < elem.files.length; i++) {
@@ -1831,6 +1838,8 @@ var CustomFile;
 				
 				if (clearBtnElem) {
 					var inputElem = clearBtnElem.closest('.custom-file').querySelector('.custom-file__input');
+
+					inputElem.value = null;
 					
 					this.clear(inputElem);
 				}
