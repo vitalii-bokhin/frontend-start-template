@@ -10,9 +10,14 @@ var CustomSelect;
 		onSelect: null,
 		
 		reset: function() {
-			var buttonElements = document.querySelectorAll('.custom-select__button'),
+			var fieldElements = document.querySelectorAll('.custom-select'),
+			buttonElements = document.querySelectorAll('.custom-select__button'),
 			inputElements = document.querySelectorAll('.custom-select__input'),
 			valueElements = document.querySelectorAll('.custom-select__val');
+
+			for (var i = 0; i < fieldElements.length; i++) {
+				fieldElements[i].classList.remove('custom-select_changed');
+			}
 			
 			for (var i = 0; i < buttonElements.length; i++) {
 				buttonElements[i].innerHTML = buttonElements[i].getAttribute('data-placeholder');
@@ -28,10 +33,13 @@ var CustomSelect;
 		},
 		
 		close: function() {
-			var fieldElements = document.querySelectorAll('.custom-select');
+			var fieldElements = document.querySelectorAll('.custom-select'),
+			optionsElements = document.querySelectorAll('.custom-select__options');
 			
 			for (var i = 0; i < fieldElements.length; i++) {
 				fieldElements[i].classList.remove('custom-select_opened');
+				optionsElements[i].classList.remove('ovfauto');
+				optionsElements[i].style.height = 0;
 			}
 			
 			var listItemElements = document.querySelectorAll('.custom-select__options li');
@@ -44,7 +52,14 @@ var CustomSelect;
 		open: function() {
 			this.field.classList.add('custom-select_opened');
 			
-			this.field.querySelector('.custom-select__options').scrollTop = 0;
+			var opionsElem = this.field.querySelector('.custom-select__options');
+
+			opionsElem.style.height = (opionsElem.scrollHeight + 2) +'px';
+			opionsElem.scrollTop = 0;
+
+			setTimeout(function() {
+				opionsElem.classList.add('ovfauto');
+			}, 550);
 		},
 		
 		selectMultipleVal: function(elem, button, input) {
@@ -315,8 +330,9 @@ var CustomSelect;
 					if (opt.hasAttribute('selected')) {
 						selectedOption = opt;
 					}
+					((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '')
 					
-					optionsList += '<li><button type="button" class="custom-select__val'+ ((opt.hasAttribute('selected')) ? ' custom-select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '' ) + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '' ) +'>'+ opt.innerHTML +'</button></li>';
+					optionsList += '<li><button type="button" class="custom-select__val'+ ((opt.hasAttribute('selected')) ? ' custom-select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '') + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '') +'>'+ opt.innerHTML +'</button></li>';
 				}
 				
 				var require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
