@@ -621,6 +621,8 @@ var ValidateForm, NextFieldset, Form;
 
 			if (ret === false) {
 				e.preventDefault();
+				
+				actSubmitBtn(false);
 			}
 		},
 

@@ -153,6 +153,58 @@
 					</div>
 				</div>
 			</div>
+
+			<div id="duplicate-model" class="hidden">
+				<div class="row">
+					<div class="col-6">
+						<div class="form__field">
+							<select name="favorite-animal" data-placeholder="Select an animal*" data-required="true">
+								<option value="monkey">Monkey</option>
+								<option value="cat">Cat</option>
+								<option>Dog</option>
+								<option value="lion">Lion</option>
+								<option value="crocodile">Crocodile</option>
+								<option value="elephant">Elephant</option>
+								<option value="other" data-target-elements="#other-animal-field">Other</option>
+							</select>
+							<div class="field-error-tip">Select an animal</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form__field">
+							<select name="favorite-animal2" data-required="true">
+								<option value="monkey">Monkey</option>
+								<option value="cat">Cat</option>
+								<option>Dog</option>
+								<option value="lion">Lion</option>
+								<option value="crocodile">Crocodile</option>
+								<option value="elephant">Elephant</option>
+								<option value="other" data-target-elements="#other-animal-field">Other</option>
+							</select>
+							<div class="field-error-tip">Select an animal</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div id="other-animal-field" class="form__field hidden">
+							<input type="text" data-required="true" placeholder="Other animal" class="form__text-input" value="">
+							<div class="field-error-tip">Enter other animal</div>
+						</div>
+					</div>
+					<div class="col-12">
+						<button type="button" class="js-remove-dupicated-form-btn">- Remove Fields</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="duplicated-block">
+				<!-- duplicated -->
+			</div>
+
+			<div class="row">
+				<div class="col-12">
+					<button type="button" data-form-model="#duplicate-model" data-duplicated-dest="#duplicated-block" class="js-dupicate-form-btn">+ Add Fields</button>
+				</div>
+			</div>
 			
 			<div class="row mt-25">
 				<div class="col-12">

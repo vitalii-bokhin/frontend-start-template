@@ -217,7 +217,7 @@
 					
 					<div class="row">
 						<div class="col-12">
-							<button type="button" class="form__button btn" data-next-fieldset-item="#step-fs2">Next</button>
+							<button type="button" class="form__button btn js-next-fieldset-btn" data-go-to-fieldset="#step-fs2">Next</button>
 						</div>
 					</div>
 				</div>
@@ -234,10 +234,10 @@
 
 					<div class="row">
 						<div class="col">
-							<button type="button" class="form__button button" data-prev-fieldset-item="#step-fs1">Prevent</button>
+							<button type="button" class="form__button btn js-prev-fieldset-btn" data-go-to-fieldset="#step-fs1">Prev</button>
 						</div>
 						<div class="col">
-							<button type="button" class="form__button btn" data-next-fieldset-item="#step-fs3">Next</button>
+							<button type="button" class="form__button btn js-next-fieldset-btn" data-go-to-fieldset="#step-fs3">Next</button>
 						</div>
 					</div>
 				</div>
@@ -249,6 +249,11 @@
 								<input type="text" data-required="true" placeholder="Weight*" class="form__text-input" value="" >
 								<div class="field-error-tip">Enter your weight</div>
 							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<button type="button" class="form__button btn js-prev-fieldset-btn" data-go-to-fieldset="#step-fs2">Prev</button>
 						</div>
 					</div>
 				</div>
@@ -304,11 +309,36 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="form__field">
-						<input type="text" name="name" data-required="true" placeholder="Name*" class="form__text-input" value="">
+						<input type="text" name="myname[]" data-required="true" placeholder="Name*" class="form__text-input" value="">
 						<div class="field-error-tip">Enter your name</div>
 					</div>
 				</div>
 			</div>
+
+			<div id="duplicate-model" class="hidden">
+				<div class="row">
+					<div class="col-12">
+						<div class="form__field">
+							<input type="text" name="myname[]" data-required="true" placeholder="Name*" class="form__text-input" value="">
+							<div class="field-error-tip">Enter your name</div>
+						</div>
+					</div>
+					<div class="col-12">
+						<button type="button" class="js-remove-dupicated-form-btn">- Name</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="duplicated-block">
+				<!-- duplicated -->
+			</div>
+
+			<div class="row">
+				<div class="col-12">
+					<button type="button" data-form-model="#duplicate-model" data-duplicated-dest="#duplicated-block" class="js-dupicate-form-btn">+ Name</button>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col">
 					<button type="submit" class="form__submit btn">Submit</button>
@@ -338,6 +368,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col">
 					<button type="submit" class="form__submit btn">Submit</button>
