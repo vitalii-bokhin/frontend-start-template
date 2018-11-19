@@ -566,69 +566,6 @@ var ValidateForm, Form;
 		}
 	};
 	
-	// duplicate form
-	var DuplicateForm = {
-		add: function (btnElem) {
-			var modelElem = (btnElem.hasAttribute('data-form-model')) ? document.querySelector(btnElem.getAttribute('data-form-model')) : null,
-			destElem = (btnElem.hasAttribute('data-duplicated-dest')) ? document.querySelector(btnElem.getAttribute('data-duplicated-dest')) : null;
-			
-			if (!modelElem || !destElem) return;
-			
-			var duplicatedDiv = document.createElement('div');
-			
-			duplicatedDiv.className = 'duplicated';
-			
-			duplicatedDiv.innerHTML = modelElem.innerHTML;
-			
-			destElem.appendChild(duplicatedDiv);
-			
-			var dupicatedElements = destElem.querySelectorAll('.duplicated');
-			
-			for (var i = 0; i < dupicatedElements.length; i++) {
-				var dupicatedElem = dupicatedElements[i],
-				labelElements = dupicatedElem.querySelectorAll('label'),
-				inputElements = dupicatedElem.querySelectorAll('input');
-				
-				for (var j = 0; j < labelElements.length; j++) {
-					var elem = labelElements[j];
-					
-					if (elem.htmlFor != '') {
-						elem.htmlFor += '-'+ i +'-'+ j;
-					}
-				}
-				
-				for (var j = 0; j < inputElements.length; j++) {
-					var elem = inputElements[j];
-					
-					if (elem.id != '') {
-						elem.id += '-'+ i +'-'+ j;
-					}
-				}
-			}
-		},
-		
-		remove: function (btnElem) {
-			var duplElem =  btnElem.closest('.duplicated');
-			
-			if (duplElem) {
-				duplElem.innerHTML = '';
-			}
-		},
-		
-		init: function (addBtnSelector, removeBtnSelector) {
-			document.addEventListener('click', (e) => {
-				var addBtnElem = e.target.closest(addBtnSelector),
-				removeBtnElem = e.target.closest(removeBtnSelector);
-				
-				if (addBtnElem) {
-					this.add(addBtnElem);
-				} else if (removeBtnElem) {
-					this.remove(removeBtnElem);
-				}
-			});
-		}
-	};
-	
 	// form
 	Form = {
 		onSubmit: null,
@@ -738,6 +675,69 @@ var ValidateForm, Form;
 			}
 		}
 	}
+
+	// duplicate form
+	var DuplicateForm = {
+		add: function (btnElem) {
+			var modelElem = (btnElem.hasAttribute('data-form-model')) ? document.querySelector(btnElem.getAttribute('data-form-model')) : null,
+			destElem = (btnElem.hasAttribute('data-duplicated-dest')) ? document.querySelector(btnElem.getAttribute('data-duplicated-dest')) : null;
+			
+			if (!modelElem || !destElem) return;
+			
+			var duplicatedDiv = document.createElement('div');
+			
+			duplicatedDiv.className = 'duplicated';
+			
+			duplicatedDiv.innerHTML = modelElem.innerHTML;
+			
+			destElem.appendChild(duplicatedDiv);
+			
+			var dupicatedElements = destElem.querySelectorAll('.duplicated');
+			
+			for (var i = 0; i < dupicatedElements.length; i++) {
+				var dupicatedElem = dupicatedElements[i],
+				labelElements = dupicatedElem.querySelectorAll('label'),
+				inputElements = dupicatedElem.querySelectorAll('input');
+				
+				for (var j = 0; j < labelElements.length; j++) {
+					var elem = labelElements[j];
+					
+					if (elem.htmlFor != '') {
+						elem.htmlFor += '-'+ i +'-'+ j;
+					}
+				}
+				
+				for (var j = 0; j < inputElements.length; j++) {
+					var elem = inputElements[j];
+					
+					if (elem.id != '') {
+						elem.id += '-'+ i +'-'+ j;
+					}
+				}
+			}
+		},
+		
+		remove: function (btnElem) {
+			var duplElem =  btnElem.closest('.duplicated');
+			
+			if (duplElem) {
+				duplElem.innerHTML = '';
+			}
+		},
+		
+		init: function (addBtnSelector, removeBtnSelector) {
+			document.addEventListener('click', (e) => {
+				var addBtnElem = e.target.closest(addBtnSelector),
+				removeBtnElem = e.target.closest(removeBtnSelector);
+				
+				if (addBtnElem) {
+					this.add(addBtnElem);
+				} else if (removeBtnElem) {
+					this.remove(removeBtnElem);
+				}
+			});
+		}
+	};
 	
 	// set tabindex
 	/*function SetTabindex(elementsStr) {

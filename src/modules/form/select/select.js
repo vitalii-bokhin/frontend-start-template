@@ -14,7 +14,7 @@ var CustomSelect;
 			buttonElements = document.querySelectorAll('.custom-select__button'),
 			inputElements = document.querySelectorAll('.custom-select__input'),
 			valueElements = document.querySelectorAll('.custom-select__val');
-
+			
 			for (var i = 0; i < fieldElements.length; i++) {
 				fieldElements[i].classList.remove('custom-select_changed');
 			}
@@ -53,10 +53,10 @@ var CustomSelect;
 			this.field.classList.add('custom-select_opened');
 			
 			var opionsElem = this.field.querySelector('.custom-select__options');
-
+			
 			opionsElem.style.height = (opionsElem.scrollHeight + 2) +'px';
 			opionsElem.scrollTop = 0;
-
+			
 			setTimeout(function() {
 				opionsElem.classList.add('ovfauto');
 			}, 550);
@@ -159,6 +159,10 @@ var CustomSelect;
 				
 				if (window.Placeholder) {
 					Placeholder.hide(input, true);
+				}
+				
+				if (input.getAttribute('data-submit-form-onchange')) {
+					input.closest('form').submit();
 				}
 				
 				if (this.onSelect) {
@@ -337,6 +341,7 @@ var CustomSelect;
 				
 				var require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
 				placeholder = elem.getAttribute('data-placeholder'),
+				submitOnChange = (elem.hasAttribute('data-submit-form-onchange')) ? ' data-submit-form-onchange="'+ elem.getAttribute('data-submit-form-onchange') +'" ' : '',
 				head;
 				
 				if (elem.getAttribute('data-type') == 'autocomplete') {
@@ -349,7 +354,7 @@ var CustomSelect;
 					class: (elem.multiple) ? ' custom-select_multiple' : '',
 					inpDiv: (elem.multiple) ? '<div class="custom-select__multiple-inputs"></div>' : ''
 				},
-				hiddenInp = (elem.getAttribute('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ elem.name +'"'+ require +'class="custom-select__input" value="'+ ((selectedOption) ? selectedOption.value : '') +'">' : '';
+				hiddenInp = (elem.getAttribute('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ elem.name +'"'+ require + submitOnChange +'class="custom-select__input" value="'+ ((selectedOption) ? selectedOption.value : '') +'">' : '';
 				
 				//output select
 				var customElem = document.createElement('div');

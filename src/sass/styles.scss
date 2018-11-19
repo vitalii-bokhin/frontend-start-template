@@ -3,6 +3,11 @@
 @import "extends";
 @import "mixins";
 
+/*main*/
+.main{
+	padding-top: 100px;
+}
+
 /*full-page*/
 .full-page{
 	@extend %fwh;

@@ -412,6 +412,9 @@
 				margin-left: 0;
 				float: none !important;
 			}
+			&-first{
+				order: -1;
+			}
 		}
 	}
 }
@@ -519,6 +522,9 @@
 				flex-basis: 100%;
 				margin-left: 0;
 				float: none !important;
+			}
+			&-first{
+				order: -1;
 			}
 		}
 	}
