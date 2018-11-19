@@ -9,11 +9,12 @@ var CustomSelect;
 		hideCssClass: 'hidden',
 		onSelect: null,
 		
-		reset: function() {
-			var fieldElements = document.querySelectorAll('.custom-select'),
-			buttonElements = document.querySelectorAll('.custom-select__button'),
-			inputElements = document.querySelectorAll('.custom-select__input'),
-			valueElements = document.querySelectorAll('.custom-select__val');
+		reset: function (parentElem) {
+			var parElem = parentElem || document, 
+			fieldElements = parElem.querySelectorAll('.custom-select'),
+			buttonElements = parElem.querySelectorAll('.custom-select__button'),
+			inputElements = parElem.querySelectorAll('.custom-select__input'),
+			valueElements = parElem.querySelectorAll('.custom-select__val');
 			
 			for (var i = 0; i < fieldElements.length; i++) {
 				fieldElements[i].classList.remove('custom-select_changed');
@@ -25,6 +26,7 @@ var CustomSelect;
 			
 			for (var i = 0; i < inputElements.length; i++) {
 				inputElements[i].value = '';
+				inputElements[i].blur();
 			}
 			
 			for (var i = 0; i < valueElements.length; i++) {
