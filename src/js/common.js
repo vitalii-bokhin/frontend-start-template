@@ -1,7 +1,3 @@
-/*
-* In common.js use only ECMAScript 5.1
-*/
-
 document.addEventListener('DOMContentLoaded', function() {
 	(function initFun() {
 		if (window.innerWidth < 1200) {

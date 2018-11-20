@@ -1,13 +1,13 @@
-//global variables
+// global variables
 ; var browser, ajax, animate;
 
 (function() {
 	"use strict";
 
-	//Get useragent
+	// Get useragent
 	document.documentElement.setAttribute('data-useragent', navigator.userAgent.toLowerCase());
 
-	//Browser identify
+	// Browser identify
 	browser = (function(userAgent) {
 		userAgent = userAgent.toLowerCase();
 
@@ -16,7 +16,7 @@
 		}
 	})(navigator.userAgent);
 
-	//Add support CustomEvent constructor for IE
+	// Add support CustomEvent constructor for IE
 	try {
 		new CustomEvent("IE has CustomEvent, but doesn't support constructor");
 	} catch (e) {
@@ -39,7 +39,7 @@
 		CustomEvent.prototype = Object.create(window.Event.prototype);
 	}
 
-	//Window Resized Event
+	// Window Resized Event
 	var winResizedEvent = new CustomEvent('winResized'),
 	rsz = true;
 
@@ -54,7 +54,7 @@
 		}
 	});
 
-	//Closest polyfill
+	// Closest polyfill
 	if (!Element.prototype.closest) {
 		(function(ElProto) {
 			ElProto.matches = ElProto.matches || ElProto.mozMatchesSelector || ElProto.msMatchesSelector || ElProto.oMatchesSelector || ElProto.webkitMatchesSelector;
@@ -77,18 +77,16 @@
 		})(Element.prototype);
 	}
 
-	//Check element for hidden
+	// Check element for hidden
 	Element.prototype.elementIsHidden = function() {
 		var elem = this;
 
 		while (elem) {
-			if (!elem) {
-				break;
-			}
+			if (!elem) break;
 
-			var compStyles = getComputedStyle(elem);
+			var compStyle = getComputedStyle(elem);
 
-			if (compStyles.display == 'none' || compStyles.visibility == 'hidden' || compStyles.opacity == '0') {
+			if (compStyle.display == 'none' || compStyle.visibility == 'hidden' || compStyle.opacity == '0') {
 				return true;
 			}
 
@@ -98,7 +96,7 @@
 		return false;
 	}
 
-	//Ajax
+	// Ajax
 	ajax = function(options) {
 		var xhr = new XMLHttpRequest();
 
@@ -160,5 +158,4 @@
 	function quad(timeFraction) {
 		return Math.pow(timeFraction, 2)
 	}
-
 })();
