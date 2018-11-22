@@ -44,9 +44,11 @@
 		}
 	}
 	@media(max-width: 1000px){
-		&_wpr{
-			padding-left: 10px;
-			padding-right: 10px;
+		@media(min-width: 751px){
+			&_wpr{
+				padding-left: 15px;
+				padding-right: 15px;
+			}
 		}
 	}
 	@media(min-width: 751px){

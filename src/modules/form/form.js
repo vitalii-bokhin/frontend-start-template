@@ -591,8 +591,8 @@ var ValidateForm, Form;
 					}
 				}
 				
-				if (window.CustomSelect) {
-					CustomSelect.reset();
+				if (window.Select) {
+					Select.reset();
 				}
 				
 				var textareaMirrors = formElem.querySelectorAll('.form__textarea-mirror');

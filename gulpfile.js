@@ -26,6 +26,7 @@ var modulesOn = [
 	'form/checkbox',
 	'form/radio',
 	'form/select',
+	'form/autocomplete',
 	'form/file',
 	'form/placeholder',
 	'form/maskinput',
@@ -154,7 +155,10 @@ gulp.task('svgs', function() {
 	}))
 	.pipe(replace('\/dist\/', '/'))
 	.pipe(gulp.dest('.'))
-	.pipe(notify('SVG Sprites had built!'));
+	.pipe(notify({
+		title: 'SVG',
+		message: 'SVG Sprites had built!'
+	}));
 });
 
 // DISTRIBUTION
@@ -167,8 +171,12 @@ gulp.task('dist', function() {
 	
 	gulp.src(['!src/js/global.js', 'src/js/*.js'])
 	.pipe(babel())
+	.on('error', notify.onError(function(err) { return err; }))
 	.pipe(gulp.dest('dist/js'))
-	.pipe(notify('Common Script had Refreshed!'));
+	.pipe(notify({
+		title: 'JS',
+		message: 'Dist Common Script'
+	}));
 });
 
 // Functions

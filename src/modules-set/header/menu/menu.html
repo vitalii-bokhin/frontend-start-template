@@ -71,12 +71,15 @@
 			</li>
 		</ul>
 	</li>
-	<li class="menu__item menu__item_has-children">
+	<li class="menu__item menu__item_has-children @@if (menu_item_current === 'form' || menu_item_current === 'form_complete') {menu__item_current}">
 		<a href="form.html" class="menu__a">Form</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
-			<li class="sub-menu__item">
+			<li class="sub-menu__item @@if (menu_item_current === 'timer') {sub-menu__item_current}">
 				<a href="form-custom.html" class="sub-menu__a">Custom Form</a>
+			</li>
+			<li class="sub-menu__item @@if (menu_item_current === 'form_autocomplete') {sub-menu__item_current}">
+				<a href="form-autocomplete.html" class="sub-menu__a">Autocomplete</a>
 			</li>
 		</ul>
 	</li>

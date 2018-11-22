@@ -1,7 +1,3 @@
-/*
-* In common.js use only ECMAScript 5.1
-*/
-
 document.addEventListener('DOMContentLoaded', function() {
 	(function initFun() {
 		if (window.innerWidth < 1200) {
@@ -276,7 +272,6 @@ document.addEventListener('DOMContentLoaded', function() {
 					console.log(response);
 				}
 			});
-			
 			return false;
 		}
 	}
@@ -287,15 +282,15 @@ function dAirGetInit() {
 	dAirGet.countries(function(c) {
 		var contryObjArr = JSON.parse(c);
 
-		CustomSelect.setOptions('.countries', contryObjArr, 'name', 'name', 'id');
+		Select.setOptions('.countries', contryObjArr, 'name', 'name', 'id');
 	});
 
-	CustomSelect.onSelect = function (inpElem, val, secVal) {
+	Select.onSelect = function (inpElem, val, secVal) {
 		if (inpElem.name == 'country') {
 			dAirGet.region(secVal, function(c) {
 				var regionObjArr = JSON.parse(c);
 				
-				CustomSelect.setOptions('.cities', regionObjArr, 'name', 'name');
+				Select.setOptions('.cities', regionObjArr, 'name', 'name');
 			});
 		}
 	}

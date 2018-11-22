@@ -1,0 +1,56 @@
+@@include('_head.html', {"title": "Form Autocomplete"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html', {"menu_item_current": "form_autocomplete"})
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+	
+	<div class="section">
+		
+		<form action="test-ajax.php" method="POST" class="form">
+			
+			<div class="row row_wrp">
+				<div class="col-6">
+					<div class="form__field">
+						<div class="autocomplete">
+							<button type="button" class="autocomplete__arr"></button>
+							<input type="text" name="planet" data-required="true" placeholder="Select a planet*" class="autocomplete__input">
+							<ul class="autocomplete__options">
+								<li><button type="button" class="autocomplete__val">Mercury</button></li>
+								<li><button type="button" class="autocomplete__val">Venus</button></li>
+								<li><button type="button" class="autocomplete__val">Earth</button></li>
+								<li><button type="button" class="autocomplete__val">Mars</button></li>
+								<li><button type="button" class="autocomplete__val">Jupiter</button></li>
+								<li><button type="button" class="autocomplete__val">Saturn</button></li>
+								<li><button type="button" class="autocomplete__val">Uranus</button></li>
+								<li><button type="button" class="autocomplete__val">Neptune</button></li>
+								<li><button type="button" class="autocomplete__val">Pluto</button></li>
+							</ul>
+						</div>
+						<div class="field-error-tip">Select a planet</div>
+					</div>
+				</div>
+			</div>
+			
+		</form>
+		
+	</div>
+	
+</main>
+<!--/MAIN-->
+
+<!--FOOTER/-->
+@@include('../modules/footer/footer.html')
+<!--/FOOTER-->
+
+<!--POPUPs/-->
+@@include('../modules/popup/popup.html')
+<!--/POPUPs-->
+
+@@include('_javascript.html')
+
+
+</body>
+</html>

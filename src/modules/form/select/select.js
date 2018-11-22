@@ -1,10 +1,10 @@
-var CustomSelect;
+; var Select;
 
-(function() {
+(function () {
 	"use strict";
 	
-	//custom select
-	CustomSelect = {
+	// custom select
+	Select = {
 		field: null,
 		hideCssClass: 'hidden',
 		onSelect: null,
@@ -34,7 +34,7 @@ var CustomSelect;
 			}
 		},
 		
-		close: function() {
+		close: function () {
 			var fieldElements = document.querySelectorAll('.custom-select'),
 			optionsElements = document.querySelectorAll('.custom-select__options');
 			
@@ -51,20 +51,21 @@ var CustomSelect;
 			}
 		},
 		
-		open: function() {
+		open: function () {
 			this.field.classList.add('custom-select_opened');
 			
 			var opionsElem = this.field.querySelector('.custom-select__options');
 			
-			opionsElem.style.height = (opionsElem.scrollHeight + 2) +'px';
+			opionsElem.style.height = ((opionsElem.scrollHeight < 132) ? 132 : (opionsElem.scrollHeight + 2)) +'px';
+			
 			opionsElem.scrollTop = 0;
 			
-			setTimeout(function() {
+			setTimeout(function () {
 				opionsElem.classList.add('ovfauto');
 			}, 550);
 		},
 		
-		selectMultipleVal: function(elem, button, input) {
+		selectMultipleVal: function (elem, button, input) {
 			var toButtonValue = [],
 			toInputValue = [],
 			inputsBlock = this.field.querySelector('.custom-select__multiple-inputs');
@@ -105,7 +106,7 @@ var CustomSelect;
 			}
 		},
 		
-		targetAction: function() {
+		targetAction: function () {
 			var elements = this.field.querySelectorAll('.custom-select__val');
 			
 			for (var i = 0; i < elements.length; i++) {
@@ -131,7 +132,7 @@ var CustomSelect;
 			}
 		},
 		
-		selectVal: function(elem) {
+		selectVal: function (elem) {
 			var button = this.field.querySelector('.custom-select__button'),
 			input = this.field.querySelector('.custom-select__input');
 			
@@ -183,35 +184,7 @@ var CustomSelect;
 			ValidateForm.select(input);
 		},
 		
-		autocomplete: function(elem) {
-			var match = false,
-			reg = new RegExp(elem.value, 'gi'),
-			valueElements = this.field.querySelectorAll('.custom-select__val');
-			
-			if (elem.value.length) {
-				for (var i = 0; i < valueElements.length; i++) {
-					var valueElem = valueElements[i];
-					
-					valueElem.classList.remove('custom-select__val_checked');
-					
-					if (valueElem.innerHTML.match(reg)) {
-						valueElem.parentElement.classList.remove('hidden');
-						
-						match = true;
-					} else {
-						valueElem.parentElement.classList.add('hidden');
-					}
-				}
-			}
-			
-			if (!match) {
-				for (var i = 0; i < valueElements.length; i++) {
-					valueElements[i].parentElement.classList.remove('hidden');
-				}
-			}
-		},
-		
-		setOptions: function(fieldSelector, optObj, nameKey, valKey, secValKey) {
+		setOptions: function (fieldSelector, optObj, nameKey, valKey, secValKey) {
 			var fieldElements = document.querySelectorAll(fieldSelector);
 			
 			for (var i = 0; i < fieldElements.length; i++) {
@@ -230,14 +203,14 @@ var CustomSelect;
 			}
 		},
 		
-		keyboard: function(key) {
+		keyboard: function (key) {
 			var options = this.field.querySelector('.custom-select__options'),
 			hoverItem = options.querySelector('li.hover');
 			
 			switch (key) {
 				case 40:
 				if (hoverItem) {
-					var nextItem = function(item) {
+					var nextItem = function (item) {
 						var elem = item.nextElementSibling;
 						
 						while (elem) {
@@ -275,7 +248,7 @@ var CustomSelect;
 				
 				case 38:
 				if (hoverItem) {
-					var nextItem = function(item) {
+					var nextItem = function (item) {
 						var elem = item.previousElementSibling;
 						
 						while (elem) {
@@ -317,7 +290,7 @@ var CustomSelect;
 			}
 		},
 		
-		build: function(elementStr) {
+		build: function (elementStr) {
 			var elements = document.querySelectorAll(elementStr);
 			
 			if (!elements.length) return;
@@ -329,7 +302,7 @@ var CustomSelect;
 				optionsList = '',
 				selectedOption = null;
 				
-				//option list
+				// option list
 				for (let i = 0; i < options.length; i++) {
 					var opt = options[i];
 					
@@ -358,7 +331,7 @@ var CustomSelect;
 				},
 				hiddenInp = (elem.getAttribute('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ elem.name +'"'+ require + submitOnChange +'class="custom-select__input" value="'+ ((selectedOption) ? selectedOption.value : '') +'">' : '';
 				
-				//output select
+				// output select
 				var customElem = document.createElement('div');
 				customElem.className = 'custom-select'+ multiple.class + ((selectedOption) ? ' custom-select_changed' : '');
 				customElem.innerHTML = head +'<ul class="custom-select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv;
@@ -367,10 +340,10 @@ var CustomSelect;
 			}
 		},
 		
-		init: function(elementStr) {
+		init: function (elementStr) {
 			this.build(elementStr);
 			
-			//click on select or value or arrow button
+			// click on select or value or arrow button
 			document.addEventListener('click', (e) => {
 				var btnElem = e.target.closest('.custom-select__button'),
 				valElem = e.target.closest('.custom-select__val'),
@@ -399,35 +372,7 @@ var CustomSelect;
 				}
 			});
 			
-			//focus autocomplete
-			document.addEventListener('focus', (e) => {
-				var elem = e.target.closest('.custom-select__autocomplete');
-				
-				if (!elem) return;
-				
-				this.field = elem.closest('.custom-select');
-				
-				this.close();
-				
-				this.open();
-			}, true);
-			
-			//input autocomplete
-			document.addEventListener('input', (e) => {
-				var elem = e.target.closest('.custom-select__autocomplete');
-				
-				if (!elem) return;
-				
-				this.field = elem.closest('.custom-select');
-				
-				this.autocomplete(elem);
-				
-				if (!this.field.classList.contains('custom-select_opened')) {
-					this.open();
-				}
-			});
-			
-			//keyboard events
+			// keyboard events
 			document.addEventListener('keydown', (e) => {
 				var elem = e.target.closest('.custom-select_opened');
 				
@@ -444,7 +389,7 @@ var CustomSelect;
 				}
 			});
 			
-			//close all
+			// close all
 			document.addEventListener('click', (e) => {
 				if (!e.target.closest('.custom-select_opened')) {
 					this.close();
@@ -453,8 +398,8 @@ var CustomSelect;
 		}
 	};
 	
-	//init scripts
-	document.addEventListener('DOMContentLoaded', function() {
-		CustomSelect.init('select');
+	// init scripts
+	document.addEventListener('DOMContentLoaded', function () {
+		Select.init('select');
 	});
 })();

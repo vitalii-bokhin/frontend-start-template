@@ -1,4 +1,4 @@
-var CustomFile;
+; var CustomFile;
 
 (function() {
 	"use strict";

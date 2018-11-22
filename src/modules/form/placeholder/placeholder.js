@@ -1,4 +1,4 @@
-var Placeholder;
+; var Placeholder;
 
 (function() {
 	"use strict";
@@ -7,9 +7,7 @@ var Placeholder;
 		init: function(elementsStr) {
 			var elements = document.querySelectorAll(elementsStr);
 
-			if (!elements.length) {
-				return;
-			}
+			if (!elements.length) return;
 
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
