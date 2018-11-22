@@ -1,0 +1,16 @@
+@import "../../../sass/variables";
+@import "../../../sass/functions";
+@import "../../../sass/extends";
+@import "../../../sass/mixins";
+@import "../form-extends";
+
+.autocomplete{
+   position: relative;
+   &__input{
+      @extend %inp;
+      padding-right: 45px;
+   }
+   &__options{
+ 
+   }
+}

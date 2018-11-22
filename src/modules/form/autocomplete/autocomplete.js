@@ -4,7 +4,9 @@
    "use strict";
 
    AutoComplete = {
-      complete: function(elem) {
+		field: null,
+		
+      complete: function (elem) {
 			var match = false,
 			reg = new RegExp(elem.value, 'gi'),
 			valueElements = this.field.querySelectorAll('.custom-select__val');

@@ -1,10 +1,10 @@
-; var SelectComplete;
+; var AutoComplete;
 
 (function () {
    "use strict";
 
-   SelectComplete = {
-      complete: function(elem) {
+   AutoComplete = {
+      complete: function (elem) {
 			var match = false,
 			reg = new RegExp(elem.value, 'gi'),
 			valueElements = this.field.querySelectorAll('.custom-select__val');
@@ -34,7 +34,7 @@
 
       init: function () {
          document.addEventListener('focus', (e) => {
-				var elem = e.target.closest('.custom-select__autocomplete');
+				var elem = e.target.closest('.autocomplete__input');
 				
 				if (!elem) return;
 				
@@ -46,11 +46,11 @@
          }, true);
          
          document.addEventListener('input', (e) => {
-				var elem = e.target.closest('.custom-select__autocomplete');
+				var elem = e.target.closest('.autocomplete__input');
 				
 				if (!elem) return;
 				
-				Select.field = elem.closest('.custom-select');
+				Select.field = elem.closest('.autocomplete');
 				
 				this.complete(elem);
 				
@@ -63,6 +63,6 @@
 
    // init scripts
 	document.addEventListener('DOMContentLoaded', function () {
-		SelectComplete.init();
+		AutoComplete.init();
 	});
 })();

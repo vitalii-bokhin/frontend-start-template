@@ -184,6 +184,34 @@
 			ValidateForm.select(input);
 		},
 		
+		autocomplete: function(elem) {
+			var match = false,
+			reg = new RegExp(elem.value, 'gi'),
+			valueElements = this.field.querySelectorAll('.custom-select__val');
+			
+			if (elem.value.length) {
+				for (var i = 0; i < valueElements.length; i++) {
+					var valueElem = valueElements[i];
+					
+					valueElem.classList.remove('custom-select__val_checked');
+					
+					if (valueElem.innerHTML.match(reg)) {
+						valueElem.parentElement.classList.remove('hidden');
+						
+						match = true;
+					} else {
+						valueElem.parentElement.classList.add('hidden');
+					}
+				}
+			}
+			
+			if (!match) {
+				for (var i = 0; i < valueElements.length; i++) {
+					valueElements[i].parentElement.classList.remove('hidden');
+				}
+			}
+		},
+		
 		setOptions: function (fieldSelector, optObj, nameKey, valKey, secValKey) {
 			var fieldElements = document.querySelectorAll(fieldSelector);
 			
@@ -369,6 +397,34 @@
 					} else {
 						this.close();
 					}
+				}
+			});
+			
+			//focus autocomplete
+			document.addEventListener('focus', (e) => {
+				var elem = e.target.closest('.custom-select__autocomplete');
+				
+				if (!elem) return;
+				
+				this.field = elem.closest('.custom-select');
+				
+				this.close();
+				
+				this.open();
+			}, true);
+			
+			//input autocomplete
+			document.addEventListener('input', (e) => {
+				var elem = e.target.closest('.custom-select__autocomplete');
+				
+				if (!elem) return;
+				
+				this.field = elem.closest('.custom-select');
+				
+				this.autocomplete(elem);
+				
+				if (!this.field.classList.contains('custom-select_opened')) {
+					this.open();
 				}
 			});
 			
