@@ -4,6 +4,8 @@
    "use strict";
 
    AutoComplete = {
+		field: null,
+		
       complete: function (elem) {
 			var match = false,
 			reg = new RegExp(elem.value, 'gi'),
