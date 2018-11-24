@@ -5,13 +5,15 @@
 	
 	AutoComplete = {
 		field: null,
-		
+		srcData: null,
+
 		complete: function (elem) {
-			var match = false,
-			reg = new RegExp(elem.value, 'gi'),
-			valueElements = this.field.querySelectorAll('.custom-select__val');
+			var optionsElem = this.field.querySelector('.autocomplete__options');
 			
 			if (elem.value.length) {
+				var reg = new RegExp('^'+ elem.value, 'i');
+
+
 				for (var i = 0; i < valueElements.length; i++) {
 					var valueElem = valueElements[i];
 					
@@ -25,6 +27,8 @@
 						valueElem.parentElement.classList.add('hidden');
 					}
 				}
+			} else {
+				optionsElem.innerHTML = '';
 			}
 			
 			if (!match) {
