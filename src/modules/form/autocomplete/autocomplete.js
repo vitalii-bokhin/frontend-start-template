@@ -7,34 +7,61 @@
 		field: null,
 		srcData: null,
 
-		complete: function (elem) {
+		open: function () {
+			this.field.classList.add('autocomplete_opened');
+
+			var opionsElem = this.field.querySelector('.autocomplete__options');
+			
+			opionsElem.style.height = opionsElem.scrollHeight +'px';
+			
+			opionsElem.scrollTop = 0;
+			
+			setTimeout(function () {
+				if (opionsElem.scrollHeight > opionsElem.offsetHeight) {
+					opionsElem.classList.add('ovfauto');
+				}
+			}, 550);
+		},
+
+		close: function () {
+			this.field.classList.remove('autocomplete_opened');
+
+			var opionsElem = this.field.querySelector('.autocomplete__options');
+
+			opionsElem.classList.remove('ovfauto');
+
+			opionsElem.style.height = 0;
+		},
+		
+		complete: function (inpElem) {
 			var optionsElem = this.field.querySelector('.autocomplete__options');
 			
-			if (elem.value.length) {
-				var reg = new RegExp('^'+ elem.value, 'i');
-
-
-				for (var i = 0; i < valueElements.length; i++) {
-					var valueElem = valueElements[i];
+			if (inpElem.value.length) {
+				var reg = new RegExp('^'+ inpElem.value, 'i'),
+				data = JSON.parse(this.srcData),
+				values = '';
+				
+				for (var i = 0; i < data.length; i++) {
+					var dataVal = data[i];
 					
-					valueElem.classList.remove('custom-select__val_checked');
-					
-					if (valueElem.innerHTML.match(reg)) {
-						valueElem.parentElement.classList.remove('hidden');
-						
-						match = true;
-					} else {
-						valueElem.parentElement.classList.add('hidden');
+					if (dataVal.name.match(reg)) {
+						values += '<li><button type="button" class="autocomplete__val">'+ dataVal.name +'</button></li>';
 					}
 				}
+				
+				optionsElem.innerHTML = values;
+
+				if (values != '') {
+					this.open();
+				} else {
+					this.close();
+				}
+
+				values = '';
 			} else {
 				optionsElem.innerHTML = '';
-			}
-			
-			if (!match) {
-				for (var i = 0; i < valueElements.length; i++) {
-					valueElements[i].parentElement.classList.remove('hidden');
-				}
+				
+				this.close();
 			}
 		},
 		
@@ -139,10 +166,10 @@
 				if (!elem) return;
 				
 				this.field = elem.closest('.autocomplete');
-				
-				this.close();
-				
-				this.open();
+
+				if (this.field.querySelector('.autocomplete__val')) {
+					this.open();
+				}
 			}, true);
 			
 			// input event
@@ -154,10 +181,6 @@
 				this.field = elem.closest('.autocomplete');
 				
 				this.complete(elem);
-				
-				if (!this.field.classList.contains('autocomplete_opened')) {
-					this.open();
-				}
 			});
 			
 			// keyboard events

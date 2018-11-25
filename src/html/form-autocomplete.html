@@ -15,18 +15,9 @@
 				<div class="col-6">
 					<div class="form__field">
 						<div class="autocomplete">
-							<button type="button" class="autocomplete__arr"></button>
 							<input type="text" name="planet" data-required="true" placeholder="Select a planet*" class="autocomplete__input">
 							<ul class="autocomplete__options">
-								<li><button type="button" class="autocomplete__val">Mercury</button></li>
-								<li><button type="button" class="autocomplete__val">Venus</button></li>
-								<li><button type="button" class="autocomplete__val">Earth</button></li>
-								<li><button type="button" class="autocomplete__val">Mars</button></li>
-								<li><button type="button" class="autocomplete__val">Jupiter</button></li>
-								<li><button type="button" class="autocomplete__val">Saturn</button></li>
-								<li><button type="button" class="autocomplete__val">Uranus</button></li>
-								<li><button type="button" class="autocomplete__val">Neptune</button></li>
-								<li><button type="button" class="autocomplete__val">Pluto</button></li>
+								<!-- values -->
 							</ul>
 						</div>
 						<div class="field-error-tip">Select a planet</div>
@@ -51,6 +42,11 @@
 
 @@include('_javascript.html')
 
+<script>
+AutoComplete.srcData = '[{"val":"mc","name":"Mercury"},{"val":"vn","name":"Venus"}]';
+
+console.log(JSON.parse(AutoComplete.srcData))
+</script>
 
 </body>
 </html>

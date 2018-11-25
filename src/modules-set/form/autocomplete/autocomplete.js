@@ -5,26 +5,32 @@
 	
 	AutoComplete = {
 		field: null,
-		
-		complete: function (elem) {
-			var match = false,
-			reg = new RegExp(elem.value, 'gi'),
-			valueElements = this.field.querySelectorAll('.custom-select__val');
+		srcData: null,
+
+		complete: function (inpElem) {
+			var optionsElem = this.field.querySelector('.autocomplete__options');
 			
-			if (elem.value.length) {
-				for (var i = 0; i < valueElements.length; i++) {
-					var valueElem = valueElements[i];
+			if (inpElem.value.length) {
+				var reg = new RegExp('^'+ inpElem.value, 'i'),
+				match = false,
+				data = JSON.parse(this.srcData);
+
+				for (var i = 0; i < data.length; i++) {
+					var dataVal = data[i];
 					
-					valueElem.classList.remove('custom-select__val_checked');
-					
-					if (valueElem.innerHTML.match(reg)) {
-						valueElem.parentElement.classList.remove('hidden');
+					if (dataVal.match(reg)) {
+						optionsElem.innerHTML = '';
 						
-						match = true;
+						this.field.classList.add('autocomplete_opened');
 					} else {
-						valueElem.parentElement.classList.add('hidden');
+						optionsElem.innerHTML = '';
+
+						this.field.classList.remove('autocomplete_opened');
 					}
 				}
+			} else {
+				optionsElem.innerHTML = '';
+				this.field.classList.remove('autocomplete_opened');
 			}
 			
 			if (!match) {
