@@ -17,7 +17,7 @@
 		top: 100%;
 		width: 100%;
 		height: 0;
-		max-height: 132px;
+		max-height: 117px;
 		overflow: hidden;
 		z-index: 5;
 		border: 1px solid #c3c3c3;
@@ -34,12 +34,9 @@
 				border: none;
 			}
 			&.hover{
-				.custom-select__val{
+				.autocomplete__val{
 					background: $gy;
 					color: #fff;
-				}
-				.custom-select__val_checked{
-					background: #c31d1d;
 				}
 			}
 		}
@@ -56,13 +53,6 @@
 		&:hover{
 			background: $gy;
 			color: #fff;
-		}
-		&_checked{
-			background: $rd;
-			color: #fff;
-			&:hover{
-				background: #c31d1d;
-			}
 		}
 	}
 	&_opened{

@@ -7,36 +7,61 @@
 		field: null,
 		srcData: null,
 
+		open: function () {
+			this.field.classList.add('autocomplete_opened');
+
+			var opionsElem = this.field.querySelector('.autocomplete__options');
+			
+			opionsElem.style.height = opionsElem.scrollHeight +'px';
+			
+			opionsElem.scrollTop = 0;
+			
+			setTimeout(function () {
+				if (opionsElem.scrollHeight > opionsElem.offsetHeight) {
+					opionsElem.classList.add('ovfauto');
+				}
+			}, 550);
+		},
+
+		close: function () {
+			this.field.classList.remove('autocomplete_opened');
+
+			var opionsElem = this.field.querySelector('.autocomplete__options');
+
+			opionsElem.classList.remove('ovfauto');
+
+			opionsElem.style.height = 0;
+		},
+		
 		complete: function (inpElem) {
 			var optionsElem = this.field.querySelector('.autocomplete__options');
 			
 			if (inpElem.value.length) {
 				var reg = new RegExp('^'+ inpElem.value, 'i'),
-				match = false,
-				data = JSON.parse(this.srcData);
-
+				data = JSON.parse(this.srcData),
+				values = '';
+				
 				for (var i = 0; i < data.length; i++) {
 					var dataVal = data[i];
 					
-					if (dataVal.match(reg)) {
-						optionsElem.innerHTML = '';
-						
-						this.field.classList.add('autocomplete_opened');
-					} else {
-						optionsElem.innerHTML = '';
-
-						this.field.classList.remove('autocomplete_opened');
+					if (dataVal.name.match(reg)) {
+						values += '<li><button type="button" class="autocomplete__val">'+ dataVal.name +'</button></li>';
 					}
 				}
+				
+				optionsElem.innerHTML = values;
+
+				if (values != '') {
+					this.open();
+				} else {
+					this.close();
+				}
+
+				values = '';
 			} else {
 				optionsElem.innerHTML = '';
-				this.field.classList.remove('autocomplete_opened');
-			}
-			
-			if (!match) {
-				for (var i = 0; i < valueElements.length; i++) {
-					valueElements[i].parentElement.classList.remove('hidden');
-				}
+				
+				this.close();
 			}
 		},
 		
@@ -141,10 +166,21 @@
 				if (!elem) return;
 				
 				this.field = elem.closest('.autocomplete');
+
+				if (this.field.querySelector('.autocomplete__val')) {
+					this.open();
+				}
+			}, true);
+
+			// blur event
+			document.addEventListener('blur', (e) => {
+				var elem = e.target.closest('.autocomplete__input');
 				
+				if (!elem) return;
+				
+				this.field = elem.closest('.autocomplete');
+
 				this.close();
-				
-				this.open();
 			}, true);
 			
 			// input event
@@ -156,10 +192,6 @@
 				this.field = elem.closest('.autocomplete');
 				
 				this.complete(elem);
-				
-				if (!this.field.classList.contains('autocomplete_opened')) {
-					this.open();
-				}
 			});
 			
 			// keyboard events

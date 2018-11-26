@@ -2056,7 +2056,7 @@ select {
   top: 100%;
   width: 100%;
   height: 0;
-  max-height: 132px;
+  max-height: 117px;
   overflow: hidden;
   z-index: 5;
   border: 1px solid #c3c3c3;
@@ -2078,13 +2078,9 @@ select {
   border: none;
 }
 
-.autocomplete__options li.hover .custom-select__val {
+.autocomplete__options li.hover .autocomplete__val {
   background: #aaaaaa;
   color: #fff;
-}
-
-.autocomplete__options li.hover .custom-select__val_checked {
-  background: #c31d1d;
 }
 
 .autocomplete__val {
@@ -2101,15 +2097,6 @@ select {
 .autocomplete__val:hover {
   background: #aaaaaa;
   color: #fff;
-}
-
-.autocomplete__val_checked {
-  background: #ff0000;
-  color: #fff;
-}
-
-.autocomplete__val_checked:hover {
-  background: #c31d1d;
 }
 
 .autocomplete_opened .autocomplete__options {
