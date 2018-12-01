@@ -252,19 +252,19 @@ hr {
 }
 
 @media (min-width: 1001px) {
-  .row_vw1001-nw {
+  .row_md-x-nw {
     flex-wrap: nowrap;
   }
-  .row_vw1001-block {
+  .row_md-x-block {
     display: block;
   }
-  .row_vw1001-block:after {
+  .row_md-x-block:after {
     display: block;
     content: "";
     width: 100%;
     clear: both;
   }
-  .row_vw1001-block > [class*="col"] {
+  .row_md-x-block > [class*="col"] {
     float: left;
     width: 100%;
   }
@@ -278,26 +278,26 @@ hr {
 }
 
 @media (min-width: 751px) {
-  .row_vw751-nw {
+  .row_sm-x-nw {
     flex-wrap: nowrap;
   }
-  .row_vw751-block {
+  .row_sm-x-block {
     display: block;
   }
-  .row_vw751-block:after {
+  .row_sm-x-block:after {
     display: block;
     content: "";
     width: 100%;
     clear: both;
   }
-  .row_vw751-block > [class*="col"] {
+  .row_sm-x-block > [class*="col"] {
     float: left;
     width: 100%;
   }
 }
 
 @media (max-width: 750px) {
-  .row:not(.row_nw) > [class*="col-"]:not([class*="vw750-col"]) {
+  .row:not(.row_nw) > [class*="col-"]:not([class*="xs-col"]) {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
@@ -439,111 +439,223 @@ hr {
   flex-grow: 1 !important;
 }
 
-@media (max-width: 1200px) {
-  .vw1200-row-col-12 > [class*="col-"] {
+@media (max-width: 1600px) {
+  .lg-row-col-12 > [class*="col-"] {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
     float: none !important;
   }
-  .vw1200-col {
+  .lg-col {
     width: auto !important;
     max-width: none;
     flex-basis: auto;
   }
-  .vw1200-col-0-1 {
+  .lg-col-0-1 {
     max-width: 4.166665%;
     flex-basis: 4.166665%;
   }
-  .vw1200-col-1 {
+  .lg-col-1 {
     max-width: 8.33333%;
     flex-basis: 8.33333%;
   }
-  .vw1200-col-1-2 {
+  .lg-col-1-2 {
     max-width: 12.499995%;
     flex-basis: 12.499995%;
   }
-  .vw1200-col-2 {
+  .lg-col-2 {
     max-width: 16.66666%;
     flex-basis: 16.66666%;
   }
-  .vw1200-col-2-3 {
+  .lg-col-2-3 {
     max-width: 20.83333%;
     flex-basis: 20.83333%;
   }
-  .vw1200-col-3 {
+  .lg-col-3 {
     max-width: 25%;
     flex-basis: 25%;
   }
-  .vw1200-col-3-4 {
+  .lg-col-3-4 {
     max-width: 29.16666%;
     flex-basis: 29.16666%;
   }
-  .vw1200-col-4 {
+  .lg-col-4 {
     max-width: 33.33332%;
     flex-basis: 33.33332%;
   }
-  .vw1200-col-4-5 {
+  .lg-col-4-5 {
     max-width: 37.499985%;
     flex-basis: 37.499985%;
   }
-  .vw1200-col-5 {
+  .lg-col-5 {
     max-width: 41.66665%;
     flex-basis: 41.66665%;
   }
-  .vw1200-col-5-6 {
+  .lg-col-5-6 {
     max-width: 45.833325%;
     flex-basis: 45.833325%;
   }
-  .vw1200-col-6 {
+  .lg-col-6 {
     max-width: 50%;
     flex-basis: 50%;
   }
-  .vw1200-col-6-7 {
+  .lg-col-6-7 {
     max-width: 54.166665%;
     flex-basis: 54.166665%;
   }
-  .vw1200-col-7 {
+  .lg-col-7 {
     max-width: 58.33333%;
     flex-basis: 58.33333%;
   }
-  .vw1200-col-7-8 {
+  .lg-col-7-8 {
     max-width: 62.499985%;
     flex-basis: 62.499985%;
   }
-  .vw1200-col-8 {
+  .lg-col-8 {
     max-width: 66.66664%;
     flex-basis: 66.66664%;
   }
-  .vw1200-col-8-9 {
+  .lg-col-8-9 {
     max-width: 70.833305%;
     flex-basis: 70.833305%;
   }
-  .vw1200-col-9 {
+  .lg-col-9 {
     max-width: 74.99997%;
     flex-basis: 74.99997%;
   }
-  .vw1200-col-9-10 {
+  .lg-col-9-10 {
     max-width: 79.166635%;
     flex-basis: 79.166635%;
   }
-  .vw1200-col-10 {
+  .lg-col-10 {
     max-width: 83.33333%;
     flex-basis: 83.33333%;
   }
-  .vw1200-col-10-11 {
+  .lg-col-10-11 {
     max-width: 87.499995%;
     flex-basis: 87.499995%;
   }
-  .vw1200-col-11 {
+  .lg-col-11 {
     max-width: 91.66663%;
     flex-basis: 91.66663%;
   }
-  .vw1200-col-11-12 {
+  .lg-col-11-12 {
     max-width: 95.833295%;
     flex-basis: 95.833295%;
   }
-  .vw1200-col-12 {
+  .lg-col-12 {
+    max-width: 100%;
+    flex-basis: 100%;
+    margin-left: 0;
+    float: none !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .md-row-col-12 > [class*="col-"] {
+    max-width: 100%;
+    flex-basis: 100%;
+    margin-left: 0;
+    float: none !important;
+  }
+  .md-col {
+    width: auto !important;
+    max-width: none;
+    flex-basis: auto;
+  }
+  .md-col-0-1 {
+    max-width: 4.166665%;
+    flex-basis: 4.166665%;
+  }
+  .md-col-1 {
+    max-width: 8.33333%;
+    flex-basis: 8.33333%;
+  }
+  .md-col-1-2 {
+    max-width: 12.499995%;
+    flex-basis: 12.499995%;
+  }
+  .md-col-2 {
+    max-width: 16.66666%;
+    flex-basis: 16.66666%;
+  }
+  .md-col-2-3 {
+    max-width: 20.83333%;
+    flex-basis: 20.83333%;
+  }
+  .md-col-3 {
+    max-width: 25%;
+    flex-basis: 25%;
+  }
+  .md-col-3-4 {
+    max-width: 29.16666%;
+    flex-basis: 29.16666%;
+  }
+  .md-col-4 {
+    max-width: 33.33332%;
+    flex-basis: 33.33332%;
+  }
+  .md-col-4-5 {
+    max-width: 37.499985%;
+    flex-basis: 37.499985%;
+  }
+  .md-col-5 {
+    max-width: 41.66665%;
+    flex-basis: 41.66665%;
+  }
+  .md-col-5-6 {
+    max-width: 45.833325%;
+    flex-basis: 45.833325%;
+  }
+  .md-col-6 {
+    max-width: 50%;
+    flex-basis: 50%;
+  }
+  .md-col-6-7 {
+    max-width: 54.166665%;
+    flex-basis: 54.166665%;
+  }
+  .md-col-7 {
+    max-width: 58.33333%;
+    flex-basis: 58.33333%;
+  }
+  .md-col-7-8 {
+    max-width: 62.499985%;
+    flex-basis: 62.499985%;
+  }
+  .md-col-8 {
+    max-width: 66.66664%;
+    flex-basis: 66.66664%;
+  }
+  .md-col-8-9 {
+    max-width: 70.833305%;
+    flex-basis: 70.833305%;
+  }
+  .md-col-9 {
+    max-width: 74.99997%;
+    flex-basis: 74.99997%;
+  }
+  .md-col-9-10 {
+    max-width: 79.166635%;
+    flex-basis: 79.166635%;
+  }
+  .md-col-10 {
+    max-width: 83.33333%;
+    flex-basis: 83.33333%;
+  }
+  .md-col-10-11 {
+    max-width: 87.499995%;
+    flex-basis: 87.499995%;
+  }
+  .md-col-11 {
+    max-width: 91.66663%;
+    flex-basis: 91.66663%;
+  }
+  .md-col-11-12 {
+    max-width: 95.833295%;
+    flex-basis: 95.833295%;
+  }
+  .md-col-12 {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
@@ -552,225 +664,225 @@ hr {
 }
 
 @media (max-width: 1000px) {
-  .vw1000-row-col-12 > [class*="col-"] {
+  .sm-row-col-12 > [class*="col-"] {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
     float: none !important;
   }
-  .vw1000-col {
+  .sm-col {
     width: auto !important;
     max-width: none;
     flex-basis: auto;
   }
-  .vw1000-col-0-1 {
+  .sm-col-0-1 {
     max-width: 4.166665%;
     flex-basis: 4.166665%;
   }
-  .vw1000-col-1 {
+  .sm-col-1 {
     max-width: 8.33333%;
     flex-basis: 8.33333%;
   }
-  .vw1000-col-1-2 {
+  .sm-col-1-2 {
     max-width: 12.499995%;
     flex-basis: 12.499995%;
   }
-  .vw1000-col-2 {
+  .sm-col-2 {
     max-width: 16.66666%;
     flex-basis: 16.66666%;
   }
-  .vw1000-col-2-3 {
+  .sm-col-2-3 {
     max-width: 20.83333%;
     flex-basis: 20.83333%;
   }
-  .vw1000-col-3 {
+  .sm-col-3 {
     max-width: 25%;
     flex-basis: 25%;
   }
-  .vw1000-col-3-4 {
+  .sm-col-3-4 {
     max-width: 29.16666%;
     flex-basis: 29.16666%;
   }
-  .vw1000-col-4 {
+  .sm-col-4 {
     max-width: 33.33332%;
     flex-basis: 33.33332%;
   }
-  .vw1000-col-4-5 {
+  .sm-col-4-5 {
     max-width: 37.499985%;
     flex-basis: 37.499985%;
   }
-  .vw1000-col-5 {
+  .sm-col-5 {
     max-width: 41.66665%;
     flex-basis: 41.66665%;
   }
-  .vw1000-col-5-6 {
+  .sm-col-5-6 {
     max-width: 45.833325%;
     flex-basis: 45.833325%;
   }
-  .vw1000-col-6 {
+  .sm-col-6 {
     max-width: 50%;
     flex-basis: 50%;
   }
-  .vw1000-col-6-7 {
+  .sm-col-6-7 {
     max-width: 54.166665%;
     flex-basis: 54.166665%;
   }
-  .vw1000-col-7 {
+  .sm-col-7 {
     max-width: 58.33333%;
     flex-basis: 58.33333%;
   }
-  .vw1000-col-7-8 {
+  .sm-col-7-8 {
     max-width: 62.499985%;
     flex-basis: 62.499985%;
   }
-  .vw1000-col-8 {
+  .sm-col-8 {
     max-width: 66.66664%;
     flex-basis: 66.66664%;
   }
-  .vw1000-col-8-9 {
+  .sm-col-8-9 {
     max-width: 70.833305%;
     flex-basis: 70.833305%;
   }
-  .vw1000-col-9 {
+  .sm-col-9 {
     max-width: 74.99997%;
     flex-basis: 74.99997%;
   }
-  .vw1000-col-9-10 {
+  .sm-col-9-10 {
     max-width: 79.166635%;
     flex-basis: 79.166635%;
   }
-  .vw1000-col-10 {
+  .sm-col-10 {
     max-width: 83.33333%;
     flex-basis: 83.33333%;
   }
-  .vw1000-col-10-11 {
+  .sm-col-10-11 {
     max-width: 87.499995%;
     flex-basis: 87.499995%;
   }
-  .vw1000-col-11 {
+  .sm-col-11 {
     max-width: 91.66663%;
     flex-basis: 91.66663%;
   }
-  .vw1000-col-11-12 {
+  .sm-col-11-12 {
     max-width: 95.833295%;
     flex-basis: 95.833295%;
   }
-  .vw1000-col-12 {
+  .sm-col-12 {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
     float: none !important;
   }
-  .vw1000-col-first {
+  .sm-col-first {
     order: -1;
   }
 }
 
 @media (max-width: 750px) {
-  .vw750-col {
+  .xs-col {
     width: auto !important;
     max-width: none;
     flex-basis: auto;
   }
-  .vw750-col-0-1 {
+  .xs-col-0-1 {
     max-width: 4.166665%;
     flex-basis: 4.166665%;
   }
-  .vw750-col-1 {
+  .xs-col-1 {
     max-width: 8.33333%;
     flex-basis: 8.33333%;
   }
-  .vw750-col-1-2 {
+  .xs-col-1-2 {
     max-width: 12.499995%;
     flex-basis: 12.499995%;
   }
-  .vw750-col-2 {
+  .xs-col-2 {
     max-width: 16.66666%;
     flex-basis: 16.66666%;
   }
-  .vw750-col-2-3 {
+  .xs-col-2-3 {
     max-width: 20.83333%;
     flex-basis: 20.83333%;
   }
-  .vw750-col-3 {
+  .xs-col-3 {
     max-width: 25%;
     flex-basis: 25%;
   }
-  .vw750-col-3-4 {
+  .xs-col-3-4 {
     max-width: 29.16666%;
     flex-basis: 29.16666%;
   }
-  .vw750-col-4 {
+  .xs-col-4 {
     max-width: 33.33332%;
     flex-basis: 33.33332%;
   }
-  .vw750-col-4-5 {
+  .xs-col-4-5 {
     max-width: 37.499985%;
     flex-basis: 37.499985%;
   }
-  .vw750-col-5 {
+  .xs-col-5 {
     max-width: 41.66665%;
     flex-basis: 41.66665%;
   }
-  .vw750-col-5-6 {
+  .xs-col-5-6 {
     max-width: 45.833325%;
     flex-basis: 45.833325%;
   }
-  .vw750-col-6 {
+  .xs-col-6 {
     max-width: 50%;
     flex-basis: 50%;
   }
-  .vw750-col-6-7 {
+  .xs-col-6-7 {
     max-width: 54.166665%;
     flex-basis: 54.166665%;
   }
-  .vw750-col-7 {
+  .xs-col-7 {
     max-width: 58.33333%;
     flex-basis: 58.33333%;
   }
-  .vw750-col-7-8 {
+  .xs-col-7-8 {
     max-width: 62.499985%;
     flex-basis: 62.499985%;
   }
-  .vw750-col-8 {
+  .xs-col-8 {
     max-width: 66.66664%;
     flex-basis: 66.66664%;
   }
-  .vw750-col-8-9 {
+  .xs-col-8-9 {
     max-width: 70.833305%;
     flex-basis: 70.833305%;
   }
-  .vw750-col-9 {
+  .xs-col-9 {
     max-width: 74.99997%;
     flex-basis: 74.99997%;
   }
-  .vw750-col-9-10 {
+  .xs-col-9-10 {
     max-width: 79.166635%;
     flex-basis: 79.166635%;
   }
-  .vw750-col-10 {
+  .xs-col-10 {
     max-width: 83.33333%;
     flex-basis: 83.33333%;
   }
-  .vw750-col-10-11 {
+  .xs-col-10-11 {
     max-width: 87.499995%;
     flex-basis: 87.499995%;
   }
-  .vw750-col-11 {
+  .xs-col-11 {
     max-width: 91.66663%;
     flex-basis: 91.66663%;
   }
-  .vw750-col-11-12 {
+  .xs-col-11-12 {
     max-width: 95.833295%;
     flex-basis: 95.833295%;
   }
-  .vw750-col-12 {
+  .xs-col-12 {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
     float: none !important;
   }
-  .vw750-col-first {
+  .xs-col-first {
     order: -1;
   }
 }
@@ -3062,69 +3174,69 @@ select {
 }
 
 @media (max-width: 1600px) {
-  .vw1600-hidden {
+  .lg-hidden {
     display: none !important;
   }
 }
 
 @media (min-width: 1201px) {
-  .vw1201-hidden {
+  .lg-x-hidden {
     display: none !important;
   }
 }
 
 @media (max-width: 1200px) {
-  .vw1200-hidden {
+  .md-hidden {
     display: none !important;
   }
 }
 
 @media (min-width: 1001px) {
-  .vw1001-hidden {
+  .md-x-hidden {
     display: none !important;
   }
 }
 
 @media (max-width: 1000px) {
-  .vw1000-hidden {
+  .sm-hidden {
     display: none !important;
   }
-  .vw1000-p-x-15 {
+  .sm-p-x-15 {
     padding-left: 15px !important;
     padding-right: 15px !important;
   }
-  .vw1000-p-x-0 {
+  .sm-p-x-0 {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
-  .vw1000-p-y-0 {
+  .sm-p-y-0 {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
-  .vw1000-p-0 {
+  .sm-p-0 {
     padding: 0 !important;
   }
-  .vw1000-m-x-0 {
+  .sm-m-x-0 {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
-  .vw1000-m-y-0 {
+  .sm-m-y-0 {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
-  .vw1000-m-0 {
+  .sm-m-0 {
     margin: 0 !important;
   }
 }
 
 @media (min-width: 751px) {
-  .vw751-hidden {
+  .sm-x-hidden {
     display: none !important;
   }
 }
 
 @media (max-width: 750px) {
-  .vw750-hidden {
+  .xs-hidden {
     display: none !important;
   }
 }

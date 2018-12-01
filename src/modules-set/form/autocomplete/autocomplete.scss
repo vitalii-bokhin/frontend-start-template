@@ -34,12 +34,9 @@
 				border: none;
 			}
 			&.hover{
-				.custom-select__val{
+				.autocomplete__val{
 					background: $gy;
 					color: #fff;
-				}
-				.custom-select__val_checked{
-					background: #c31d1d;
 				}
 			}
 		}
@@ -56,13 +53,6 @@
 		&:hover{
 			background: $gy;
 			color: #fff;
-		}
-		&_checked{
-			background: $rd;
-			color: #fff;
-			&:hover{
-				background: #c31d1d;
-			}
 		}
 	}
 	&_opened{
