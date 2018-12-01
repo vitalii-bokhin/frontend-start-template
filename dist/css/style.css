@@ -430,7 +430,7 @@ hr {
   flex-basis: 100%;
 }
 
-.col-right {
+.col_right {
   margin-left: auto;
   float: right !important;
 }
