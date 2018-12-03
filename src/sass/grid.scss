@@ -173,11 +173,11 @@
 		max-width: 100%;
 		flex-basis: 100%;
 	}
-	&_right{
+	&-right{
 		margin-left: auto;
 		float: right !important;
 	}
-	&_grow{
+	&-grow{
 		flex-grow: 1 !important;
 	}
 }
