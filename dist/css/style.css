@@ -114,7 +114,6 @@ header, footer, main, section, nav, article, aside {
 
 button {
   display: inline-block;
-  vertical-align: bottom;
   line-height: normal;
   overflow: visible;
   cursor: pointer;
@@ -430,12 +429,12 @@ hr {
   flex-basis: 100%;
 }
 
-.col_right {
+.col-right {
   margin-left: auto;
   float: right !important;
 }
 
-.col_grow {
+.col-grow {
   flex-grow: 1 !important;
 }
 
@@ -900,6 +899,7 @@ hr {
   line-height: normal;
   text-align: center;
   text-decoration: none;
+  vertical-align: bottom;
   border: none;
   background: #212121;
   user-select: none;

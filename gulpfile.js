@@ -18,6 +18,7 @@ var modulesOn = [
 	'header/user',
 	'header/menu',
 	'fsscroll',
+	'scrollsmooth',
 	'toggle',
 	'flex-image',
 	'cover-image',

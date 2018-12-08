@@ -146,7 +146,14 @@
 	}
 
 	function easing(timeFraction, ease) {
-		if (ease == 'easeInOutQuad') {
+		switch (ease) {
+			case 'easeInQuad':
+			return quad(timeFraction);
+			
+			case 'easeOutQuad':
+			return 1 - quad(1 - timeFraction);
+			
+			case 'easeInOutQuad':
 			if (timeFraction <= 0.5) {
 				return quad(2 * timeFraction) / 2;
 			} else {

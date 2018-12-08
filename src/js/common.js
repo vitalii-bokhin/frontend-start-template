@@ -17,71 +17,74 @@ document.addEventListener('DOMContentLoaded', function() {
 		window.addEventListener('winResized', initFun);
 	})();
 	
-	//init cover images
+	// init cover images
 	CoverImg.init();
 	
-	//init toggle button
+	// init toggle button
 	Toggle.init('.js-toggle');
 	
 	Toggle.onChange = function(tgl, state) {
 		
 	}
 	
-	//ajax button
+	// ajax button
 	/*Ajax.init('.js-ajax');
 	
 	Ajax.success = function(response) {
-		// code...
+		//  code...
 	}*/
 	
-	//popup init
+	// popup init
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
 	
-	//menu
+	// menu
 	if (window.innerWidth < 1000) {
 		Menu.init('.menu__item_has-children', '.menu__sub-menu');
 	}
 	
-	//mobile nav
+	// mobile nav
 	MobNav.init({
 		openBtn: '.js-open-menu',
 		closeBtn: '.js-close-menu',
 		navId: 'header-mob-menu'
 	});
 	
-	//bubble
+	// bubble
 	Bubble.init({
 		element: '.js-bubble'
 	});
 	
-	//accord
+	// accord
 	Accord.init('.accord__button');
 	
-	//more
+	// more
 	More.init('.more__btn');
 	
-	//tab
+	// tab
 	Tab.init({
 		container: '.tab',
 		button: '.tab__button',
 		item: '.tab__item'
 	});
 	
-	//video
+	// video
 	Video.init('.video__btn-play');
 	
-	//fullscreen scroll
+	// fullscreen scroll
 	FsScroll.init({
 		container: '.fsscroll',
 		screen: '.fsscroll__screen',
 		duration: 700
 	});
+
+	// smooth scroll
+	ScrollSmooth.init();
 	
-	//anchor
+	// anchor
 	Anchor.init('.js-anchor', 700, 100);
 	
-	//diagram
+	// diagram
 	var diagram = new Diagram({
 		canvasId: 'diagram',
 		charts: [
@@ -103,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	
 	
-	//diagram 2
+	// diagram 2
 	var diagram_2 = new Diagram({
 		canvasId: 'diagram-2',
 		charts: [
@@ -127,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	diagram_2.animate(2700);
 	
-	//diagram 2
+	// diagram 2
 	var diagram_3 = new Diagram({
 		canvasId: 'diagram-3',
 		charts: [
@@ -165,15 +168,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	diagram_3.animate(4200);
 	
-	//numberspin
+	// numberspin
 	var numberspin = new Numberspin('.numberspin');
 	
 	numberspin.animate(4200);
 	
-	//share
+	// share
 	Share.init('.js-share-btn');
 	
-	//timer
+	// timer
 	var timer = new Timer({
 		elemId: 'timer'
 	});
@@ -221,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	stopwatch2.start(0);
 	
-	//get content via Ajax
+	// get content via Ajax
 	var getCont = new GetContentAjax({
 		eventBtn: '.js-get-content-ajax',
 		event: 'click',
@@ -236,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 	
 	
-	//submit form
+	// submit form
 	Form.init('.form');
 	
 	Form.onSubmit = function(form, callback) {
@@ -277,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 });
 
-//GetCountriesAndCitiesList
+// GetCountriesAndCitiesList
 function dAirGetInit() {
 	dAirGet.countries(function(c) {
 		var contryObjArr = JSON.parse(c);
@@ -307,9 +310,9 @@ ajax({
 */
 
 
-//jQuery plugins
+// jQuery plugins
 $(document).ready(function(){
-	//slick slider
+	// slick slider
 	/*$('#slider').on('init', function() {
 		CoverImg.reInit('#slider');
 	});
@@ -320,13 +323,13 @@ $(document).ready(function(){
 		slidesToScroll: 1
 	});*/
 	
-	//scroll pane
-	//$('.scroll-pane').jScrollPane();
+	// scroll pane
+	// $('.scroll-pane').jScrollPane();
 	
-	//masked inputs
-	//$('input[data-type="tel"]').mask('+7(999)999-99-99');
+	// masked inputs
+	// $('input[data-type="tel"]').mask('+7(999)999-99-99');
 	$('input[data-type="tel"]').each(function() {
 		new Maskinput(this, 'tel');
 	});
-	//$('input[data-type="date"]').mask('99.99.9999');
+	// $('input[data-type="date"]').mask('99.99.9999');
 });
