@@ -279,7 +279,17 @@
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 
 <script>
-AutoComplete.valuesData = '[{"val":"mc","name":"Mercury"},{"val":"vn","name":"Venus"},{"val":"eth","name":"Earth"},{"val":"ms","name":"Mars"},{"val":"mn","name":"Mandarin"},{"val":"mk","name":"Marakuja"},{"val":"mlk","name":"Milk"}]';
+	AutoComplete.setValuesData = function (val) {
+		return [
+		{val:"mc", value:"Mercury"},
+		{val:"vn", value:"Venus"},
+		{val:"eth", value:"Earth"},
+		{val:"ms", value:"Mars"},
+		{val:"mn", value:"Mandarin"},
+		{val:"mk", value:"Marakuja"},
+		{val:"mlk", value:"Milk"}
+		];
+	}
 </script>
 
 </body>

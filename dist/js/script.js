@@ -455,54 +455,6 @@ FsScroll.init({
 	};
 })();
 /*
-ScrollSmooth.init();
-*/
-
-; var ScrollSmooth;
-
-(function() {
-	"use strict";
-	
-	ScrollSmooth = {
-		scrolling: false,
-		delta: 0,
-		scrollTo: 0,
-		startPageYOffset: window.pageYOffset,
-		
-		scroll: function() {
-			this.scrolling = true;
-			
-			var duration = 3500,
-			easing = 'easeInOutQuad';
-			
-			animate((progress) => {
-				window.scrollTo(0, ((this.scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
-				console.log(this.scrollTo);
-			}, duration, easing, () => {
-				this.scrolling = false;
-				this.delta = 0;
-				this.startPageYOffset = window.pageYOffset;
-			});
-		},
-		
-		init: function() {
-			if ('onwheel' in document) {
-				document.addEventListener('wheel', (e) => {
-					e.preventDefault();
-					
-					this.delta += e.deltaY;
-					
-					this.scrollTo = this.delta + this.startPageYOffset;
-					
-					if (!this.scrolling) {
-						this.scroll();
-					}
-				});
-			}
-		}
-	};
-})();
-/*
 Toggle.init(Str toggleSelector[, Str toggledClass (default - 'toggled')]);
 
 Toggle.onChange = function(toggleElem, state) {
@@ -1770,7 +1722,7 @@ var Popup, MediaPopup;
 		field: null,
 		input: null,
 		valuesData: null,
-		inputValue: '',
+		setValuesData: null,
 		
 		open: function () {
 			this.field.classList.add('autocomplete_opened');
@@ -1802,17 +1754,19 @@ var Popup, MediaPopup;
 			var optionsElem = this.field.querySelector('.autocomplete__options');
 			
 			if (this.input.value.length) {
-				var reg = new RegExp('^'+ this.input.value, 'i'),
-				data = JSON.parse(this.valuesData),
-				values = '';
+				var preReg = new RegExp(this.input.value, 'i'),
+				values = '',
+				valuesData;
 
-				this.inputValue = this.input.value;
+				if (this.setValuesData) {
+					valuesData = this.setValuesData(this.input.value);
+				}
 				
-				for (var i = 0; i < data.length; i++) {
-					var dataVal = data[i];
+				for (var i = 0; i < valuesData.length; i++) {
+					var dataVal = valuesData[i];
 					
-					if (dataVal.name.match(reg)) {
-						values += '<li><button type="button" class="autocomplete__val">'+ dataVal.name +'</button></li>';
+					if (dataVal.value.match(preReg)) {
+						values += '<li><button type="button" class="autocomplete__val">'+ dataVal.value +'</button></li>';
 					}
 				}
 				
@@ -1823,18 +1777,16 @@ var Popup, MediaPopup;
 				} else {
 					this.close();
 				}
-				
-				values = '';
 			} else {
 				optionsElem.innerHTML = '';
 				
 				this.close();
 			}
 		},
-
+		
 		selectVal: function (itemElem) {
 			var valueElem = itemElem.querySelector('.autocomplete__val');
-
+			
 			this.input.value = valueElem.innerHTML;
 		},
 		
@@ -1858,7 +1810,7 @@ var Popup, MediaPopup;
 						nextItem.classList.add('hover');
 						
 						optionsElem.scrollTop = optionsElem.scrollTop + (nextItem.getBoundingClientRect().top - optionsElem.getBoundingClientRect().top);
-
+						
 						this.selectVal(nextItem);
 					}
 				} else {
@@ -1866,7 +1818,7 @@ var Popup, MediaPopup;
 					
 					if (nextItem) {
 						nextItem.classList.add('hover');
-
+						
 						this.selectVal(nextItem);
 					}
 				}
@@ -1881,7 +1833,7 @@ var Popup, MediaPopup;
 						nextItem.classList.add('hover');
 						
 						optionsElem.scrollTop = optionsElem.scrollTop + (nextItem.getBoundingClientRect().top - optionsElem.getBoundingClientRect().top);
-
+						
 						this.selectVal(nextItem);
 					}
 				} else {
@@ -1889,9 +1841,9 @@ var Popup, MediaPopup;
 					
 					if (nextItem) {
 						nextItem.classList.add('hover');
-
+						
 						optionsElem.scrollTop = 9999;
-
+						
 						this.selectVal(nextItem);
 					}
 				}
@@ -1900,7 +1852,7 @@ var Popup, MediaPopup;
 				case 13:
 				if (hoverItem) {
 					this.selectVal(hoverItem);
-
+					
 					this.input.blur();
 				}
 			}
@@ -1916,15 +1868,15 @@ var Popup, MediaPopup;
 				this.field = elem.closest('.autocomplete');
 				this.input = elem;
 				
-				if (this.field.querySelector('.autocomplete__val')) {
-					this.open();
-				}
+				this.getValues();
 			}, true);
 			
 			// blur event
 			document.addEventListener('blur', (e) => {
 				if (e.target.closest('.autocomplete__input')) {
-					this.close();
+					setTimeout(() => {
+						this.close();
+					}, 21);
 				}
 			}, true);
 			
@@ -1932,6 +1884,15 @@ var Popup, MediaPopup;
 			document.addEventListener('input', (e) => {
 				if (e.target.closest('.autocomplete__input')) {
 					this.getValues();
+				}
+			});
+			
+			// click event
+			document.addEventListener('click', (e) => {
+				var elem = e.target.closest('.autocomplete__val');
+				
+				if (elem) {
+					this.selectVal(elem.parentElement);
 				}
 			});
 			

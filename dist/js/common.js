@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	// smooth scroll
-	ScrollSmooth.init();
+	// ScrollSmooth.init();
 	
 	// anchor
 	Anchor.init('.js-anchor', 700, 100);

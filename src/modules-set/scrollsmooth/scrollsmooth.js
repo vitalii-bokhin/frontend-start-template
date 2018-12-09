@@ -11,18 +11,21 @@ ScrollSmooth.init();
 		scrolling: false,
 		delta: 0,
 		scrollTo: 0,
+		startPageYOffset: window.pageYOffset,
 		
 		scroll: function() {
 			this.scrolling = true;
 			
-			duration = 500;
+			var duration = 3500,
 			easing = 'easeInOutQuad';
 			
-			animate(function(progress) {
+			animate((progress) => {
 				window.scrollTo(0, ((this.scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
+				console.log(this.scrollTo);
 			}, duration, easing, () => {
 				this.scrolling = false;
 				this.delta = 0;
+				this.startPageYOffset = window.pageYOffset;
 			});
 		},
 		
@@ -33,7 +36,7 @@ ScrollSmooth.init();
 					
 					this.delta += e.deltaY;
 					
-					this.scrollTo = this.delta + window.pageYOffset;
+					this.scrollTo = this.delta + this.startPageYOffset;
 					
 					if (!this.scrolling) {
 						this.scroll();
