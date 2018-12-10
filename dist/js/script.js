@@ -1719,63 +1719,63 @@ var Popup, MediaPopup;
 	"use strict";
 	
 	AutoComplete = {
-		field: null,
-		input: null,
+		fieldElem: null,
+		inputElem: null,
+		optionsElem: null,
 		valuesData: null,
 		setValuesData: null,
 		
 		open: function () {
-			this.field.classList.add('autocomplete_opened');
+			this.fieldElem.classList.add('autocomplete_opened');
 			
-			var opionsElem = this.field.querySelector('.autocomplete__options');
+			var optionsElem = this.optionsElem;
 			
-			opionsElem.style.height = opionsElem.scrollHeight +'px';
+			optionsElem.style.height = optionsElem.scrollHeight +'px';
 			
-			opionsElem.scrollTop = 0;
+			optionsElem.scrollTop = 0;
 			
 			setTimeout(function () {
-				if (opionsElem.scrollHeight > opionsElem.offsetHeight) {
-					opionsElem.classList.add('ovfauto');
+				if (optionsElem.scrollHeight > optionsElem.offsetHeight) {
+					optionsElem.classList.add('ovfauto');
 				}
 			}, 550);
 		},
 		
 		close: function () {
-			this.field.classList.remove('autocomplete_opened');
+			this.fieldElem.classList.remove('autocomplete_opened');
 			
-			var opionsElem = this.field.querySelector('.autocomplete__options');
+			var optionsElem = this.optionsElem;
 			
-			opionsElem.classList.remove('ovfauto');
+			optionsElem.classList.remove('ovfauto');
 			
-			opionsElem.style.height = 0;
+			optionsElem.style.height = 0;
 		},
 		
 		getValues: function () {
-			var optionsElem = this.field.querySelector('.autocomplete__options');
+			var optionsElem = this.optionsElem;
 			
-			if (this.input.value.length) {
-				var preReg = new RegExp(this.input.value, 'i'),
-				values = '',
-				valuesData;
-
+			if (this.inputElem.value.length) {
+				var preReg = new RegExp(this.inputElem.value, 'i'),
+				values = '';
+				
 				if (this.setValuesData) {
-					valuesData = this.setValuesData(this.input.value);
-				}
-				
-				for (var i = 0; i < valuesData.length; i++) {
-					var dataVal = valuesData[i];
-					
-					if (dataVal.value.match(preReg)) {
-						values += '<li><button type="button" class="autocomplete__val">'+ dataVal.value +'</button></li>';
-					}
-				}
-				
-				optionsElem.innerHTML = values;
-				
-				if (values != '') {
-					this.open();
-				} else {
-					this.close();
+					this.setValuesData(this.inputElem.value, (valuesData) => {
+						for (var i = 0; i < valuesData.length; i++) {
+							var dataVal = valuesData[i];
+							
+							if (dataVal.value.match(preReg)) {
+								values += '<li><button type="button" class="autocomplete__val">'+ dataVal.value +'</button></li>';
+							}
+						}
+						
+						if (values == '') {
+							values = '<li>Nothing found!</li>';
+						}
+						
+						optionsElem.innerHTML = values;
+						
+						this.open();
+					});
 				}
 			} else {
 				optionsElem.innerHTML = '';
@@ -1787,7 +1787,9 @@ var Popup, MediaPopup;
 		selectVal: function (itemElem) {
 			var valueElem = itemElem.querySelector('.autocomplete__val');
 			
-			this.input.value = valueElem.innerHTML;
+			if (valueElem) {
+				this.inputElem.value = valueElem.innerHTML;
+			}
 		},
 		
 		keybinding: function (e) {
@@ -1797,7 +1799,7 @@ var Popup, MediaPopup;
 			
 			e.preventDefault();
 			
-			var optionsElem = this.field.querySelector('.autocomplete__options'),
+			var optionsElem = this.optionsElem,
 			hoverItem = optionsElem.querySelector('li.hover');
 			
 			switch (key) {
@@ -1853,7 +1855,7 @@ var Popup, MediaPopup;
 				if (hoverItem) {
 					this.selectVal(hoverItem);
 					
-					this.input.blur();
+					this.inputElem.blur();
 				}
 			}
 		},
@@ -1865,8 +1867,9 @@ var Popup, MediaPopup;
 				
 				if (!elem) return;
 				
-				this.field = elem.closest('.autocomplete');
-				this.input = elem;
+				this.fieldElem = elem.closest('.autocomplete');
+				this.inputElem = elem;
+				this.optionsElem = this.fieldElem.querySelector('.autocomplete__options');
 				
 				this.getValues();
 			}, true);

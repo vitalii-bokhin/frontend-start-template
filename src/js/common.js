@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		screen: '.fsscroll__screen',
 		duration: 700
 	});
-
+	
 	// smooth scroll
 	// ScrollSmooth.init();
 	
@@ -238,6 +238,18 @@ document.addEventListener('DOMContentLoaded', function() {
 		return result[1];
 	}
 	
+	// autocomplete data
+	AutoComplete.setValuesData = function (val, fun) {
+		fun([
+			{val:"mc", value:"Mercury"},
+			{val:"vn", value:"Venus"},
+			{val:"eth", value:"Earth"},
+			{val:"ms", value:"Mars"},
+			{val:"mn", value:"Mandarin"},
+			{val:"mk", value:"Marakuja"},
+			{val:"mlk", value:"Milk"}
+		]);
+	}
 	
 	// submit form
 	Form.init('.form');
@@ -247,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			case 'form-no-ajax':
 			case 'search-form':
 			return true;
-
+			
 			case 'custom-form-2':
 			case 'custom-form-3':
 			case 'custom-form-4':
@@ -284,10 +296,10 @@ document.addEventListener('DOMContentLoaded', function() {
 function dAirGetInit() {
 	dAirGet.countries(function(c) {
 		var contryObjArr = JSON.parse(c);
-
+		
 		Select.setOptions('.countries', contryObjArr, 'name', 'name', 'id');
 	});
-
+	
 	Select.onSelect = function (inpElem, val, secVal) {
 		if (inpElem.name == 'country') {
 			dAirGet.region(secVal, function(c) {
