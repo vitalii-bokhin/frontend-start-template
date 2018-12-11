@@ -8,55 +8,40 @@
 	height: 100px;
 	align-items: center;
 	transition: .21s;
-	&_fixed,
-	.mob-nav-is-opened &{
+	&_fixed{
 		background: #FFF;
 		box-shadow: 0 1px 11px rgba(0,0,0,.21);
 	}
 	&__logo{
 		display: inline-block;
-		width: 100%;
-		max-width: 121px;
-		
+		width: 121px;
 		img{
 			width: 100%;
 			height: auto;
 		}
 	}
-	&__nav{
-		float: left;
-		
-		&-wrap{
-			float: right;
-		}
-	}
 	@media(max-width: 1000px){
 		height: 65px;
-		&__nav{
-			float: none;
-			padding: 20px 0;
-			
-			&-wrap{
-				float: none;
-				position: fixed;
-				top: 0;
-				bottom: 0;
-				left: -100%;
-				z-index: 3;
-				width: 100%;
-				overflow: auto;
-				background: #FFF;
-				transition: .5s;
-				
-				&.opened{
-					left: 0;
-				}
+		&__row{
+			position: fixed;
+			top: 65px;
+			bottom: 0;
+			left: -100%;
+			z-index: 3;
+			width: 100%;
+			overflow: auto;
+			align-content: flex-start;
+			background: #FFF;
+			transition: .5s;
+			.opened &{
+				left: 0;
 			}
 		}
-		&__user{
-			float: none;
-			margin: 0;
-			text-align: center;
+		&__logo{
+			width: 75px;
+			position: fixed;
+			top: 10px;
+			left: 15px;
 		}
 	}
 }
@@ -83,20 +68,16 @@
 		width: 100%;
 		transition: .5s;
 	}
-
 	span:first-child{
 		top: 0;
 	}
-
 	span:last-child{
 		bottom: 0;
 	}
-
 	span:nth-child(2),
 	span:nth-child(3){
 		top: 9px;
 	}
-
 	&.opened{
 		span:first-child,
 		span:last-child{
@@ -109,7 +90,6 @@
 			transform: rotate(45deg);
 		}
 	}
-
 	@media(max-width: 1000px){
 		display: block;
 	}
@@ -143,7 +123,6 @@
 	&:before{
 		transform: rotate(45deg);
 	}
-
 	@media(max-width: 1000px){
 		display: block;
 	}

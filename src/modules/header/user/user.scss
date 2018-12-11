@@ -5,14 +5,16 @@
 
 /*User*/
 .user{
-	height: 34px;
 	position: relative;
-	float: right;
-	margin-left: 50px;
+	&__button{
+		@extend %fwh;
+		background: none;
+		border: none;
+	}
 	&__thumb{
 		display: inline-block;
-		width: 34px;
-		height: 34px;
+		width: 50px;
+		height: 50px;
 		border-radius: 50%;
 		vertical-align: middle;
 		overflow: hidden;
@@ -23,22 +25,17 @@
 		}
 	}
 	&__name{
-		font-size: 14px;
 		display: inline-block;
 		vertical-align: middle;
 		margin-right: 10px;
 		text-align: right;
 	}
 	&__link{
+		line-height: normal;
 		text-decoration: none;
-		transition: .5s;
+		transition: .21s;
 		&:hover{
 			color: $rd;
-		}
-		&-logout{
-			font-size: 13px;
-			margin-top: 3px;
-			opacity: .8;
 		}
 	}
 	&__bubble{
@@ -56,9 +53,6 @@
 			visibility: visible;
 			opacity: 1;
 		}
-	}
-	&_l{
-		padding-top: 10px;
 	}
 	@media(max-width: 1000px){
 		&__bubble{

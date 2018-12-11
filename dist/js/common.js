@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	CoverImg.init();
 	
 	// init toggle button
-	Toggle.init('.js-toggle');
+	Toggle.init('.js-toggle', '.js-document-toggle-off');
 	
 	Toggle.onChange = function(tgl, state) {
 		
@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	MobNav.init({
 		openBtn: '.js-open-menu',
 		closeBtn: '.js-close-menu',
-		navId: 'header-mob-menu'
+		headerId: 'header',
+		menuLinkSelector: '.menu a'
 	});
 	
 	// bubble

@@ -1,26 +1,30 @@
-<div class="user">
-	<span class="user__name">
-		<a href="#" class="js-toggle user__link" data-target-elements="#user-menu,.user__thumb">Lufter</a><br>
-		<a href="#" class="user__link-logout">Выйти</a>
-	</span>
-
-	<a href="#" data-target-elements="#user-menu,.user__link" class="js-toggle user__thumb">
-		<img src="images/avatar.png" alt="avatar">
-	</a>
-
-	<div id="user-menu" class="user__bubble">
-
+@@if (user_item === 'logged') {
+	<div class="user">
+		<span class="user__name">
+			Lufter
+		</span>
+		<span class="user__thumb">
+			<img src="images/avatar.png" alt="avatar">
+		</span>
+		
+		<button data-target-elements="#user-menu" class="js-toggle js-document-toggle-off user__button"></button>
+		
+		<div id="user-menu" class="user__bubble">
+			
+		</div>
 	</div>
-</div>
+}
 
-<div class="user user_l">
-	<a id="log-user-link" href="#" class="js-toggle user__link" data-target-elements="#user-menu-log" data-dependence-target-elements="#user-menu-reg,#reg-user-link">Вход</a> / <a id="reg-user-link" href="#" class="js-toggle user__link" data-target-elements="#user-menu-reg,#log-user-link"  data-dependence-target-elements="#user-menu-log,#log-user-link">Регистрация</a>
-	
-	<div id="user-menu-log" class="user__bubble">
-		Вход
+@@if (user_item === 'not_logged') {
+	<div class="user">
+		<a id="log-user-link" href="#" class="js-toggle js-document-toggle-off user__link" data-target-elements="#user-menu-log" data-dependence-target-elements="#user-menu-reg,#reg-user-link">Вход</a> / <a id="reg-user-link" href="#" class="js-toggle js-document-toggle-off user__link" data-target-elements="#user-menu-reg"  data-dependence-target-elements="#user-menu-log,#log-user-link">Регистрация</a>
+		
+		<div id="user-menu-log" class="user__bubble">
+			Вход
+		</div>
+		
+		<div id="user-menu-reg" class="user__bubble">
+			Регистрация
+		</div>
 	</div>
-
-	<div id="user-menu-reg" class="user__bubble">
-		Регистрация
-	</div>
-</div>
+}

@@ -65,7 +65,7 @@
 		}
 	}
 	@media(max-width: 750px){
-		&:not(.row_nw) > [class*="col-"]:not([class*="xs-col"]){
+		&:not(.row_nw) > [class*="col"]:not([class*="xs-col"]){
 			max-width: 100%;
 			flex-basis: 100%;
 			margin-left: 0;
@@ -177,7 +177,7 @@
 		margin-left: auto;
 		float: right !important;
 	}
-	&-grow{
+	&_grow{
 		flex-grow: 1 !important;
 	}
 }

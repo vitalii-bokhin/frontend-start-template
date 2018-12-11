@@ -200,30 +200,26 @@
 			}
 		},
 
-		open: function(elem) {
-			var navElem = document.getElementById(this.options.navId);
+		open: function(btnElem) {
+			var headerElem = document.getElementById(this.options.headerId);
 
-			if (!navElem) {
-				return;
-			}
+			if (!headerElem) return;
 
-			if (elem.classList.contains('opened')) {
+			if (btnElem.classList.contains('opened')) {
 				this.close();
 			} else {
-				elem.classList.add('opened');
-				navElem.classList.add('opened');
+				btnElem.classList.add('opened');
+				headerElem.classList.add('opened');
 				this.fixBody(true);
 			}
 		},
 
 		close: function() {
-			var navElem = document.getElementById(this.options.navId);
+			var headerElem = document.getElementById(this.options.headerId);
 
-			if (!navElem || !navElem.classList.contains('opened')) {
-				return;
-			}
+			if (!headerElem) return;
 
-			navElem.classList.remove('opened');
+			headerElem.classList.remove('opened');
 
 			var openBtnElements = document.querySelectorAll(this.options.openBtn);
 
@@ -240,7 +236,7 @@
 			document.addEventListener('click', (e) => {
 				var openElem = e.target.closest(options.openBtn),
 				closeElem = e.target.closest(options.closeBtn),
-				menuLinkElem = e.target.closest('#'+ options.navId +' a');
+				menuLinkElement = e.target.closest(options.menuLinkSelector);
 
 				if (openElem) {
 					e.preventDefault();
@@ -248,7 +244,7 @@
 				} else if (closeElem) {
 					e.preventDefault();
 					this.close();
-				} else if (menuLinkElem || (!e.target.closest('#'+ options.navId) && document.getElementById(options.navId).classList.contains('opened'))) {
+				} else if (menuLinkElement) {
 					this.close();
 				}
 			});
@@ -455,7 +451,7 @@ FsScroll.init({
 	};
 })();
 /*
-Toggle.init(Str toggleSelector[, Str toggledClass (default - 'toggled')]);
+Toggle.init(Str toggleSelector[, onDocClickToggleOffSelecor[, Str toggledClass (default - 'toggled')]]);
 
 Toggle.onChange = function(toggleElem, state) {
 	// code...
@@ -466,27 +462,25 @@ Toggle.onChange = function(toggleElem, state) {
 
 (function() {
 	"use strict";
-
+	
 	Toggle = {
 		toggledClass: 'toggled',
 		onChange: null,
-
+		
 		target: function(toggleElem, state) {
 			var targetElements = document.querySelectorAll(toggleElem.getAttribute('data-target-elements'));
-
-			if (!targetElements.length) {
-				return;
-			}
-
+			
+			if (!targetElements.length) return;
+			
 			if (state) {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.add(this.toggledClass);
 				}
-
+				
 				//dependence elements
 				if (toggleElem.hasAttribute('data-dependence-target-elements')) {
 					var dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
-
+					
 					for (var i = 0; i < dependenceTargetElements.length; i++) {
 						dependenceTargetElements[i].classList.remove(this.toggledClass);
 					}
@@ -497,53 +491,71 @@ Toggle.onChange = function(toggleElem, state) {
 				}
 			}
 		},
-
-		toggle: function(toggleElem) {
+		
+		toggle: function(toggleElem, off) {
 			var state;
-
+			
 			if (toggleElem.classList.contains(this.toggledClass)) {
 				toggleElem.classList.remove(this.toggledClass);
-
+				
 				state = false;
-
+				
 				if (toggleElem.hasAttribute('data-first-text')) {
 					toggleElem.innerHTML = toggleElem.getAttribute('data-first-text');
 				}
-			} else {
+			} else if (!off) {
 				toggleElem.classList.add(this.toggledClass);
-
+				
 				state = true;
-
+				
 				if (toggleElem.hasAttribute('data-second-text')) {
 					toggleElem.setAttribute('data-first-text', toggleElem.innerHTML);
-
+					
 					toggleElem.innerHTML = toggleElem.getAttribute('data-second-text');
 				}
 			}
-
+			
 			//target
 			if (toggleElem.hasAttribute('data-target-elements')) {
 				this.target(toggleElem, state);
 			}
-
+			
 			//call onChange
 			if (this.onChange) {
 				this.onChange(toggleElem, state);
 			}
 		},
-
-		init: function(toggleSelector, toggledClass) {
+		
+		onDocClickOff: function (e, onDocClickOffSelector) {
+			var toggleElements = document.querySelectorAll(onDocClickOffSelector + '.' +this.toggledClass);
+			
+			for (var i = 0; i < toggleElements.length; i++) {
+				var elem = toggleElements[i];
+				
+				if (elem.hasAttribute('data-target-elements')) {
+					var targetSelectors = elem.getAttribute('data-target-elements');
+					
+					if (!e.target.closest(targetSelectors)) {
+						this.toggle(elem, true);
+					}
+				}
+			}
+		},
+		
+		init: function(toggleSelector, onDocClickOffSelector, toggledClass) {
 			if (toggledClass) {
 				this.toggledClass = toggledClass;
 			}
 			
 			document.addEventListener('click', (e) => {
 				var toggleElem = e.target.closest(toggleSelector);
-
+				
 				if (toggleElem) {
 					e.preventDefault();
-
+					
 					this.toggle(toggleElem);
+				} else {
+					this.onDocClickOff(e, onDocClickOffSelector);
 				}
 			});
 		}
