@@ -32,30 +32,26 @@
 			}
 		},
 
-		open: function(elem) {
-			var navElem = document.getElementById(this.options.navId);
+		open: function(btnElem) {
+			var headerElem = document.getElementById(this.options.headerId);
 
-			if (!navElem) {
-				return;
-			}
+			if (!headerElem) return;
 
-			if (elem.classList.contains('opened')) {
+			if (btnElem.classList.contains('opened')) {
 				this.close();
 			} else {
-				elem.classList.add('opened');
-				navElem.classList.add('opened');
+				btnElem.classList.add('opened');
+				headerElem.classList.add('opened');
 				this.fixBody(true);
 			}
 		},
 
 		close: function() {
-			var navElem = document.getElementById(this.options.navId);
+			var headerElem = document.getElementById(this.options.headerId);
 
-			if (!navElem || !navElem.classList.contains('opened')) {
-				return;
-			}
+			if (!headerElem) return;
 
-			navElem.classList.remove('opened');
+			headerElem.classList.remove('opened');
 
 			var openBtnElements = document.querySelectorAll(this.options.openBtn);
 
@@ -72,7 +68,7 @@
 			document.addEventListener('click', (e) => {
 				var openElem = e.target.closest(options.openBtn),
 				closeElem = e.target.closest(options.closeBtn),
-				menuLinkElem = e.target.closest('#'+ options.navId +' a');
+				menuLinkElement = e.target.closest(options.menuLinkSelector);
 
 				if (openElem) {
 					e.preventDefault();
@@ -80,7 +76,7 @@
 				} else if (closeElem) {
 					e.preventDefault();
 					this.close();
-				} else if (menuLinkElem || (!e.target.closest('#'+ options.navId) && document.getElementById(options.navId).classList.contains('opened'))) {
+				} else if (menuLinkElement) {
 					this.close();
 				}
 			});

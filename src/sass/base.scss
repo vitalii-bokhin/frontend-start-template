@@ -8,16 +8,10 @@ html, body {
 	background: #ffffff;
 	height: 100%;
 }
-
-a:hover{
-	text-decoration: none;
-}
-
 body{
 	display: flex;
 	flex-direction: column;
 }
-
 header{
 	position: fixed;
 	top: 0;
@@ -28,29 +22,17 @@ header{
 		transform: translate3d(0, 0, 0);
 	}
 }
-
 main{
 	flex: 1 0 auto;
 	position: relative;
 	overflow: hidden;
 }
-
 footer{
 	flex: 0 0 auto;
 }
-
-h1{
-	font-size: 2em;
+a:hover{
+	text-decoration: none;
 }
-
-h2{
-	font-size: 1.5em;
-}
-
-h1, h2{
-	margin-bottom: 1em;
-}
-
 hr{
 	margin: 5px 0;
 	border: none;

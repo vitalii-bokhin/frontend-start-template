@@ -78,9 +78,7 @@ Bubble.init({
 			mouseOver = (e) => {
 				var elem = e.target.closest(opt.element);
 				
-				if (!elem) {
-					return;
-				}
+				if (!elem) return;
 
 				if (document.ontouchstart !== undefined) {
 					

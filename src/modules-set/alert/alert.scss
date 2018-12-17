@@ -1,0 +1,15 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.alert{
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   &_top{
+      bottom: auto;
+      top: 0;
+   }
+}

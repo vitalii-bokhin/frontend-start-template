@@ -7,23 +7,15 @@
 .menu{
 	@include clr;
 	list-style: none;
-	padding-top: 8px;
-	
 	&__item{
 		float: left;
 		margin-left: 45px;
-		
-		&:first-child{
-			margin-left: 0;
-		}
-
+		@include fch(l);
 		&_has-children{
 			position: relative;
-			   
 			.menu__arr{
 				display: inline-block;
 			}
-
 			@media(min-width: 1001px){
 				&:hover{
 					.menu__sub-menu{
@@ -33,21 +25,19 @@
 				}
 			}
 		}
-
 		&_current{
 			.menu__a{
 				border-bottom-color: $bk;
 			}
 		}
 	}
-
 	&__a{
 		font-size: 18px;
 		font-weight: 500;
+		line-height: normal;
 		text-decoration: none;
 		border-bottom: 2px solid transparent;
-		transition: .5s;
-		
+		transition: .21s;
 		@media(min-width: 1001px){
 			&:hover{
 				color: $rd;

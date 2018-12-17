@@ -56,6 +56,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		element: '.js-bubble'
 	});
 	
+	// alert
+	new Alert({
+		content: 'We use coockie top',
+		position: 'top',
+		showOnce: true
+	});
+
+	new Alert({
+		content: 'We use coockie'
+	});
+	
 	// accord
 	Accord.init('.accord__button');
 	

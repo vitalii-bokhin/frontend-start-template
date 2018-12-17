@@ -36,6 +36,7 @@ var modulesOn = [
 	// 'ajax',
 	'more',
 	'tab',
+	'alert',
 	'bubble',
 	'anchor',
 	'diagram',

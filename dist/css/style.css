@@ -94,7 +94,7 @@
   font-style: italic;
 }
 
-html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, form, label, input, textarea, button, hr, header, footer, main, section, nav, article, aside {
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, pre, code, form, label, input, textarea, button, hr, header, footer, main, section, nav, article, aside {
   margin: 0;
   padding: 0;
   outline: none;
@@ -140,6 +140,10 @@ i {
   font-style: italic;
 }
 
+code {
+  display: inline-block;
+}
+
 html, body {
   font-weight: 400;
   font-style: normal;
@@ -152,10 +156,6 @@ html, body {
   color: #212121;
   background: #ffffff;
   height: 100%;
-}
-
-a:hover {
-  text-decoration: none;
 }
 
 body {
@@ -187,16 +187,8 @@ footer {
   flex: 0 0 auto;
 }
 
-h1 {
-  font-size: 2em;
-}
-
-h2 {
-  font-size: 1.5em;
-}
-
-h1, h2 {
-  margin-bottom: 1em;
+a:hover {
+  text-decoration: none;
 }
 
 hr {
@@ -1639,7 +1631,6 @@ hr {
 }
 
 .popup-close-btn {
-  display: block;
   width: 25px;
   height: 25px;
   position: absolute;
@@ -1648,7 +1639,6 @@ hr {
   z-index: 3;
   background: none;
   border: none;
-  -webkit-appearance: none;
 }
 
 .popup-close-btn:after, .popup-close-btn:before {
@@ -2742,6 +2732,72 @@ select {
 .tab__item.active {
   visibility: visible;
   opacity: 1;
+}
+
+.alert-close-btn:after, .alert-close-btn:before {
+  display: block;
+  content: "";
+}
+
+.alert {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 21;
+  background: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  padding: 20px;
+  line-height: 1.35;
+  color: #fff;
+  transition: .5s;
+}
+
+.alert_top {
+  bottom: auto;
+  top: 0;
+}
+
+.alert_hidden {
+  transform: translate(0, 101%);
+}
+
+.alert_hidden.alert_top {
+  transform: translate(0, -101%);
+}
+
+.alert-close-btn {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 2;
+  background: none;
+  border: none;
+}
+
+.alert-close-btn:after, .alert-close-btn:before {
+  width: 130%;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  left: -15%;
+  top: 50%;
+  margin-top: -1px;
+  transition: .5s;
+}
+
+.alert-close-btn:after {
+  transform: rotate(-45deg);
+}
+
+.alert-close-btn:before {
+  transform: rotate(45deg);
+}
+
+.alert-close-btn:hover:after, .alert-close-btn:hover:before {
+  background: #ff0000;
 }
 
 .bubble:after {

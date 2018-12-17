@@ -63,9 +63,7 @@
 		}
 
 		this.start = function(startTime) {
-			if (!elem) {
-				return;
-			}
+			if (!elem) return;
 			
 			this.time = startTime;
 
