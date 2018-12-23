@@ -7,7 +7,7 @@ new Alert({
 ; var Alert;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	var alertIndex = 0;
 

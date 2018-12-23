@@ -7,7 +7,7 @@ Bubble.init({
 ; var Bubble;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Bubble = {
 		bubbleDiv: null,

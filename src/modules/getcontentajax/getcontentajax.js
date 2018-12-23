@@ -1,7 +1,7 @@
 ; var GetContentAjax;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	GetContentAjax = function(options) {
 		if (!document.querySelector(options.eventBtn)) {

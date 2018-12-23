@@ -1,5 +1,5 @@
 (function() {
-	"use strict";
+	'use strict';
 
 	//show element on checkbox change
 	var ChangeCheckbox = {

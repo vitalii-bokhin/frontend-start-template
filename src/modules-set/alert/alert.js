@@ -7,34 +7,60 @@ new Alert({
 ; var Alert;
 
 (function() {
-	"use strict";
+	'use strict';
+
+	var alertIndex = 0;
 
 	Alert = function (opt) {
 		opt = opt || {};
 
-		//add alert to DOM
-		var alertDiv = document.createElement('div');
+		var alertId = 'alert-id-'+ alertIndex++;
 
-		alertDiv.className = 'alert';
+		if (opt.showOnce && document.cookie) {
+			var reg = new RegExp('lastTimestampValue-'+ options.elemId +'=(\\d+)', 'i'),
+			matchArr = cookie.match(reg);
 
-		if (opt.content) {
-			alertDiv.innerHTML = opt.content;
+			return matchArr ? matchArr[1] : null;
 		}
+
+		//add alert to DOM
+		var alertElem = document.createElement('div');
+
+		alertElem.className = 'alert';
+
+		alertElem.id = alertId;
+
+		alertElem.innerHTML = '<div></div><button class="alert-close-btn"></button>';
+
+		document.body.appendChild(alertElem);
 
 		if (opt.position == 'top') {
-			alertDiv.classList.add('alert_top');
+			alertElem.classList.add('alert_top');
 		}
-
-		document.body.appendChild(alertDiv);
-
+		
 		// set content
 		this.setContent = function (content) {
-			alertDiv.innerHTML = content;
+			alertElem.querySelector('div').innerHTML = content;
+		}
+
+		if (opt.content) {
+			this.setContent(opt.content);
 		}
 
 		// hide permanently
-		function hidePermanently(params) {
-			
+		function hidePermanently() {
+			document.cookie = 'notShowAlert='+ alertId +'; expires='+ new Date(Date.now() + 86400).toUTCString();
 		}
+
+		// hide
+		function hide() {
+			alertElem.classList.add('alert_hidden');
+			
+			if (opt.showOnce) {
+				hidePermanently();
+			}
+		}
+
+		alertElem.querySelector('.alert-close-btn').addEventListener('click', hide);
 	}
 })();

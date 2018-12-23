@@ -1,7 +1,7 @@
 var Maskinput;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Maskinput = function(inputElem, type) {
 		if (!inputElem) {

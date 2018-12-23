@@ -7,7 +7,7 @@ Bubble.init({
 ; var Bubble;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Bubble = {
 		bubbleDiv: null,
@@ -78,9 +78,7 @@ Bubble.init({
 			mouseOver = (e) => {
 				var elem = e.target.closest(opt.element);
 				
-				if (!elem) {
-					return;
-				}
+				if (!elem) return;
 
 				if (document.ontouchstart !== undefined) {
 					

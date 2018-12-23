@@ -1,7 +1,7 @@
 ; var CustomFile;
 
 (function() {
-	"use strict";
+	'use strict';
 	
 	//custom file
 	CustomFile = {

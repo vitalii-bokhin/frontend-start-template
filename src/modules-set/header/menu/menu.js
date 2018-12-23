@@ -4,7 +4,7 @@
 var Menu;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Menu = {
 		toggle: function(elem, elementStr, subMenuStr) {

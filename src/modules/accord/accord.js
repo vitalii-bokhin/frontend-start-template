@@ -4,7 +4,7 @@
 var Accord;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Accord = {
 		toggle: function(elem) {

@@ -5,7 +5,7 @@ Video.init(Str button selector);
 var Video;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Video = {
 		play: function(elem) {

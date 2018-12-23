@@ -19,7 +19,7 @@ diagram.animate(Int duration ms);
 ; var Diagram;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Diagram = function(options) {
 		var canvasElement = document.getElementById(options.canvasId);

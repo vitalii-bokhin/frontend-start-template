@@ -1,7 +1,7 @@
 ; var AutoComplete;
 
 (function () {
-	"use strict";
+	'use strict';
 	
 	AutoComplete = {
 		fieldElem: null,

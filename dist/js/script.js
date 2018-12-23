@@ -169,7 +169,7 @@
 ; var MobNav;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	//fix header
 	var headerElem = document.querySelector('.header');
@@ -257,7 +257,7 @@
 var Menu;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Menu = {
 		toggle: function(elem, elementStr, subMenuStr) {
@@ -311,7 +311,7 @@ FsScroll.init({
 ; var FsScroll;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	FsScroll = {
 		options: null,
@@ -461,7 +461,7 @@ Toggle.onChange = function(toggleElem, state) {
 ; var Toggle;
 
 (function() {
-	"use strict";
+	'use strict';
 	
 	Toggle = {
 		toggledClass: 'toggled',
@@ -564,7 +564,7 @@ Toggle.onChange = function(toggleElem, state) {
 ; var FlexImg;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	FlexImg = function(elementsStr) {
 
@@ -604,7 +604,7 @@ Toggle.onChange = function(toggleElem, state) {
 var CoverImg;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	CoverImg = {
 		cover: function(e) {
@@ -708,7 +708,7 @@ Video.init(Str button selector);
 var Video;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Video = {
 		play: function(elem) {
@@ -745,7 +745,7 @@ var Video;
 var Popup, MediaPopup;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	//popup core
 	Popup = {
@@ -1170,7 +1170,7 @@ var Popup, MediaPopup;
 
 });*/
 (function() {
-	"use strict";
+	'use strict';
 
 	//show element on checkbox change
 	var ChangeCheckbox = {
@@ -1213,7 +1213,7 @@ var Popup, MediaPopup;
 	});
 })();
 (function() {
-	"use strict";
+	'use strict';
 
 	//show element on radio button change
 	var ChangeRadio = {
@@ -1267,7 +1267,7 @@ var Popup, MediaPopup;
 ; var Select;
 
 (function () {
-	"use strict";
+	'use strict';
 	
 	// custom select
 	Select = {
@@ -1728,7 +1728,7 @@ var Popup, MediaPopup;
 ; var AutoComplete;
 
 (function () {
-	"use strict";
+	'use strict';
 	
 	AutoComplete = {
 		fieldElem: null,
@@ -1928,7 +1928,7 @@ var Popup, MediaPopup;
 ; var CustomFile;
 
 (function() {
-	"use strict";
+	'use strict';
 	
 	//custom file
 	CustomFile = {
@@ -2095,7 +2095,7 @@ var Popup, MediaPopup;
 ; var Placeholder;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Placeholder = {
 		init: function(elementsStr) {
@@ -2183,7 +2183,7 @@ var Popup, MediaPopup;
 var Maskinput;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Maskinput = function(inputElem, type) {
 		if (!inputElem) {
@@ -2233,7 +2233,7 @@ var Maskinput;
 var ValidateForm, Form;
 
 (function () {
-	"use strict";
+	'use strict';
 	
 	// validate form
 	ValidateForm = {
@@ -2999,7 +2999,7 @@ var ValidateForm, Form;
 var Accord;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Accord = {
 		toggle: function(elem) {
@@ -3047,7 +3047,7 @@ More.init(Str button selector);
 var More;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	More = {
 		toggle: function(elem) {
@@ -3100,7 +3100,7 @@ Tab.init({
 var Tab;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Tab = {
 		options: null,
@@ -3190,7 +3190,7 @@ new Alert({
 ; var Alert;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	var alertIndex = 0;
 
@@ -3256,7 +3256,7 @@ Bubble.init({
 ; var Bubble;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Bubble = {
 		bubbleDiv: null,
@@ -3365,7 +3365,7 @@ Anchor.init(Str anchor selector[, Int duration ms[, Int shift px]]);
 var Anchor;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Anchor = {
 		duration: 1000,
@@ -3438,7 +3438,7 @@ diagram.animate(Int duration ms);
 ; var Diagram;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Diagram = function(options) {
 		var canvasElement = document.getElementById(options.canvasId);
@@ -3510,7 +3510,7 @@ diagram.animate(Int duration ms);
 var Numberspin;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Numberspin = function(elementsStr) {
 		this.elements = document.querySelectorAll(elementsStr);
@@ -3660,7 +3660,7 @@ Share.init(Str button class);
 ; var Share;
 
 ;(function() {
-	"use strict";
+	'use strict';
 	
 	var encodedHref = encodeURIComponent(window.location.href);
 
@@ -3717,7 +3717,7 @@ Share.init(Str button class);
 ; var Timer;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Timer = function(options) {
 		var elem = document.getElementById(options.elemId);
@@ -3829,7 +3829,7 @@ Share.init(Str button class);
 ; var GetContentAjax;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	GetContentAjax = function(options) {
 		if (!document.querySelector(options.eventBtn)) {
@@ -3968,4 +3968,41 @@ $(document).ready(function() {
 	
 
 });*/
+; var DragLine;
+
+(function() {
+	'use strict';
+	
+	DragLine = {
+		
+		dragStart: function(e) {
+			if (e.type == 'mousedown' && e.which !== 1) return;
+			
+			
+		},
+		
+		init: function(opt) {
+			var dragLineElements = document.getElementsByClassName(opt.lineClass);
+			
+			if (!dragLineElements.length) return;
+			
+			for (let i = 0; i < dragLineElements.length; i++) {
+				var dlElem = dragLineElements[i],
+				itemElements = dlElem.getElementsByTagName('div');
+
+				for (let i = 0; i < itemElements.length; i++) {
+					itemElements[i].classList.add(opt.lineClass +'__item');
+				}
+
+				dlElem.innerHTML = '<div class="'+ opt.lineClass +'__dragable"><div class="'+ opt.lineClass +'__line">'+ dlElem.innerHTML +'</div></div>';
+			}
+			
+			if (document.ontouchstart !== undefined) {
+				document.addEventListener('touchstart', this.dragStart.bind(this));
+			} else {
+				document.addEventListener('mousedown', this.dragStart.bind(this));
+			}
+		}
+	};
+})();
 //# sourceMappingURL=script.js.map

@@ -1,7 +1,7 @@
 ; var Select;
 
 (function () {
-	"use strict";
+	'use strict';
 	
 	// custom select
 	Select = {

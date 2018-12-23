@@ -5,7 +5,7 @@ Share.init(Str button class);
 ; var Share;
 
 ;(function() {
-	"use strict";
+	'use strict';
 	
 	var encodedHref = encodeURIComponent(window.location.href);
 

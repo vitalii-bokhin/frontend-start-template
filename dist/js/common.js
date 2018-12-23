@@ -92,6 +92,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	// smooth scroll
 	// ScrollSmooth.init();
+
+	// drag line
+	DragLine.init({
+		lineClass: 'dragline'
+	})
 	
 	// anchor
 	Anchor.init('.js-anchor', 700, 100);

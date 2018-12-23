@@ -1,7 +1,7 @@
 var Numberspin;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Numberspin = function(elementsStr) {
 		this.elements = document.querySelectorAll(elementsStr);

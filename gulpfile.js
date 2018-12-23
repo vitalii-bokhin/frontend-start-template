@@ -45,6 +45,7 @@ var modulesOn = [
 	'timer',
 	'footer',
 	'getcontentajax',
+	'dragline',
 	// 'mouseparallax',
 	// 'floatslider',
 	// 'slickslider',

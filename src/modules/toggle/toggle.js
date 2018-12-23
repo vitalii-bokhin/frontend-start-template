@@ -9,7 +9,7 @@ Toggle.onChange = function(toggleElem, state) {
 ; var Toggle;
 
 (function() {
-	"use strict";
+	'use strict';
 	
 	Toggle = {
 		toggledClass: 'toggled',

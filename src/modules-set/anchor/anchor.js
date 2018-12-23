@@ -5,7 +5,7 @@ Anchor.init(Str anchor selector[, Int duration ms[, Int shift px]]);
 var Anchor;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Anchor = {
 		duration: 1000,

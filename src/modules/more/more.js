@@ -5,7 +5,7 @@ More.init(Str button selector);
 var More;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	More = {
 		toggle: function(elem) {

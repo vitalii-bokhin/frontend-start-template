@@ -1,7 +1,7 @@
 ; var Placeholder;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Placeholder = {
 		init: function(elementsStr) {

@@ -1,7 +1,7 @@
 var ValidateForm, Form;
 
 (function () {
-	"use strict";
+	'use strict';
 	
 	// validate form
 	ValidateForm = {

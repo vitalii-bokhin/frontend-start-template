@@ -1,7 +1,7 @@
 ; var FlexImg;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	FlexImg = function(elementsStr) {
 

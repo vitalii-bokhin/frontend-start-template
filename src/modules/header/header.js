@@ -1,7 +1,7 @@
 ; var MobNav;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	//fix header
 	var headerElem = document.querySelector('.header');

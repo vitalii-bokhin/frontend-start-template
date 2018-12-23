@@ -1,7 +1,7 @@
 var Popup, MediaPopup;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	//popup core
 	Popup = {

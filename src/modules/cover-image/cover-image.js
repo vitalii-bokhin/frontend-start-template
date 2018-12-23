@@ -1,7 +1,7 @@
 var CoverImg;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	CoverImg = {
 		cover: function(e) {

@@ -9,7 +9,7 @@ FsScroll.init({
 ; var FsScroll;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	FsScroll = {
 		options: null,

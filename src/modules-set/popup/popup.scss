@@ -17,11 +17,9 @@
 	background: #000;
 	background: rgba(0,0,0,.5);
 	font-size: 0;
-	
 	&_visible{
 		display: block;
 	}
-
 	&:before{
 		display: inline-block;
 		content: "";
@@ -50,7 +48,6 @@
 		font-size: 18px;
 	}
 	&-close-btn{
-		display: block;
 		width:25px;
 		height:25px;
 		position:absolute;
@@ -59,7 +56,6 @@
 		z-index:3;
 		background: none;
 		border: none;
-		-webkit-appearance: none;
 		&:after,
 		&:before{
 			@extend %ab;
@@ -84,8 +80,6 @@
 				background: #000;
 			}
 		}
-
-
 	}
 }
 
@@ -199,7 +193,6 @@
 			margin: -6px 0 0 -3px;
 		}
 	}
-
 	@media(max-width: 1200px){
 		max-width: 904px;
 		.popup__close{
@@ -225,7 +218,6 @@
 			}
 		}
 	}
-
 	@media(max-width: 1000px){
 		.popup__close{
 			right: 18px;

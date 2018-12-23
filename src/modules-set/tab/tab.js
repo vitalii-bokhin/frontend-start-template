@@ -9,7 +9,7 @@ Tab.init({
 var Tab;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Tab = {
 		options: null,

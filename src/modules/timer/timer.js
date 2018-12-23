@@ -1,7 +1,7 @@
 ; var Timer;
 
 (function() {
-	"use strict";
+	'use strict';
 
 	Timer = function(options) {
 		var elem = document.getElementById(options.elemId);
