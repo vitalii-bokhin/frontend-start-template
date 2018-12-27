@@ -34,21 +34,39 @@
 	li{
 		line-height: (24/16);
 		padding-left: 30px;
-		margin: em(30) 0;
+		margin-top: em(30);
+		@include fch(t);
 		position: relative;
 		&:before{
 			@extend %ab;
+			position: absolute;
+		}
+	}
+}
+ul.list{
+	li{
+		&:before{
 			width: 9px;
 			height: 9px;
-			position: absolute;
 			left: 3px;
 			top: 6px;
 			background: $rd;
 		}
-	}	
+	}
 }
-
-
+ol.list{
+	counter-reset: listCounter;
+	li{
+		&:before{
+			counter-increment: listCounter;
+			content: counter(listCounter)".";
+			color: $be;
+			font-weight: 700;
+			top: 0;
+			left: 0;
+		}
+	}
+}
 
 /*image*/
 .fullwidth-img{

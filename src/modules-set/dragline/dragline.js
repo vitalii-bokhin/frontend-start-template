@@ -1,16 +1,37 @@
 ; var DragLine;
 
 (function() {
-   'use strict';
+	'use strict';
+	
+	DragLine = {
+		
+		dragStart: function(e) {
+			if (e.type == 'mousedown' && e.which !== 1) return;
+			
+			
+		},
+		
+		init: function(opt) {
+			var dragLineElements = document.getElementsByClassName(opt.lineClass);
+			
+			if (!dragLineElements.length) return;
+			
+			for (let i = 0; i < dragLineElements.length; i++) {
+				var dlElem = dragLineElements[i],
+				itemElements = dlElem.getElementsByTagName('div');
 
-   DragLine = {
+				for (let i = 0; i < itemElements.length; i++) {
+					itemElements[i].classList.add(opt.lineClass +'__item');
+				}
 
-      init: function(opt) {
-         var dragLineElements = document.querySelectorAll(opt.lineSelector);
-
-         if (!dragLineElements.length) return;
-
-			console.log(document.ontouchstart);
-      }
-   };
+				dlElem.innerHTML = '<div class="'+ opt.lineClass +'__dragable"><div class="'+ opt.lineClass +'__line">'+ dlElem.innerHTML +'</div></div>';
+			}
+			
+			if (document.ontouchstart !== undefined) {
+				document.addEventListener('touchstart', this.dragStart.bind(this));
+			} else {
+				document.addEventListener('mousedown', this.dragStart.bind(this));
+			}
+		}
+	};
 })();
