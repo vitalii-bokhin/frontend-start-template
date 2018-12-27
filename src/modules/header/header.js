@@ -28,7 +28,9 @@
 			} else {
 				document.body.classList.remove('mob-nav-is-opened');
 
-				window.scrollTo(0, this.winScrollTop);
+				if (this.winScrollTop > 0) {
+					window.scrollTo(0, this.winScrollTop);
+				}
 			}
 		},
 

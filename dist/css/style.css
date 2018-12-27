@@ -905,9 +905,17 @@ select { visibility: hidden; }
 /*list*/
 .list { list-style: none; }
 
-.list li { line-height: 1.5; padding-left: 30px; margin: 1.875em 0; position: relative; }
+.list li { line-height: 1.5; padding-left: 30px; margin-top: 1.875em; position: relative; }
 
-.list li:before { width: 9px; height: 9px; position: absolute; left: 3px; top: 6px; background: #ff0000; }
+.list li:first-child { margin-top: 0 !important; }
+
+.list li:before { position: absolute; }
+
+ul.list li:before { width: 9px; height: 9px; left: 3px; top: 6px; background: #ff0000; }
+
+ol.list { counter-reset: listCounter; }
+
+ol.list li:before { counter-increment: listCounter; content: counter(listCounter) "."; color: #0000ff; font-weight: 700; top: 0; left: 0; }
 
 /*image*/
 .fullwidth-img { width: 100%; height: auto; }
