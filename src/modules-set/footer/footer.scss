@@ -7,9 +7,10 @@
 	background: #FFF;
 	box-shadow: 0 -1px 11px rgba(0,0,0,.21);
 	&__logo{
+		display: inline-block;
+		width: 120px;
 		img{
 			width: 100%;
-			max-width: 121px;
 			height: auto;
 		}
 	}

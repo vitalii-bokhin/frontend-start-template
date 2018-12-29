@@ -42,17 +42,35 @@
 	&__inner{
 		background: #FFF;
 		padding: 50px;
+		border-radius: 6px;
 		@include clr;
+		h2{
+			font-weight: 700;
+			margin-top: 30px;
+			@include fch(t);
+		}
+		p{
+			font-size: 15px;
+			line-height: 1.45;
+			margin-top: 20px;
+			@include fch(t);
+		}
+	}
+	&__title{
+		font-size: 24px;
+		font-weight: 700;
+		margin-bottom: 30px;
 	}
 	&__message{
 		font-size: 18px;
 	}
 	&-close-btn{
-		width:25px;
-		height:25px;
+		display: block;
+		width:20px;
+		height:20px;
 		position:absolute;
-		right:-29px;
-		top:4px;
+		right:15px;
+		top:50px;
 		z-index:3;
 		background: none;
 		border: none;
@@ -60,8 +78,8 @@
 		&:before{
 			@extend %ab;
 			width: 130%;
-			height: 3px;
-			background: $rd;
+			height: 2px;
+			background: $gy;
 			position: absolute;
 			left: -15%;
 			top: 50%;
@@ -77,7 +95,7 @@
 		&:hover{
 			&:after,
 			&:before{
-				background: #000;
+				background: $bk;
 			}
 		}
 	}
