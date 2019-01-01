@@ -71,16 +71,31 @@
 }
 
 /*link*/
-.link{
+%link{
 	text-decoration: none;
+	border-bottom: 1px solid;
+	transition: .21s;
+	&:hover{
+		border-bottom-color: transparent;
+	}
+}
+.link{
+	@extend %link;
 	color: $be;
-	border-bottom: 2px solid $be;
-	transition: .5s;
+	border-bottom-color: $be;
+}
+.green-link{
+	@extend %link;
+	color: $gn;
+	border-bottom-color: $gn;
 	&_dash{
 		border-bottom-style: dashed;
 	}
-	&:hover{
+	&_rev{
 		border-bottom-color: transparent;
+		&:hover{
+			border-bottom-color: $gn;
+		}
 	}
 }
 
