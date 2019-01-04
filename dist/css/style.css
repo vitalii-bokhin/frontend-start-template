@@ -858,19 +858,36 @@ hr {
 }
 
 /*link*/
-.link {
+.link, .green-link {
   text-decoration: none;
-  color: #0000ff;
-  border-bottom: 2px solid #0000ff;
-  transition: .5s;
+  border-bottom: 1px solid;
+  transition: .21s;
 }
 
-.link_dash {
+.link:hover, .green-link:hover {
+  border-bottom-color: transparent;
+}
+
+.link {
+  color: #0000ff;
+  border-bottom-color: #0000ff;
+}
+
+.green-link {
+  color: #00ff00;
+  border-bottom-color: #00ff00;
+}
+
+.green-link_dash {
   border-bottom-style: dashed;
 }
 
-.link:hover {
+.green-link_rev {
   border-bottom-color: transparent;
+}
+
+.green-link_rev:hover {
+  border-bottom-color: #00ff00;
 }
 
 /*paginate*/
@@ -2854,7 +2871,7 @@ select {
 
 .footer {
   background: #FFF;
-  box-shadow: 0 -1px 7px rgba(0, 0, 0, 0.21);
+  border-bottom: 1px solid #aaaaaa;
 }
 
 .footer__logo {
