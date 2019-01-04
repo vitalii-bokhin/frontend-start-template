@@ -59,12 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	// alert
 	new Alert({
 		content: 'We use coockie top',
-		position: 'top',
-		showOnce: true
+		position: 'top'
 	});
 
 	new Alert({
-		content: 'We use coockie'
+		content: 'We use coockie',
+		showOnce: true
 	});
 	
 	// accord
