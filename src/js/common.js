@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	new Alert({
-		content: 'We use coockie',
+		content: 'На нашем веб-сайте используются файлы cookies, которые позволяют улучшить Ваше взаимодействие с сайтом.<br> Когда вы посещаете данный веб-сайт, Вы даете согласие на использование файлов cookies.',
 		showOnce: true
 	});
 	

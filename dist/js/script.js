@@ -3185,7 +3185,9 @@ var Tab;
 })();
 /*
 new Alert({
-	
+	content: 'We use coockie',
+	position: 'top', // default - bottom
+	showOnce: true // default - false
 });
 */
 
@@ -3199,13 +3201,14 @@ new Alert({
 	Alert = function (opt) {
 		opt = opt || {};
 
-		var alertId = 'alert-id-'+ alertIndex++;
+		var alertId = 'alert-id-'+ (alertIndex++);
 
-		if (opt.showOnce && document.cookie) {
-			var reg = new RegExp('lastTimestampValue-'+ options.elemId +'=(\\d+)', 'i'),
-			matchArr = cookie.match(reg);
+		if (opt.showOnce) {
+			let hiddenAlert = window.localStorage.getItem('notShowAlert='+ alertId);
 
-			return matchArr ? matchArr[1] : null;
+			if (hiddenAlert !== null && hiddenAlert === 'true') {
+				return false;
+			}
 		}
 
 		//add alert to DOM
@@ -3234,7 +3237,7 @@ new Alert({
 
 		// hide permanently
 		function hidePermanently() {
-			document.cookie = 'notShowAlert='+ alertId +'; expires='+ new Date(Date.now() + 86400).toUTCString();
+			window.localStorage.setItem('notShowAlert='+ alertId, 'true');
 		}
 
 		// hide
