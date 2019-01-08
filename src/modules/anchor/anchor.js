@@ -14,20 +14,24 @@ var Anchor;
 		scroll: function(anchorId, e) {
 			var anchorSectionElem = document.getElementById(anchorId +'-anchor');
 
-			if (!anchorSectionElem) {
-				return;
-			}
+			if (!anchorSectionElem) return;
 
-			if (e) {
+			/* if (e) {
 				e.preventDefault();
-			}
+			} */
 
 			var scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
 			scrollTo = scrollTo - this.shift;
 
 			animate(function(progress) {
 				window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
-			}, this.duration, 'easeInOutQuad');
+			}, this.duration, 'easeInOutQuad', function() {
+				anchorSectionElem.classList.add('scrolled');
+
+				setTimeout(function() {
+					anchorSectionElem.classList.remove('scrolled');
+				}, 500);
+			});
 		},
 
 		init: function(elementStr, duration, shift) {

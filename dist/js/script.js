@@ -2808,6 +2808,7 @@ var ValidateForm, Form;
 			formElem.classList.add('form_sending');
 			
 			if (!this.onSubmit) {
+				formElem.submit();
 				return;
 			}
 			
@@ -2868,8 +2869,9 @@ var ValidateForm, Form;
 			
 			if (ret === false) {
 				e.preventDefault();
-				
 				actSubmitBtn(false);
+			} else {
+				formElem.submit();
 			}
 		},
 		
@@ -2878,17 +2880,33 @@ var ValidateForm, Form;
 			
 			ValidateForm.init(formSelector);
 			
+			// submit event
 			document.addEventListener('submit', (e) => {
 				var formElem = e.target.closest(formSelector);
 				
-				if (!formElem) {
-					return;
-				}
+				if (!formElem) return;
 				
 				if (ValidateForm.validate(formElem)) {
 					this.submit(e, formElem);
 				} else {
 					e.preventDefault();
+				}
+			});
+			
+			// keyboard event
+			document.addEventListener('keydown', (e) => {
+				var formElem = e.target.closest(formSelector);
+				
+				if (!formElem) return;
+				
+				var key = e.which || e.keyCode || 0;
+				
+				if (e.ctrlKey && key == 13) {
+					e.preventDefault();
+
+					if (ValidateForm.validate(formElem)) {
+						this.submit(e, formElem);
+					}
 				}
 			});
 		}
@@ -2909,7 +2927,7 @@ var ValidateForm, Form;
 			}
 		}
 	}
-
+	
 	// duplicate form
 	var DuplicateForm = {
 		add: function (btnElem) {
@@ -3379,20 +3397,24 @@ var Anchor;
 		scroll: function(anchorId, e) {
 			var anchorSectionElem = document.getElementById(anchorId +'-anchor');
 
-			if (!anchorSectionElem) {
-				return;
-			}
+			if (!anchorSectionElem) return;
 
-			if (e) {
+			/* if (e) {
 				e.preventDefault();
-			}
+			} */
 
 			var scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
 			scrollTo = scrollTo - this.shift;
 
 			animate(function(progress) {
 				window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
-			}, this.duration, 'easeInOutQuad');
+			}, this.duration, 'easeInOutQuad', function() {
+				anchorSectionElem.classList.add('scrolled');
+
+				setTimeout(function() {
+					anchorSectionElem.classList.remove('scrolled');
+				}, 500);
+			});
 		},
 
 		init: function(elementStr, duration, shift) {

@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	// anchor
 	Anchor.init('.js-anchor', 700, 100);
+	// Anchor.scroll('section-3');
 	
 	// diagram
 	var diagram = new Diagram({
