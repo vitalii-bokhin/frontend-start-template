@@ -73,3 +73,31 @@ ol.list{
 	height: auto;
 }
 
+/* title */
+.title{
+	font-size: 30px;
+	font-weight: 700;
+	line-height: 1.2;
+	margin-bottom: em(35,30);
+}
+
+/* article */
+.article{
+	h2{
+		font-size: 22px;
+		font-weight: 700;
+		line-height: 1.2;
+		margin: 45px 0 30px;
+		@include fch(t);
+	}
+	p{
+		line-height: 1.35;
+		margin-top: 25px;
+		@include fch(t);
+	}
+	blockquote{
+		line-height: 1.35;
+		margin-top: 35px;
+		@include fch(t);
+	}
+}
