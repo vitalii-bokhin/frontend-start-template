@@ -574,6 +574,7 @@ var ValidateForm, Form;
 			formElem.classList.add('form_sending');
 			
 			if (!this.onSubmit) {
+				formElem.submit();
 				return;
 			}
 			
@@ -634,8 +635,9 @@ var ValidateForm, Form;
 			
 			if (ret === false) {
 				e.preventDefault();
-				
 				actSubmitBtn(false);
+			} else {
+				formElem.submit();
 			}
 		},
 		
@@ -644,17 +646,33 @@ var ValidateForm, Form;
 			
 			ValidateForm.init(formSelector);
 			
+			// submit event
 			document.addEventListener('submit', (e) => {
 				var formElem = e.target.closest(formSelector);
 				
-				if (!formElem) {
-					return;
-				}
+				if (!formElem) return;
 				
 				if (ValidateForm.validate(formElem)) {
 					this.submit(e, formElem);
 				} else {
 					e.preventDefault();
+				}
+			});
+			
+			// keyboard event
+			document.addEventListener('keydown', (e) => {
+				var formElem = e.target.closest(formSelector);
+				
+				if (!formElem) return;
+				
+				var key = e.which || e.keyCode || 0;
+				
+				if (e.ctrlKey && key == 13) {
+					e.preventDefault();
+
+					if (ValidateForm.validate(formElem)) {
+						this.submit(e, formElem);
+					}
 				}
 			});
 		}
@@ -675,7 +693,7 @@ var ValidateForm, Form;
 			}
 		}
 	}
-
+	
 	// duplicate form
 	var DuplicateForm = {
 		add: function (btnElem) {

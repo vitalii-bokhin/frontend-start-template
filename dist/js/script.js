@@ -1947,6 +1947,29 @@ var Popup, MediaPopup;
 			
 			this.filesObj[elem.id] = {};
 			this.filesArrayObj[elem.id] = [];
+
+			this.labelText(elem);
+		},
+
+		labelText: function(inputElem) {
+			const labTxtElem = inputElem.closest('.custom-file').querySelector('.custom-file__label-text');
+
+			if (!labTxtElem || !labTxtElem.hasAttribute('data-label-text-2')) return;
+
+			let maxFiles = 1;
+
+			if (inputElem.multiple) {
+				maxFiles = +this.input.getAttribute('data-max-files');
+			}
+
+			if (this.filesArrayObj[inputElem.id].length >= maxFiles) {
+				if (!labTxtElem.hasAttribute('data-label-text')) {
+					labTxtElem.setAttribute('data-label-text', labTxtElem.innerHTML);
+				}
+				labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text-2');
+			} else if (labTxtElem.hasAttribute('data-label-text')) {
+				labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text');
+			}
 		},
 		
 		loadPreview: function(file, fileItem) {
@@ -2025,6 +2048,8 @@ var Popup, MediaPopup;
 			for (var key in this.filesObj[inputElem.id]) {
 				this.filesArrayObj[inputElem.id].push(this.filesObj[inputElem.id][key]);
 			}
+
+			this.labelText(inputElem);
 			
 			ValidateForm.file(inputElem, this.filesArrayObj[inputElem.id]);
 		},
@@ -2242,16 +2267,14 @@ var ValidateForm, Form;
 		input: null,
 		
 		errorTip: function (err, errInd, errorTxt) {
-			var field = this.input.closest('.form__field') || this.input.parentElement,
+			const field = this.input.closest('.form__field') || this.input.parentElement,
 			errTip = field.querySelector('.field-error-tip');
 			
 			if (err) {
 				field.classList.remove('field-success');
 				field.classList.add('field-error');
 				
-				if (!errTip) {
-					return;
-				}
+				if (!errTip) return;
 				
 				if (errInd) {
 					if (!errTip.hasAttribute('data-error-text')) {
@@ -2268,9 +2291,7 @@ var ValidateForm, Form;
 		},
 		
 		customErrorTip: function (input, errorTxt) {
-			if (!input) {
-				return;
-			}
+			if (!input) return;
 			
 			this.input = input;
 			
@@ -2407,8 +2428,7 @@ var ValidateForm, Form;
 			
 			return err;
 		},
-		
-		
+
 		checkbox: function (elem) {
 			this.input = elem;
 			

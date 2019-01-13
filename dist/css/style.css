@@ -3008,6 +3008,44 @@ ol.list li:before {
   height: auto;
 }
 
+/* title */
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.16667em;
+}
+
+/* article */
+.article h2 {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 45px 0 30px;
+}
+
+.article h2:first-child {
+  margin-top: 0 !important;
+}
+
+.article p {
+  line-height: 1.35;
+  margin-top: 25px;
+}
+
+.article p:first-child {
+  margin-top: 0 !important;
+}
+
+.article blockquote {
+  line-height: 1.35;
+  margin-top: 35px;
+}
+
+.article blockquote:first-child {
+  margin-top: 0 !important;
+}
+
 .menu__arr, .accord__button:after, .arrow-btn:after, .custom-checkbox__input:checked + .custom-checkbox__label:before, .fb-btn, .ok-btn, .plus-btn:after, .form__btn_search:before, .tw-btn, .vk-btn, .video__btn-play,
 .icon:before {
   background: url("../images/sprite.svg") no-repeat;
