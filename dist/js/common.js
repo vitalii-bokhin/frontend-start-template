@@ -58,8 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	// alert
 	new Alert({
-		content: 'We use coockie top',
-		position: 'top'
+		content: 'We use cookie top',
+		position: 'top',
+		showOnce: true
 	});
 
 	new Alert({

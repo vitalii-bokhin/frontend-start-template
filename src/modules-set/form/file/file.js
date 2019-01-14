@@ -18,6 +18,29 @@
 			
 			this.filesObj[elem.id] = {};
 			this.filesArrayObj[elem.id] = [];
+
+			this.labelText(elem);
+		},
+
+		labelText: function(inputElem) {
+			const labTxtElem = inputElem.closest('.custom-file').querySelector('.custom-file__label-text');
+
+			if (!labTxtElem || !labTxtElem.hasAttribute('data-label-text-2')) return;
+
+			let maxFiles = 1;
+
+			if (inputElem.multiple) {
+				maxFiles = +this.input.getAttribute('data-max-files');
+			}
+
+			if (this.filesArrayObj[inputElem.id].length >= maxFiles) {
+				if (!labTxtElem.hasAttribute('data-label-text')) {
+					labTxtElem.setAttribute('data-label-text', labTxtElem.innerHTML);
+				}
+				labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text-2');
+			} else if (labTxtElem.hasAttribute('data-label-text')) {
+				labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text');
+			}
 		},
 		
 		loadPreview: function(file, fileItem) {
@@ -96,6 +119,8 @@
 			for (var key in this.filesObj[inputElem.id]) {
 				this.filesArrayObj[inputElem.id].push(this.filesObj[inputElem.id][key]);
 			}
+
+			this.labelText(inputElem);
 			
 			ValidateForm.file(inputElem, this.filesArrayObj[inputElem.id]);
 		},
