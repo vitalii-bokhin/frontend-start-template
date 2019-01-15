@@ -8,16 +8,14 @@ var ValidateForm, Form;
 		input: null,
 		
 		errorTip: function (err, errInd, errorTxt) {
-			var field = this.input.closest('.form__field') || this.input.parentElement,
+			const field = this.input.closest('.form__field') || this.input.parentElement,
 			errTip = field.querySelector('.field-error-tip');
 			
 			if (err) {
 				field.classList.remove('field-success');
 				field.classList.add('field-error');
 				
-				if (!errTip) {
-					return;
-				}
+				if (!errTip) return;
 				
 				if (errInd) {
 					if (!errTip.hasAttribute('data-error-text')) {
@@ -34,9 +32,7 @@ var ValidateForm, Form;
 		},
 		
 		customErrorTip: function (input, errorTxt) {
-			if (!input) {
-				return;
-			}
+			if (!input) return;
 			
 			this.input = input;
 			
@@ -173,8 +169,7 @@ var ValidateForm, Form;
 			
 			return err;
 		},
-		
-		
+
 		checkbox: function (elem) {
 			this.input = elem;
 			

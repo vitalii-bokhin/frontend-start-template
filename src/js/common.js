@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
 		window.addEventListener('winResized', initFun);
 	})();
 	
-	// init cover images
+	// cover images
 	CoverImg.init();
 	
-	// init toggle button
+	// toggle button
 	Toggle.init('.js-toggle', '.js-document-toggle-off');
 	
 	Toggle.onChange = function(tgl, state) {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		//  code...
 	}*/
 	
-	// popup init
+	// popup
 	Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
 	
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	timer.start(50);
 	
-	
+	// timer 2
 	var timer2 = new Timer({
 		elemId: 'timer-2',
 		format: 'extended'
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	timer2.start(130);
 	
-	
+	// stopwatch
 	var stopwatch = new Timer({
 		elemId: 'stopwatch', 
 		stopwatch: true
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	stopwatch.start(0);
 	
-	
+	// stopwatch 2
 	var stopwatch2 = new Timer({
 		elemId: 'stopwatch-1', 
 		stopwatch: true,
