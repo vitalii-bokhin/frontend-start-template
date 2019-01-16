@@ -1608,6 +1608,7 @@ hr {
   z-index: 3;
   background: none;
   border: none;
+  backface-visibility: hidden;
 }
 
 .popup-close-btn:after, .popup-close-btn:before {

@@ -75,6 +75,7 @@
 		z-index:3;
 		background: none;
 		border: none;
+		backface-visibility: hidden;
 		&:after,
 		&:before{
 			@extend %ab;
