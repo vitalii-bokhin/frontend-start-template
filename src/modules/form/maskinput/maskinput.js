@@ -2,7 +2,7 @@ var Maskinput;
 
 (function() {
 	'use strict';
-
+	
 	Maskinput = function(inputElem, type) {
 		if (!inputElem) {
 			return;
@@ -11,6 +11,10 @@ var Maskinput;
 		var defValue = '';
 
 		this.tel = function() {
+			if (evStr == 'focus' && !inputElem.value.length) {
+				inputElem.value = '+7(';
+			}
+
 			if (!/[\+\d\(\)\-]*/.test(inputElem.value)) {
 				inputElem.value = defValue;
 			} else {
@@ -46,5 +50,9 @@ var Maskinput;
 		inputElem.addEventListener('input', () => {
 			this[type]();
 		});
+
+		inputElem.addEventListener('focus', () => {
+			this[type]('focus');
+		}, true);
 	}
 })();

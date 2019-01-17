@@ -244,7 +244,7 @@
 						while (elem) {
 							if (!elem) break;
 							
-							if (!elem.elementIsHidden()) {
+							if (!elemIsHidden(elem)) {
 								return elem;
 							} else {
 								elem = elem.nextElementSibling;
@@ -264,7 +264,7 @@
 					while (elem) {
 						if (!elem) break;
 						
-						if (!elem.elementIsHidden()) {
+						if (!elemIsHidden(elem)) {
 							elem.classList.add('hover');
 							break;
 						} else {
@@ -282,7 +282,7 @@
 						while (elem) {
 							if (!elem) break;
 							
-							if (!elem.elementIsHidden()) {
+							if (!elemIsHidden(elem)) {
 								return elem;
 							} else {
 								elem = elem.previousElementSibling;
@@ -302,7 +302,7 @@
 					while (elem) {
 						if (!elem) break;
 						
-						if (!elem.elementIsHidden()) {
+						if (!elemIsHidden(elem)) {
 							elem.classList.add('hover');
 							options.scrollTop = 9999;
 							break;

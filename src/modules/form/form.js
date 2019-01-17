@@ -310,7 +310,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.elementIsHidden()) {
+				if (elemIsHidden(elem)) {
 					continue;
 				}
 				
@@ -342,7 +342,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.parentElement.elementIsHidden()) {
+				if (elemIsHidden(elem.parentElement)) {
 					continue;
 				}
 				
@@ -357,7 +357,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.elementIsHidden()) {
+				if (elemIsHidden(elem)) {
 					continue;
 				}
 				
@@ -380,7 +380,7 @@ var ValidateForm, Form;
 				var group = groups[i],
 				checkedElements = 0;
 				
-				if (group.elementIsHidden()) {
+				if (elemIsHidden(group)) {
 					continue;
 				}
 				
@@ -409,7 +409,7 @@ var ValidateForm, Form;
 				var group = groups[i],
 				checkedElement = false;
 				
-				if (group.elementIsHidden()) {
+				if (elemIsHidden(group)) {
 					continue;
 				}
 				
@@ -437,7 +437,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.elementIsHidden()) {
+				if (elemIsHidden(elem)) {
 					continue;
 				}
 				
@@ -461,7 +461,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.elementIsHidden()) {
+				if (elemIsHidden(elem)) {
 					continue;
 				}
 				
@@ -605,7 +605,7 @@ var ValidateForm, Form;
 				for (var i = 0; i < elements.length; i++) {
 					var elem = elements[i];
 					
-					if (!elem.elementIsHidden()) {
+					if (!elemIsHidden(elem)) {
 						if (st) {
 							elem.removeAttribute('disabled');
 						} else {
@@ -759,7 +759,7 @@ var ValidateForm, Form;
 		for (let i = 0; i < elements.length; i++) {
 			var elem = elements[i];
 			
-			if (!elem.elementIsHidden()) {
+			if (!elemIsHidden(elem)) {
 				elem.setAttribute('tabindex', i + 1);
 			}
 		}

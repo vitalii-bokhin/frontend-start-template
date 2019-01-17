@@ -1,5 +1,5 @@
 // global variables
-; var browser, ajax, animate;
+; var browser, elemIsHidden, ajax, animate;
 
 (function() {
 	"use strict";
@@ -78,17 +78,13 @@
 	}
 
 	// Check element for hidden
-	Element.prototype.elementIsHidden = function() {
-		var elem = this;
-
+	elemIsHidden = function(elem) {
 		while (elem) {
 			if (!elem) break;
 
-			var compStyle = getComputedStyle(elem);
+			const compStyle = getComputedStyle(elem);
 
-			if (compStyle.display == 'none' || compStyle.visibility == 'hidden' || compStyle.opacity == '0') {
-				return true;
-			}
+			if (compStyle.display == 'none' || compStyle.visibility == 'hidden' || compStyle.opacity == '0') return true;
 
 			elem = elem.parentElement;
 		}

@@ -1,5 +1,5 @@
 // global variables
-; var browser, ajax, animate;
+; var browser, elemIsHidden, ajax, animate;
 
 (function() {
 	"use strict";
@@ -78,17 +78,13 @@
 	}
 
 	// Check element for hidden
-	Element.prototype.elementIsHidden = function() {
-		var elem = this;
-
+	elemIsHidden = function(elem) {
 		while (elem) {
 			if (!elem) break;
 
-			var compStyle = getComputedStyle(elem);
+			const compStyle = getComputedStyle(elem);
 
-			if (compStyle.display == 'none' || compStyle.visibility == 'hidden' || compStyle.opacity == '0') {
-				return true;
-			}
+			if (compStyle.display == 'none' || compStyle.visibility == 'hidden' || compStyle.opacity == '0') return true;
 
 			elem = elem.parentElement;
 		}
@@ -1509,7 +1505,7 @@ var Popup, MediaPopup;
 						while (elem) {
 							if (!elem) break;
 							
-							if (!elem.elementIsHidden()) {
+							if (!elemIsHidden(elem)) {
 								return elem;
 							} else {
 								elem = elem.nextElementSibling;
@@ -1529,7 +1525,7 @@ var Popup, MediaPopup;
 					while (elem) {
 						if (!elem) break;
 						
-						if (!elem.elementIsHidden()) {
+						if (!elemIsHidden(elem)) {
 							elem.classList.add('hover');
 							break;
 						} else {
@@ -1547,7 +1543,7 @@ var Popup, MediaPopup;
 						while (elem) {
 							if (!elem) break;
 							
-							if (!elem.elementIsHidden()) {
+							if (!elemIsHidden(elem)) {
 								return elem;
 							} else {
 								elem = elem.previousElementSibling;
@@ -1567,7 +1563,7 @@ var Popup, MediaPopup;
 					while (elem) {
 						if (!elem) break;
 						
-						if (!elem.elementIsHidden()) {
+						if (!elemIsHidden(elem)) {
 							elem.classList.add('hover');
 							options.scrollTop = 9999;
 							break;
@@ -2208,7 +2204,7 @@ var Maskinput;
 
 (function() {
 	'use strict';
-
+	
 	Maskinput = function(inputElem, type) {
 		if (!inputElem) {
 			return;
@@ -2217,6 +2213,10 @@ var Maskinput;
 		var defValue = '';
 
 		this.tel = function() {
+			if (evStr == 'focus' && !inputElem.value.length) {
+				inputElem.value = '+7(';
+			}
+
 			if (!/[\+\d\(\)\-]*/.test(inputElem.value)) {
 				inputElem.value = defValue;
 			} else {
@@ -2252,6 +2252,10 @@ var Maskinput;
 		inputElem.addEventListener('input', () => {
 			this[type]();
 		});
+
+		inputElem.addEventListener('focus', () => {
+			this[type]('focus');
+		}, true);
 	}
 })();
 var ValidateForm, Form;
@@ -2566,7 +2570,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.elementIsHidden()) {
+				if (elemIsHidden(elem)) {
 					continue;
 				}
 				
@@ -2598,7 +2602,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.parentElement.elementIsHidden()) {
+				if (elemIsHidden(elem.parentElement)) {
 					continue;
 				}
 				
@@ -2613,7 +2617,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.elementIsHidden()) {
+				if (elemIsHidden(elem)) {
 					continue;
 				}
 				
@@ -2636,7 +2640,7 @@ var ValidateForm, Form;
 				var group = groups[i],
 				checkedElements = 0;
 				
-				if (group.elementIsHidden()) {
+				if (elemIsHidden(group)) {
 					continue;
 				}
 				
@@ -2665,7 +2669,7 @@ var ValidateForm, Form;
 				var group = groups[i],
 				checkedElement = false;
 				
-				if (group.elementIsHidden()) {
+				if (elemIsHidden(group)) {
 					continue;
 				}
 				
@@ -2693,7 +2697,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.elementIsHidden()) {
+				if (elemIsHidden(elem)) {
 					continue;
 				}
 				
@@ -2717,7 +2721,7 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (elem.elementIsHidden()) {
+				if (elemIsHidden(elem)) {
 					continue;
 				}
 				
@@ -2861,7 +2865,7 @@ var ValidateForm, Form;
 				for (var i = 0; i < elements.length; i++) {
 					var elem = elements[i];
 					
-					if (!elem.elementIsHidden()) {
+					if (!elemIsHidden(elem)) {
 						if (st) {
 							elem.removeAttribute('disabled');
 						} else {
@@ -3015,7 +3019,7 @@ var ValidateForm, Form;
 		for (let i = 0; i < elements.length; i++) {
 			var elem = elements[i];
 			
-			if (!elem.elementIsHidden()) {
+			if (!elemIsHidden(elem)) {
 				elem.setAttribute('tabindex', i + 1);
 			}
 		}
