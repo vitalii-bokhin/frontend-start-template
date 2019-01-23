@@ -3,32 +3,28 @@
 @import "extends";
 @import "mixins";
 
-/*main*/
+/* main */
 .main{
-	padding-top: 100px;
-}
-
-/*full-page*/
-.full-page{
-	@extend %fwh;
-	padding-top: 100px;
-	overflow: hidden;
-	&_middle{
-		display: flex;
-		align-items: center;
-		&__inner{
-			width: 100%;
-		}
+	&, &__full-page{
+		padding-top: 100px;
+	}
+	&__full-page{
+		@extend %fwh;
 	}
 }
 
-/*section*/
+/* first screen */
+.first-screen{
+	overflow: hidden;
+}
+
+/* section */
 .section{
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
 
-/*list*/
+/* list */
 .list{
 	list-style: none;
 	li{
@@ -67,7 +63,7 @@ ol.list{
 	}
 }
 
-/*image*/
+/* image */
 .fullwidth-img{
 	width: 100%;
 	height: auto;

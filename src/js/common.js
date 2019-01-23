@@ -1,11 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
+	const fsElem = document.getElementById('js-first-screen');
+	
 	(function initFun() {
-		if (window.innerWidth < 1200) {
-			var fsElem = document.querySelector('.first-screen');
-			
-			if (fsElem) {
-				fsElem.style.height = window.innerHeight +'px';
+		if (fsElem) {
+			let padTop = 100;
+
+			if (window.innerWidth < 1200) {
+				padTop = 60;
 			}
+
+			fsElem.style.height = (window.innerHeight - padTop) +'px';
 		}
 		
 		FlexImg('.flex-img');
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		position: 'top',
 		showOnce: true
 	});
-
+	
 	new Alert({
 		content: 'На нашем веб-сайте используются файлы cookies, которые позволяют улучшить Ваше взаимодействие с сайтом.<br> Когда вы посещаете данный веб-сайт, Вы даете согласие на использование файлов cookies.',
 		showOnce: true
@@ -93,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	// smooth scroll
 	// ScrollSmooth.init();
-
+	
 	// drag line
 	DragLine.init({
 		lineClass: 'dragline'
