@@ -3222,7 +3222,8 @@ var Tab;
 new Alert({
 	content: 'We use coockie',
 	position: 'top', // default - bottom
-	showOnce: true // default - false
+	showOnce: true, // default - false
+	addClass: 'alert-class'
 });
 */
 
@@ -3253,12 +3254,16 @@ new Alert({
 
 		alertElem.id = alertId;
 
-		alertElem.innerHTML = '<div></div><button class="alert-close-btn"></button>';
+		alertElem.innerHTML = '<div></div><button class="js-alert-close alert__close-btn"></button>';
 
 		document.body.appendChild(alertElem);
 
 		if (opt.position == 'top') {
 			alertElem.classList.add('alert_top');
+		}
+		
+		if (opt.addClass) {
+			alertElem.classList.add(opt.addClass);
 		}
 		
 		// set content
@@ -3284,7 +3289,11 @@ new Alert({
 			}
 		}
 
-		alertElem.querySelector('.alert-close-btn').addEventListener('click', hide);
+		alertElem.addEventListener('click', function(e) {
+			if (e.target.closest('.js-alert-close')) {
+				hide();
+			}
+		});
 	}
 })();
 /*

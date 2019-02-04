@@ -62,13 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	// alert
 	new Alert({
-		content: 'We use cookie top',
+		content: 'This content in top alert.',
 		position: 'top',
-		showOnce: true
+		addClass: 'top-alert-block'
 	});
 	
 	new Alert({
-		content: 'На нашем веб-сайте используются файлы cookies, которые позволяют улучшить Ваше взаимодействие с сайтом.<br> Когда вы посещаете данный веб-сайт, Вы даете согласие на использование файлов cookies.',
+		content: '<div class="row alert__row row_col-middle row_sm-x-nw"><div class="col">На нашем веб-сайте используются файлы cookies, которые позволяют улучшить Ваше взаимодействие с сайтом. Когда вы посещаете данный веб-сайт, Вы даете согласие на использование файлов cookies.</div><div class="col"><button class="js-alert-close btn btn_be">Хорошо</button></div></div>',
 		showOnce: true
 	});
 	
