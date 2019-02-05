@@ -37,6 +37,10 @@
 		&:hover{
 			color: $rd;
 		}
+		&-sep{
+			line-height: normal;
+			margin: 0 3px;
+		}
 	}
 	&__bubble{
 		position: absolute;
