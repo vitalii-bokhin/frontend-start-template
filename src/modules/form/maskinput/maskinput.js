@@ -10,7 +10,7 @@ var Maskinput;
 
 		var defValue = '';
 
-		this.tel = function() {
+		this.tel = function(evStr) {
 			if (evStr == 'focus' && !inputElem.value.length) {
 				inputElem.value = '+7(';
 			}
