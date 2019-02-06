@@ -70,15 +70,12 @@
 	}
 }
 
-/* social */
-%social-btn{
+/* icon button */
+%icon-btn{
 	display: inline-block;
-	width: 35px;
-	height: 35px;
 	border: none;
 	background: none;
 	-webkit-appearance: none;
-	user-select: none;
 	transition: .5s;
 	&:hover{
 		opacity: .55;
@@ -86,21 +83,24 @@
 }
 
 .vk-btn{
-	@extend %social-btn;
+	@extend %icon-btn;
 	width: 46px;
 	height: 37px;
 }
 .fb-btn{
-	@extend %social-btn;
+	@extend %icon-btn;
 	width: 32px;
 	height: 36px;
 }
 .tw-btn{
-	@extend %social-btn;
+	@extend %icon-btn;
+	width: 35px;
+	height: 35px;
 }
 .ok-btn{
-	@extend %social-btn;
+	@extend %icon-btn;
 	width: 21px;
+	height: 35px;
 }
 
 /* link */

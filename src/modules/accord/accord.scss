@@ -5,26 +5,36 @@
 
 
 .accord{
-	border-top: 1px solid $gy;
-	background: #FFF;
+	&__item{
+		margin-top: 20px;
+		@include fch(t);
+		background: $gy;
+		border-radius: 20px;
+	}
 	&__button{
-		display: block;
-		padding: 20px 80px 20px 20px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		padding: 0 80px 0 40px;
 		position: relative;
 		width: 100%;
+		height: 68px;
 		text-align: left;
 		border: none;
 		background: none;
-		border-bottom: 1px solid $gy;
-		-webkit-appearance: none;
+		user-select: none;
+		span{
+			display: block;
+			width: 100%;
+		}
 		&:after{
 			@extend %ab;
-			width: 40px;
-			height: 40px;
+			width: 30px;
+			height: 30px;
 			position: absolute;
 			right: 20px;
 			top: 50%;
-			margin-top: -20px;
+			margin-top: -15px;
 			opacity: .38;
 			transition: .5s;
 		}
@@ -37,7 +47,6 @@
 	&__content{
 		height: 0;
 		overflow: hidden;
-		border-bottom: 1px solid $gy;
 		transition: .5s;
 	}
 }

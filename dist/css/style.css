@@ -857,15 +857,12 @@ hr {
   margin-top: -16px;
 }
 
-/* social */
+/* icon button */
 .vk-btn, .fb-btn, .tw-btn, .ok-btn {
   display: inline-block;
-  width: 35px;
-  height: 35px;
   border: none;
   background: none;
   -webkit-appearance: none;
-  user-select: none;
   transition: .5s;
 }
 
@@ -883,8 +880,14 @@ hr {
   height: 36px;
 }
 
+.tw-btn {
+  width: 35px;
+  height: 35px;
+}
+
 .ok-btn {
   width: 21px;
+  height: 35px;
 }
 
 /* link */
@@ -1188,6 +1191,11 @@ hr {
 
 .user__link:hover {
   color: #ff0000;
+}
+
+.user__link-sep {
+  line-height: normal;
+  margin: 0 3px;
 }
 
 .user__bubble {
@@ -2632,30 +2640,42 @@ select {
   content: "";
 }
 
-.accord {
-  border-top: 1px solid #aaaaaa;
-  background: #FFF;
+.accord__item {
+  margin-top: 20px;
+  background: #aaaaaa;
+  border-radius: 20px;
+}
+
+.accord__item:first-child {
+  margin-top: 0 !important;
 }
 
 .accord__button {
-  display: block;
-  padding: 20px 80px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 80px 0 40px;
   position: relative;
   width: 100%;
+  height: 68px;
   text-align: left;
   border: none;
   background: none;
-  border-bottom: 1px solid #aaaaaa;
-  -webkit-appearance: none;
+  user-select: none;
+}
+
+.accord__button span {
+  display: block;
+  width: 100%;
 }
 
 .accord__button:after {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   position: absolute;
   right: 20px;
   top: 50%;
-  margin-top: -20px;
+  margin-top: -15px;
   opacity: .38;
   transition: .5s;
 }
@@ -2667,7 +2687,6 @@ select {
 .accord__content {
   height: 0;
   overflow: hidden;
-  border-bottom: 1px solid #aaaaaa;
   transition: .5s;
 }
 
