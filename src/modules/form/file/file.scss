@@ -9,9 +9,35 @@
 		position: absolute;
 		left: -9999px;
 	}
-	&__lab{
-		font-size: 28px;
+	&__lab,
+	&__submit{
+		margin: 0 25px;
 		cursor: pointer;
+	}
+	
+	&__submit{
+		display: none;
+		.custom-file_loaded &{
+			display: inline-block;
+		}
+	}
+	&_loaded{
+		.popup__message{
+			display: none;
+		}
+		.custom-file__lab{
+			background: $bk;
+			&:hover{
+				opacity: 0.7;
+			}
+		}
+	}
+	&_max-loaded{
+		.custom-file__lab{
+			background: none;
+			border: 2px solid $gy2;
+			color: $lpk;
+		}
 	}
 	&__btn{
 		display: block;
@@ -52,18 +78,18 @@
 	&__items{
 		&_flex{
 			display: flex;
-			justify-content: space-around;
-			margin-bottom: 15px;
+			justify-content: center;
+			margin-bottom: 50px;
 		}
 	}
 	&__item{
 		float: left;
 		width: 25%;
-		max-width: 210px;
-		padding: 0 15px;
+		max-width: 185px;
+		padding: 0 10px;
 		position: relative;
 		.custom-file__items_flex &{
-			flex: 0 1 210px;
+			flex: 0 1 185px;
 		}
 	}
 	&__preview{
@@ -96,16 +122,43 @@
 		}
 	}
 	&__name{
-		margin-top: 10px;
-		font-size: 14px;
-		word-wrap: break-word;
+		display: none !important;
+		// margin-top: 10px;
+		// font-size: 14px;
+		// word-wrap: break-word;
 	}
 	&__del-btn{
-		position: absolute;
-		width: 20px;
-		height: 20px;
-		top: -10px;
-		right: 5px;
-		z-index: 2;
+		display: block;
+		width:20px;
+		height:20px;
+		border-radius: 50%;
+		position:absolute;
+		right:20px;
+		top:10px;
+		z-index:3;
+		background: rgba(255, 255, 255, .7);
+		border: none;
+		backface-visibility: hidden;
+		transition: .5s;
+		&:after,
+		&:before{
+			@extend %ab;
+			width: 70%;
+			height: 2px;
+			background: $gy3;
+			position: absolute;
+			left: 15%;
+			top: 50%;
+			margin-top: -1px;
+		}
+		&:after{
+			transform: rotate(-45deg);
+		}
+		&:before{
+			transform: rotate(45deg);
+		}
+		&:hover{
+			background: $og;
+		}
 	}
 }

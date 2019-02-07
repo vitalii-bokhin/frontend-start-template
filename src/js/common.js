@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			case 'custom-form-2':
 			case 'custom-form-3':
 			case 'custom-form-4':
-			var files = CustomFile.files(form);
+			var files = CustomFile.getFiles(form);
 			
 			console.log(files);
 			return false;

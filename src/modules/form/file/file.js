@@ -13,26 +13,51 @@
 			if (elem.hasAttribute('data-preview-elem')) {
 				document.querySelector(elem.getAttribute('data-preview-elem')).innerHTML = '';
 			}
-
+			
 			elem.closest('.custom-file').querySelector('.custom-file__items').innerHTML = '';
 			
 			this.filesObj[elem.id] = {};
 			this.filesArrayObj[elem.id] = [];
-
+			
 			this.labelText(elem);
 		},
 
+		lockUpload: function(inputElem) {
+			if (this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
+				inputElem.setAttribute('disabled', 'disable');
+			} else {
+				inputElem.removeAttribute('disabled');
+			}
+		},
+		
+		fieldClass: function(inputElem) {
+			const fieldElem = inputElem.closest('.custom-file');
+			
+			if (this.filesArrayObj[inputElem.id].length) {
+				fieldElem.classList.add('custom-file_loaded');
+				
+				if (this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
+					fieldElem.classList.add('custom-file_max-loaded');
+				} else {
+					fieldElem.classList.remove('custom-file_max-loaded');
+				}
+			} else {
+				fieldElem.classList.remove('custom-file_loaded');
+				fieldElem.classList.remove('custom-file_max-loaded');
+			}
+		},
+		
 		labelText: function(inputElem) {
 			const labTxtElem = inputElem.closest('.custom-file').querySelector('.custom-file__label-text');
-
+			
 			if (!labTxtElem || !labTxtElem.hasAttribute('data-label-text-2')) return;
-
+			
 			let maxFiles = 1;
-
+			
 			if (inputElem.multiple) {
 				maxFiles = +this.input.getAttribute('data-max-files');
 			}
-
+			
 			if (this.filesArrayObj[inputElem.id].length >= maxFiles) {
 				if (!labTxtElem.hasAttribute('data-label-text')) {
 					labTxtElem.setAttribute('data-label-text', labTxtElem.innerHTML);
@@ -61,7 +86,7 @@
 				setTimeout(function() {
 					var imgDiv = document.createElement('div');
 					
-					imgDiv.innerHTML = '<img src="'+ e.target.result +'">';
+					imgDiv.innerHTML = (file.type.match(/image.*/)) ? '<img src="'+ e.target.result +'">' : '<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCAzMDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzMDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNCOEQ4RkYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIi8+DQo8cG9seWdvbiBmaWxsPSIjN0M3QzdDIiBwb2ludHM9IjUxLDI2Ny42NjY5OTIyIDExMSwxOTcgMTUxLDI0My42NjY5OTIyIDI4OC4zMzMwMDc4LDEyMSAzMDAuMTY2OTkyMiwxMzQuMTY2NTAzOSAzMDAsMzAwIDAsMzAwIA0KCTAsMjA4LjgzMzk4NDQgIi8+DQo8cG9seWdvbiBmaWxsPSIjQUZBRkFGIiBwb2ludHM9IjAuMTI1LDI2Ny4xMjUgNDguODMzNDk2MSwxNzQuNjY2OTkyMiAxMDMuNSwyNjQuNSAyMDMuODc1LDY1LjMzMzAwNzggMzAwLjE2Njk5MjIsMjU0LjUgMzAwLDMwMCANCgkwLDMwMCAiLz4NCjxjaXJjbGUgZmlsbD0iI0VBRUFFQSIgY3g9Ijc3LjAwMDI0NDEiIGN5PSI3MSIgcj0iMzYuNjY2NzQ4Ii8+DQo8L3N2Zz4NCg==">';
 					
 					previewDiv.appendChild(imgDiv);
 				}, 121);
@@ -89,9 +114,7 @@
 				
 				fileItems.appendChild(fileItem);
 				
-				if (file.type.match(/image.*/)) {
-					this.loadPreview(file, fileItem);
-				}
+				this.loadPreview(file, fileItem);
 			}
 			
 			this.setFilesObj(elem.files);
@@ -119,8 +142,12 @@
 			for (var key in this.filesObj[inputElem.id]) {
 				this.filesArrayObj[inputElem.id].push(this.filesObj[inputElem.id][key]);
 			}
-
+			
+			this.fieldClass(inputElem);
+			
 			this.labelText(inputElem);
+
+			this.lockUpload(inputElem);
 			
 			ValidateForm.file(inputElem, this.filesArrayObj[inputElem.id]);
 		},
@@ -129,7 +156,7 @@
 			return this.filesArrayObj[inputElem.id] || [];
 		},
 		
-		files: function(formElem) {
+		getFiles: function(formElem) {
 			var inputFileElements = formElem.querySelectorAll('.custom-file__input'),
 			filesArr = [];
 			
@@ -176,7 +203,7 @@
 				
 				if (clearBtnElem) {
 					var inputElem = clearBtnElem.closest('.custom-file').querySelector('.custom-file__input');
-
+					
 					inputElem.value = null;
 					
 					this.clear(inputElem);
