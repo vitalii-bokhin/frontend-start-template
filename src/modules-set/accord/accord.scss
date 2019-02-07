@@ -8,7 +8,7 @@
 	&__item{
 		margin-top: 20px;
 		@include fch(t);
-		background: #FFF;
+		background: $gy;
 		border-radius: 20px;
 	}
 	&__button{
@@ -29,12 +29,19 @@
 		}
 		&:after{
 			@extend %ab;
-			width: 32px;
-			height: 32px;
+			width: 30px;
+			height: 30px;
 			position: absolute;
 			right: 20px;
 			top: 50%;
 			margin-top: -15px;
+			opacity: .38;
+			transition: .5s;
+		}
+		&_active{
+			&:after{
+				transform: rotate(180deg);
+			}
 		}
 	}
 	&__content{

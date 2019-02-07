@@ -2204,7 +2204,7 @@ select {
   overflow: auto;
 }
 
-.custom-file__btn:after, .custom-file__preview:after {
+.custom-file__btn:after, .custom-file__preview:after, .custom-file__del-btn:after, .custom-file__del-btn:before {
   display: block;
   content: "";
 }
@@ -2229,9 +2229,35 @@ select {
   left: -9999px;
 }
 
-.custom-file__lab {
-  font-size: 28px;
+.custom-file__lab, .custom-file__submit {
+  margin: 0 25px;
   cursor: pointer;
+}
+
+.custom-file__submit {
+  display: none;
+}
+
+.custom-file_loaded .custom-file__submit {
+  display: inline-block;
+}
+
+.custom-file_loaded .popup__message {
+  display: none;
+}
+
+.custom-file_loaded .custom-file__lab {
+  background: #212121;
+}
+
+.custom-file_loaded .custom-file__lab:hover {
+  opacity: 0.7;
+}
+
+.custom-file_max-loaded .custom-file__lab {
+  background: none;
+  border: 2px solid #aaaaaa;
+  color: #aaaaaa;
 }
 
 .custom-file__btn {
@@ -2281,20 +2307,20 @@ select {
 
 .custom-file__items_flex {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 15px;
+  justify-content: center;
+  margin-bottom: 50px;
 }
 
 .custom-file__item {
   float: left;
   width: 25%;
-  max-width: 210px;
-  padding: 0 15px;
+  max-width: 185px;
+  padding: 0 10px;
   position: relative;
 }
 
 .custom-file__items_flex .custom-file__item {
-  flex: 0 1 210px;
+  flex: 0 1 185px;
 }
 
 .custom-file__preview {
@@ -2335,18 +2361,44 @@ select {
 }
 
 .custom-file__name {
-  margin-top: 10px;
-  font-size: 14px;
-  word-wrap: break-word;
+  display: none !important;
 }
 
 .custom-file__del-btn {
-  position: absolute;
+  display: block;
   width: 20px;
   height: 20px;
-  top: -10px;
-  right: 5px;
-  z-index: 2;
+  border-radius: 50%;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  backface-visibility: hidden;
+  transition: .5s;
+}
+
+.custom-file__del-btn:after, .custom-file__del-btn:before {
+  width: 70%;
+  height: 2px;
+  background: #aaaaaa;
+  position: absolute;
+  left: 15%;
+  top: 50%;
+  margin-top: -1px;
+}
+
+.custom-file__del-btn:after {
+  transform: rotate(-45deg);
+}
+
+.custom-file__del-btn:before {
+  transform: rotate(45deg);
+}
+
+.custom-file__del-btn:hover {
+  background: #aaaaaa;
 }
 
 .placeholder {

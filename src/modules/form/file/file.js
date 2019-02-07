@@ -21,14 +21,6 @@
 			
 			this.labelText(elem);
 		},
-
-		lockUpload: function(inputElem) {
-			if (this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
-				inputElem.setAttribute('disabled', 'disable');
-			} else {
-				inputElem.removeAttribute('disabled');
-			}
-		},
 		
 		fieldClass: function(inputElem) {
 			const fieldElem = inputElem.closest('.custom-file');
@@ -46,17 +38,21 @@
 				fieldElem.classList.remove('custom-file_max-loaded');
 			}
 		},
+
+		lockUpload: function(inputElem) {
+			if (inputElem.classList.contains('custom-file__input_lock') && inputElem.multiple && inputElem.hasAttribute('data-max-files') && this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
+				inputElem.setAttribute('disabled', 'disable');
+			} else {
+				inputElem.removeAttribute('disabled');
+			}
+		},
 		
 		labelText: function(inputElem) {
 			const labTxtElem = inputElem.closest('.custom-file').querySelector('.custom-file__label-text');
 			
 			if (!labTxtElem || !labTxtElem.hasAttribute('data-label-text-2')) return;
 			
-			let maxFiles = 1;
-			
-			if (inputElem.multiple) {
-				maxFiles = +this.input.getAttribute('data-max-files');
-			}
+			const maxFiles = (inputElem.multiple) ? (+this.input.getAttribute('data-max-files')) : 1;
 			
 			if (this.filesArrayObj[inputElem.id].length >= maxFiles) {
 				if (!labTxtElem.hasAttribute('data-label-text')) {

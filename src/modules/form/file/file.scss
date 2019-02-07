@@ -35,8 +35,8 @@
 	&_max-loaded{
 		.custom-file__lab{
 			background: none;
-			border: 2px solid $gy2;
-			color: $lpk;
+			border: 2px solid $gy;
+			color: $gy;
 		}
 	}
 	&__btn{
@@ -145,7 +145,7 @@
 			@extend %ab;
 			width: 70%;
 			height: 2px;
-			background: $gy3;
+			background: $gy;
 			position: absolute;
 			left: 15%;
 			top: 50%;
@@ -158,7 +158,7 @@
 			transform: rotate(45deg);
 		}
 		&:hover{
-			background: $og;
+			background: $gy;
 		}
 	}
 }
