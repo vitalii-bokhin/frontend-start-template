@@ -192,7 +192,7 @@
 	.lg{
 		&-row{
 			&-col-12{
-				& > [class*="col-"]{
+				& > [class*="col"]{
 					max-width: 100%;
 					flex-basis: 100%;
 					margin-left: 0;
@@ -312,7 +312,7 @@
 	.md{
 		&-row{
 			&-col-12{
-				& > [class*="col-"]{
+				& > [class*="col"]{
 					max-width: 100%;
 					flex-basis: 100%;
 					margin-left: 0;
@@ -432,7 +432,7 @@
 	.sm{
 		&-row{
 			&-col-12{
-				& > [class*="col-"]{
+				& > [class*="col"]{
 					max-width: 100%;
 					flex-basis: 100%;
 					margin-left: 0;
