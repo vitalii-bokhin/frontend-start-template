@@ -1,5 +1,5 @@
 
-html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, ol, ul, li, pre, code, form, label, input, textarea, button, hr, header, footer, main, section, nav, article, aside {
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, sup, ol, ul, li, pre, code, form, label, input, textarea, button, hr, header, footer, main, section, nav, article, aside {
   margin: 0;
   padding: 0;
   outline: none;
@@ -43,6 +43,12 @@ b, strong {
 
 i {
   font-style: italic;
+}
+
+sup {
+  font-size: .85em;
+  position: relative;
+  bottom: .5em;
 }
 
 code {
@@ -343,7 +349,7 @@ hr {
 }
 
 @media (max-width: 1600px) {
-  .lg-row-col-12 > [class*="col-"] {
+  .lg-row-col-12 > [class*="col"] {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
@@ -457,7 +463,7 @@ hr {
 }
 
 @media (max-width: 1200px) {
-  .md-row-col-12 > [class*="col-"] {
+  .md-row-col-12 > [class*="col"] {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
@@ -571,7 +577,7 @@ hr {
 }
 
 @media (max-width: 1000px) {
-  .sm-row-col-12 > [class*="col-"] {
+  .sm-row-col-12 > [class*="col"] {
     max-width: 100%;
     flex-basis: 100%;
     margin-left: 0;
@@ -1373,6 +1379,29 @@ hr {
     margin: 0;
     padding: 9px 0;
   }
+}
+
+/*Lang*/
+.lang__link {
+  line-height: normal;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: .21s;
+}
+
+.lang__link_current {
+  border-bottom-color: #00ff00;
+}
+
+@media (min-width: 1001px) {
+  .lang__link:hover {
+    color: #00ff00;
+  }
+}
+
+.lang__link-sep {
+  line-height: normal;
+  margin: 0 3px;
 }
 
 .fsscroll {
