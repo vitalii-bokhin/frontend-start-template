@@ -93,7 +93,7 @@ gulp.task('clean_js_folder', ['include_modules'], function() {
 
 gulp.task('dev', ['clean_js_folder'], function() {
 	// html dev
-	HTML(['!src/html/_*.html', 'src/html/*.html']);
+	HTML(['!src/html/**/_*.html', 'src/html/**/*.html']);
 	
 	// build style.css
 	CSS(cssSrc);
@@ -128,12 +128,12 @@ gulp.task('dev', ['clean_js_folder'], function() {
 	});
 	
 	// watch html
-	gulp.watch(['!src/html/_*.html', 'src/html/*.html'], function(event) {
-		HTML(['!src/html/_*.html', event.path]);
+	gulp.watch(['!src/html/**/_*.html', 'src/html/**/*.html'], function(event) {
+		HTML(['!src/html/**/_*.html', event.path]);
 	});
 	
-	gulp.watch(['src/html/_*.html'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.html')), function() {
-		HTML(['!src/html/_*.html', 'src/html/*.html']);
+	gulp.watch(['src/html/**/_*.html'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.html')), function() {
+		HTML(['!src/html/**/_*.html', 'src/html/**/*.html']);
 	});
 });
 
@@ -167,7 +167,7 @@ gulp.task('svgs', function() {
 
 // DISTRIBUTION
 gulp.task('dist', function() {
-	HTML(['src/html/*.html', '!src/html/_*.html'], true);
+	HTML(['src/html/**/*.html', '!src/html/**/_*.html'], true);
 	
 	CSS(cssSrc, true);
 	
@@ -247,7 +247,7 @@ function JS(src, dist) {
 // html
 function HTML(src, dist) {
 	if (dist) {
-		gulp.src(src)
+		gulp.src(src, {base: 'src/html/'})
 		.pipe(fileinclude())
 		.on('error', notify.onError(function(err) { return err; }))
 		.pipe(gulp.dest(dist_path))
@@ -256,7 +256,7 @@ function HTML(src, dist) {
 			message: 'Dist HTML'
 		}));
 	} else {
-		gulp.src(src)
+		gulp.src(src, {base: 'src/html/'})
 		.pipe(fileinclude())
 		.on('error', notify.onError(function(err) { return err; }))
 		.pipe(gulp.dest(dist_path))
