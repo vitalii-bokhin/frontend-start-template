@@ -929,6 +929,34 @@ hr {
   border-bottom-color: #00ff00;
 }
 
+/* icon link */
+.icon-link {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  border-bottom: 1px solid #0000ff;
+  margin-left: 48px;
+  transition: .21s;
+}
+
+.icon-link:hover {
+  border-bottom-color: transparent;
+}
+
+.icon-link:before {
+  display: block;
+  content: "";
+  position: absolute;
+  left: -48px;
+  top: 50%;
+}
+
+.icon-link:before {
+  width: 35px;
+  height: 30px;
+  margin-top: -15px;
+}
+
 /*paginate*/
 .paginate {
   list-style: none;
