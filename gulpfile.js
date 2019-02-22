@@ -47,6 +47,7 @@ const modulesOn = [
 	'footer',
 	'getcontentajax',
 	'dragline',
+	'webgl',
 	// 'mouseparallax',
 	// 'floatslider',
 	// 'slickslider',

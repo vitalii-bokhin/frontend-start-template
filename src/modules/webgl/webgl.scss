@@ -1,0 +1,14 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.webgl{
+   position: relative;
+   @include fixprop;
+   max-width: 500px;
+   margin: 0 auto;
+   &__canvas{
+      @extend %fwh;
+   }
+}
