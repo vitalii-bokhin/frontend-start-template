@@ -1,10 +1,10 @@
-//after-before
+// after-before
 %ab{
 	display: block;
 	content: "";
 }
 
-//fullWidthHeight
+// full Width Height
 %fwh{
 	position: absolute;
 	width: 100%;
@@ -13,7 +13,7 @@
 	top: 0;
 }
 
-//responsive image
+// responsive image
 %r-img{
 	width: auto;
 	height: auto;
@@ -21,7 +21,13 @@
 	max-height: 100%;
 }
 
-//flex center
+// fullwidth image
+%fw-img{
+	width: 100%;
+	height: auto;
+}
+
+// flex center
 %fx-c{
 	display: flex;
 	align-items: center;

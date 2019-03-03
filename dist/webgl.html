@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-	<title>Get content via Ajax | startTemplate</title>
+	<title>Home page | startTemplate</title>
 </head>
 <body>
 
@@ -27,7 +27,7 @@
 			<li class="sub-menu__item ">
 				<a href="fullscreen-scrolling.html" class="sub-menu__a">Full Screen Scroll</a>
 			</li>
-			<li class="sub-menu__item sub-menu__item_current">
+			<li class="sub-menu__item ">
 				<a href="getcontentajax.html" class="sub-menu__a">Get Content Ajax</a>
 			</li>
 			<li class="sub-menu__item ">
@@ -126,22 +126,19 @@
 				<div class="col col_right p-0">
 					<!--User/-->
 					
+
+
 	<div class="user">
-		<span class="user__name">
-			Lufter
-		</span>
-		<span class="user__thumb">
-			<img src="images/avatar.png" alt="avatar">
-		</span>
+		<a id="log-user-link" href="#" class="js-toggle js-document-toggle-off user__link" data-target-elements="#user-menu-log" data-dependence-target-elements="#user-menu-reg,#reg-user-link">Вход</a><span class="user__link-sep">/</span><a id="reg-user-link" href="#" class="js-toggle js-document-toggle-off user__link" data-target-elements="#user-menu-reg"  data-dependence-target-elements="#user-menu-log,#log-user-link">Регистрация</a>
 		
-		<button data-target-elements="#user-menu" class="js-toggle js-document-toggle-off user__button"></button>
+		<div id="user-menu-log" class="user__bubble">
+			Вход
+		</div>
 		
-		<div id="user-menu" class="user__bubble">
-			
+		<div id="user-menu-reg" class="user__bubble">
+			Регистрация
 		</div>
 	</div>
-
-
 
 					<!--/User-->
 				</div>
@@ -156,28 +153,19 @@
 
 <!--MAIN/-->
 <main class="main">
-
-	<div class="section">
-
-		<div class="row">
-			<div class="col-12">
-				<h1>Get content via Ajax</h1>
-			</div>
+	<div class="row">
+		<div class="col-12">
+			<h1>WebGL</h1>
 		</div>
-
-		<div class="row">
-			<div class="col-4">
-				<button class="js-get-content-ajax btn">Get Content</button>
-			</div>
-			<div class="col-8">
-				<div id="output-ajax">
-					<!--ajax content-->
-				</div>
-			</div>
-		</div>
-
 	</div>
 
+	<div class="row">
+		<div class="col-12">		
+			<div class="webgl">
+				<canvas id="webgl-canvas" class="webgl__canvas"></canvas>
+			</div>
+		</div>
+	</div>
 </main>
 <!--/MAIN-->
 
