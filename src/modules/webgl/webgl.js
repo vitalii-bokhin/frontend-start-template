@@ -21,7 +21,7 @@
 			
 		},
       
-      init: function(arguments) {
+      init: function() {
          this.loadTxtRes('/shaders/vertexShader.glsl', (response) => {
 				this.VSTxt = response;
 				

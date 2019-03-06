@@ -12,24 +12,6 @@ body{
 	display: flex;
 	flex-direction: column;
 }
-header{
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 8;
-	@media(min-width: 1001px){
-		transform: translate3d(0, 0, 0);
-	}
-}
-main{
-	flex: 1 0 auto;
-	position: relative;
-	overflow: hidden;
-}
-footer{
-	flex: 0 0 auto;
-}
 a:hover{
 	text-decoration: none;
 }

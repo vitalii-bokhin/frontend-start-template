@@ -13,6 +13,8 @@
 		
 		if (/(msie|rv:11\.0)/.test(userAgent)) {
 			return 'ie';
+		} else if (/firefox/.test(userAgent)) {
+			return 'ff';
 		}
 	})(navigator.userAgent);
 	
@@ -38,15 +40,25 @@
 	}
 	
 	// Window Resized Event
-	const winResizedEvent = new CustomEvent('winResized');
-	let rsz = true;
+	const winResizedEvent = new CustomEvent('winResized'),
+	winWidthResizedEvent = new CustomEvent('winWidthResized');
+
+	let rsz = true,
+	beginWidth = 0;
 	
 	window.addEventListener('resize', function() {
 		if (rsz) {
 			rsz = false;
 			
+			beginWidth = window.innerWidth; 
+
 			setTimeout(function() {
 				window.dispatchEvent(winResizedEvent);
+
+				if (beginWidth != window.innerWidth) {
+					window.dispatchEvent(winWidthResizedEvent);
+				}
+
 				rsz = true;
 			}, 1021);
 		}

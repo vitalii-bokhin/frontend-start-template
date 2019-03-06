@@ -4,6 +4,7 @@
 @import "../../sass/mixins";
 
 .footer{
+	flex: 0 0 auto;
 	background: #FFF;
 	border-top: 1px solid $gy;
 	&__logo{

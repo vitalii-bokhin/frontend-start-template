@@ -18,7 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		
 		Tab.reInit();
 		
-		window.addEventListener('winResized', initFun);
+		if (window.innerWidth > 1200) {
+			window.addEventListener('winResized', initFun);
+		} else {
+			window.addEventListener('winWidthResized', initFun);
+		}
 	})();
 	
 	// cover images
