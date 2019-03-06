@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
 		
 		Tab.reInit();
 		
+		// resize events
+		window.removeEventListener('winResized', initFun);
+		window.removeEventListener('winWidthResized', initFun);
+
 		if (window.innerWidth > 1200) {
 			window.addEventListener('winResized', initFun);
 		} else {

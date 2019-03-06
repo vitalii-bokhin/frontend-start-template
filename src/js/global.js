@@ -44,19 +44,19 @@
 	winWidthResizedEvent = new CustomEvent('winWidthResized');
 
 	let rsz = true,
-	beginWidth = 0;
+	beginWidth = window.innerWidth;
 	
 	window.addEventListener('resize', function() {
 		if (rsz) {
 			rsz = false;
 			
-			beginWidth = window.innerWidth; 
-
 			setTimeout(function() {
 				window.dispatchEvent(winResizedEvent);
-
+				
 				if (beginWidth != window.innerWidth) {
 					window.dispatchEvent(winWidthResizedEvent);
+
+					beginWidth = window.innerWidth
 				}
 
 				rsz = true;
