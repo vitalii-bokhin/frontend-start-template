@@ -6,11 +6,14 @@
       animElements: null,
       
       scroll: function() {
+         const winBotEdge = window.pageYOffset + window.innerHeight;
+
          for (let i = 0; i < this.animElements.length; i++) {
             const animElem = this.animElements[i],
-            animElemOffsetTop = animElem.getBoundingClientRect().top + window.pageYOffset;
+            animElemOffsetTop = animElem.getBoundingClientRect().top + window.pageYOffset,
+            animElemOffsetBot = animElemOffsetTop + animElem.offsetHeight;
             
-            if ((window.pageYOffset + window.innerHeight) > animElemOffsetTop && window.pageYOffset < animElemOffsetTop) {
+            if (winBotEdge > animElemOffsetBot && window.pageYOffset < animElemOffsetTop) {
                animElem.classList.add('animated');
             } else {
                animElem.classList.remove('animated');
@@ -23,6 +26,7 @@
          
          if (animElements.length) {
             this.animElements = animElements;
+            this.scroll();
          }
       }
    };

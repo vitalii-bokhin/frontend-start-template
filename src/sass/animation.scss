@@ -2,3 +2,13 @@
 @import "functions";
 @import "extends";
 @import "mixins";
+
+.fadein{
+   visibility: hidden;
+   opacity: 0;
+   transition: .5s;
+   &.animated{
+      visibility: visible;
+      opacity: 1;
+   }
+}
