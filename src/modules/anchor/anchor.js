@@ -5,33 +5,31 @@ Anchor.init(Str anchor selector[, Int duration ms[, Int shift px]]);
 var Anchor;
 
 (function() {
-	'use strict';
+	"use strict";
 
 	Anchor = {
 		duration: 1000,
 		shift: 0,
 
 		scroll: function(anchorId, e) {
-			var anchorSectionElem = document.getElementById(anchorId +'-anchor');
+			const anchorSectionElem = document.getElementById(anchorId +'-anchor');
 
-			if (!anchorSectionElem) return;
+			if (!anchorSectionElem) {
+				return;
+			}
 
-			/* if (e) {
+			if (e) {
 				e.preventDefault();
-			} */
+			}
 
-			var scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
-			scrollTo = scrollTo - this.shift;
+			let scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
+			ownShift = +anchorSectionElem.getAttribute('data-shift') || 0;
+			
+			scrollTo = scrollTo - this.shift - ownShift;
 
 			animate(function(progress) {
 				window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
-			}, this.duration, 'easeInOutQuad', function() {
-				anchorSectionElem.classList.add('scrolled');
-
-				setTimeout(function() {
-					anchorSectionElem.classList.remove('scrolled');
-				}, 500);
-			});
+			}, this.duration, 'easeInOutQuad');
 		},
 
 		init: function(elementStr, duration, shift) {
@@ -48,7 +46,9 @@ var Anchor;
 				var elem = e.target.closest(elementStr);
 
 				if (elem) {
-					this.scroll(elem.getAttribute('href').split('#')[1], e);
+					const anchId = (elem.hasAttribute('href')) ? elem.getAttribute('href').split('#')[1] : elem.getAttribute('data-anchor-id');
+					
+					this.scroll(anchId, e);
 				}
 			});
 
