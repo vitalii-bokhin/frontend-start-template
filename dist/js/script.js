@@ -607,7 +607,12 @@ Toggle.onChange = function(toggleElem, state) {
 
 	}
 })();
-var CoverImg;
+/* 
+CoverImg.init([Str parent element selector]);
+
+CoverImg.reInit([Str parent element selector]);
+*/
+; var CoverImg;
 
 (function() {
 	'use strict';
@@ -622,16 +627,16 @@ var CoverImg;
 			if (imgWrapProportion != Infinity && imgWrapProportion < 21) {
 
 				if (imgProportion <= imgWrapProportion) {
-					var margin = Math.round(-(imgWrap.offsetWidth / imgProportion - imgWrap.offsetHeight) / 2);
+					// var margin = Math.round(-(imgWrap.offsetWidth / imgProportion - imgWrap.offsetHeight) / 2);
 
 					img.classList.add('cover-img_w');
-					img.style.marginTop = margin +'px';
+					// img.style.marginTop = margin +'px';
 
 				} else {
-					var margin = Math.round(-(imgWrap.offsetHeight * imgProportion - imgWrap.offsetWidth) / 2);
+					// var margin = Math.round(-(imgWrap.offsetHeight * imgProportion - imgWrap.offsetWidth) / 2);
 
 					img.classList.add('cover-img_h');
-					img.style.marginLeft = margin +'px';
+					// img.style.marginLeft = margin +'px';
 
 				}
 
@@ -660,8 +665,8 @@ var CoverImg;
 
 				img.classList.remove('cover-img_w');
 				img.classList.remove('cover-img_h');
-				img.style.marginTop = '';
-				img.style.marginLeft = '';
+				// img.style.marginTop = '';
+				// img.style.marginLeft = '';
 				img.src = (browser == 'ie') ? (img.src +'?'+ new Date().getTime()) : img.src;
 			}
 
@@ -3461,33 +3466,31 @@ Anchor.init(Str anchor selector[, Int duration ms[, Int shift px]]);
 var Anchor;
 
 (function() {
-	'use strict';
+	"use strict";
 
 	Anchor = {
 		duration: 1000,
 		shift: 0,
 
 		scroll: function(anchorId, e) {
-			var anchorSectionElem = document.getElementById(anchorId +'-anchor');
+			const anchorSectionElem = document.getElementById(anchorId +'-anchor');
 
-			if (!anchorSectionElem) return;
+			if (!anchorSectionElem) {
+				return;
+			}
 
-			/* if (e) {
+			if (e) {
 				e.preventDefault();
-			} */
+			}
 
-			var scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
-			scrollTo = scrollTo - this.shift;
+			let scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
+			ownShift = +anchorSectionElem.getAttribute('data-shift') || 0;
+			
+			scrollTo = scrollTo - this.shift - ownShift;
 
 			animate(function(progress) {
 				window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
-			}, this.duration, 'easeInOutQuad', function() {
-				anchorSectionElem.classList.add('scrolled');
-
-				setTimeout(function() {
-					anchorSectionElem.classList.remove('scrolled');
-				}, 500);
-			});
+			}, this.duration, 'easeInOutQuad');
 		},
 
 		init: function(elementStr, duration, shift) {
@@ -3504,7 +3507,9 @@ var Anchor;
 				var elem = e.target.closest(elementStr);
 
 				if (elem) {
-					this.scroll(elem.getAttribute('href').split('#')[1], e);
+					const anchId = (elem.hasAttribute('href')) ? elem.getAttribute('href').split('#')[1] : elem.getAttribute('data-anchor-id');
+					
+					this.scroll(anchId, e);
 				}
 			});
 

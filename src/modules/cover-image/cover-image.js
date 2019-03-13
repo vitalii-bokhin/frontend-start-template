@@ -1,4 +1,9 @@
-var CoverImg;
+/* 
+CoverImg.init([Str parent element selector]);
+
+CoverImg.reInit([Str parent element selector]);
+*/
+; var CoverImg;
 
 (function() {
 	'use strict';
@@ -13,16 +18,16 @@ var CoverImg;
 			if (imgWrapProportion != Infinity && imgWrapProportion < 21) {
 
 				if (imgProportion <= imgWrapProportion) {
-					var margin = Math.round(-(imgWrap.offsetWidth / imgProportion - imgWrap.offsetHeight) / 2);
+					// var margin = Math.round(-(imgWrap.offsetWidth / imgProportion - imgWrap.offsetHeight) / 2);
 
 					img.classList.add('cover-img_w');
-					img.style.marginTop = margin +'px';
+					// img.style.marginTop = margin +'px';
 
 				} else {
-					var margin = Math.round(-(imgWrap.offsetHeight * imgProportion - imgWrap.offsetWidth) / 2);
+					// var margin = Math.round(-(imgWrap.offsetHeight * imgProportion - imgWrap.offsetWidth) / 2);
 
 					img.classList.add('cover-img_h');
-					img.style.marginLeft = margin +'px';
+					// img.style.marginLeft = margin +'px';
 
 				}
 
@@ -51,8 +56,8 @@ var CoverImg;
 
 				img.classList.remove('cover-img_w');
 				img.classList.remove('cover-img_h');
-				img.style.marginTop = '';
-				img.style.marginLeft = '';
+				// img.style.marginTop = '';
+				// img.style.marginLeft = '';
 				img.src = (browser == 'ie') ? (img.src +'?'+ new Date().getTime()) : img.src;
 			}
 

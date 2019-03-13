@@ -21,6 +21,9 @@
 	}
 	&-wrap{
 		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		img{
 			opacity: 0;
 			transition: opacity .21s;

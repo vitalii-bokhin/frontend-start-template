@@ -1492,6 +1492,9 @@ hr {
 
 .cover-img-wrap {
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cover-img-wrap img {
