@@ -23,6 +23,7 @@ const modulesOn = [
 	'toggle',
 	'flex-image',
 	'cover-image',
+	'lazy-load',
 	'video',
 	'popup',
 	'form/checkbox',
