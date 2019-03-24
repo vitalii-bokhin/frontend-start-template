@@ -4,7 +4,6 @@
 @import "mixins";
 
 %ico{
-	display: inline-block;
 	position: relative;
 	&:before{
 		display: block;
@@ -16,11 +15,11 @@
 
 .icon{
 	@extend %ico;
-	min-height: em(13);
-	padding-left: em(30);
+	min-height: 21px;
+	padding-left: 30px;
 	&:before{
-		width: em(25);
-		height: em(21);
-		top: em(-5);
+		width: 25px;
+		height: 21px;
+		top: 0;
 	}
 }

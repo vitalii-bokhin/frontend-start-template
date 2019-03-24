@@ -7,7 +7,7 @@
       
       scroll: function() {
          const winBotEdge = window.pageYOffset + window.innerHeight;
-
+         
          for (let i = 0; i < this.animElements.length; i++) {
             const animElem = this.animElements[i],
             animElemOffsetTop = animElem.getBoundingClientRect().top + window.pageYOffset,
@@ -30,13 +30,13 @@
          }
       }
    };
-
+   
    // document ready
    document.addEventListener('DOMContentLoaded', function() {
       animationOnVisible.init();
       
-      window.addEventListener('scroll', function() {
-         animationOnVisible.scroll();
-      });
+      if (animationOnVisible.animElements) {
+         window.addEventListener('scroll', animationOnVisible.scroll);
+      }
    });
 })();

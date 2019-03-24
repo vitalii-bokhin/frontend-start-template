@@ -24,6 +24,10 @@ var Anchor;
 
 			let scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
 			ownShift = +anchorSectionElem.getAttribute('data-shift') || 0;
+
+			if (window.innerWidth < 1000 && anchorSectionElem.hasAttribute('data-sm-shift')) {
+				ownShift = +anchorSectionElem.getAttribute('data-sm-shift');
+			}
 			
 			scrollTo = scrollTo - this.shift - ownShift;
 

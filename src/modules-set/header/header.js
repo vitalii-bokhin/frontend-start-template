@@ -3,16 +3,20 @@
 (function() {
 	'use strict';
 
-	//fix header
-	var headerElem = document.querySelector('.header');
+	// fix header
+	const headerElem = document.getElementById('header');
 
-	window.addEventListener('scroll', function() {
+	function fixHeader() {
 		if (window.pageYOffset > 21) {
 			headerElem.classList.add('header_fixed');
 		} else if (!document.body.classList.contains('popup-is-opened') && !document.body.classList.contains('mob-nav-is-opened')) {
 			headerElem.classList.remove('header_fixed');
 		}
-	});
+	}
+
+	fixHeader();
+
+	window.addEventListener('scroll', fixHeader);
 
 	//mob menu
 	MobNav = {
