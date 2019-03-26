@@ -327,15 +327,13 @@ document.addEventListener('DOMContentLoaded', function() {
 function dAirGetInit() {
 	dAirGet.countries(function(c) {
 		var contryObjArr = JSON.parse(c);
-		
 		Select.setOptions('.countries', contryObjArr, 'name', 'name', 'id');
 	});
 	
-	Select.onSelect = function (inpElem, val, secVal) {
+	Select.onSelect = function(inpElem, val, secVal) {
 		if (inpElem.name == 'country') {
 			dAirGet.region(secVal, function(c) {
 				var regionObjArr = JSON.parse(c);
-				
 				Select.setOptions('.cities', regionObjArr, 'name', 'name');
 			});
 		}

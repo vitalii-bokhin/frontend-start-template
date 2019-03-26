@@ -3,7 +3,7 @@
 @import "../../../sass/extends";
 @import "../../../sass/mixins";
 
-.custom-select{
+.select{
 	position: relative;
 	&__button{
 		display: inline-flex;
@@ -87,9 +87,6 @@
 		transition: .5s;
 		li{
 			border-top: 1px solid #c3c3c3;
-			&.hidden{
-				display: none;
-			}
 			&:first-child{
 				border: none;
 			}
@@ -97,9 +94,6 @@
 				.custom-select__val{
 					background: $gy;
 					color: #fff;
-				}
-				.custom-select__val_checked{
-					background: #c31d1d;
 				}
 			}
 		}
@@ -121,11 +115,9 @@
 			color: #fff;
 		}
 		&_checked{
-			background: $rd;
-			color: #fff;
-			&:hover{
-				background: #c31d1d;
-			}
+			background: $rd !important;
+			color: #fff !important;
+			cursor: not-allowed;
 		}
 	}
 	&_opened{

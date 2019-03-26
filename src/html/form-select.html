@@ -12,7 +12,7 @@
 		<form id="custom-form" action="send.php" method="POST" enctype="multipart/form-data" class="form">
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">What is your favorite animal?</div>
+					<div class="title-h2">Standart select</div>
 				</div>
 			</div>
 			
@@ -23,21 +23,7 @@
 							<option value="monkey">Monkey</option>
 							<option value="cat">Cat</option>
 							<option>Dog</option>
-							<option value="lion">Lion</option>
-							<option value="crocodile">Crocodile</option>
-							<option value="elephant">Elephant</option>
-							<option value="other" data-target-elements="#other-animal-field">Other</option>
-						</select>
-						<div class="field-error-tip">Select an animal</div>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="form__field">
-						<select name="favorite-animal2" data-required="true">
-							<option value="monkey">Monkey</option>
-							<option value="cat">Cat</option>
-							<option>Dog</option>
-							<option value="lion">Lion</option>
+							<option value="lion" data-second-value="lionID">Lion</option>
 							<option value="crocodile">Crocodile</option>
 							<option value="elephant">Elephant</option>
 							<option value="other" data-target-elements="#other-animal-field">Other</option>
@@ -55,7 +41,7 @@
 			
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2">What kind of pet do you have?</div>
+					<div class="title-h2">Multiple select</div>
 				</div>
 			</div>
 			
@@ -83,7 +69,7 @@
 			
 			<div class="row mt-25">
 				<div class="col-12">
-					<div class="title-h2 mb-25">Where are you from?</div>
+					<div class="title-h2 mb-25">Select with external data</div>
 					<div class="txt c-gray">
 						Get data from https://get.dealersair.com/api/geo/
 					</div>
@@ -100,11 +86,16 @@
 				</div>
 				<div class="col-6">
 					<div class="form__field cities">
-						<select name="city" data-placeholder="Select your city*" data-required="true">
+						<select name="city" data-placeholder="Select your city*" data-required="true" data-empty-text="Select country first">
 							<!--options-->
-							<option value="0">Select country first</option>
 						</select>
 					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<button type="submit">Submit</button>
 				</div>
 			</div>
 			

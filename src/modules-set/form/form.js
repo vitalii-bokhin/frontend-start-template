@@ -565,6 +565,45 @@ var ValidateForm, Form;
 	Form = {
 		onSubmit: null,
 		
+		clearForm: function(formElem) {
+			var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], textarea');
+			
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
+				elem.value = '';
+				
+				if (window.Placeholder) {
+					Placeholder.hide(elem, false);
+				}
+			}
+			
+			if (window.Select) {
+				Select.reset();
+			}
+			
+			var textareaMirrors = formElem.querySelectorAll('.form__textarea-mirror');
+			
+			for (var i = 0; i < textareaMirrors.length; i++) {
+				textareaMirrors[i].innerHTML = '';
+			}
+		},
+		
+		actSubmitBtn: function(state, formElem) {
+			var elements = formElem.querySelectorAll('button[type="submit"], input[type="submit"]');
+			
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
+				
+				if (!elemIsHidden(elem)) {
+					if (state) {
+						elem.removeAttribute('disabled');
+					} else {
+						elem.setAttribute('disabled', 'disable');
+					}
+				}
+			}
+		},
+		
 		submitForm: function (formElem, e) {
 			if (!ValidateForm.validate(formElem)) {
 				if (e) {
@@ -578,62 +617,19 @@ var ValidateForm, Form;
 			
 			if (!this.onSubmit) {
 				formElem.submit();
-				
 				return;
 			}
 			
-			// clear form
-			function clear() {
-				var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], textarea');
-				
-				for (var i = 0; i < elements.length; i++) {
-					var elem = elements[i];
-					
-					elem.value = '';
-					
-					if (window.Placeholder) {
-						Placeholder.hide(elem, false);
-					}
-				}
-				
-				if (window.Select) {
-					Select.reset();
-				}
-				
-				var textareaMirrors = formElem.querySelectorAll('.form__textarea-mirror');
-				
-				for (var i = 0; i < textareaMirrors.length; i++) {
-					textareaMirrors[i].innerHTML = '';
-				}
-			}
-			
-			// submit button
-			function actSubmitBtn(st) {
-				var elements = formElem.querySelectorAll('button[type="submit"], input[type="submit"]');
-				
-				for (var i = 0; i < elements.length; i++) {
-					var elem = elements[i];
-					
-					if (!elemIsHidden(elem)) {
-						if (st) {
-							elem.removeAttribute('disabled');
-						} else {
-							elem.setAttribute('disabled', 'disable');
-						}
-					}
-				}
-			}
-			
 			// call onSubmit
-			const ret = this.onSubmit(formElem, function (obj) {
+			const ret = this.onSubmit(formElem, (obj) => {
 				obj = obj || {};
 				
-				actSubmitBtn(obj.unlockSubmitButton);
+				this.actSubmitBtn(obj.unlockSubmitButton, formElem);
 				
 				formElem.classList.remove('form_sending');
 				
 				if (obj.clearForm == true) {
-					clear();
+					this.clearForm(formElem);
 				}
 			});
 			
@@ -642,7 +638,7 @@ var ValidateForm, Form;
 					e.preventDefault();
 				}
 
-				actSubmitBtn(false);
+				this.actSubmitBtn(false, formElem);
 			} else {
 				formElem.submit();
 			}
@@ -655,7 +651,7 @@ var ValidateForm, Form;
 			
 			// submit event
 			document.addEventListener('submit', (e) => {
-				var formElem = e.target.closest(formSelector);
+				const formElem = e.target.closest(formSelector);
 				
 				if (formElem) {
 					this.submitForm(formElem, e);
@@ -664,15 +660,14 @@ var ValidateForm, Form;
 			
 			// keyboard event
 			document.addEventListener('keydown', (e) => {
-				var formElem = e.target.closest(formSelector);
+				const formElem = e.target.closest(formSelector);
 				
 				if (!formElem) return;
 				
-				var key = e.which || e.keyCode || 0;
+				const key = e.which || e.keyCode || 0;
 				
 				if (e.ctrlKey && key == 13) {
 					e.preventDefault();
-
 					this.submitForm(formElem, e);
 				}
 			});
