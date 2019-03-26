@@ -1370,8 +1370,7 @@ var Popup, MediaPopup;
 			
 			var opionsElem = this.field.querySelector('.custom-select__options');
 			
-			opionsElem.style.height = ((opionsElem.scrollHeight < 132) ? 132 : (opionsElem.scrollHeight + 2)) +'px';
-			
+			opionsElem.style.height = (opionsElem.scrollHeight + 2) +'px';
 			opionsElem.scrollTop = 0;
 			
 			setTimeout(function () {
@@ -1421,14 +1420,14 @@ var Popup, MediaPopup;
 		},
 		
 		targetAction: function () {
-			var elements = this.field.querySelectorAll('.custom-select__val');
+			const elements = this.field.querySelectorAll('.custom-select__val');
 			
-			for (var i = 0; i < elements.length; i++) {
-				var elem = elements[i];
+			for (let i = 0; i < elements.length; i++) {
+				const elem = elements[i];
 				
 				if (!elem.hasAttribute('data-target-elements')) continue;
 				
-				var targetElem = document.querySelector(elem.getAttribute('data-target-elements'));
+				const targetElem = document.querySelector(elem.getAttribute('data-target-elements'));
 				
 				if (elem.classList.contains('custom-select__val_checked')) {
 					targetElem.style.display = 'block';
@@ -1447,24 +1446,26 @@ var Popup, MediaPopup;
 		},
 		
 		selectVal: function (elem) {
-			var button = this.field.querySelector('.custom-select__button'),
+			const button = this.field.querySelector('.custom-select__button'),
 			input = this.field.querySelector('.custom-select__input');
 			
 			if (this.field.classList.contains('custom-select_multiple')) {
-				
 				this.selectMultipleVal(elem, button, input);
-				
 			} else {
-				var toButtonValue = elem.innerHTML,
+				const toButtonValue = elem.innerHTML,
 				toInputValue = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
 				
-				var valueElements = this.field.querySelectorAll('.custom-select__val');
+				const valueElements = this.field.querySelectorAll('.custom-select__val');
 				
-				for (var i = 0; i < valueElements.length; i++) {
-					valueElements[i].classList.remove('custom-select__val_checked');
+				for (let i = 0; i < valueElements.length; i++) {
+					const valElem = valueElements[i];
+
+					valElem.classList.remove('custom-select__val_checked');
+					valElem.disabled = false;
 				}
 				
 				elem.classList.add('custom-select__val_checked');
+				elem.disabled = true;
 				
 				if (button) {
 					button.innerHTML = toButtonValue;
@@ -1496,34 +1497,6 @@ var Popup, MediaPopup;
 			this.field.classList.add('custom-select_changed');
 			
 			ValidateForm.select(input);
-		},
-		
-		autocomplete: function(elem) {
-			var match = false,
-			reg = new RegExp(elem.value, 'gi'),
-			valueElements = this.field.querySelectorAll('.custom-select__val');
-			
-			if (elem.value.length) {
-				for (var i = 0; i < valueElements.length; i++) {
-					var valueElem = valueElements[i];
-					
-					valueElem.classList.remove('custom-select__val_checked');
-					
-					if (valueElem.innerHTML.match(reg)) {
-						valueElem.parentElement.classList.remove('hidden');
-						
-						match = true;
-					} else {
-						valueElem.parentElement.classList.add('hidden');
-					}
-				}
-			}
-			
-			if (!match) {
-				for (var i = 0; i < valueElements.length; i++) {
-					valueElements[i].parentElement.classList.remove('hidden');
-				}
-			}
 		},
 		
 		setOptions: function (fieldSelector, optObj, nameKey, valKey, secValKey) {
@@ -1633,50 +1606,51 @@ var Popup, MediaPopup;
 		},
 		
 		build: function (elementStr) {
-			var elements = document.querySelectorAll(elementStr);
+			const elements = document.querySelectorAll(elementStr);
 			
 			if (!elements.length) return;
 			
 			for (let i = 0; i < elements.length; i++) {
-				var elem = elements[i],
+				const elem = elements[i],
 				options = elem.querySelectorAll('option'),
-				parent = elem.parentElement,
-				optionsList = '',
+				parent = elem.parentElement;
+				
+				let optionsList = '',
 				selectedOption = null;
 				
 				// option list
 				for (let i = 0; i < options.length; i++) {
-					var opt = options[i];
+					const opt = options[i];
 					
 					if (opt.hasAttribute('selected')) {
 						selectedOption = opt;
 					}
-					((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '')
 					
 					optionsList += '<li><button type="button" class="custom-select__val'+ ((opt.hasAttribute('selected')) ? ' custom-select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '') + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '') +'>'+ opt.innerHTML +'</button></li>';
 				}
 				
-				var require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
+				const require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
+
 				placeholder = elem.getAttribute('data-placeholder'),
+
 				submitOnChange = (elem.hasAttribute('data-submit-form-onchange')) ? ' data-submit-form-onchange="'+ elem.getAttribute('data-submit-form-onchange') +'" ' : '',
-				head;
-				
-				if (elem.getAttribute('data-type') == 'autocomplete') {
-					head = '<button type="button" class="custom-select__arr"></button><input type="text" name="'+ elem.name +'"'+ require + ((placeholder) ? ' placeholder="'+ placeholder +'" ' : '') +'class="custom-select__input custom-select__autocomplete form__text-input" value="'+ ((selectedOption) ? selectedOption.innerHTML : '') +'">';
-				} else {
-					head = '<button type="button"'+ ((placeholder) ? ' data-placeholder="'+ placeholder +'"' : '') +' class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') +'</button>';
-				}
-				
-				var multiple = {
+
+				head = '<button type="button"'+ ((placeholder) ? ' data-placeholder="'+ placeholder +'"' : '') +' class="custom-select__button">'+ ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') +'</button>',
+
+				multiple = {
 					class: (elem.multiple) ? ' custom-select_multiple' : '',
 					inpDiv: (elem.multiple) ? '<div class="custom-select__multiple-inputs"></div>' : ''
 				},
+
 				hiddenInp = (elem.getAttribute('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ elem.name +'"'+ require + submitOnChange +'class="custom-select__input" value="'+ ((selectedOption) ? selectedOption.value : '') +'">' : '';
 				
 				// output select
-				var customElem = document.createElement('div');
+				const customElem = document.createElement('div');
+
 				customElem.className = 'custom-select'+ multiple.class + ((selectedOption) ? ' custom-select_changed' : '');
+
 				customElem.innerHTML = head +'<ul class="custom-select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv;
+
 				parent.insertBefore(customElem, parent.firstChild);
 				parent.removeChild(parent.children[1]);
 			}
@@ -1698,12 +1672,10 @@ var Popup, MediaPopup;
 						this.close();
 					} else {
 						this.close();
-						
 						this.open();
 					}
 				} else if (valElem) {
 					this.field = valElem.closest('.custom-select');
-					
 					this.selectVal(valElem);
 				} else if (arrElem) {
 					if (!arrElem.closest('.custom-select_opened')) {
@@ -1711,34 +1683,6 @@ var Popup, MediaPopup;
 					} else {
 						this.close();
 					}
-				}
-			});
-			
-			//focus autocomplete
-			document.addEventListener('focus', (e) => {
-				var elem = e.target.closest('.custom-select__autocomplete');
-				
-				if (!elem) return;
-				
-				this.field = elem.closest('.custom-select');
-				
-				this.close();
-				
-				this.open();
-			}, true);
-			
-			//input autocomplete
-			document.addEventListener('input', (e) => {
-				var elem = e.target.closest('.custom-select__autocomplete');
-				
-				if (!elem) return;
-				
-				this.field = elem.closest('.custom-select');
-				
-				this.autocomplete(elem);
-				
-				if (!this.field.classList.contains('custom-select_opened')) {
-					this.open();
 				}
 			});
 			
@@ -1754,7 +1698,6 @@ var Popup, MediaPopup;
 				
 				if (key == 40 || key == 38 || key == 13) {
 					e.preventDefault();
-					
 					this.keyboard(key);
 				}
 			});
@@ -1768,7 +1711,7 @@ var Popup, MediaPopup;
 		}
 	};
 	
-	// init scripts
+	// init script
 	document.addEventListener('DOMContentLoaded', function () {
 		Select.init('select');
 	});
@@ -2901,6 +2844,45 @@ var ValidateForm, Form;
 	Form = {
 		onSubmit: null,
 		
+		clearForm: function(formElem) {
+			var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], textarea');
+			
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
+				elem.value = '';
+				
+				if (window.Placeholder) {
+					Placeholder.hide(elem, false);
+				}
+			}
+			
+			if (window.Select) {
+				Select.reset();
+			}
+			
+			var textareaMirrors = formElem.querySelectorAll('.form__textarea-mirror');
+			
+			for (var i = 0; i < textareaMirrors.length; i++) {
+				textareaMirrors[i].innerHTML = '';
+			}
+		},
+		
+		actSubmitBtn: function(state, formElem) {
+			var elements = formElem.querySelectorAll('button[type="submit"], input[type="submit"]');
+			
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i];
+				
+				if (!elemIsHidden(elem)) {
+					if (state) {
+						elem.removeAttribute('disabled');
+					} else {
+						elem.setAttribute('disabled', 'disable');
+					}
+				}
+			}
+		},
+		
 		submitForm: function (formElem, e) {
 			if (!ValidateForm.validate(formElem)) {
 				if (e) {
@@ -2914,62 +2896,19 @@ var ValidateForm, Form;
 			
 			if (!this.onSubmit) {
 				formElem.submit();
-				
 				return;
 			}
 			
-			// clear form
-			function clear() {
-				var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], textarea');
-				
-				for (var i = 0; i < elements.length; i++) {
-					var elem = elements[i];
-					
-					elem.value = '';
-					
-					if (window.Placeholder) {
-						Placeholder.hide(elem, false);
-					}
-				}
-				
-				if (window.Select) {
-					Select.reset();
-				}
-				
-				var textareaMirrors = formElem.querySelectorAll('.form__textarea-mirror');
-				
-				for (var i = 0; i < textareaMirrors.length; i++) {
-					textareaMirrors[i].innerHTML = '';
-				}
-			}
-			
-			// submit button
-			function actSubmitBtn(st) {
-				var elements = formElem.querySelectorAll('button[type="submit"], input[type="submit"]');
-				
-				for (var i = 0; i < elements.length; i++) {
-					var elem = elements[i];
-					
-					if (!elemIsHidden(elem)) {
-						if (st) {
-							elem.removeAttribute('disabled');
-						} else {
-							elem.setAttribute('disabled', 'disable');
-						}
-					}
-				}
-			}
-			
 			// call onSubmit
-			const ret = this.onSubmit(formElem, function (obj) {
+			const ret = this.onSubmit(formElem, (obj) => {
 				obj = obj || {};
 				
-				actSubmitBtn(obj.unlockSubmitButton);
+				this.actSubmitBtn(obj.unlockSubmitButton, formElem);
 				
 				formElem.classList.remove('form_sending');
 				
 				if (obj.clearForm == true) {
-					clear();
+					this.clearForm(formElem);
 				}
 			});
 			
@@ -2978,7 +2917,7 @@ var ValidateForm, Form;
 					e.preventDefault();
 				}
 
-				actSubmitBtn(false);
+				this.actSubmitBtn(false, formElem);
 			} else {
 				formElem.submit();
 			}
@@ -2991,7 +2930,7 @@ var ValidateForm, Form;
 			
 			// submit event
 			document.addEventListener('submit', (e) => {
-				var formElem = e.target.closest(formSelector);
+				const formElem = e.target.closest(formSelector);
 				
 				if (formElem) {
 					this.submitForm(formElem, e);
@@ -3000,15 +2939,14 @@ var ValidateForm, Form;
 			
 			// keyboard event
 			document.addEventListener('keydown', (e) => {
-				var formElem = e.target.closest(formSelector);
+				const formElem = e.target.closest(formSelector);
 				
 				if (!formElem) return;
 				
-				var key = e.which || e.keyCode || 0;
+				const key = e.which || e.keyCode || 0;
 				
 				if (e.ctrlKey && key == 13) {
 					e.preventDefault();
-
 					this.submitForm(formElem, e);
 				}
 			});

@@ -165,7 +165,7 @@
 				}
 				
 				if (input.getAttribute('data-submit-form-onchange')) {
-					input.closest('form').submit();
+					Form.submitForm(input.closest('form'));
 				}
 				
 				if (this.onSelect) {

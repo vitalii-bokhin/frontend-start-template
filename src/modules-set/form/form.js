@@ -169,7 +169,7 @@ var ValidateForm, Form;
 			
 			return err;
 		},
-
+		
 		checkbox: function (elem) {
 			this.input = elem;
 			
@@ -565,11 +565,20 @@ var ValidateForm, Form;
 	Form = {
 		onSubmit: null,
 		
-		submit: function (e, formElem) {
+		submitForm: function (formElem, e) {
+			if (!ValidateForm.validate(formElem)) {
+				if (e) {
+					e.preventDefault();
+				}
+
+				return;
+			}
+			
 			formElem.classList.add('form_sending');
 			
 			if (!this.onSubmit) {
 				formElem.submit();
+				
 				return;
 			}
 			
@@ -616,7 +625,7 @@ var ValidateForm, Form;
 			}
 			
 			// call onSubmit
-			var ret = this.onSubmit(formElem, function (obj) {
+			const ret = this.onSubmit(formElem, function (obj) {
 				obj = obj || {};
 				
 				actSubmitBtn(obj.unlockSubmitButton);
@@ -629,7 +638,10 @@ var ValidateForm, Form;
 			});
 			
 			if (ret === false) {
-				e.preventDefault();
+				if (e) {
+					e.preventDefault();
+				}
+
 				actSubmitBtn(false);
 			} else {
 				formElem.submit();
@@ -645,12 +657,8 @@ var ValidateForm, Form;
 			document.addEventListener('submit', (e) => {
 				var formElem = e.target.closest(formSelector);
 				
-				if (!formElem) return;
-				
-				if (ValidateForm.validate(formElem)) {
-					this.submit(e, formElem);
-				} else {
-					e.preventDefault();
+				if (formElem) {
+					this.submitForm(formElem, e);
 				}
 			});
 			
@@ -665,9 +673,7 @@ var ValidateForm, Form;
 				if (e.ctrlKey && key == 13) {
 					e.preventDefault();
 
-					if (ValidateForm.validate(formElem)) {
-						this.submit(e, formElem);
-					}
+					this.submitForm(formElem, e);
 				}
 			});
 		}

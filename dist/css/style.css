@@ -784,11 +784,9 @@ hr {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-weight: 500;
   letter-spacing: 1px;
   color: #FFF;
-  padding: 0 15px;
+  padding: 0 25px;
   height: 43px;
   line-height: normal;
   text-align: center;
@@ -798,7 +796,7 @@ hr {
   background: #212121;
   user-select: none;
   position: relative;
-  transition: .5s;
+  transition: .21s;
 }
 
 .btn span, .arrow-btn span, .plus-btn span {
@@ -846,7 +844,7 @@ hr {
   border: none;
   background: none;
   -webkit-appearance: none;
-  transition: .5s;
+  transition: .21s;
 }
 
 .vk-btn:hover, .fb-btn:hover, .tw-btn:hover, .ok-btn:hover {
@@ -959,7 +957,7 @@ hr {
 
 .paginate__a {
   opacity: .3;
-  transition: .5s;
+  transition: .21s;
 }
 
 .paginate__a:hover {
@@ -1019,7 +1017,7 @@ hr {
 
 .header_fixed {
   background: #FFF;
-  box-shadow: 0 1px 7px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 21px rgba(0, 0, 0, 0.21);
 }
 
 .header__logo {
