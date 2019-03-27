@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	(function initFun() {
 		if (fsElem) {
 			let padTop = 100;
-
+			
 			if (window.innerWidth < 1200) {
 				padTop = 60;
 			}
-
+			
 			fsElem.style.height = (window.innerHeight - padTop) +'px';
 		}
 		
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		// resize events
 		window.removeEventListener('winResized', initFun);
 		window.removeEventListener('winWidthResized', initFun);
-
+		
 		if (window.innerWidth > 1200) {
 			window.addEventListener('winResized', initFun);
 		} else {
@@ -270,16 +270,22 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 	
 	// autocomplete data
-	AutoComplete.setValuesData = function (val, fun) {
-		fun([
-			{val:"mc", value:"Mercury"},
-			{val:"vn", value:"Venus"},
-			{val:"eth", value:"Earth"},
-			{val:"ms", value:"Mars"},
-			{val:"mn", value:"Mandarin"},
-			{val:"mk", value:"Marakuja"},
-			{val:"mlk", value:"Milk"}
-		]);
+	AutoComplete.getValues = function(inpElem, returnFun) {
+		switch (inpElem.name) {
+			case 'fruits':
+			returnFun([
+				{val:"mc", value:"Pinapple", id:1},
+				{val:"vn", value:"Apple", id:2},
+				{val:"eth", value:"Berry", id:3},
+				{val:"ms", value:"Cherry", id:4},
+				{val:"mn", value:"Mandarin", id:5},
+				{val:"mk", value:"Marakuja", id:6}
+			], 'value', 'val', 'id');
+			break;
+			
+			default:
+			break;
+		}
 	}
 	
 	// submit form
@@ -327,6 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function dAirGetInit() {
 	dAirGet.countries(function(c) {
 		var contryObjArr = JSON.parse(c);
+		
 		Select.setOptions('.countries', contryObjArr, 'name', 'name', 'id');
 	});
 	

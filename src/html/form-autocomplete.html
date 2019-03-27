@@ -9,22 +9,27 @@
 	
 	<div class="section">
 		
-		<form action="test-ajax.php" method="POST" class="form">
+		<form action="test-ajax.php" method="POST" autocomplete="off" class="form">
 			
 			<div class="row row_wrp">
 				<div class="col-6">
-					<div class="form__field">
+					<div class="form__field countries">
 						<div class="autocomplete">
-							<input type="text" name="planet" data-required="true" placeholder="Select a planet*" class="autocomplete__input">
+							<input type="text" name="fruits" data-required="true" placeholder="Select a fruit*" data-nf-text="Nothing found" class="autocomplete__input">
 							<ul class="autocomplete__options">
-								<!-- values -->
+								<!-- options -->
 							</ul>
 						</div>
-						<div class="field-error-tip">Select a planet</div>
+						<div class="field-error-tip">Select fruit</div>
 					</div>
 				</div>
 			</div>
 			
+			<div class="row row_wrp">
+				<div class="col-6">
+					<button type="submit">Submit</button>
+				</div>
+			</div>
 		</form>
 		
 	</div>

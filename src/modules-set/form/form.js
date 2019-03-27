@@ -337,16 +337,14 @@ var ValidateForm, Form;
 			}
 			
 			// select
-			var elements = formElem.querySelectorAll('.custom-select__input');
+			const selectElements = formElem.querySelectorAll('.select__input');
 			
-			for (var i = 0; i < elements.length; i++) {
-				var elem = elements[i];
+			for (let i = 0; i < selectElements.length; i++) {
+				const selectElem = selectElements[i];
 				
-				if (elemIsHidden(elem.parentElement)) {
-					continue;
-				}
+				if (elemIsHidden(selectElem.parentElement)) continue;
 				
-				if (this.select(elem)) {
+				if (this.select(selectElem)) {
 					err++;
 				}
 			}

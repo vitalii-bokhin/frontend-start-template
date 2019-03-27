@@ -9,7 +9,7 @@
 		hideCssClass: 'hidden',
 		onSelect: null,
 		
-		reset: function (parentElem) {
+		reset: function(parentElem) {
 			var parElem = parentElem || document, 
 			fieldElements = parElem.querySelectorAll('.select'),
 			buttonElements = parElem.querySelectorAll('.select__button'),
@@ -34,7 +34,7 @@
 			}
 		},
 		
-		close: function () {
+		close: function() {
 			var fieldElements = document.querySelectorAll('.select'),
 			optionsElements = document.querySelectorAll('.select__options');
 			
@@ -51,7 +51,7 @@
 			}
 		},
 		
-		open: function () {
+		open: function() {
 			this.field.classList.add('select_opened');
 			
 			var opionsElem = this.field.querySelector('.select__options');
@@ -64,7 +64,7 @@
 			}, 550);
 		},
 		
-		selectMultipleVal: function (elem, button, input) {
+		selectMultipleVal: function(elem, button, input) {
 			var toButtonValue = [],
 			toInputValue = [],
 			inputsBlock = this.field.querySelector('.select__multiple-inputs');
@@ -105,7 +105,7 @@
 			}
 		},
 		
-		targetAction: function () {
+		targetAction: function() {
 			const elements = this.field.querySelectorAll('.select__val');
 			
 			for (let i = 0; i < elements.length; i++) {
@@ -131,7 +131,7 @@
 			}
 		},
 		
-		selectVal: function (elem) {
+		selectVal: function(elem) {
 			const button = this.field.querySelector('.select__button'),
 			input = this.field.querySelector('.select__input');
 			
@@ -185,7 +185,7 @@
 			ValidateForm.select(input);
 		},
 		
-		setOptions: function (fieldSelector, optObj, nameKey, valKey, secValKey) {
+		setOptions: function(fieldSelector, optObj, nameKey, valKey, secValKey) {
 			var fieldElements = document.querySelectorAll(fieldSelector);
 			
 			for (var i = 0; i < fieldElements.length; i++) {
@@ -204,7 +204,7 @@
 			}
 		},
 		
-		keyboard: function (key) {
+		keyboard: function(key) {
 			var options = this.field.querySelector('.select__options'),
 			hoverItem = options.querySelector('li.hover');
 			
@@ -291,7 +291,7 @@
 			}
 		},
 		
-		build: function (elementStr) {
+		build: function(elementStr) {
 			const elements = document.querySelectorAll(elementStr);
 			
 			if (!elements.length) return;
@@ -328,7 +328,11 @@
 					inpDiv: (elem.multiple) ? '<div class="select__multiple-inputs"></div>' : ''
 				},
 
-				hiddenInp = (elem.getAttribute('data-type') != 'autocomplete') ? '<input type="hidden" name="'+ elem.name +'"'+ require + submitOnChange +'class="select__input" value="'+ ((selectedOption) ? selectedOption.value : '') +'">' : '';
+				hiddenInp = '<input type="hidden" name="'+ elem.name +'"'+ require + submitOnChange +'class="select__input" value="'+ ((selectedOption) ? selectedOption.value : '') +'">';
+
+				if (elem.hasAttribute('data-empty-text')) {
+					optionsList = '<li class="select__options-empty">'+ elem.getAttribute('data-empty-text') +'</li>';
+				}
 				
 				// output select
 				const customElem = document.createElement('div');

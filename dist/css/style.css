@@ -2212,6 +2212,15 @@ select {
   color: #fff;
 }
 
+.autocomplete__options.ovfauto {
+  overflow: auto;
+}
+
+.autocomplete__options-empty {
+  padding: 10px 15px;
+  text-align: center;
+}
+
 .autocomplete__val {
   display: block;
   width: 100%;
@@ -2223,6 +2232,10 @@ select {
   transition: .5s;
 }
 
+.autocomplete__val span {
+  color: #ff0000;
+}
+
 .autocomplete__val:hover {
   background: #aaaaaa;
   color: #fff;
@@ -2230,10 +2243,6 @@ select {
 
 .autocomplete_opened .autocomplete__options {
   visibility: visible;
-}
-
-.autocomplete_opened .autocomplete__options.ovfauto {
-  overflow: auto;
 }
 
 .custom-file__btn:after, .custom-file__preview:after, .custom-file__del-btn:after, .custom-file__del-btn:before {
