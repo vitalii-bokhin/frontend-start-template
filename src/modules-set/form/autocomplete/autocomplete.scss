@@ -40,6 +40,13 @@
 				}
 			}
 		}
+		&.ovfauto{
+			overflow: auto;
+		}
+		&-empty{
+			padding: 10px 15px;
+			text-align: center;
+		}
 	}
 	&__val{
 		display: block;
@@ -50,6 +57,9 @@
 		text-align: left;
 		border: none;
 		transition: .5s;
+		span{
+			color: $rd;
+		}
 		&:hover{
 			background: $gy;
 			color: #fff;
@@ -58,9 +68,6 @@
 	&_opened{
 		.autocomplete__options{
 			visibility: visible;
-			&.ovfauto{
-				overflow: auto;
-			}
 		}
 	}
 }

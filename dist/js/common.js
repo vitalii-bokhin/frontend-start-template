@@ -269,6 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		return result[1];
 	}
 	
+	var contries;
+	
 	// autocomplete data
 	AutoComplete.getValues = function(inpElem, returnFun) {
 		switch (inpElem.name) {
@@ -283,8 +285,25 @@ document.addEventListener('DOMContentLoaded', function() {
 			], 'value', 'val', 'id');
 			break;
 			
+			case 'country':
+			if (contries) {
+				returnFun(contries, 'name', 'name', 'id');
+			} else {
+				dAirGet.countries(function(c) {
+					contries = JSON.parse(c);
+					returnFun(contries, 'name', 'name', 'id');
+				});
+			}
+			break;
+			
 			default:
 			break;
+		}
+	}
+	
+	AutoComplete.onSelect = function(inpElem, val, secVal) {
+		if (inpElem.name == 'country') {
+			
 		}
 	}
 	

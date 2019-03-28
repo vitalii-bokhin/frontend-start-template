@@ -54,13 +54,13 @@
 		open: function() {
 			this.field.classList.add('select_opened');
 			
-			var opionsElem = this.field.querySelector('.select__options');
+			const optionsElem = this.field.querySelector('.select__options');
 			
-			opionsElem.style.height = (opionsElem.scrollHeight + 2) +'px';
-			opionsElem.scrollTop = 0;
+			optionsElem.style.height = (optionsElem.scrollHeight + 2) +'px';
+			optionsElem.scrollTop = 0;
 			
 			setTimeout(function () {
-				opionsElem.classList.add('ovfauto');
+				optionsElem.classList.add('ovfauto');
 			}, 550);
 		},
 		
@@ -186,7 +186,7 @@
 		},
 		
 		setOptions: function(fieldSelector, optObj, nameKey, valKey, secValKey) {
-			var fieldElements = document.querySelectorAll(fieldSelector);
+			var fieldElements = document.querySelectorAll(fieldSelector +' .select');
 			
 			for (var i = 0; i < fieldElements.length; i++) {
 				var optionsElem = fieldElements[i].querySelector('.select__options');

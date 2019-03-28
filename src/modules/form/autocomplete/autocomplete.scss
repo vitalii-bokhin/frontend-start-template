@@ -9,7 +9,29 @@
    &__input{
       @extend %inp;
       padding-right: 45px;
-   }
+	}
+	&__arr{
+		display: block;
+		width: 40px;
+		height: 44px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 3;
+		border: none;
+		background: none;
+		&:after{
+			@extend %ab;
+			width: 0;
+			height: 0;
+			border: 4px solid transparent;
+			border-top: 6px solid $rd;
+			position: absolute;
+			right: 13px;
+			top: 50%;
+			margin-top: -2px;
+		}
+	}
 	&__options{
 		list-style: none;
 		position: absolute;

@@ -1349,11 +1349,12 @@ var Popup, MediaPopup;
 		},
 		
 		close: function() {
-			var fieldElements = document.querySelectorAll('.select'),
+			const fieldElements = document.querySelectorAll('.select'),
 			optionsElements = document.querySelectorAll('.select__options');
 			
-			for (var i = 0; i < fieldElements.length; i++) {
+			for (let i = 0; i < fieldElements.length; i++) {
 				fieldElements[i].classList.remove('select_opened');
+
 				optionsElements[i].classList.remove('ovfauto');
 				optionsElements[i].style.height = 0;
 			}
@@ -1370,7 +1371,7 @@ var Popup, MediaPopup;
 			
 			const optionsElem = this.field.querySelector('.select__options');
 			
-			optionsElem.style.height = (optionsElem.scrollHeight + 2) +'px';
+			optionsElem.style.height = ((optionsElem.scrollHeight > 222) ? 222 : (optionsElem.scrollHeight + 2)) +'px';
 			optionsElem.scrollTop = 0;
 			
 			setTimeout(function () {
@@ -1665,9 +1666,8 @@ var Popup, MediaPopup;
 			
 			// click on select or value or arrow button
 			document.addEventListener('click', (e) => {
-				var btnElem = e.target.closest('.select__button'),
-				valElem = e.target.closest('.select__val'),
-				arrElem = e.target.closest('.select__arr');
+				const btnElem = e.target.closest('.select__button'),
+				valElem = e.target.closest('.select__val');
 				
 				if (btnElem) {
 					this.field = btnElem.closest('.select');
@@ -1681,12 +1681,6 @@ var Popup, MediaPopup;
 				} else if (valElem) {
 					this.field = valElem.closest('.select');
 					this.selectVal(valElem);
-				} else if (arrElem) {
-					if (!arrElem.closest('.select_opened')) {
-						arrElem.closest('.select').querySelector('.select__autocomplete').focus();
-					} else {
-						this.close();
-					}
 				}
 			});
 			
@@ -1729,7 +1723,6 @@ var Popup, MediaPopup;
 		fieldElem: null,
 		inputElem: null,
 		optionsElem: null,
-		valuesData: null,
 		getValues: null,
 		opt: {},
 		
@@ -1746,11 +1739,15 @@ var Popup, MediaPopup;
 			}, 550);
 		},
 		
-		close: function () {
-			this.fieldElem.classList.remove('autocomplete_opened');
+		close: function (inputElem) {
+			const inpElem = inputElem || this.inputElem,
+			fieldElem = inpElem.closest('.autocomplete'),
+			optionsElem = fieldElem.querySelector('.autocomplete__options');
 			
-			this.optionsElem.classList.remove('ovfauto');
-			this.optionsElem.style.height = 0;
+			fieldElem.classList.remove('autocomplete_opened');
+			
+			optionsElem.classList.remove('ovfauto');
+			optionsElem.style.height = 0;
 		},
 		
 		searchValue: function() {
@@ -1801,7 +1798,7 @@ var Popup, MediaPopup;
 		},
 		
 		selectVal: function(itemElem) {
-			var valueElem = itemElem.querySelector('.autocomplete__val');
+			const valueElem = itemElem.querySelector('.autocomplete__val');
 			
 			if (!valueElem) return;
 			
@@ -1813,13 +1810,13 @@ var Popup, MediaPopup;
 		},
 		
 		keybinding: function(e) {
-			var key = e.which || e.keyCode || 0;
+			const key = e.which || e.keyCode || 0;
 			
 			if (key != 40 && key != 38 && key != 13) return;
 			
 			e.preventDefault();
 			
-			var optionsElem = this.optionsElem,
+			const optionsElem = this.optionsElem,
 			hoverItem = optionsElem.querySelector('li.hover');
 			
 			switch (key) {
@@ -1900,9 +1897,11 @@ var Popup, MediaPopup;
 			
 			// blur event
 			document.addEventListener('blur', (e) => {
-				if (e.target.closest('.autocomplete__input')) {
+				const inpElem = e.target.closest('.autocomplete__input');
+				
+				if (inpElem) {
 					setTimeout(() => {
-						this.close();
+						this.close(inpElem);
 					}, 321);
 				}
 			}, true);
@@ -1916,10 +1915,17 @@ var Popup, MediaPopup;
 			
 			// click event
 			document.addEventListener('click', (e) => {
-				var elem = e.target.closest('.autocomplete__val');
+				const valElem = e.target.closest('.autocomplete__val'),
+				arrElem = e.target.closest('.autocomplete__arr');
 				
-				if (elem) {
-					this.selectVal(elem.parentElement);
+				if (valElem) {
+					this.selectVal(valElem.parentElement);
+				} else if (arrElem) {
+					if (!arrElem.closest('.autocomplete_opened')) {
+						arrElem.closest('.autocomplete').querySelector('.autocomplete__input').focus();
+					} else {
+						this.close();
+					}
 				}
 			});
 			

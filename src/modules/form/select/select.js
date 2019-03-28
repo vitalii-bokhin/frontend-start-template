@@ -35,11 +35,12 @@
 		},
 		
 		close: function() {
-			var fieldElements = document.querySelectorAll('.select'),
+			const fieldElements = document.querySelectorAll('.select'),
 			optionsElements = document.querySelectorAll('.select__options');
 			
-			for (var i = 0; i < fieldElements.length; i++) {
+			for (let i = 0; i < fieldElements.length; i++) {
 				fieldElements[i].classList.remove('select_opened');
+
 				optionsElements[i].classList.remove('ovfauto');
 				optionsElements[i].style.height = 0;
 			}
@@ -56,7 +57,7 @@
 			
 			const optionsElem = this.field.querySelector('.select__options');
 			
-			optionsElem.style.height = (optionsElem.scrollHeight + 2) +'px';
+			optionsElem.style.height = ((optionsElem.scrollHeight > 222) ? 222 : (optionsElem.scrollHeight + 2)) +'px';
 			optionsElem.scrollTop = 0;
 			
 			setTimeout(function () {
@@ -351,9 +352,8 @@
 			
 			// click on select or value or arrow button
 			document.addEventListener('click', (e) => {
-				var btnElem = e.target.closest('.select__button'),
-				valElem = e.target.closest('.select__val'),
-				arrElem = e.target.closest('.select__arr');
+				const btnElem = e.target.closest('.select__button'),
+				valElem = e.target.closest('.select__val');
 				
 				if (btnElem) {
 					this.field = btnElem.closest('.select');
@@ -367,12 +367,6 @@
 				} else if (valElem) {
 					this.field = valElem.closest('.select');
 					this.selectVal(valElem);
-				} else if (arrElem) {
-					if (!arrElem.closest('.select_opened')) {
-						arrElem.closest('.select').querySelector('.select__autocomplete').focus();
-					} else {
-						this.close();
-					}
 				}
 			});
 			
