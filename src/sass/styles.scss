@@ -13,6 +13,7 @@
 	}
 	&__full-page{
 		@extend %fwh;
+		overflow: hidden;
 	}
 }
 
