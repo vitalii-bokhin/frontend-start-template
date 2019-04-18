@@ -92,7 +92,9 @@ hr {
 
 .row_wrp {
   margin: 0 auto;
-  max-width: 980px;
+  max-width: 1010px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .row_nw {
@@ -129,6 +131,13 @@ hr {
   width: 100%;
 }
 
+@media (max-width: 1200px) {
+  .row_wrp {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 @media (min-width: 1001px) {
   .row_md-x-nw {
     flex-wrap: nowrap;
@@ -145,13 +154,6 @@ hr {
   .row_md-x-block > [class*="col"] {
     float: left;
     width: 100%;
-  }
-}
-
-@media (max-width: 1000px) and (min-width: 751px) {
-  .row_wpr {
-    padding-left: 15px;
-    padding-right: 15px;
   }
 }
 
@@ -665,7 +667,7 @@ hr {
     margin-right: 0;
     float: none !important;
   }
-  .sm-col-first {
+  .sm-col_first {
     order: -1;
   }
 }
@@ -775,7 +777,7 @@ hr {
     margin-right: 0;
     float: none !important;
   }
-  .xs-col-first {
+  .xs-col_first {
     order: -1;
   }
 }
@@ -2945,12 +2947,12 @@ select {
   margin: 0 auto;
 }
 
-.bubble:after {
+.tooltip:after {
   display: block;
   content: "";
 }
 
-.bubble {
+.tooltip {
   position: absolute;
   top: 0;
   left: 0;
@@ -2968,7 +2970,7 @@ select {
   transition: opacity .5s;
 }
 
-.bubble:after {
+.tooltip:after {
   width: 0;
   height: 0;
   border: 10px solid transparent;
@@ -2978,22 +2980,22 @@ select {
   left: 5px;
 }
 
-.bubble_visible {
+.tooltip_visible {
   display: block;
   visibility: visible;
   opacity: 1;
 }
 
-.bubble_rd {
+.tooltip_rd {
   background: #ff0000;
 }
 
-.bubble_rd:after {
+.tooltip_rd:after {
   border-left-color: #ff0000;
 }
 
 @media (max-width: 750px) {
-  .bubble {
+  .tooltip {
     font-size: 13px;
   }
 }
@@ -3142,6 +3144,10 @@ select {
 
 .main, .main__full-page {
   padding-top: 100px;
+}
+
+.main__full-page {
+  overflow: hidden;
 }
 
 /* first screen */

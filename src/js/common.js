@@ -63,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		menuLinkSelector: '.menu a'
 	});
 	
-	// bubble
-	Bubble.init({
-		element: '.js-bubble'
+	// tooltip
+	ToolTip.init({
+		element: '.js-tooltip'
 	});
 	
 	// alert

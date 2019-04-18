@@ -7,7 +7,6 @@
 		fieldElem: null,
 		inputElem: null,
 		optionsElem: null,
-		valuesData: null,
 		getValues: null,
 		opt: {},
 		
@@ -24,11 +23,15 @@
 			}, 550);
 		},
 		
-		close: function () {
-			this.fieldElem.classList.remove('autocomplete_opened');
+		close: function (inputElem) {
+			const inpElem = inputElem || this.inputElem,
+			fieldElem = inpElem.closest('.autocomplete'),
+			optionsElem = fieldElem.querySelector('.autocomplete__options');
 			
-			this.optionsElem.classList.remove('ovfauto');
-			this.optionsElem.style.height = 0;
+			fieldElem.classList.remove('autocomplete_opened');
+			
+			optionsElem.classList.remove('ovfauto');
+			optionsElem.style.height = 0;
 		},
 		
 		searchValue: function() {
@@ -79,7 +82,7 @@
 		},
 		
 		selectVal: function(itemElem) {
-			var valueElem = itemElem.querySelector('.autocomplete__val');
+			const valueElem = itemElem.querySelector('.autocomplete__val');
 			
 			if (!valueElem) return;
 			
@@ -91,13 +94,13 @@
 		},
 		
 		keybinding: function(e) {
-			var key = e.which || e.keyCode || 0;
+			const key = e.which || e.keyCode || 0;
 			
 			if (key != 40 && key != 38 && key != 13) return;
 			
 			e.preventDefault();
 			
-			var optionsElem = this.optionsElem,
+			const optionsElem = this.optionsElem,
 			hoverItem = optionsElem.querySelector('li.hover');
 			
 			switch (key) {
@@ -178,9 +181,11 @@
 			
 			// blur event
 			document.addEventListener('blur', (e) => {
-				if (e.target.closest('.autocomplete__input')) {
+				const inpElem = e.target.closest('.autocomplete__input');
+				
+				if (inpElem) {
 					setTimeout(() => {
-						this.close();
+						this.close(inpElem);
 					}, 321);
 				}
 			}, true);
@@ -194,10 +199,17 @@
 			
 			// click event
 			document.addEventListener('click', (e) => {
-				var elem = e.target.closest('.autocomplete__val');
+				const valElem = e.target.closest('.autocomplete__val'),
+				arrElem = e.target.closest('.autocomplete__arr');
 				
-				if (elem) {
-					this.selectVal(elem.parentElement);
+				if (valElem) {
+					this.selectVal(valElem.parentElement);
+				} else if (arrElem) {
+					if (!arrElem.closest('.autocomplete_opened')) {
+						arrElem.closest('.autocomplete').querySelector('.autocomplete__input').focus();
+					} else {
+						this.close();
+					}
 				}
 			});
 			

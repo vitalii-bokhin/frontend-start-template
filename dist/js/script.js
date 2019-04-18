@@ -2898,12 +2898,10 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (!elemIsHidden(elem)) {
-					if (state) {
-						elem.removeAttribute('disabled');
-					} else {
-						elem.setAttribute('disabled', 'disable');
-					}
+				if (state) {
+					elem.removeAttribute('disabled');
+				} else {
+					elem.setAttribute('disabled', 'disable');
 				}
 			}
 		},
@@ -2913,7 +2911,7 @@ var ValidateForm, Form;
 				if (e) {
 					e.preventDefault();
 				}
-
+				
 				return;
 			}
 			
@@ -2941,7 +2939,7 @@ var ValidateForm, Form;
 				if (e) {
 					e.preventDefault();
 				}
-
+				
 				this.actSubmitBtn(false, formElem);
 			} else {
 				formElem.submit();
@@ -3358,60 +3356,60 @@ new Alert({
 	}
 })();
 /*
-Bubble.init({
-	element: '.js-bubble'
+tooltip.init({
+	element: '.js-tooltip'
 });
 */
 
-; var Bubble;
+; var ToolTip;
 
 (function() {
 	'use strict';
 
-	Bubble = {
-		bubbleDiv: null,
-		bubbleClass: null,
+	ToolTip = {
+		tooltipDiv: null,
+		tooltipClass: null,
 		canBeHidden: true,
 
 		show: function(elem) {
-			this.bubbleDiv.innerHTML = elem.getAttribute('data-bubble');
+			this.tooltipDiv.innerHTML = elem.getAttribute('data-tooltip');
 
-			this.bubbleClass = elem.getAttribute('data-bubble-class');
+			this.tooltipClass = elem.getAttribute('data-tooltip-class');
 
-			if (this.bubbleClass) {
-				this.bubbleDiv.classList.add(this.bubbleClass);
+			if (this.tooltipClass) {
+				this.tooltipDiv.classList.add(this.tooltipClass);
 			}
 
-			var bubleStyle = this.bubbleDiv.style, 
-			bubbleMinWidth = 100,
-			bubblePotentWidth = window.innerWidth - (elem.getBoundingClientRect().left + elem.offsetWidth) - 10,
+			var bubleStyle = this.tooltipDiv.style, 
+			tooltipMinWidth = 100,
+			tooltipPotentWidth = window.innerWidth - (elem.getBoundingClientRect().left + elem.offsetWidth) - 10,
 			coordX = elem.getBoundingClientRect().left + elem.offsetWidth;
 
-			if (bubblePotentWidth < bubbleMinWidth) {
-				bubblePotentWidth = bubbleMinWidth;
+			if (tooltipPotentWidth < tooltipMinWidth) {
+				tooltipPotentWidth = tooltipMinWidth;
 
-				coordX = window.innerWidth - bubbleMinWidth - 10;
+				coordX = window.innerWidth - tooltipMinWidth - 10;
 			}
 
-			bubleStyle.width = bubblePotentWidth +'px';
+			bubleStyle.width = tooltipPotentWidth +'px';
 			bubleStyle.left = coordX +'px';
 
-			var coordY = elem.getBoundingClientRect().top + pageYOffset - this.bubbleDiv.offsetHeight;
+			var coordY = elem.getBoundingClientRect().top + pageYOffset - this.tooltipDiv.offsetHeight;
 
 			bubleStyle.top = coordY +'px';
 
-			this.bubbleDiv.classList.add('bubble_visible');
+			this.tooltipDiv.classList.add('tooltip_visible');
 		},
 
 		hide: function() {
-			this.bubbleDiv.classList.remove('bubble_visible');
-			this.bubbleDiv.removeAttribute('style');
-			this.bubbleDiv.innerHTML = '';
+			this.tooltipDiv.classList.remove('tooltip_visible');
+			this.tooltipDiv.removeAttribute('style');
+			this.tooltipDiv.innerHTML = '';
 
-			if (this.bubbleClass) {
-				this.bubbleDiv.classList.remove(this.bubbleClass);
+			if (this.tooltipClass) {
+				this.tooltipDiv.classList.remove(this.tooltipClass);
 
-				this.bubbleClass = null;
+				this.tooltipClass = null;
 			}
 		},
 
@@ -3425,7 +3423,7 @@ Bubble.init({
 
 						document.removeEventListener('touchstart', mouseOut);
 					} else {
-						if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.bubble')) {
+						if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.tooltip')) {
 							this.hide();
 
 							this.canBeHidden = true;
@@ -3447,7 +3445,7 @@ Bubble.init({
 				} else {
 					if (elem) {
 						this.show(elem);
-					} else if (e.target.closest('.bubble')) {
+					} else if (e.target.closest('.tooltip')) {
 						this.canBeHidden = false;
 					}
 				}
@@ -3460,11 +3458,11 @@ Bubble.init({
 				document.addEventListener('mouseout', mouseOut);
 			}
 
-			//add bubble to DOM
-			this.bubbleDiv = document.createElement('div');
-			this.bubbleDiv.className = 'bubble';
+			//add tooltip to DOM
+			this.tooltipDiv = document.createElement('div');
+			this.tooltipDiv.className = 'tooltip';
 
-			document.body.appendChild(this.bubbleDiv);
+			document.body.appendChild(this.tooltipDiv);
 		}
 	};
 })();

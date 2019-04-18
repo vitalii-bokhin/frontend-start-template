@@ -592,12 +592,10 @@ var ValidateForm, Form;
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
 				
-				if (!elemIsHidden(elem)) {
-					if (state) {
-						elem.removeAttribute('disabled');
-					} else {
-						elem.setAttribute('disabled', 'disable');
-					}
+				if (state) {
+					elem.removeAttribute('disabled');
+				} else {
+					elem.setAttribute('disabled', 'disable');
 				}
 			}
 		},
@@ -607,7 +605,7 @@ var ValidateForm, Form;
 				if (e) {
 					e.preventDefault();
 				}
-
+				
 				return;
 			}
 			
@@ -635,7 +633,7 @@ var ValidateForm, Form;
 				if (e) {
 					e.preventDefault();
 				}
-
+				
 				this.actSubmitBtn(false, formElem);
 			} else {
 				formElem.submit();

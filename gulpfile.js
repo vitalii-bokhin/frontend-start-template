@@ -39,7 +39,7 @@ const modulesOn = [
 	'more',
 	'tab',
 	'alert',
-	'bubble',
+	'tooltip',
 	'anchor',
 	'diagram',
 	'numberspin',
