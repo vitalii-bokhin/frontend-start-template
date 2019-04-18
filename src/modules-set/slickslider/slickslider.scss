@@ -134,10 +134,16 @@
 	font-size: 0;
 	transition: .5s;
 	&:after{
-		display: inline-block;
-		content: "";
-		width: 12px;
-		height: 20px;
+		@extend %ab;
+		width: 16px;
+		height: 16px;
+		border: 4px solid transparent;
+		border-top-color: $be;
+		border-left-color: $be;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		margin-top: -12px;
 	}
 	@media(min-width: 1201px){
 		&:hover{
@@ -151,12 +157,14 @@
 .slick-prev{
 	left: -42px;
 	&:after{
-		
+		margin-left: -5px;
+		transform: rotate(-45deg);
 	}
 }
 .slick-next{
 	right: -42px;
 	&:after{
-		
+		margin-left: -18px;
+		transform: rotate(135deg);
 	}
 }
