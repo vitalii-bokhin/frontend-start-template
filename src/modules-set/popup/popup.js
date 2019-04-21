@@ -7,6 +7,8 @@ var Popup, MediaPopup;
 	Popup = {
 		winScrollTop: 0,
 		onClose: null,
+		_onclose: null,
+		onOpen: null,
 		headerSelector: '.header',
 
 		fixBody: function(st) {
@@ -37,7 +39,7 @@ var Popup, MediaPopup;
 			}
 		},
 
-		open: function(elementStr, callback) {
+		open: function(elementStr, callback, btnElem) {
 			var elem = document.querySelector(elementStr);
 
 			if (!elem || !elem.classList.contains('popup__window')) {
@@ -53,10 +55,14 @@ var Popup, MediaPopup;
 			elem.classList.add('popup__window_visible');
 
 			if (callback) {
-				this.onClose = callback;
+				this._onclose = callback;
 			}
 
 			this.fixBody(true);
+
+			if (this.onOpen) {
+				this.onOpen(elementStr, btnElem);
+			}
 
 			return elem;
 		},
@@ -82,27 +88,28 @@ var Popup, MediaPopup;
 				}
 
 				elem.classList.remove('popup__window_visible');
+
 				elem.parentElement.classList.remove('popup_visible');
 			}
 
-			if (this.onClose) {
+			if (this._onclose) {
+				this._onclose();
+				this._onclose = null;
+			} else if (this.onClose) {
 				this.onClose();
-				this.onClose = null;
 			}
 		},
 
 		init: function(elementStr) {
 			document.addEventListener('click', (e) => {
-				var element = e.target.closest(elementStr),
-				closeElem = e.target.closest('.js-popup-close');
+				var btnElem = e.target.closest(elementStr),
+				closeBtnElem = e.target.closest('.js-popup-close');
 
-				if (element) {
+				if (btnElem) {
 					e.preventDefault();
-
-					this.open(element.getAttribute('data-popup'));
-				} else if (closeElem || (!e.target.closest('.popup__window') && e.target.closest('.popup'))) {
+					this.open(btnElem.getAttribute('data-popup'), false, btnElem);
+				} else if (closeBtnElem || (!e.target.closest('.popup__window') && e.target.closest('.popup'))) {
 					this.fixBody(false);
-
 					this.close();
 				}
 			});
