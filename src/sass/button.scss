@@ -101,6 +101,20 @@
 	height: 35px;
 }
 
+/* social */
+.social{
+	font-size: 0;
+	text-align: center;
+	&__item{
+		display: inline-block;
+		list-style: none;
+		margin: 0 10px;
+	}
+	// &__btn{
+		
+	// }
+}
+
 /* link */
 %link{
 	text-decoration: none;
