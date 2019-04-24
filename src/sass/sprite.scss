@@ -37,24 +37,21 @@ $sprite-width: 2192;
 	@include bgs(432);
 }
 
-.vk-btn{
+.v-btn::after{
 	@extend %svg-vk;
 	@include bgs(576);
 }
-
-.fb-btn{
+.f-btn::after{
 	@extend %svg-facebook;
 	@include bgs(448);
 }
-
-.tw-btn{
-	@extend %svg-twitter;
-	@include bgs(512);
-}
-
-.ok-btn{
+.o-btn::after{
 	@extend %svg-odnoklassniki;
 	@include bgs(320);
+}
+.t-btn::after{
+	@extend %svg-twitter;
+	@include bgs(512);
 }
 
 .video__btn-play,

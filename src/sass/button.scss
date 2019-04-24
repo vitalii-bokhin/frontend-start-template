@@ -71,34 +71,57 @@
 /* icon button */
 %icon-btn{
 	display: inline-block;
-	border: none;
 	background: none;
 	-webkit-appearance: none;
+	width: 94px;
+	height: 94px;
+	border: 7px solid #fff;
+	border-radius: 50%;
 	transition: .21s;
+	position: relative;
+	&::after{
+		left: 50%;
+	}
 	&:hover{
-		opacity: .55;
+		opacity: .75;
 	}
 }
 
-.vk-btn{
+.v-btn{
 	@extend %icon-btn;
-	width: 46px;
-	height: 37px;
+	&::after{
+		@extend %btn-icon;
+		width: per(53,80);
+		height: per(32,80);
+		margin: per(-14,80) 0 0 per(-28,80);
+	}
 }
-.fb-btn{
+.f-btn{
 	@extend %icon-btn;
-	width: 32px;
-	height: 36px;
+	&::after{
+		@extend %btn-icon;
+		width: per(25,80);
+		height: per(47,80);
+		margin: per(-23,80) 0 0 per(-13,80);
+	}
 }
-.tw-btn{
+.o-btn{
 	@extend %icon-btn;
-	width: 35px;
-	height: 35px;
+	&::after{
+		@extend %btn-icon;
+		width: per(31,80);
+		height: per(50,80);
+		margin: per(-25,80) 0 0 per(-15,80);
+	}
 }
-.ok-btn{
+.t-btn{
 	@extend %icon-btn;
-	width: 21px;
-	height: 35px;
+	&::after{
+		@extend %btn-icon;
+		width: per(53,80);
+		height: per(32,80);
+		margin: per(-14,80) 0 0 per(-28,80);
+	}
 }
 
 /* social */
