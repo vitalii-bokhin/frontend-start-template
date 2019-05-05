@@ -74,18 +74,22 @@ Toggle.onChange = function(toggleElem, state) {
 			}
 		},
 		
-		onDocClickOff: function (e, onDocClickOffSelector) {
+		onDocClickOff: function (e, onDocClickOffSelector, curEl) {
 			var toggleElements = document.querySelectorAll(onDocClickOffSelector + '.' +this.toggledClass);
 			
 			for (var i = 0; i < toggleElements.length; i++) {
 				var elem = toggleElements[i];
-				
+
+				if (curEl === elem) continue;
+
 				if (elem.hasAttribute('data-target-elements')) {
 					var targetSelectors = elem.getAttribute('data-target-elements');
 					
 					if (!e.target.closest(targetSelectors)) {
 						this.toggle(elem, true);
 					}
+				} else {
+					this.toggle(elem, true);
 				}
 			}
 		},
@@ -102,9 +106,9 @@ Toggle.onChange = function(toggleElem, state) {
 					e.preventDefault();
 					
 					this.toggle(toggleElem);
-				} else {
-					this.onDocClickOff(e, onDocClickOffSelector);
 				}
+				
+				this.onDocClickOff(e, onDocClickOffSelector, toggleElem);
 			});
 		}
 	};

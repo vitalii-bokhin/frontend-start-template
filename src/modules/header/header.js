@@ -1,6 +1,15 @@
+/* 
+	MobNav.init({
+		openBtn: '.js-open-menu',
+		closeBtn: '.js-close-menu',
+		headerId: 'header',
+		closeLink: '.menu a.js-anchor'
+	});
+*/
+
 ; var MobNav;
 
-(function() {
+(function () {
 	'use strict';
 
 	// fix header
@@ -23,12 +32,12 @@
 		options: null,
 		winScrollTop: 0,
 
-		fixBody: function(st) {
+		fixBody: function (st) {
 			if (st) {
 				this.winScrollTop = window.pageYOffset;
 
 				document.body.classList.add('mob-nav-is-opened');
-				document.body.style.top = -this.winScrollTop +'px';
+				document.body.style.top = -this.winScrollTop + 'px';
 			} else {
 				document.body.classList.remove('mob-nav-is-opened');
 
@@ -38,7 +47,7 @@
 			}
 		},
 
-		open: function(btnElem) {
+		open: function (btnElem) {
 			var headerElem = document.getElementById(this.options.headerId);
 
 			if (!headerElem) return;
@@ -52,7 +61,7 @@
 			}
 		},
 
-		close: function() {
+		close: function () {
 			var headerElem = document.getElementById(this.options.headerId);
 
 			if (!headerElem) return;
@@ -68,21 +77,19 @@
 			this.fixBody(false);
 		},
 
-		init: function(options) {
+		init: function (options) {
 			this.options = options;
 
 			document.addEventListener('click', (e) => {
-				var openElem = e.target.closest(options.openBtn),
-				closeElem = e.target.closest(options.closeBtn),
-				menuLinkElement = e.target.closest(options.menuLinkSelector);
+				const openElem = e.target.closest(options.openBtn);
 
 				if (openElem) {
 					e.preventDefault();
 					this.open(openElem);
-				} else if (closeElem) {
+				} else if (e.target.closest(options.closeBtn)) {
 					e.preventDefault();
 					this.close();
-				} else if (menuLinkElement) {
+				} else if (e.target.closest(options.closeLink)) {
 					this.close();
 				}
 			});

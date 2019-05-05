@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		openBtn: '.js-open-menu',
 		closeBtn: '.js-close-menu',
 		headerId: 'header',
-		menuLinkSelector: '.menu a'
+		closeLink: '.menu a.js-anchor'
 	});
 	
 	// tooltip

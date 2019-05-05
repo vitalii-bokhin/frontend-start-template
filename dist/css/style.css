@@ -806,7 +806,7 @@ hr {
   width: 100%;
 }
 
-.arrow-btn:after, .plus-btn:after {
+.arrow-btn:after, .plus-btn:after, .v-btn::after, .f-btn::after, .o-btn::after, .t-btn::after {
   display: block;
   content: "";
   position: absolute;
@@ -841,36 +841,60 @@ hr {
 }
 
 /* icon button */
-.vk-btn, .fb-btn, .tw-btn, .ok-btn {
+.v-btn, .f-btn, .o-btn, .t-btn {
   display: inline-block;
-  border: none;
   background: none;
   -webkit-appearance: none;
+  width: 94px;
+  height: 94px;
+  border: 7px solid #fff;
+  border-radius: 50%;
   transition: .21s;
+  position: relative;
 }
 
-.vk-btn:hover, .fb-btn:hover, .tw-btn:hover, .ok-btn:hover {
-  opacity: .55;
+.v-btn::after, .f-btn::after, .o-btn::after, .t-btn::after {
+  left: 50%;
 }
 
-.vk-btn {
-  width: 46px;
-  height: 37px;
+.v-btn:hover, .f-btn:hover, .o-btn:hover, .t-btn:hover {
+  opacity: .75;
 }
 
-.fb-btn {
-  width: 32px;
-  height: 36px;
+.v-btn::after {
+  width: 66.25%;
+  height: 40%;
+  margin: -17.5% 0 0 -35%;
 }
 
-.tw-btn {
-  width: 35px;
-  height: 35px;
+.f-btn::after {
+  width: 31.25%;
+  height: 58.75%;
+  margin: -28.75% 0 0 -16.25%;
 }
 
-.ok-btn {
-  width: 21px;
-  height: 35px;
+.o-btn::after {
+  width: 38.75%;
+  height: 62.5%;
+  margin: -31.25% 0 0 -18.75%;
+}
+
+.t-btn::after {
+  width: 66.25%;
+  height: 40%;
+  margin: -17.5% 0 0 -35%;
+}
+
+/* social */
+.social {
+  font-size: 0;
+  text-align: center;
+}
+
+.social__item {
+  display: inline-block;
+  list-style: none;
+  margin: 0 10px;
 }
 
 /* link */
@@ -2472,7 +2496,8 @@ select {
 }
 
 .placeholder {
-  display: block;
+  display: flex;
+  align-items: center;
   height: 44px;
   padding: 12px 15px;
   border: 1px solid transparent;
@@ -3239,7 +3264,7 @@ ol.list li:before {
   margin-top: 0 !important;
 }
 
-.menu__arr, .accord__button:after, .arrow-btn:after, .custom-checkbox__input:checked + .custom-checkbox__label:before, .fb-btn, .ok-btn, .plus-btn:after, .form__btn_search:before, .tw-btn, .vk-btn, .video__btn-play,
+.menu__arr, .accord__button:after, .arrow-btn:after, .custom-checkbox__input:checked + .custom-checkbox__label:before, .f-btn::after, .o-btn::after, .plus-btn:after, .form__btn_search:before, .t-btn::after, .v-btn::after, .video__btn-play,
 .icon:before {
   background: url("../images/sprite.svg") no-repeat;
 }
@@ -3260,11 +3285,11 @@ ol.list li:before {
   background-position: 94.31818181818181% 91.40893470790378%;
 }
 
-.fb-btn {
+.f-btn::after {
   background-position: 69.1415313225058% 0;
 }
 
-.ok-btn {
+.o-btn::after {
   background-position: 89.63282937365011% 50%;
 }
 
@@ -3276,11 +3301,11 @@ ol.list li:before {
   background-position: 64.09638554216868% 100%;
 }
 
-.tw-btn {
+.t-btn::after {
   background-position: 100% 0;
 }
 
-.vk-btn {
+.v-btn::after {
   background-position: 37.34335839598997% 0;
 }
 
@@ -3314,20 +3339,20 @@ ol.list li:before {
   background-size: 507.40741% auto;
 }
 
-.vk-btn {
+.v-btn::after {
   background-size: 380.55556% auto;
 }
 
-.fb-btn {
+.f-btn::after {
   background-size: 489.28571% auto;
 }
 
-.tw-btn {
-  background-size: 428.125% auto;
+.o-btn::after {
+  background-size: 685% auto;
 }
 
-.ok-btn {
-  background-size: 685% auto;
+.t-btn::after {
+  background-size: 428.125% auto;
 }
 
 .video__btn-play,

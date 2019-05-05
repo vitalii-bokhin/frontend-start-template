@@ -4,7 +4,8 @@
 @import "../../../sass/mixins";
 
 .placeholder{
-	display: block;
+	display: flex;
+	align-items: center;
 	height: 44px;
 	padding: 12px 15px;
 	border: 1px solid transparent;
