@@ -139,7 +139,7 @@
 		background: rgba(255, 255, 255, .7);
 		border: none;
 		backface-visibility: hidden;
-		transition: .5s;
+		transition: .21s;
 		&:after,
 		&:before{
 			@extend %ab;

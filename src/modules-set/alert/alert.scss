@@ -15,7 +15,7 @@
 	font-size: 14px;
    line-height: 1.5;
 	color: #fff;
-	transition: .5s;
+	transition: .21s;
    &_top{
       bottom: auto;
       top: 0;
@@ -45,7 +45,7 @@
 			left: -15%;
 			top: 50%;
 			margin-top: -1px;
-			transition: .5s;
+			transition: .21s;
 		}
 		&:after{
 			transform: rotate(-45deg);

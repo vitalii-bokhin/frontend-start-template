@@ -46,7 +46,7 @@
 		border-top: none;
 		background: #F0F1F2;
 		visibility: hidden;
-		transition: .5s;
+		transition: .21s;
 		li{
 			border-top: 1px solid #c3c3c3;
 			&.hidden{
@@ -78,7 +78,7 @@
 		text-decoration: none;
 		text-align: left;
 		border: none;
-		transition: .5s;
+		transition: .21s;
 		span{
 			color: $rd;
 		}

@@ -40,7 +40,7 @@
 			overflow: auto;
 			align-content: flex-start;
 			background: #FFF;
-			transition: .5s;
+			transition: .21s;
 			.opened &{
 				left: 0;
 			}
@@ -74,7 +74,7 @@
 		position: absolute;
 		left: 0;
 		width: 100%;
-		transition: .5s;
+		transition: .21s;
 	}
 	span:first-child{
 		top: 0;

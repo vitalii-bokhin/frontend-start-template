@@ -92,7 +92,7 @@
 	top: 0;
 	visibility: hidden;
 	opacity: 0;
-	transition: .5s;
+	transition: .21s;
 	padding: 0 30px;
 }
 
@@ -130,7 +130,7 @@
 	height: 8px;
 	border-radius: 8px;
 	border: 1px solid #0a55b2;
-	transition: .5s;
+	transition: .21s;
 }
 
 .float-slider_grn .float-slider__dots button {
@@ -399,7 +399,7 @@
 		height: 52px;
 		right: 50px;
 		margin-top: -26px;
-		transition: .5s;
+		transition: .21s;
 	}
 	.float-slider-control__btn_active {
 		visibility: visible;

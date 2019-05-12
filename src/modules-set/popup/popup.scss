@@ -86,7 +86,7 @@
 			left: -15%;
 			top: 50%;
 			margin-top: -1px;
-			transition: .5s;
+			transition: .21s;
 		}
 		&:after{
 			transform: rotate(-45deg);
@@ -131,7 +131,7 @@
 	&__image{
 		visibility: hidden;
 		opacity: 0;
-		transition: .5s;
+		transition: .21s;
 		&_visible{
 			visibility: visible;
 			opacity: 1;
@@ -145,7 +145,7 @@
 		@extend %fwh;
 		visibility: hidden;
 		border: none;
-		transition: .5s;
+		transition: .21s;
 		&_visible{
 			visibility: visible;
 			opacity: 1;

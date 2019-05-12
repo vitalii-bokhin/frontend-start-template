@@ -36,7 +36,7 @@
 			top: 50%;
 			margin-top: -15px;
 			opacity: .38;
-			transition: .5s;
+			transition: .21s;
 		}
 		&_active{
 			&:after{
@@ -47,6 +47,6 @@
 	&__content{
 		height: 0;
 		overflow: hidden;
-		transition: .5s;
+		transition: .21s;
 	}
 }

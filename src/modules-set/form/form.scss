@@ -51,7 +51,7 @@
 		border: 1px solid transparent;
 		background: none;
 		-webkit-appearance: none;
-		transition: .5s;
+		transition: .21s;
 		&:before{
 			@extend %ab;
 			position: absolute;
@@ -142,7 +142,7 @@
 .fieldset{
 	position: relative;
 	&__item{
-		transition: .5s;
+		transition: .21s;
 		position: static;
 		&_hidden{
 			opacity: 0;

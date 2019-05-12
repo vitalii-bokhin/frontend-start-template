@@ -13,6 +13,21 @@
 	top: 0;
 }
 
+// center image wrapper
+%c-img-wr{
+	font-size: 0;
+	text-align: center;
+	&::before{
+		display: inline-block;
+		content: "";
+		height: 100%;
+		vertical-align: middle;
+	}
+	img{
+		vertical-align: middle;
+	}
+}
+
 // responsive image
 %r-img{
 	width: auto;

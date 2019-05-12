@@ -6,7 +6,7 @@
 .fadein{
    visibility: hidden;
    opacity: 0;
-   transition: .5s;
+   transition: .21s;
    &.animated{
       visibility: visible;
       opacity: 1;
