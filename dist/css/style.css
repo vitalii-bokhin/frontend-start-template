@@ -1076,7 +1076,7 @@ hr {
     overflow: auto;
     align-content: flex-start;
     background: #FFF;
-    transition: .5s;
+    transition: .21s;
   }
   .opened .header__row {
     left: 0;
@@ -1110,7 +1110,7 @@ hr {
   position: absolute;
   left: 0;
   width: 100%;
-  transition: .5s;
+  transition: .21s;
 }
 
 .open-menu-btn span:first-child {
@@ -1396,7 +1396,7 @@ hr {
   text-decoration: none;
   border-bottom: 2px solid transparent;
   display: inline-block;
-  transition: .5s;
+  transition: .21s;
 }
 
 .sub-menu__a:hover {
@@ -1558,7 +1558,7 @@ hr {
   z-index: 2;
   margin: -4.82143% 0 0 -5.35714%;
   border: none;
-  transition: .5s;
+  transition: .21s;
 }
 
 .video__btn-play:hover {
@@ -1726,7 +1726,7 @@ hr {
   left: -15%;
   top: 50%;
   margin-top: -1px;
-  transition: .5s;
+  transition: .21s;
 }
 
 .popup-close-btn:after {
@@ -1772,7 +1772,7 @@ hr {
 .popup-media__image {
   visibility: hidden;
   opacity: 0;
-  transition: .5s;
+  transition: .21s;
 }
 
 .popup-media__image_visible {
@@ -1787,7 +1787,7 @@ hr {
 .popup-media__video, .popup-media__iframe {
   visibility: hidden;
   border: none;
-  transition: .5s;
+  transition: .21s;
 }
 
 .popup-media__video_visible, .popup-media__iframe_visible {
@@ -2054,7 +2054,7 @@ hr {
   text-overflow: ellipsis;
   background: #ffffff;
   -webkit-appearance: none;
-  transition: .5s;
+  transition: .21s;
 }
 
 .select__button:hover, .select__button:focus {
@@ -2117,7 +2117,7 @@ hr {
   border-top: none;
   background: #F0F1F2;
   visibility: hidden;
-  transition: .5s;
+  transition: .21s;
 }
 
 .select__options li {
@@ -2150,7 +2150,7 @@ hr {
   text-decoration: none;
   text-align: left;
   border: none;
-  transition: .5s;
+  transition: .21s;
 }
 
 .select__val:hover {
@@ -2189,7 +2189,7 @@ select {
   padding: 12px 15px;
   border: 1px solid #aaaaaa;
   background: #FFF;
-  transition: .5s;
+  transition: .21s;
 }
 
 .autocomplete__input:hover, .autocomplete__input:focus {
@@ -2245,7 +2245,7 @@ select {
   border-top: none;
   background: #F0F1F2;
   visibility: hidden;
-  transition: .5s;
+  transition: .21s;
 }
 
 .autocomplete__options li {
@@ -2282,7 +2282,7 @@ select {
   text-decoration: none;
   text-align: left;
   border: none;
-  transition: .5s;
+  transition: .21s;
 }
 
 .autocomplete__val span {
@@ -2470,7 +2470,7 @@ select {
   background: rgba(255, 255, 255, 0.7);
   border: none;
   backface-visibility: hidden;
-  transition: .5s;
+  transition: .21s;
 }
 
 .custom-file__del-btn:after, .custom-file__del-btn:before {
@@ -2541,7 +2541,7 @@ select {
   padding: 12px 15px;
   border: 1px solid #aaaaaa;
   background: #FFF;
-  transition: .5s;
+  transition: .21s;
 }
 
 .form__text-input:hover, .form__textarea:hover, .form__text-input:focus, .form__textarea:focus {
@@ -2599,7 +2599,7 @@ select {
   border: 1px solid transparent;
   background: none;
   -webkit-appearance: none;
-  transition: .5s;
+  transition: .21s;
 }
 
 .form__btn:before {
@@ -2693,7 +2693,7 @@ select {
 }
 
 .fieldset__item {
-  transition: .5s;
+  transition: .21s;
   position: static;
 }
 
@@ -2782,7 +2782,7 @@ select {
   color: #ff0000;
 }
 
-.accord__button:after {
+.accord__button:after, .accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before, .accord__btn-btn:after {
   display: block;
   content: "";
 }
@@ -2801,19 +2801,15 @@ select {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 80px 0 40px;
+  padding: 5px 80px 5px 40px;
   position: relative;
   width: 100%;
   height: 68px;
   text-align: left;
+  line-height: normal;
   border: none;
   background: none;
   user-select: none;
-}
-
-.accord__button span {
-  display: block;
-  width: 100%;
 }
 
 .accord__button:after {
@@ -2824,17 +2820,65 @@ select {
   top: 50%;
   margin-top: -15px;
   opacity: .38;
-  transition: .5s;
+  transition: .21s;
 }
 
 .accord__button_active:after {
   transform: rotate(180deg);
 }
 
+.accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before {
+  width: 20px;
+  height: 2px;
+  background: #aaaaaa;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -1px 0 0 -10px;
+  border: none;
+}
+
+.accord__button_active .accord__btn-btn:after {
+  transform: rotate(-45deg);
+}
+
+.accord__button_active .accord__btn-btn:before {
+  transform: rotate(45deg);
+}
+
+.accord__btn-txt {
+  display: block;
+  width: 100%;
+}
+
+.accord__btn-btn {
+  display: block;
+  width: 53px;
+  height: 100%;
+  background: #212121;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 1px solid #aaaaaa;
+}
+
+.accord__btn-btn:after {
+  width: 10px;
+  height: 10px;
+  border: 2px solid transparent;
+  border-top-color: #aaaaaa;
+  border-left-color: #aaaaaa;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -11px 0 0 -7px;
+  transform: rotate(-135deg);
+}
+
 .accord__content {
   height: 0;
   overflow: hidden;
-  transition: .5s;
+  transition: .21s;
 }
 
 .more {
@@ -2845,7 +2889,7 @@ select {
 .more__content {
   height: 97px;
   overflow: hidden;
-  transition: .5s;
+  transition: .21s;
 }
 
 .more__btn {
@@ -2892,7 +2936,7 @@ select {
   width: 100%;
   visibility: hidden;
   opacity: 0;
-  transition: .5s;
+  transition: .21s;
 }
 
 .tab__item.active {
@@ -2917,7 +2961,7 @@ select {
   font-size: 14px;
   line-height: 1.5;
   color: #fff;
-  transition: .5s;
+  transition: .21s;
 }
 
 .alert_top {
@@ -2952,7 +2996,7 @@ select {
   left: -15%;
   top: 50%;
   margin-top: -1px;
-  transition: .5s;
+  transition: .21s;
 }
 
 .alert__close-btn:after {
@@ -3051,7 +3095,7 @@ select {
   border: none;
   -webkit-appearance: none;
   user-select: none;
-  transition: .5s;
+  transition: .21s;
 }
 
 .vk-btn:hover, .fb-btn:hover, .tw-btn:hover, .ok-btn:hover {
@@ -3118,7 +3162,7 @@ select {
   letter-spacing: 0.8px;
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  transition: .5s;
+  transition: .21s;
 }
 
 .foot-nav__a:hover {
@@ -3363,7 +3407,7 @@ ol.list li:before {
 .fadein {
   visibility: hidden;
   opacity: 0;
-  transition: .5s;
+  transition: .21s;
 }
 
 .fadein.animated {
