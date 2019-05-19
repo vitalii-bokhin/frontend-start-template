@@ -13,7 +13,7 @@
 		open: function (optH) {
 			this.fieldElem.classList.add('autocomplete_opened');
 			
-			const optionsHeight = optH || 117;
+			const optionsHeight = optH || 185;
 			
 			this.optionsElem.style.height = (optionsHeight + 2) +'px';
 			this.optionsElem.scrollTop = 0;
@@ -46,8 +46,14 @@
 					for (let i = 0; i < valuesData.length; i++) {
 						const valData = valuesData[i];
 						
-						if (valData[nameKey].match(preReg)) {
-							values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey].replace(preReg, '<span>$1</span>') +'</button></li>';
+						if (nameKey !== undefined) {
+							if (valData[nameKey].match(preReg)) {
+								values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey].replace(preReg, '<span>$1</span>') +'</button></li>';
+							}
+						} else {
+							if (valData.match(preReg)) {
+								values += '<li><button type="button" class="autocomplete__val">'+ valData.replace(preReg, '<span>$1</span>') +'</button></li>';
+							}
 						}
 					}
 					
@@ -68,7 +74,11 @@
 						for (let i = 0; i < valuesData.length; i++) {
 							const valData = valuesData[i];
 							
-							values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey] +'</button></li>';
+							if (nameKey !== undefined) {
+								values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey] +'</button></li>';
+							} else {
+								values += '<li><button type="button" class="autocomplete__val">'+ valData +'</button></li>';
+							}
 						}
 						
 						this.optionsElem.innerHTML = values;

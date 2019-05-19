@@ -13,6 +13,9 @@
 	&_nw{
 		flex-wrap: nowrap;
 	}
+	&_col-center{
+		justify-content: center;
+	}
 	&_col-middle{
 		align-items: center;
 	}
