@@ -1,3 +1,18 @@
+/* 
+var timer = new Timer({
+	elemId: 'timer', // Str element id,
+	format: 'extended', // default - false
+	stopwatch: true, // default - false
+	continue: false // default - true
+});
+
+timer.onStop = function () {
+	
+}
+
+timer.start(Int interval in seconds);
+*/
+
 ; var Timer;
 
 (function() {
@@ -6,8 +21,12 @@
 	Timer = function(options) {
 		var elem = document.getElementById(options.elemId);
 
+		options.continue = (options.continue !== undefined) ? options.continue : true;
+
 		function setCookie() {
-			document.cookie = 'lastTimestampValue-'+ options.elemId +'='+ Date.now() +'; expires='+ new Date(Date.now() + 259200000).toUTCString();
+			if (options.continue) {
+				document.cookie = 'lastTimestampValue-'+ options.elemId +'='+ Date.now() +'; expires='+ new Date(Date.now() + 259200000).toUTCString();
+			}
 		}
 
 		function output(time) {
@@ -91,6 +110,8 @@
 			} else {
 				setCookie();
 			}
+
+			if (this.interval !== undefined) return;
 			
 			this.interval = setInterval(() => {
 				if (options.stopwatch) {
