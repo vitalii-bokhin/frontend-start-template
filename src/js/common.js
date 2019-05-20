@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	
 	timer.onStop = function() {
-		Popup.message('#message-popup', 'Timer Stopped');
+		Popup.message('Timer Stopped');
 	}
 	
 	timer.start(50);
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	
 	timer2.onStop = function() {
-		Popup.message('#message-popup', 'Timer 2 Stopped');
+		Popup.message('Timer 2 Stopped');
 	}
 	
 	timer2.start(130);
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	
 	stopwatch.onStop = function() {
-		Popup.message('#message-popup', 'Stopwatch Stopped');
+		Popup.message('Stopwatch Stopped');
 	}
 	
 	stopwatch.start(0);
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	
 	stopwatch2.onStop = function() {
-		Popup.message('#message-popup', 'Stopwatch Stopped');
+		Popup.message('Stopwatch Stopped');
 	}
 	
 	stopwatch2.start(0);
@@ -332,7 +332,8 @@ document.addEventListener('DOMContentLoaded', function() {
 					var response = JSON.parse(response);
 					
 					if (response.status == 'sent') {
-						Popup.message('#message-popup', 'Форма отправлена');
+						Popup.message('Форма отправлена');
+						// Popup.message('Форма отправлена', '#message-popup', function() {});
 						
 						callback({clearForm: true, unlockSubmitButton: true});
 					} else {

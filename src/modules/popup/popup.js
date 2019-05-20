@@ -67,10 +67,11 @@ var Popup, MediaPopup;
 			return elem;
 		},
 
-		message: function(elementStr, msg, callback) {
-			var elem = this.open(elementStr, callback);
+		message: function(msg, elementStr, callback) {
+			const elemStr = elementStr || '#message-popup',
+			elem = this.open(elemStr, callback);
 
-			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message">'+ msg +'</div>';
+			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message m-0">'+ msg +'</div>';
 		},
 
 		close: function() {
