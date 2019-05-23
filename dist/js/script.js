@@ -870,10 +870,11 @@ var Popup, MediaPopup;
 			return elem;
 		},
 
-		message: function(elementStr, msg, callback) {
-			var elem = this.open(elementStr, callback);
+		message: function(msg, elementStr, callback) {
+			const elemStr = elementStr || '#message-popup',
+			elem = this.open(elemStr, callback);
 
-			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message">'+ msg +'</div>';
+			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message m-0">'+ msg +'</div>';
 		},
 
 		close: function() {
@@ -1747,7 +1748,7 @@ var Popup, MediaPopup;
 		open: function (optH) {
 			this.fieldElem.classList.add('autocomplete_opened');
 			
-			const optionsHeight = optH || 117;
+			const optionsHeight = optH || 185;
 			
 			this.optionsElem.style.height = (optionsHeight + 2) +'px';
 			this.optionsElem.scrollTop = 0;
@@ -1780,17 +1781,33 @@ var Popup, MediaPopup;
 					for (let i = 0; i < valuesData.length; i++) {
 						const valData = valuesData[i];
 						
-						if (valData[nameKey].match(preReg)) {
-							values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey].replace(preReg, '<span>$1</span>') +'</button></li>';
+						if (nameKey !== undefined) {
+							if (valData[nameKey].match(preReg)) {
+								values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey].replace(preReg, '<span>$1</span>') +'</button></li>';
+							}
+						} else {
+							if (valData.match(preReg)) {
+								values += '<li><button type="button" class="autocomplete__val">'+ valData.replace(preReg, '<span>$1</span>') +'</button></li>';
+							}
 						}
 					}
 					
 					if (values == '') {
-						values = '<li class="autocomplete__options-empty">'+ this.inputElem.getAttribute('data-nf-text') +'</li>';
+						if (this.inputElem.hasAttribute('data-other-value')) {
+							values = '<li class="autocomplete__options-other"><button type="button" class="autocomplete__val">'+ this.inputElem.getAttribute('data-other-value') +'</button></li>';
+
+							this.optionsElem.innerHTML = values;
+							
+							this.open(this.optionsElem.querySelector('.autocomplete__options-other').offsetHeight);
+						} else {
+							values = '<li class="autocomplete__options-empty">'+ this.inputElem.getAttribute('data-nf-text') +'</li>';
+							
+							this.optionsElem.innerHTML = values;
+							
+							this.open(this.optionsElem.querySelector('.autocomplete__options-empty').offsetHeight);
+						}
 						
-						this.optionsElem.innerHTML = values;
 						
-						this.open(this.optionsElem.querySelector('.autocomplete__options-empty').offsetHeight);
 					} else {
 						this.optionsElem.innerHTML = values;
 						this.open();
@@ -1802,7 +1819,11 @@ var Popup, MediaPopup;
 						for (let i = 0; i < valuesData.length; i++) {
 							const valData = valuesData[i];
 							
-							values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey] +'</button></li>';
+							if (nameKey !== undefined) {
+								values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey] +'</button></li>';
+							} else {
+								values += '<li><button type="button" class="autocomplete__val">'+ valData +'</button></li>';
+							}
 						}
 						
 						this.optionsElem.innerHTML = values;
@@ -3875,6 +3896,21 @@ Share.init(Str button class);
 		}
 	};
 })();
+/* 
+var timer = new Timer({
+	elemId: 'timer', // Str element id,
+	format: 'extended', // default - false
+	stopwatch: true, // default - false
+	continue: false // default - true
+});
+
+timer.onStop = function () {
+	
+}
+
+timer.start(Int interval in seconds);
+*/
+
 ; var Timer;
 
 (function() {
@@ -3883,8 +3919,12 @@ Share.init(Str button class);
 	Timer = function(options) {
 		var elem = document.getElementById(options.elemId);
 
+		options.continue = (options.continue !== undefined) ? options.continue : true;
+
 		function setCookie() {
-			document.cookie = 'lastTimestampValue-'+ options.elemId +'='+ Date.now() +'; expires='+ new Date(Date.now() + 259200000).toUTCString();
+			if (options.continue) {
+				document.cookie = 'lastTimestampValue-'+ options.elemId +'='+ Date.now() +'; expires='+ new Date(Date.now() + 259200000).toUTCString();
+			}
 		}
 
 		function output(time) {
@@ -3968,6 +4008,8 @@ Share.init(Str button class);
 			} else {
 				setCookie();
 			}
+
+			if (this.interval !== undefined) return;
 			
 			this.interval = setInterval(() => {
 				if (options.stopwatch) {

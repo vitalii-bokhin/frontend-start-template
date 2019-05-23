@@ -58,11 +58,21 @@
 					}
 					
 					if (values == '') {
-						values = '<li class="autocomplete__options-empty">'+ this.inputElem.getAttribute('data-nf-text') +'</li>';
+						if (this.inputElem.hasAttribute('data-other-value')) {
+							values = '<li class="autocomplete__options-other"><button type="button" class="autocomplete__val">'+ this.inputElem.getAttribute('data-other-value') +'</button></li>';
+
+							this.optionsElem.innerHTML = values;
+							
+							this.open(this.optionsElem.querySelector('.autocomplete__options-other').offsetHeight);
+						} else {
+							values = '<li class="autocomplete__options-empty">'+ this.inputElem.getAttribute('data-nf-text') +'</li>';
+							
+							this.optionsElem.innerHTML = values;
+							
+							this.open(this.optionsElem.querySelector('.autocomplete__options-empty').offsetHeight);
+						}
 						
-						this.optionsElem.innerHTML = values;
 						
-						this.open(this.optionsElem.querySelector('.autocomplete__options-empty').offsetHeight);
 					} else {
 						this.optionsElem.innerHTML = values;
 						this.open();

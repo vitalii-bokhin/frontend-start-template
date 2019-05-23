@@ -101,6 +101,10 @@ hr {
   flex-wrap: nowrap;
 }
 
+.row_col-center {
+  justify-content: center;
+}
+
 .row_col-middle {
   align-items: center;
 }

@@ -45,7 +45,7 @@
 					@extend %ab;
 					width: 20px;
 					height: 2px;
-					background: $wh;
+					background: $gy;
 					position: absolute;
 					left: 50%;
 					top: 50%;
@@ -74,14 +74,14 @@
 			position: absolute;
 			right: 0;
 			top: 0;
-			border: 1px solid $wh;
+			border: 1px solid $gy;
 			&:after{
 				@extend %ab;
 				width: 10px;
 				height: 10px;
 				border: 2px solid transparent;
-				border-top-color: $wh;
-				border-left-color: $wh;
+				border-top-color: $gy;
+				border-left-color: $gy;
 				position: absolute;
 				left: 50%;
 				top: 50%;
