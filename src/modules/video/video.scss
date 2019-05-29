@@ -11,6 +11,11 @@
 	
 	&__preview{
 		@extend %fwh;
+		overflow: hidden;
+		img{
+			@extend %fw-img;
+			min-height: 100%;
+		}
 	}
 
 	&__btn-play{

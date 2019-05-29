@@ -1540,6 +1540,11 @@ hr {
   top: 0;
 }
 
+.video__preview img {
+  width: 100%;
+  height: auto;
+}
+
 /*video*/
 .video {
   position: relative;
@@ -1550,6 +1555,14 @@ hr {
   content: "";
   width: 100%;
   padding-bottom: 56.25%;
+}
+
+.video__preview {
+  overflow: hidden;
+}
+
+.video__preview img {
+  min-height: 100%;
 }
 
 .video__btn-play {
@@ -3090,34 +3103,6 @@ select {
   content: "";
   width: 100%;
   padding-bottom: 100%;
-}
-
-.vk-btn, .fb-btn, .tw-btn, .ok-btn {
-  display: inline-block;
-  width: 35px;
-  height: 35px;
-  border: none;
-  -webkit-appearance: none;
-  user-select: none;
-  transition: .21s;
-}
-
-.vk-btn:hover, .fb-btn:hover, .tw-btn:hover, .ok-btn:hover {
-  opacity: .55;
-}
-
-.vk-btn {
-  width: 46px;
-  height: 37px;
-}
-
-.fb-btn {
-  width: 32px;
-  height: 36px;
-}
-
-.ok-btn {
-  width: 21px;
 }
 
 .footer {
