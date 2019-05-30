@@ -7,8 +7,7 @@
 /*video*/
 .video{
 	position: relative;
-	@include fixprop(560, 315);
-	
+	@include fixprop(780,435);
 	&__preview{
 		@extend %fwh;
 		overflow: hidden;
@@ -17,7 +16,6 @@
 			min-height: 100%;
 		}
 	}
-
 	&__btn-play{
 		display: block;
 		width: per(60,560);
@@ -33,13 +31,12 @@
 			opacity: .7;
 		}
 	}
-
 	&__frame{
 		@extend %fwh;
 		z-index: 3;
-		background: $bk;
+		background: #000000;
 		display: none;
-		&:before{
+		&::before{
 			@extend %ab;
 			width: per(60,560);
 			height: per(60,315);
@@ -50,21 +47,20 @@
 			margin: per(-30,560) 0 0 per(-30,560);
 			background: url("../images/loading.svg") no-repeat 50% 50%;
 			background-size: 100% 100%;
+		}
+		&:not(.video__frame_played)::before{
 			animation: video_loading_icon .9s infinite linear;
 		}
-
 		iframe{
 			@extend %fwh;
 			z-index: 2;
 			border: none;
 			background: none;
 			display: none;
-			
 			&.visible{
 				display: block;
 			}
 		}
-
 		&_visible{
 			display: block;
 		}
