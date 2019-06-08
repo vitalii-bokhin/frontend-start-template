@@ -313,7 +313,7 @@
 						selectedOption = opt;
 					}
 					
-					optionsList += '<li><button type="button" class="select__val'+ ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '') + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '') +'>'+ opt.innerHTML +'</button></li>';
+					optionsList += '<li><button type="button" tabindex="-1" class="select__val'+ ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '') + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '') +'>'+ opt.innerHTML +'</button></li>';
 				}
 				
 				const require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
@@ -369,6 +369,29 @@
 					this.selectVal(valElem);
 				}
 			});
+
+			document.addEventListener('focus', (e) => {
+				const inpElem = e.target.closest('.select__button');
+
+				if (inpElem) {
+					this.field = inpElem.closest('.select');
+					
+					if (!this.field.classList.contains('select_opened')) {
+						this.close();
+						this.open();
+					}
+				}
+			}, true);
+
+			document.addEventListener('blur', (e) => {
+				const inpElem = e.target.closest('.select__button');
+				
+				if (inpElem) {
+					setTimeout(() => {
+						this.close();
+					}, 321);
+				}
+			}, true);
 			
 			// keyboard events
 			document.addEventListener('keydown', (e) => {

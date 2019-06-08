@@ -96,7 +96,7 @@ var ValidateForm, Form;
 		name: function () {
 			var err = false;
 
-			if (!/^[a-zа-яё'-]{3,21}(\s[a-zа-яё'-]{3,21})?(\s[a-zа-яё'-]{3,21})?$/i.test(this.input.value)) {
+			if (!/^[a-zа-яё'-]{2,21}(\s[a-zа-яё'-]{2,21})?(\s[a-zа-яё'-]{2,21})?$/i.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {
@@ -148,7 +148,7 @@ var ValidateForm, Form;
 		email: function () {
 			var err = false;
 
-			if (!/^[a-z0-9]+[\w\-\.]*@[\w\-]{2,}\.[a-z]{2,6}$/i.test(this.input.value)) {
+			if (!/^[a-z0-9]+[\w\-\.]*@([\w\-]{2,}\.)+[a-z]{2,6}$/i.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {

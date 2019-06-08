@@ -1649,7 +1649,7 @@ var Popup, MediaPopup;
 						selectedOption = opt;
 					}
 					
-					optionsList += '<li><button type="button" class="select__val'+ ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '') + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '') +'>'+ opt.innerHTML +'</button></li>';
+					optionsList += '<li><button type="button" tabindex="-1" class="select__val'+ ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '') + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '') +'>'+ opt.innerHTML +'</button></li>';
 				}
 				
 				const require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
@@ -1705,6 +1705,29 @@ var Popup, MediaPopup;
 					this.selectVal(valElem);
 				}
 			});
+
+			document.addEventListener('focus', (e) => {
+				const inpElem = e.target.closest('.select__button');
+
+				if (inpElem) {
+					this.field = inpElem.closest('.select');
+					
+					if (!this.field.classList.contains('select_opened')) {
+						this.close();
+						this.open();
+					}
+				}
+			}, true);
+
+			document.addEventListener('blur', (e) => {
+				const inpElem = e.target.closest('.select__button');
+				
+				if (inpElem) {
+					setTimeout(() => {
+						this.close();
+					}, 321);
+				}
+			}, true);
 			
 			// keyboard events
 			document.addEventListener('keydown', (e) => {
@@ -2444,7 +2467,7 @@ var ValidateForm, Form;
 		name: function () {
 			var err = false;
 
-			if (!/^[a-zа-яё'-]{3,21}(\s[a-zа-яё'-]{3,21})?(\s[a-zа-яё'-]{3,21})?$/i.test(this.input.value)) {
+			if (!/^[a-zа-яё'-]{2,21}(\s[a-zа-яё'-]{2,21})?(\s[a-zа-яё'-]{2,21})?$/i.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {
@@ -2496,7 +2519,7 @@ var ValidateForm, Form;
 		email: function () {
 			var err = false;
 
-			if (!/^[a-z0-9]+[\w\-\.]*@[\w\-]{2,}\.[a-z]{2,6}$/i.test(this.input.value)) {
+			if (!/^[a-z0-9]+[\w\-\.]*@([\w\-]{2,}\.)+[a-z]{2,6}$/i.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {
@@ -3425,112 +3448,162 @@ new Alert({
 	}
 })();
 /*
-tooltip.init({
+ToolTip.init({
 	element: '.js-tooltip'
 });
+
+ToolTip.onShow = function(elem) {
+	
+}
 */
 
 ; var ToolTip;
 
-(function() {
+(function () {
 	'use strict';
-
+	
 	ToolTip = {
 		tooltipDiv: null,
 		tooltipClass: null,
-		canBeHidden: true,
-
-		show: function(elem) {
-			this.tooltipDiv.innerHTML = elem.getAttribute('data-tooltip');
-
+		canBeHidden: false,
+		position: {},
+		onShow: null,
+		opt: null,
+		
+		show: function (elem) {
+			this.tooltipDiv.innerHTML = (elem.hasAttribute('data-tooltip')) ? elem.getAttribute('data-tooltip').replace(/\[(\w+)\](.*)\[\:(\w+)\]/gi, '<$1>$2</$3>') : '';
+			
 			this.tooltipClass = elem.getAttribute('data-tooltip-class');
-
+			
+			if (window.innerWidth < 750) {
+				this.position.X = 'center';
+			} else if (elem.hasAttribute('data-tooltip-pos-x')) {
+				this.position.X = elem.getAttribute('data-tooltip-pos-x');
+			}
+			
+			if (elem.hasAttribute('data-tooltip-pos-y')) {
+				this.position.Y = elem.getAttribute('data-tooltip-pos-y');
+			}
+			
 			if (this.tooltipClass) {
 				this.tooltipDiv.classList.add(this.tooltipClass);
 			}
-
-			var bubleStyle = this.tooltipDiv.style, 
+			
+			var bubleStyle = this.tooltipDiv.style,
+			elemRect = elem.getBoundingClientRect(),
 			tooltipMinWidth = 100,
-			tooltipPotentWidth = window.innerWidth - (elem.getBoundingClientRect().left + elem.offsetWidth) - 10,
-			coordX = elem.getBoundingClientRect().left + elem.offsetWidth;
-
-			if (tooltipPotentWidth < tooltipMinWidth) {
-				tooltipPotentWidth = tooltipMinWidth;
-
-				coordX = window.innerWidth - tooltipMinWidth - 10;
+			coordX,
+			coordY;
+			
+			switch (this.position.X) {
+				case 'center':
+				coordX = (elemRect.left + (elem.offsetWidth / 2)) - (this.tooltipDiv.offsetWidth / 2);
+				bubleStyle.left = coordX + 'px';
+				bubleStyle.marginLeft = '0';
+				bubleStyle.marginRight = '0';
+				break;
+				
+				case 'leftIn':
+				coordX = elemRect.left;
+				bubleStyle.left = coordX + 'px';
+				break;
+				
+				case 'rightIn':
+				coordX = window.innerWidth - elemRect.right;
+				bubleStyle.right = coordX + 'px';
+				break;
+				
+				default:
+				coordX = elemRect.right;
+				bubleStyle.left = coordX + 'px';
+				break;
 			}
-
-			bubleStyle.width = tooltipPotentWidth +'px';
-			bubleStyle.left = coordX +'px';
-
-			var coordY = elem.getBoundingClientRect().top + pageYOffset - this.tooltipDiv.offsetHeight;
-
-			bubleStyle.top = coordY +'px';
-
+			
+			// if (tooltipPotentWidth < tooltipMinWidth) {
+			// 	tooltipPotentWidth = tooltipMinWidth;
+			
+			// 	coordX = window.innerWidth - tooltipMinWidth - 10;
+			// }
+			
+			switch (this.position.Y) {
+				case 'bottomIn':
+				bubleStyle.top = (elemRect.bottom + window.pageYOffset - this.tooltipDiv.offsetHeight) + 'px';
+				break;
+				
+				case 'bottomOut':
+				bubleStyle.top = (elemRect.bottom + window.pageYOffset) + 'px';
+				break;
+				
+				default:
+				bubleStyle.top = (elemRect.top + window.pageYOffset - this.tooltipDiv.offsetHeight) + 'px';
+				break;
+			}
+			
+			if (this.onShow) {
+				this.onShow(elem);
+			}
+			
 			this.tooltipDiv.classList.add('tooltip_visible');
+			
+			this.canBeHidden = true;
+			
+			if (document.ontouchstart !== undefined) {
+				document.addEventListener('touchstart', this.mouseOut.bind(this));
+			}
 		},
-
-		hide: function() {
+		
+		hide: function () {
 			this.tooltipDiv.classList.remove('tooltip_visible');
 			this.tooltipDiv.removeAttribute('style');
 			this.tooltipDiv.innerHTML = '';
-
+			this.position = {};
+			
 			if (this.tooltipClass) {
 				this.tooltipDiv.classList.remove(this.tooltipClass);
-
+				
 				this.tooltipClass = null;
 			}
 		},
-
-		init: function(opt) {
-			var mouseOver, mouseOut;
-
-			mouseOut = (e) => {
-				setTimeout(() => {
-					if (document.ontouchstart !== undefined) {
-						this.hide();
-
-						document.removeEventListener('touchstart', mouseOut);
-					} else {
-						if ((e.target.closest(opt.element) && this.canBeHidden) || e.target.closest('.tooltip')) {
-							this.hide();
-
-							this.canBeHidden = true;
-						}
-					}
-				}, 21);
-			}
-
-			mouseOver = (e) => {
-				var elem = e.target.closest(opt.element);
+		
+		mouseOut: function (e) {
+			if (this.canBeHidden && !e.target.closest(this.opt.element) && !e.target.closest('.tooltip')) {
+				console.log('ts1');
+				this.hide();
+				this.canBeHidden = false;
 				
-				if (!elem) return;
+				document.removeEventListener('touchstart', this.mouseOut);
+			}
+		},
+		
+		init: function (opt) {
+			this.opt = opt || {};
 
-				if (document.ontouchstart !== undefined) {
-					
-					this.show(elem);
-
-					document.addEventListener('touchstart', mouseOut);
+			let mouseOver = (e) => {
+				if (this.canBeHidden) {
+					if (!e.target.closest(opt.element) && !e.target.closest('.tooltip')) {
+						this.hide();
+						
+						this.canBeHidden = false;
+					}
 				} else {
+					const elem = e.target.closest(opt.element);
+					
 					if (elem) {
 						this.show(elem);
-					} else if (e.target.closest('.tooltip')) {
-						this.canBeHidden = false;
 					}
 				}
 			}
-
+			
 			if (document.ontouchstart !== undefined) {
 				document.addEventListener('click', mouseOver);
 			} else {
 				document.addEventListener('mouseover', mouseOver);
-				document.addEventListener('mouseout', mouseOut);
 			}
-
+			
 			//add tooltip to DOM
 			this.tooltipDiv = document.createElement('div');
 			this.tooltipDiv.className = 'tooltip';
-
+			
 			document.body.appendChild(this.tooltipDiv);
 		}
 	};
