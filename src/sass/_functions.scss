@@ -14,6 +14,11 @@ $base-font-size: 16;
     @return $px * (100 / $base) * 1%;
 }
 
+//vw
+@function vw($px, $base) {
+    @return $px * (100 / $base) * 1vw;
+}
+
 //vh
 @function vh($px, $base) {
     @return $px * (100 / $base) * 1vh;

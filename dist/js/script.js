@@ -3956,8 +3956,6 @@ Share.init(Str button class);
 ;(function () {
 	'use strict';
 
-	var encodedHref = encodeURIComponent(window.location.href);
-
 	Share = {
 		network: function network(elem) {
 			var net = elem.getAttribute('data-network');
@@ -3966,15 +3964,18 @@ Share.init(Str button class);
 				return;
 			}
 
-			var url;
+			var encodedHref = elem.hasAttribute('data-share-url') ? encodeURIComponent(elem.getAttribute('data-share-url')) : encodeURIComponent(window.location.href),
+			    encodedImageUrl = elem.hasAttribute('data-share-img') ? encodeURIComponent(elem.getAttribute('data-share-img')) : null,
+			    title = elem.hasAttribute('data-share-tit') ? encodeURIComponent(elem.getAttribute('data-share-tit')) : null,
+			    url = void 0;
 
 			switch (net) {
 				case 'vk':
-					url = 'http://vkontakte.ru/share.php?url=' + encodedHref;
+					url = 'https://vkontakte.ru/share.php?url=' + encodedHref + (encodedImageUrl ? '&image=' + encodedImageUrl : '') + (title ? '&title=' + title : '');
 					break;
 
 				case 'fb':
-					url = 'http://www.facebook.com/sharer.php?u=' + encodedHref;
+					url = 'https://www.facebook.com/sharer.php?u=' + encodedHref;
 					break;
 
 				case 'tw':
@@ -3982,7 +3983,7 @@ Share.init(Str button class);
 					break;
 
 				case 'ok':
-					url = 'https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=' + encodedHref;
+					url = 'https://connect.ok.ru/offer?url=' + encodedHref + (encodedImageUrl ? '&imageUrl=' + encodedImageUrl : '') + (title ? '&title=' + title : '');
 					break;
 			}
 

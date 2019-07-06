@@ -7,16 +7,12 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	letter-spacing: 1px;
-	color: #FFF;
-	padding: 0 25px;
-	height: 43px;
 	line-height: normal;
 	text-align: center;
 	text-decoration: none;
 	vertical-align: bottom;
 	border: none;
-	background: $bk;
+	background: none;
 	user-select: none;
 	position: relative;
 	transition: .21s;
@@ -37,13 +33,22 @@
 .btn{
 	@extend %btn;
 	width: 150px;
+	height: 43px;
+	color: #FFF;
+	background: $bk;
+	padding: 0 15px;
+	letter-spacing: 1px;
 }
 
 //arrow btn
 .arrow-btn{
 	@extend %btn;
 	padding-right: 43px;
-
+	height: 43px;
+	color: #FFF;
+	background: $bk;
+	padding: 0 15px;
+	letter-spacing: 1px;
 	&:after{
 		@extend %btn-icon;
 		width: 15px;
@@ -58,7 +63,11 @@
 	@extend %btn;
 	padding-left: 55px;
 	border-radius: 32px;
-	
+	height: 43px;
+	color: #FFF;
+	background: $bk;
+	padding: 0 15px;
+	letter-spacing: 1px;
 	&:after{
 		@extend %btn-icon;
 		width: 32px;
@@ -140,22 +149,22 @@
 
 /* link */
 %link{
+	line-height: normal;
 	text-decoration: none;
-	border-bottom: 1px solid;
 	transition: .21s;
-	&:hover{
-		border-bottom-color: transparent;
-	}
 }
 .link{
 	@extend %link;
 	color: $be;
-	border-bottom-color: $be;
+	border-bottom: 1px solid $be;
+	&:hover{
+		border-bottom-color: transparent;
+	}
 }
 .green-link{
 	@extend %link;
 	color: $gn;
-	border-bottom-color: $gn;
+	border-bottom: 1px solid $gn;
 	&_dash{
 		border-bottom-style: dashed;
 	}
@@ -170,29 +179,30 @@
 /* icon link */
 %icon-link{
 	display: inline-block;
+	line-height: normal;
 	position: relative;
 	text-decoration: none;
-	border-bottom: 1px solid $be;
-	margin-left: 48px;
 	transition: .21s;
-	&:hover{
-		border-bottom-color: transparent;
-	}
-	&:before{
+	&::before{
 		display: block;
 		content: "";
 		position: absolute;
-		left: -48px;
 		top: 50%;
 	}
 }
 
 .icon-link{
 	@extend %icon-link;
-	&:before{
+	border-bottom: 1px solid $be;
+	margin-left: 48px;
+	&::before{
 		width: 35px;
 		height: 30px;
 		margin-top: -15px;
+		left: -48px;
+	}
+	&:hover{
+		border-bottom-color: transparent;
 	}
 }
 
