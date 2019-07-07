@@ -1,0 +1,28 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+/* screens */
+.screen{
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	visibility: hidden;
+	opacity: 0;
+	padding-top: 100px;
+	&_visible{
+		visibility: visible;
+	}
+	&_active{
+		opacity: 1;
+	}
+	&-wrap{
+		position: relative;
+		padding: 0;
+		overflow: hidden;
+		transition: height .5s;
+	}
+}

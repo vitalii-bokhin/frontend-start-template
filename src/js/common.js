@@ -102,6 +102,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		screen: '.fsscroll__screen',
 		duration: 700
 	});
+
+	// screens
+	Screens.init({
+		container: '.main',
+		duration: 700, // default - 1000
+		menuCurrentClass: 'current' // default - 'menu__item_current'
+	});
 	
 	// smooth scroll
 	// ScrollSmooth.init();
