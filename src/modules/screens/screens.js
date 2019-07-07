@@ -61,8 +61,6 @@ Screens.init({
 
 					nextScreenElem.classList.add('screen_active');
 
-					this.contElem.style.height = nextScreenElem.getAttribute('data-height') + 'px';
-
 					this.scrolling = false;
 				}, 21);
 			});
@@ -102,17 +100,17 @@ Screens.init({
 			this.options = options;
 			this.contElem = contElem;
 
-			const screenElements = contElem.querySelectorAll('.screen');
+			// const screenElements = contElem.querySelectorAll('.screen');
 
-			for (let i = 0; i < screenElements.length; i++) {
-				const scrElem = screenElements[i];
+			// for (let i = 0; i < screenElements.length; i++) {
+			// 	const scrElem = screenElements[i];
 
-				scrElem.setAttribute('data-height', scrElem.scrollHeight);
+			// 	scrElem.setAttribute('data-height', scrElem.scrollHeight);
 
-				if (!i) {
-					contElem.style.height = scrElem.scrollHeight + 'px';
-				}
-			}
+			// 	if (!i) {
+			// 		contElem.style.height = scrElem.scrollHeight + 'px';
+			// 	}
+			// }
 
 			if ('ontouchstart' in document) {
 				const _this = this;
