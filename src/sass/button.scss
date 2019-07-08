@@ -81,14 +81,23 @@
 %icon-btn{
 	display: inline-block;
 	background: none;
+	border: none;
 	-webkit-appearance: none;
+	transition: .21s;
+	position: relative;
+}
+
+.v-btn,
+.f-btn,
+.o-btn,
+.t-btn{
+	@extend %icon-btn;
 	width: 94px;
 	height: 94px;
 	border: 7px solid #fff;
 	border-radius: 50%;
-	transition: .21s;
-	position: relative;
 	&::after{
+		@extend %btn-icon;
 		left: 50%;
 	}
 	&:hover{
@@ -97,36 +106,28 @@
 }
 
 .v-btn{
-	@extend %icon-btn;
 	&::after{
-		@extend %btn-icon;
 		width: per(53,80);
 		height: per(32,80);
 		margin: per(-14,80) 0 0 per(-28,80);
 	}
 }
 .f-btn{
-	@extend %icon-btn;
 	&::after{
-		@extend %btn-icon;
 		width: per(25,80);
 		height: per(47,80);
 		margin: per(-23,80) 0 0 per(-13,80);
 	}
 }
 .o-btn{
-	@extend %icon-btn;
 	&::after{
-		@extend %btn-icon;
 		width: per(31,80);
 		height: per(50,80);
 		margin: per(-25,80) 0 0 per(-15,80);
 	}
 }
 .t-btn{
-	@extend %icon-btn;
 	&::after{
-		@extend %btn-icon;
 		width: per(53,80);
 		height: per(32,80);
 		margin: per(-14,80) 0 0 per(-28,80);
