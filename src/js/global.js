@@ -106,10 +106,16 @@
 	ajax = function(options) {
 		const xhr = new XMLHttpRequest();
 		
-		xhr.open('POST', options.url);
-		
-		if (typeof options.send == 'string') {
-			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		if (options.method == 'GET') {
+			xhr.open('GET', options.url);
+			
+			options.send = null;
+		} else {
+			xhr.open('POST', options.url);
+			
+			if (typeof options.send == 'string') {
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			}
 		}
 		
 		xhr.onreadystatechange = function() {
