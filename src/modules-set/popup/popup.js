@@ -52,6 +52,8 @@ var Popup, MediaPopup;
 			
 			elemParent.classList.add('popup_visible');
 
+			elemParent.scrollTop = 0;
+
 			elem.classList.add('popup__window_visible');
 
 			if (callback) {

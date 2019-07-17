@@ -60,7 +60,8 @@ dist_path = 'dist';
 let assets = {
 	form: ['src/assets/maskinput.min.js', 'src/assets/jquery-3.1.1.min.js'],
 	slickslider: ['src/assets/slick.min.js', 'src/assets/jquery-3.1.1.min.js'],
-	scrollpane: ['src/assets/scrollpane.min.js', 'src/assets/jquery-3.1.1.min.js', 'src/assets/mousewheel.js']
+	scrollpane: ['src/assets/scrollpane.min.js', 'src/assets/jquery-3.1.1.min.js', 'src/assets/mousewheel.js'],
+	screens: ['src/assets/jquery.touchSwipe.min.js', 'src/assets/jquery-3.1.1.min.js']
 },
 jsAssets = [];
 

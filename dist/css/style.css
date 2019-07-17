@@ -806,7 +806,10 @@ hr {
   width: 100%;
 }
 
-.arrow-btn:after, .plus-btn:after, .v-btn::after, .f-btn::after, .o-btn::after, .t-btn::after {
+.arrow-btn:after, .plus-btn:after, .v-btn::after,
+.f-btn::after,
+.o-btn::after,
+.t-btn::after {
   display: block;
   content: "";
   position: absolute;
@@ -856,23 +859,39 @@ hr {
 }
 
 /* icon button */
-.v-btn, .f-btn, .o-btn, .t-btn {
+.v-btn,
+.f-btn,
+.o-btn,
+.t-btn {
   display: inline-block;
   background: none;
+  border: none;
   -webkit-appearance: none;
-  width: 94px;
-  height: 94px;
-  border: 7px solid #fff;
-  border-radius: 50%;
   transition: .21s;
   position: relative;
 }
 
-.v-btn::after, .f-btn::after, .o-btn::after, .t-btn::after {
+.v-btn,
+.f-btn,
+.o-btn,
+.t-btn {
+  width: 94px;
+  height: 94px;
+  border: 7px solid #fff;
+  border-radius: 50%;
+}
+
+.v-btn::after,
+.f-btn::after,
+.o-btn::after,
+.t-btn::after {
   left: 50%;
 }
 
-.v-btn:hover, .f-btn:hover, .o-btn:hover, .t-btn:hover {
+.v-btn:hover,
+.f-btn:hover,
+.o-btn:hover,
+.t-btn:hover {
   opacity: .75;
 }
 
@@ -1477,7 +1496,7 @@ hr {
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 0;
+  height: 100%;
   visibility: hidden;
   opacity: 0;
   padding-top: 100px;
@@ -1488,14 +1507,13 @@ hr {
 }
 
 .screen_active {
+  position: relative;
   opacity: 1;
 }
 
 .screen-wrap {
   position: relative;
-  padding: 0;
-  overflow: hidden;
-  transition: height .5s;
+  padding: 0 !important;
 }
 
 .toggle:before, .toggle:after {

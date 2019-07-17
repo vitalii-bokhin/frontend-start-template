@@ -9,7 +9,7 @@
 	position: absolute;
 	left: 0;
 	top: 0;
-	bottom: 0;
+	height: 100%;
 	visibility: hidden;
 	opacity: 0;
 	padding-top: 100px;
@@ -17,12 +17,11 @@
 		visibility: visible;
 	}
 	&_active{
+		position: relative;
 		opacity: 1;
 	}
 	&-wrap{
 		position: relative;
 		padding: 0;
-		overflow: hidden;
-		transition: height .5s;
 	}
 }

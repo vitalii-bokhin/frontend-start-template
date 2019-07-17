@@ -25,6 +25,16 @@ var Video;
 			
 			elem.nextElementSibling.appendChild(iFrame);
 		},
+
+		stop: function() {
+			const frameBlockElem = document.querySelector('.video__frame');
+			
+			if (!frameBlockElem) return;
+
+			frameBlockElem.innerHTML = '';
+			frameBlockElem.classList.remove('video__frame_visible');
+			frameBlockElem.classList.remove('video__frame_played');
+		},
 		
 		init: function(elementStr) {
 			if (!document.querySelectorAll('.video').length) return;
