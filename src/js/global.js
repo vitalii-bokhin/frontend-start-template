@@ -1,28 +1,28 @@
 // global variables
 ; var browser, elemIsHidden, ajax, animate;
 
-(function() {
+(function () {
 	'use strict';
-	
+
 	// Get useragent
 	document.documentElement.setAttribute('data-useragent', navigator.userAgent.toLowerCase());
-	
+
 	// Browser identify
-	browser = (function(userAgent) {
+	browser = (function (userAgent) {
 		userAgent = userAgent.toLowerCase();
-		
+
 		if (/(msie|rv:11\.0)/.test(userAgent)) {
 			return 'ie';
 		} else if (/firefox/.test(userAgent)) {
 			return 'ff';
 		}
 	})(navigator.userAgent);
-	
+
 	// Add support CustomEvent constructor for IE
 	try {
 		new CustomEvent("IE has CustomEvent, but doesn't support constructor");
 	} catch (e) {
-		window.CustomEvent = function(event, params) {
+		window.CustomEvent = function (event, params) {
 			var evt = document.createEvent("CustomEvent");
 
 			params = params || {
@@ -32,27 +32,27 @@
 			};
 
 			evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-			
+
 			return evt;
 		}
-		
+
 		CustomEvent.prototype = Object.create(window.Event.prototype);
 	}
-	
+
 	// Window Resized Event
 	const winResizedEvent = new CustomEvent('winResized'),
-	winWidthResizedEvent = new CustomEvent('winWidthResized');
+		winWidthResizedEvent = new CustomEvent('winWidthResized');
 
 	let rsz = true,
-	beginWidth = window.innerWidth;
-	
-	window.addEventListener('resize', function() {
+		beginWidth = window.innerWidth;
+
+	window.addEventListener('resize', function () {
 		if (rsz) {
 			rsz = false;
-			
-			setTimeout(function() {
+
+			setTimeout(function () {
 				window.dispatchEvent(winResizedEvent);
-				
+
 				if (beginWidth != window.innerWidth) {
 					window.dispatchEvent(winWidthResizedEvent);
 
@@ -63,21 +63,21 @@
 			}, 1021);
 		}
 	});
-	
+
 	// Closest polyfill
 	if (!Element.prototype.closest) {
-		(function(ElProto) {
+		(function (ElProto) {
 			ElProto.matches = ElProto.matches || ElProto.mozMatchesSelector || ElProto.msMatchesSelector || ElProto.oMatchesSelector || ElProto.webkitMatchesSelector;
-			
+
 			ElProto.closest = ElProto.closest || function closest(selector) {
 				if (!this) {
 					return null;
 				}
-				
+
 				if (this.matches(selector)) {
 					return this;
 				}
-				
+
 				if (!this.parentElement) {
 					return null;
 				} else {
@@ -86,65 +86,69 @@
 			};
 		})(Element.prototype);
 	}
-	
+
 	// Check element for hidden
-	elemIsHidden = function(elem) {
+	elemIsHidden = function (elem) {
 		while (elem) {
 			if (!elem) break;
-			
+
 			const compStyle = getComputedStyle(elem);
-			
+
 			if (compStyle.display == 'none' || compStyle.visibility == 'hidden' || compStyle.opacity == '0') return true;
-			
+
 			elem = elem.parentElement;
 		}
-		
+
 		return false;
 	}
-	
+
 	// Ajax
-	ajax = function(options) {
+	ajax = function (options) {
 		const xhr = new XMLHttpRequest();
-		
+
 		if (options.method == 'GET') {
 			xhr.open('GET', options.url);
-			
+
 			options.send = null;
 		} else {
 			xhr.open('POST', options.url);
-			
+
 			if (typeof options.send == 'string') {
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			}
 		}
-		
-		xhr.onreadystatechange = function() {
+
+		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4 && xhr.status == 200) {
-				options.success(xhr.response);
+				if (options.success) {
+					options.success(xhr.response);
+				}
 			} else if (xhr.readyState == 4 && xhr.status != 200) {
-				options.error(xhr.response);
+				if (options.error) {
+					options.error(xhr.response);
+				}
 			}
 		}
-		
+
 		xhr.send(options.send);
 	}
-	
+
 	/*
 	Animation
 	animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
 	*/
-	animate = function(draw, duration, ease, complete) {
+	animate = function (draw, duration, ease, complete) {
 		const start = performance.now();
-		
+
 		requestAnimationFrame(function anim(time) {
 			let timeFraction = (time - start) / duration;
-			
+
 			if (timeFraction > 1) {
 				timeFraction = 1;
 			}
-			
+
 			draw((ease) ? easing(timeFraction, ease) : timeFraction);
-			
+
 			if (timeFraction < 1) {
 				requestAnimationFrame(anim);
 			} else {
@@ -154,24 +158,24 @@
 			}
 		});
 	}
-	
+
 	function easing(timeFraction, ease) {
 		switch (ease) {
 			case 'easeInQuad':
-			return quad(timeFraction);
-			
+				return quad(timeFraction);
+
 			case 'easeOutQuad':
-			return 1 - quad(1 - timeFraction);
-			
+				return 1 - quad(1 - timeFraction);
+
 			case 'easeInOutQuad':
-			if (timeFraction <= 0.5) {
-				return quad(2 * timeFraction) / 2;
-			} else {
-				return (2 - quad(2 * (1 - timeFraction))) / 2;
-			}
+				if (timeFraction <= 0.5) {
+					return quad(2 * timeFraction) / 2;
+				} else {
+					return (2 - quad(2 * (1 - timeFraction))) / 2;
+				}
 		}
 	}
-	
+
 	function quad(timeFraction) {
 		return Math.pow(timeFraction, 2)
 	}
