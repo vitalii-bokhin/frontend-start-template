@@ -40,15 +40,20 @@ ToolTip.onShow = function(elem) {
 				this.tooltipDiv.classList.add(this.tooltipClass);
 			}
 			
-			var bubleStyle = this.tooltipDiv.style,
+			let bubleStyle = this.tooltipDiv.style,
 			elemRect = elem.getBoundingClientRect(),
-			tooltipMinWidth = 100,
+			winW = window.innerWidth,
 			coordX,
 			coordY;
 			
 			switch (this.position.X) {
 				case 'center':
 				coordX = (elemRect.left + (elem.offsetWidth / 2)) - (this.tooltipDiv.offsetWidth / 2);
+				
+				if (coordX < 10) {
+					coordX = 10;
+				}
+				
 				bubleStyle.left = coordX + 'px';
 				bubleStyle.marginLeft = '0';
 				bubleStyle.marginRight = '0';
@@ -68,6 +73,10 @@ ToolTip.onShow = function(elem) {
 				coordX = elemRect.right;
 				bubleStyle.left = coordX + 'px';
 				break;
+			}
+			
+			if ((this.tooltipDiv.offsetWidth + coordX) > winW) {
+				bubleStyle.width = (winW - coordX - 10) + 'px';
 			}
 			
 			// if (tooltipPotentWidth < tooltipMinWidth) {
@@ -118,8 +127,8 @@ ToolTip.onShow = function(elem) {
 		
 		mouseOut: function (e) {
 			if (this.canBeHidden && !e.target.closest(this.opt.element) && !e.target.closest('.tooltip')) {
-				console.log('ts1');
 				this.hide();
+				
 				this.canBeHidden = false;
 				
 				document.removeEventListener('touchstart', this.mouseOut);
@@ -128,7 +137,7 @@ ToolTip.onShow = function(elem) {
 		
 		init: function (opt) {
 			this.opt = opt || {};
-
+			
 			let mouseOver = (e) => {
 				if (this.canBeHidden) {
 					if (!e.target.closest(opt.element) && !e.target.closest('.tooltip')) {
@@ -145,8 +154,17 @@ ToolTip.onShow = function(elem) {
 				}
 			}
 			
+			let mouseClick = (e) => {
+				const elem = e.target.closest(opt.element);
+				
+				if (elem) {
+					this.hide();
+					this.show(elem);
+				}
+			}
+			
 			if (document.ontouchstart !== undefined) {
-				document.addEventListener('click', mouseOver);
+				document.addEventListener('click', mouseClick);
 			} else {
 				document.addEventListener('mouseover', mouseOver);
 			}

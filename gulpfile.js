@@ -14,6 +14,7 @@ svgSprite = require('gulp-svg-sprite');
 
 // modules
 const modulesOn = [
+	'global',
 	'header',
 	'header/user',
 	'header/menu',
@@ -49,6 +50,7 @@ const modulesOn = [
 	'footer',
 	'getcontentajax',
 	'dragline',
+	'animation',
 	'webgl',
 	// 'mouseparallax',
 	// 'floatslider',
@@ -72,8 +74,8 @@ modulesOn.forEach(function(val) {
 });
 
 // src
-let cssSrc = ['src/sass/font.scss', 'src/sass/reset.scss', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss', 'src/sass/icon.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/animation.scss', 'src/sass/decor.scss', 'src/sass/class.scss'),
-jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'), 'src/js/animation.js');
+let cssSrc = ['src/sass/font.scss', 'src/sass/reset.scss', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss', 'src/sass/icon.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/decor.scss', 'src/sass/class.scss'),
+jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));
 
 // DEV MODE
 // copy module folders
@@ -107,7 +109,7 @@ gulp.task('dev', ['clean_js_folder'], function() {
 	JS(jsSrc);
 	
 	// copy common script
-	gulp.src(['!src/js/global.js', '!src/js/animation.js', 'src/js/*.js'])
+	gulp.src('src/js/*.js')
 	.pipe(gulp.dest(dist_path +'/js'))
 	.pipe(notify('Common script had copied!'));
 	
@@ -122,12 +124,12 @@ gulp.task('dev', ['clean_js_folder'], function() {
 	});
 	
 	// watch js
-	gulp.watch(['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'), 'src/js/animation.js'), function() {
+	gulp.watch(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'), function() {
 		JS(jsSrc);
 	});
 	
-	gulp.watch(['!src/js/global.js', '!src/js/animation.js', 'src/js/*.js'], function() {
-		gulp.src(['!src/js/global.js', '!src/js/animation.js', 'src/js/*.js'])
+	gulp.watch('src/js/*.js', function() {
+		gulp.src('src/js/*.js')
 		.pipe(gulp.dest(dist_path +'/js'))
 		.pipe(notify('Script had Refreshed!'));
 	});
@@ -178,7 +180,7 @@ gulp.task('dist', function() {
 	
 	JS(jsSrc, true);
 	
-	gulp.src(['!src/js/global.js', '!src/js/animation.js', 'src/js/*.js'])
+	gulp.src('src/js/*.js')
 	.pipe(babel())
 	.on('error', notify.onError(function(err) { return err; }))
 	.pipe(gulp.dest(dist_path +'/js'))

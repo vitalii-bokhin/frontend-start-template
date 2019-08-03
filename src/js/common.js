@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	// video
 	Video.init('.video__btn-play');
-	
+	 
 	// fullscreen scroll
 	FsScroll.init({
 		container: '.fsscroll',

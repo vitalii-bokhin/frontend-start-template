@@ -1,0 +1,14 @@
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
+
+.fadein{
+   visibility: hidden;
+   opacity: 0;
+   transition: .21s;
+   &.animated{
+      visibility: visible;
+      opacity: 1;
+   }
+}

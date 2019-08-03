@@ -96,7 +96,7 @@ var ValidateForm, Form;
 		name: function () {
 			var err = false;
 
-			if (!/^[a-zа-яё'-]{2,21}(\s[a-zа-яё'-]{2,21})?(\s[a-zа-яё'-]{2,21})?$/i.test(this.input.value)) {
+			if (!/^[a-zа-яё'\s-]{2,21}(\s[a-zа-яё'\s-]{2,21})?(\s[a-zа-яё'\s-]{2,21})?$/i.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {
@@ -644,7 +644,9 @@ var ValidateForm, Form;
 			const ret = this.onSubmit(formElem, (obj) => {
 				obj = obj || {};
 
-				this.actSubmitBtn(obj.unlockSubmitButton, formElem);
+				setTimeout(() => {
+					this.actSubmitBtn(obj.unlockSubmitButton, formElem);
+				}, 321);
 
 				formElem.classList.remove('form_sending');
 
@@ -654,9 +656,7 @@ var ValidateForm, Form;
 			});
 
 			if (ret === false) {
-				if (e) {
-					e.preventDefault();
-				}
+				if (e) e.preventDefault();
 
 				this.actSubmitBtn(false, formElem);
 			} else {

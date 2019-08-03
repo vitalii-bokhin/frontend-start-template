@@ -37,6 +37,10 @@
 			border-left-color: $rd;
 		}
 	}
+	&_visible{
+		visibility: visible;
+		opacity: 1;
+	}
 	@media(max-width: 750px){
 		font-size: 13px;
 	}

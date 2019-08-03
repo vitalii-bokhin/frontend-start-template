@@ -1,7 +1,7 @@
-@import "variables";
-@import "functions";
-@import "extends";
-@import "mixins";
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/extends";
+@import "../../sass/mixins";
 
 .fadein{
    visibility: hidden;
