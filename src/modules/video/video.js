@@ -27,7 +27,7 @@ var Video;
 		},
 
 		stop: function() {
-			const frameBlockElem = document.querySelector('.video__frame');
+			const frameBlockElem = document.querySelector('.video__frame_played');
 			
 			if (!frameBlockElem) return;
 

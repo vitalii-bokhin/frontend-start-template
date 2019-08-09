@@ -1,6 +1,6 @@
 var Popup, MediaPopup;
 
-(function() {
+(function () {
 	'use strict';
 
 	//popup core
@@ -11,7 +11,7 @@ var Popup, MediaPopup;
 		onOpen: null,
 		headerSelector: '.header',
 
-		fixBody: function(st) {
+		fixBody: function (st) {
 			var headerElem = document.querySelector(this.headerSelector);
 
 			if (st && !document.body.classList.contains('popup-is-opened')) {
@@ -22,24 +22,24 @@ var Popup, MediaPopup;
 				document.body.classList.add('popup-is-opened');
 
 				if (headerElem) {
-					headerElem.style.right = offset +'px';
+					headerElem.style.right = offset + 'px';
 				}
 
-				document.body.style.right = offset +'px';
+				document.body.style.right = offset + 'px';
 
-				document.body.style.top = (-this.winScrollTop) +'px';
+				document.body.style.top = (-this.winScrollTop) + 'px';
 			} else if (!st) {
 				if (headerElem) {
 					headerElem.style.right = '';
 				}
-				
+
 				document.body.classList.remove('popup-is-opened');
 
 				window.scrollTo(0, this.winScrollTop);
 			}
 		},
 
-		open: function(elementStr, callback, btnElem) {
+		open: function (elementStr, callback, btnElem) {
 			var elem = document.querySelector(elementStr);
 
 			if (!elem || !elem.classList.contains('popup__window')) {
@@ -49,7 +49,7 @@ var Popup, MediaPopup;
 			this.close();
 
 			var elemParent = elem.parentElement;
-			
+
 			elemParent.classList.add('popup_visible');
 
 			elemParent.scrollTop = 0;
@@ -69,14 +69,14 @@ var Popup, MediaPopup;
 			return elem;
 		},
 
-		message: function(msg, elementStr, callback) {
+		message: function (msg, elementStr, callback) {
 			const elemStr = elementStr || '#message-popup',
-			elem = this.open(elemStr, callback);
+				elem = this.open(elemStr, callback);
 
-			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message m-0">'+ msg +'</div>';
+			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message m-0">' + msg + '</div>';
 		},
 
-		close: function() {
+		close: function () {
 			var elements = document.querySelectorAll('.popup__window');
 
 			if (!elements.length) {
@@ -103,10 +103,10 @@ var Popup, MediaPopup;
 			}
 		},
 
-		init: function(elementStr) {
+		init: function (elementStr) {
 			document.addEventListener('click', (e) => {
 				var btnElem = e.target.closest(elementStr),
-				closeBtnElem = e.target.closest('.js-popup-close');
+					closeBtnElem = e.target.closest('.js-popup-close');
 
 				if (btnElem) {
 					e.preventDefault();
@@ -125,50 +125,62 @@ var Popup, MediaPopup;
 
 	//popup media
 	MediaPopup = {
-		image: function(args) {
-			var elemPopup = Popup.open(args.popupStr),
-			elemImg = elemPopup.querySelector('.popup-media__image');
+		image: function (args) {
+			const elemPopup = Popup.open(args.popupStr),
+				elemImg = elemPopup.querySelector('.popup-media__image');
 
-			Popup.onClose = function() {
+			Popup.onClose = function () {
 				elemImg.src = '#';
-				elemImg.classList.remove('popup-media__image_visible'); 
+				elemImg.classList.remove('popup-media__image_visible');
 			}
 
 			elemImg.src = args.href;
 			elemImg.classList.add('popup-media__image_visible');
-			
-		},
-
-		video: function(args) {
 
 		},
 
-		next: function(elem) {
+		video: function (args) {
+			const elemPopup = Popup.open(args.popupStr),
+				videoEl = elemPopup.querySelector('.popup-media__video'),
+				prevEl = videoEl.querySelector('.popup-media__preview'),
+				btnPlayEl = videoEl.querySelector('.popup-media__btn-play');
+
+			Popup.onClose = function () {
+				Video.stop();
+				prevEl.src = '#';
+				videoEl.classList.remove('popup-media__video_visible');
+			}
+
+			prevEl.src = args.preview;
+			btnPlayEl.setAttribute('data-src', args.href);
+			videoEl.classList.add('popup-media__video_visible');
+		},
+
+		next: function (elem) {
 			if (!elem.hasAttribute('data-group')) {
 				return;
 			}
 
 			var group = elem.getAttribute('data-group'),
-			index = [].slice.call(document.querySelectorAll('[data-group="'+ group +'"]')).indexOf(elem);
+				index = [].slice.call(document.querySelectorAll('[data-group="' + group + '"]')).indexOf(elem);
 		},
 
-		init: function(elementStr) {
+		init: function (btnSel) {
 			document.addEventListener('click', (e) => {
-				var element = e.target.closest(elementStr);
+				const btnEl = e.target.closest(btnSel);
 
-				if (!element) {
-					return;
-				}
+				if (!btnEl) return;
 
 				e.preventDefault();
 
-				var type = element.getAttribute('data-type'),
-				args = {
-					href: element.href,
-					caption: element.getAttribute('data-caption'),
-					group: element.getAttribute('data-group'),
-					popupStr: element.getAttribute('data-popup')
-				};
+				const type = btnEl.getAttribute('data-type'),
+					args = {
+						href: btnEl.href,
+						preview: btnEl.getAttribute('data-preview'),
+						caption: btnEl.getAttribute('data-caption'),
+						group: btnEl.getAttribute('data-group'),
+						popupStr: btnEl.getAttribute('data-popup') || '#media-popup'
+					};
 
 				if (type == 'image') {
 					this.image(args);
@@ -176,7 +188,7 @@ var Popup, MediaPopup;
 					this.video(args);
 				}
 
-				this.next(element);
+				this.next(btnEl);
 			});
 		}
 	};
@@ -196,7 +208,7 @@ var Popup, MediaPopup;
 		var _ = this,
 		$popWin = $(id),
 		$popup = $popWin.closest('.popup');
-		
+
 		if ($popWin.length && $popWin.hasClass('popup__window')) {
 
 			_.position = $(window).scrollTop();
@@ -265,11 +277,11 @@ var Popup, MediaPopup;
 		if (args.img) {
 			Img.css({visibility: 'visible', marginLeft: '', marginTop: ''}).removeClass('cover-img_w cover-img_h').attr('src', args.img);
 		}
-		
+
 		//Pop.css('max-width', '');
 		Iframe.css('visibility', 'hidden').attr('src', '');
 		BtnPlay.css('visibility', 'hidden');
-		
+
 		if (args.vid) {
 			$box.removeClass('middle').addClass('cover-img-wrap');
 			Img.removeClass('middle__img').addClass('cover-img');
@@ -292,7 +304,7 @@ var Popup, MediaPopup;
 				}, 721);
 			}
 
-			
+
 
 		} else {
 			$box.removeClass('cover-img-wrap').addClass('middle');
@@ -363,7 +375,7 @@ var Popup, MediaPopup;
 			}
 
 			_.media($next, args);
-			
+
 		}
 
 	}

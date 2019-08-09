@@ -27,7 +27,7 @@ const modulesOn = [
 	'cover-image',
 	'lazy-load',
 	'video',
-	'popup',
+	'popup', // popup media video needs video module
 	'form/checkbox',
 	'form/radio',
 	'form/select',
