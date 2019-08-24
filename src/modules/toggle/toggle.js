@@ -24,15 +24,6 @@ Toggle.onChange = function(toggleElem, state) {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.add(this.toggledClass);
 				}
-				
-				//dependence elements
-				if (toggleElem.hasAttribute('data-dependence-target-elements')) {
-					var dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
-					
-					for (var i = 0; i < dependenceTargetElements.length; i++) {
-						dependenceTargetElements[i].classList.remove(this.toggledClass);
-					}
-				}
 			} else {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.remove(this.toggledClass);
@@ -71,6 +62,17 @@ Toggle.onChange = function(toggleElem, state) {
 			//call onChange
 			if (this.onChange) {
 				this.onChange(toggleElem, state);
+			}
+
+			if (!state) return;
+
+			//dependence elements
+			if (toggleElem.hasAttribute('data-dependence-target-elements')) {
+				const dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
+				
+				for (let i = 0; i < dependenceTargetElements.length; i++) {
+					dependenceTargetElements[i].classList.remove(this.toggledClass);
+				}
 			}
 		},
 		
