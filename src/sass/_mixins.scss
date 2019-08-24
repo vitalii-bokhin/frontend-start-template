@@ -7,7 +7,7 @@
 	}
 }
 
-//fixProportion
+// fixProportion
 @mixin fixprop($width: 1, $height: 1) {
 	&:before{
 		display: block;
@@ -17,7 +17,7 @@
 	}
 }
 
-//first child
+// first child
 @mixin fch($m: default) {
 	&:first-child{
 		@if $m == t {

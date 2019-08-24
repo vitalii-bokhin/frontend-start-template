@@ -1,25 +1,25 @@
-//rem
+// rem
 $base-font-size: 16;
 @function rem($px, $base: $base-font-size) {
     @return ($px / $base) * 1rem;
 }
 
-//em
+// em
 @function em($px, $base: $base-font-size) {
     @return ($px / $base) * 1em;
 }
 
-//percent
+// percent
 @function per($px, $base) {
     @return $px * (100 / $base) * 1%;
 }
 
-//vw
+// vw
 @function vw($px, $base) {
     @return $px * (100 / $base) * 1vw;
 }
 
-//vh
+// vh
 @function vh($px, $base) {
     @return $px * (100 / $base) * 1vh;
 }

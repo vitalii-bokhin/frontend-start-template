@@ -67,6 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	ToolTip.init({
 		element: '.js-tooltip'
 	});
+
+	ToolTip.onShow = function(btnEl, tooltipDivEl) {
+	
+	}
 	
 	// alert
 	new Alert({

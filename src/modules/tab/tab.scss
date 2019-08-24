@@ -32,6 +32,7 @@
 		opacity: 0;
 		transition: .21s;
 		&.active{
+			position: relative;
 			visibility: visible;
 			opacity: 1;
 		}

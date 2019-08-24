@@ -48,3 +48,73 @@
 	align-items: center;
 	justify-content: center;
 }
+
+// button
+%btn{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: normal;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: bottom;
+	border: none;
+	background: none;
+	user-select: none;
+	position: relative;
+	transition: .21s;
+	span{
+		display: block;
+		width: 100%;
+	}
+}
+
+%btn-icon{
+	display: block;
+	content: "";
+	position: absolute;
+	top: 50%;
+}
+
+// icon button
+%icon-btn{
+	display: inline-block;
+	background: none;
+	border: none;
+	-webkit-appearance: none;
+	transition: .21s;
+	position: relative;
+}
+
+// link
+%link{
+	line-height: normal;
+	text-decoration: none;
+	transition: .21s;
+}
+
+// icon link
+%icon-link{
+	display: inline-block;
+	line-height: normal;
+	position: relative;
+	text-decoration: none;
+	transition: .21s;
+	&::before{
+		display: block;
+		content: "";
+		position: absolute;
+		top: 50%;
+	}
+}
+
+// icon
+%icon{
+	position: relative;
+	&:before{
+		display: block;
+		content: "";
+		position: absolute;
+		left: 0;
+	}
+}

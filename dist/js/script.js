@@ -3855,7 +3855,7 @@ ToolTip.init({
 	element: '.js-tooltip'
 });
 
-ToolTip.onShow = function(elem) {
+ToolTip.onShow = function(btnEl, tooltipDivEl) {
 	
 }
 */
@@ -3952,7 +3952,7 @@ ToolTip.onShow = function(elem) {
 			}
 			
 			if (this.onShow) {
-				this.onShow(elem);
+				this.onShow(elem, this.tooltipDiv);
 			}
 			
 			this.tooltipDiv.classList.add('tooltip_visible');

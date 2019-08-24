@@ -1,12 +1,12 @@
 @import "sprite-extends";
 
-//gulp svg sprite bg size mixin
+// gulp svg sprite bg size mixin
 $sprite-width: 2192;
 @mixin bgs($icon-svg-w: 1) {
 	background-size: ($sprite-width / $icon-svg-w) * 100% auto;
 }
 
-/*sprites*/
+/* sprites */
 .menu__arr{
 	@extend %svg-angle-down;
 	@include bgs(340);

@@ -3,33 +3,7 @@
 @import "extends";
 @import "mixins";
 
-%btn{
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	line-height: normal;
-	text-align: center;
-	text-decoration: none;
-	vertical-align: bottom;
-	border: none;
-	background: none;
-	user-select: none;
-	position: relative;
-	transition: .21s;
-	span{
-		display: block;
-		width: 100%;
-	}
-}
-
-%btn-icon{
-	display: block;
-	content: "";
-	position: absolute;
-	top: 50%;
-}
-
-//default btn
+/* buttons */
 .btn{
 	@extend %btn;
 	width: 150px;
@@ -77,16 +51,7 @@
 	}
 }
 
-/* icon button */
-%icon-btn{
-	display: inline-block;
-	background: none;
-	border: none;
-	-webkit-appearance: none;
-	transition: .21s;
-	position: relative;
-}
-
+// icon button
 .v-btn,
 .f-btn,
 .o-btn,
@@ -143,17 +108,9 @@
 		list-style: none;
 		margin: 0 10px;
 	}
-	// &__btn{
-		
-	// }
 }
 
 /* link */
-%link{
-	line-height: normal;
-	text-decoration: none;
-	transition: .21s;
-}
 .link{
 	@extend %link;
 	color: $be;
@@ -177,21 +134,6 @@
 	}
 }
 
-/* icon link */
-%icon-link{
-	display: inline-block;
-	line-height: normal;
-	position: relative;
-	text-decoration: none;
-	transition: .21s;
-	&::before{
-		display: block;
-		content: "";
-		position: absolute;
-		top: 50%;
-	}
-}
-
 .icon-link{
 	@extend %icon-link;
 	border-bottom: 1px solid $be;
@@ -207,7 +149,7 @@
 	}
 }
 
-/*paginate*/
+/* paginate */
 .paginate{
 	list-style: none;
 	text-align: center;

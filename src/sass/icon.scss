@@ -3,18 +3,9 @@
 @import "extends";
 @import "mixins";
 
-%ico{
-	position: relative;
-	&:before{
-		display: block;
-		content: "";
-		position: absolute;
-		left: 0;
-	}
-}
-
+/* icons */
 .icon{
-	@extend %ico;
+	@extend %icon;
 	min-height: 21px;
 	padding-left: 30px;
 	&:before{
