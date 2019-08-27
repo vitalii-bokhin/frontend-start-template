@@ -1,7 +1,6 @@
-/node_modules/
-/PSD/
+node_modules/
+PSD/
 *.pdf
 *.zip
-package-lock.json
 *.*-workspace
 *.*-project
