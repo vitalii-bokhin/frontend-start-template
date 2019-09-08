@@ -4193,8 +4193,10 @@ var Numberspin;
 (function() {
 	'use strict';
 
-	Numberspin = function(elementsStr) {
-		this.elements = document.querySelectorAll(elementsStr);
+	Numberspin = function(options) {
+		const opt = options || {};
+
+		this.elements = document.querySelectorAll(opt.elemSel);
 		this.values = [];
 
 		for (var i = 0; i < this.elements.length; i++) {
@@ -4202,10 +4204,20 @@ var Numberspin;
 			this.elements[i].innerHTML = 0;
 		}
 
+		function draw(elem, num) {
+			if (opt.format) {
+				const numStr = String(num);
+
+				elem.innerHTML = numStr.replace(/(\d)?(?=(\d{3})+$)/g, '$1 ');
+			} else {
+				elem.innerHTML = num;
+			}
+		}
+
 		this.animate = function(duration) {
 			animate((progress) => {
 				for (var i = 0; i < this.elements.length; i++) {
-					this.elements[i].innerHTML = Math.round(this.values[i] * progress);
+					draw(this.elements[i], Math.round(this.values[i] * progress));
 				}
 			}, duration);
 		}

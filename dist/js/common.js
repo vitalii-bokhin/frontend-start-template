@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// screens
 	Screens.init({
-		container: '.main',
+		container: '.screen-wrap',
 		duration: 700, // default - 1000
 		menuCurrentClass: 'current' // default - 'menu__item_current'
 	});
@@ -211,7 +211,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	diagram_3.animate(4200);
 	
 	// numberspin
-	var numberspin = new Numberspin('.numberspin');
+	var numberspin = new Numberspin({
+		elemSel: '.numberspin',
+		format: true
+	});
 	
 	numberspin.animate(4200);
 	
