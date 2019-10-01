@@ -2,100 +2,116 @@
 
 (function () {
 	'use strict';
-	
+
 	// custom select
 	Select = {
 		field: null,
 		hideCssClass: 'hidden',
 		onSelect: null,
-		
-		reset: function(parentElem) {
-			var parElem = parentElem || document, 
-			fieldElements = parElem.querySelectorAll('.select'),
-			buttonElements = parElem.querySelectorAll('.select__button'),
-			inputElements = parElem.querySelectorAll('.select__input'),
-			valueElements = parElem.querySelectorAll('.select__val');
-			
-			for (var i = 0; i < fieldElements.length; i++) {
+
+		reset: function (parentElem) {
+			const parElem = parentElem || document,
+				fieldElements = parElem.querySelectorAll('.select'),
+				buttonElements = parElem.querySelectorAll('.select__button'),
+				inputElements = parElem.querySelectorAll('.select__input'),
+				valueElements = parElem.querySelectorAll('.select__val');
+
+			for (let i = 0; i < fieldElements.length; i++) {
 				fieldElements[i].classList.remove('select_changed');
 			}
-			
-			for (var i = 0; i < buttonElements.length; i++) {
+
+			for (let i = 0; i < buttonElements.length; i++) {
 				buttonElements[i].innerHTML = buttonElements[i].getAttribute('data-placeholder');
 			}
-			
-			for (var i = 0; i < inputElements.length; i++) {
+
+			for (let i = 0; i < inputElements.length; i++) {
 				inputElements[i].value = '';
 				inputElements[i].blur();
 			}
-			
-			for (var i = 0; i < valueElements.length; i++) {
+
+			for (let i = 0; i < valueElements.length; i++) {
 				valueElements[i].classList.remove('select__val_checked');
 			}
 		},
-		
-		close: function() {
+
+		closeAll: function () {
 			const fieldElements = document.querySelectorAll('.select'),
-			optionsElements = document.querySelectorAll('.select__options');
-			
+				optionsElements = document.querySelectorAll('.select__options');
+
 			for (let i = 0; i < fieldElements.length; i++) {
 				fieldElements[i].classList.remove('select_opened');
 
 				optionsElements[i].classList.remove('ovfauto');
 				optionsElements[i].style.height = 0;
+
+				const listItemElements = optionsElements[i].querySelectorAll('li');
+
+				for (let i = 0; i < listItemElements.length; i++) {
+					listItemElements[i].classList.remove('hover');
+				}
 			}
-			
-			var listItemElements = document.querySelectorAll('.select__options li');
-			
-			for (var i = 0; i < listItemElements.length; i++) {
+		},
+
+		close: function (fieldEl) {
+			fieldEl = fieldEl || this.field;
+
+			fieldEl.classList.remove('select_opened');
+
+			const optionsElem = fieldEl.querySelector('.select__options'),
+				listItemElements = optionsElem.querySelectorAll('li');
+
+			optionsElem.classList.remove('ovfauto');
+			optionsElem.style.height = 0;
+
+			for (let i = 0; i < listItemElements.length; i++) {
 				listItemElements[i].classList.remove('hover');
 			}
 		},
-		
-		open: function() {
+
+		open: function () {
 			this.field.classList.add('select_opened');
-			
+
 			const optionsElem = this.field.querySelector('.select__options');
-			
-			optionsElem.style.height = ((optionsElem.scrollHeight > 222) ? 222 : (optionsElem.scrollHeight + 2)) +'px';
+
+			optionsElem.style.height = ((optionsElem.scrollHeight > 222) ? 222 : (optionsElem.scrollHeight + 2)) + 'px';
 			optionsElem.scrollTop = 0;
-			
+
 			setTimeout(function () {
 				optionsElem.classList.add('ovfauto');
-			}, 550);
+			}, 621);
 		},
-		
-		selectMultipleVal: function(elem, button, input) {
-			var toButtonValue = [],
-			toInputValue = [],
-			inputsBlock = this.field.querySelector('.select__multiple-inputs');
-			
+
+		selectMultipleVal: function (elem, button, input) {
+			const toButtonValue = [],
+				toInputValue = [],
+				inputsBlock = this.field.querySelector('.select__multiple-inputs');
+
 			elem.classList.toggle('select__val_checked');
-			
-			var checkedElements = this.field.querySelectorAll('.select__val_checked');
-			
-			for (var i = 0; i < checkedElements.length; i++) {
-				var elem = checkedElements[i];
-				
+
+			const checkedElements = this.field.querySelectorAll('.select__val_checked');
+
+			for (let i = 0; i < checkedElements.length; i++) {
+				const elem = checkedElements[i];
+
 				toButtonValue[i] = elem.innerHTML;
 				toInputValue[i] = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
 			}
-			
+
 			if (toButtonValue.length) {
 				button.innerHTML = toButtonValue.join(', ');
-				
+
 				input.value = toInputValue[0];
-				
+
 				inputsBlock.innerHTML = '';
-				
+
 				if (toInputValue.length > 1) {
-					for (var i = 1; i < toInputValue.length; i++) {
-						var yetInput = document.createElement('input');
-						
+					for (let i = 1; i < toInputValue.length; i++) {
+						const yetInput = document.createElement('input');
+
 						yetInput.type = 'hidden';
 						yetInput.name = input.name;
 						yetInput.value = toInputValue[i];
-						
+
 						inputsBlock.appendChild(yetInput);
 					}
 				}
@@ -105,23 +121,23 @@
 				this.close();
 			}
 		},
-		
-		targetAction: function() {
+
+		targetAction: function () {
 			const elements = this.field.querySelectorAll('.select__val');
-			
+
 			for (let i = 0; i < elements.length; i++) {
 				const elem = elements[i];
-				
+
 				if (!elem.hasAttribute('data-target-elements')) continue;
-				
+
 				const targetElem = document.querySelector(elem.getAttribute('data-target-elements'));
-				
+
 				if (elem.classList.contains('select__val_checked')) {
 					targetElem.style.display = 'block';
 					targetElem.classList.remove(this.hideCssClass);
-					
-					var textInputElement = targetElem.querySelector('input[type="text"]');
-					
+
+					const textInputElement = targetElem.querySelector('input[type="text"]');
+
 					if (textInputElement) {
 						textInputElement.focus();
 					}
@@ -131,293 +147,318 @@
 				}
 			}
 		},
-		
-		selectVal: function(elem) {
+
+		selectVal: function (elem) {
 			const button = this.field.querySelector('.select__button'),
-			input = this.field.querySelector('.select__input');
-			
+				input = this.field.querySelector('.select__input');
+
 			if (this.field.classList.contains('select_multiple')) {
 				this.selectMultipleVal(elem, button, input);
 			} else {
 				const toButtonValue = elem.innerHTML,
-				toInputValue = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
-				
+					toInputValue = (elem.hasAttribute('data-value')) ? elem.getAttribute('data-value') : elem.innerHTML;
+
 				const valueElements = this.field.querySelectorAll('.select__val');
-				
+
 				for (let i = 0; i < valueElements.length; i++) {
 					const valElem = valueElements[i];
 
 					valElem.classList.remove('select__val_checked');
 					valElem.disabled = false;
 				}
-				
+
 				elem.classList.add('select__val_checked');
 				elem.disabled = true;
-				
+
 				if (button) {
 					button.innerHTML = toButtonValue;
 				}
-				
+
 				input.value = toInputValue;
-				
+
 				this.close();
-				
+
 				if (window.Placeholder) {
 					Placeholder.hide(input, true);
 				}
-				
+
 				if (input.getAttribute('data-submit-form-onchange')) {
 					Form.submitForm(input.closest('form'));
 				}
-				
+
 				if (this.onSelect) {
 					this.onSelect(input, toInputValue, elem.getAttribute('data-second-value'));
 				}
 			}
-			
+
 			this.targetAction();
-			
+
 			if (input.classList.contains('var-height-textarea__textarea')) {
 				varHeightTextarea.setHeight(input);
 			}
-			
+
 			this.field.classList.add('select_changed');
-			
+
 			ValidateForm.select(input);
 		},
-		
-		setOptions: function(fieldSelector, optObj, nameKey, valKey, secValKey) {
-			var fieldElements = document.querySelectorAll(fieldSelector +' .select');
-			
-			for (var i = 0; i < fieldElements.length; i++) {
-				var optionsElem = fieldElements[i].querySelector('.select__options');
-				
+
+		setOptions: function (fieldSelector, optObj, nameKey, valKey, secValKey) {
+			const fieldElements = document.querySelectorAll(fieldSelector + ' .select');
+
+			for (let i = 0; i < fieldElements.length; i++) {
+				const optionsElem = fieldElements[i].querySelector('.select__options');
+
 				optionsElem.innerHTML = '';
-				
-				for (var i = 0; i < optObj.length; i++) {
-					var li = document.createElement('li'),
-					secValAttr = (secValKey != undefined) ? ' data-second-value="'+ optObj[i][secValKey] +'"' : '';
-					
-					li.innerHTML = '<button type="button" class="select__val" data-value="'+ optObj[i][valKey] +'"'+ secValAttr +'>'+ optObj[i][nameKey] +'</button>';
-					
+
+				for (let i = 0; i < optObj.length; i++) {
+					let li = document.createElement('li'),
+						secValAttr = (secValKey != undefined) ? ' data-second-value="' + optObj[i][secValKey] + '"' : '';
+
+					li.innerHTML = '<button type="button" class="select__val" data-value="' + optObj[i][valKey] + '"' + secValAttr + '>' + optObj[i][nameKey] + '</button>';
+
 					optionsElem.appendChild(li);
 				}
 			}
 		},
-		
-		keyboard: function(key) {
-			var options = this.field.querySelector('.select__options'),
-			hoverItem = options.querySelector('li.hover');
-			
+
+		keyboard: function (key) {
+			const options = this.field.querySelector('.select__options'),
+				hoverItem = options.querySelector('li.hover');
+
 			switch (key) {
 				case 40:
-				if (hoverItem) {
-					var nextItem = function (item) {
-						var elem = item.nextElementSibling;
-						
+					if (hoverItem) {
+						const nextItem = function (item) {
+							let elem = item.nextElementSibling;
+
+							while (elem) {
+								if (!elem) break;
+
+								if (!elemIsHidden(elem)) {
+									return elem;
+								} else {
+									elem = elem.nextElementSibling;
+								}
+							}
+						}(hoverItem);
+
+						if (nextItem) {
+							hoverItem.classList.remove('hover');
+							nextItem.classList.add('hover');
+
+							options.scrollTop = options.scrollTop + (nextItem.getBoundingClientRect().top - options.getBoundingClientRect().top);
+						}
+					} else {
+						let elem = options.firstElementChild;
+
 						while (elem) {
 							if (!elem) break;
-							
+
 							if (!elemIsHidden(elem)) {
-								return elem;
+								elem.classList.add('hover');
+								break;
 							} else {
 								elem = elem.nextElementSibling;
 							}
 						}
-					}(hoverItem);
-					
-					if (nextItem) {
-						hoverItem.classList.remove('hover');
-						nextItem.classList.add('hover');
-						
-						options.scrollTop = options.scrollTop + (nextItem.getBoundingClientRect().top - options.getBoundingClientRect().top);
 					}
-				} else {
-					var elem = options.firstElementChild;
-					
-					while (elem) {
-						if (!elem) break;
-						
-						if (!elemIsHidden(elem)) {
-							elem.classList.add('hover');
-							break;
-						} else {
-							elem = elem.nextElementSibling;
-						}
-					}
-				}
-				break;
-				
+					break;
+
 				case 38:
-				if (hoverItem) {
-					var nextItem = function (item) {
-						var elem = item.previousElementSibling;
-						
+					if (hoverItem) {
+						const nextItem = function (item) {
+							let elem = item.previousElementSibling;
+
+							while (elem) {
+								if (!elem) break;
+
+								if (!elemIsHidden(elem)) {
+									return elem;
+								} else {
+									elem = elem.previousElementSibling;
+								}
+							}
+						}(hoverItem);
+
+						if (nextItem) {
+							hoverItem.classList.remove('hover');
+							nextItem.classList.add('hover');
+
+							options.scrollTop = options.scrollTop + (nextItem.getBoundingClientRect().top - options.getBoundingClientRect().top);
+						}
+					} else {
+						let elem = options.lastElementChild;
+
 						while (elem) {
 							if (!elem) break;
-							
+
 							if (!elemIsHidden(elem)) {
-								return elem;
+								elem.classList.add('hover');
+								options.scrollTop = 9999;
+								break;
 							} else {
 								elem = elem.previousElementSibling;
 							}
 						}
-					}(hoverItem);
-					
-					if (nextItem) {
-						hoverItem.classList.remove('hover');
-						nextItem.classList.add('hover');
-						
-						options.scrollTop = options.scrollTop + (nextItem.getBoundingClientRect().top - options.getBoundingClientRect().top);
 					}
-				} else {
-					var elem = options.lastElementChild;
-					
-					while (elem) {
-						if (!elem) break;
-						
-						if (!elemIsHidden(elem)) {
-							elem.classList.add('hover');
-							options.scrollTop = 9999;
-							break;
-						} else {
-							elem = elem.previousElementSibling;
-						}
-					}
-				}
-				break;
-				
+					break;
+
 				case 13:
-				this.selectVal(hoverItem.querySelector('.select__val'));
+					this.selectVal(hoverItem.querySelector('.select__val'));
 			}
 		},
-		
-		build: function(elementStr) {
+
+		build: function (elementStr) {
 			const elements = document.querySelectorAll(elementStr);
-			
+
 			if (!elements.length) return;
-			
+
 			for (let i = 0; i < elements.length; i++) {
 				const elem = elements[i],
-				options = elem.querySelectorAll('option'),
-				parent = elem.parentElement;
-				
+					options = elem.querySelectorAll('option'),
+					parent = elem.parentElement;
+
 				let optionsList = '',
-				selectedOption = null;
-				
+					selectedOption = null;
+
 				// option list
 				for (let i = 0; i < options.length; i++) {
 					const opt = options[i];
-					
+
 					if (opt.hasAttribute('selected')) {
 						selectedOption = opt;
 					}
-					
-					optionsList += '<li><button type="button" tabindex="-1" class="select__val'+ ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') +'"'+ ( (opt.hasAttribute('value')) ? ' data-value="'+ opt.value +'"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="'+ opt.getAttribute('data-second-value') +'"' : '') + ( (opt.hasAttribute('data-target-elements')) ? ' data-target-elements="'+ opt.getAttribute('data-target-elements') +'"' : '') +'>'+ opt.innerHTML +'</button></li>';
+
+					optionsList += '<li><button type="button" tabindex="-1" class="select__val' + ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') + '"' + ((opt.hasAttribute('value')) ? ' data-value="' + opt.value + '"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="' + opt.getAttribute('data-second-value') + '"' : '') + ((opt.hasAttribute('data-target-elements')) ? ' data-target-elements="' + opt.getAttribute('data-target-elements') + '"' : '') + '>' + opt.innerHTML + '</button></li>';
 				}
-				
-				const require = (elem.hasAttribute('data-required')) ? ' data-required="'+ elem.getAttribute('data-required') +'" ' : '',
 
-				placeholder = elem.getAttribute('data-placeholder'),
+				const require = (elem.hasAttribute('data-required')) ? ' data-required="' + elem.getAttribute('data-required') + '" ' : '',
 
-				submitOnChange = (elem.hasAttribute('data-submit-form-onchange')) ? ' data-submit-form-onchange="'+ elem.getAttribute('data-submit-form-onchange') +'" ' : '',
+					placeholder = elem.getAttribute('data-placeholder'),
 
-				head = '<button type="button"'+ ((placeholder) ? ' data-placeholder="'+ placeholder +'"' : '') +' class="select__button">'+ ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') +'</button>',
+					submitOnChange = (elem.hasAttribute('data-submit-form-onchange')) ? ' data-submit-form-onchange="' + elem.getAttribute('data-submit-form-onchange') + '" ' : '',
 
-				multiple = {
-					class: (elem.multiple) ? ' select_multiple' : '',
-					inpDiv: (elem.multiple) ? '<div class="select__multiple-inputs"></div>' : ''
-				},
+					head = '<button type="button"' + ((placeholder) ? ' data-placeholder="' + placeholder + '"' : '') + ' class="select__button">' + ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') + '</button>',
 
-				hiddenInp = '<input type="hidden" name="'+ elem.name +'"'+ require + submitOnChange +'class="select__input" value="'+ ((selectedOption) ? selectedOption.value : '') +'">';
+					multiple = {
+						class: (elem.multiple) ? ' select_multiple' : '',
+						inpDiv: (elem.multiple) ? '<div class="select__multiple-inputs"></div>' : ''
+					},
+
+					hiddenInp = '<input type="hidden" name="' + elem.name + '"' + require + submitOnChange + 'class="select__input" value="' + ((selectedOption) ? selectedOption.value : '') + '">';
 
 				if (elem.hasAttribute('data-empty-text')) {
-					optionsList = '<li class="select__options-empty">'+ elem.getAttribute('data-empty-text') +'</li>';
+					optionsList = '<li class="select__options-empty">' + elem.getAttribute('data-empty-text') + '</li>';
 				}
-				
+
 				// output select
 				const customElem = document.createElement('div');
 
-				customElem.className = 'select'+ multiple.class + ((selectedOption) ? ' select_changed' : '');
+				customElem.className = 'select' + multiple.class + ((selectedOption) ? ' select_changed' : '');
 
-				customElem.innerHTML = head +'<ul class="select__options">'+ optionsList +'</ul>'+ hiddenInp + multiple.inpDiv;
+				customElem.innerHTML = head + '<ul class="select__options">' + optionsList + '</ul>' + hiddenInp + multiple.inpDiv;
 
 				parent.insertBefore(customElem, parent.firstChild);
 				parent.removeChild(parent.children[1]);
 			}
 		},
-		
+
 		init: function (elementStr) {
+			if (!document.querySelector(elementStr)) return;
+
 			this.build(elementStr);
-			
+
+			let focusBlurIsDisabled = false,
+			st;
+
 			// click on select or value or arrow button
 			document.addEventListener('click', (e) => {
+				clearTimeout(st);
+
 				const btnElem = e.target.closest('.select__button'),
-				valElem = e.target.closest('.select__val');
-				
+					valElem = e.target.closest('.select__val');
+
 				if (btnElem) {
+					focusBlurIsDisabled = true;
+
 					this.field = btnElem.closest('.select');
-					
+
 					if (this.field.classList.contains('select_opened')) {
 						this.close();
 					} else {
-						this.close();
+						this.closeAll();
 						this.open();
 					}
 				} else if (valElem) {
+					focusBlurIsDisabled = true;
+
 					this.field = valElem.closest('.select');
 					this.selectVal(valElem);
 				}
+
+				st = setTimeout(function() {
+					focusBlurIsDisabled = false;
+				}, 521);
 			});
 
 			document.addEventListener('focus', (e) => {
 				const inpElem = e.target.closest('.select__button');
 
 				if (inpElem) {
-					this.field = inpElem.closest('.select');
-					
-					if (!this.field.classList.contains('select_opened')) {
-						this.close();
-						this.open();
-					}
+					setTimeout(() => {
+						if (focusBlurIsDisabled) return;
+
+						this.field = inpElem.closest('.select');
+
+						if (!this.field.classList.contains('select_opened')) {
+							this.closeAll();
+							this.open();
+						}
+					}, 321);
 				}
 			}, true);
 
 			document.addEventListener('blur', (e) => {
 				const inpElem = e.target.closest('.select__button');
-				
+
 				if (inpElem) {
 					setTimeout(() => {
-						this.close();
+						if (focusBlurIsDisabled) return;
+
+						const fieldEl = inpElem.closest('.select');
+
+						if (fieldEl.classList.contains('select_opened')) {
+							this.close(fieldEl);
+						}
 					}, 321);
 				}
 			}, true);
-			
+
 			// keyboard events
 			document.addEventListener('keydown', (e) => {
-				var elem = e.target.closest('.select_opened');
-				
+				const elem = e.target.closest('.select_opened');
+
 				if (!elem) return;
-				
+
 				this.field = elem.closest('.select');
-				
-				var key = e.which || e.keyCode || 0;
-				
+
+				const key = e.which || e.keyCode || 0;
+
 				if (key == 40 || key == 38 || key == 13) {
 					e.preventDefault();
 					this.keyboard(key);
 				}
 			});
-			
+
 			// close all
 			document.addEventListener('click', (e) => {
-				if (!e.target.closest('.select_opened')) {
-					this.close();
+				if (!e.target.closest('.select')) {
+					this.closeAll();
 				}
 			});
 		}
 	};
-	
+
 	// init script
 	document.addEventListener('DOMContentLoaded', function () {
 		Select.init('select');
