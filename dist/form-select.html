@@ -161,13 +161,20 @@
 							<option value="lion" data-second-value="lionID">Lion</option>
 							<option value="crocodile">Crocodile</option>
 							<option value="elephant">Elephant</option>
-							<option value="other" data-target-elements="#other-animal-field">Other</option>
+							<option value="other" data-hide-elements="#hide-animal-field">Hide</option>
+							<option value="other" data-show-elements="#other-animal-field">Other</option>
 						</select>
 						<div class="field-error-tip">Select an animal</div>
 					</div>
 				</div>
 				<div class="col-6">
 					<div id="other-animal-field" class="form__field hidden">
+						<input type="text" data-required="true" placeholder="Other animal" class="form__text-input" value="">
+						<div class="field-error-tip">Enter other animal</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div id="hide-animal-field" class="form__field">
 						<input type="text" data-required="true" placeholder="Other animal" class="form__text-input" value="">
 						<div class="field-error-tip">Enter other animal</div>
 					</div>
@@ -189,7 +196,7 @@
 							<option value="parrot">Parrot</option>
 							<option value="cavy">Cavy</option>
 							<option value="hamster">Hamster</option>
-							<option value="other" data-target-elements="#other-pets-field">Other</option>
+							<option value="other" data-show-elements="#other-pets-field">Other</option>
 						</select>
 						<div class="field-error-tip">Select pets</div>
 					</div>

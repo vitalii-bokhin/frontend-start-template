@@ -1864,27 +1864,48 @@ var Popup, MediaPopup;
 		},
 
 		targetAction: function () {
-			const elements = this.field.querySelectorAll('.select__val');
+			const valEls = this.field.querySelectorAll('.select__val');
 
-			for (let i = 0; i < elements.length; i++) {
-				const elem = elements[i];
+			for (let i = 0; i < valEls.length; i++) {
+				const vEl = valEls[i];
 
-				if (!elem.hasAttribute('data-target-elements')) continue;
+				if (vEl.hasAttribute('data-show-elements')) {
+					const showEls = document.querySelectorAll(vEl.getAttribute('data-show-elements'));
 
-				const targetElem = document.querySelector(elem.getAttribute('data-target-elements'));
+					for (let i = 0; i < showEls.length; i++) {
+						const sEl = showEls[i];
 
-				if (elem.classList.contains('select__val_checked')) {
-					targetElem.style.display = 'block';
-					targetElem.classList.remove(this.hideCssClass);
+						if (vEl.classList.contains('select__val_checked')) {
+							sEl.style.display = 'block';
+							sEl.classList.remove(this.hideCssClass);
 
-					const textInputElement = targetElem.querySelector('input[type="text"]');
+							// focus on input
+							const txtInpEl = sEl.querySelector('input[type="text"]');
 
-					if (textInputElement) {
-						textInputElement.focus();
+							if (txtInpEl) {
+								txtInpEl.focus();
+							}
+						} else {
+							sEl.style.display = 'none';
+							sEl.classList.add(this.hideCssClass);
+						}
 					}
-				} else {
-					targetElem.style.display = 'none';
-					targetElem.classList.add(this.hideCssClass);
+				}
+
+				if (vEl.hasAttribute('data-hide-elements')) {
+					const hideEls = document.querySelectorAll(vEl.getAttribute('data-hide-elements'));
+
+					for (let i = 0; i < hideEls.length; i++) {
+						const hEl = hideEls[i];
+
+						if (vEl.classList.contains('select__val_checked')) {
+							hEl.style.display = 'none';
+							hEl.classList.add(this.hideCssClass);
+						} else {
+							hEl.style.display = 'block';
+							hEl.classList.remove(this.hideCssClass);
+						}
+					}
 				}
 			}
 		},
@@ -2070,23 +2091,23 @@ var Popup, MediaPopup;
 						selectedOption = opt;
 					}
 
-					optionsList += '<li><button type="button" tabindex="-1" class="select__val' + ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') + '"' + ((opt.hasAttribute('value')) ? ' data-value="' + opt.value + '"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="' + opt.getAttribute('data-second-value') + '"' : '') + ((opt.hasAttribute('data-target-elements')) ? ' data-target-elements="' + opt.getAttribute('data-target-elements') + '"' : '') + '>' + opt.innerHTML + '</button></li>';
+					optionsList += '<li><button type="button" tabindex="-1" class="select__val' + ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') + '"' + ((opt.hasAttribute('value')) ? ' data-value="' + opt.value + '"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="' + opt.getAttribute('data-second-value') + '"' : '') + ((opt.hasAttribute('data-show-elements')) ? ' data-show-elements="' + opt.getAttribute('data-show-elements') + '"' : '') + ((opt.hasAttribute('data-hide-elements')) ? ' data-hide-elements="' + opt.getAttribute('data-hide-elements') + '"' : '') + '>' + opt.innerHTML + '</button></li>';
 				}
 
-				const require = (elem.hasAttribute('data-required')) ? ' data-required="' + elem.getAttribute('data-required') + '" ' : '',
+				const require = (elem.hasAttribute('data-required')) ? ' data-required="' + elem.getAttribute('data-required') + '" ' : '';
 
-					placeholder = elem.getAttribute('data-placeholder'),
+				const placeholder = elem.getAttribute('data-placeholder');
 
-					submitOnChange = (elem.hasAttribute('data-submit-form-onchange')) ? ' data-submit-form-onchange="' + elem.getAttribute('data-submit-form-onchange') + '" ' : '',
+				const submitOnChange = (elem.hasAttribute('data-submit-form-onchange')) ? ' data-submit-form-onchange="' + elem.getAttribute('data-submit-form-onchange') + '" ' : '';
 
-					head = '<button type="button"' + ((placeholder) ? ' data-placeholder="' + placeholder + '"' : '') + ' class="select__button">' + ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') + '</button>',
+				const head = '<button type="button"' + ((placeholder) ? ' data-placeholder="' + placeholder + '"' : '') + ' class="select__button">' + ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') + '</button>';
 
-					multiple = {
-						class: (elem.multiple) ? ' select_multiple' : '',
-						inpDiv: (elem.multiple) ? '<div class="select__multiple-inputs"></div>' : ''
-					},
-
-					hiddenInp = '<input type="hidden" name="' + elem.name + '"' + require + submitOnChange + 'class="select__input" value="' + ((selectedOption) ? selectedOption.value : '') + '">';
+				const multiple = {
+					class: (elem.multiple) ? ' select_multiple' : '',
+					inpDiv: (elem.multiple) ? '<div class="select__multiple-inputs"></div>' : ''
+				};
+				
+				const hiddenInp = '<input type="hidden" name="' + elem.name + '"' + require + submitOnChange + 'class="select__input" value="' + ((selectedOption) ? selectedOption.value : '') + '">';
 
 				if (elem.hasAttribute('data-empty-text')) {
 					optionsList = '<li class="select__options-empty">' + elem.getAttribute('data-empty-text') + '</li>';
@@ -2110,7 +2131,7 @@ var Popup, MediaPopup;
 			this.build(elementStr);
 
 			let focusBlurIsDisabled = false,
-			st;
+				st;
 
 			// click on select or value or arrow button
 			document.addEventListener('click', (e) => {
@@ -2137,7 +2158,7 @@ var Popup, MediaPopup;
 					this.selectVal(valElem);
 				}
 
-				st = setTimeout(function() {
+				st = setTimeout(function () {
 					focusBlurIsDisabled = false;
 				}, 521);
 			});
