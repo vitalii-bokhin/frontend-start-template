@@ -31,14 +31,17 @@ var ValidateForm, Form;
 			}
 		},
 
-		customErrorTip: function (input, errorTxt) {
+		customErrorTip: function (input, errorTxt, isLockForm) {
 			if (!input) return;
 
 			this.input = input;
 
 			if (errorTxt !== null) {
 				this.errorTip(true, 'custom', errorTxt);
-				input.setAttribute('data-custom-error', 'true');
+
+				if (isLockForm) {
+					input.setAttribute('data-custom-error', 'true');
+				}
 			} else {
 				this.errorTip(false);
 				input.removeAttribute('data-custom-error');
@@ -345,7 +348,7 @@ var ValidateForm, Form;
 			var err = 0;
 
 			// text, password, textarea
-			var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], textarea');
+			var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], input[type="number"], textarea');
 
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
@@ -528,7 +531,7 @@ var ValidateForm, Form;
 
 		init: function (formSelector) {
 			document.addEventListener('input', (e) => {
-				var elem = e.target.closest(formSelector + ' input[type="text"],' + formSelector + ' input[type="password"],' + formSelector + ' textarea');
+				var elem = e.target.closest(formSelector + ' input[type="text"],' + formSelector + ' input[type="password"],' + formSelector + ' input[type="number"],' + formSelector + ' textarea');
 
 				if (elem && elem.hasAttribute('data-tested')) {
 					this.validateOnInput(elem);
