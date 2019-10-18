@@ -36,7 +36,15 @@ var ValidateForm, Form;
 
 			this.input = input;
 
-			this.errorTip(true, 'custom', errorTxt);
+			if (errorTxt !== null) {
+				this.errorTip(true, 'custom', errorTxt);
+				input.setAttribute('data-custom-error', 'true');
+			} else {
+				this.errorTip(false);
+				input.removeAttribute('data-custom-error');
+
+				this.validate(input.closest('form'));
+			}
 		},
 
 		formError: function (formElem, err, errTxt) {
@@ -64,7 +72,11 @@ var ValidateForm, Form;
 		customFormErrorTip: function (formElem, errorTxt) {
 			if (!formElem) return;
 
-			this.formError(formElem, true, errorTxt);
+			if (errorTxt !== null) {
+				this.formError(formElem, true, errorTxt);
+			} else {
+				this.formError(formElem, false);
+			}
 		},
 
 		txt: function () {
@@ -352,7 +364,9 @@ var ValidateForm, Form;
 					this.errorTip(true);
 					err++;
 				} else if (elem.value.length) {
-					if (dataType) {
+					if (elem.hasAttribute('data-custom-error')) {
+						err++;
+					} else if (dataType) {
 						if (this[dataType]()) {
 							err++;
 						}

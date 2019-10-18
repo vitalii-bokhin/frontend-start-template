@@ -8,18 +8,18 @@ Toggle.onChange = function(toggleElem, state) {
 
 ; var Toggle;
 
-(function() {
+(function () {
 	'use strict';
-	
+
 	Toggle = {
 		toggledClass: 'toggled',
 		onChange: null,
-		
-		target: function(toggleElem, state) {
+
+		target: function (toggleElem, state) {
 			var targetElements = document.querySelectorAll(toggleElem.getAttribute('data-target-elements'));
-			
+
 			if (!targetElements.length) return;
-			
+
 			if (state) {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.add(this.toggledClass);
@@ -30,35 +30,35 @@ Toggle.onChange = function(toggleElem, state) {
 				}
 			}
 		},
-		
-		toggle: function(toggleElem, off) {
+
+		toggle: function (toggleElem, off) {
 			var state;
-			
+
 			if (toggleElem.classList.contains(this.toggledClass)) {
 				toggleElem.classList.remove(this.toggledClass);
-				
+
 				state = false;
-				
+
 				if (toggleElem.hasAttribute('data-first-text')) {
 					toggleElem.innerHTML = toggleElem.getAttribute('data-first-text');
 				}
 			} else if (!off) {
 				toggleElem.classList.add(this.toggledClass);
-				
+
 				state = true;
-				
+
 				if (toggleElem.hasAttribute('data-second-text')) {
 					toggleElem.setAttribute('data-first-text', toggleElem.innerHTML);
-					
+
 					toggleElem.innerHTML = toggleElem.getAttribute('data-second-text');
 				}
 			}
-			
+
 			//target
 			if (toggleElem.hasAttribute('data-target-elements')) {
 				this.target(toggleElem, state);
 			}
-			
+
 			//call onChange
 			if (this.onChange) {
 				this.onChange(toggleElem, state);
@@ -69,16 +69,16 @@ Toggle.onChange = function(toggleElem, state) {
 			//dependence elements
 			if (toggleElem.hasAttribute('data-dependence-target-elements')) {
 				const dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
-				
+
 				for (let i = 0; i < dependenceTargetElements.length; i++) {
 					dependenceTargetElements[i].classList.remove(this.toggledClass);
 				}
 			}
 		},
-		
+
 		onDocClickOff: function (e, onDocClickOffSelector, curEl) {
-			var toggleElements = document.querySelectorAll(onDocClickOffSelector + '.' +this.toggledClass);
-			
+			var toggleElements = document.querySelectorAll(onDocClickOffSelector + '.' + this.toggledClass);
+
 			for (var i = 0; i < toggleElements.length; i++) {
 				var elem = toggleElements[i];
 
@@ -86,7 +86,7 @@ Toggle.onChange = function(toggleElem, state) {
 
 				if (elem.hasAttribute('data-target-elements')) {
 					var targetSelectors = elem.getAttribute('data-target-elements');
-					
+
 					if (!e.target.closest(targetSelectors)) {
 						this.toggle(elem, true);
 					}
@@ -95,21 +95,21 @@ Toggle.onChange = function(toggleElem, state) {
 				}
 			}
 		},
-		
-		init: function(toggleSelector, onDocClickOffSelector, toggledClass) {
+
+		init: function (toggleSelector, onDocClickOffSelector, toggledClass) {
 			if (toggledClass) {
 				this.toggledClass = toggledClass;
 			}
-			
+
 			document.addEventListener('click', (e) => {
 				var toggleElem = e.target.closest(toggleSelector);
-				
+
 				if (toggleElem) {
 					e.preventDefault();
-					
+
 					this.toggle(toggleElem);
 				}
-				
+
 				this.onDocClickOff(e, onDocClickOffSelector, toggleElem);
 			});
 		}
