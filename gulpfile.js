@@ -44,7 +44,7 @@ const modulesOn = [
 	'tooltip',
 	'anchor',
 	'diagram',
-	'numberspin',
+	'numberspin', // need fix. set data attribute
 	'share',
 	'timer',
 	'footer',
