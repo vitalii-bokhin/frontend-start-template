@@ -33,10 +33,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	CoverImg.init();
 	
 	// toggle button
-	Toggle.init('.js-toggle', '.js-document-toggle-off');
+	Toggle.init({
+		button: '.js-toggle',
+		onDocumenClickOff: '.js-document-toggle-off',
+		offButton: '.js-tgl-off',
+		toggledClass: 'toggled' // def: toggled
+	});
 	
-	Toggle.onChange = function(tgl, state) {
-		
+	Toggle.onChange = function(toggleElem, targetElements, state) {
+		// code...
 	}
 	
 	// ajax button

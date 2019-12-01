@@ -36,7 +36,7 @@ var ValidateForm, Form;
 
 			this.input = input;
 
-			if (errorTxt !== null) {
+			if (errorTxt) {
 				this.errorTip(true, 'custom', errorTxt);
 
 				if (isLockForm) {
@@ -75,7 +75,7 @@ var ValidateForm, Form;
 		customFormErrorTip: function (formElem, errorTxt) {
 			if (!formElem) return;
 
-			if (errorTxt !== null) {
+			if (errorTxt) {
 				this.formError(formElem, true, errorTxt);
 			} else {
 				this.formError(formElem, false);

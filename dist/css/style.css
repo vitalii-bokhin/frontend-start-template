@@ -20,7 +20,6 @@ header, footer, main, section, nav, article, aside {
 button {
   display: inline-block;
   line-height: normal;
-  overflow: visible;
   cursor: pointer;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
@@ -328,7 +327,6 @@ hr {
 
 .col_grow {
   flex-grow: 1 !important;
-  flex-shrink: 0 !important;
 }
 
 @media (max-width: 1600px) {
@@ -3397,54 +3395,7 @@ ol.list li:before {
 }
 
 
-/*text color*/
-.c-red {
-  color: #ff0000 !important;
-}
-
-.c-gray {
-  color: #aaaaaa !important;
-}
-
-/*text align*/
-.ta-l {
-  text-align: left !important;
-}
-
-.ta-c {
-  text-align: center !important;
-}
-
-.ta-r {
-  text-align: right !important;
-}
-
-/*background*/
-.bg-gray {
-  background: #aaaaaa;
-}
-
-/*border*/
-.brad-5 {
-  border-radius: 5px;
-}
-
-/*width*/
-.maxw-100 {
-  max-width: 100px;
-}
-
-/*height*/
-.minh-100per {
-  min-height: 100%;
-}
-
-/*position*/
-.pos-r {
-  position: relative !important;
-}
-
-/*marging*/
+/* margin */
 .mt-0 {
   margin-top: 0 !important;
 }
@@ -3465,7 +3416,7 @@ ol.list li:before {
   margin: 0 !important;
 }
 
-/*padding*/
+/* padding */
 .pt-0 {
   padding-top: 0 !important;
 }
@@ -3496,7 +3447,7 @@ ol.list li:before {
   padding: 0 !important;
 }
 
-/*display*/
+/* display */
 .hidden {
   display: none !important;
 }
@@ -3528,32 +3479,6 @@ ol.list li:before {
 @media (max-width: 1000px) {
   .sm-hidden {
     display: none !important;
-  }
-  .sm-p-x-15 {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-  .sm-p-x-0 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  .sm-p-y-0 {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  .sm-p-0 {
-    padding: 0 !important;
-  }
-  .sm-m-x-0 {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  .sm-m-y-0 {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  .sm-m-0 {
-    margin: 0 !important;
   }
 }
 

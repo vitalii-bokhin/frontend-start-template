@@ -1,5 +1,5 @@
 // global variables
-; var browser, elemIsHidden, ajax, animate;
+; var browser, elemIsHidden, ajax, animate, Storage;
 
 (function () {
 	'use strict';
@@ -179,4 +179,17 @@
 	function quad(timeFraction) {
 		return Math.pow(timeFraction, 2)
 	}
+
+	// Local/Session Storage
+	Storage = {
+		set: function(prop, val) {
+			window.localStorage.setItem(prop, val);
+		},
+
+		get: function(prop) {
+			const val = window.localStorage.getItem(prop);
+
+			return (val !== null) ? val : false;
+		}
+	};
 })();

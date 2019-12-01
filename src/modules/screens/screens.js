@@ -146,7 +146,7 @@ Screens.onChange = function (nextScreenElem) {}
 						}
 					}
 				});
-			} else if ('onwheel' in document) {
+			} else {
 				contElem.addEventListener('wheel', (e) => {
 					if (document.documentElement.offsetHeight >= document.documentElement.scrollHeight) {
 						e.preventDefault();

@@ -1,5 +1,5 @@
 {
-  "name": "startTemplate",
+  "name": "starttemplate",
   "version": "2.1.0",
   "description": "start template for web development",
   "main": "index.js",
@@ -13,7 +13,7 @@
     "babel-plugin-transform-remove-strict-mode": "0.0.2",
     "babel-preset-env": "^1.7.0",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
