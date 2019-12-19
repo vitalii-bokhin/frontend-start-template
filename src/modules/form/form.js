@@ -335,7 +335,11 @@ var ValidateForm, Form;
 				this.errorTip(true);
 			} else if (elem.value.length) {
 				if (dataType) {
-					this[dataType]();
+					try {
+						this[dataType]();
+					} catch (error) {
+						console.log('Error while process', dataType)
+					}
 				} else {
 					this.errorTip(false);
 				}
@@ -370,8 +374,12 @@ var ValidateForm, Form;
 					if (elem.hasAttribute('data-custom-error')) {
 						err++;
 					} else if (dataType) {
-						if (this[dataType]()) {
-							err++;
+						try {
+							if (this[dataType]()) {
+								err++;
+							}
+						} catch (error) {
+							console.log('Error while process', dataType)
 						}
 					} else {
 						this.errorTip(false);
@@ -620,7 +628,7 @@ var ValidateForm, Form;
 				Select.reset();
 			}
 
-			var textareaMirrors = formElem.querySelectorAll('.form__textarea-mirror');
+			var textareaMirrors = formElem.querySelectorAll('.var-height-textarea__mirror');
 
 			for (var i = 0; i < textareaMirrors.length; i++) {
 				textareaMirrors[i].innerHTML = '';
