@@ -3231,7 +3231,7 @@ var ValidateForm, Form;
 
 			var dataType = elem.getAttribute('data-type');
 
-			if (elem.getAttribute('data-required') && !elem.value.length) {
+			if (elem.getAttribute('data-required') && (!elem.value.length || /^\s+$/.test(elem.value))) {
 				this.errorTip(true);
 			} else if (elem.value.length) {
 				if (dataType) {
@@ -3267,7 +3267,7 @@ var ValidateForm, Form;
 
 				var dataType = elem.getAttribute('data-type');
 
-				if (elem.getAttribute('data-required') && !elem.value.length) {
+				if (elem.getAttribute('data-required') && (!elem.value.length || /^\s+$/.test(elem.value))) {
 					this.errorTip(true);
 					err++;
 				} else if (elem.value.length) {
