@@ -12,6 +12,7 @@
 		screenChanging: false,
 		lastEvenSrc: 'win',
 		onChange: null,
+		opt: {},
 
 		screenHadChanged: function () {
 			if (this.lastEvenSrc == 'fun') return;
@@ -107,26 +108,14 @@
 
 				sEl.style.height = window.innerHeight + 'px';
 
-				// console.log(sEl.scrollHeight, sEl.scrollTop, sEl.offsetHeight, sEl.scrollHeight + sEl.scrollTop);
-
-				// if (sEl.scrollHeight + sEl.scrollTop <= sEl.offsetHeight) {
-				// 	screenVirtHeight = (window.innerWidth > 1200) ? 121 : sEl.scrollHeight + sEl.scrollTop;
-				// } else {
-				// 	screenVirtHeight = sEl.scrollHeight + sEl.scrollTop;
-
-				// 	sEl.classList.add('screen_inner-scroll');
-
-				// 	sEl.innerHTML = '<div class="screen_inner-scroll__in">' + sEl.innerHTML + '</div>';
-				// }
-
-				if (!i) {
-					screenVirtHeight = (window.innerWidth > 1200) ? 121 : sEl.scrollHeight + sEl.scrollTop;
-				} else {
+				if (sEl.scrollHeight > sEl.offsetHeight) {
 					screenVirtHeight = sEl.scrollHeight + sEl.scrollTop;
 
 					sEl.classList.add('screen_inner-scroll');
 
 					sEl.innerHTML = '<div class="screen_inner-scroll__in">' + sEl.innerHTML + '</div>';
+				} else {
+					screenVirtHeight = (window.innerWidth > 1200) ? 121 : sEl.scrollHeight + sEl.scrollTop;
 				}
 
 				if (i == 1) {
@@ -140,17 +129,20 @@
 					bottomEdge: heightSum,
 					divider: (i == 1) ? 2 : 1
 				};
-
-				sEl.setAttribute('data-bot-edge', heightSum);
 			}
-// console.log(this.screenProps);
-			this.wrapHeight = heightSum;
 
-			this.wrapEl.style.height = heightSum + 'px';
+			if (this.opt.horisontal != true) {
+				this.wrapHeight = heightSum;
+				this.wrapEl.style.height = heightSum + 'px';
+			} else {
+				this.wrapEl.classList.add('screen-horisontal');
+			}
 		},
 
 		init: function (opt) {
 			const wrapEl = document.querySelector('.screen-wrap');
+
+			this.opt = opt || {};
 
 			if (!wrapEl) return;
 

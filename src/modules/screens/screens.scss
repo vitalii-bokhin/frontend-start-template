@@ -9,12 +9,24 @@
 	top: 100%;
 	transition: 1s;
 	z-index: 1;
+	.screen-horisontal &{
+		top: auto;
+		left: 100%;
+	}
 	&_first{
 		top: 0 !important;
+		.screen-horisontal &{
+			top: auto !important;
+			left: 0 !important;
+		}
 	}
 	&_top,
 	&_current{
 		top: 0;
+		.screen-horisontal &{
+			top: auto;
+			left: 0;
+		}
 	}
 	&_inner-scroll{
 		&__in{

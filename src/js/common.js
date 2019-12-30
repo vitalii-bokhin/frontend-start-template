@@ -113,7 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	// screens
-	Screens.init();
+	Screens.init({
+		horisontal: true
+	});
 
 	// Screens2.init({
 	// 	container: '.screen-wrap',

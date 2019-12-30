@@ -1503,12 +1503,27 @@ hr {
   z-index: 1;
 }
 
+.screen-horisontal .screen {
+  top: auto;
+  left: 100%;
+}
+
 .screen_first {
   top: 0 !important;
 }
 
+.screen-horisontal .screen_first {
+  top: auto !important;
+  left: 0 !important;
+}
+
 .screen_top, .screen_current {
   top: 0;
+}
+
+.screen-horisontal .screen_top, .screen-horisontal .screen_current {
+  top: auto;
+  left: 0;
 }
 
 .screen_inner-scroll__in {
