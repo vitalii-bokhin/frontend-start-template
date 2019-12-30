@@ -113,11 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	// screens
-	Screens.init({
-		container: '.screen-wrap',
-		duration: 700, // default - 1000
-		menuCurrentClass: 'current' // default - 'menu__item_current'
-	});
+	Screens.init();
+
+	// Screens2.init({
+	// 	container: '.screen-wrap',
+	// 	duration: 700, // default - 1000
+	// 	menuCurrentClass: 'current' // default - 'menu__item_current'
+	// });
 	
 	// smooth scroll
 	// ScrollSmooth.init();

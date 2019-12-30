@@ -5,23 +5,50 @@
 
 /* screens */
 .screen{
-	width: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	height: 100%;
-	visibility: hidden;
-	opacity: 0;
-	padding-top: 100px;
-	&_visible{
-		visibility: visible;
+	@extend %fwh;
+	top: 100%;
+	transition: 1s;
+	z-index: 1;
+	&_first{
+		top: 0 !important;
 	}
-	&_active{
-		position: relative;
-		opacity: 1;
+	&_top,
+	&_current{
+		top: 0;
 	}
-	&-wrap{
+	&_inner-scroll{
+		&__in{
+			@extend %fwh;
+			height: auto;
+			transition: .5s;
+		}
+	}
+	&-container{
+		@extend %fwh;
+		position: fixed;
+		overflow: hidden;
+	}
+	@media(max-width: 1200px){
 		position: relative;
-		padding: 0 !important;
+		top: 0;
+		height: 100vh;
+		&_inner-scroll{
+			height: auto !important;
+			&__in{
+				position: relative;
+				top: 0 !important;
+			}
+		}
+		&-container{
+			position: relative;
+			overflow: visible;
+			height: auto;
+		}
+		&-wrap{
+			height: auto !important;
+		}
+		&:first-child{
+			z-index: 4;
+		}
 	}
 }

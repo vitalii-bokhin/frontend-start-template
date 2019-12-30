@@ -21,6 +21,7 @@ const modulesOn = [
 	'header/lang',
 	'fsscroll',
 	'screens',
+	// 'screens2',
 	// 'scrollsmooth',
 	'toggle',
 	'flex-image',

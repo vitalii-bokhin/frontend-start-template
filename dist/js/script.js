@@ -490,375 +490,178 @@ FsScroll.init({
 		}
 	};
 })();
-/* 
-Screens.init({
-	container: '.main',
-	duration: 700 // default - 1000,
-	menuCurrentClass: 'current' // default - 'menu__item_current'
-});
-
-Screens.setHeight(); // call on window resize
-
-Screens.onChange = function (nextScreenElem) {}
-*/
-
 ; var Screens;
 
 (function () {
 	'use strict';
-	
+
 	Screens = {
-		options: {},
-		contElem: null,
-		scrolling: false,
-		scrollSum: 0,
+		wrapHeight: 0,
+		wrapEl: 0,
+		screenElems: null,
+		screenProps: null,
+		curScreenInd: 0,
+		screenChanging: false,
+		lastEvenSrc: 'win',
 		onChange: null,
-		
-		menu: function (currentScreenElem) {
-			const menuElements = document.querySelectorAll('.js-change-screen-menu'),
-			curMenuItElem = document.querySelector('.js-change-screen-menu[data-screen="#' + currentScreenElem.id + '"]'),
-			curClass = this.options.menuCurrentClass || 'current';
-			
-			for (let i = 0; i < menuElements.length; i++) {
-				const mEl = menuElements[i];
-				
-				mEl.parentElement.classList.remove(curClass);
-			}
-			
-			if (curMenuItElem) {
-				curMenuItElem.parentElement.classList.add(curClass);
-			}
-		},
-		
-		changeScreen: function (nextScreenElem) {
-			const currentScreenElem = this.contElem.querySelector('.screen_visible');
-			
-			if (nextScreenElem === currentScreenElem) return;
-			
-			if (nextScreenElem.offsetHeight < window.innerHeight) {
-				nextScreenElem.style.height = window.innerHeight + 'px';
-			}
-			
-			this.scrolling = true;
-			this.scrollSum = 0;
-			
-			const duration = this.options.duration || 1000;
-			
-			currentScreenElem.classList.remove('screen_active');
-			
-			nextScreenElem.classList.add('screen_visible');
-			
-			setTimeout(() => {
-				this.menu(nextScreenElem);
-			}, duration / 2);
-			
-			animate(function (progress) {
-				currentScreenElem.style.opacity = 1 - progress;
-				
-				nextScreenElem.style.opacity = progress;
-			}, duration, false, () => {
-				setTimeout(() => {
-					currentScreenElem.classList.remove('screen_visible');
-					
-					nextScreenElem.classList.add('screen_active');
-					
-					this.scrolling = false;
-				}, 21);
-			});
-			
-			window.location.hash = '#' + nextScreenElem.id.split('-')[0];
+
+		screenHadChanged: function () {
+			if (this.lastEvenSrc == 'fun') return;
+
+			this.lastEvenSrc = 'fun';
+
+			this.scrollHandler(window.pageYOffset);
 
 			if (this.onChange) {
-				this.onChange(nextScreenElem);
+				this.onChange();
 			}
 		},
-		
-		nextScreen: function (delta) {
-			const currentScreenElem = this.contElem.querySelector('.screen_visible');
-			
-			let nextScreenElem = null;
-			
-			if (delta > 0) {
-				if (currentScreenElem && currentScreenElem.nextElementSibling && currentScreenElem.nextElementSibling.classList.contains('screen')) {
-					nextScreenElem = currentScreenElem.nextElementSibling;
+
+		goToScreen: function (ind) {
+			if (ind == this.curScreenInd) return;
+
+			this.screenChanging = true;
+
+			this.screenElems[this.curScreenInd].classList.remove('screen_current');
+
+			if (ind < this.curScreenInd) {
+				this.screenElems[this.curScreenInd].classList.remove('screen_top');
+			}
+
+			this.screenElems[ind].classList.add('screen_top');
+			this.screenElems[ind].classList.add('screen_current');
+
+			this.curScreenInd = ind;
+
+			setTimeout(() => {
+				this.screenChanging = false;
+				this.screenHadChanged();
+			}, 1000);
+		},
+
+		scrollInner: function (scrTop) {
+			for (let i = 0; i < this.screenElems.length; i++) {
+				const scrEl = this.screenElems[i];
+
+				if (!scrEl.classList.contains('screen_inner-scroll')) continue;
+
+				const inScrollEl = scrEl.querySelector('.screen_inner-scroll__in'),
+					sP = this.screenProps[i];
+
+				// let top = sP.topEdge - scrTop;
+				let top = ((inScrollEl.offsetHeight - window.innerHeight) / 100) * (scrTop / ((sP.bottomEdge - sP.topEdge - window.innerHeight) / 100)) * -1;
+
+				if (top > 0) {
+					top = 0;
+				} else if (top < scrEl.offsetHeight - inScrollEl.offsetHeight) {
+					top = scrEl.offsetHeight - inScrollEl.offsetHeight;
 				}
-			} else if (delta < 0) {
-				if (currentScreenElem && currentScreenElem.previousElementSibling && currentScreenElem.previousElementSibling.classList.contains('screen')) {
-					nextScreenElem = currentScreenElem.previousElementSibling;
+
+				inScrollEl.style.top = top.toFixed(0) + 'px';
+			}
+		},
+
+		scrollHandler: function (scrTop) {
+			const scrBot = scrTop + window.innerHeight;
+
+			this.scrollInner(scrTop);
+
+			if (this.screenChanging) return;
+
+			this.screenProps.forEach((sP, i) => {
+				if (scrTop >= sP.topEdge && scrTop < sP.bottomEdge) {
+					this.goToScreen(i);
 				}
-			}
-			
-			if (nextScreenElem) {
-				this.changeScreen(nextScreenElem);
-			}
-		},
 
-		setHeight: function () {
-			if (!this.contElem) return;
-
-			const screenElements = this.contElem.querySelectorAll('.screen'),
-			actScreenElem = this.contElem.querySelector('.screen_active');
-
-			for (let i = 0; i < screenElements.length; i++) {
-				const scEl = screenElements[i];
-				
-				scEl.style.height = 'auto';
-			}
-			
-			if (actScreenElem.offsetHeight < window.innerHeight) {
-				actScreenElem.style.height = window.innerHeight + 'px';
-			}
-		},
-		
-		init: function (options) {
-			const contElem = document.querySelector(options.container);
-			
-			if (!contElem) return;
-			
-			this.options = options;
-			this.contElem = contElem;
-			
-			this.setHeight();
-
-			// scroll or swipe event
-			if ('ontouchstart' in document) {
-				const _this = this;
-
-				$(contElem).swipe({
-					allowPageScroll: "vertical",
-					swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
-						if (direction == 'down') {
-							if (!_this.scrolling) {
-								_this.nextScreen(-1);
-							}
-						} else if (direction == 'up') {
-							if (!_this.scrolling) {
-								_this.nextScreen(1);
-							}
-						}
-					}
-				});
-			} else {
-				contElem.addEventListener('wheel', (e) => {
-					if (document.documentElement.offsetHeight >= document.documentElement.scrollHeight) {
-						e.preventDefault();
-
-						if (!this.scrolling) {
-							this.nextScreen(e.deltaY);
-						}
-					} else {
-						const dS = document.documentElement.scrollHeight - document.documentElement.offsetHeight;
-
-						if ((e.deltaY > 0 && window.pageYOffset >= dS) || e.deltaY < 0 && window.pageYOffset == 0) {
-							e.preventDefault();
-
-							const absDelta = Math.abs(e.deltaY);
-
-							this.scrollSum += absDelta;
-
-							if (!this.scrolling && this.scrollSum > (absDelta * 3)) {
-								this.nextScreen(e.deltaY);
-							}
-						}
-					}
-				});
-			}
-			
-			// click event
-			document.addEventListener('click', (e) => {
-				const chngSecBtn = e.target.closest('.js-change-screen-menu');
-				
-				if (chngSecBtn) {
-					e.preventDefault();
-
-					const curClass = this.options.menuCurrentClass || 'current';
-					
-					if (!this.scrolling && !chngSecBtn.parentElement.classList.contains(curClass)) {
-						this.changeScreen(document.querySelector(chngSecBtn.getAttribute('data-screen')));
-					}
+				if (scrBot + (window.innerHeight / 3) >= sP.bottomEdge) {
+					this.screenElems[i].classList.add('screen_bottom-edge');
+				} else {
+					this.screenElems[i].classList.remove('screen_bottom-edge');
 				}
 			});
-			
-			// change by hash url
-			if (window.location.hash) {
-				const screenElem = document.getElementById(window.location.hash.split('#')[1] + '-screen');
-				
-				if (screenElem) {
-					this.changeScreen(screenElem);
+
+		},
+
+		setProps: function () {
+			if (!this.screenElems) return;
+
+			let heightSum = 0;
+
+			this.screenProps = [];
+
+			this.screenElems[0].classList.add('screen_top');
+			this.screenElems[0].classList.add('screen_first');
+
+			for (let i = 0; i < this.screenElems.length; i++) {
+				const sEl = this.screenElems[i];
+
+				let screenVirtHeight;
+
+				sEl.style.height = window.innerHeight + 'px';
+
+				// console.log(sEl.scrollHeight, sEl.scrollTop, sEl.offsetHeight, sEl.scrollHeight + sEl.scrollTop);
+
+				// if (sEl.scrollHeight + sEl.scrollTop <= sEl.offsetHeight) {
+				// 	screenVirtHeight = (window.innerWidth > 1200) ? 121 : sEl.scrollHeight + sEl.scrollTop;
+				// } else {
+				// 	screenVirtHeight = sEl.scrollHeight + sEl.scrollTop;
+
+				// 	sEl.classList.add('screen_inner-scroll');
+
+				// 	sEl.innerHTML = '<div class="screen_inner-scroll__in">' + sEl.innerHTML + '</div>';
+				// }
+
+				if (!i) {
+					screenVirtHeight = (window.innerWidth > 1200) ? 121 : sEl.scrollHeight + sEl.scrollTop;
+				} else {
+					screenVirtHeight = sEl.scrollHeight + sEl.scrollTop;
+
+					sEl.classList.add('screen_inner-scroll');
+
+					sEl.innerHTML = '<div class="screen_inner-scroll__in">' + sEl.innerHTML + '</div>';
 				}
+
+				if (i == 1) {
+					screenVirtHeight = screenVirtHeight * 2;
+				}
+
+				heightSum += screenVirtHeight;
+
+				this.screenProps[i] = {
+					topEdge: (!i) ? 0 : this.screenProps[i - 1].bottomEdge + 1,
+					bottomEdge: heightSum,
+					divider: (i == 1) ? 2 : 1
+				};
+
+				sEl.setAttribute('data-bot-edge', heightSum);
 			}
+// console.log(this.screenProps);
+			this.wrapHeight = heightSum;
+
+			this.wrapEl.style.height = heightSum + 'px';
+		},
+
+		init: function (opt) {
+			const wrapEl = document.querySelector('.screen-wrap');
+
+			if (!wrapEl) return;
+
+			const contEl = document.querySelector('.screen-container'),
+				screenElems = contEl.querySelectorAll('.screen');
+
+			this.wrapEl = wrapEl;
+			this.screenElems = screenElems;
+
+			this.setProps();
+
+			window.addEventListener('scroll', () => {
+				this.lastEvenSrc = 'win';
+				this.scrollHandler(window.pageYOffset);
+			});
 		}
 	};
+
 })();
-
-// (function () {
-// 	'use strict';
-
-// 	Screens = {
-// 		options: null,
-// 		contElem: null,
-// 		scrolling: false,
-// 		scrollSum: 0,
-
-// 		menu: function (currentScreenElem) {
-// 			const menuElements = document.querySelectorAll('.js-change-screen-menu'),
-// 				curMenuItElem = document.querySelector('.js-change-screen-menu[data-screen="#' + currentScreenElem.id + '"]'),
-// 				curClass = this.options.menuCurrentClass || 'menu__item_current';
-
-// 			for (let i = 0; i < menuElements.length; i++) {
-// 				const mEl = menuElements[i];
-
-// 				mEl.parentElement.classList.remove(curClass);
-// 			}
-
-// 			if (curMenuItElem) {
-// 				curMenuItElem.parentElement.classList.add(curClass);
-// 			}
-// 		},
-
-// 		changeScreen: function (nextScreenElem) {
-// 			const currentScreenElem = this.contElem.querySelector('.screen_visible');
-
-// 			if (nextScreenElem === currentScreenElem) return;
-
-// 			this.scrolling = true;
-// 			this.scrollSum = 0;
-
-// 			const duration = this.options.duration || 1000;
-
-// 			currentScreenElem.classList.remove('screen_active');
-
-// 			nextScreenElem.classList.add('screen_visible');
-
-// 			setTimeout(() => {
-// 				this.menu(nextScreenElem);
-// 			}, duration / 2);
-
-// 			animate(function (progress) {
-// 				currentScreenElem.style.opacity = 1 - progress;
-
-// 				nextScreenElem.style.opacity = progress;
-// 			}, duration, false, () => {
-// 				setTimeout(() => {
-// 					currentScreenElem.classList.remove('screen_visible');
-
-// 					nextScreenElem.classList.add('screen_active');
-
-// 					this.scrolling = false;
-// 				}, 21);
-// 			});
-
-// 			window.location.hash = '#' + nextScreenElem.id.split('-')[0];
-
-// 			if (window.Video && Video.stop != undefined) {
-// 				Video.stop();
-// 			}
-// 		},
-
-// 		nextScreen: function (delta) {
-// 			const currentScreenElem = this.contElem.querySelector('.screen_visible');
-
-// 			let nextScreenElem = null;
-
-// 			if (delta > 0) {
-// 				if (currentScreenElem && currentScreenElem.nextElementSibling && currentScreenElem.nextElementSibling.classList.contains('screen')) {
-// 					nextScreenElem = currentScreenElem.nextElementSibling;
-// 				}
-// 			} else if (delta < 0) {
-// 				if (currentScreenElem && currentScreenElem.previousElementSibling && currentScreenElem.previousElementSibling.classList.contains('screen')) {
-// 					nextScreenElem = currentScreenElem.previousElementSibling;
-// 				}
-// 			}
-
-// 			if (nextScreenElem) {
-// 				this.changeScreen(nextScreenElem);
-// 			}
-// 		},
-
-// 		init: function (options) {
-// 			const contElem = document.querySelector(options.container);
-
-// 			if (!contElem) return;
-
-// 			this.options = options;
-// 			this.contElem = contElem;
-
-// 			// const screenElements = contElem.querySelectorAll('.screen');
-
-// 			// for (let i = 0; i < screenElements.length; i++) {
-// 			// 	const scrElem = screenElements[i];
-
-// 			// 	scrElem.setAttribute('data-height', scrElem.scrollHeight);
-
-// 			// 	if (!i) {
-// 			// 		contElem.style.height = scrElem.scrollHeight + 'px';
-// 			// 	}
-// 			// }
-
-// 			if ('ontouchstart' in document) {
-// 				const _this = this;
-
-// 				$(contElem).swipe({
-// 					allowPageScroll: "vertical",
-// 					swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
-// 						const dS = document.documentElement.scrollHeight - document.documentElement.offsetHeight;
-
-// 						if (direction == 'down' && window.pageYOffset == 0) {
-// 							if (!_this.scrolling) {
-// 								_this.nextScreen(-1);
-// 							}
-// 						} else if (direction == 'up') {
-// 							if (!_this.scrolling) {
-// 								_this.nextScreen(1);
-// 							}
-// 						}
-// 					}
-// 				});
-// 			} else if ('onwheel' in document) {
-// 				contElem.addEventListener('wheel', (e) => {
-// 					if (document.documentElement.offsetHeight >= document.documentElement.scrollHeight) {
-// 						e.preventDefault();
-
-// 						if (!this.scrolling) {
-// 							this.nextScreen(e.deltaY);
-// 						}
-// 					} else {
-// 						const dS = document.documentElement.scrollHeight - document.documentElement.offsetHeight;
-
-// 						if ((e.deltaY > 0 && window.pageYOffset >= dS) || e.deltaY < 0 && window.pageYOffset == 0) {
-// 							e.preventDefault();
-
-// 							const absDelta = Math.abs(e.deltaY);
-
-// 							this.scrollSum += absDelta;
-
-// 							if (!this.scrolling && this.scrollSum > (absDelta * 3)) {
-// 								this.nextScreen(e.deltaY);
-// 							}
-// 						}
-// 					}
-
-// 				});
-// 			}
-
-// 			document.addEventListener('click', (e) => {
-// 				const chngSecBtn = e.target.closest('.js-change-screen-menu');
-
-// 				if (chngSecBtn) {
-// 					e.preventDefault();
-
-// 					if (!this.scrolling && !chngSecBtn.parentElement.classList.contains('menu__item_current')) {
-// 						this.changeScreen(document.querySelector(chngSecBtn.getAttribute('data-screen')));
-// 					}
-// 				}
-// 			});
-
-// 			if (window.location.hash) {
-// 				this.changeScreen(document.querySelector(window.location.hash + '-screen'));
-// 			}
-// 		}
-// 	};
-// })();
 /*
 Toggle.init({
 	button: '.js-tgl-btn',
