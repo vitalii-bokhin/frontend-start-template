@@ -111,7 +111,7 @@
 
 			options.send = null;
 		} else {
-			xhr.open('POST', options.url);
+			xhr.open('POST', options.url, );
 
 			if (typeof options.send == 'string') {
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

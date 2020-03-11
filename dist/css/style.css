@@ -32,6 +32,7 @@ input {
 
 img {
   display: inline-block;
+  max-width: 100%;
   vertical-align: bottom;
   border: none;
 }
@@ -92,8 +93,6 @@ hr {
 .row_wrp {
   margin: 0 auto;
   max-width: 1010px;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .row_nw {
@@ -132,13 +131,6 @@ hr {
 .row_block > [class*="col"] {
   float: left;
   width: 100%;
-}
-
-@media (max-width: 1200px) {
-  .row_wrp {
-    padding-left: 0;
-    padding-right: 0;
-  }
 }
 
 @media (min-width: 1001px) {
@@ -939,15 +931,15 @@ hr {
 }
 
 /* social */
-.social {
-  font-size: 0;
-  text-align: center;
+.sc {
+  display: flex;
+  justify-content: center;
+  list-style: none;
 }
 
-.social__item {
-  display: inline-block;
-  list-style: none;
-  margin: 0 10px;
+.sc__item {
+  flex: 0 1 auto;
+  padding: 0 5px;
 }
 
 /* link */

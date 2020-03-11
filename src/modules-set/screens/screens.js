@@ -131,9 +131,12 @@
 				};
 			}
 
-			this.wrapHeight = (this.opt.horisontal == true) ? window.innerHeight : heightSum;
-
-			this.wrapEl.style.height = heightSum + 'px';
+			if (this.opt.horisontal != true) {
+				this.wrapHeight = heightSum;
+				this.wrapEl.style.height = heightSum + 'px';
+			} else {
+				this.wrapEl.classList.add('screen-horisontal');
+			}
 		},
 
 		init: function (opt) {

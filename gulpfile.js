@@ -115,9 +115,11 @@ gulp.task('dev', gulp.series('copy_modules', 'clean_modules_folder', 'include_mo
 		.pipe(notify('Common script had copied!'));
 
 	// import js assets
-	gulp.src(jsAssets)
+	if (jsAssets.length) {
+		gulp.src(jsAssets)
 		.pipe(gulp.dest(dist_path + '/js'))
 		.pipe(notify('JS Assets had imported!'));
+	}
 
 	// watch css
 	gulp.watch(['src/sass/*.scss'].concat(modulesOn.map((m) => 'src/modules/' + m + '/*.scss')), gulp.series(function (done) {

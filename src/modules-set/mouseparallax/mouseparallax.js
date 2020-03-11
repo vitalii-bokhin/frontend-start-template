@@ -70,13 +70,13 @@ function Mouseparallax(elem, options) {
 		translateY = _.translateElement.Y;
 
 		if (opt.rangeX) {
-			if (_.translateElement.X >= opt.rangeX[0]) {
+			if (_.translateElement.X <= opt.rangeX[0] * -1) {
 				if (direct.X == 'left') {
 					startMousePos.X = e.clientX;
-					_.startElementPos.X = +opt.rangeX[0];
+					_.startElementPos.X = +opt.rangeX[0] * -1;
 				}
-				translateX = opt.rangeX[0];
-			} else if (_.translateElement.X <= opt.rangeX[1]) {
+				translateX = opt.rangeX[0] * -1;
+			} else if (_.translateElement.X >= opt.rangeX[1]) {
 				if (direct.X == 'right') {
 					startMousePos.X = e.clientX;
 					_.startElementPos.X = +opt.rangeX[1];
@@ -86,18 +86,18 @@ function Mouseparallax(elem, options) {
 		}
 
 		if (opt.rangeY) {
-			if (_.translateElement.Y >= opt.rangeY[0]) {
+			if (_.translateElement.Y >= opt.rangeY[1]) {
 				if (direct.Y == 'down') {
-					startMousePos.Y = e.clientY;
-					_.startElementPos.Y = +opt.rangeY[0];
-				}
-				translateY = opt.rangeY[0];
-			} else if (_.translateElement.Y <= opt.rangeY[1]) {
-				if (direct.Y == 'up') {
 					startMousePos.Y = e.clientY;
 					_.startElementPos.Y = +opt.rangeY[1];
 				}
 				translateY = opt.rangeY[1];
+			} else if (_.translateElement.Y <= +opt.rangeY[0] * -1) {
+				if (direct.Y == 'up') {
+					startMousePos.Y = e.clientY;
+					_.startElementPos.Y = +opt.rangeY[0] * -1;
+				}
+				translateY = +opt.rangeY[0] * -1;
 			}
 		}
 

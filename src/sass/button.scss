@@ -100,13 +100,13 @@
 }
 
 /* social */
-.social{
-	font-size: 0;
-	text-align: center;
+.sc{
+	display: flex;
+	justify-content: center;
+	list-style: none;
 	&__item{
-		display: inline-block;
-		list-style: none;
-		margin: 0 10px;
+		flex: 0 1 auto;
+		padding: 0 5px;
 	}
 }
 
