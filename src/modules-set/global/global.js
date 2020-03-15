@@ -1,5 +1,5 @@
 // global variables
-; var browser, elemIsHidden, ajax, animate, Storage;
+; var browser, elemIsHidden, ajax, animate, LocStor;
 
 (function () {
 	'use strict';
@@ -180,8 +180,8 @@
 		return Math.pow(timeFraction, 2)
 	}
 
-	// Local/Session Storage
-	Storage = {
+	// Local Storage
+	LocStor = {
 		set: function(prop, val) {
 			window.localStorage.setItem(prop, val);
 		},
@@ -192,4 +192,5 @@
 			return (val !== null) ? val : false;
 		}
 	};
+
 })();

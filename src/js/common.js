@@ -391,6 +391,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		new Maskinput(this, 'tel');
 	});
 	// $('input[data-type="date"]').mask('99.99.9999');
+
+	if ($('.parallax-element').length) {
+		new Mouseparallax('.parallax-element', {
+			listener: '.section'
+		});
+	}
 });
 
 // GetCountriesAndCitiesList

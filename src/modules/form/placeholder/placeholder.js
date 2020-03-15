@@ -1,10 +1,10 @@
 ; var Placeholder;
 
-(function() {
+(function () {
 	'use strict';
 
 	Placeholder = {
-		init: function(elementsStr) {
+		init: function (elementsStr) {
 			var elements = document.querySelectorAll(elementsStr);
 
 			if (!elements.length) return;
@@ -14,8 +14,8 @@
 
 				if (elem.placeholder) {
 
-					var elemFor = (elem.id) ? elem.id : 'placeholder-index-'+ i,
-					label = document.createElement('label');
+					var elemFor = (elem.id) ? elem.id : 'placeholder-index-' + i,
+						label = document.createElement('label');
 
 					label.htmlFor = elemFor;
 					label.className = 'placeholder';
@@ -24,7 +24,7 @@
 					elem.parentElement.insertBefore(label, elem);
 
 					elem.removeAttribute('placeholder');
-					
+
 					if (!elem.id) {
 						elem.id = elemFor;
 					}
@@ -53,9 +53,9 @@
 				}
 			}, true);
 		},
-		
-		hide: function(elem, hide) {
-			var label = document.querySelector('label.placeholder[for="'+ elem.id +'"]');
+
+		hide: function (elem, hide) {
+			var label = document.querySelector('label.placeholder[for="' + elem.id + '"]');
 
 			if (!label) {
 				return;
@@ -82,7 +82,7 @@
 	};
 
 	//init scripts
-	document.addEventListener('DOMContentLoaded', function() {
-		Placeholder.init('input[type="text"], input[type="password"], textarea');
+	document.addEventListener('DOMContentLoaded', function () {
+		Placeholder.init('input[type="text"], input[type="number"], input[type="tel"], input[type="password"], textarea');
 	});
 })();

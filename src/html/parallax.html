@@ -15,10 +15,10 @@
 <!--MAIN/-->
 <main class="main">
 
-	<div class="section" style="background: gray; width: 500px; margin: auto;">
+	<div class="section" style="background: gray; width: 90%; margin: auto;">
 		
 		<!-- <div class="parallax-element el1" data-delta-x="150" style="background: red"></div> -->
-		<div class="parallax-element el2" style="background: blue" data-range-x="20,0"></div>
+		<div class="parallax-element el2" data-range-x="20,0" style="background: blue"></div>
 		<!-- <div class="parallax-element el3" style="background: green"></div> -->
 
 
@@ -36,35 +36,6 @@
 <!--/POPUPs-->
 
 @@include('_javascript.html')
-
-
-<script>
-	$(document).ready(function() {
-
-		
-		$('.parallax-element').each(function() {
-			mouseparallax(this, {
-				listener: '.section'
-			});
-		});
-
-
-		/*mouseparallax('.el1', {
-				listener: '.section',
-				deltaX: 150
-			});
-
-		mouseparallax('.el2', {
-				listener: document,
-				deltaX: 80
-			});
-		
-		mouseparallax('.el3', {
-				listener: '.section'
-			});*/
-
-		});
-	</script>
 
 </body>
 </html>

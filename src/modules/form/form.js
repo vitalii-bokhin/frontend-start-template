@@ -352,7 +352,7 @@ var ValidateForm, Form;
 			var err = 0;
 
 			// text, password, textarea
-			var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], input[type="number"], textarea');
+			var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], input[type="number"], input[type="tel"], textarea');
 
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
@@ -539,7 +539,7 @@ var ValidateForm, Form;
 
 		init: function (formSelector) {
 			document.addEventListener('input', (e) => {
-				var elem = e.target.closest(formSelector + ' input[type="text"],' + formSelector + ' input[type="password"],' + formSelector + ' input[type="number"],' + formSelector + ' textarea');
+				var elem = e.target.closest(formSelector + ' input[type="text"],' + formSelector + ' input[type="password"],' + formSelector + ' input[type="number"],' + formSelector + ' input[type="tel"],' + formSelector + ' textarea');
 
 				if (elem && elem.hasAttribute('data-tested')) {
 					this.validateOnInput(elem);
@@ -613,7 +613,7 @@ var ValidateForm, Form;
 		onSubmit: null,
 
 		clearForm: function (formElem) {
-			var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], textarea');
+			var elements = formElem.querySelectorAll('input[type="text"], input[type="number"],input[type="tel"], input[type="password"], textarea');
 
 			for (var i = 0; i < elements.length; i++) {
 				var elem = elements[i];
@@ -813,7 +813,7 @@ var ValidateForm, Form;
 
 	// init scripts
 	document.addEventListener('DOMContentLoaded', function () {
-		BindLabels('input[type="text"], input[type="checkbox"], input[type="radio"]');
+		BindLabels('input[type="text"], input[type="number"], input[type="tel"], input[type="checkbox"], input[type="radio"]');
 		// SetTabindex('input[type="text"], input[type="password"], textarea');
 		varHeightTextarea.init();
 		NextFieldset.init('.js-next-fieldset-btn', '.js-prev-fieldset-btn');
