@@ -13,19 +13,24 @@
 	'use strict';
 
 	// fix header
-	const headerElem = document.getElementById('header');
+	document.addEventListener('DOMContentLoaded', function () {
+		const headerElem = document.getElementById('header');
 
-	function fixHeader() {
-		if (window.pageYOffset > 21) {
-			headerElem.classList.add('header_fixed');
-		} else if (!document.body.classList.contains('popup-is-opened') && !document.body.classList.contains('mob-nav-is-opened')) {
-			headerElem.classList.remove('header_fixed');
+		function fixHeader() {
+			if (window.pageYOffset > 21) {
+				headerElem.classList.add('header_fixed');
+			} else if (
+				!document.body.classList.contains('popup-is-opened') &&
+				!document.body.classList.contains('mob-nav-is-opened')
+			) {
+				headerElem.classList.remove('header_fixed');
+			}
 		}
-	}
 
-	fixHeader();
+		fixHeader();
 
-	window.addEventListener('scroll', fixHeader);
+		window.addEventListener('scroll', fixHeader);
+	});
 
 	//mob menu
 	MobNav = {
