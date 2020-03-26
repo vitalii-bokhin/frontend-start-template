@@ -355,7 +355,11 @@ document.addEventListener('DOMContentLoaded', function () {
 						var response = JSON.parse(response);
 
 						if (response.status == 'sent') {
+
 							Popup.message('Форма отправлена');
+							// ValidateForm.customErrorTip(input, errorTxt, isLockForm);
+							// ValidateForm.customFormErrorTip(formElem, errorTxt);
+							// Popup.message('Форма отправлена');
 							// Popup.message('Форма отправлена', '#message-popup', function() {});
 
 							callback({ clearForm: true, unlockSubmitButton: true });

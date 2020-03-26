@@ -57,6 +57,7 @@ const modulesOn = [
 	// 'floatslider',
 	// 'slickslider',
 	// 'scrollpane',
+	'zoom'
 ],
 	dist_path = 'dist';
 

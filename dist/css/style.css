@@ -926,6 +926,7 @@ hr {
 }
 
 .link, .green-link {
+  display: inline-block;
   line-height: normal;
   text-decoration: none;
   transition: .21s;
@@ -3326,6 +3327,27 @@ select {
   content: "";
   width: 100%;
   padding-bottom: 100%;
+}
+
+.zoom {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  width: 262px;
+  height: 262px;
+  border-radius: 50%;
+  box-shadow: 0 0 21px rgba(0, 0, 0, 0.21);
+  overflow: hidden;
+  background: #ffffff;
+  cursor: none;
+}
+
+.zoom__inner {
+  position: absolute;
+  transform: scale(2);
+  transform-origin: 0 0;
 }
 
 .list li:before {
