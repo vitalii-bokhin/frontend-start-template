@@ -1,8 +1,3 @@
-@import "../../sass/variables";
-@import "../../sass/functions";
-@import "../../sass/extends";
-@import "../../sass/mixins";
-
 .webgl{
    position: relative;
    @include fixprop;

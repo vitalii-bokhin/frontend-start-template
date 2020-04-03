@@ -10,6 +10,7 @@ const gulp = require('gulp'),
 	replace = require('gulp-replace'),
 	notify = require('gulp-notify'),
 	del = require('del'),
+	fs = require('fs'),
 	svgSprite = require('gulp-svg-sprite');
 
 // modules
@@ -76,7 +77,20 @@ modulesOn.forEach(function (val) {
 });
 
 // src
-let cssSrc = ['src/sass/font.scss', 'src/sass/reset.scss', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss', 'src/sass/icon.scss'].concat(modulesOn.map((m) => 'src/modules/' + m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/decor.scss', 'src/sass/class.scss'),
+
+
+function cssModules() {
+	const cssSrc = modulesOn.map(function (m) {
+		const spl = m.split('/');
+		return 'src/modules/' + m + '/' + spl[spl.length - 1] + '.scss';
+	});
+
+	return cssSrc.filter(function (path) {
+		return fs.existsSync(path);
+	});
+}
+
+const cssSrc = ['src/sass/font.scss', 'src/sass/reset.scss', 'variables', 'functions', 'extends', 'mixins', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss', 'src/sass/icon.scss'].concat(cssModules(), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/decor.scss', 'src/sass/class.scss'),
 	jsSrc = modulesOn.map((m) => 'src/modules/' + m + '/*.js');
 
 // DEV MODE
@@ -104,8 +118,12 @@ gulp.task('dev', gulp.series('copy_modules', 'clean_modules_folder', 'include_mo
 	// html dev
 	HTML(['src/html/**/*.html', '!src/html/**/_*.html']);
 
-	// build style.css
-	CSS(cssSrc);
+	// build scss
+	const cssCode = cssSrc.map(src => '@import "' + src + '"').join('; ');
+
+	fs.writeFile('src/sass/common.scss', cssCode, function () {
+		CSS();
+	});
 
 	// build script.js
 	JS(jsSrc);
@@ -118,13 +136,13 @@ gulp.task('dev', gulp.series('copy_modules', 'clean_modules_folder', 'include_mo
 	// import js assets
 	if (jsAssets.length) {
 		gulp.src(jsAssets)
-		.pipe(gulp.dest(dist_path + '/js'))
-		.pipe(notify('JS Assets had imported!'));
+			.pipe(gulp.dest(dist_path + '/js'))
+			.pipe(notify('JS Assets had imported!'));
 	}
 
 	// watch css
 	gulp.watch(['src/sass/*.scss'].concat(modulesOn.map((m) => 'src/modules/' + m + '/*.scss')), gulp.series(function (done) {
-		CSS(cssSrc);
+		CSS();
 		done();
 	}));
 
@@ -144,7 +162,7 @@ gulp.task('dev', gulp.series('copy_modules', 'clean_modules_folder', 'include_mo
 	// watch html
 	const htmlWatcher = gulp.watch(['src/html/**/*.html', '!src/html/**/_*.html']);
 
-	htmlWatcher.on('change', function(path) {
+	htmlWatcher.on('change', function (path) {
 		return HTML([path, '!src/html/**/_*.html']);
 	});
 
@@ -193,7 +211,7 @@ gulp.task('svgs', function () {
 gulp.task('dist', function () {
 	HTML(['src/html/**/*.html', '!src/html/**/_*.html'], true);
 
-	CSS(cssSrc, true);
+	CSS(true);
 
 	JS(jsSrc, true);
 
@@ -209,7 +227,7 @@ gulp.task('dist', function () {
 
 // Functions
 // css
-function CSS(src, dist) {
+function CSS(dist) {
 	// const concatStream = gulp.src(src)
 	// .pipe(sourcemaps.init())
 	// .pipe(concat('__temp__.scss'))
@@ -221,14 +239,49 @@ function CSS(src, dist) {
 	// .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
 	// .pipe(sourcemaps.write('.'));
 
+	// setTimeout(function () {
+	// 	if (dist) {
+	// 		gulp.src(src)
+	// 			.pipe(sourcemaps.init())
+	// 			.pipe(sass({ outputStyle: 'compact' }).on('error', sass.logError))
+	// 			.pipe(autoprefixer(['last 3 versions']))
+	// 			.pipe(concat('style.css'))
+	// 			// .pipe(rename({suffix: '.min'}))
+	// 			.pipe(sourcemaps.write('.'))
+	// 			.pipe(gulp.dest(dist_path + '/css'))
+	// 			.pipe(notify({
+	// 				title: 'CSS',
+	// 				message: 'Dist Styles'
+	// 			}));
+	// 	} else {
+	// 		gulp.src(src)
+	// 			.pipe(sourcemaps.init())
+	// 			.pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
+	// 			.pipe(concat('style.css'))
+	// 			.pipe(sourcemaps.write('.'))
+	// 			.pipe(gulp.dest(dist_path + '/css'))
+	// 			.pipe(notify({
+	// 				onLast: true,
+	// 				title: 'CSS',
+	// 				message: 'Styles had Compiled!'
+	// 			}));
+
+	// 		// return gulp.merge(concatStream, scssStream)
+	// 		// .pipe(gulp.dest(dist_path +'/css'))
+	// 		// .pipe(notify({
+	// 		// 	title: 'CSS',
+	// 		// 	message: 'Dist Styles'
+	// 		// }));
+	// 	}
+	// }, 321);
+
 	setTimeout(function () {
 		if (dist) {
-			gulp.src(src)
+			gulp.src('src/sass/common.scss')
 				.pipe(sourcemaps.init())
 				.pipe(sass({ outputStyle: 'compact' }).on('error', sass.logError))
 				.pipe(autoprefixer(['last 3 versions']))
-				.pipe(concat('style.css'))
-				// .pipe(rename({suffix: '.min'}))
+				.pipe(rename('style.css'))
 				.pipe(sourcemaps.write('.'))
 				.pipe(gulp.dest(dist_path + '/css'))
 				.pipe(notify({
@@ -236,10 +289,10 @@ function CSS(src, dist) {
 					message: 'Dist Styles'
 				}));
 		} else {
-			gulp.src(src)
+			gulp.src('src/sass/common.scss')
 				.pipe(sourcemaps.init())
 				.pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
-				.pipe(concat('style.css'))
+				.pipe(rename('style.css'))
 				.pipe(sourcemaps.write('.'))
 				.pipe(gulp.dest(dist_path + '/css'))
 				.pipe(notify({
@@ -247,13 +300,6 @@ function CSS(src, dist) {
 					title: 'CSS',
 					message: 'Styles had Compiled!'
 				}));
-
-			// return gulp.merge(concatStream, scssStream)
-			// .pipe(gulp.dest(dist_path +'/css'))
-			// .pipe(notify({
-			// 	title: 'CSS',
-			// 	message: 'Dist Styles'
-			// }));
 		}
 	}, 321);
 }
