@@ -31,12 +31,12 @@ var Accord;
 		},
 
 		init: function(elementStr) {
+			if (!document.querySelectorAll('.accord').length) return;
+
 			document.addEventListener('click', (e) => {
 				var elem = e.target.closest(elementStr);
 
-				if (!elem) {
-					return;
-				}
+				if (!elem || elem.closest('.accord_closed')) return;
 
 				e.preventDefault();
 
