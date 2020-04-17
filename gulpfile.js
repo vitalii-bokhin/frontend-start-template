@@ -185,7 +185,7 @@ gulp.task('svgs', function () {
 		.pipe(svgSprite({
 			shape: {
 				spacing: {
-					padding: 10
+					padding: 2
 				}
 			},
 			mode: {

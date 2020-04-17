@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-	const fsElem = document.getElementById('js-first-screen');
+	var fsElem = document.getElementById('js-first-screen');
 
 	(function initFun() {
 		if (fsElem) {
-			let padTop = 100;
+			var padTop = 100;
 
 			if (window.innerWidth < 1200) {
 				padTop = 60;
 			}
 
-			fsElem.style.height = (window.innerHeight - padTop) + 'px';
+			fsElem.style.height = window.innerHeight - padTop + 'px';
 		}
 
 		FlexImg('.flex-img');
@@ -40,19 +40,19 @@ document.addEventListener('DOMContentLoaded', function () {
 		toggledClass: 'toggled' // def: toggled
 	});
 
-	Toggle.onChange = function (toggleElem, targetElements, state) {
-		// code...
-	}
+	Toggle.onChange = function (toggleElem, targetElements, state) {}
+	// code...
+
 
 	// ajax button
 	/*Ajax.init('.js-ajax');
-	
-	Ajax.success = function(response) {
-		//  code...
-	}*/
+ 
+ Ajax.success = function(response) {
+ 	//  code...
+ }*/
 
 	// popup
-	Popup.init('.js-open-popup');
+	;Popup.init('.js-open-popup');
 	MediaPopup.init('.js-open-media-popup');
 
 	// menu
@@ -73,9 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		element: '.js-tooltip'
 	});
 
-	ToolTip.onShow = function (btnEl, tooltipDivEl) {
-
-	}
+	ToolTip.onShow = function (btnEl, tooltipDivEl) {};
 
 	// alert
 	new Alert({
@@ -129,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// drag line
 	DragLine.init({
 		lineClass: 'dragline'
-	})
+	});
 
 	// anchor
 	Anchor.init('.js-anchor', 700, 100);
@@ -138,43 +136,36 @@ document.addEventListener('DOMContentLoaded', function () {
 	// diagram
 	var diagram = new Diagram({
 		canvasId: 'diagram',
-		charts: [
-			{
-				value: 37,
-				color: 'green',
-				width: 20,
-				numContId: 'diagram-num-1'
-			},
-			{
-				value: 45,
-				color: '#d0295e',
-				width: 10,
-				offset: 2,
-				numContId: 'diagram-num-2'
-			}
-		],
+		charts: [{
+			value: 37,
+			color: 'green',
+			width: 20,
+			numContId: 'diagram-num-1'
+		}, {
+			value: 45,
+			color: '#d0295e',
+			width: 10,
+			offset: 2,
+			numContId: 'diagram-num-2'
+		}],
 		maxValue: 100
 	});
-
 
 	// diagram 2
 	var diagram_2 = new Diagram({
 		canvasId: 'diagram-2',
-		charts: [
-			{
-				value: 84,
-				color: '#fd8d40',
-				width: 30,
-				numContId: 'diagram-2-num-1'
-			},
-			{
-				value: 39,
-				color: '#0000ff',
-				width: 30,
-				offset: 2,
-				numContId: 'diagram-2-num-2'
-			}
-		],
+		charts: [{
+			value: 84,
+			color: '#fd8d40',
+			width: 30,
+			numContId: 'diagram-2-num-1'
+		}, {
+			value: 39,
+			color: '#0000ff',
+			width: 30,
+			offset: 2,
+			numContId: 'diagram-2-num-2'
+		}],
 		maxValue: 100,
 		animate: true
 	});
@@ -184,35 +175,30 @@ document.addEventListener('DOMContentLoaded', function () {
 	// diagram 2
 	var diagram_3 = new Diagram({
 		canvasId: 'diagram-3',
-		charts: [
-			{
-				value: 67,
-				color: '#fd8d40',
-				width: 15,
-				numContId: 'diagram-3-num-1'
-			},
-			{
-				value: 75,
-				color: '#d0295e',
-				width: 15,
-				offset: 2,
-				numContId: 'diagram-3-num-2'
-			},
-			{
-				value: 83,
-				color: 'green',
-				width: 15,
-				offset: 2,
-				numContId: 'diagram-3-num-3'
-			},
-			{
-				value: 91,
-				color: '#0000ff',
-				width: 15,
-				offset: 2,
-				numContId: 'diagram-3-num-4'
-			}
-		],
+		charts: [{
+			value: 67,
+			color: '#fd8d40',
+			width: 15,
+			numContId: 'diagram-3-num-1'
+		}, {
+			value: 75,
+			color: '#d0295e',
+			width: 15,
+			offset: 2,
+			numContId: 'diagram-3-num-2'
+		}, {
+			value: 83,
+			color: 'green',
+			width: 15,
+			offset: 2,
+			numContId: 'diagram-3-num-3'
+		}, {
+			value: 91,
+			color: '#0000ff',
+			width: 15,
+			offset: 2,
+			numContId: 'diagram-3-num-4'
+		}],
 		maxValue: 100,
 		animate: true
 	});
@@ -237,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	timer.onStop = function () {
 		Popup.message('Timer Stopped');
-	}
+	};
 
 	timer.start(50);
 
@@ -249,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	timer2.onStop = function () {
 		Popup.message('Timer 2 Stopped');
-	}
+	};
 
 	timer2.start(130);
 
@@ -261,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	stopwatch.onStop = function () {
 		Popup.message('Stopwatch Stopped');
-	}
+	};
 
 	stopwatch.start(0);
 
@@ -274,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	stopwatch2.onStop = function () {
 		Popup.message('Stopwatch Stopped');
-	}
+	};
 
 	stopwatch2.start(0);
 
@@ -290,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		var result = response.match(/\<div id\="source"\>([\s\S]*?)\<\/div\>/);
 
 		return result[1];
-	}
+	};
 
 	var contries;
 
@@ -298,14 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	AutoComplete.getValues = function (inpElem, returnFun) {
 		switch (inpElem.name) {
 			case 'fruits':
-				returnFun([
-					{ val: "mc", value: "Pinapple", id: 1 },
-					{ val: "vn", value: "Apple", id: 2 },
-					{ val: "eth", value: "Berry", id: 3 },
-					{ val: "ms", value: "Cherry", id: 4 },
-					{ val: "mn", value: "Mandarin", id: 5 },
-					{ val: "mk", value: "Marakuja", id: 6 }
-				], 'value', 'val', 'id');
+				returnFun([{ val: "mc", value: "Pinapple", id: 1 }, { val: "vn", value: "Apple", id: 2 }, { val: "eth", value: "Berry", id: 3 }, { val: "ms", value: "Cherry", id: 4 }, { val: "mn", value: "Mandarin", id: 5 }, { val: "mk", value: "Marakuja", id: 6 }], 'value', 'val', 'id');
 				break;
 
 			case 'country':
@@ -322,13 +301,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			default:
 				break;
 		}
-	}
+	};
 
 	AutoComplete.onSelect = function (inpElem, val, secVal) {
-		if (inpElem.name == 'country') {
-
-		}
-	}
+		if (inpElem.name == 'country') {}
+	};
 
 	// submit form
 	Form.init('.form');
@@ -351,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				ajax({
 					url: form.action,
 					send: new FormData(form),
-					success: function (response) {
+					success: function success(response) {
 						var response = JSON.parse(response);
 
 						if (response.status == 'sent') {
@@ -367,24 +344,24 @@ document.addEventListener('DOMContentLoaded', function () {
 							console.log(response);
 						}
 					},
-					error: function (response) {
+					error: function error(response) {
 						console.log(response);
 					}
 				});
 				return false;
 		}
-	}
+	};
 
 	// slick slider
 	/*$('#slider').on('init', function() {
-		CoverImg.reInit('#slider');
-	});
-	
-	$('#slider').slick({
-		infinite: true,
-		slidesToShow: 1,
-		slidesToScroll: 1
-	});*/
+ 	CoverImg.reInit('#slider');
+ });
+ 
+ $('#slider').slick({
+ 	infinite: true,
+ 	slidesToShow: 1,
+ 	slidesToScroll: 1
+ });*/
 
 	// scroll pane
 	// $('.scroll-pane').jScrollPane();
@@ -418,7 +395,7 @@ function dAirGetInit() {
 				Select.setOptions('.cities', regionObjArr, 'name', 'name');
 			});
 		}
-	}
+	};
 }
 
 /*

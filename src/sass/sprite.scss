@@ -7,11 +7,6 @@ $sprite-width: 2192;
 }
 
 /* sprites */
-.menu__arr{
-	@extend %svg-angle-down;
-	@include bgs(340);
-}
-
 .accord__button:after{
 	@extend %svg-arrow-alt-circle-down;
 	@include bgs(512);

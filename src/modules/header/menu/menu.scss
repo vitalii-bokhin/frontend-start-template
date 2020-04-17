@@ -39,19 +39,19 @@
 			}
 		}
 	}
-
 	&__arr{
 		display: none;
-		width: 12px;
-		height: 8px;
+		width: 7px;
+		height: 7px;
 		position: relative;
-		bottom: 2px;
+		bottom: 5px;
 		margin-left: 7px;
 		border: none;
+		border-left: 1px solid #000000;
+		border-bottom: 1px solid #000000;
+		transform: rotate(-45deg);
 		background: none;
-		
 	}
-
 	@media(max-width: 1000px){
 		padding: 10px 25px;
 		&__item{
