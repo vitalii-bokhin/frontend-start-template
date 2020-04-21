@@ -57,26 +57,13 @@
 		hide: function (elem, hide) {
 			var label = document.querySelector('label.placeholder[for="' + elem.id + '"]');
 
-			if (!label) {
-				return;
-			}
-
-			var lSt = label.style;
+			if (!label) return;
 
 			if (hide) {
+				label.style.display = 'none';
 
-				lSt.textIndent = '-9999px';
-				lSt.paddingLeft = '0px';
-				lSt.paddingRight = '0px';
-
-			} else {
-
-				if (!elem.value.length) {
-					lSt.textIndent = '';
-					lSt.paddingLeft = '';
-					lSt.paddingRight = '';
-				}
-
+			} else if (!elem.value.length) {
+				label.style.display = '';
 			}
 		}
 	};

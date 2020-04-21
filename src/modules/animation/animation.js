@@ -6,6 +6,8 @@
       animElements: null,
       
       scroll: function() {
+         console.log('scr');
+         console.log(this.animElements);
          const winBotEdge = window.pageYOffset + window.innerHeight;
          
          for (let i = 0; i < this.animElements.length; i++) {
@@ -13,7 +15,7 @@
             animElemOffsetTop = animElem.getBoundingClientRect().top + window.pageYOffset,
             animElemOffsetBot = animElemOffsetTop + animElem.offsetHeight;
             
-            if (winBotEdge > animElemOffsetBot && window.pageYOffset < animElemOffsetTop) {
+            if (animElemOffsetTop < winBotEdge && animElemOffsetBot > window.pageYOffset) {
                animElem.classList.add('animated');
             } else {
                animElem.classList.remove('animated');
@@ -26,6 +28,7 @@
          
          if (animElements.length) {
             this.animElements = animElements;
+            
             this.scroll();
          }
       }
@@ -36,7 +39,7 @@
       animationOnVisible.init();
       
       if (animationOnVisible.animElements) {
-         window.addEventListener('scroll', animationOnVisible.scroll);
+         window.addEventListener('scroll', animationOnVisible.scroll.bind(animationOnVisible));
       }
    });
 })();
