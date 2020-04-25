@@ -16,8 +16,7 @@
 		display: inline-block;
 		width: 121px;
 		img{
-			width: 100%;
-			height: auto;
+			@extend %fw-img;
 		}
 	}
 	@media(min-width: 1001px){

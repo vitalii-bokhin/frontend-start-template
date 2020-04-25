@@ -62,6 +62,27 @@ ol.list{
 	}
 }
 
+/* table */
+table.table{
+	width: 100%;
+	border-collapse: collapse;
+	tr{
+		&:first-child{
+			border-top: 1px solid $gy;
+		}
+		td{
+			border-bottom: 1px solid $gy;
+			padding: 15px 0;
+			&:first-child{
+				color: $gy;
+			}
+			&:last-child{
+				text-align: right;
+			}
+		}
+	}
+}
+
 /* title */
 .title{
 	font-size: 30px;
