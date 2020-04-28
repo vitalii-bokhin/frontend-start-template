@@ -37,6 +37,7 @@ const modulesOn = [
 	'form/file',
 	'form/placeholder',
 	'form/maskinput',
+	'form/fieldset',
 	'form',
 	'accord',
 	// 'ajax',
@@ -46,7 +47,7 @@ const modulesOn = [
 	'tooltip',
 	'anchor',
 	'diagram',
-	'numberspin', // need fix. set data attribute
+	'numberspin',
 	'share',
 	'timer',
 	'footer',

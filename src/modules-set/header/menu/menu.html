@@ -17,7 +17,7 @@
 	<li class="menu__item @@if (menu_item_current === 'grid') {menu__item_current}">
 		<a href="grid.html" class="menu__a">Grid</a>
 	</li>
-	<li class="menu__item menu__item_has-children @@if (menu_item_current === 'accordion' || menu_item_current === 'anchors' || menu_item_current === 'tabs' || menu_item_current === 'more' || menu_item_current === 'share' || menu_item_current === 'bubble') {menu__item_current}">
+	<li class="menu__item menu__item_has-children @@if (menu_item_current === 'accordion' || menu_item_current === 'anchors' || menu_item_current === 'tabs' || menu_item_current === 'more' || menu_item_current === 'share' || menu_item_current === 'bubble' || menu_item_current === 'zoom') {menu__item_current}">
 		<a href="#" class="menu__a">Interface</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
@@ -38,6 +38,9 @@
 			</li>
 			<li class="sub-menu__item @@if (menu_item_current === 'bubble') {sub-menu__item_current}">
 				<a href="bubble.html" class="sub-menu__a">Bubble</a>
+			</li>
+			<li class="sub-menu__item @@if (menu_item_current === 'zoom') {sub-menu__item_current}">
+				<a href="zoom.html" class="sub-menu__a">Zoom</a>
 			</li>
 		</ul>
 	</li> 

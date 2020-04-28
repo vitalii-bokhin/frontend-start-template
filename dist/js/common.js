@@ -278,6 +278,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     stopwatch2.start(0);
 
+    // zoom
+    Zoom.init('.js-zoom-container');
+
     // get content via Ajax
     var getCont = new GetContentAjax({
         eventBtn: '.js-get-content-ajax',
@@ -293,6 +296,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // fieldsets
+    NextFieldset.init('.js-next-fieldset-btn', '.js-prev-fieldset-btn');
+
     NextFieldset.onChange = function (prevFsEl, curFsEl) {
         
     }

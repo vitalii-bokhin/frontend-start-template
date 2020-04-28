@@ -2443,6 +2443,29 @@ select {
   color: #ff0000;
 }
 
+.fieldset {
+  position: relative;
+  display: none;
+}
+
+.fieldset__item {
+  transition: .21s;
+  position: static;
+}
+
+.fieldset__item_hidden {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+}
+
+.fieldset.initialized {
+  display: block;
+}
+
 .form .row {
   padding-left: 8px;
   padding-right: 8px;
@@ -2577,30 +2600,6 @@ select {
   100% {
     transform: translate(-100%);
   }
-}
-
-/* fieldsets */
-.fieldset {
-  position: relative;
-  display: none;
-}
-
-.fieldset__item {
-  transition: .21s;
-  position: static;
-}
-
-.fieldset__item_hidden {
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: none;
-}
-
-.fieldset.initialized {
-  display: block;
 }
 
 /*variable height textarea*/

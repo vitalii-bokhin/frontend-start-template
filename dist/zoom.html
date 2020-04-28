@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-	<title>Form Custom | startTemplate</title>
+	<title>Zoom | startTemplate</title>
 </head>
 <body>
 
@@ -38,7 +38,7 @@
 	<li class="menu__item ">
 		<a href="grid.html" class="menu__a">Grid</a>
 	</li>
-	<li class="menu__item menu__item_has-children ">
+	<li class="menu__item menu__item_has-children menu__item_current">
 		<a href="#" class="menu__a">Interface</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
@@ -60,7 +60,7 @@
 			<li class="sub-menu__item ">
 				<a href="bubble.html" class="sub-menu__a">Bubble</a>
 			</li>
-			<li class="sub-menu__item ">
+			<li class="sub-menu__item sub-menu__item_current">
 				<a href="zoom.html" class="sub-menu__a">Zoom</a>
 			</li>
 		</ul>
@@ -129,6 +129,21 @@
 				<div class="col col_right p-0">
 					<!--User/-->
 					
+	<div class="user">
+		<span class="user__name">
+			Lufter
+		</span>
+		<span class="user__thumb">
+			<img src="images/avatar.png" alt="avatar">
+		</span>
+		
+		<button data-target-elements="#user-menu" class="js-toggle js-document-toggle-off user__button"></button>
+		
+		<div id="user-menu" class="user__bubble">
+			
+		</div>
+	</div>
+
 
 
 					<!--/User-->
@@ -144,113 +159,29 @@
 
 <!--MAIN/-->
 <main class="main">
-	
-	<div class="section" style="margin-bottom: 300px;">
 
-		<form id="custom-form" action="send.php" method="POST" enctype="multipart/form-data" class="form">
-			<div class="row mt-25">
-				<div class="col-12">
-					<div class="title-h2">Standart select</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-6">
-					<div class="form__field">
-						<select name="favorite-animal" data-placeholder="Select an animal*" data-required="true">
-							<option value="monkey">Monkey</option>
-							<option value="cat">Cat</option>
-							<option>Dog</option>
-							<option value="lion" data-second-value="lionID">Lion</option>
-							<option value="crocodile">Crocodile</option>
-							<option value="elephant">Elephant</option>
-							<option value="other" data-hide-elements="#hide-animal-field">Hide</option>
-							<option value="other" data-show-elements="#other-animal-field">Other</option>
-						</select>
-						<div class="field-error-tip">Select an animal</div>
-					</div>
-				</div>
-				<div class="col-6">
-					<div id="other-animal-field" class="form__field hidden">
-						<input type="text" data-required="true" placeholder="Other animal" class="form__text-input" value="">
-						<div class="field-error-tip">Enter other animal</div>
-					</div>
-				</div>
-				<div class="col-6">
-					<div id="hide-animal-field" class="form__field">
-						<input type="text" data-required="true" placeholder="Other animal" class="form__text-input" value="">
-						<div class="field-error-tip">Enter other animal</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row mt-25">
-				<div class="col-12">
-					<div class="title-h2">Multiple select</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-6">
-					<div class="form__field">
-						<select name="pets[]" multiple data-placeholder="Select pets*" data-required="true">
-							<option value="cat">Cat</option>
-							<option value="dog">Dog</option>
-							<option value="parrot">Parrot</option>
-							<option value="cavy">Cavy</option>
-							<option value="hamster">Hamster</option>
-							<option value="other" data-show-elements="#other-pets-field">Other</option>
-						</select>
-						<div class="field-error-tip">Select pets</div>
-					</div>
-				</div>
-				<div class="col-6">
-					<div id="other-pets-field" class="form__field hidden">
-						<input type="text" data-required="true" placeholder="Other pets" class="form__text-input" value="">
-						<div class="field-error-tip">Enter other pets</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row mt-25">
-				<div class="col-12">
-					<div class="title-h2 mb-25">Select with external data</div>
-					<div class="txt c-gray">
-						Get data from https://get.dealersair.com/api/geo/
-					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-6">
-					<div class="form__field countries">
-						<select name="country" data-placeholder="Select your country*" data-required="true">
-							<!--options-->
-						</select>
-						<div class="field-error-tip">Select country</div>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="form__field cities">
-						<select name="city" data-placeholder="Select your city*" data-required="true" data-empty-text="Select country first">
-							<!--options-->
-						</select>
-						<div class="field-error-tip">Select city</div>
-					</div>
-				</div>
-			</div>
+	<div class="js-zoom-container section">
 
-			<div class="row">
-				<div class="col-6">
-					<button type="submit">Submit</button>
-				</div>
+		<div class="row row_wrp">
+			<div class="col-12">
+				<h1>Zoom</h1>
 			</div>
-			
-			<div class="form-error-tip">Form error</div>
-		</form>
+		</div>
+		
+		<div class="row row_wrp">
+			<div class="col-6">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores quibusdam debitis sapiente repellendus voluptatibus, non officiis quidem voluptate velit deserunt id optio, repudiandae perferendis nemo dolore sit autem quam accusamus?
+			</div>
+			<div class="col-3">
+				<img src="images/img1.jpg" alt="img">
+			</div>
+			<div class="col-3">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda cupiditate aperiam repellat dolores! Obcaecati, dolorum aliquid vitae eum quia voluptates architecto animi nulla soluta cumque optio temporibus repellendus, ab distinctio?
+			</div>
+		</div>
 
 	</div>
-	
+
 </main>
 <!--/MAIN-->
 
@@ -387,7 +318,6 @@
 // 	}
 // });
 </script>
-
 
 </body>
 </html>

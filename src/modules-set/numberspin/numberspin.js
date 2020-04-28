@@ -10,7 +10,7 @@ var Numberspin;
 		this.values = [];
 
 		for (var i = 0; i < this.elements.length; i++) {
-			this.values[i] = +this.elements[i].innerHTML.replace(/\s/g, '');
+			this.values[i] = +this.elements[i].getAttribute('data-value');
 			this.elements[i].innerHTML = 0;
 		}
 
