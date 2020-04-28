@@ -133,8 +133,10 @@
 	}
 }
 
+/* fieldsets */
 .fieldset{
 	position: relative;
+	display: none;
 	&__item{
 		transition: .21s;
 		position: static;
@@ -146,6 +148,9 @@
 			top: 0;
 			display: none;
 		}
+	}
+	&.initialized{
+		display: block;
 	}
 }
 

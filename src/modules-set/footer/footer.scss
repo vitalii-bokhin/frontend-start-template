@@ -6,8 +6,7 @@
 		display: inline-block;
 		width: 120px;
 		img{
-			width: 100%;
-			height: auto;
+			@extend %fw-img;
 		}
 	}
 	&__txt{

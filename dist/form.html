@@ -208,7 +208,7 @@
 
 			<div class="fieldset">
 
-				<div id="step-fs1" class="fieldset__item">
+				<div class="fieldset__item">
 
 					<div class="row">
 						<div class="col-4">
@@ -221,12 +221,12 @@
 					
 					<div class="row">
 						<div class="col-12">
-							<button type="button" class="form__button btn js-next-fieldset-btn" data-go-to-fieldset="#step-fs2">Next</button>
+							<button type="button" class="form__button btn js-next-fieldset-btn">Next</button>
 						</div>
 					</div>
 				</div>
 
-				<div id="step-fs2" class="fieldset__item fieldset__item_hidden">
+				<div class="fieldset__item">
 					<div class="row">
 						<div class="col-4">
 							<div class="form__field">
@@ -238,15 +238,15 @@
 
 					<div class="row">
 						<div class="col">
-							<button type="button" class="form__button btn js-prev-fieldset-btn" data-go-to-fieldset="#step-fs1">Prev</button>
+							<button type="button" class="form__button btn js-prev-fieldset-btn">Prev</button>
 						</div>
 						<div class="col">
-							<button type="button" class="form__button btn js-next-fieldset-btn" data-go-to-fieldset="#step-fs3">Next</button>
+							<button type="button" class="form__button btn js-next-fieldset-btn">Next</button>
 						</div>
 					</div>
 				</div>
 
-				<div id="step-fs3" class="fieldset__item fieldset__item_hidden">
+				<div class="fieldset__item">
 					<div class="row">
 						<div class="col-4">
 							<div class="form__field">
@@ -257,7 +257,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<button type="button" class="form__button btn js-prev-fieldset-btn" data-go-to-fieldset="#step-fs2">Prev</button>
+							<button type="button" class="form__button btn js-prev-fieldset-btn">Prev</button>
 						</div>
 					</div>
 				</div>
@@ -454,35 +454,35 @@
 
 <!--POPUPs/-->
 <div class="popup">
-
+	
 	<div id="popup-1" class="popup__window" style="max-width: 550px;">
 		<button class="js-popup-close popup-close-btn"></button>
 		<div class="popup__inner" style="height: 100px;">
 			<a href="#message-popup" class="js-open-msg-popup">POPUP с сообщением 1</a>
 		</div> 
 	</div>
-
+	
 	<div id="popup-2" class="popup__window" style="max-width: 550px;">
 		<button class="js-popup-close popup-close-btn"></button>
 		<div class="popup__inner" style="height: 1300px;">
 			
 		</div>
 	</div>
-
+	
 	<!--Media Popup/-->
 	<div id="media-popup" class="popup-media popup__window">
 		<button class="js-popup-close popup-close-btn"></button>
 		<div class="popup__inner">
-
+			
 			<div class="popup-media__box">
-
+				
 				<img src="#" class="popup-media__image" alt="photo">
-
+				
 				<!-- <div class="popup-media__video">
 					<a href="#" class="popup-media__play"></a>
 					<iframe src="" class="popup-media__iframe" allowfullscreen></iframe>
 				</div> -->
-
+				
 				<div class="video popup-media__video">
 					<div class="video__preview">
 						<img src="#" alt="thumbnail" class="popup-media__preview">
@@ -507,7 +507,10 @@
 		</div>
 	</div>
 	<!--/Media Popup-->
+	
+</div>
 
+<div class="popup btn-close-only">
 	<!--Message Popup/-->
 	<div id="message-popup" class="popup-message popup__window">
 		<button class="js-popup-close popup-close-btn"></button>
@@ -516,7 +519,6 @@
 		</div>
 	</div>
 	<!--/Message Popup-->
-
 </div>
 <!--/POPUPs-->
 

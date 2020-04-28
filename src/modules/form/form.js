@@ -1,4 +1,4 @@
-var ValidateForm, Form;
+var ValidateForm, Form, NextFieldset;
 
 (function () {
 	'use strict';
@@ -176,7 +176,7 @@ var ValidateForm, Form;
 		url: function () {
 			var err = false;
 
-			if (!/^(https?\:\/\/)?[a-zа-я0-9\-\.]+\.[a-zа-я]{2,11}$/i.test(this.input.value)) {
+			if (!/^(https?\:\/\/)?[а-я\w-.]+\.[a-zа-я]{2,11}[/?а-я\w/=-]+$/i.test(this.input.value)) {
 				this.errorTip(true, 2);
 				err = true;
 			} else {
@@ -579,22 +579,78 @@ var ValidateForm, Form;
 	};
 
 	// next fieldset
-	var NextFieldset = {
+	NextFieldset = {
+		onChange: null,
+		opt: {},
+
 		next: function (btnElem, fwd) {
-			var nextFieldset = (btnElem.hasAttribute('data-go-to-fieldset')) ? document.querySelector(btnElem.getAttribute('data-go-to-fieldset')) : null;
+			const currentFieldset = btnElem.closest('.fieldset__item');
+
+			let nextFieldset = null;
+
+			if (fwd) {
+				if (this.opt.nextPending) {
+					let nextEl = currentFieldset.nextElementSibling;
+
+					if (!nextEl.classList.contains('pending')) {
+						while (nextEl && !nextEl.classList.contains('pending')) {
+							if (nextEl.nextElementSibling.classList.contains('pending')) {
+								nextFieldset = nextEl.nextElementSibling;
+							}
+								
+							nextEl = nextEl.nextElementSibling;
+						}
+
+					} else {
+						nextFieldset = nextEl;
+					}
+
+				} else {
+					nextFieldset = currentFieldset.nextElementSibling;
+				}
+
+			} else {
+				nextFieldset = currentFieldset.previousElementSibling;
+			}
 
 			if (!nextFieldset) return;
 
-			var currentFieldset = btnElem.closest('.fieldset__item'),
-				goTo = (fwd) ? ValidateForm.validate(currentFieldset) : true;
+			const goTo = (fwd) ? ValidateForm.validate(currentFieldset) : true;
 
 			if (goTo) {
 				currentFieldset.classList.add('fieldset__item_hidden');
+				currentFieldset.classList.remove('pending');
+				currentFieldset.classList.add('success');
 				nextFieldset.classList.remove('fieldset__item_hidden');
+
+				if (this.onChange) {
+					this.onChange(currentFieldset, nextFieldset);
+				}
 			}
 		},
 
-		init: function (nextBtnSelector, prevBtnSelector) {
+		init: function (nextBtnSelector, prevBtnSelector, options) {
+			const fsEls = document.querySelectorAll('.fieldset'),
+				fsItemEls = document.querySelectorAll('.fieldset__item');
+
+			for (let i = 0; i < fsItemEls.length; i++) {
+				const itEl = fsItemEls[i];
+				itEl.classList.add('pending');
+
+				if (i > 0) {
+					itEl.classList.add('fieldset__item_hidden');
+				}
+			}
+
+			for (let i = 0; i < fsEls.length; i++) {
+				const fEl = fsEls[i];
+				fEl.classList.add('initialized');
+			}
+
+			options = options || {};
+
+			this.opt.nextPending = (options.nextPending !== undefined) ? options.nextPending : false;
+
 			document.addEventListener('click', (e) => {
 				var nextBtnElem = e.target.closest(nextBtnSelector),
 					prevBtnElem = e.target.closest(prevBtnSelector);
@@ -711,7 +767,11 @@ var ValidateForm, Form;
 
 				const key = e.which || e.keyCode || 0;
 
-				if (e.ctrlKey && key == 13) {
+				if (e.target.closest('.fieldset__item') && key == 13) {
+					e.preventDefault();
+					e.target.closest('.fieldset__item').querySelector('.js-next-fieldset-btn').click();
+
+				} else if (e.ctrlKey && key == 13) {
 					e.preventDefault();
 					this.submitForm(formElem, e);
 				}
@@ -816,7 +876,7 @@ var ValidateForm, Form;
 		BindLabels('input[type="text"], input[type="number"], input[type="tel"], input[type="checkbox"], input[type="radio"]');
 		// SetTabindex('input[type="text"], input[type="password"], textarea');
 		varHeightTextarea.init();
-		NextFieldset.init('.js-next-fieldset-btn', '.js-prev-fieldset-btn');
+		NextFieldset.init('.js-next-fieldset-btn', '.js-prev-fieldset-btn'/*, { nextPending: true } */);
 		DuplicateForm.init('.js-dupicate-form-btn', '.js-remove-dupicated-form-btn');
 	});
 })();

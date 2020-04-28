@@ -292,6 +292,11 @@ document.addEventListener('DOMContentLoaded', function () {
         return result[1];
     }
 
+    // fieldsets
+    NextFieldset.onChange = function (prevFsEl, curFsEl) {
+        
+    }
+
     var contries;
 
     // autocomplete data

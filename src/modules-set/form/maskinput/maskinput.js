@@ -1,16 +1,14 @@
 var Maskinput;
 
-(function() {
+(function () {
 	'use strict';
-	
-	Maskinput = function(inputElem, type) {
-		if (!inputElem) {
-			return;
-		}
+
+	Maskinput = function (inputElem, type) {
+		if (!inputElem) return;
 
 		var defValue = '';
 
-		this.tel = function(evStr) {
+		this.tel = function (evStr) {
 			if (evStr == 'focus' && !inputElem.value.length) {
 				inputElem.value = '+7(';
 			}
@@ -19,20 +17,20 @@ var Maskinput;
 				inputElem.value = defValue;
 			} else {
 				var reg = /^(\+7?)?(\(\d{0,3})?(\)\d{0,3})?(\-\d{0,2}){0,2}$/,
-				cursPos = inputElem.selectionStart;
+					cursPos = inputElem.selectionStart;
 
 				if (!reg.test(inputElem.value)) {
-					inputElem.value = inputElem.value.replace(/^(?:\+7?)?\(?(\d{0,3})\)?(\d{0,3})\-?(\d{0,2})\-?(\d{0,2})$/, function(str, p1, p2, p3, p4) {
+					inputElem.value = inputElem.value.replace(/^(?:\+7?)?\(?(\d{0,3})\)?(\d{0,3})\-?(\d{0,2})\-?(\d{0,2})$/, function (str, p1, p2, p3, p4) {
 						var res = '';
 
 						if (p4 != '') {
-							res = '+7('+ p1 +')'+ p2 +'-'+ p3 +'-'+ p4;
+							res = '+7(' + p1 + ')' + p2 + '-' + p3 + '-' + p4;
 						} else if (p3 != '') {
-							res = '+7('+ p1 +')'+ p2 +'-'+ p3;
+							res = '+7(' + p1 + ')' + p2 + '-' + p3;
 						} else if (p2 != '') {
-							res = '+7('+ p1 +')'+ p2;
+							res = '+7(' + p1 + ')' + p2;
 						} else if (p1 != '') {
-							res = '+7('+ p1;
+							res = '+7(' + p1;
 						}
 
 						return res;
@@ -47,12 +45,70 @@ var Maskinput;
 			}
 		}
 
+		this.date = function (ev) {
+			if (ev == 'focus') return;
+
+			if (!/[\d\/]*/.test(inputElem.value)) {
+				inputElem.value = defValue;
+			} else {
+				const reg = /^\d{0,2}(\/\d{0,2}(\/\d{0,4})?)?$/;
+
+				if (!reg.test(inputElem.value)) {
+					inputElem.value = inputElem.value.replace(/^(\d{0,2})\/?(\d{0,2})\/?(\d{0,4})$/, function (str, p1, p2, p3) {
+						let res;
+
+						if (p3 != '') {
+							res = p1 + '/' + p2 + '/' + p3;
+						} else if (p2 != '') {
+							res = p1 + '/' + p2;
+						}
+
+						return res;
+					});
+				}
+
+				if (!reg.test(inputElem.value)) {
+					inputElem.value = defValue;
+				} else {
+					defValue = inputElem.value;
+				}
+			}
+		}
+
+		this.gmail = function (ev) {
+			if (ev == 'focus') return;
+
+			if (!/[@\w.-]*/.test(inputElem.value)) {
+				inputElem.value = defValue;
+			} else {
+				const reg = /^[\w.-]*(@gmail\.com)?$/;
+
+				if (!reg.test(inputElem.value)) {
+					inputElem.value = inputElem.value.replace(/^([\w.-]*)@(?:gmail\.com)?$/, '$1@gmail.com');
+				}
+
+				if (!reg.test(inputElem.value)) {
+					inputElem.value = defValue;
+				} else {
+					defValue = inputElem.value;
+				}
+			}
+		}
+
 		inputElem.addEventListener('input', () => {
-			this[type]();
+			try {
+				this[type]();
+			} catch (error) {
+				console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+			}
 		});
 
 		inputElem.addEventListener('focus', () => {
-			this[type]('focus');
+			try {
+				this[type]('focus');
+			} catch (error) {
+				console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+			}
 		}, true);
 	}
 })();

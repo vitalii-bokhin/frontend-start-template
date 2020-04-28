@@ -47,15 +47,13 @@ var Maskinput;
 
 		this.date = function (ev) {
 			if (ev == 'focus') return;
-			
+
 			if (!/[\d\/]*/.test(inputElem.value)) {
 				inputElem.value = defValue;
-				console.log('def');
 			} else {
 				const reg = /^\d{0,2}(\/\d{0,2}(\/\d{0,4})?)?$/;
 
 				if (!reg.test(inputElem.value)) {
-					console.log('fst');
 					inputElem.value = inputElem.value.replace(/^(\d{0,2})\/?(\d{0,2})\/?(\d{0,4})$/, function (str, p1, p2, p3) {
 						let res;
 
@@ -69,7 +67,25 @@ var Maskinput;
 					});
 				}
 
-				console.log(inputElem.value);
+				if (!reg.test(inputElem.value)) {
+					inputElem.value = defValue;
+				} else {
+					defValue = inputElem.value;
+				}
+			}
+		}
+
+		this.gmail = function (ev) {
+			if (ev == 'focus') return;
+
+			if (!/[@\w.-]*/.test(inputElem.value)) {
+				inputElem.value = defValue;
+			} else {
+				const reg = /^[\w.-]*(@gmail\.com)?$/;
+
+				if (!reg.test(inputElem.value)) {
+					inputElem.value = inputElem.value.replace(/^([\w.-]*)@(?:gmail\.com)?$/, '$1@gmail.com');
+				}
 
 				if (!reg.test(inputElem.value)) {
 					inputElem.value = defValue;
@@ -80,11 +96,19 @@ var Maskinput;
 		}
 
 		inputElem.addEventListener('input', () => {
-			this[type]();
+			try {
+				this[type]();
+			} catch (error) {
+				console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+			}
 		});
 
 		inputElem.addEventListener('focus', () => {
-			this[type]('focus');
+			try {
+				this[type]('focus');
+			} catch (error) {
+				console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+			}
 		}, true);
 	}
 })();

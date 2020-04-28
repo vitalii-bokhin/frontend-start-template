@@ -88,13 +88,19 @@
 	}
 
 	// Check element for hidden
-	elemIsHidden = function (elem) {
+	elemIsHidden = function (elem, exclude) {
+		exclude = exclude || [];
+
 		while (elem) {
 			if (!elem) break;
 
 			const compStyle = getComputedStyle(elem);
 
-			if (compStyle.display == 'none' || compStyle.visibility == 'hidden' || compStyle.opacity == '0') return true;
+			if (
+				compStyle.display == 'none' || 
+				compStyle.visibility == 'hidden' || 
+				(exclude.indexOf('opacity') == -1 && compStyle.opacity == '0')
+			) return true;
 
 			elem = elem.parentElement;
 		}
