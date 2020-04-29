@@ -1263,14 +1263,15 @@ var Popup, MediaPopup;
 	};
 
 })();
-(function() {
+(function () {
 	'use strict';
 
 	//show element on checkbox change
 	var ChangeCheckbox = {
 		hideCssClass: 'hidden',
+		opt: {},
 
-		change: function(elem) {
+		change: function (elem) {
 			var targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
 
 			if (!targetElements.length) {
@@ -1281,16 +1282,29 @@ var Popup, MediaPopup;
 				var targetElem = targetElements[i];
 
 				targetElem.style.display = (elem.checked) ? 'block' : 'none';
-				
+
 				if (elem.checked) {
 					targetElem.classList.remove(this.hideCssClass);
+
+					const inpEls = targetElem.querySelectorAll('input[type="text"]');
+
+					for (var j = 0; j < inpEls.length; j++) {
+						var inpEl = inpEls[j];
+
+						inpEl.focus();
+					}
+
 				} else {
 					targetElem.classList.add(this.hideCssClass);
 				}
 			}
 		},
 
-		init: function() {
+		init: function (options) {
+			options = options || {};
+
+			this.opt.focusOnTarget = (options.focusOnTarget !== undefined) ? options.focusOnTarget : false;
+
 			document.addEventListener('change', (e) => {
 				var elem = e.target.closest('input[type="checkbox"]');
 
@@ -1302,8 +1316,8 @@ var Popup, MediaPopup;
 	};
 
 	//init scripts
-	document.addEventListener('DOMContentLoaded', function() {
-		ChangeCheckbox.init();
+	document.addEventListener('DOMContentLoaded', function () {
+		ChangeCheckbox.init({ focusOnTarget: true });
 	});
 })();
 (function() {
@@ -1842,7 +1856,7 @@ var Popup, MediaPopup;
 
 	// init script
 	document.addEventListener('DOMContentLoaded', function () {
-		Select.init('select');
+		Select.init('.custom-select');
 	});
 })();
 ; var AutoComplete;
@@ -2332,9 +2346,14 @@ var Popup, MediaPopup;
 					label.className = 'placeholder';
 					label.innerHTML = elem.placeholder;
 
+					if (elem.hasAttribute('data-hide-placeholder')) {
+						label.setAttribute('data-hide-placeholder', elem.getAttribute('data-hide-placeholder'));
+					}
+
 					elem.parentElement.insertBefore(label, elem);
 
 					elem.removeAttribute('placeholder');
+					elem.removeAttribute('data-hide-placeholder');
 
 					if (!elem.id) {
 						elem.id = elemFor;
@@ -2348,11 +2367,23 @@ var Popup, MediaPopup;
 			}
 
 			//events
+			document.addEventListener('input', (e) => {
+				var elem = e.target.closest(elementsStr);
+
+				if (!elem) return;
+
+				if (elem.value.length > 0) {
+					this.hide(elem, true, 'input');
+				} else {
+					this.hide(elem, false, 'input');
+				}
+			});
+
 			document.addEventListener('focus', (e) => {
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
-					this.hide(elem, true);
+					this.hide(elem, true, 'focus');
 				}
 			}, true);
 
@@ -2365,12 +2396,16 @@ var Popup, MediaPopup;
 			}, true);
 		},
 
-		hide: function (elem, hide) {
+		hide: function (elem, hide, ev) {
 			var label = document.querySelector('label.placeholder[for="' + elem.id + '"]');
 
 			if (!label) return;
 
+
+
 			if (hide) {
+				if (ev == 'focus' && label.getAttribute('data-hide-placeholder') == 'input') return;
+
 				label.style.display = 'none';
 
 			} else if (!elem.value.length) {

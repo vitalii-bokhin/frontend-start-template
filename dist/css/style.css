@@ -2113,7 +2113,7 @@ hr {
   visibility: visible;
 }
 
-select {
+.custom-select {
   visibility: hidden;
 }
 
