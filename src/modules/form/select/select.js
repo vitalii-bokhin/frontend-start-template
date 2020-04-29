@@ -482,6 +482,6 @@
 
 	// init script
 	document.addEventListener('DOMContentLoaded', function () {
-		Select.init('select');
+		Select.init('.custom-select');
 	});
 })();
