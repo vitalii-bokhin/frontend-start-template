@@ -21,9 +21,14 @@
 					label.className = 'placeholder';
 					label.innerHTML = elem.placeholder;
 
+					if (elem.hasAttribute('data-hide-placeholder')) {
+						label.setAttribute('data-hide-placeholder', elem.getAttribute('data-hide-placeholder'));
+					}
+
 					elem.parentElement.insertBefore(label, elem);
 
 					elem.removeAttribute('placeholder');
+					elem.removeAttribute('data-hide-placeholder');
 
 					if (!elem.id) {
 						elem.id = elemFor;
@@ -37,11 +42,23 @@
 			}
 
 			//events
+			document.addEventListener('input', (e) => {
+				var elem = e.target.closest(elementsStr);
+
+				if (!elem) return;
+
+				if (elem.value.length > 0) {
+					this.hide(elem, true, 'input');
+				} else {
+					this.hide(elem, false, 'input');
+				}
+			});
+
 			document.addEventListener('focus', (e) => {
 				var elem = e.target.closest(elementsStr);
 
 				if (elem) {
-					this.hide(elem, true);
+					this.hide(elem, true, 'focus');
 				}
 			}, true);
 
@@ -54,12 +71,16 @@
 			}, true);
 		},
 
-		hide: function (elem, hide) {
+		hide: function (elem, hide, ev) {
 			var label = document.querySelector('label.placeholder[for="' + elem.id + '"]');
 
 			if (!label) return;
 
+
+
 			if (hide) {
+				if (ev == 'focus' && label.getAttribute('data-hide-placeholder') == 'input') return;
+
 				label.style.display = 'none';
 
 			} else if (!elem.value.length) {

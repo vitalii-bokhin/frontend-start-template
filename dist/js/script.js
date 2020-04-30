@@ -2584,6 +2584,12 @@ var NextFieldset;
                 currentFieldset.classList.add('success');
                 nextFieldset.classList.remove('fieldset__item_hidden');
 
+                if (this.opt.focusInput) {
+					const inpEl = nextFieldset.querySelector('input[type="text"]');
+
+					if (inpEl) inpEl.focus();
+				}
+
                 if (this.onChange) {
                     this.onChange(currentFieldset, nextFieldset);
                 }
@@ -2616,6 +2622,7 @@ var NextFieldset;
             options = options || {};
 
             this.opt.nextPending = (options.nextPending !== undefined) ? options.nextPending : false;
+            this.opt.focusInput = (options.focusInput !== undefined) ? options.focusInput : false;
 
             document.addEventListener('click', (e) => {
                 var nextBtnElem = e.target.closest(nextBtnSelector),
