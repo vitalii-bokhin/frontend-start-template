@@ -16,14 +16,26 @@
 	document.addEventListener('DOMContentLoaded', function () {
 		const headerElem = document.getElementById('header');
 
+		let scrTop = 0;
+
 		function fixHeader() {
-			if (window.pageYOffset > 21) {
-				headerElem.classList.add('header_fixed');
-			} else if (
-				!document.body.classList.contains('popup-is-opened') &&
-				!document.body.classList.contains('mob-nav-is-opened')
-			) {
-				headerElem.classList.remove('header_fixed');
+			if (headerElem) {
+				if (window.pageYOffset > 21) {
+					headerElem.classList.add('header_fixed');
+				} else if (
+					!document.body.classList.contains('popup-is-opened') &&
+					!document.body.classList.contains('mob-nav-is-opened')
+				) {
+					headerElem.classList.remove('header_fixed');
+				}
+
+				if (window.pageYOffset > scrTop) {
+					scrTop += window.pageYOffset;
+				} else {
+					scrTop -= window.pageYOffset;
+				}
+
+				console.log(scrTop);
 			}
 		}
 
