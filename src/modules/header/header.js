@@ -17,17 +17,27 @@
 		const headerElem = document.getElementById('header');
 
 		let scrTop = 0,
-		scrAccUp = 0,
-		scrAccDown = 0;
+			scrAccUp = 0,
+			scrAccDown = 0;
 
 		function fixHeader() {
 			if (headerElem) {
 				if (window.pageYOffset > 21) {
 					headerElem.classList.add('header_fixed');
 
+					if (window.pageYOffset > scrTop) {
+						scrAccDown++;
+						scrAccUp = 0;
+					} else {
+						scrAccUp++;
+						scrAccDown = 0;
+					}
+
+					scrTop = window.pageYOffset;
+
 					if (scrAccDown > 3) {
 						headerElem.classList.add('header_hide');
-					} else if (scrAccUp > 3) {
+					} else if (scrAccUp > 1) {
 						headerElem.classList.remove('header_hide');
 					}
 
@@ -38,16 +48,6 @@
 					headerElem.classList.remove('header_fixed');
 					headerElem.classList.remove('header_hide');
 				}
-
-				if (window.pageYOffset > scrTop) {
-					scrAccDown++;
-					scrAccUp = 0;
-				} else {
-					scrAccUp++;
-					scrAccDown = 0;
-				}
-
-				scrTop = window.pageYOffset;
 			}
 		}
 
