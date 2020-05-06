@@ -30,12 +30,13 @@
 				}
 
 				if (window.pageYOffset > scrTop) {
-					scrTop += window.pageYOffset;
+					console.log('scrDown');
 				} else {
-					scrTop -= window.pageYOffset;
+					console.log('scrUp');
 				}
 
-				console.log(scrTop);
+				scrTop = window.pageYOffset;
+
 			}
 		}
 
