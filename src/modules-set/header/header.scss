@@ -7,10 +7,13 @@
 	display: flex;
 	height: 100px;
 	align-items: center;
-	transition: .21s;
+	transition: .5s;
 	&_fixed{
 		background: #FFF;
 		box-shadow: 0 1px 21px rgba(0,0,0,.21);
+	}
+	&_hide{
+		top: -100px;
 	}
 	&__logo{
 		display: inline-block;

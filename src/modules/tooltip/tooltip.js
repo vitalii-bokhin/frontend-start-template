@@ -1,6 +1,7 @@
 /*
 ToolTip.init({
-	element: '.js-tooltip'
+	element: '.js-tooltip',
+	notHide: true // def: false
 });
 
 ToolTip.onShow = function(btnEl, tooltipDivEl) {
@@ -113,6 +114,8 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
 		},
 		
 		hide: function () {
+			if (this.opt.notHide) return;
+
 			this.tooltipDiv.classList.remove('tooltip_visible');
 			this.tooltipDiv.removeAttribute('style');
 			this.tooltipDiv.innerHTML = '';
@@ -137,6 +140,8 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
 		
 		init: function (opt) {
 			this.opt = opt || {};
+
+			this.opt.notHide = (opt.notHide !== undefined) ? opt.notHide : false;
 			
 			let mouseOver = (e) => {
 				if (this.canBeHidden) {
@@ -156,7 +161,9 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
 			
 			let mouseClick = (e) => {
 				const elem = e.target.closest(opt.element);
-				
+
+				e.preventDefault();
+
 				if (elem) {
 					this.hide();
 					this.show(elem);

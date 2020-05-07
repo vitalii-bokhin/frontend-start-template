@@ -16,27 +16,38 @@
 	document.addEventListener('DOMContentLoaded', function () {
 		const headerElem = document.getElementById('header');
 
-		let scrTop = 0;
+		let scrTop = 0,
+			scrAccUp = 0,
+			scrAccDown = 0;
 
 		function fixHeader() {
 			if (headerElem) {
 				if (window.pageYOffset > 21) {
 					headerElem.classList.add('header_fixed');
+
+					if (window.pageYOffset > scrTop) {
+						scrAccDown++;
+						scrAccUp = 0;
+					} else {
+						scrAccUp++;
+						scrAccDown = 0;
+					}
+
+					scrTop = window.pageYOffset;
+
+					if (scrAccDown > 3) {
+						headerElem.classList.add('header_hide');
+					} else if (scrAccUp > 1) {
+						headerElem.classList.remove('header_hide');
+					}
+
 				} else if (
 					!document.body.classList.contains('popup-is-opened') &&
 					!document.body.classList.contains('mob-nav-is-opened')
 				) {
 					headerElem.classList.remove('header_fixed');
+					headerElem.classList.remove('header_hide');
 				}
-
-				if (window.pageYOffset > scrTop) {
-					console.log('scrDown');
-				} else {
-					console.log('scrUp');
-				}
-
-				scrTop = window.pageYOffset;
-
 			}
 		}
 
