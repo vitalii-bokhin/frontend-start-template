@@ -47,34 +47,47 @@
 		}
 	}
 }
-
-.col{
+ 
+@mixin cols {
 	flex: 0 1 auto;
+	max-width: none;
 	
 	$cC: 12;
 	@for $i from 1 through $cC {
-		&-#{$i - 1}-#{$i}{
-			flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-			max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-		}
 		&-#{$i}{
 			flex: 0 0 (100 / $cC) * $i * 1%;
 			max-width: (100 / $cC) * $i * 1%;
+			@if $i == $cC {
+				margin-left: 0;
+				margin-right: 0;
+			}
 		}
 	}
 	
-	$cC: 15;
+	$cC: 11;
 	@for $i from 1 through $cC {
-		&-#{$i - 1}-#{$i}{
-			.row_#{$cC} > &{
-				flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-				max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-			}
-		}
 		&-#{$i}{
 			.row_#{$cC} > &{
 				flex: 0 0 (100 / $cC) * $i * 1%;
 				max-width: (100 / $cC) * $i * 1%;
+				@if $i == $cC {
+					margin-left: 0;
+					margin-right: 0;
+				}
+			}
+		}
+	}
+
+	$cC: 15;
+	@for $i from 1 through $cC {
+		&-#{$i}{
+			.row_#{$cC} > &{
+				flex: 0 0 (100 / $cC) * $i * 1%;
+				max-width: (100 / $cC) * $i * 1%;
+				@if $i == $cC {
+					margin-left: 0;
+					margin-right: 0;
+				}
 			}
 		}
 	}
@@ -91,48 +104,14 @@
 	}
 }
 
+.col{
+	@include cols;
+}
+
 @media(max-width: 1600px){
 	.lg{
 		&-col{
-			flex: 0 1 auto;
-			max-width: none;
-			
-			$cC: 12;
-			@for $i from 1 through $cC {
-				&-#{$i - 1}-#{$i}{
-					flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-					max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-				}
-				&-#{$i}{
-					flex: 0 0 (100 / $cC) * $i * 1%;
-					max-width: (100 / $cC) * $i * 1%;
-					@if $i == $cC {
-						margin-left: 0;
-						margin-right: 0;
-					}
-				}
-			}
-			
-			$cC: 15;
-			@for $i from 1 through $cC {
-				&-#{$i - 1}-#{$i}{
-					.row_#{$cC} > &{
-						flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-						max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-					}
-				}
-				&-#{$i}{
-					.row_#{$cC} > &{
-						flex: 0 0 (100 / $cC) * $i * 1%;
-						max-width: (100 / $cC) * $i * 1%;
-						@if $i == $cC {
-							margin-left: 0;
-							margin-right: 0;
-						}
-					}
-				}
-			}
-			
+			@include cols;
 		}
 	}
 }
@@ -150,45 +129,7 @@
 			}
 		}
 		&-col{
-			flex: 0 1 auto;
-			max-width: none;
-			
-			$cC: 12;
-			@for $i from 1 through $cC {
-				&-#{$i - 1}-#{$i}{
-					flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-					max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-				}
-				&-#{$i}{
-					flex: 0 0 (100 / $cC) * $i * 1%;
-					max-width: (100 / $cC) * $i * 1%;
-					@if $i == $cC {
-						margin-left: 0;
-						margin-right: 0;
-					}
-				}
-			}
-			
-			$cC: 15;
-			@for $i from 1 through $cC {
-				&-#{$i - 1}-#{$i}{
-					.row_#{$cC} > &{
-						flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-						max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-					}
-				}
-				&-#{$i}{
-					.row_#{$cC} > &{
-						flex: 0 0 (100 / $cC) * $i * 1%;
-						max-width: (100 / $cC) * $i * 1%;
-						@if $i == $cC {
-							margin-left: 0;
-							margin-right: 0;
-						}
-					}
-				}
-			}
-			
+			@include cols;
 		}
 	}
 }
@@ -206,48 +147,7 @@
 			}
 		}
 		&-col{
-			flex: 0 1 auto;
-			max-width: none;
-			
-			$cC: 12;
-			@for $i from 1 through $cC {
-				&-#{$i - 1}-#{$i}{
-					flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-					max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-				}
-				&-#{$i}{
-					flex: 0 0 (100 / $cC) * $i * 1%;
-					max-width: (100 / $cC) * $i * 1%;
-					@if $i == $cC {
-						margin-left: 0;
-						margin-right: 0;
-					}
-				}
-			}
-			
-			$cC: 15;
-			@for $i from 1 through $cC {
-				&-#{$i - 1}-#{$i}{
-					.row_#{$cC} > &{
-						flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-						max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-					}
-				}
-				&-#{$i}{
-					.row_#{$cC} > &{
-						flex: 0 0 (100 / $cC) * $i * 1%;
-						max-width: (100 / $cC) * $i * 1%;
-						@if $i == $cC {
-							margin-left: 0;
-							margin-right: 0;
-						}
-					}
-				}
-			}
-			
-			&_first{
-				order: -1;
-			}
+			@include cols;
 		}
 	}
 }
@@ -255,48 +155,7 @@
 @media(max-width: 750px){
 	.xs{
 		&-col{
-			flex: 0 1 auto;
-			max-width: none;
-			
-			$cC: 12;
-			@for $i from 1 through $cC {
-				&-#{$i - 1}-#{$i}{
-					flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-					max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-				}
-				&-#{$i}{
-					flex: 0 0 (100 / $cC) * $i * 1%;
-					max-width: (100 / $cC) * $i * 1%;
-					@if $i == $cC {
-						margin-left: 0;
-						margin-right: 0;
-					}
-				}
-			}
-			
-			$cC: 15;
-			@for $i from 1 through $cC {
-				&-#{$i - 1}-#{$i}{
-					.row_#{$cC} > &{
-						flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-						max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
-					}
-				}
-				&-#{$i}{
-					.row_#{$cC} > &{
-						flex: 0 0 (100 / $cC) * $i * 1%;
-						max-width: (100 / $cC) * $i * 1%;
-						@if $i == $cC {
-							margin-left: 0;
-							margin-right: 0;
-						}
-					}
-				}
-			}
-
-			&_first{
-				order: -1;
-			}
+			@include cols;
 		}
 	}
 }
