@@ -1,8 +1,7 @@
 .wrp{
 	margin: 0 auto;
 	max-width: 1180px;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding: 15px;
 }
 
 .row{
@@ -51,102 +50,35 @@
 
 .col{
 	flex: 0 1 auto;
-	&-0-1{
-		flex: 0 0 4.166665%;
-		max-width: 4.166665%;
+	
+	$cC: 12;
+	@for $i from 1 through $cC {
+		&-#{$i - 1}-#{$i}{
+			flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+			max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+		}
+		&-#{$i}{
+			flex: 0 0 (100 / $cC) * $i * 1%;
+			max-width: (100 / $cC) * $i * 1%;
+		}
 	}
-	&-1{
-		flex: 0 0 8.33333%;
-		max-width: 8.33333%;
+	
+	$cC: 15;
+	@for $i from 1 through $cC {
+		&-#{$i - 1}-#{$i}{
+			.row_#{$cC} > &{
+				flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+				max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+			}
+		}
+		&-#{$i}{
+			.row_#{$cC} > &{
+				flex: 0 0 (100 / $cC) * $i * 1%;
+				max-width: (100 / $cC) * $i * 1%;
+			}
+		}
 	}
-	&-1-2{
-		flex: 0 0 12.499995%;
-		max-width: 12.499995%;
-	}
-	&-2{
-		flex: 0 0 16.66666%;
-		max-width: 16.66666%;
-	}
-	&-2-3{
-		flex: 0 0 20.83333%;
-		max-width: 20.83333%;
-	}
-	&-3{
-		flex: 0 0 25%;
-		max-width: 25%;
-	}
-	&-3-4{
-		flex: 0 0 29.16666%;
-		max-width: 29.16666%;
-	}
-	&-4{
-		flex: 0 0 33.33332%;
-		max-width: 33.33332%;
-	}
-	&-4-5{
-		flex: 0 0 37.499985%;
-		max-width: 37.499985%;
-	}
-	&-5{
-		flex: 0 0 41.66665%;
-		max-width: 41.66665%;
-	}
-	&-5-6{
-		flex: 0 0 45.833325%;
-		max-width: 45.833325%;
-	}
-	&-6{
-		flex: 0 0 50%;
-		max-width: 50%;
-	}
-	&-6-7{
-		flex: 0 0 54.166665%;
-		max-width: 54.166665%;
-	}
-	&-7{
-		flex: 0 0 58.33333%;
-		max-width: 58.33333%;
-	}
-	&-7-8{
-		flex: 0 0 62.499985%;
-		max-width: 62.499985%;
-	}
-	&-8{
-		flex: 0 0 66.66664%;
-		max-width: 66.66664%;
-	}
-	&-8-9{
-		flex: 0 0 70.833305%;
-		max-width: 70.833305%;
-	}
-	&-9{
-		flex: 0 0 74.99997%;
-		max-width: 74.99997%;
-	}
-	&-9-10{
-		flex: 0 0 79.166635%;
-		max-width: 79.166635%;
-	}
-	&-10{
-		flex: 0 0 83.33333%;
-		max-width: 83.33333%;
-	}
-	&-10-11{
-		flex: 0 0 87.499995%;
-		max-width: 87.499995%;
-	}
-	&-11{
-		flex: 0 0 91.66663%;
-		max-width: 91.66663%;
-	}
-	&-11-12{
-		flex: 0 0 95.833295%;
-		max-width: 95.833295%;
-	}
-	&-12{
-		flex: 0 0 100%;
-		max-width: 100%;
-	}
+	
 	&_center{
 		margin-left: auto;
 		margin-right: auto;
@@ -164,104 +96,43 @@
 		&-col{
 			flex: 0 1 auto;
 			max-width: none;
-			&-0-1{
-				flex: 0 0 4.166665%;
-				max-width: 4.166665%;
+			
+			$cC: 12;
+			@for $i from 1 through $cC {
+				&-#{$i - 1}-#{$i}{
+					flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+					max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+				}
+				&-#{$i}{
+					flex: 0 0 (100 / $cC) * $i * 1%;
+					max-width: (100 / $cC) * $i * 1%;
+					@if $i == $cC {
+						margin-left: 0;
+						margin-right: 0;
+					}
+				}
 			}
-			&-1{
-				flex: 0 0 8.33333%;
-				max-width: 8.33333%;
+			
+			$cC: 15;
+			@for $i from 1 through $cC {
+				&-#{$i - 1}-#{$i}{
+					.row_#{$cC} > &{
+						flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+						max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+					}
+				}
+				&-#{$i}{
+					.row_#{$cC} > &{
+						flex: 0 0 (100 / $cC) * $i * 1%;
+						max-width: (100 / $cC) * $i * 1%;
+						@if $i == $cC {
+							margin-left: 0;
+							margin-right: 0;
+						}
+					}
+				}
 			}
-			&-1-2{
-				flex: 0 0 12.499995%;
-				max-width: 12.499995%;
-			}
-			&-2{
-				flex: 0 0 16.66666%;
-				max-width: 16.66666%;
-			}
-			&-2-3{
-				flex: 0 0 20.83333%;
-				max-width: 20.83333%;
-			}
-			&-3{
-				flex: 0 0 25%;
-				max-width: 25%;
-			}
-			&-3-4{
-				flex: 0 0 29.16666%;
-				max-width: 29.16666%;
-			}
-			&-4{
-				flex: 0 0 33.33332%;
-				max-width: 33.33332%;
-			}
-			&-4-5{
-				flex: 0 0 37.499985%;
-				max-width: 37.499985%;
-			}
-			&-5{
-				flex: 0 0 41.66665%;
-				max-width: 41.66665%;
-			}
-			&-5-6{
-				flex: 0 0 45.833325%;
-				max-width: 45.833325%;
-			}
-			&-6{
-				flex: 0 0 50%;
-				max-width: 50%;
-			}
-			&-6-7{
-				flex: 0 0 54.166665%;
-				max-width: 54.166665%;
-			}
-			&-7{
-				flex: 0 0 58.33333%;
-				max-width: 58.33333%;
-			}
-			&-7-8{
-				flex: 0 0 62.499985%;
-				max-width: 62.499985%;
-			}
-			&-8{
-				flex: 0 0 66.66664%;
-				max-width: 66.66664%;
-			}
-			&-8-9{
-				flex: 0 0 70.833305%;
-				max-width: 70.833305%;
-			}
-			&-9{
-				flex: 0 0 74.99997%;
-				max-width: 74.99997%;
-			}
-			&-9-10{
-				flex: 0 0 79.166635%;
-				max-width: 79.166635%;
-			}
-			&-10{
-				flex: 0 0 83.33333%;
-				max-width: 83.33333%;
-			}
-			&-10-11{
-				flex: 0 0 87.499995%;
-				max-width: 87.499995%;
-			}
-			&-11{
-				flex: 0 0 91.66663%;
-				max-width: 91.66663%;
-			}
-			&-11-12{
-				flex: 0 0 95.833295%;
-				max-width: 95.833295%;
-			}
-			&-12{
-				flex: 0 0 100%;
-				max-width: 100%;
-				margin-left: 0;
-				margin-right: 0;
-			}
+			
 		}
 	}
 }
@@ -269,7 +140,7 @@
 @media(max-width: 1200px){
 	.md{
 		&-row{
-			&-col-12{
+			&-col-fw{
 				& > [class*="col"]{
 					flex: 0 0 100%;
 					max-width: 100%;
@@ -281,104 +152,43 @@
 		&-col{
 			flex: 0 1 auto;
 			max-width: none;
-			&-0-1{
-				flex: 0 0 4.166665%;
-				max-width: 4.166665%;
+			
+			$cC: 12;
+			@for $i from 1 through $cC {
+				&-#{$i - 1}-#{$i}{
+					flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+					max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+				}
+				&-#{$i}{
+					flex: 0 0 (100 / $cC) * $i * 1%;
+					max-width: (100 / $cC) * $i * 1%;
+					@if $i == $cC {
+						margin-left: 0;
+						margin-right: 0;
+					}
+				}
 			}
-			&-1{
-				flex: 0 0 8.33333%;
-				max-width: 8.33333%;
+			
+			$cC: 15;
+			@for $i from 1 through $cC {
+				&-#{$i - 1}-#{$i}{
+					.row_#{$cC} > &{
+						flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+						max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+					}
+				}
+				&-#{$i}{
+					.row_#{$cC} > &{
+						flex: 0 0 (100 / $cC) * $i * 1%;
+						max-width: (100 / $cC) * $i * 1%;
+						@if $i == $cC {
+							margin-left: 0;
+							margin-right: 0;
+						}
+					}
+				}
 			}
-			&-1-2{
-				flex: 0 0 12.499995%;
-				max-width: 12.499995%;
-			}
-			&-2{
-				flex: 0 0 16.66666%;
-				max-width: 16.66666%;
-			}
-			&-2-3{
-				flex: 0 0 20.83333%;
-				max-width: 20.83333%;
-			}
-			&-3{
-				flex: 0 0 25%;
-				max-width: 25%;
-			}
-			&-3-4{
-				flex: 0 0 29.16666%;
-				max-width: 29.16666%;
-			}
-			&-4{
-				flex: 0 0 33.33332%;
-				max-width: 33.33332%;
-			}
-			&-4-5{
-				flex: 0 0 37.499985%;
-				max-width: 37.499985%;
-			}
-			&-5{
-				flex: 0 0 41.66665%;
-				max-width: 41.66665%;
-			}
-			&-5-6{
-				flex: 0 0 45.833325%;
-				max-width: 45.833325%;
-			}
-			&-6{
-				flex: 0 0 50%;
-				max-width: 50%;
-			}
-			&-6-7{
-				flex: 0 0 54.166665%;
-				max-width: 54.166665%;
-			}
-			&-7{
-				flex: 0 0 58.33333%;
-				max-width: 58.33333%;
-			}
-			&-7-8{
-				flex: 0 0 62.499985%;
-				max-width: 62.499985%;
-			}
-			&-8{
-				flex: 0 0 66.66664%;
-				max-width: 66.66664%;
-			}
-			&-8-9{
-				flex: 0 0 70.833305%;
-				max-width: 70.833305%;
-			}
-			&-9{
-				flex: 0 0 74.99997%;
-				max-width: 74.99997%;
-			}
-			&-9-10{
-				flex: 0 0 79.166635%;
-				max-width: 79.166635%;
-			}
-			&-10{
-				flex: 0 0 83.33333%;
-				max-width: 83.33333%;
-			}
-			&-10-11{
-				flex: 0 0 87.499995%;
-				max-width: 87.499995%;
-			}
-			&-11{
-				flex: 0 0 91.66663%;
-				max-width: 91.66663%;
-			}
-			&-11-12{
-				flex: 0 0 95.833295%;
-				max-width: 95.833295%;
-			}
-			&-12{
-				flex: 0 0 100%;
-				max-width: 100%;
-				margin-left: 0;
-				margin-right: 0;
-			}
+			
 		}
 	}
 }
@@ -386,7 +196,7 @@
 @media(max-width: 1000px){
 	.sm{
 		&-row{
-			&-col-12{
+			&-col-fw{
 				& > [class*="col"]{
 					flex: 0 0 100%;
 					max-width: 100%;
@@ -398,104 +208,43 @@
 		&-col{
 			flex: 0 1 auto;
 			max-width: none;
-			&-0-1{
-				flex: 0 0 4.166665%;
-				max-width: 4.166665%;
+			
+			$cC: 12;
+			@for $i from 1 through $cC {
+				&-#{$i - 1}-#{$i}{
+					flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+					max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+				}
+				&-#{$i}{
+					flex: 0 0 (100 / $cC) * $i * 1%;
+					max-width: (100 / $cC) * $i * 1%;
+					@if $i == $cC {
+						margin-left: 0;
+						margin-right: 0;
+					}
+				}
 			}
-			&-1{
-				flex: 0 0 8.33333%;
-				max-width: 8.33333%;
+			
+			$cC: 15;
+			@for $i from 1 through $cC {
+				&-#{$i - 1}-#{$i}{
+					.row_#{$cC} > &{
+						flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+						max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+					}
+				}
+				&-#{$i}{
+					.row_#{$cC} > &{
+						flex: 0 0 (100 / $cC) * $i * 1%;
+						max-width: (100 / $cC) * $i * 1%;
+						@if $i == $cC {
+							margin-left: 0;
+							margin-right: 0;
+						}
+					}
+				}
 			}
-			&-1-2{
-				flex: 0 0 12.499995%;
-				max-width: 12.499995%;
-			}
-			&-2{
-				flex: 0 0 16.66666%;
-				max-width: 16.66666%;
-			}
-			&-2-3{
-				flex: 0 0 20.83333%;
-				max-width: 20.83333%;
-			}
-			&-3{
-				flex: 0 0 25%;
-				max-width: 25%;
-			}
-			&-3-4{
-				flex: 0 0 29.16666%;
-				max-width: 29.16666%;
-			}
-			&-4{
-				flex: 0 0 33.33332%;
-				max-width: 33.33332%;
-			}
-			&-4-5{
-				flex: 0 0 37.499985%;
-				max-width: 37.499985%;
-			}
-			&-5{
-				flex: 0 0 41.66665%;
-				max-width: 41.66665%;
-			}
-			&-5-6{
-				flex: 0 0 45.833325%;
-				max-width: 45.833325%;
-			}
-			&-6{
-				flex: 0 0 50%;
-				max-width: 50%;
-			}
-			&-6-7{
-				flex: 0 0 54.166665%;
-				max-width: 54.166665%;
-			}
-			&-7{
-				flex: 0 0 58.33333%;
-				max-width: 58.33333%;
-			}
-			&-7-8{
-				flex: 0 0 62.499985%;
-				max-width: 62.499985%;
-			}
-			&-8{
-				flex: 0 0 66.66664%;
-				max-width: 66.66664%;
-			}
-			&-8-9{
-				flex: 0 0 70.833305%;
-				max-width: 70.833305%;
-			}
-			&-9{
-				flex: 0 0 74.99997%;
-				max-width: 74.99997%;
-			}
-			&-9-10{
-				flex: 0 0 79.166635%;
-				max-width: 79.166635%;
-			}
-			&-10{
-				flex: 0 0 83.33333%;
-				max-width: 83.33333%;
-			}
-			&-10-11{
-				flex: 0 0 87.499995%;
-				max-width: 87.499995%;
-			}
-			&-11{
-				flex: 0 0 91.66663%;
-				max-width: 91.66663%;
-			}
-			&-11-12{
-				flex: 0 0 95.833295%;
-				max-width: 95.833295%;
-			}
-			&-12{
-				flex: 0 0 100%;
-				max-width: 100%;
-				margin-left: 0;
-				margin-right: 0;
-			}
+			
 			&_first{
 				order: -1;
 			}
@@ -508,104 +257,43 @@
 		&-col{
 			flex: 0 1 auto;
 			max-width: none;
-			&-0-1{
-				flex: 0 0 4.166665%;
-				max-width: 4.166665%;
+			
+			$cC: 12;
+			@for $i from 1 through $cC {
+				&-#{$i - 1}-#{$i}{
+					flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+					max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+				}
+				&-#{$i}{
+					flex: 0 0 (100 / $cC) * $i * 1%;
+					max-width: (100 / $cC) * $i * 1%;
+					@if $i == $cC {
+						margin-left: 0;
+						margin-right: 0;
+					}
+				}
 			}
-			&-1{
-				flex: 0 0 8.33333%;
-				max-width: 8.33333%;
+			
+			$cC: 15;
+			@for $i from 1 through $cC {
+				&-#{$i - 1}-#{$i}{
+					.row_#{$cC} > &{
+						flex: 0 0 (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+						max-width: (100 / $cC) * $i - (100 / $cC / 2) * 1%;
+					}
+				}
+				&-#{$i}{
+					.row_#{$cC} > &{
+						flex: 0 0 (100 / $cC) * $i * 1%;
+						max-width: (100 / $cC) * $i * 1%;
+						@if $i == $cC {
+							margin-left: 0;
+							margin-right: 0;
+						}
+					}
+				}
 			}
-			&-1-2{
-				flex: 0 0 12.499995%;
-				max-width: 12.499995%;
-			}
-			&-2{
-				flex: 0 0 16.66666%;
-				max-width: 16.66666%;
-			}
-			&-2-3{
-				flex: 0 0 20.83333%;
-				max-width: 20.83333%;
-			}
-			&-3{
-				flex: 0 0 25%;
-				max-width: 25%;
-			}
-			&-3-4{
-				flex: 0 0 29.16666%;
-				max-width: 29.16666%;
-			}
-			&-4{
-				flex: 0 0 33.33332%;
-				max-width: 33.33332%;
-			}
-			&-4-5{
-				flex: 0 0 37.499985%;
-				max-width: 37.499985%;
-			}
-			&-5{
-				flex: 0 0 41.66665%;
-				max-width: 41.66665%;
-			}
-			&-5-6{
-				flex: 0 0 45.833325%;
-				max-width: 45.833325%;
-			}
-			&-6{
-				flex: 0 0 50%;
-				max-width: 50%;
-			}
-			&-6-7{
-				flex: 0 0 54.166665%;
-				max-width: 54.166665%;
-			}
-			&-7{
-				flex: 0 0 58.33333%;
-				max-width: 58.33333%;
-			}
-			&-7-8{
-				flex: 0 0 62.499985%;
-				max-width: 62.499985%;
-			}
-			&-8{
-				flex: 0 0 66.66664%;
-				max-width: 66.66664%;
-			}
-			&-8-9{
-				flex: 0 0 70.833305%;
-				max-width: 70.833305%;
-			}
-			&-9{
-				flex: 0 0 74.99997%;
-				max-width: 74.99997%;
-			}
-			&-9-10{
-				flex: 0 0 79.166635%;
-				max-width: 79.166635%;
-			}
-			&-10{
-				flex: 0 0 83.33333%;
-				max-width: 83.33333%;
-			}
-			&-10-11{
-				flex: 0 0 87.499995%;
-				max-width: 87.499995%;
-			}
-			&-11{
-				flex: 0 0 91.66663%;
-				max-width: 91.66663%;
-			}
-			&-11-12{
-				flex: 0 0 95.833295%;
-				max-width: 95.833295%;
-			}
-			&-12{
-				flex: 0 0 100%;
-				max-width: 100%;
-				margin-left: 0;
-				margin-right: 0;
-			}
+
 			&_first{
 				order: -1;
 			}

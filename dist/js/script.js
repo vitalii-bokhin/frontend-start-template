@@ -3770,6 +3770,8 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
 				this.position.X = 'center';
 			} else if (elem.hasAttribute('data-tooltip-pos-x')) {
 				this.position.X = elem.getAttribute('data-tooltip-pos-x');
+			} else {
+				this.position.X = 'center';
 			}
 			
 			if (elem.hasAttribute('data-tooltip-pos-y')) {
@@ -3788,7 +3790,7 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
 			
 			switch (this.position.X) {
 				case 'center':
-				coordX = (elemRect.left + (elem.offsetWidth / 2)) - (this.tooltipDiv.offsetWidth / 2);
+				coordX = (elemRect.left + ((elemRect.right - elemRect.left) / 2)) - (this.tooltipDiv.offsetWidth / 2);
 				
 				if (coordX < 10) {
 					coordX = 10;
