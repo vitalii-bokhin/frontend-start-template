@@ -38,9 +38,9 @@ var Menu;
 			document.addEventListener('click', (e) => {
 				var elem = e.target.closest(elementStr);
 
-				if (!elem) {
-					return;
-				}
+				if (!elem) return;
+
+				if (e.target.getAttribute('href') == '#') e.preventDefault();
 
 				this.toggle(elem, elementStr, subMenuStr);
 			});
