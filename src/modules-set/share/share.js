@@ -30,7 +30,7 @@ Share.init(Str button class);
 					break;
 
 				case 'tw':
-					url = 'http://twitter.com/share?url=' + encodedHref;
+					url = 'http://twitter.com/share?url=' + encodedHref + ((title) ? '&text=' + title : '');
 					break;
 
 				case 'ok':
