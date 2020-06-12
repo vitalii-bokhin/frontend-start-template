@@ -19,6 +19,9 @@
 	&_col-center{
 		justify-content: center;
 	}
+	&_col-between{
+		justify-content: space-between;
+	}
 	&_col-middle{
 		align-items: center;
 	}
@@ -51,6 +54,11 @@
 @mixin cols {
 	flex: 0 1 auto;
 	max-width: none;
+
+	&-fill{
+		flex: 1 1 100%;
+		max-width: none;
+	}
 	
 	$cC: 12;
 	@for $i from 1 through $cC {
@@ -61,6 +69,9 @@
 				margin-left: 0;
 				margin-right: 0;
 			}
+		}
+		&-offset-#{$i}{
+			margin-left: (100 / $cC) * $i * 1%;
 		}
 	}
 	
@@ -74,6 +85,11 @@
 					margin-left: 0;
 					margin-right: 0;
 				}
+			}
+		}
+		&-offset-#{$i}{
+			.row_#{$cC} > &{
+				margin-left: (100 / $cC) * $i * 1%;
 			}
 		}
 	}
@@ -90,17 +106,28 @@
 				}
 			}
 		}
+		&-offset-#{$i}{
+			.row_#{$cC} > &{
+				margin-left: (100 / $cC) * $i * 1%;
+			}
+		}
 	}
 	
 	&_center{
 		margin-left: auto;
 		margin-right: auto;
 	}
+	&_middle{
+		align-self: center;
+	}
 	&_right{
 		margin-left: auto;
 	}
 	&_grow{
 		flex-grow: 1;
+	}
+	&_first{
+		order: -1;
 	}
 }
 

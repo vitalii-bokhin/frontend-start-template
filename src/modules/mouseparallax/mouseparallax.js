@@ -50,8 +50,8 @@ function Mouseparallax(elSel, options) {
 		startMousePos.Y = e.clientY;
 	});
 
-	$(document).on('mousemove', opt.listener, function (e) {
-
+	$(opt.listener).on('mousemove', opt.listener, function (e) {
+console.log($(this));
 		if (e.clientX > cursorPos.X) {
 			direct.X = 'right';
 		} else {

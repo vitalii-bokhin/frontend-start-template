@@ -1,52 +1,109 @@
-html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, img, strong, b, i, sup, ol, ul, li, pre, code, form, label, input, textarea, button, hr, header, footer, main, section, nav, article, aside {
-	margin: 0;
-	padding: 0;
-	outline: none;
-	font-weight: inherit;
-	font-style: inherit;
-	font-size: inherit;
-	font-family: inherit;
-	color: inherit;
-	line-height: inherit;
-	vertical-align: baseline;
-	box-sizing: border-box;
+html,
+body,
+div,
+span,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+a,
+img,
+strong,
+b,
+i,
+sup,
+ol,
+ul,
+li,
+pre,
+code,
+form,
+label,
+input,
+textarea,
+button,
+hr,
+header,
+footer,
+main,
+section,
+nav,
+article,
+aside {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    line-height: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
 }
-header, footer, main, section, nav, article, aside {
-	display: block;
+
+header,
+footer,
+main,
+section,
+nav,
+article,
+aside {
+    display: block;
 }
-button{
-	display: inline-block;
-	line-height: normal;
-	cursor: pointer;
-	-webkit-appearance: none;
-	-webkit-tap-highlight-color: transparent;
+
+button {
+    display: inline-block;
+    line-height: normal;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
 }
-a, input {
-	line-height: normal;
-	-webkit-appearance: none;
+
+input {
+    line-height: normal;
+    -webkit-appearance: none;
 }
-img{
-	display: inline-block;
-	max-width: 100%;
-	vertical-align: bottom;
-	border: none;
+
+a {
+    -webkit-appearance: none;
 }
-b, strong {
-	font-weight: 700;
+
+img {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: bottom;
+    border: none;
 }
-i{
-	font-style: italic;
+
+b,
+strong {
+    font-weight: 700;
 }
-sup{
-	font-size: .85em;
-	position: relative;
-	bottom: .5em;
+
+i {
+    font-style: italic;
 }
-code{
-	display: inline-block;
+
+sup {
+    font-size: .85em;
+    position: relative;
+    bottom: .5em;
 }
-html, body {
-	font-weight: 400;
-	font-style: normal;
-	line-height: 1;
+
+code {
+    display: inline-block;
+}
+
+html,
+body {
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1;
 }

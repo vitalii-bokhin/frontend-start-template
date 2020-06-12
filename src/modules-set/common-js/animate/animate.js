@@ -1,12 +1,12 @@
+/*
+animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
+*/
+
 ; var animate;
 
 (function () {
     'use strict';
 
-    /*
-	Animation
-	animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
-	*/
     animate = function (draw, duration, ease, complete) {
         const start = performance.now();
 
