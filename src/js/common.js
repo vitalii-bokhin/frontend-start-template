@@ -55,6 +55,10 @@ document.addEventListener('DOMContentLoaded', function () {
     Popup.init('.js-open-popup');
     MediaPopup.init('.js-open-media-popup');
 
+    Popup.onOpen(function (elSel, btnEl) {
+        console.log(elSel, btnEl);
+    });
+
     // menu
     if (window.innerWidth < 1000) {
         Menu.init('.menu__item_has-children', '.menu__sub-menu');
@@ -299,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
     NextFieldset.init('.js-next-fieldset-btn', '.js-prev-fieldset-btn');
 
     NextFieldset.onChange = function (prevFsEl, curFsEl) {
-        
+
     }
 
     var contries;
@@ -405,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function () {
         new Maskinput(this, 'tel');
     });
     // $('input[data-type="date"]').mask('99.99.9999');
-console.log($($('.parallax-element.el2')));
+    console.log($($('.parallax-element.el2')));
     if ($('.parallax-element').length) {
         new Mouseparallax($('.parallax-element.el2'), {
             listener: $('#sec1')

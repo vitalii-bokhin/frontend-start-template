@@ -1105,7 +1105,7 @@ var Popup, MediaPopup;
 		winScrollTop: 0,
 		onClose: null,
 		_onclose: null,
-		onOpen: null,
+		onOpenSubscribers: [],
 		headerSelector: '.header',
 
 		fixBody: function (st) {
@@ -1159,11 +1159,17 @@ var Popup, MediaPopup;
 
 			this.fixBody(true);
 
-			if (this.onOpen) {
-				this.onOpen(elementStr, btnElem);
-			}
+			this.onOpenSubscribers.forEach(function (item) {
+				item(elementStr, btnElem);
+			});
 
 			return elem;
+		},
+
+		onOpen: function (fun) {
+			if (typeof fun === 'function') {
+				this.onOpenSubscribers.push(fun);
+			}
 		},
 
 		message: function (msg, elementStr, callback) {
@@ -2455,7 +2461,7 @@ var Maskinput;
 (function () {
 	'use strict';
 
-	Maskinput = function (inputElem, type) {
+	Maskinput = function (inputElem, type, opt) {
 		if (!inputElem) return;
 
 		var defValue = '';
@@ -2540,6 +2546,20 @@ var Maskinput;
 				}
 
 				if (!reg.test(inputElem.value)) {
+					inputElem.value = defValue;
+				} else {
+					defValue = inputElem.value;
+				}
+			}
+		}
+
+		this.number = function (ev) {
+			if (ev == 'focus') return;
+
+			if (opt.maxLength && inputElem.value.length > opt.maxLength) {
+				inputElem.value = defValue;
+			} else {
+				if (!/^\d*$/.test(inputElem.value)) {
 					inputElem.value = defValue;
 				} else {
 					defValue = inputElem.value;

@@ -247,6 +247,10 @@ hr {
   flex-wrap: nowrap;
 }
 
+.row_column {
+  flex-direction: column;
+}
+
 .row_col-center {
   justify-content: center;
 }

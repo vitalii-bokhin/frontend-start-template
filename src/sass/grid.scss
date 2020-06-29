@@ -16,6 +16,9 @@
 	&_nw{
 		flex-wrap: nowrap;
 	}
+	&_column{
+		flex-direction: column;
+	}
 	&_col-center{
 		justify-content: center;
 	}

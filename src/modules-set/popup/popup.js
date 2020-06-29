@@ -8,7 +8,7 @@ var Popup, MediaPopup;
 		winScrollTop: 0,
 		onClose: null,
 		_onclose: null,
-		onOpen: null,
+		onOpenSubscribers: [],
 		headerSelector: '.header',
 
 		fixBody: function (st) {
@@ -62,11 +62,17 @@ var Popup, MediaPopup;
 
 			this.fixBody(true);
 
-			if (this.onOpen) {
-				this.onOpen(elementStr, btnElem);
-			}
+			this.onOpenSubscribers.forEach(function (item) {
+				item(elementStr, btnElem);
+			});
 
 			return elem;
+		},
+
+		onOpen: function (fun) {
+			if (typeof fun === 'function') {
+				this.onOpenSubscribers.push(fun);
+			}
 		},
 
 		message: function (msg, elementStr, callback) {

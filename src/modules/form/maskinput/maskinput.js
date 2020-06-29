@@ -3,7 +3,7 @@ var Maskinput;
 (function () {
 	'use strict';
 
-	Maskinput = function (inputElem, type) {
+	Maskinput = function (inputElem, type, opt) {
 		if (!inputElem) return;
 
 		var defValue = '';
@@ -88,6 +88,20 @@ var Maskinput;
 				}
 
 				if (!reg.test(inputElem.value)) {
+					inputElem.value = defValue;
+				} else {
+					defValue = inputElem.value;
+				}
+			}
+		}
+
+		this.number = function (ev) {
+			if (ev == 'focus') return;
+
+			if (opt.maxLength && inputElem.value.length > opt.maxLength) {
+				inputElem.value = defValue;
+			} else {
+				if (!/^\d*$/.test(inputElem.value)) {
 					inputElem.value = defValue;
 				} else {
 					defValue = inputElem.value;
