@@ -57,6 +57,7 @@ const modulesOn = [
     'animation',
     'webgl',
     'mouseparallax',
+    'scrollbox',
     // 'floatslider',
     // 'slickslider',
     // 'scrollpane',
