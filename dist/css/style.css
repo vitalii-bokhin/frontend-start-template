@@ -108,7 +108,7 @@ body {
   line-height: 1;
 }
 
-.menu-close-btn:after, .menu-close-btn:before, .toggle:before, .toggle:after, .video__frame::before, .popup-close-btn:after, .popup-close-btn:before, .custom-checkbox__label:before, .custom-radio__input:checked + .custom-radio__label:after, .custom-radio__label:before, .select__button:after, .select__arr:after, .autocomplete__arr:after, .custom-file__btn:after, .custom-file__preview:after, .custom-file__del-btn:after, .custom-file__del-btn:before, .form__btn:before, .form_sending .form__loader:before, .form_sending .form__submit:before, .form_sending .form__submit:after, .accord__button:after, .accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before, .accord__btn-btn:after, .alert__close-btn:after, .alert__close-btn:before, .tooltip:after, .list li:before {
+.menu-close-btn:after, .menu-close-btn:before, .toggle:before, .toggle:after, .video__frame::before, .popup-close-btn:after, .popup-close-btn:before, .custom-checkbox__label:before, .custom-radio__input:checked + .custom-radio__label:after, .custom-radio__label:before, .select__button:after, .select__arr:after, .autocomplete__arr:after, .custom-file__btn:after, .custom-file__preview:after, .custom-file__del-btn:after, .custom-file__del-btn:before, .form__btn:before, .form_sending .form__loader:before, .form_sending .form__submit:before, .form_sending .form__submit:after, .accord__button:after, .accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before, .accord__btn-btn:after, .alert__close-btn:after, .alert__close-btn:before, .tooltip:after, .scrollbox_main > .scrollbox__window > .scrollbox__inner::after, .list li:before {
   display: block;
   content: "";
 }
@@ -3061,12 +3061,17 @@ hr {
   text-align: left;
   position: relative;
   z-index: 3;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   background: #ffffff;
   -webkit-appearance: none;
   transition: .21s;
+}
+
+.select__button span {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .select__button:hover, .select__button:focus {
@@ -4105,6 +4110,161 @@ hr {
   content: "";
   width: 100%;
   padding-bottom: 100%;
+}
+
+/* scrollbox */
+.scrollbox {
+  position: relative;
+}
+
+.scrollbox__window {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.scrollbox__inner_init {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.scrollbox__horizontal-bar {
+  height: 4px;
+  position: absolute;
+  bottom: 50px;
+  left: 32.13542%;
+  right: 32.13542%;
+  background: #a6cbff;
+  border-radius: 4px;
+}
+
+.scrollbox__horizontal-bar div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: #75afff;
+  border-radius: 4px;
+}
+
+.scrollbox__vertical-bar {
+  width: 10px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid #aaaaaa;
+}
+
+.scrollbox__vertical-bar div {
+  position: absolute;
+  left: 1px;
+  top: 0;
+  width: 6px;
+  height: 0;
+  background: #aaaaaa;
+}
+
+.scrollbox_main {
+  height: 100%;
+}
+
+.scrollbox_main > .scrollbox__window {
+  height: 100% !important;
+}
+
+.scrollbox_main > .scrollbox__window > .scrollbox__inner {
+  height: 100% !important;
+}
+
+.scrollbox_main > .scrollbox__window > .scrollbox__inner::after {
+  background: #000;
+  position: absolute;
+  right: -3px;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  z-index: 2;
+}
+
+.lifepath .scrollbox_main > .scrollbox__window > .scrollbox__inner::after {
+  background: #aaaaaa;
+}
+
+.scrollbox__section {
+  width: 100vw;
+  flex: 0 0 100vw;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollbox__section-wrap {
+  display: flex;
+  height: 100%;
+}
+
+.scrollbox__section_rounds {
+  width: auto;
+  flex: 0 0 auto;
+  display: flex;
+}
+
+.scrollbox .section {
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  overflow: hidden;
+}
+
+.scrollbox .section.op-1 {
+  opacity: 1;
+}
+
+@media (max-width: 1200px) {
+  .scrollbox_main {
+    height: auto;
+  }
+  .scrollbox_main > .scrollbox__window {
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+  }
+  .scrollbox_main > .scrollbox__window > .scrollbox__inner {
+    height: auto !important;
+    order: -1;
+  }
+  .scrollbox_main > .scrollbox__window > .scrollbox__inner::after {
+    display: none;
+  }
+  .scrollbox__section {
+    width: 100%;
+    flex: 0 0 auto;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .scrollbox__section-wrap {
+    flex-direction: column;
+    height: auto;
+  }
+  .scrollbox .section {
+    position: relative;
+    width: 100%;
+    height: auto;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.lifepath #start-section-2 {
+  display: none;
 }
 
 .zoom {
