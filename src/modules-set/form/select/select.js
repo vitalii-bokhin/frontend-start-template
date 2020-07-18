@@ -21,7 +21,7 @@
 			}
 
 			for (let i = 0; i < buttonElements.length; i++) {
-				buttonElements[i].innerHTML = buttonElements[i].getAttribute('data-placeholder');
+				buttonElements[i].children[0].innerHTML = buttonElements[i].getAttribute('data-placeholder');
 			}
 
 			for (let i = 0; i < inputElements.length; i++) {
@@ -31,6 +31,7 @@
 
 			for (let i = 0; i < valueElements.length; i++) {
 				valueElements[i].classList.remove('select__val_checked');
+				valueElements[i].disabled = false;
 			}
 		},
 
@@ -98,7 +99,7 @@
 			}
 
 			if (toButtonValue.length) {
-				button.innerHTML = toButtonValue.join(', ');
+				button.children[0].innerHTML = toButtonValue.join(', ');
 
 				input.value = toInputValue[0];
 
@@ -116,7 +117,7 @@
 					}
 				}
 			} else {
-				button.innerHTML = button.getAttribute('data-placeholder');
+				button.children[0].innerHTML = button.getAttribute('data-placeholder');
 				input.value = '';
 				this.close();
 			}
@@ -192,7 +193,7 @@
 				elem.disabled = true;
 
 				if (button) {
-					button.innerHTML = toButtonValue;
+					button.children[0].innerHTML = toButtonValue;
 				}
 
 				input.value = toInputValue;
@@ -359,7 +360,7 @@
 
 				const submitOnChange = (elem.hasAttribute('data-submit-form-onchange')) ? ' data-submit-form-onchange="' + elem.getAttribute('data-submit-form-onchange') + '" ' : '';
 
-				const head = '<button type="button"' + ((placeholder) ? ' data-placeholder="' + placeholder + '"' : '') + ' class="select__button">' + ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') + '</button>';
+				const head = '<button type="button"' + ((placeholder) ? ' data-placeholder="' + placeholder + '"' : '') + ' class="select__button"><span>' + ((selectedOption) ? selectedOption.innerHTML : (placeholder) ? placeholder : '') + '</span></button>';
 
 				const multiple = {
 					class: (elem.multiple) ? ' select_multiple' : '',

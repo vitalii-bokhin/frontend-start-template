@@ -700,14 +700,13 @@ FsScroll.init({
 /*
 Toggle.init({
 	button: '.js-tgl-btn',
-	onDocumenClickOff: '.js-tgl-off-on-doc',
 	offButton: '.js-tgl-off',
-	toggledClass: 'toggled' // def: toggled
+	toggledClass: 'some-class' // def: toggled
 });
 
-Toggle.onChange = function(toggleElem, targetElements, state) {
-	// code...
-}
+Toggle.onChange(function (btnEl, targetElems, state) {
+    // code...
+});
 */
 
 ; var Toggle;
@@ -717,10 +716,10 @@ Toggle.onChange = function(toggleElem, targetElements, state) {
 
 	Toggle = {
 		toggledClass: 'toggled',
-		onChange: null,
+		onChangeSubscribers: [],
 
-		target: function (toggleElem, state) {
-			var targetElements = document.querySelectorAll(toggleElem.getAttribute('data-target-elements'));
+		target: function (btnEl, state) {
+			var targetElements = document.querySelectorAll(btnEl.getAttribute('data-target-elements'));
 
 			if (!targetElements.length) return;
 
@@ -735,8 +734,10 @@ Toggle.onChange = function(toggleElem, targetElements, state) {
 			}
 
 			//call onChange
-			if (this.onChange) {
-				this.onChange(toggleElem, targetElements, state);
+			if (this.onChangeSubscribers.length) {
+				this.onChangeSubscribers.forEach(function (item) {
+					item(btnEl, targetElements, state);
+				});
 			}
 		},
 
@@ -791,27 +792,25 @@ Toggle.onChange = function(toggleElem, targetElements, state) {
 		toggleOff: function (btnEl) {
 			const targetEls = btnEl.getAttribute('data-target-elements'),
 				toggleBtnEls = document.querySelectorAll('.' + this.toggledClass +
-				'[data-target-elements*="' + targetEls + '"]');
+					'[data-target-elements*="' + targetEls + '"]');
 
 			this.target(btnEl, false);
 
-			for (var i = 0; i < toggleBtnEls.length; i++) {
+			for (let i = 0; i < toggleBtnEls.length; i++) {
 				toggleBtnEls[i].classList.remove(this.toggledClass);
 			}
 		},
 
-		onDocClickOff: function (e, onDocClickOffSelector, curEl) {
-			if (!onDocClickOffSelector) return;
+		onDocClickOff: function (e, targetBtnEl) {
+			const toggleElements = document.querySelectorAll('[data-toggle-off="document"].' + this.toggledClass);
 
-			var toggleElements = document.querySelectorAll(onDocClickOffSelector + '.' + this.toggledClass);
+			for (let i = 0; i < toggleElements.length; i++) {
+				const elem = toggleElements[i];
 
-			for (var i = 0; i < toggleElements.length; i++) {
-				var elem = toggleElements[i];
-
-				if (curEl === elem) continue;
+				if (targetBtnEl === elem) continue;
 
 				if (elem.hasAttribute('data-target-elements')) {
-					var targetSelectors = elem.getAttribute('data-target-elements');
+					const targetSelectors = elem.getAttribute('data-target-elements');
 
 					if (!e.target.closest(targetSelectors)) {
 						this.toggle(elem, true);
@@ -822,11 +821,17 @@ Toggle.onChange = function(toggleElem, targetElements, state) {
 			}
 		},
 
+		onChange: function (fun) {
+			if (typeof fun === 'function') {
+				this.onChangeSubscribers.push(fun);
+			}
+		},
+
 		init: function (opt) {
 			if (opt.toggledClass) {
 				this.toggledClass = opt.toggledClass;
 			}
-			
+
 			document.addEventListener('click', (e) => {
 				const btnEl = e.target.closest(opt.button),
 					offBtnEl = e.target.closest(opt.offButton);
@@ -841,7 +846,7 @@ Toggle.onChange = function(toggleElem, targetElements, state) {
 					this.toggleOff(offBtnEl);
 				}
 
-				this.onDocClickOff(e, opt.onDocumenClickOff, btnEl);
+				this.onDocClickOff(e, btnEl);
 			});
 		}
 	};
