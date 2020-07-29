@@ -14,14 +14,14 @@
         const opt = options || {};
 
         opt.horizontal = (opt.horizontal !== undefined) ? opt.horizontal : false;
-        opt.fullWidthScroll = (opt.fullWidthScroll !== undefined) ? opt.fullWidthScroll : false;
-        opt.scrollStep = (opt.scrollStep !== undefined) ? opt.scrollStep : null;
+        opt.fullSizeStep = (opt.fullSizeStep !== undefined) ? opt.fullSizeStep : false;
         opt.nestedScrollbox = (opt.nestedScrollbox !== undefined) ? opt.nestedScrollbox : null;
         opt.parentScrollbox = (opt.parentScrollbox !== undefined) ? opt.parentScrollbox : null;
         opt.childrenScrollbox = (opt.childrenScrollbox !== undefined) ? opt.childrenScrollbox : null;
         opt.evListenerEl = (opt.evListenerEl !== undefined) ? opt.evListenerEl : null;
         opt.duration = (opt.duration !== undefined) ? opt.duration : 1000;
         opt.bar = (opt.bar !== undefined) ? opt.bar : false;
+        opt.barSize = (opt.barSize !== undefined) ? opt.barSize : null;
 
         const winEl = scrBoxEl.querySelector('.scrollbox__window'),
             innerEl = scrBoxEl.querySelector('.scrollbox__inner');
@@ -30,11 +30,14 @@
 
         this.scrBoxEl = scrBoxEl;
         this.winEl = winEl;
+        this.winSize = 0;
         this.horizontal = opt.horizontal;
         this.bar = opt.bar;
+        this.barSize = opt.barSize;
         this.nestedSbEls = null;
         this.parentEl = null;
         this.barSlEl = null;
+        this.barSlElSize = 0;
         this.scrolled = 0;
         this.isScrolling = false;
         this.isBreak = false;
@@ -42,85 +45,52 @@
         this.initialized = false;
         this.ts = Date.now();
         this.params = null;
+        this.innerSize = null;
+        this.innerEl = innerEl || null;
+        this.innerSize = null;
+        this.endBreak = null;
 
         if (opt.parentScrollbox) {
             this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
         }
 
-
-
-        // // init breakpoints
-        // let breakpoints;
-
-        // function initBreakpoints() {
-        // 	breakpoints = [];
-
-        // 	options.breakpoints.forEach(function (item) {
-        // 		const bkPointEls = winEl.querySelectorAll('[' + item.attr + ']');
-
-        // 		for (let i = 0; i < bkPointEls.length; i++) {
-        // 			const bpEl = bkPointEls[i];
-
-        // 			breakpoints.push({
-        // 				el: bpEl,
-        // 				left: bpEl.getBoundingClientRect().left - winEl.getBoundingClientRect().left,
-        // 				attr: item.attr,
-        // 				state: item.state
-        // 			});
-        // 		}
-        // 	});
-        // }
-
-        // initBreakpoints();
-
-
-        // // checkpoints
-        // const checkbkPointEls = winEl.querySelectorAll('[data-scroll-checkpoint]'),
-        // 	checkpoints = [];
-
-        // for (let i = 0; i < checkbkPointEls.length; i++) {
-        // 	const pEl = checkbkPointEls[i];
-
-        // 	checkpoints.push({
-        // 		el: pEl,
-        // 		left: pEl.getBoundingClientRect().left - winEl.getBoundingClientRect().left
-        // 	});
-        // }
-
-        let step, curStep;
-
         const init = () => {
-            winEl.style.width = winEl.offsetWidth + 'px';
-            winEl.style.height = winEl.offsetHeight + 'px';
-
             if (opt.horizontal) {
-                const innerW = winEl.scrollWidth;
+                scrBoxEl.classList.add('scrollbox_horizontal');
 
-                this.endBreak = innerW - winEl.offsetWidth;
-
-                if (innerEl && innerW > winEl.offsetWidth) {
-                    this.innerEl = innerEl;
-
-                    innerEl.style.width = innerW + 'px';
-
-                    innerEl.classList.add('scrollbox__inner_init');
-                }
-
-            } else {
                 setTimeout(() => {
-                    const innerH = winEl.scrollHeight;
+                    if (this.innerEl) {
+                        const innerH = winEl.scrollHeight,
+                            winH = winEl.offsetHeight;
 
-                    this.endBreak = innerH - winEl.offsetHeight;
+                        if (innerH > winH) {
+                            scrBoxEl.classList.add('srollbox_scrollable');
+                        }
 
-                    if (innerEl && innerH > winEl.offsetHeight) {
-                        this.innerEl = innerEl;
-
-                        innerEl.style.height = innerH + 'px';
-
-                        innerEl.classList.add('scrollbox__inner_init');
+                        this.winSize = winH;
+                        this.innerSize = innerH;
+                        this.endBreak = innerH - winH;
                     }
 
-                    this.innerH = innerH;
+                    this.scrollBar();
+                }, 21);
+
+            } else {
+                scrBoxEl.classList.add('scrollbox_vertical');
+
+                setTimeout(() => {
+                    if (this.innerEl) {
+                        const innerH = winEl.scrollHeight,
+                            winH = winEl.offsetHeight;
+
+                        if (innerH > winH) {
+                            scrBoxEl.classList.add('srollbox_scrollable');
+                        }
+
+                        this.winSize = winH;
+                        this.innerSize = innerH;
+                        this.endBreak = innerH - winH;
+                    }
 
                     this.scrollBar();
                 }, 21);
@@ -198,42 +168,9 @@
                 });
             }
 
-            // scroll step
-            if (opt.fullWidthScroll) {
-                let mod = null,
-                    base;
-
-                for (let i = 3; i < 10; i++) {
-                    if (mod === null || winEl.offsetWidth % i < mod) {
-                        mod = winEl.offsetWidth % i;
-                        base = i;
-                    }
-                }
-
-                step = winEl.offsetWidth / base;
-
-                if (opt.scrollStep !== null) {
-                    if (typeof opt.scrollStep === 'string') {
-                        if (opt.scrollStep === 'windowWidth') {
-                            step = winEl.offsetWidth;
-
-                            if (this.scrolled > 0) {
-                                const scrolledSteps = this.scrolled / curStep;
-
-                                this.scrollTo(step * scrolledSteps, 0);
-                            }
-                        }
-                    } else {
-                        step = opt.scrollStep;
-                    }
-                }
-            }
-
-            curStep = step;
-
             setTimeout(() => {
                 this.initialized = true;
-            }, 121);
+            }, 21);
         }
 
         init();
@@ -273,8 +210,7 @@
                 (opt.childrenScrollbox && e.target.closest(opt.childrenScrollbox))
             ) return;
 
-            let scrTo,
-                delta;
+            let scrTo, delta;
 
             if (e.deltaX) {
                 delta = e.deltaX;
@@ -293,31 +229,29 @@
                 ) return;
             }
 
-            // // break before scroll
-            // if (this.beforeScroll) {
-            // 	const befRes = this.beforeScroll(delta);
-
-            // 	if (befRes !== null) {
-            // 		step = befRes;
-            // 	} else {
-            // 		step = curStep;
-            // 	}
-            // }
-
-            if (opt.fullWidthScroll) {
+            if (opt.fullSizeStep) {
                 if (delta > 0) {
-                    scrTo = this.scrolled + step;
+                    scrTo = this.scrolled + this.winSize;
                 } else if (delta < 0) {
-                    scrTo = this.scrolled - step;
+                    scrTo = this.scrolled - this.winSize;
                 }
+
             } else {
-                if (delta > 0) {
-                    delta = 150;
-                } else if (delta < 0) {
-                    delta = -150;
+                if (Math.abs(delta) > this.winSize) {
+                    if (delta > 0) {
+                        delta = this.winSize;
+                    } else if (delta < 0) {
+                        delta = -this.winSize;
+                    }
                 }
 
-                delta *= 2;
+                if (Math.abs(delta) < 150) {
+                    if (delta > 0) {
+                        delta = 150;
+                    } else if (delta < 0) {
+                        delta = -150;
+                    }
+                }
 
                 scrTo = this.scrolled + delta;
             }
@@ -358,7 +292,7 @@
                 ) return;
             }
 
-            if (opt.fullWidthScroll) {
+            if (opt.fullSizeStep) {
                 if (delta > 0) {
                     scrTo = this.scrolled + step;
                 } else if (delta < 0) {
@@ -399,19 +333,10 @@
         }
 
         this.setOptions = function (options) {
-            // if (options.slipBreakpoints !== undefined) opt.slipBreakpoints = options.slipBreakpoints;
+
         }
 
         this.reInit = function () {
-            winEl.style.width = '';
-            winEl.style.height = '';
-
-            if (innerEl) {
-                innerEl.classList.remove('scrollbox__inner_init');
-                innerEl.style.width = '';
-                innerEl.style.height = '';
-            }
-
             init();
         }
 
@@ -420,15 +345,6 @@
             this.initialized = false;
 
             scrBoxEl.removeEventListener('wheel', wheelHandler);
-
-            winEl.style.width = '';
-            winEl.style.height = '';
-
-            if (innerEl) {
-                innerEl.classList.remove('scrollbox__inner_init');
-                innerEl.style.width = '';
-                innerEl.style.height = '';
-            }
 
             this.actionEls.forEach(function (item) {
                 item.el.style.transform = '';
@@ -519,7 +435,6 @@
             }
         });
 
-        // borders
         let pos;
 
         if (scrTo >= this.endBreak) {
@@ -556,14 +471,16 @@
             }
         }
 
-
-
-        if (this.barSlEl) {
+        if (this.barSlEl && ev != 'bar') {
             if (this.horizontal) {
-                // const bsrScrTo = scrTo / (innerW / 100);
-                // barSlEl.style.left = Math.abs(bsrScrTo) + '%';
+                const barW = this.barSlEl.parentElement.offsetWidth;
+
+                this.barSlEl.style.transform = 'translateX(' + ((barW - this.barSlElSize) / 100) * (scrTo / (this.endBreak / 100)) + 'px)';
+
             } else {
-                this.barSlEl.style.top = Math.abs(scrTo / (this.innerH / 100)) + '%';
+                const barH = this.barSlEl.parentElement.offsetHeight;
+
+                this.barSlEl.style.transform = 'translateY(' + ((barH - this.barSlElSize) / 100) * (scrTo / (this.endBreak / 100)) + 'px)';
             }
         }
 
@@ -574,7 +491,7 @@
             if (this.horizontal) {
                 this.innerEl.style.left = -scrTo + 'px';
             } else {
-                this.innerEl.style.top = -scrTo + 'px';
+                this.innerEl.style.transform = 'translateY(' + (-scrTo) + 'px)';
             }
         }
 
@@ -595,18 +512,7 @@
         if (!this.bar) return;
 
         if (this.horizontal) {
-            // barEl = scrBoxEl.querySelector('.scrollbox__horizontal-bar');
-            // let barSlEl = null;
-
-            // if (barEl) {
-            // 	barSlEl = document.createElement('div');
-
-            // 	barSlEl.style.width = (winW / (innerW / 100)) + '%';
-
-            // 	barEl.appendChild(barSlEl);
-            // }
-        } else {
-            const barEl = this.scrBoxEl.querySelector('.scrollbox__vertical-bar');
+            const barEl = this.scrBoxEl.querySelector('.scrollbox__horizontal-bar');
 
             if (barEl) {
                 if (!this.initialized) {
@@ -617,9 +523,131 @@
                     this.barSlEl = barSlEl;
                 }
 
-                this.barSlEl.style.height = (this.winEl.offsetHeight / (this.innerH / 100)) + '%';
+                if (this.innerSize > this.winEl.offsetWidth) {
+                    if (this.barSize === null) {
+                        this.barSlEl.style.width = (this.winEl.offsetWidth / (this.innerSize / 100)) + '%';
+                    } else if (this.barSize === true) {
+                        this.barSlElSize = this.barSlEl.offsetWidth;
+                    } else {
+                        this.barSlEl.style.width = this.barSize + 'px';
+                        this.barSlElSize = this.barSize;
+                    }
+
+                    barEl.style.display = '';
+
+                } else {
+                    barEl.style.display = 'none';
+                }
+            }
+
+        } else {
+            const barEl = this.scrBoxEl.querySelector('.scrollbox__vertical-bar');
+
+            if (barEl) {
+                if (!this.initialized) {
+                    const el = document.createElement('div');
+
+                    barEl.appendChild(el);
+
+                    this.barSlEl = el;
+                }
+
+                if (this.endBreak) {
+                    if (this.barSize === null) {
+                        this.barSlEl.style.height = (this.winEl.offsetHeight / (this.innerSize / 100)) + '%';
+
+                        setTimeout(() => {
+                            this.barSlElSize = this.barSlEl.offsetHeight;
+                        }, 21);
+
+                    } else if (this.barSize === true) {
+                        this.barSlElSize = this.barSlEl.offsetHeight;
+                    } else {
+                        this.barSlEl.style.height = this.barSize + 'px';
+                        this.barSlElSize = this.barSize;
+                    }
+
+                    barEl.style.display = '';
+
+                } else {
+                    barEl.style.display = 'none';
+                }
             }
         }
-    }
 
+        const mouseStart = { X: 0, Y: 0 },
+            mouseDelta = { X: 0, Y: 0 },
+            bar = { X: 0, Y: 0, W: 0, H: 0 },
+            barSlStart = { X: 0, Y: 0 };
+
+        const mouseMove = (e) => {
+            mouseDelta.X = e.clientX - mouseStart.X;
+            mouseDelta.Y = e.clientY - mouseStart.Y;
+
+            if (this.horizontal) {
+                let shift = mouseDelta.X + barSlStart.X - bar.X;
+
+                const limit = bar.W - this.barSlElSize;
+
+                if (shift <= 0) {
+                    shift = 0;
+                } else if (shift >= limit) {
+                    shift = limit;
+                }
+
+                this.barSlEl.style.transform = 'translateX(' + shift + 'px)';
+
+                this.scroll((shift / (limit / 100)) * (this.endBreak / 100), null, 'bar');
+
+            } else {
+                let shift = mouseDelta.Y + barSlStart.Y - bar.Y;
+
+                const limit = bar.H - this.barSlElSize;
+
+                if (shift <= 0) {
+                    shift = 0;
+                } else if (shift >= limit) {
+                    shift = limit;
+                }
+
+                this.barSlEl.style.transform = 'translateY(' + shift + 'px)';
+
+                this.scroll((shift / (limit / 100)) * (this.endBreak / 100), null, 'bar');
+            }
+        }
+
+        const mouseUp = () => {
+            document.removeEventListener('mousemove', mouseMove);
+
+            this.scrBoxEl.classList.remove('scrollbox_dragging');
+        }
+
+        const mouseDown = (e) => {
+            if (e.type == 'mousedown' && e.which != 1) return;
+
+            const barSlEl = e.target.closest('div');
+
+            if (barSlEl === this.barSlEl) {
+                document.addEventListener('mousemove', mouseMove);
+
+                mouseStart.X = e.clientX;
+                mouseStart.Y = e.clientY;
+
+                bar.X = barSlEl.parentElement.getBoundingClientRect().left;
+                bar.Y = barSlEl.parentElement.getBoundingClientRect().top;
+                bar.W = barSlEl.parentElement.offsetWidth;
+                bar.H = barSlEl.parentElement.offsetHeight;
+
+                barSlStart.X = barSlEl.getBoundingClientRect().left;
+                barSlStart.Y = barSlEl.getBoundingClientRect().top;
+
+                this.scrBoxEl.classList.add('scrollbox_dragging');
+            }
+        }
+
+        if (!this.initialized) {
+            document.addEventListener('mousedown', mouseDown);
+            document.addEventListener('mouseup', mouseUp);
+        }
+    }
 })();

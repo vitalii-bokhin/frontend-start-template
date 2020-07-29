@@ -15,24 +15,26 @@ timer.start(Int interval in seconds);
 
 ; var Timer;
 
-(function() {
+(function () {
 	'use strict';
 
-	Timer = function(options) {
+	Timer = function (options) {
 		var elem = document.getElementById(options.elemId);
+
+		let tickSubscribers = [];
 
 		options.continue = (options.continue !== undefined) ? options.continue : true;
 
 		function setCookie() {
 			if (options.continue) {
-				document.cookie = 'lastTimestampValue-'+ options.elemId +'='+ Date.now() +'; expires='+ new Date(Date.now() + 259200000).toUTCString();
+				document.cookie = 'lastTimestampValue-' + options.elemId + '=' + Date.now() + '; expires=' + new Date(Date.now() + 259200000).toUTCString();
 			}
 		}
 
 		function output(time) {
 			var min = (time > 60) ? Math.floor(time / 60) : 0,
-			sec = (time > 60) ? Math.round(time % 60) : time,
-			timerOut;
+				sec = (time > 60) ? Math.round(time % 60) : time,
+				timerOut;
 
 			if (options.format == 'extended') {
 				function numToWord(num, wordsArr) {
@@ -44,36 +46,48 @@ timer.start(Int interval in seconds);
 
 					switch (num) {
 						case 1:
-						return wordsArr[0];
+							return wordsArr[0];
 
 						case 2:
-						case 3: 
+						case 3:
 						case 4:
-						return wordsArr[1];
+							return wordsArr[1];
 
 						default:
-						return wordsArr[2];
+							return wordsArr[2];
 					}
 				}
 
-				var minTxt = numToWord(min, ['минуту', 'минуты', 'минут']), 
-				secTxt = numToWord(sec, ['секунду', 'секунды', 'секунд']);
+				var minTxt = numToWord(min, ['минуту', 'минуты', 'минут']),
+					secTxt = numToWord(sec, ['секунду', 'секунды', 'секунд']);
 
-				var minOut = (min != 0) ? min +' '+ minTxt : '',
-				secNum = (sec < 10) ? '0'+ sec : sec;
+				var minOut = (min != 0) ? min + ' ' + minTxt : '',
+					secNum = (sec < 10) ? '0' + sec : sec;
 
-				timerOut = ((min) ? min +' '+ minTxt +' ' : '')+''+ sec +' '+ secTxt;
+				timerOut = ((min) ? min + ' ' + minTxt + ' ' : '') + '' + sec + ' ' + secTxt;
 			} else {
-				var minNum =  (min < 10) ? '0'+ min : min,
-				secNum = (sec < 10) ? '0'+ sec : sec;
+				var minNum = (min < 10) ? '0' + min : min,
+					secNum = (sec < 10) ? '0' + sec : sec;
 
-				timerOut = minNum +':'+ secNum;
+				timerOut = minNum + ':' + secNum;
 			}
 
 			elem.innerHTML = timerOut;
+
+			if (tickSubscribers.length) {
+				tickSubscribers.forEach(function (item) {
+					item(time);
+				});
+			}
 		}
 
-		this.stop = function() {
+		this.onTick = function (fun) {
+			if (typeof fun === 'function') {
+				tickSubscribers.push(fun);
+			}
+		}
+
+		this.stop = function () {
 			clearInterval(this.interval);
 
 			if (this.onStop) {
@@ -81,15 +95,19 @@ timer.start(Int interval in seconds);
 			}
 		}
 
-		this.start = function(startTime) {
+		this.pause = function () {
+			clearInterval(this.interval);
+		}
+
+		this.start = function (startTime) {
 			if (!elem) return;
-			
+
 			this.time = startTime;
 
-			var lastTimestampValue = (function(cookie) {
+			var lastTimestampValue = (function (cookie) {
 				if (cookie) {
-					var reg = new RegExp('lastTimestampValue-'+ options.elemId +'=(\\d+)', 'i'),
-					matchArr = cookie.match(reg);
+					var reg = new RegExp('lastTimestampValue-' + options.elemId + '=(\\d+)', 'i'),
+						matchArr = cookie.match(reg);
 
 					return matchArr ? matchArr[1] : null;
 				}
@@ -111,8 +129,12 @@ timer.start(Int interval in seconds);
 				setCookie();
 			}
 
-			if (this.interval !== undefined) return;
-			
+			output(this.time);
+
+			if (this.interval !== undefined) {
+				clearInterval(this.interval);
+			}
+
 			this.interval = setInterval(() => {
 				if (options.stopwatch) {
 					this.time++;

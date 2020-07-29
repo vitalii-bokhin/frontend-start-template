@@ -29,6 +29,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })();
 
+    // scrollbox
+    new Scrollbox('#vert-scroll', {
+        bar: true
+    });
+
+    new Scrollbox('#hor-scroll', {
+        horizontal: true,
+        bar: true
+    });
+
     // cover images
     CoverImg.init();
 
@@ -118,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // screens
     Screens.init({
-        horisontal: true
+        horizontal: true
     });
 
     // Screens2.init({
@@ -129,11 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // smooth scroll
     // ScrollSmooth.init();
-
-    // drag line
-    DragLine.init({
-        lineClass: 'dragline'
-    })
 
     // anchor
     Anchor.init('.js-anchor', 700, 100);

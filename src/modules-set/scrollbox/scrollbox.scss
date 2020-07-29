@@ -3,139 +3,71 @@
    position: relative;
    &__window{
       overflow: hidden;
-      position: relative;
-      width: 100%;
-      height: 100%;
-   }
-   &__inner{
-      &_init{
-         position: absolute;
-         left: 0;
-         top: 0;
+      &_ovv{
+         overflow: visible;
+      }
+      #routes-scroll &{
+         height: auto !important;
       }
    }
    &__horizontal-bar{
-      height: 4px;
-      position: absolute;
-      bottom: 50px;
-      left: per(617,1920);
-      right: per(617,1920);
-      background: #a6cbff;
-      border-radius: 4px;
+      margin-top: rem(23);
+      height: 1px;
+      background: #808080;
+      position: relative;
       div{
          position: absolute;
          left: 0;
-         top: 0;
+         top: rem(-10);
          height: 100%;
-         width: 0;
-         background: #75afff;
-         border-radius: 4px;
+         width: rem(20);
+         height: rem(20);
+         background: #ffffff;
+         border-radius: 50%;
+         cursor: pointer;
+         &::before{
+            @extend %ab;
+            width: rem(55);
+            height: rem(55);
+            border: 1px solid #ffffff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: rem(-29) 0 0 rem(-29);
+            border-radius: 50%;
+         }
       }
    }
    &__vertical-bar{
-      width: 10px;
-      height: 100%;
+      width: 6px;
       position: absolute;
       top: 0;
-      right: 0;
-      border: 1px solid $gy;
+      right: -20px;
+      height: 100%;
+      background: $gy;
+      border-radius: 6px;
       div{
-         position: absolute;
-         left: 1px;
-         top: 0;
-         width: 6px;
+         width: 100%;
          height: 0;
-         background: $gy;
+         background: $rd;
+         border-radius: 6px;
+         cursor: pointer;
       }
    }
-   &_main{
-      height: 100%;
-      & > .scrollbox__window{
-         height: 100% !important;
-         & > .scrollbox__inner{
-            height: 100% !important;
-            &::after{
-               @extend %ab;
-               background: #000;
-               position: absolute;
-               right: -3px;
-               top: 0;
-               width: 3px;
-               height: 100%;
-               z-index: 2;
-               .lifepath &{
-                  background: $gy;
-               }
-            }
+   &_vertical{
+      .scrollbox{
+         &__window{
+            max-height: 200px;
          }
       }
    }
-   &__section{
-      width: 100vw;
-      flex: 0 0 100vw;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-      &-wrap{
-         display: flex;
-         height: 100%;
-      }
-      &_rounds{
-         width: auto;
-         flex: 0 0 auto;
-         display: flex;  
-      }
+   &_dragging{
+      user-select: none;
    }
-   .section{
-      width: 100vw;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 100%;
-      overflow: hidden;
-      &.op-1{
-         opacity: 1;
-      }
-   }
-   
    @media(max-width: 1200px){
-      &_main{
-         height: auto;
-         & > .scrollbox__window{
-            height: auto !important;
-            display: flex;
-            flex-direction: column;
-            & > .scrollbox__inner{
-               height: auto !important;
-               order: -1;
-               &::after{
-                  display: none;
-               }
-            }
-         }
-      }
-      &__section{
-         width: 100%;
-         flex: 0 0 auto;
-         height: auto;
-         position: relative;
-         overflow: hidden;
-         &-wrap{
-            flex-direction: column;
-            height: auto;
-         }
-      }
-      .section{
-         position: relative;
-         width: 100%;
-         height: auto;
-         left: 0;
-         display: flex;
-         flex-direction: column;
+      &__vertical-bar,
+      &__horizontal-bar{
+         display: none;
       }
    }
-}
-
-.lifepath #start-section-2{
-   display: none;
 }

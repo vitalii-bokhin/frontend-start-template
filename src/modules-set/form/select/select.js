@@ -56,7 +56,9 @@
 		close: function (fieldEl) {
 			fieldEl = fieldEl || this.field;
 
-			fieldEl.classList.remove('select_opened');
+			setTimeout(function() {
+				fieldEl.classList.remove('select_opened');
+			}, 210);
 
 			const optionsElem = fieldEl.querySelector('.select__options'),
 				listItemElements = optionsElem.querySelectorAll('li');
@@ -74,12 +76,14 @@
 
 			const optionsElem = this.field.querySelector('.select__options');
 
-			optionsElem.style.height = ((optionsElem.scrollHeight > 222) ? 222 : (optionsElem.scrollHeight + 2)) + 'px';
-			optionsElem.scrollTop = 0;
-
 			setTimeout(function () {
-				optionsElem.classList.add('ovfauto');
-			}, 621);
+				optionsElem.style.height = ((optionsElem.scrollHeight > window.innerHeight - optionsElem.getBoundingClientRect().top) ? window.innerHeight - optionsElem.getBoundingClientRect().top : (optionsElem.scrollHeight + 2)) + 'px';
+				optionsElem.scrollTop = 0;
+
+				setTimeout(function () {
+					optionsElem.classList.add('ovfauto');
+				}, 621);
+			}, 210);
 		},
 
 		selectMultipleVal: function (elem, button, input) {
@@ -366,7 +370,7 @@
 					class: (elem.multiple) ? ' select_multiple' : '',
 					inpDiv: (elem.multiple) ? '<div class="select__multiple-inputs"></div>' : ''
 				};
-				
+
 				const hiddenInp = '<input type="hidden" name="' + elem.name + '"' + require + submitOnChange + 'class="select__input" value="' + ((selectedOption) ? selectedOption.value : '') + '">';
 
 				if (elem.hasAttribute('data-empty-text')) {
@@ -386,9 +390,7 @@
 		},
 
 		init: function (elementStr) {
-			if (!document.querySelector(elementStr)) return;
-
-			this.build(elementStr);
+			if (document.querySelector(elementStr)) this.build(elementStr);
 
 			let focusBlurIsDisabled = false,
 				st;

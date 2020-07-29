@@ -17,6 +17,7 @@ const gulp = require('gulp'),
 const modulesOn = [
     'common-js',
     'common-js/animate',
+    'common-js/template',
     'header',
     'header/user',
     'header/menu',
@@ -53,7 +54,6 @@ const modulesOn = [
     'timer',
     'footer',
     'getcontentajax',
-    'dragline',
     'animation',
     'webgl',
     'mouseparallax',
@@ -66,12 +66,12 @@ const modulesOn = [
     dist_path = 'dist';
 
 let assets = {
-    form: ['src/assets/maskinput.min.js', 'src/assets/jquery-3.1.1.min.js'],
-    slickslider: ['src/assets/slick.min.js', 'src/assets/jquery-3.1.1.min.js'],
-    scrollpane: ['src/assets/scrollpane.min.js', 'src/assets/jquery-3.1.1.min.js', 'src/assets/mousewheel.js'],
-    screens: ['src/assets/jquery.touchSwipe.min.js', 'src/assets/jquery-3.1.1.min.js']
+    form: ['src/assets/maskinput.min.js'],
+    slickslider: ['src/assets/slick.min.js'],
+    scrollpane: ['src/assets/scrollpane.min.js', 'src/assets/mousewheel.js'],
+    screens: ['src/assets/jquery.touchSwipe.min.js']
 },
-    jsAssets = [];
+    jsAssets = ['src/assets/jquery-3.1.1.min.js'];
 
 modulesOn.forEach(function (val) {
     if (assets[val]) {
