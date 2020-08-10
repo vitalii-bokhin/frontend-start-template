@@ -247,8 +247,11 @@ var ValidateForm, Form, NextFieldset;
 			this.input = elem;
 
 			var checkedElement = false,
-				group = elem.closest('.form__radio-group'),
-				elements = group.querySelectorAll('input[type="radio"]');
+				group = elem.closest('.form__radio-group');
+
+			if (!group) return;
+
+			var elements = group.querySelectorAll('input[type="radio"]');
 
 			for (var i = 0; i < elements.length; i++) {
 				if (elements[i].checked) {

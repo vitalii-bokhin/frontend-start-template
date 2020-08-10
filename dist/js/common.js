@@ -241,7 +241,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // timer
     var timer = new Timer({
-        elemId: 'timer'
+        elemId: 'timer',
+        continue: true
     });
 
     timer.onStop = function () {

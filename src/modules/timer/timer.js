@@ -3,7 +3,7 @@ var timer = new Timer({
 	elemId: 'timer', // Str element id,
 	format: 'extended', // default - false
 	stopwatch: true, // default - false
-	continue: false // default - true
+	continue: false // default - false
 });
 
 timer.onStop = function () {
@@ -19,11 +19,13 @@ timer.start(Int interval in seconds);
 	'use strict';
 
 	Timer = function (options) {
+		options = options || {};
+
 		var elem = document.getElementById(options.elemId);
 
 		let tickSubscribers = [];
 
-		options.continue = (options.continue !== undefined) ? options.continue : true;
+		options.continue = (options.continue !== undefined) ? options.continue : false;
 
 		function setCookie() {
 			if (options.continue) {
@@ -32,9 +34,20 @@ timer.start(Int interval in seconds);
 		}
 
 		function output(time) {
-			var min = (time > 60) ? Math.floor(time / 60) : 0,
-				sec = (time > 60) ? Math.round(time % 60) : time,
-				timerOut;
+			let day = time > 86400 ? Math.floor(time / 86400) : 0,
+				hour = time > 3600 ? Math.floor(time / 3600) : 0,
+				min = time > 60 ? Math.floor(time / 60) : 0,
+				sec = time > 60 ? Math.round(time % 60) : time;
+
+			if (hour > 24) {
+				hour = hour % 24;
+			}
+
+			if (min > 60) {
+				min = min % 60;
+			}
+
+			let timerOut;
 
 			if (options.format == 'extended') {
 				function numToWord(num, wordsArr) {
@@ -72,11 +85,11 @@ timer.start(Int interval in seconds);
 				timerOut = minNum + ':' + secNum;
 			}
 
-			elem.innerHTML = timerOut;
+			if (elem) elem.innerHTML = timerOut;
 
 			if (tickSubscribers.length) {
 				tickSubscribers.forEach(function (item) {
-					item(time);
+					item(time, { day, hour, min, sec });
 				});
 			}
 		}
@@ -100,9 +113,7 @@ timer.start(Int interval in seconds);
 		}
 
 		this.start = function (startTime) {
-			if (!elem) return;
-
-			this.time = startTime;
+			this.time = +startTime || 0;
 
 			var lastTimestampValue = (function (cookie) {
 				if (cookie) {
@@ -143,10 +154,10 @@ timer.start(Int interval in seconds);
 				} else {
 					this.time--;
 
-					output(this.time);
-
-					if (this.time == 0) {
+					if (this.time <= 0) {
 						this.stop();
+					} else {
+						output(this.time);
 					}
 				}
 			}, 1000);

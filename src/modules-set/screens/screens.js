@@ -131,7 +131,7 @@
 				};
 			}
 
-			if (this.opt.horisontal != true) {
+			if (this.opt.horizontal != true) {
 				this.wrapHeight = heightSum;
 				this.wrapEl.style.height = heightSum + 'px';
 			} else {

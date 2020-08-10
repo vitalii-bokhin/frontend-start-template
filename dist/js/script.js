@@ -1379,30 +1379,29 @@ var Popup, MediaPopup;
 		ChangeCheckbox.init({ focusOnTarget: true });
 	});
 })();
-(function() {
+(function () {
 	'use strict';
 
 	//show element on radio button change
 	var ChangeRadio = {
 		hideCssClass: 'hidden',
-		
-		change: function(checkedElem) {
-			var elements = document.querySelectorAll('input[type="radio"][name="'+ checkedElem.name +'"]');
+
+		change: function (checkedElem) {
+			var elements = document.querySelectorAll('input[type="radio"][name="' + checkedElem.name + '"]');
 
 			if (!elements.length) {
 				return;
 			}
 
 			for (let i = 0; i < elements.length; i++) {
-				var elem = elements[i],
-				targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
+				const elem = elements[i],
+					targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : [],
+					hideElems = (elem.hasAttribute('data-hide-elements')) ? document.querySelectorAll(elem.getAttribute('data-hide-elements')) : [];
 
-				if (!targetElements.length) {
-					continue;
-				}
+				if (!targetElements.length && !hideElems.length) continue;
 
 				for (let i = 0; i < targetElements.length; i++) {
-					var targetElem = targetElements[i];
+					const targetElem = targetElements[i];
 
 					targetElem.style.display = (elem.checked) ? 'block' : 'none';
 
@@ -1412,10 +1411,23 @@ var Popup, MediaPopup;
 						targetElem.classList.add(this.hideCssClass);
 					}
 				}
+
+				for (let i = 0; i < hideElems.length; i++) {
+					const hideEl = hideElems[i];
+
+					hideEl.style.display = (elem.checked) ? 'none' : 'block';
+
+					if (elem.checked) {
+						hideEl.classList.add(this.hideCssClass);
+					} else {
+						hideEl.classList.remove(this.hideCssClass);
+					}
+				}
+
 			}
 		},
 
-		init: function() {
+		init: function () {
 			document.addEventListener('change', (e) => {
 				var elem = e.target.closest('input[type="radio"]');
 
@@ -1427,7 +1439,7 @@ var Popup, MediaPopup;
 	};
 
 	//init scripts
-	document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded', function () {
 		ChangeRadio.init();
 	});
 })();
@@ -1920,6 +1932,258 @@ var Popup, MediaPopup;
 	document.addEventListener('DOMContentLoaded', function () {
 		Select.init('.custom-select');
 	});
+})();
+var FormSlider;
+
+(function () {
+    'use strict';
+
+    FormSlider = {
+        mM: null,
+        mU: null,
+        dragElemObj: {},
+        formsliderObj: {},
+        track: null,
+        edge: {},
+        input: null,
+        valUnit: 0,
+        dragElemLeft: 0,
+        dragEnd: null,
+        formaters: {},
+
+        init: function () {
+            const sliders = document.querySelectorAll('.formslider');
+
+            for (let i = 0; i < sliders.length; i++) {
+                const sliderEl = sliders[i],
+                    isRange = sliders[i].getAttribute('data-range');
+
+                let dragElem;
+
+                if (isRange) {
+                    dragElem = '<button type="button" class="formslider__drag" data-index="0" data-input="' + sliderEl.getAttribute('data-first-input') + '"></button><button type="button" class="formslider__drag" data-index="1" data-input="' + sliderEl.getAttribute('data-second-input') + '"></button>';
+                } else {
+                    dragElem = '<button type="button" class="formslider__drag" data-input="' + sliderEl.getAttribute('data-input') + '></button>';
+                }
+
+                sliderEl.innerHTML = '<div class="formslider__bar"><div class="formslider__track"></div>' + dragElem + '</div>';
+
+                this.setInitState(sliderEl);
+            }
+
+            document.addEventListener('mousedown', this.mouseDown.bind(this));
+            document.addEventListener('touchstart', this.mouseDown.bind(this));
+        },
+
+        reInit: function () {
+            const sliders = document.querySelectorAll('.formslider');
+
+            for (var i = 0; i < sliders.length; i++) {
+                this.setInitState(sliders[i]);
+            }
+        },
+
+        setInitState: function (slider) {
+            const dragElems = slider.querySelectorAll('.formslider__drag'),
+                trackEl = slider.querySelector('.formslider__track'),
+                dragWidth = dragElems[0].offsetWidth,
+                sliderW = slider.offsetWidth,
+                min = +slider.getAttribute('data-min'),
+                max = +slider.getAttribute('data-max'),
+                isRange = slider.getAttribute('data-range');
+
+            if (isRange) {
+                for (let i = 0; i < dragElems.length; i++) {
+                    const dragEl = dragElems[i],
+                        inpEl = document.getElementById(dragEl.getAttribute('data-input')),
+                        inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value,
+
+                        left = ((inpVal - min) / ((max - min) / 100)) * ((sliderW - dragWidth) / 100);
+
+                    dragEl.style.left = left + 'px';
+
+                    if (!i) {
+                        trackEl.style.left = (left + dragWidth / 2) + 'px';
+                    } else {
+                        trackEl.style.right = (sliderW - left - dragWidth / 2) + 'px';
+                    }
+                }
+            }
+        },
+
+        //on mouse down
+        mouseDown: function (e) {
+            if (e.type == 'mousedown' && e.which != 1) {
+                return;
+            }
+
+            var elem = e.target.closest('.formslider__drag');
+
+            if (!elem) {
+                return;
+            }
+
+            this.mM = this.mouseMove.bind(this);
+            this.mU = this.mouseUp.bind(this);
+
+            document.addEventListener('mousemove', this.mM);
+            document.addEventListener('touchmove', this.mM);
+
+            document.addEventListener('mouseup', this.mU);
+            document.addEventListener('touchend', this.mU);
+
+            var clientX = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX;
+
+            //dragable options 
+            this.dragElemObj.elem = elem;
+            this.dragElemObj.X = elem.getBoundingClientRect().left;
+            this.dragElemObj.shiftX = clientX - this.dragElemObj.X;
+            this.dragElemObj.index = elem.getAttribute('data-index');
+            this.dragElemObj.width = elem.offsetWidth;
+            elem.setAttribute('data-active', 'true');
+
+            //formslider options
+            var formslider = elem.closest('.formslider');
+            this.formsliderObj.X = formslider.getBoundingClientRect().left;
+            this.formsliderObj.width = formslider.offsetWidth;
+            this.formsliderObj.isRange = formslider.getAttribute('data-range');
+            this.formsliderObj.min = +formslider.getAttribute('data-min');
+
+            //one unit of value
+            this.valUnit = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / (formslider.offsetWidth - elem.offsetWidth);
+
+            this.oneValPerc = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / 100;
+
+            //track
+            this.track = formslider.querySelector('.formslider__track');
+
+            //get parameters of slider
+            if (this.formsliderObj.isRange) {
+
+                if (this.dragElemObj.index == 0) {
+
+                    var siblElem = formslider.querySelector('.formslider__drag[data-index="1"]');
+
+                    this.edge.L = 0;
+
+                    this.edge.R = siblElem.getBoundingClientRect().left - this.formsliderObj.X - siblElem.offsetWidth;
+
+                } else if (this.dragElemObj.index == 1) {
+
+                    var siblElem = formslider.querySelector('.formslider__drag[data-index="0"]');
+
+                    this.edge.L = siblElem.getBoundingClientRect().left - this.formsliderObj.X + siblElem.offsetWidth;
+
+                    this.edge.R = this.formsliderObj.width - elem.offsetWidth;
+
+                }
+
+                this.input = document.getElementById(elem.getAttribute('data-input'));
+
+            } else {
+                this.edge.L = 0;
+                this.edge.R = this.formsliderObj.width - elem.offsetWidth;
+            }
+
+        },
+
+        //on mouse move
+        mouseMove: function (e) {
+            if (!this.dragElemObj.elem) {
+                return;
+            }
+
+            var clientX = (e.type == 'touchmove') ? e.targetTouches[0].clientX : e.clientX;
+
+            var dragElemLeft = clientX - this.dragElemObj.shiftX - this.formsliderObj.X;
+
+            if (dragElemLeft < this.edge.L) {
+                dragElemLeft = this.edge.L;
+            } else if (dragElemLeft > this.edge.R) {
+                dragElemLeft = this.edge.R;
+            }
+
+            if (this.formsliderObj.isRange) {
+
+                if (this.dragElemObj.index == 0) {
+                    this.track.style.left = (dragElemLeft + 5) + 'px';
+                } else if (this.dragElemObj.index == 1) {
+                    this.track.style.right = (this.formsliderObj.width - dragElemLeft - 5) + 'px';
+                }
+
+            } else {
+                this.track.style.width = (dragElemLeft + 5) + 'px';
+            }
+
+            this.dragElemObj.elem.style.left = dragElemLeft + 'px';
+
+            this.dragElemLeft = dragElemLeft;
+
+            this.setInputVal();
+        },
+
+        //end drag
+        mouseUp: function (e) {
+            document.removeEventListener('mousemove', this.mM);
+            document.removeEventListener('touchmove', this.mM);
+
+            document.removeEventListener('mouseup', this.mU);
+            document.removeEventListener('touchend', this.mU);
+
+            this.setInputVal();
+
+            if (this.dragEnd != null) {
+                this.dragEnd();
+            }
+
+            this.dragElemObj.elem.setAttribute('data-active', 'false');
+
+            //reset properties
+            this.dragElemObj = {};
+            this.formsliderObj = {};
+            this.track = null;
+            this.edge = {};
+            this.input = null;
+            this.valUnit = 0;
+            this.dragElemLeft = 0;
+        },
+
+        //set hidden input value
+        setInputVal: function () {
+            let val;
+
+            if (this.formsliderObj.isRange) {
+                if (this.dragElemObj.index == 0) {
+                    val = Math.round((this.dragElemLeft / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
+                } else {
+                    val = Math.round(((this.dragElemLeft - this.dragElemObj.width) / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
+                }
+            }
+
+            val = val + this.formsliderObj.min;
+
+            const formatId = this.input.getAttribute('data-format');
+
+            if (formatId !== null && this.formaters[formatId]) {
+                val = this.formaters[formatId](val)
+            }
+
+            this.input.value = val;
+        },
+
+        format: function (id, fun) {
+            this.formaters[id] = fun;
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function (e) {
+        FormSlider.init();
+
+        window.addEventListener('winResized', function () {
+            FormSlider.reInit();
+        });
+    });
+
 })();
 ; var AutoComplete;
 
@@ -2713,6 +2977,81 @@ var NextFieldset;
         }
     };
 })();
+(function () {
+    'use strict';
+
+    const Number = {
+        contEl: null,
+        inputEl: null,
+        defValue: 0,
+
+        clickHandler: function (btnEl) {
+            this.contEl = btnEl.closest('.number');
+            this.inputEl = this.contEl.querySelector('.number__input');
+
+            const action = +btnEl.getAttribute('data-action');
+
+            let val;
+
+            if (action > 0) {
+                val = +this.inputEl.value + 1;
+            } else {
+                val = +this.inputEl.value - 1;
+
+                if (val < 0) {
+                    val = 0;
+                }
+            }
+
+            this.inputEl.value = val;
+            this.defValue = val;
+        },
+
+        inputHandler: function (inpEl) {
+            this.inputEl = inpEl;
+
+            if (!/^\d*$/.test(this.inputEl.value)) {
+                this.inputEl.value = this.defValue;
+            } else {
+                this.defValue = this.inputEl.value;
+            }
+        },
+
+        blurHandler: function(inpEl) {
+            this.inputEl = inpEl;
+
+            if (!this.inputEl.value.length) {
+                this.inputEl.value = 0;
+                this.defValue = 0;
+            }
+        },
+
+        init: function () {
+            document.addEventListener('click', (e) => {
+                const btnEl = e.target.closest('.number__btn');
+
+                if (btnEl) this.clickHandler(btnEl);
+            });
+
+            document.addEventListener('input', (e) => {
+                const inpEl = e.target.closest('.number__input');
+
+                if (inpEl) this.inputHandler(inpEl);
+            });
+
+            document.addEventListener('blur', (e) => {
+                const inpEl = e.target.closest('.number__input');
+
+                if (inpEl) this.blurHandler(inpEl);
+            }, true);
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        Number.init();
+    });
+
+})();
 var ValidateForm, Form, NextFieldset;
 
 (function () {
@@ -2962,8 +3301,11 @@ var ValidateForm, Form, NextFieldset;
 			this.input = elem;
 
 			var checkedElement = false,
-				group = elem.closest('.form__radio-group'),
-				elements = group.querySelectorAll('input[type="radio"]');
+				group = elem.closest('.form__radio-group');
+
+			if (!group) return;
+
+			var elements = group.querySelectorAll('input[type="radio"]');
 
 			for (var i = 0; i < elements.length; i++) {
 				if (elements[i].checked) {
@@ -4375,7 +4717,7 @@ var timer = new Timer({
 	elemId: 'timer', // Str element id,
 	format: 'extended', // default - false
 	stopwatch: true, // default - false
-	continue: false // default - true
+	continue: false // default - false
 });
 
 timer.onStop = function () {
@@ -4391,11 +4733,13 @@ timer.start(Int interval in seconds);
 	'use strict';
 
 	Timer = function (options) {
+		options = options || {};
+
 		var elem = document.getElementById(options.elemId);
 
 		let tickSubscribers = [];
 
-		options.continue = (options.continue !== undefined) ? options.continue : true;
+		options.continue = (options.continue !== undefined) ? options.continue : false;
 
 		function setCookie() {
 			if (options.continue) {
@@ -4404,9 +4748,20 @@ timer.start(Int interval in seconds);
 		}
 
 		function output(time) {
-			var min = (time > 60) ? Math.floor(time / 60) : 0,
-				sec = (time > 60) ? Math.round(time % 60) : time,
-				timerOut;
+			let day = time > 86400 ? Math.floor(time / 86400) : 0,
+				hour = time > 3600 ? Math.floor(time / 3600) : 0,
+				min = time > 60 ? Math.floor(time / 60) : 0,
+				sec = time > 60 ? Math.round(time % 60) : time;
+
+			if (hour > 24) {
+				hour = hour % 24;
+			}
+
+			if (min > 60) {
+				min = min % 60;
+			}
+
+			let timerOut;
 
 			if (options.format == 'extended') {
 				function numToWord(num, wordsArr) {
@@ -4444,11 +4799,11 @@ timer.start(Int interval in seconds);
 				timerOut = minNum + ':' + secNum;
 			}
 
-			elem.innerHTML = timerOut;
+			if (elem) elem.innerHTML = timerOut;
 
 			if (tickSubscribers.length) {
 				tickSubscribers.forEach(function (item) {
-					item(time);
+					item(time, { day, hour, min, sec });
 				});
 			}
 		}
@@ -4472,9 +4827,7 @@ timer.start(Int interval in seconds);
 		}
 
 		this.start = function (startTime) {
-			if (!elem) return;
-
-			this.time = startTime;
+			this.time = +startTime || 0;
 
 			var lastTimestampValue = (function (cookie) {
 				if (cookie) {
@@ -4515,10 +4868,10 @@ timer.start(Int interval in seconds);
 				} else {
 					this.time--;
 
-					output(this.time);
-
-					if (this.time == 0) {
+					if (this.time <= 0) {
 						this.stop();
+					} else {
+						output(this.time);
 					}
 				}
 			}, 1000);

@@ -13,6 +13,13 @@
 	top: 0;
 }
 
+// cover background image
+%c-bg-img{
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
+}
+
 // center image wrapper
 %c-img-wr{
 	font-size: 0;

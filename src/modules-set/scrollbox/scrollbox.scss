@@ -11,31 +11,19 @@
       }
    }
    &__horizontal-bar{
-      margin-top: rem(23);
-      height: 1px;
-      background: #808080;
-      position: relative;
+      height: 6px;
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      background: $gy;
+      border-radius: 6px;
       div{
-         position: absolute;
-         left: 0;
-         top: rem(-10);
+         width: 0;
          height: 100%;
-         width: rem(20);
-         height: rem(20);
-         background: #ffffff;
-         border-radius: 50%;
+         background: $rd;
+         border-radius: 6px;
          cursor: pointer;
-         &::before{
-            @extend %ab;
-            width: rem(55);
-            height: rem(55);
-            border: 1px solid #ffffff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: rem(-29) 0 0 rem(-29);
-            border-radius: 50%;
-         }
       }
    }
    &__vertical-bar{

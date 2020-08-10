@@ -60,16 +60,16 @@
 
                 setTimeout(() => {
                     if (this.innerEl) {
-                        const innerH = winEl.scrollHeight,
-                            winH = winEl.offsetHeight;
+                        const innerW = winEl.scrollWidth,
+                            winW = winEl.offsetWidth;
 
-                        if (innerH > winH) {
+                        if (innerW > winW) {
                             scrBoxEl.classList.add('srollbox_scrollable');
                         }
 
-                        this.winSize = winH;
-                        this.innerSize = innerH;
-                        this.endBreak = innerH - winH;
+                        this.winSize = winW;
+                        this.innerSize = innerW;
+                        this.endBreak = innerW - winW;
                     }
 
                     this.scrollBar();
@@ -489,7 +489,7 @@
         // move
         if (this.innerEl) {
             if (this.horizontal) {
-                this.innerEl.style.left = -scrTo + 'px';
+                this.innerEl.style.transform = 'translateX(' + (-scrTo) + 'px)';
             } else {
                 this.innerEl.style.transform = 'translateY(' + (-scrTo) + 'px)';
             }
@@ -516,16 +516,21 @@
 
             if (barEl) {
                 if (!this.initialized) {
-                    const barSlEl = document.createElement('div');
+                    const el = document.createElement('div');
 
-                    barEl.appendChild(barSlEl);
+                    barEl.appendChild(el);
 
-                    this.barSlEl = barSlEl;
+                    this.barSlEl = el;
                 }
 
                 if (this.innerSize > this.winEl.offsetWidth) {
                     if (this.barSize === null) {
-                        this.barSlEl.style.width = (this.winEl.offsetWidth / (this.innerSize / 100)) + '%';
+                        this.barSlEl.style.width = (this.winSize / (this.innerSize / 100)) + '%';
+
+                        setTimeout(() => {
+                            this.barSlElSize = this.barSlEl.offsetWidth;
+                        }, 21);
+
                     } else if (this.barSize === true) {
                         this.barSlElSize = this.barSlEl.offsetWidth;
                     } else {
@@ -554,7 +559,7 @@
 
                 if (this.endBreak) {
                     if (this.barSize === null) {
-                        this.barSlEl.style.height = (this.winEl.offsetHeight / (this.innerSize / 100)) + '%';
+                        this.barSlEl.style.height = (this.winSize / (this.innerSize / 100)) + '%';
 
                         setTimeout(() => {
                             this.barSlElSize = this.barSlEl.offsetHeight;
