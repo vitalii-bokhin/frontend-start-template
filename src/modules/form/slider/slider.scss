@@ -33,13 +33,13 @@
 		top: -13px;
 		z-index: 2;
 		&:hover{
-			border-color: $rd;
+			border-color: $gy;
 		}
 		&:active,
 		&[data-active="true"]{
 			transition: 0s;
-			background: $be;
-			border-color: $be;
+			background: $gy;
+			border-color: $gy;
 		}
 	}
 }

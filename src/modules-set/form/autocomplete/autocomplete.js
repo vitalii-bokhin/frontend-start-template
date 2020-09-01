@@ -7,8 +7,9 @@
 		fieldElem: null,
 		inputElem: null,
 		optionsElem: null,
-		getValues: null,
+		setValues: null,
 		opt: {},
+		onSelectSubscribers: [],
 		
 		open: function (optH) {
 			this.fieldElem.classList.add('autocomplete_opened');
@@ -35,32 +36,39 @@
 		},
 		
 		searchValue: function() {
-			if (!this.getValues) return;
+			if (!this.setValues) return;
+			
+			const permOpened = this.inputElem.getAttribute('data-perm-opened') === 'true';
 			
 			let values = '';
 			
 			if (this.inputElem.value.length) {
 				const preReg = new RegExp('('+ this.inputElem.value +')', 'i');
 				
-				this.getValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
+				this.setValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
 					for (let i = 0; i < valuesData.length; i++) {
 						const valData = valuesData[i];
 						
-						if (nameKey !== undefined) {
-							if (valData[nameKey].match(preReg)) {
-								values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey].replace(preReg, '<span>$1</span>') +'</button></li>';
+						if (!permOpened) {
+							if (nameKey !== undefined) {
+								if (valData[nameKey].match(preReg)) {
+									values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey].replace(preReg, '<span>$1</span>') +'</button></li>';
+								}
+							} else {
+								if (valData.match(preReg)) {
+									values += '<li><button type="button" class="autocomplete__val">'+ valData.replace(preReg, '<span>$1</span>') +'</button></li>';
+								}
 							}
+
 						} else {
-							if (valData.match(preReg)) {
-								values += '<li><button type="button" class="autocomplete__val">'+ valData.replace(preReg, '<span>$1</span>') +'</button></li>';
-							}
+							values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey].replace(preReg, '<span>$1</span>') +'</button></li>';
 						}
 					}
 					
 					if (values == '') {
 						if (this.inputElem.hasAttribute('data-other-value')) {
 							values = '<li class="autocomplete__options-other"><button type="button" class="autocomplete__val">'+ this.inputElem.getAttribute('data-other-value') +'</button></li>';
-
+							
 							this.optionsElem.innerHTML = values;
 							
 							this.open(this.optionsElem.querySelector('.autocomplete__options-other').offsetHeight);
@@ -78,9 +86,10 @@
 						this.open();
 					}
 				});
+				
 			} else {
 				if (this.opt.getAllValuesIfEmpty) {
-					this.getValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
+					this.setValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
 						for (let i = 0; i < valuesData.length; i++) {
 							const valData = valuesData[i];
 							
@@ -101,7 +110,7 @@
 			}
 		},
 		
-		selectVal: function(itemElem) {
+		selectVal: function(itemElem, ev) {
 			const valueElem = itemElem.querySelector('.autocomplete__val');
 			
 			if (!valueElem) return;
@@ -110,7 +119,21 @@
 				Placeholder.hide(this.inputElem, true);
 			}
 			
-			this.inputElem.value = valueElem.innerHTML.replace(/<\/?span>/g, '');
+			const inpVal = valueElem.innerHTML.replace(/<\/?span>/g, '');
+			
+			this.inputElem.value = inpVal;
+			
+			if (ev == 'click' || ev == 'enter') {
+				this.onSelectSubscribers.forEach(item => {
+					item(this.inputElem, inpVal, valueElem.getAttribute('data-value'), valueElem.getAttribute('data-second-value'));
+				});
+			}
+		},
+		
+		onSelect: function (fun) {
+			if (typeof fun === 'function') {
+				this.onSelectSubscribers.push(fun);
+			}
 		},
 		
 		keybinding: function(e) {
@@ -174,7 +197,7 @@
 				
 				case 13:
 				if (hoverItem) {
-					this.selectVal(hoverItem);
+					this.selectVal(hoverItem, 'enter');
 					
 					this.inputElem.blur();
 				}
@@ -185,6 +208,35 @@
 			options = options || {};
 			
 			this.opt.getAllValuesIfEmpty = (options.getAllValuesIfEmpty !== undefined) ? options.getAllValuesIfEmpty : true;
+			
+			const acElems = document.querySelectorAll('.autocomplete');
+			
+			for (let i = 0; i < acElems.length; i++) {
+				const acEl = acElems[i],
+				inputElem = acEl.querySelector('.autocomplete__input');
+				
+				this.setValues(inputElem, (valuesData, nameKey, valKey, secValKey, permOpened) => {
+					if (!permOpened) return;
+					
+					inputElem.setAttribute('data-perm-opened', true);
+					
+					const optionsElem = acEl.querySelector('.autocomplete__options');
+					
+					let values = '';
+					
+					for (let i = 0; i < valuesData.length; i++) {
+						const valData = valuesData[i];
+						
+						if (nameKey !== undefined) {
+							values += '<li><button type="button" data-value="'+ valData[valKey] +'" data-second-value="'+ valData[secValKey] +'" class="autocomplete__val">'+ valData[nameKey] +'</button></li>';
+						} else {
+							values += '<li><button type="button" class="autocomplete__val">'+ valData +'</button></li>';
+						}
+					}
+					
+					optionsElem.innerHTML = values;
+				});
+			}
 			
 			// focus event
 			document.addEventListener('focus', (e) => {
@@ -221,9 +273,12 @@
 			document.addEventListener('click', (e) => {
 				const valElem = e.target.closest('.autocomplete__val'),
 				arrElem = e.target.closest('.autocomplete__arr');
+
 				
 				if (valElem) {
-					this.selectVal(valElem.parentElement);
+					this.inputElem = valElem.closest('.autocomplete').querySelector('.autocomplete__input');
+
+					this.selectVal(valElem.parentElement, 'click');
 				} else if (arrElem) {
 					if (!arrElem.closest('.autocomplete_opened')) {
 						arrElem.closest('.autocomplete').querySelector('.autocomplete__input').focus();
@@ -244,6 +299,6 @@
 	
 	// init scripts
 	document.addEventListener('DOMContentLoaded', function () {
-		AutoComplete.init();
+		AutoComplete.init({getAllValuesIfEmpty: true});
 	});
 })();

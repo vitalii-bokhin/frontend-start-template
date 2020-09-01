@@ -13,7 +13,7 @@ var FormSlider;
         input: null,
         valUnit: 0,
         dragElemLeft: 0,
-        dragEnd: null,
+        dragEndSubscribers: [],
         formaters: {},
 
         init: function () {
@@ -197,11 +197,11 @@ var FormSlider;
 
             this.setInputVal();
 
-            if (this.dragEnd != null) {
-                this.dragEnd();
-            }
-
             this.dragElemObj.elem.setAttribute('data-active', 'false');
+
+            this.dragEndSubscribers.forEach(item => {
+                item();
+            });
 
             //reset properties
             this.dragElemObj = {};
@@ -212,6 +212,12 @@ var FormSlider;
             this.valUnit = 0;
             this.dragElemLeft = 0;
         },
+
+        onDragEnd: function (fun) {
+			if (typeof fun === 'function') {
+				this.dragEndSubscribers.push(fun);
+			}
+		},
 
         //set hidden input value
         setInputVal: function () {

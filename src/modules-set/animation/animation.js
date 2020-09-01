@@ -24,7 +24,7 @@
       },
       
       init: function() {
-         const animElements = document.querySelectorAll('.animate');
+         const animElements = document.querySelectorAll('.js-animate');
          
          if (animElements.length) {
             this.animElements = animElements;
@@ -42,4 +42,13 @@
          window.addEventListener('scroll', animationOnVisible.scroll.bind(animationOnVisible));
       }
    });
+
+   // onload animate
+   window.onload = function () {
+      const animElems = document.querySelectorAll('.js-onload-animate');
+
+      for (let i = 0; i < animElems.length; i++) {
+         animElems[i].classList.add('animated');
+      }
+   }
 })();

@@ -113,7 +113,8 @@ body {
   content: "";
 }
 
-.img-icon__ico span, .user__button, .screen, .screen_inner-scroll__in, .screen-container, .video__preview, .video__frame, .video__frame iframe, .custom-file__preview > div, .form_sending .form__submit:before, .var-height-textarea__textarea, .diagram__canvas, .webgl__canvas, .main__full-page {
+.img-icon__ico span, .user__button, .screen, .screen_inner-scroll__in, .screen-container, .video__preview, .video__frame, .video__frame iframe,
+.video__frame video, .custom-file__preview > div, .form_sending .form__submit:before, .var-height-textarea__textarea, .diagram__canvas, .webgl__canvas, .main__full-page {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -137,7 +138,7 @@ body {
   vertical-align: middle;
 }
 
-.img-icon-btn__img img, .img-icon__ico img, .header__logo img, .video__preview img, .footer__logo img {
+.img-icon-btn__img img, .img-icon__ico img, .header__logo img, .footer__logo img {
   width: 100%;
   height: auto;
 }
@@ -2700,15 +2701,13 @@ hr {
   display: block;
   content: "";
   width: 100%;
-  padding-bottom: 55.76923%;
+  padding-bottom: 100%;
 }
 
 .video__preview {
-  overflow: hidden;
-}
-
-.video__preview img {
-  min-height: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
 }
 
 .video__btn-play {
@@ -2750,14 +2749,16 @@ hr {
   animation: video_loading_icon .9s infinite linear;
 }
 
-.video__frame iframe {
+.video__frame iframe,
+.video__frame video {
   z-index: 2;
   border: none;
   background: none;
   display: none;
 }
 
-.video__frame iframe.visible {
+.video__frame iframe.visible,
+.video__frame video.visible {
   display: block;
 }
 
@@ -3295,13 +3296,13 @@ hr {
 }
 
 .formslider__drag:hover {
-  border-color: #ff0000;
+  border-color: #aaaaaa;
 }
 
 .formslider__drag:active, .formslider__drag[data-active="true"] {
   transition: 0s;
-  background: #0000ff;
-  border-color: #0000ff;
+  background: #aaaaaa;
+  border-color: #aaaaaa;
 }
 
 .autocomplete__input, .form__text-input, .form__textarea {
@@ -4366,6 +4367,199 @@ hr {
   position: absolute;
   transform: scale(2);
   transform-origin: 0 0;
+}
+
+.cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  width: 2.125rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid #6c61a1;
+  pointer-events: none;
+  visibility: hidden;
+  transition: width .35s;
+}
+
+.cursor:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="hover"] {
+  width: 2.625rem;
+  background: rgba(241, 89, 51, 0.7);
+  border: none;
+}
+
+.cursor[data-class="hover-point"] {
+  width: 2.625rem;
+  border: 1px solid #ffffff;
+  background: #aaaaaa;
+}
+
+.cursor[data-class="hover-map"] {
+  width: 1.75rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.cursor[data-class="close"] {
+  width: 3.8125rem;
+  border: none;
+  border-radius: 0;
+  background: url("../images/cursor-close.svg") no-repeat;
+  background-size: 100% 100%;
+}
+
+.cursor[data-class="close"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 88.33333%;
+}
+
+.cursor[data-class="curs1"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs1.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs1"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="curs2"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs2.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs2"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="curs3"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs3.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs3"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="curs4"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs4.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs4"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="curs5"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs5.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs5"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="curs6"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs6.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs6"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="curs7"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs7.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs7"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="curs8"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs8.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs8"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor[data-class="curs9"] {
+  width: 5.125rem;
+  border: none;
+  background: url("../images/curs9.svg") no-repeat #ffffff;
+  background-size: 100% 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursor[data-class="curs9"]:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.cursor_visible {
+  visibility: visible;
 }
 
 /* main */

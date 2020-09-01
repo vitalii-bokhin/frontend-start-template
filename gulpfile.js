@@ -60,10 +60,11 @@ const modulesOn = [
     'webgl',
     'mouseparallax',
     'scrollbox',
-    // 'floatslider',
-    // 'slickslider',
-    // 'scrollpane',
-    'zoom'
+    'floatslider',
+    'slickslider',
+    'scrollpane',
+    'zoom',
+    'cursor'
 ],
     dist_path = 'dist';
 

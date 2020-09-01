@@ -1,12 +1,37 @@
+/* Checkbox.onChange(function(el, state) {
+	// body
+}); */
+
+var Checkbox;
+
 (function () {
 	'use strict';
 
 	//show element on checkbox change
-	var ChangeCheckbox = {
+	Checkbox = {
 		hideCssClass: 'hidden',
 		opt: {},
+		onChangeSubscribers: [],
+
+		init: function (options) {
+			options = options || {};
+
+			this.opt.focusOnTarget = (options.focusOnTarget !== undefined) ? options.focusOnTarget : false;
+
+			document.addEventListener('change', (e) => {
+				var elem = e.target.closest('input[type="checkbox"]');
+
+				if (elem) {
+					this.change(elem);
+				}
+			});
+		},
 
 		change: function (elem) {
+			this.onChangeSubscribers.forEach(item => {
+				item(elem, elem.checked);
+			});
+			
 			var targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
 
 			if (!targetElements.length) {
@@ -35,23 +60,15 @@
 			}
 		},
 
-		init: function (options) {
-			options = options || {};
-
-			this.opt.focusOnTarget = (options.focusOnTarget !== undefined) ? options.focusOnTarget : false;
-
-			document.addEventListener('change', (e) => {
-				var elem = e.target.closest('input[type="checkbox"]');
-
-				if (elem) {
-					this.change(elem);
-				}
-			});
+		onChange: function (fun) {
+			if (typeof fun === 'function') {
+				this.onChangeSubscribers.push(fun);
+			}
 		}
 	};
 
 	//init scripts
 	document.addEventListener('DOMContentLoaded', function () {
-		ChangeCheckbox.init({ focusOnTarget: true });
+		Checkbox.init({ focusOnTarget: true });
 	});
 })();

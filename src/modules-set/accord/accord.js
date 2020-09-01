@@ -7,6 +7,20 @@ var Accord;
 	'use strict';
 
 	Accord = {
+		init: function(elementStr) {
+			if (!document.querySelectorAll('.accord').length) return;
+
+			document.addEventListener('click', (e) => {
+				var elem = e.target.closest(elementStr);
+
+				if (!elem || elem.closest('.accord_closed')) return;
+
+				e.preventDefault();
+
+				this.toggle(elem);
+			});
+		},
+
 		toggle: function(elem) {
 			var contentElem = elem.nextElementSibling;
 
@@ -14,6 +28,7 @@ var Accord;
 				contentElem.style.height = 0;
 
 				elem.classList.remove('accord__button_active');
+
 			} else {
 				var mainElem = elem.closest('.accord'),
 				allButtonElem = mainElem.querySelectorAll('.accord__button'),
@@ -27,21 +42,15 @@ var Accord;
 				contentElem.style.height = contentElem.scrollHeight +'px';
 
 				elem.classList.add('accord__button_active');
+
+				this.scroll(elem);
 			}
 		},
 
-		init: function(elementStr) {
-			if (!document.querySelectorAll('.accord').length) return;
-
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
-
-				if (!elem || elem.closest('.accord_closed')) return;
-
-				e.preventDefault();
-
-				this.toggle(elem);
-			});
+		scroll: function(elem) {
+			setTimeout(function() {
+				$('html, body').stop().animate({scrollTop: $(elem).position().top - 20}, 721);
+			}, 321);
 		}
 	};
 })();

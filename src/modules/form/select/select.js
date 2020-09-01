@@ -7,7 +7,7 @@
 	Select = {
 		field: null,
 		hideCssClass: 'hidden',
-		onSelect: null,
+		onSelectSubscribers: [],
 
 		reset: function (parentElem) {
 			const parElem = parentElem || document,
@@ -83,7 +83,7 @@
 				setTimeout(function () {
 					optionsElem.classList.add('ovfauto');
 				}, 621);
-			}, 210);
+			}, 21);
 		},
 
 		selectMultipleVal: function (elem, button, input) {
@@ -212,9 +212,9 @@
 					Form.submitForm(input.closest('form'));
 				}
 
-				if (this.onSelect) {
-					this.onSelect(input, toInputValue, elem.getAttribute('data-second-value'));
-				}
+				this.onSelectSubscribers.forEach(item => {
+					item(input, toInputValue, elem.getAttribute('data-second-value'));
+				});
 			}
 
 			this.targetAction();
@@ -226,6 +226,12 @@
 			this.field.classList.add('select_changed');
 
 			ValidateForm.select(input);
+		},
+
+		onSelect: function (fun) {
+			if (typeof fun === 'function') {
+				this.onSelectSubscribers.push(fun);
+			}
 		},
 
 		setOptions: function (fieldSelector, optObj, nameKey, valKey, secValKey) {

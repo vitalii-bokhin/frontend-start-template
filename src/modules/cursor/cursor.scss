@@ -1,0 +1,121 @@
+.cursor{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 99;
+    width: rem(34);
+    @include fixprop;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .2);
+    border: 1px solid #6c61a1;
+    pointer-events: none;
+    visibility: hidden;
+    transition: width .35s;
+    &[data-class="hover"]{
+        width: rem(42);
+        background: rgba(241, 89, 51, .7);
+        border: none;
+    }
+    &[data-class="hover-point"]{
+        width: rem(42);
+        border: 1px solid #ffffff;
+        background: $gy;
+    }
+    &[data-class="hover-map"]{
+        width: rem(28);
+        border: none;
+        background: rgba(255, 255, 255, .9);
+    }
+    &[data-class="close"]{
+        width: rem(61);
+        @include fixprop(60,53);
+        border: none;
+        border-radius: 0;
+        background: url('../images/cursor-close.svg') no-repeat;
+        background-size: 100% 100%;
+    }
+    &[data-class="curs1"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs1.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &[data-class="curs2"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs2.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &[data-class="curs3"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs3.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &[data-class="curs4"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs4.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &[data-class="curs5"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs5.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &[data-class="curs6"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs6.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &[data-class="curs7"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs7.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &[data-class="curs8"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs8.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &[data-class="curs9"]{
+        width: rem(82);
+        @include fixprop;
+        border: none;
+        background: url('../images/curs9.svg') no-repeat #ffffff;
+        background-size: 100% 100%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+    }
+    &_visible{
+        visibility: visible;
+    }
+}
+
+// @media(min-width: 1101px){
+//     .main,
+//     a,
+//     button,
+//     .popup{
+//         cursor: none;
+//     }
+// }

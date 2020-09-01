@@ -291,6 +291,28 @@ document.addEventListener('DOMContentLoaded', function () {
     // zoom
     Zoom.init('.js-zoom-container');
 
+    // cursor
+    if (window.innerWidth > 1100) {
+        Cursor.init([
+            { selector: '.main' },
+            { selector: '.area', class: 'hover-map' },
+            { selector: '.popup', class: 'close' },
+            { selector: '.popup__window' },
+            { selector: 'a:not(.o-btn):not(.v-btn):not(.f-btn):not(.tw-btn)', class: 'hover' },
+            { selector: 'button', class: 'hover' },
+            { selector: '.map__point', class: 'hover-point' },
+            { selector: '.popup__card-btn_1', class: 'curs1' },
+            { selector: '.popup__card-btn_2', class: 'curs2' },
+            { selector: '.popup__card-btn_3', class: 'curs3' },
+            { selector: '.popup__card-btn_4', class: 'curs4' },
+            { selector: '.popup__card-btn_5', class: 'curs5' },
+            { selector: '.popup__card-btn_6', class: 'curs6' },
+            { selector: '.popup__card-btn_7', class: 'curs7' },
+            { selector: '.popup__card-btn_8', class: 'curs8' },
+            { selector: '.popup__card-btn_9', class: 'curs9' }
+        ]);
+    }
+
     // get content via Ajax
     var getCont = new GetContentAjax({
         eventBtn: '.js-get-content-ajax',
@@ -344,11 +366,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    AutoComplete.onSelect = function (inpElem, val, secVal) {
+    AutoComplete.onSelect(function (inpElem, val, secVal) {
         if (inpElem.name == 'country') {
 
         }
-    }
+    });
 
     // submit form
     Form.init('.form');
@@ -435,14 +457,14 @@ function dAirGetInit() {
         Select.setOptions('.countries', contryObjArr, 'name', 'name', 'id');
     });
 
-    Select.onSelect = function (inpElem, val, secVal) {
+    Select.onSelect(function (inpElem, val, secVal) {
         if (inpElem.name == 'country') {
             dAirGet.region(secVal, function (c) {
                 var regionObjArr = JSON.parse(c);
                 Select.setOptions('.cities', regionObjArr, 'name', 'name');
             });
         }
-    }
+    });
 }
 
 /*
