@@ -111,3 +111,15 @@ table.table{
         @include fch(t);
     }
 }
+
+/* tile */
+.tile{
+	&-wrap{
+		& > div{
+			display: flex;
+			.tile{
+				flex: 1 0 100%;
+			}
+		}
+	}
+}
