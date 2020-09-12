@@ -1,7 +1,7 @@
 @import "sprite-extends";
 
 // gulp svg sprite bg size mixin
-$sprite-width: 2192;
+$sprite-width: 153;
 @mixin bgs($icon-svg-w: 1) {
 	background-size: ($sprite-width / $icon-svg-w) * 100% auto;
 }
@@ -19,7 +19,7 @@ $sprite-width: 2192;
 
 .plus-btn:after{
 	@extend %svg-plus-circle;
-	@include bgs(512);
+	@include bgs(36);
 }
 
 .form__btn_search:before{

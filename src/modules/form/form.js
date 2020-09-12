@@ -583,7 +583,87 @@ var ValidateForm, Form, NextFieldset;
 
 	// form
 	Form = {
-		onSubmit: null,
+		onSubmitSubscribers: [],
+
+		init: function (formSelector) {
+			if (!document.querySelector(formSelector)) return;
+
+			ValidateForm.init(formSelector);
+
+			// submit event
+			document.addEventListener('submit', (e) => {
+				const formElem = e.target.closest(formSelector);
+
+				if (formElem) {
+					this.submitForm(formElem, e);
+				}
+			});
+
+			// keyboard event
+			document.addEventListener('keydown', (e) => {
+				const formElem = e.target.closest(formSelector);
+
+				if (!formElem) return;
+
+				const key = e.code;
+
+				if (e.target.closest('.fieldset__item') && key == 'Enter') {
+					e.preventDefault();
+					e.target.closest('.fieldset__item').querySelector('.js-next-fieldset-btn').click();
+
+				} else if (e.ctrlKey && key == 'Enter') {
+					e.preventDefault();
+					this.submitForm(formElem, e);
+				}
+			});
+		},
+
+		submitForm: function (formElem, e) {
+			if (!ValidateForm.validate(formElem)) {
+				if (e) e.preventDefault();
+				return;
+			}
+
+			formElem.classList.add('form_sending');
+
+			if (!this.onSubmitSubscribers.length) {
+				formElem.submit();
+				return;
+			}
+
+			let fReturn;
+
+			this.onSubmitSubscribers.forEach(item => {
+				fReturn = item(formElem, (obj) => {
+					obj = obj || {};
+	
+					setTimeout(() => {
+						this.actSubmitBtn(obj.unlockSubmitButton, formElem);
+					}, 321);
+	
+					formElem.classList.remove('form_sending');
+	
+					if (obj.clearForm == true) {
+						this.clearForm(formElem);
+					}
+				});
+			});
+
+			console.log(fReturn);
+
+			if (fReturn === true) {
+				formElem.submit();
+			} else {
+				if (e) e.preventDefault();
+				this.actSubmitBtn(false, formElem);
+			}
+		},
+
+		onSubmit: function (fun) {
+			if (typeof fun === 'function') {
+				this.onSubmitSubscribers.push(fun);
+			}
+		},
 
 		clearForm: function (formElem) {
 			var elements = formElem.querySelectorAll('input[type="text"], input[type="number"],input[type="tel"], input[type="password"], textarea');
@@ -620,79 +700,6 @@ var ValidateForm, Form, NextFieldset;
 					elem.setAttribute('disabled', 'disable');
 				}
 			}
-		},
-
-		submitForm: function (formElem, e) {
-			if (!ValidateForm.validate(formElem)) {
-				if (e) {
-					e.preventDefault();
-				}
-
-				return;
-			}
-
-			formElem.classList.add('form_sending');
-
-			if (!this.onSubmit) {
-				formElem.submit();
-				return;
-			}
-
-			// call onSubmit
-			const ret = this.onSubmit(formElem, (obj) => {
-				obj = obj || {};
-
-				setTimeout(() => {
-					this.actSubmitBtn(obj.unlockSubmitButton, formElem);
-				}, 321);
-
-				formElem.classList.remove('form_sending');
-
-				if (obj.clearForm == true) {
-					this.clearForm(formElem);
-				}
-			});
-
-			if (ret === false) {
-				if (e) e.preventDefault();
-
-				this.actSubmitBtn(false, formElem);
-			} else {
-				formElem.submit();
-			}
-		},
-
-		init: function (formSelector) {
-			if (!document.querySelector(formSelector)) return;
-
-			ValidateForm.init(formSelector);
-
-			// submit event
-			document.addEventListener('submit', (e) => {
-				const formElem = e.target.closest(formSelector);
-
-				if (formElem) {
-					this.submitForm(formElem, e);
-				}
-			});
-
-			// keyboard event
-			document.addEventListener('keydown', (e) => {
-				const formElem = e.target.closest(formSelector);
-
-				if (!formElem) return;
-
-				const key = e.which || e.keyCode || 0;
-
-				if (e.target.closest('.fieldset__item') && key == 13) {
-					e.preventDefault();
-					e.target.closest('.fieldset__item').querySelector('.js-next-fieldset-btn').click();
-
-				} else if (e.ctrlKey && key == 13) {
-					e.preventDefault();
-					this.submitForm(formElem, e);
-				}
-			});
 		}
 	};
 

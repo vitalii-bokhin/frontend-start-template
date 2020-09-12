@@ -31,6 +31,8 @@ function Mouseparallax(elSel, options) {
 		direct = {},
 		elems = [];
 
+	_.disabled = false;
+
 	$(elSel).each(function () {
 		const $el = $(this);
 
@@ -46,12 +48,15 @@ function Mouseparallax(elSel, options) {
 	});
 
 	$(document).on('mouseenter', opt.listener, function (e) {
+		if (_.disabled) return;
+		
 		startMousePos.X = e.clientX;
 		startMousePos.Y = e.clientY;
 	});
 
 	$(opt.listener).on('mousemove', opt.listener, function (e) {
-console.log($(this));
+		if (_.disabled) return;
+
 		if (e.clientX > cursorPos.X) {
 			direct.X = 'right';
 		} else {
@@ -126,6 +131,8 @@ console.log($(this));
 	});
 
 	$(document).on('mouseleave', opt.listener, function (e) {
+		if (_.disabled) return;
+
 		elems.forEach(function (el) {
 			el.startElementPos.X = el.translateElement.X;
 			el.startElementPos.Y = el.translateElement.Y;

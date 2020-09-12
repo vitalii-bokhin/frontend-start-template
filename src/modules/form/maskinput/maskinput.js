@@ -109,6 +109,16 @@ var Maskinput;
 			}
 		}
 
+		this.cyr = function (ev) {
+			if (ev == 'focus') return;
+
+			if (!/^[а-я\s]*$/i.test(inputElem.value)) {
+				inputElem.value = defValue;
+			} else {
+				defValue = inputElem.value;
+			}
+		}
+
 		inputElem.addEventListener('input', () => {
 			try {
 				this[type]();

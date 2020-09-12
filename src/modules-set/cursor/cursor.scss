@@ -19,7 +19,7 @@
     &[data-class="hover-point"]{
         width: rem(42);
         border: 1px solid #ffffff;
-        background: $og;
+        background: $gy;
     }
     &[data-class="hover-map"]{
         width: rem(28);
@@ -111,11 +111,11 @@
     }
 }
 
-@media(min-width: 1101px){
-    .main,
-    a,
-    button,
-    .popup{
-        cursor: none;
-    }
-}
+// @media(min-width: 1101px){
+//     .main,
+//     a,
+//     button,
+//     .popup{
+//         cursor: none;
+//     }
+// }

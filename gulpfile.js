@@ -24,11 +24,11 @@ const modulesOn = [
     'header/lang',
     'fsscroll',
     'screens',
-    // 'screens2',
-    // 'scrollsmooth',
+    'screens2',
+    'scrollsmooth',
     'toggle',
     'flex-image',
-    'cover-image',
+    // 'cover-image',
     'lazy-load',
     'video',
     'popup', // popup media video needs video module
@@ -44,7 +44,7 @@ const modulesOn = [
     'form/number',
     'form',
     'accord',
-    // 'ajax',
+    'ajax',
     'more',
     'tab',
     'alert',
@@ -194,6 +194,10 @@ gulp.task('svgs', function (done) {
     gulp.src('src/images/svg/*.svg')
         .pipe(svgSprite({
             shape: {
+                dimension: {
+                    maxWidth: 32,
+                    maxHeight: 32
+                },
                 spacing: {
                     padding: 2
                 }
@@ -206,6 +210,9 @@ gulp.task('svgs', function (done) {
                     render: {
                         scss: { dest: '../src/sass/_sprite-extends.scss' }
                     }
+                },
+                symbol: {
+                    sprite: '../' + dist_path + '/images/sprite-symbol.svg',
                 }
             }
         }))
