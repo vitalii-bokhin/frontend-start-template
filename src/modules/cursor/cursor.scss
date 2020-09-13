@@ -27,10 +27,10 @@
     }
 }
 
-// @media(min-width: 1101px){
-//     .main,
-//     a,
-//     button{
-//         cursor: none;
-//     }
-// }
+@media(min-width: 1101px){
+    .curs-main,
+    .curs-btn,
+    .curs-link{
+        cursor: none;
+    }
+}

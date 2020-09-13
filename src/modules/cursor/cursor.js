@@ -24,15 +24,18 @@ var Cursor;
         },
 
         start: function (e) {
-            this.opt.forEach(it => {
-                const el = e.target.closest(it.selector);
+            let el;
+
+            for (const it of this.opt) {
+                el = e.target.closest(it.selector);
 
                 if (el) {
                     this.elObj = { el, cursCl: it.class };
+                    break;
                 }
-            });
+            }
 
-            if (!this.elObj) return;
+            if (!el) return;
 
             if (this.elObj.cursCl) {
                 this.cursorEl.setAttribute('data-class', this.elObj.cursCl);
@@ -71,6 +74,7 @@ var Cursor;
         },
 
         end: function (e) {
+            console.log('out');
             this.cursorEl.classList.remove('cursor_visible');
 
             document.removeEventListener('mousemove', this.mMove);

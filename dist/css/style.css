@@ -2626,6 +2626,32 @@ hr {
   }
 }
 
+/* screens */
+.screen {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  visibility: hidden;
+  opacity: 0;
+  padding-top: 100px;
+}
+
+.screen_visible {
+  visibility: visible;
+}
+
+.screen_active {
+  position: relative;
+  opacity: 1;
+}
+
+.screen-wrap {
+  position: relative;
+  padding: 0 !important;
+}
+
 .toggle {
   width: 50px;
   height: 20px;
@@ -5392,6 +5418,14 @@ hr {
 
 .cursor_visible {
   visibility: visible;
+}
+
+@media (min-width: 1101px) {
+  .curs-main,
+  .curs-btn,
+  .curs-link {
+    cursor: none;
+  }
 }
 
 /* main */

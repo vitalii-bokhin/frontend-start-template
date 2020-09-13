@@ -28,7 +28,7 @@ var Cursor;
                 const el = e.target.closest(it.selector);
 
                 if (el) {
-                    this.elObj = {el, cursCl: it.class};
+                    this.elObj = { el, cursCl: it.class };
                 }
             });
 
@@ -41,7 +41,7 @@ var Cursor;
             }
 
             this.cursorEl.classList.add('cursor_visible');
-            
+
             this.mMove = this.move.bind(this);
             document.addEventListener('mousemove', this.mMove);
 
@@ -51,17 +51,23 @@ var Cursor;
 
         move: function (e) {
             let x = e.pageX - this.cursorEl.offsetWidth / 2,
-            y = e.pageY - this.cursorEl.offsetHeight / 2;
+                y = e.pageY - this.cursorEl.offsetHeight / 2;
+                
+            if (e.pageX + this.cursorEl.offsetWidth / 2 > document.documentElement.clientWidth) {
+                x = document.documentElement.clientWidth - this.cursorEl.offsetWidth;
 
-            if (e.pageX + this.cursorEl.offsetWidth / 2 > window.innerWidth) {
-                x = window.innerWidth - this.cursorEl.offsetWidth;
+            } else if (e.pageX < this.cursorEl.offsetWidth / 2) {
+                x = 0;
             }
 
-            if (e.pageY + this.cursorEl.offsetHeight / 2 > window.innerHeight) {
-                y = window.innerHeight - this.cursorEl.offsetHeight;
+            if (e.pageY + this.cursorEl.offsetHeight / 2 > window.innerHeight + window.pageYOffset) {
+                y = window.innerHeight + window.pageYOffset - this.cursorEl.offsetHeight;
+
+            } else if (e.pageY < this.cursorEl.offsetHeight / 2) {
+                y = 0;
             }
 
-            this.cursorEl.style.transform = 'translate('+ x + 'px,'+ y + 'px)';
+            this.cursorEl.style.transform = 'translate(' + x + 'px,' + y + 'px)';
         },
 
         end: function (e) {

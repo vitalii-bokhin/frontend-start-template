@@ -334,53 +334,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // timer
     try {
-        var timer = new Timer({
-            elemId: 'timer',
-            continue: true
-        });
+        if (document.getElementById('timer')) {
+            var timer = new Timer({
+                elemId: 'timer',
+                continue: true
+            });
 
-        timer.onStop = function () {
-            Popup.message('Timer Stopped');
+            timer.onStop = function () {
+                Popup.message('Timer Stopped');
+            }
+
+            timer.start(50);
+
+            // timer 2
+            var timer2 = new Timer({
+                elemId: 'timer-2',
+                format: 'extended'
+            });
+
+            timer2.onStop = function () {
+                Popup.message('Timer 2 Stopped');
+            }
+
+            timer2.start(130);
+
+            // stopwatch
+            var stopwatch = new Timer({
+                elemId: 'stopwatch',
+                stopwatch: true
+            });
+
+            stopwatch.onStop = function () {
+                Popup.message('Stopwatch Stopped');
+            }
+
+            stopwatch.start(0);
+
+            // stopwatch 2
+            var stopwatch2 = new Timer({
+                elemId: 'stopwatch-1',
+                stopwatch: true,
+                format: 'extended'
+            });
+
+            stopwatch2.onStop = function () {
+                Popup.message('Stopwatch Stopped');
+            }
+
+            stopwatch2.start(0);
         }
 
-        timer.start(50);
-
-        // timer 2
-        var timer2 = new Timer({
-            elemId: 'timer-2',
-            format: 'extended'
-        });
-
-        timer2.onStop = function () {
-            Popup.message('Timer 2 Stopped');
-        }
-
-        timer2.start(130);
-
-        // stopwatch
-        var stopwatch = new Timer({
-            elemId: 'stopwatch',
-            stopwatch: true
-        });
-
-        stopwatch.onStop = function () {
-            Popup.message('Stopwatch Stopped');
-        }
-
-        stopwatch.start(0);
-
-        // stopwatch 2
-        var stopwatch2 = new Timer({
-            elemId: 'stopwatch-1',
-            stopwatch: true,
-            format: 'extended'
-        });
-
-        stopwatch2.onStop = function () {
-            Popup.message('Stopwatch Stopped');
-        }
-
-        stopwatch2.start(0);
     } catch (error) {
         console.log(error);
     }
@@ -397,7 +400,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (window.innerWidth > 1100) {
             Cursor.init([
                 { selector: '.curs-link', class: 'hover-a' },
-                { selector: '.curs-btn', class: 'hover-btn' }
+                { selector: '.curs-btn', class: 'hover-btn' },
+                { selector: '.curs-main' }
             ]);
         }
     } catch (error) {
