@@ -23,3 +23,8 @@ $base-font-size: 16;
 @function vh($px, $base) {
     @return $px * (100 / $base) * 1vh;
 }
+
+// vmin
+@function vmin($px, $base) {
+    @return $px * (100 / $base) * 1vmin;
+}

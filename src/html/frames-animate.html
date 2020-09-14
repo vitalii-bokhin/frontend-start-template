@@ -1,0 +1,35 @@
+@@include('_head.html', {"title": "Frames Animate"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html', {"menu_item_current": "frames", "user_item": "logged", "user_item": "not_logged"})
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+	<div class="row row_wrp">
+		<div class="col-12">
+			<h1>Frames Animate</h1>
+		</div>
+	</div>
+
+	<div class="row row_wrp">
+		<div class="col-12">
+			<div id="stopmotion-frames" class="frames-animate" data-count="4" data-dirpath="images/frames" data-ext="png"></div>
+		</div>
+	</div>
+	
+</main>
+<!--/MAIN-->
+
+<!--FOOTER/-->
+@@include('../modules/footer/footer.html')
+<!--/FOOTER-->
+
+<!--POPUPs/-->
+@@include('../modules/popup/popup.html')
+<!--/POPUPs-->
+
+@@include('_javascript.html')
+
+</body>
+</html>

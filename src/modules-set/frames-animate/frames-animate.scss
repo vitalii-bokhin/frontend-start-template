@@ -1,0 +1,8 @@
+.frames-animate{
+   div{
+      opacity: 0;
+      &.visible{
+         opacity: 1;
+      }
+   }
+}

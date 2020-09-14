@@ -1,0 +1,11 @@
+.frames-animate{
+   @include fixprop(4,3);
+   position: relative;
+   div{
+      @extend %fwh;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      opacity: 0;
+   }
+}

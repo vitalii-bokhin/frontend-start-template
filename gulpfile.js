@@ -57,6 +57,7 @@ const modulesOn = [
     'footer',
     'getcontentajax',
     'animation',
+    'frames-animate',
     'webgl',
     'mouseparallax',
     'scrollbox',

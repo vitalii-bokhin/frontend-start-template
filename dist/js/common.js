@@ -41,6 +41,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })();
 
+    // frames animate
+    try {
+        const frAn = new FramesAnimate('stopmotion-frames', {
+            fps: 4
+        });
+
+        frAn.onStop = function () {
+			// code
+		}
+    } catch (error) {
+        console.log(error);
+    }
+
     // scrollbox
     try {
         new Scrollbox('#vert-scroll', {
