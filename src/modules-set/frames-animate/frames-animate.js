@@ -21,7 +21,6 @@ function FramesAnimate(elemId, options) {
     const opt = options || {},
         count = contEl.getAttribute('data-count'),
         dirpath = contEl.getAttribute('data-dirpath'),
-        dataDelay = contEl.getAttribute('data-delay'),
         ext = contEl.getAttribute('data-ext'),
         _this = this;
 
@@ -34,11 +33,13 @@ function FramesAnimate(elemId, options) {
     this.contEl = contEl;
     this.frElems = [];
     this.fps = opt.fps;
+    this.infinite = opt.infinite;
     this.animated = false;
     this.onStop = null;
+    this.onLoad = null;
+    this.loaded = false;
 
-    let delay = {},
-        loadedImgSrc = [],
+    let loadedImgSrc = [],
         loadedImgCount = 0;
 
     for (let i = 0; i < count; i++) {
@@ -52,13 +53,19 @@ function FramesAnimate(elemId, options) {
             if (loadedImgCount == count) {
                 _this.buildHtml(loadedImgSrc);
 
-                if (opt.autoplay) {
-                    _this.animate();
+                _this.loaded = true;
+
+                if (_this.onLoad) {
+                    _this.onLoad();
                 }
             }
         }
 
         imgEl.src = dirpath + '/' + (i + 1) + '.' + ext;
+    }
+
+    if (opt.autoplay) {
+        this.play();
     }
 }
 
@@ -75,34 +82,38 @@ FramesAnimate.prototype.buildHtml = function (loadedImgSrc) {
 }
 
 FramesAnimate.prototype.animate = function () {
-    this.animated = true;
-
     let i = 0,
         back = false;
 
     (function loop() {
+        if (!this.loaded) {
+            setTimeout(loop.bind(this), 121);
+            return;
+        }
+
         let mult = 1;
 
-        this.frElems[i].classList.add('visible');
+        this.frElems[i].style.opacity = 1;
 
         if (back) {
             if (i < this.frElems.length - 1) {
-                this.frElems[i + 1].classList.remove('visible');
+                this.frElems[i + 1].style.opacity = 0;
             }
 
             i--;
         } else {
             if (i > 0) {
-                this.frElems[i - 1].classList.remove('visible');
+                this.frElems[i - 1].style.opacity = 0;
             } else {
-                this.frElems[this.frElems.length - 1].classList.remove('visible');
+                this.frElems[this.frElems.length - 1].style.opacity = 0;
             }
 
             i++;
         }
 
         if (!this.infinite && i == this.frElems.length) {
-            return this.stop();
+            this.stop();
+            return; 
         }
 
         if (this.opt.backward) {
@@ -123,6 +134,12 @@ FramesAnimate.prototype.animate = function () {
             setTimeout(loop.bind(this), (1000 / this.fps) * mult);
         }
     }.bind(this))();
+}
+
+FramesAnimate.prototype.play = function () {
+    this.animated = true;
+
+    this.animate();
 }
 
 FramesAnimate.prototype.stop = function () {

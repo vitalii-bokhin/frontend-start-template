@@ -6,6 +6,8 @@ var Maskinput;
 	Maskinput = function (inputElem, type, opt) {
 		if (!inputElem) return;
 
+		opt = opt || {};
+
 		var defValue = '';
 
 		this.tel = function (evStr) {

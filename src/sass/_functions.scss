@@ -24,6 +24,11 @@ $base-font-size: 16;
     @return $px * (100 / $base) * 1vh;
 }
 
+// vmax
+@function vmax($px, $base) {
+    @return $px * (100 / $base) * 1vmax;
+}
+
 // vmin
 @function vmin($px, $base) {
     @return $px * (100 / $base) * 1vmin;

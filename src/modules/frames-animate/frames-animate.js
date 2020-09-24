@@ -36,6 +36,8 @@ function FramesAnimate(elemId, options) {
     this.infinite = opt.infinite;
     this.animated = false;
     this.onStop = null;
+    this.onLoad = null;
+    this.loaded = false;
 
     let loadedImgSrc = [],
         loadedImgCount = 0;
@@ -51,13 +53,19 @@ function FramesAnimate(elemId, options) {
             if (loadedImgCount == count) {
                 _this.buildHtml(loadedImgSrc);
 
-                if (opt.autoplay) {
-                    _this.animate();
+                _this.loaded = true;
+
+                if (_this.onLoad) {
+                    _this.onLoad();
                 }
             }
         }
 
         imgEl.src = dirpath + '/' + (i + 1) + '.' + ext;
+    }
+
+    if (opt.autoplay) {
+        this.play();
     }
 }
 
@@ -74,12 +82,15 @@ FramesAnimate.prototype.buildHtml = function (loadedImgSrc) {
 }
 
 FramesAnimate.prototype.animate = function () {
-    this.animated = true;
-
     let i = 0,
         back = false;
 
     (function loop() {
+        if (!this.loaded) {
+            setTimeout(loop.bind(this), 121);
+            return;
+        }
+
         let mult = 1;
 
         this.frElems[i].style.opacity = 1;
@@ -101,7 +112,8 @@ FramesAnimate.prototype.animate = function () {
         }
 
         if (!this.infinite && i == this.frElems.length) {
-            return this.stop();
+            this.stop();
+            return; 
         }
 
         if (this.opt.backward) {
@@ -122,6 +134,12 @@ FramesAnimate.prototype.animate = function () {
             setTimeout(loop.bind(this), (1000 / this.fps) * mult);
         }
     }.bind(this))();
+}
+
+FramesAnimate.prototype.play = function () {
+    this.animated = true;
+
+    this.animate();
 }
 
 FramesAnimate.prototype.stop = function () {
