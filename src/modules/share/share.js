@@ -22,7 +22,7 @@ Share.init(Str button class);
 
 			switch (net) {
 				case 'vk':
-					url = 'https://vkontakte.ru/share.php?url=' + encodedHref + ((encodedImageUrl) ? '&image=' + encodedImageUrl : '') + ((title) ? '&title=' + title : '');
+					url = 'https://vk.com/share.php?url=' + encodedHref + ((encodedImageUrl) ? '&image=' + encodedImageUrl : '') + ((title) ? '&title=' + title : '');
 					break;
 
 				case 'fb':

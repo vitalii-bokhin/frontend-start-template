@@ -18,9 +18,15 @@ var Cursor;
 
             document.addEventListener('mouseover', this.mOver);
 
+            const cursWrap = document.createElement('div');
+            cursWrap.className = 'cursor-wrap';
+
+            document.body.appendChild(cursWrap);
+
             this.cursorEl = document.createElement('div');
             this.cursorEl.className = 'cursor';
-            document.body.appendChild(this.cursorEl);
+
+            cursWrap.appendChild(this.cursorEl);
         },
 
         start: function (e) {
@@ -53,28 +59,13 @@ var Cursor;
         },
 
         move: function (e) {
-            let x = e.pageX - this.cursorEl.offsetWidth / 2,
-                y = e.pageY - this.cursorEl.offsetHeight / 2;
-                
-            if (e.pageX + this.cursorEl.offsetWidth / 2 > document.documentElement.clientWidth) {
-                x = document.documentElement.clientWidth - this.cursorEl.offsetWidth;
-
-            } else if (e.pageX < this.cursorEl.offsetWidth / 2) {
-                x = 0;
-            }
-
-            if (e.pageY + this.cursorEl.offsetHeight / 2 > window.innerHeight + window.pageYOffset) {
-                y = window.innerHeight + window.pageYOffset - this.cursorEl.offsetHeight;
-
-            } else if (e.pageY < this.cursorEl.offsetHeight / 2) {
-                y = 0;
-            }
+            const x = e.clientX - this.cursorEl.offsetWidth / 2,
+                y = e.clientY - this.cursorEl.offsetHeight / 2;
 
             this.cursorEl.style.transform = 'translate(' + x + 'px,' + y + 'px)';
         },
 
-        end: function (e) {
-            console.log('out');
+        end: function () {
             this.cursorEl.classList.remove('cursor_visible');
 
             document.removeEventListener('mousemove', this.mMove);

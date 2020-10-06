@@ -47,6 +47,10 @@ document.addEventListener('DOMContentLoaded', function () {
             fps: 4
         });
 
+        frAn.onLoad = function () {
+			console.log('onLoad');
+        }
+        
         frAn.onStop = function () {
 			// code
 		}

@@ -114,7 +114,7 @@ body {
 }
 
 .img-icon__ico span, .user__button, .screen, .screen_inner-scroll__in, .screen-container, .video__preview, .video__frame, .video__frame iframe,
-.video__frame video, .custom-file__preview > div, .form_sending .form__submit:before, .var-height-textarea__textarea, .diagram__canvas, .frames-animate div, .webgl__canvas, .main__full-page {
+.video__frame video, .custom-file__preview > div, .form_sending .form__submit:before, .var-height-textarea__textarea, .diagram__canvas, .webgl__canvas, .cursor-wrap, .main__full-page {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -4283,21 +4283,9 @@ hr {
 }
 
 .frames-animate {
-  position: relative;
-}
-
-.frames-animate:before {
-  display: block;
-  content: "";
-  width: 100%;
-  padding-bottom: 75%;
-}
-
-.frames-animate div {
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 0;
+  width: 700px;
+  height: 350px;
+  border: 1px solid #000000;
 }
 
 .webgl {
@@ -5436,6 +5424,13 @@ hr {
 
 .cursor_visible {
   visibility: visible;
+}
+
+.cursor-wrap {
+  position: fixed;
+  z-index: 99;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 @media (min-width: 1101px) {

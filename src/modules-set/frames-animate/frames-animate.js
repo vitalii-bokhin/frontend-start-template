@@ -19,9 +19,8 @@ function FramesAnimate(elemId, options) {
     if (!contEl) return;
 
     const opt = options || {},
-        count = contEl.getAttribute('data-count'),
-        dirpath = contEl.getAttribute('data-dirpath'),
-        ext = contEl.getAttribute('data-ext'),
+        count = +contEl.getAttribute('data-count'),
+        path = contEl.getAttribute('data-path'),
         _this = this;
 
     opt.fps = (opt.fps !== undefined) ? opt.fps : 30;
@@ -31,118 +30,137 @@ function FramesAnimate(elemId, options) {
 
     this.opt = opt;
     this.contEl = contEl;
-    this.frElems = [];
+    this.loadedImages = [];
     this.fps = opt.fps;
+    this.autoplay = opt.autoplay;
     this.infinite = opt.infinite;
     this.animated = false;
     this.onStop = null;
     this.onLoad = null;
     this.loaded = false;
+    this.loadedImages = [];
+    this.count = count;
 
-    let loadedImgSrc = [],
-        loadedImgCount = 0;
+    
 
-    for (let i = 0; i < count; i++) {
-        const imgEl = new Image();
+    try {
+        this.ctx = contEl.getContext('2d');
+    } catch (error) {
+        console.log(error, 'Elem Id: ' + elemId);
+    }
 
-        imgEl.onload = function () {
-            loadedImgSrc[i] = this.src;
+    this.img = { W: 0, H: 0 };
+    this.imgDims = { W: 0, H: 0 };
+    this.viewportDims = { W: 0, H: 0, X: 0 };
 
-            loadedImgCount++;
+    const init = () => {
+        this.contElWidth = contEl.offsetWidth;
+        this.contElHeight = contEl.offsetHeight;
 
-            if (loadedImgCount == count) {
-                _this.buildHtml(loadedImgSrc);
+        contEl.width = this.contElWidth;
+        contEl.height = this.contElHeight;
 
-                _this.loaded = true;
+        this.imgDims.W = this.img.W / count;
+        this.imgDims.H = this.img.H;
 
-                if (_this.onLoad) {
-                    _this.onLoad();
-                }
-            }
+        this.viewportDims.W = this.contElHeight * this.imgDims.W / this.img.H;
+        this.viewportDims.H = this.contElHeight;
+        this.viewportDims.X = this.contElWidth / 2 - this.viewportDims.W / 2;
+    }
+
+    const imgEl = new Image();
+
+    imgEl.onload = function () {
+        _this.loadedImg = this;
+
+        _this.img.W = this.width;
+        _this.img.H = this.height;
+
+        init();
+
+        _this.loaded = true;
+
+        if (_this.onLoad) {
+            _this.onLoad();
         }
 
-        imgEl.src = dirpath + '/' + (i + 1) + '.' + ext;
+        if (_this.autoplay) {
+            _this.play();
+        }
     }
 
-    if (opt.autoplay) {
-        this.play();
+    imgEl.src = path;
+
+    this.reInit = function () {
+        if (this.loaded) init();
     }
 }
 
-FramesAnimate.prototype.buildHtml = function (loadedImgSrc) {
-    loadedImgSrc.forEach((src) => {
-        const frEl = document.createElement('div');
+FramesAnimate.prototype.animate = function (dir) {
+    this.animated = true;
 
-        frEl.style.backgroundImage = 'url(' + src + ')';
-
-        this.frElems.push(frEl);
-
-        this.contEl.appendChild(frEl);
-    });
-}
-
-FramesAnimate.prototype.animate = function () {
     let i = 0,
         back = false;
 
-    (function loop() {
-        if (!this.loaded) {
-            setTimeout(loop.bind(this), 121);
-            return;
-        }
+    if (dir == 'back') {
+        back = true;
+        i = this.count - 1;
+    }
 
-        let mult = 1;
+    let start = performance.now();
 
-        this.frElems[i].style.opacity = 1;
+    requestAnimationFrame(function anim(time) {
+        if (time - start > 1000 / this.fps) {
+            this.ctx.clearRect(0, 0, this.contElWidth, this.contElHeight);
 
-        if (back) {
-            if (i < this.frElems.length - 1) {
-                this.frElems[i + 1].style.opacity = 0;
+            const sx = this.imgDims.W * i;
+
+            this.ctx.drawImage(this.loadedImg, sx, 0, this.imgDims.W, this.imgDims.H, this.viewportDims.X, 0, this.viewportDims.W, this.viewportDims.H);
+
+            if (!this.infinite) {
+                if ((back && !i) || (!back && i == this.count - 1)) {
+                    this.stop();
+                    return;
+                }
             }
 
-            i--;
-        } else {
-            if (i > 0) {
-                this.frElems[i - 1].style.opacity = 0;
+            if (this.opt.backward) {
+                // if (i == this.count) {
+                //     back = true;
+                //     i = this.count - 1;
+                // } else if (i < 0) {
+                //     back = false;
+                //     i = 0;
+                // }
             } else {
-                this.frElems[this.frElems.length - 1].style.opacity = 0;
+                if (this.opt.infinite && !back && i == this.count - 1) {
+                    i = -1;
+                }
             }
 
-            i++;
-        }
-
-        if (!this.infinite && i == this.frElems.length) {
-            this.stop();
-            return; 
-        }
-
-        if (this.opt.backward) {
-            if (i == this.frElems.length) {
-                back = true;
-                i = this.frElems.length - 1;
-            } else if (i < 0) {
-                back = false;
-                i = 0;
+            if (back) {
+                i--;
+            } else {
+                i++;
             }
-        } else {
-            if (i == this.frElems.length) {
-                i = 0;
-            }
+
+            start = time;
         }
 
-        if (this.animated) {
-            setTimeout(loop.bind(this), (1000 / this.fps) * mult);
-        }
-    }.bind(this))();
+        if (this.animated) requestAnimationFrame(anim.bind(this));
+    }.bind(this));
 }
 
-FramesAnimate.prototype.play = function () {
-    this.animated = true;
-
-    this.animate();
+FramesAnimate.prototype.play = function (dir) {
+    if (this.loaded) {
+        this.animate(dir);
+    } else {
+        setTimeout(this.play.bind(this), 121);
+    }
 }
 
 FramesAnimate.prototype.stop = function () {
+    this.autoplay = false;
     this.animated = false;
 
     if (this.onStop) {

@@ -1348,53 +1348,56 @@ new LazyLoad({
    selector: @Str,
    event: false
 });
+
+const lazy = new LazyLoad().load;
+lazy('.el-sel');
 */
 
 ; var LazyLoad;
 
 (function () {
-   'use strict';
+    'use strict';
 
-   LazyLoad = function (opt) {
-      opt = opt || {};
+    LazyLoad = function (opt) {
+        opt = opt || {};
 
-      const elements = document.querySelectorAll(opt.selector);
+        const elements = document.querySelectorAll(opt.selector);
 
-      if (opt.event) {
-         if (opt.event == 'scroll') {
-            window.addEventListener('scroll', function (e) {
-               for (let i = 0; i < elements.length; i++) {
-                  const el = elements[i];
+        if (elements) {
+            if (opt.event) {
+                if (opt.event == 'scroll') {
+                    window.addEventListener('scroll', function (e) {
+                        for (let i = 0; i < elements.length; i++) {
+                            const el = elements[i];
+                        }
+                    });
+                }
+            } else {
+                setTimeout(() => {
+                    this.doLoad(elements);
+                }, 1000);
+            }
+        }
 
-                  console.log(el.getBoundingClientRect());
-               }
-            });
-         }
-      } else {
-         setTimeout(function () {
-            doLoad(elements);
-         }, 1000);
-      }
+        return {
+            load: (sel) => {
+                const elements = document.querySelectorAll(sel);
+                this.doLoad(elements);
+            }
+        }
+    }
 
-      function doLoad(elements) {
-         for (let i = 0; i < elements.length; i++) {
-            const elem = elements[i];
+    LazyLoad.prototype.doLoad = function (elems) {
+        for (let i = 0; i < elems.length; i++) {
+            const elem = elems[i];
 
             if (elem.hasAttribute('data-src')) {
-               elem.src = elem.getAttribute('data-src');
+                elem.src = elem.getAttribute('data-src');
             } else if (elem.hasAttribute('data-bg-url')) {
-               elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
+                elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
             }
-         }
-      }
-
-      return {
-         load: function (sel) {
-            const elements = document.querySelectorAll(sel);
-            doLoad(elements);
-         }
-      }
-   }
+        }
+    }
 })();
 /*
 Video.init(Str button selector);
@@ -3505,7 +3508,7 @@ var NextFieldset;
     });
 
 })();
-var ValidateForm, Form, NextFieldset;
+var ValidateForm, Form;
 
 (function () {
 	'use strict';
@@ -3516,25 +3519,34 @@ var ValidateForm, Form, NextFieldset;
 
 		errorTip: function (err, errInd, errorTxt) {
 			const field = this.input.closest('.form__field') || this.input.parentElement,
-				errTip = field.querySelector('.field-error-tip');
+				tipEl = field.querySelector('.field-error-tip');
 
 			if (err) {
 				field.classList.remove('field-success');
 				field.classList.add('field-error');
 
-				if (!errTip) return;
-
 				if (errInd) {
-					if (!errTip.hasAttribute('data-error-text')) {
-						errTip.setAttribute('data-error-text', errTip.innerHTML);
+					if (tipEl) {
+						if (!tipEl.hasAttribute('data-error-text')) {
+							tipEl.setAttribute('data-error-text', tipEl.innerHTML);
+						}
+						tipEl.innerHTML = (errInd != 'custom') ? tipEl.getAttribute('data-error-text-' + errInd) : errorTxt;
 					}
-					errTip.innerHTML = (errInd != 'custom') ? errTip.getAttribute('data-error-text-' + errInd) : errorTxt;
-				} else if (errTip.hasAttribute('data-error-text')) {
-					errTip.innerHTML = errTip.getAttribute('data-error-text');
+
+					field.setAttribute('data-error-index', errInd);
+
+				} else {
+					if (tipEl && tipEl.hasAttribute('data-error-text')) {
+						tipEl.innerHTML = tipEl.getAttribute('data-error-text');
+					}
+
+					field.removeAttribute('data-error-index');
 				}
+
 			} else {
 				field.classList.remove('field-error');
 				field.classList.add('field-success');
+				field.removeAttribute('data-error-index');
 			}
 		},
 
@@ -4128,6 +4140,15 @@ var ValidateForm, Form, NextFieldset;
 		submitForm: function (formElem, e) {
 			if (!ValidateForm.validate(formElem)) {
 				if (e) e.preventDefault();
+
+				const errFieldEl = formElem.querySelector('.field-error');
+
+				if (errFieldEl.hasAttribute('data-error-index')) {
+					ValidateForm.customFormErrorTip(formElem, errFieldEl.getAttribute('data-form-error-text-' + errFieldEl.getAttribute('data-error-index')));
+				} else if (errFieldEl.hasAttribute('data-form-error-text')) {
+					ValidateForm.customFormErrorTip(formElem, errFieldEl.getAttribute('data-form-error-text'));
+				}
+
 				return;
 			}
 
@@ -4143,20 +4164,18 @@ var ValidateForm, Form, NextFieldset;
 			this.onSubmitSubscribers.forEach(item => {
 				fReturn = item(formElem, (obj) => {
 					obj = obj || {};
-	
+
 					setTimeout(() => {
 						this.actSubmitBtn(obj.unlockSubmitButton, formElem);
 					}, 321);
-	
+
 					formElem.classList.remove('form_sending');
-	
+
 					if (obj.clearForm == true) {
 						this.clearForm(formElem);
 					}
 				});
 			});
-
-			console.log(fReturn);
 
 			if (fReturn === true) {
 				formElem.submit();
@@ -5189,7 +5208,7 @@ Share.init(Str button class);
 
 			switch (net) {
 				case 'vk':
-					url = 'https://vkontakte.ru/share.php?url=' + encodedHref + ((encodedImageUrl) ? '&image=' + encodedImageUrl : '') + ((title) ? '&title=' + title : '');
+					url = 'https://vk.com/share.php?url=' + encodedHref + ((encodedImageUrl) ? '&image=' + encodedImageUrl : '') + ((title) ? '&title=' + title : '');
 					break;
 
 				case 'fb':
@@ -5610,9 +5629,8 @@ function FramesAnimate(elemId, options) {
     if (!contEl) return;
 
     const opt = options || {},
-        count = contEl.getAttribute('data-count'),
-        dirpath = contEl.getAttribute('data-dirpath'),
-        ext = contEl.getAttribute('data-ext'),
+        count = +contEl.getAttribute('data-count'),
+        path = contEl.getAttribute('data-path'),
         _this = this;
 
     opt.fps = (opt.fps !== undefined) ? opt.fps : 30;
@@ -5622,118 +5640,137 @@ function FramesAnimate(elemId, options) {
 
     this.opt = opt;
     this.contEl = contEl;
-    this.frElems = [];
+    this.loadedImages = [];
     this.fps = opt.fps;
+    this.autoplay = opt.autoplay;
     this.infinite = opt.infinite;
     this.animated = false;
     this.onStop = null;
     this.onLoad = null;
     this.loaded = false;
+    this.loadedImages = [];
+    this.count = count;
 
-    let loadedImgSrc = [],
-        loadedImgCount = 0;
+    
 
-    for (let i = 0; i < count; i++) {
-        const imgEl = new Image();
+    try {
+        this.ctx = contEl.getContext('2d');
+    } catch (error) {
+        console.log(error, 'Elem Id: ' + elemId);
+    }
 
-        imgEl.onload = function () {
-            loadedImgSrc[i] = this.src;
+    this.img = { W: 0, H: 0 };
+    this.imgDims = { W: 0, H: 0 };
+    this.viewportDims = { W: 0, H: 0, X: 0 };
 
-            loadedImgCount++;
+    const init = () => {
+        this.contElWidth = contEl.offsetWidth;
+        this.contElHeight = contEl.offsetHeight;
 
-            if (loadedImgCount == count) {
-                _this.buildHtml(loadedImgSrc);
+        contEl.width = this.contElWidth;
+        contEl.height = this.contElHeight;
 
-                _this.loaded = true;
+        this.imgDims.W = this.img.W / count;
+        this.imgDims.H = this.img.H;
 
-                if (_this.onLoad) {
-                    _this.onLoad();
-                }
-            }
+        this.viewportDims.W = this.contElHeight * this.imgDims.W / this.img.H;
+        this.viewportDims.H = this.contElHeight;
+        this.viewportDims.X = this.contElWidth / 2 - this.viewportDims.W / 2;
+    }
+
+    const imgEl = new Image();
+
+    imgEl.onload = function () {
+        _this.loadedImg = this;
+
+        _this.img.W = this.width;
+        _this.img.H = this.height;
+
+        init();
+
+        _this.loaded = true;
+
+        if (_this.onLoad) {
+            _this.onLoad();
         }
 
-        imgEl.src = dirpath + '/' + (i + 1) + '.' + ext;
+        if (_this.autoplay) {
+            _this.play();
+        }
     }
 
-    if (opt.autoplay) {
-        this.play();
+    imgEl.src = path;
+
+    this.reInit = function () {
+        if (this.loaded) init();
     }
 }
 
-FramesAnimate.prototype.buildHtml = function (loadedImgSrc) {
-    loadedImgSrc.forEach((src) => {
-        const frEl = document.createElement('div');
+FramesAnimate.prototype.animate = function (dir) {
+    this.animated = true;
 
-        frEl.style.backgroundImage = 'url(' + src + ')';
-
-        this.frElems.push(frEl);
-
-        this.contEl.appendChild(frEl);
-    });
-}
-
-FramesAnimate.prototype.animate = function () {
     let i = 0,
         back = false;
 
-    (function loop() {
-        if (!this.loaded) {
-            setTimeout(loop.bind(this), 121);
-            return;
-        }
+    if (dir == 'back') {
+        back = true;
+        i = this.count - 1;
+    }
 
-        let mult = 1;
+    let start = performance.now();
 
-        this.frElems[i].style.opacity = 1;
+    requestAnimationFrame(function anim(time) {
+        if (time - start > 1000 / this.fps) {
+            this.ctx.clearRect(0, 0, this.contElWidth, this.contElHeight);
 
-        if (back) {
-            if (i < this.frElems.length - 1) {
-                this.frElems[i + 1].style.opacity = 0;
+            const sx = this.imgDims.W * i;
+
+            this.ctx.drawImage(this.loadedImg, sx, 0, this.imgDims.W, this.imgDims.H, this.viewportDims.X, 0, this.viewportDims.W, this.viewportDims.H);
+
+            if (!this.infinite) {
+                if ((back && !i) || (!back && i == this.count - 1)) {
+                    this.stop();
+                    return;
+                }
             }
 
-            i--;
-        } else {
-            if (i > 0) {
-                this.frElems[i - 1].style.opacity = 0;
+            if (this.opt.backward) {
+                // if (i == this.count) {
+                //     back = true;
+                //     i = this.count - 1;
+                // } else if (i < 0) {
+                //     back = false;
+                //     i = 0;
+                // }
             } else {
-                this.frElems[this.frElems.length - 1].style.opacity = 0;
+                if (this.opt.infinite && !back && i == this.count - 1) {
+                    i = -1;
+                }
             }
 
-            i++;
-        }
-
-        if (!this.infinite && i == this.frElems.length) {
-            this.stop();
-            return; 
-        }
-
-        if (this.opt.backward) {
-            if (i == this.frElems.length) {
-                back = true;
-                i = this.frElems.length - 1;
-            } else if (i < 0) {
-                back = false;
-                i = 0;
+            if (back) {
+                i--;
+            } else {
+                i++;
             }
-        } else {
-            if (i == this.frElems.length) {
-                i = 0;
-            }
+
+            start = time;
         }
 
-        if (this.animated) {
-            setTimeout(loop.bind(this), (1000 / this.fps) * mult);
-        }
-    }.bind(this))();
+        if (this.animated) requestAnimationFrame(anim.bind(this));
+    }.bind(this));
 }
 
-FramesAnimate.prototype.play = function () {
-    this.animated = true;
-
-    this.animate();
+FramesAnimate.prototype.play = function (dir) {
+    if (this.loaded) {
+        this.animate(dir);
+    } else {
+        setTimeout(this.play.bind(this), 121);
+    }
 }
 
 FramesAnimate.prototype.stop = function () {
+    this.autoplay = false;
     this.animated = false;
 
     if (this.onStop) {
@@ -6927,9 +6964,15 @@ var Cursor;
 
             document.addEventListener('mouseover', this.mOver);
 
+            const cursWrap = document.createElement('div');
+            cursWrap.className = 'cursor-wrap';
+
+            document.body.appendChild(cursWrap);
+
             this.cursorEl = document.createElement('div');
             this.cursorEl.className = 'cursor';
-            document.body.appendChild(this.cursorEl);
+
+            cursWrap.appendChild(this.cursorEl);
         },
 
         start: function (e) {
@@ -6962,28 +7005,13 @@ var Cursor;
         },
 
         move: function (e) {
-            let x = e.pageX - this.cursorEl.offsetWidth / 2,
-                y = e.pageY - this.cursorEl.offsetHeight / 2;
-                
-            if (e.pageX + this.cursorEl.offsetWidth / 2 > document.documentElement.clientWidth) {
-                x = document.documentElement.clientWidth - this.cursorEl.offsetWidth;
-
-            } else if (e.pageX < this.cursorEl.offsetWidth / 2) {
-                x = 0;
-            }
-
-            if (e.pageY + this.cursorEl.offsetHeight / 2 > window.innerHeight + window.pageYOffset) {
-                y = window.innerHeight + window.pageYOffset - this.cursorEl.offsetHeight;
-
-            } else if (e.pageY < this.cursorEl.offsetHeight / 2) {
-                y = 0;
-            }
+            const x = e.clientX - this.cursorEl.offsetWidth / 2,
+                y = e.clientY - this.cursorEl.offsetHeight / 2;
 
             this.cursorEl.style.transform = 'translate(' + x + 'px,' + y + 'px)';
         },
 
-        end: function (e) {
-            console.log('out');
+        end: function () {
             this.cursorEl.classList.remove('cursor_visible');
 
             document.removeEventListener('mousemove', this.mMove);

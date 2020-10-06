@@ -3,51 +3,54 @@ new LazyLoad({
    selector: @Str,
    event: false
 });
+
+const lazy = new LazyLoad().load;
+lazy('.el-sel');
 */
 
 ; var LazyLoad;
 
 (function () {
-   'use strict';
+    'use strict';
 
-   LazyLoad = function (opt) {
-      opt = opt || {};
+    LazyLoad = function (opt) {
+        opt = opt || {};
 
-      const elements = document.querySelectorAll(opt.selector);
+        const elements = document.querySelectorAll(opt.selector);
 
-      if (opt.event) {
-         if (opt.event == 'scroll') {
-            window.addEventListener('scroll', function (e) {
-               for (let i = 0; i < elements.length; i++) {
-                  const el = elements[i];
+        if (elements) {
+            if (opt.event) {
+                if (opt.event == 'scroll') {
+                    window.addEventListener('scroll', function (e) {
+                        for (let i = 0; i < elements.length; i++) {
+                            const el = elements[i];
+                        }
+                    });
+                }
+            } else {
+                setTimeout(() => {
+                    this.doLoad(elements);
+                }, 1000);
+            }
+        }
 
-                  console.log(el.getBoundingClientRect());
-               }
-            });
-         }
-      } else {
-         setTimeout(function () {
-            doLoad(elements);
-         }, 1000);
-      }
+        return {
+            load: (sel) => {
+                const elements = document.querySelectorAll(sel);
+                this.doLoad(elements);
+            }
+        }
+    }
 
-      function doLoad(elements) {
-         for (let i = 0; i < elements.length; i++) {
-            const elem = elements[i];
+    LazyLoad.prototype.doLoad = function (elems) {
+        for (let i = 0; i < elems.length; i++) {
+            const elem = elems[i];
 
             if (elem.hasAttribute('data-src')) {
-               elem.src = elem.getAttribute('data-src');
+                elem.src = elem.getAttribute('data-src');
             } else if (elem.hasAttribute('data-bg-url')) {
-               elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
+                elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
             }
-         }
-      }
-
-      return {
-         load: function (sel) {
-            const elements = document.querySelectorAll(sel);
-            doLoad(elements);
-         }
-      }
-   }
+        }
+    }
 })();

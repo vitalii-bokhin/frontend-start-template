@@ -25,6 +25,13 @@
     &_visible{
         visibility: visible;
     }
+    &-wrap{
+        @extend %fwh;
+        position: fixed;
+        z-index: 99;
+        overflow: hidden;
+        pointer-events: none;
+    }
 }
 
 @media(min-width: 1101px){

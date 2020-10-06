@@ -1,4 +1,4 @@
-var ValidateForm, Form, NextFieldset;
+var ValidateForm, Form;
 
 (function () {
 	'use strict';
@@ -9,25 +9,34 @@ var ValidateForm, Form, NextFieldset;
 
 		errorTip: function (err, errInd, errorTxt) {
 			const field = this.input.closest('.form__field') || this.input.parentElement,
-				errTip = field.querySelector('.field-error-tip');
+				tipEl = field.querySelector('.field-error-tip');
 
 			if (err) {
 				field.classList.remove('field-success');
 				field.classList.add('field-error');
 
-				if (!errTip) return;
-
 				if (errInd) {
-					if (!errTip.hasAttribute('data-error-text')) {
-						errTip.setAttribute('data-error-text', errTip.innerHTML);
+					if (tipEl) {
+						if (!tipEl.hasAttribute('data-error-text')) {
+							tipEl.setAttribute('data-error-text', tipEl.innerHTML);
+						}
+						tipEl.innerHTML = (errInd != 'custom') ? tipEl.getAttribute('data-error-text-' + errInd) : errorTxt;
 					}
-					errTip.innerHTML = (errInd != 'custom') ? errTip.getAttribute('data-error-text-' + errInd) : errorTxt;
-				} else if (errTip.hasAttribute('data-error-text')) {
-					errTip.innerHTML = errTip.getAttribute('data-error-text');
+
+					field.setAttribute('data-error-index', errInd);
+
+				} else {
+					if (tipEl && tipEl.hasAttribute('data-error-text')) {
+						tipEl.innerHTML = tipEl.getAttribute('data-error-text');
+					}
+
+					field.removeAttribute('data-error-index');
 				}
+
 			} else {
 				field.classList.remove('field-error');
 				field.classList.add('field-success');
+				field.removeAttribute('data-error-index');
 			}
 		},
 
@@ -621,6 +630,15 @@ var ValidateForm, Form, NextFieldset;
 		submitForm: function (formElem, e) {
 			if (!ValidateForm.validate(formElem)) {
 				if (e) e.preventDefault();
+
+				const errFieldEl = formElem.querySelector('.field-error');
+
+				if (errFieldEl.hasAttribute('data-error-index')) {
+					ValidateForm.customFormErrorTip(formElem, errFieldEl.getAttribute('data-form-error-text-' + errFieldEl.getAttribute('data-error-index')));
+				} else if (errFieldEl.hasAttribute('data-form-error-text')) {
+					ValidateForm.customFormErrorTip(formElem, errFieldEl.getAttribute('data-form-error-text'));
+				}
+
 				return;
 			}
 
@@ -636,20 +654,18 @@ var ValidateForm, Form, NextFieldset;
 			this.onSubmitSubscribers.forEach(item => {
 				fReturn = item(formElem, (obj) => {
 					obj = obj || {};
-	
+
 					setTimeout(() => {
 						this.actSubmitBtn(obj.unlockSubmitButton, formElem);
 					}, 321);
-	
+
 					formElem.classList.remove('form_sending');
-	
+
 					if (obj.clearForm == true) {
 						this.clearForm(formElem);
 					}
 				});
 			});
-
-			console.log(fReturn);
 
 			if (fReturn === true) {
 				formElem.submit();
