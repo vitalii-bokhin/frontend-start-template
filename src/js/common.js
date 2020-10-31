@@ -48,12 +48,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         frAn.onLoad = function () {
-			console.log('onLoad');
+            console.log('onLoad');
         }
-        
+
         frAn.onStop = function () {
-			// code
-		}
+            // code
+        }
     } catch (error) {
         console.log(error);
     }
@@ -529,9 +529,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // masked inputs
     try {
-        $('input[data-type="tel"]').mask('+7(999)999-99-99');
-        $('input[data-type="date"]').mask('99.99.9999');
-
         $('input[data-type="tel"]').each(function () {
             new Maskinput(this, 'tel');
         });
@@ -556,6 +553,11 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (error) {
         console.log(error);
     }
+
+    // sp app
+    SPA.init({
+        link: '.spa-link'
+    });
 
 });
 

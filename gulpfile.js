@@ -28,7 +28,7 @@ const modulesOn = [
     'scrollsmooth',
     'toggle',
     'flex-image',
-    // 'cover-image',
+    'cover-image',
     'lazy-load',
     'video',
     'popup', // popup media video needs video module
@@ -65,7 +65,8 @@ const modulesOn = [
     'slickslider',
     'scrollpane',
     'zoom',
-    'cursor'
+    'cursor',
+    'spa'
 ],
     dist_path = 'dist';
 

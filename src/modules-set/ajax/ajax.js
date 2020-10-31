@@ -2,45 +2,45 @@
 Ajax.init(Str button selector);
 
 Ajax.success = function(response) {
-	// code...
+    // code...
 }
 */
 
 ; var Ajax;
 
-(function() {
-	"use strict";
+(function () {
+    "use strict";
 
-	Ajax = {
-		success: null,
-		
-		send: function(elem) {
-			ajax({
-				url: elem.getAttribute('data-action'),
-				send: elem.getAttribute('data-send'),
-				success: function(response) {
-					if (this.success) {
-						this.success(response);
-					}
-				},
-				error: function(response) {
-					
-				}
-			});
-		},
+    Ajax = {
+        success: null,
 
-		init: function(elementStr) {
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
+        send: function (elem) {
+            ajax({
+                url: elem.getAttribute('data-action'),
+                send: elem.getAttribute('data-send'),
+                success: function (response) {
+                    if (this.success) {
+                        this.success(response);
+                    }
+                },
+                error: function (response) {
 
-				if (!elem) {
-					return;
-				}
+                }
+            });
+        },
 
-				e.preventDefault();
+        init: function (elementStr) {
+            document.addEventListener('click', (e) => {
+                var elem = e.target.closest(elementStr);
 
-				this.send(elem);
-			});
-		}
-	};
+                if (!elem) {
+                    return;
+                }
+
+                e.preventDefault();
+
+                this.send(elem);
+            });
+        }
+    };
 })();

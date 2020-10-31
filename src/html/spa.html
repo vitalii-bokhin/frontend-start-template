@@ -1,0 +1,48 @@
+@@include('_head.html', {"title": "Home page"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html', {"menu_item_current": "home", "user_item": "logged", "user_item":
+"not_logged"})
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+    <div class="row">
+        <div id="head" class="col-12">
+            <!-- content -->
+        </div>
+        <div id="content" class="col-12">
+            <!-- content -->
+        </div>
+    </div>
+
+</main>
+<!--/MAIN-->
+
+<!--FOOTER/-->
+@@include('../modules/footer/footer.html')
+<!--/FOOTER-->
+
+<!--POPUPs/-->
+@@include('../modules/popup/popup.html')
+<!--/POPUPs-->
+
+<script type="text/template" id="head-tpl">
+    <p>Page: <%page%></p>
+</script>
+
+<script type="text/template" id="home-page-content-tpl">
+    <h1><%title%></h1>
+    <p>
+        <%text%>
+    </p>
+    <p>
+        <a href="#about-page" class="spa-link">About</a>
+    </p>
+</script>
+
+@@include('_javascript.html')
+
+</body>
+
+</html>

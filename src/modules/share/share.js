@@ -36,6 +36,10 @@ Share.init(Str button class);
 				case 'ok':
 					url = 'https://connect.ok.ru/offer?url=' + encodedHref + ((encodedImageUrl) ? '&imageUrl=' + encodedImageUrl : '') + ((title) ? '&title=' + title : '');
 					break;
+
+				case 'tg':
+					url = 'https://telegram.me/share/url?url=' + encodedHref;
+					break;
 			}
 
 			this.popup(url);

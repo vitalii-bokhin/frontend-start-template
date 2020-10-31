@@ -1344,6 +1344,111 @@ Toggle.onChange(function (btnEl, targetElems, state) {
 	}
 })();
 /* 
+CoverImg.init([Str parent element selector]);
+
+CoverImg.reInit([Str parent element selector]);
+*/
+; var CoverImg;
+
+(function() {
+	'use strict';
+
+	CoverImg = {
+		cover: function(e) {
+			var img = e.currentTarget,
+			imgWrap = img.closest('.cover-img-wrap'),
+			imgProportion = img.offsetWidth/img.offsetHeight,
+			imgWrapProportion = imgWrap.offsetWidth/imgWrap.offsetHeight;
+
+			if (imgWrapProportion != Infinity && imgWrapProportion < 21) {
+
+				if (imgProportion <= imgWrapProportion) {
+					// var margin = Math.round(-(imgWrap.offsetWidth / imgProportion - imgWrap.offsetHeight) / 2);
+
+					img.classList.add('cover-img_w');
+					// img.style.marginTop = margin +'px';
+
+				} else {
+					// var margin = Math.round(-(imgWrap.offsetHeight * imgProportion - imgWrap.offsetWidth) / 2);
+
+					img.classList.add('cover-img_h');
+					// img.style.marginLeft = margin +'px';
+
+				}
+
+			} else {
+				img.classList.add('cover-img_w');
+			}
+
+		},
+
+		reInit: function(parentElementStr) {
+
+			var elements;
+
+			if (parentElementStr) {
+				if (typeof parentElementStr == 'string') {
+					elements = document.querySelectorAll(parentElementStr +' .cover-img');
+				} else {
+					elements = parentElementStr.querySelectorAll('.cover-img');
+				}
+			} else {
+				elements = document.querySelectorAll('.cover-img');
+			}
+
+			for (var i = 0; i < elements.length; i++) {
+				var img = elements[i];
+
+				img.classList.remove('cover-img_w');
+				img.classList.remove('cover-img_h');
+				// img.style.marginTop = '';
+				// img.style.marginLeft = '';
+				img.src = (browser == 'ie') ? (img.src +'?'+ new Date().getTime()) : img.src;
+			}
+
+		},
+
+		init: function(parentElementStr) {
+			var elements = (parentElementStr) ? document.querySelectorAll(parentElementStr +' .cover-img, '+ parentElementStr +' .cover-img-wrap') : document.querySelectorAll('.cover-img, .cover-img-wrap');
+
+			for (var i = 0; i < elements.length; i++) {
+				var elem = elements[i],
+				img;
+
+				if (elem.classList.contains('cover-img-wrap')) {
+
+					img = elem.querySelector('img');
+
+					img.classList.add('cover-img');
+
+				} else if (elem.classList.contains('cover-img')) {
+
+					img = elem;
+
+					img.parentElement.classList.add('cover-img-wrap');
+
+				}
+
+				if (!img.hasAttribute('data-event')) {
+
+					img.addEventListener('load', this.cover);
+
+					img.setAttribute('data-event', 'true');
+
+				}
+
+				if (browser == 'ie') {
+					img.src = img.src +'?'+ new Date().getTime();
+				}
+
+			}
+
+		}
+
+	};
+
+})();
+/* 
 new LazyLoad({
    selector: @Str,
    event: false
@@ -1480,206 +1585,206 @@ var Video;
 var Popup, MediaPopup;
 
 (function () {
-	'use strict';
+    'use strict';
 
-	//popup core
-	Popup = {
-		winScrollTop: 0,
-		onClose: null,
-		_onclose: null,
-		onOpenSubscribers: [],
-		headerSelector: '.header',
+    //popup core
+    Popup = {
+        winScrollTop: 0,
+        onClose: null,
+        _onclose: null,
+        onOpenSubscribers: [],
+        headerSelector: '.header',
 
-		fixBody: function (st) {
-			var headerElem = document.querySelector(this.headerSelector);
+        fixBody: function (st) {
+            var headerElem = document.querySelector(this.headerSelector);
 
-			if (st && !document.body.classList.contains('popup-is-opened')) {
-				this.winScrollTop = window.pageYOffset;
+            if (st && !document.body.classList.contains('popup-is-opened')) {
+                this.winScrollTop = window.pageYOffset;
 
-				var offset = window.innerWidth - document.documentElement.clientWidth;
+                var offset = window.innerWidth - document.documentElement.clientWidth;
 
-				document.body.classList.add('popup-is-opened');
+                document.body.classList.add('popup-is-opened');
 
-				if (headerElem) {
-					headerElem.style.right = offset + 'px';
-				}
+                if (headerElem) {
+                    headerElem.style.right = offset + 'px';
+                }
 
-				document.body.style.right = offset + 'px';
+                document.body.style.right = offset + 'px';
 
-				document.body.style.top = (-this.winScrollTop) + 'px';
-			} else if (!st) {
-				if (headerElem) {
-					headerElem.style.right = '';
-				}
+                document.body.style.top = (-this.winScrollTop) + 'px';
+            } else if (!st) {
+                if (headerElem) {
+                    headerElem.style.right = '';
+                }
 
-				document.body.classList.remove('popup-is-opened');
+                document.body.classList.remove('popup-is-opened');
 
-				window.scrollTo(0, this.winScrollTop);
-			}
-		},
+                window.scrollTo(0, this.winScrollTop);
+            }
+        },
 
-		open: function (elementStr, callback, btnElem) {
-			var elem = document.querySelector(elementStr);
+        open: function (elementStr, callback, btnElem) {
+            var elem = document.querySelector(elementStr);
 
-			if (!elem || !elem.classList.contains('popup__window')) {
-				return;
-			}
+            if (!elem || !elem.classList.contains('popup__window')) {
+                return;
+            }
 
-			this.close();
+            this.close();
 
-			var elemParent = elem.parentElement;
+            var elemParent = elem.parentElement;
 
-			elemParent.classList.add('popup_visible');
+            elemParent.classList.add('popup_visible');
 
-			elemParent.scrollTop = 0;
+            elemParent.scrollTop = 0;
 
-			elem.classList.add('popup__window_visible');
+            elem.classList.add('popup__window_visible');
 
-			if (callback) {
-				this._onclose = callback;
-			}
+            if (callback) {
+                this._onclose = callback;
+            }
 
-			this.fixBody(true);
+            this.fixBody(true);
 
-			this.onOpenSubscribers.forEach(function (item) {
-				item(elementStr, btnElem);
-			});
+            this.onOpenSubscribers.forEach(function (item) {
+                item(elementStr, btnElem);
+            });
 
-			return elem;
-		},
+            return elem;
+        },
 
-		onOpen: function (fun) {
-			if (typeof fun === 'function') {
-				this.onOpenSubscribers.push(fun);
-			}
-		},
+        onOpen: function (fun) {
+            if (typeof fun === 'function') {
+                this.onOpenSubscribers.push(fun);
+            }
+        },
 
-		message: function (msg, elementStr, callback) {
-			const elemStr = elementStr || '#message-popup',
-				elem = this.open(elemStr, callback);
+        message: function (msg, elementStr, callback) {
+            const elemStr = elementStr || '#message-popup',
+                elem = this.open(elemStr, callback);
 
-			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message m-0">' + msg + '</div>';
-		},
+            elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message m-0">' + msg + '</div>';
+        },
 
-		close: function () {
-			var elements = document.querySelectorAll('.popup__window');
+        close: function () {
+            var elements = document.querySelectorAll('.popup__window');
 
-			if (!elements.length) {
-				return;
-			}
+            if (!elements.length) {
+                return;
+            }
 
-			for (var i = 0; i < elements.length; i++) {
-				var elem = elements[i];
+            for (var i = 0; i < elements.length; i++) {
+                var elem = elements[i];
 
-				if (!elem.classList.contains('popup__window_visible')) {
-					continue;
-				}
+                if (!elem.classList.contains('popup__window_visible')) {
+                    continue;
+                }
 
-				elem.classList.remove('popup__window_visible');
+                elem.classList.remove('popup__window_visible');
 
-				elem.parentElement.classList.remove('popup_visible');
-			}
+                elem.parentElement.classList.remove('popup_visible');
+            }
 
-			if (this._onclose) {
-				this._onclose();
-				this._onclose = null;
-			} else if (this.onClose) {
-				this.onClose();
-			}
-		},
+            if (this._onclose) {
+                this._onclose();
+                this._onclose = null;
+            } else if (this.onClose) {
+                this.onClose();
+            }
+        },
 
-		init: function (elementStr) {
-			document.addEventListener('click', (e) => {
-				var btnElem = e.target.closest(elementStr),
-					closeBtnElem = e.target.closest('.js-popup-close');
+        init: function (elementStr) {
+            document.addEventListener('click', (e) => {
+                var btnElem = e.target.closest(elementStr),
+                    closeBtnElem = e.target.closest('.js-popup-close');
 
-				if (btnElem) {
-					e.preventDefault();
-					this.open(btnElem.getAttribute('data-popup'), false, btnElem);
-				} else if (
-					closeBtnElem ||
-					(!e.target.closest('.popup__window') && e.target.closest('.popup') && !e.target.closest('.btn-close-only'))
-				) {
-					this.fixBody(false);
-					this.close();
-				}
-			});
+                if (btnElem) {
+                    e.preventDefault();
+                    this.open(btnElem.getAttribute('data-popup'), false, btnElem);
+                } else if (
+                    closeBtnElem ||
+                    (!e.target.closest('.popup__window') && e.target.closest('.popup') && !e.target.closest('.btn-close-only'))
+                ) {
+                    this.fixBody(false);
+                    this.close();
+                }
+            });
 
-			if (window.location.hash) {
-				this.open(window.location.hash);
-			}
-		}
-	};
+            if (window.location.hash) {
+                this.open(window.location.hash);
+            }
+        }
+    };
 
-	//popup media
-	MediaPopup = {
-		image: function (args) {
-			const elemPopup = Popup.open(args.popupStr),
-				elemImg = elemPopup.querySelector('.popup-media__image');
+    //popup media
+    MediaPopup = {
+        image: function (args) {
+            const elemPopup = Popup.open(args.popupStr),
+                elemImg = elemPopup.querySelector('.popup-media__image');
 
-			Popup.onClose = function () {
-				elemImg.src = '#';
-				elemImg.classList.remove('popup-media__image_visible');
-			}
+            Popup.onClose = function () {
+                elemImg.src = '#';
+                elemImg.classList.remove('popup-media__image_visible');
+            }
 
-			elemImg.src = args.href;
-			elemImg.classList.add('popup-media__image_visible');
+            elemImg.src = args.href;
+            elemImg.classList.add('popup-media__image_visible');
 
-		},
+        },
 
-		video: function (args) {
-			const elemPopup = Popup.open(args.popupStr),
-				videoEl = elemPopup.querySelector('.popup-media__video'),
-				prevEl = videoEl.querySelector('.popup-media__preview'),
-				btnPlayEl = videoEl.querySelector('.popup-media__btn-play');
+        video: function (args) {
+            const elemPopup = Popup.open(args.popupStr),
+                videoEl = elemPopup.querySelector('.popup-media__video'),
+                prevEl = videoEl.querySelector('.popup-media__preview'),
+                btnPlayEl = videoEl.querySelector('.popup-media__btn-play');
 
-			Popup.onClose = function () {
-				Video.stop();
-				prevEl.src = '#';
-				videoEl.classList.remove('popup-media__video_visible');
-			}
+            Popup.onClose = function () {
+                Video.stop();
+                prevEl.src = '#';
+                videoEl.classList.remove('popup-media__video_visible');
+            }
 
-			prevEl.src = args.preview;
-			btnPlayEl.setAttribute('data-src', args.href);
-			videoEl.classList.add('popup-media__video_visible');
-		},
+            prevEl.src = args.preview;
+            btnPlayEl.setAttribute('data-src', args.href);
+            videoEl.classList.add('popup-media__video_visible');
+        },
 
-		next: function (elem) {
-			if (!elem.hasAttribute('data-group')) {
-				return;
-			}
+        next: function (elem) {
+            if (!elem.hasAttribute('data-group')) {
+                return;
+            }
 
-			var group = elem.getAttribute('data-group'),
-				index = [].slice.call(document.querySelectorAll('[data-group="' + group + '"]')).indexOf(elem);
-		},
+            var group = elem.getAttribute('data-group'),
+                index = [].slice.call(document.querySelectorAll('[data-group="' + group + '"]')).indexOf(elem);
+        },
 
-		init: function (btnSel) {
-			document.addEventListener('click', (e) => {
-				const btnEl = e.target.closest(btnSel);
+        init: function (btnSel) {
+            document.addEventListener('click', (e) => {
+                const btnEl = e.target.closest(btnSel);
 
-				if (!btnEl) return;
+                if (!btnEl) return;
 
-				e.preventDefault();
+                e.preventDefault();
 
-				const type = btnEl.getAttribute('data-type'),
-					args = {
-						href: btnEl.href,
-						preview: btnEl.getAttribute('data-preview'),
-						caption: btnEl.getAttribute('data-caption'),
-						group: btnEl.getAttribute('data-group'),
-						popupStr: btnEl.getAttribute('data-popup') || '#media-popup'
-					};
+                const type = btnEl.getAttribute('data-type'),
+                    args = {
+                        href: btnEl.href,
+                        preview: btnEl.getAttribute('data-preview'),
+                        caption: btnEl.getAttribute('data-caption'),
+                        group: btnEl.getAttribute('data-group'),
+                        popupStr: btnEl.getAttribute('data-popup') || '#media-popup'
+                    };
 
-				if (type == 'image') {
-					this.image(args);
-				} else if (type == 'video') {
-					this.video(args);
-				}
+                if (type == 'image') {
+                    this.image(args);
+                } else if (type == 'video') {
+                    this.video(args);
+                }
 
-				this.next(btnEl);
-			});
-		}
-	};
+                this.next(btnEl);
+            });
+        }
+    };
 
 })();
 /* Checkbox.onChange(function(el, state) {
@@ -4389,47 +4494,47 @@ var Accord;
 Ajax.init(Str button selector);
 
 Ajax.success = function(response) {
-	// code...
+    // code...
 }
 */
 
 ; var Ajax;
 
-(function() {
-	"use strict";
+(function () {
+    "use strict";
 
-	Ajax = {
-		success: null,
-		
-		send: function(elem) {
-			ajax({
-				url: elem.getAttribute('data-action'),
-				send: elem.getAttribute('data-send'),
-				success: function(response) {
-					if (this.success) {
-						this.success(response);
-					}
-				},
-				error: function(response) {
-					
-				}
-			});
-		},
+    Ajax = {
+        success: null,
 
-		init: function(elementStr) {
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
+        send: function (elem) {
+            ajax({
+                url: elem.getAttribute('data-action'),
+                send: elem.getAttribute('data-send'),
+                success: function (response) {
+                    if (this.success) {
+                        this.success(response);
+                    }
+                },
+                error: function (response) {
 
-				if (!elem) {
-					return;
-				}
+                }
+            });
+        },
 
-				e.preventDefault();
+        init: function (elementStr) {
+            document.addEventListener('click', (e) => {
+                var elem = e.target.closest(elementStr);
 
-				this.send(elem);
-			});
-		}
-	};
+                if (!elem) {
+                    return;
+                }
+
+                e.preventDefault();
+
+                this.send(elem);
+            });
+        }
+    };
 })();
 /*
 call to init:
@@ -5222,6 +5327,10 @@ Share.init(Str button class);
 				case 'ok':
 					url = 'https://connect.ok.ru/offer?url=' + encodedHref + ((encodedImageUrl) ? '&imageUrl=' + encodedImageUrl : '') + ((title) ? '&title=' + title : '');
 					break;
+
+				case 'tg':
+					url = 'https://telegram.me/share/url?url=' + encodedHref;
+					break;
 			}
 
 			this.popup(url);
@@ -5414,144 +5523,144 @@ timer.start(Int interval in seconds);
 })();
 ; var GetContentAjax;
 
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	GetContentAjax = function(options) {
-		if (!document.querySelector(options.eventBtn)) {
-			return;
-		}
+    GetContentAjax = function (options) {
+        if (!document.querySelector(options.eventBtn)) {
+            return;
+        }
 
-		this.output = null;
+        this.output = null;
 
-		var getContent = (eventBtnElem) => {
-			var outputDivElem = document.querySelector(options.outputDiv);
+        var getContent = (eventBtnElem) => {
+            var outputDivElem = document.querySelector(options.outputDiv);
 
-			ajax({
-				url: options.sourceFile,
-				send: eventBtnElem.getAttribute('data-send'),
-				success: (response) => {
-					if (this.output === null) {
-						outputDivElem.innerHTML = response;
-					} else {
-						outputDivElem.innerHTML = this.output(response);
-					}
-				},
-				error: (response) => {
-					console.log(response);
-				}
-			});
-		}
+            ajax({
+                url: options.sourceFile,
+                send: eventBtnElem.getAttribute('data-send'),
+                success: (response) => {
+                    if (this.output === null) {
+                        outputDivElem.innerHTML = response;
+                    } else {
+                        outputDivElem.innerHTML = this.output(response);
+                    }
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            });
+        }
 
-		if (options.event == 'click') {
-			document.addEventListener('click', (e) => {
-				var eventBtnElem = e.target.closest(options.eventBtn);
+        if (options.event == 'click') {
+            document.addEventListener('click', (e) => {
+                var eventBtnElem = e.target.closest(options.eventBtn);
 
-				if (eventBtnElem) {
-					e.preventDefault();
+                if (eventBtnElem) {
+                    e.preventDefault();
 
-					getContent(eventBtnElem);
-				}
-			});
-		}
-	}
+                    getContent(eventBtnElem);
+                }
+            });
+        }
+    }
 })();
 
 
 /*var Ajax = {
-	take: function(url,data,id,fun) {
-		var _ = this;
+    take: function(url,data,id,fun) {
+        var _ = this;
 
-		$.ajax({
-			url: url,
-			type:"POST",
-			dataType:"html",
-			data: data,
-			success: function(response){
-				if (response) {
-					_.put(response, id);
-					setTimeout(fun, 721);
-				}
-			},
-			error: function() {
-				alert('Send Error');
-			}
-		});
-	},
-	put: function(resp,id) {
-		var Block = $(id);
-		if (Block.hasClass('popup__window')) {
-			Block.find('.popup__inner').html(resp);
-			Popup.show(id);
-		} else {
-			Block.append(resp);
-			coverImg();
-		}
-	}
+        $.ajax({
+            url: url,
+            type:"POST",
+            dataType:"html",
+            data: data,
+            success: function(response){
+                if (response) {
+                    _.put(response, id);
+                    setTimeout(fun, 721);
+                }
+            },
+            error: function() {
+                alert('Send Error');
+            }
+        });
+    },
+    put: function(resp,id) {
+        var Block = $(id);
+        if (Block.hasClass('popup__window')) {
+            Block.find('.popup__inner').html(resp);
+            Popup.show(id);
+        } else {
+            Block.append(resp);
+            coverImg();
+        }
+    }
 
 };
 
 $(document).ready(function() {
 
-	$('body').on('click', '.js-ajax', function () {
-		var _$ = $(this);
+    $('body').on('click', '.js-ajax', function () {
+        var _$ = $(this);
 
-		if (!_$.hasClass('lock')) {
-			_$.addClass('lock');
+        if (!_$.hasClass('lock')) {
+            _$.addClass('lock');
 
-			var id = _$.attr('href') || '#'+ _$.attr('data-id'),
-			url = _$.attr('data-url'),
-			data = _$.attr('data-data');
+            var id = _$.attr('href') || '#'+ _$.attr('data-id'),
+            url = _$.attr('data-url'),
+            data = _$.attr('data-data');
 
-			if (_$.attr('data-page')) {
-				var page = +_$.attr('data-page');
+            if (_$.attr('data-page')) {
+                var page = +_$.attr('data-page');
 
-				data += '&page='+ page;
+                data += '&page='+ page;
 
-				Ajax.take(url, data, id, function() {
-					page++;
-					_$.attr('data-page', page).removeClass('lock');
-				});
+                Ajax.take(url, data, id, function() {
+                    page++;
+                    _$.attr('data-page', page).removeClass('lock');
+                });
 
-			} else {
-				Ajax.take(url, data, id, function() {
-					_$.removeClass('lock');
-				});
-			}
-		}
+            } else {
+                Ajax.take(url, data, id, function() {
+                    _$.removeClass('lock');
+                });
+            }
+        }
 
-		return false;
-	});
+        return false;
+    });
 
-	if ($('.js-ajax-scroll').length && $(window).width() > 1000) {
-		var i = 0;
+    if ($('.js-ajax-scroll').length && $(window).width() > 1000) {
+        var i = 0;
 
-		$(window).scroll(function() {
-			var winScrTop = $(window).scrollTop(),
-			Point = $('.js-ajax-scroll');
+        $(window).scroll(function() {
+            var winScrTop = $(window).scrollTop(),
+            Point = $('.js-ajax-scroll');
 
-			if (Point.offset().top < window.innerHeight && !Point.hasClass('lock')) {
-				Point.addClass('lock');
+            if (Point.offset().top < window.innerHeight && !Point.hasClass('lock')) {
+                Point.addClass('lock');
 
-				var id = '#'+ Point.attr('data-id'),
-				url = Point.attr('data-url'),
-				data = Point.attr('data-data'),
-				page = +Point.attr('data-page');
+                var id = '#'+ Point.attr('data-id'),
+                url = Point.attr('data-url'),
+                data = Point.attr('data-data'),
+                page = +Point.attr('data-page');
 
-				data += '&page='+ page;
+                data += '&page='+ page;
 
-				Ajax.take(url, data, id, function() {
-					page++;
-					Point.attr('data-page', page).removeClass('lock');
-				});
+                Ajax.take(url, data, id, function() {
+                    page++;
+                    Point.attr('data-page', page).removeClass('lock');
+                });
 
-			}
+            }
 
-		});
+        });
 
-	}
+    }
 
-	
+
 
 });*/
 (function() {
@@ -7018,5 +7127,68 @@ var Cursor;
             document.removeEventListener('mouseout', this.mOut);
         }
     };
+})();
+var SPA;
+
+(function () {
+    'use strict';
+
+    SPA = {
+        opt: null,
+        routeSubscribers: {},
+
+        init: function (opt) {
+            this.opt = opt || {};
+
+            // let link;
+
+            // document.addEventListener('click', (e) => {
+            //     link = e.target.closest(this.opt.link);
+
+            //     if (link) {
+            //         setTimeout(() => {
+            //             this.changeTemplate();
+            //             link = null;
+            //         }, 121);
+            //     }
+            // });
+
+            window.addEventListener('popstate', () => {
+                // if (link) return;
+                
+                setTimeout(() => {
+                    this.changeTemplate();
+                }, 121);
+            });
+
+            this.changeTemplate();
+        },
+
+        route: function (path, fun) {
+            if (typeof fun === 'function') {
+                const key = path ? path.replace(/\W/g, '') : 'isFrontSpaPage';
+                this.routeSubscribers[key] = fun;
+            }
+
+            return this;
+        },
+
+        changeTemplate: function () {
+            const hash = window.location.hash.replace('#', ''),
+                key = hash.length ? hash.replace(/\W/g, '') : 'isFrontSpaPage';
+
+            if (!this.routeSubscribers[key]) return;
+
+            this.routeSubscribers[key](function (data) {
+                const contEl = document.getElementById(data.container),
+                    tplEl = document.getElementById(data.template);
+
+                if (!contEl || !tplEl) return;
+
+                contEl.innerHTML = template(data, tplEl.innerHTML);
+            });
+        }
+    };
+
 })();
 //# sourceMappingURL=script.js.map
