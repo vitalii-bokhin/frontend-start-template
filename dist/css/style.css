@@ -2688,6 +2688,36 @@ hr {
   transform: translate(30px);
 }
 
+.cover-img {
+  flex: 0 0 auto;
+  opacity: 0;
+  transition: opacity .21s;
+}
+
+.cover-img_w {
+  width: 100%;
+  height: auto;
+  opacity: 1 !important;
+}
+
+.cover-img_h {
+  height: 100%;
+  width: auto;
+  opacity: 1 !important;
+}
+
+.cover-img-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cover-img-wrap img {
+  opacity: 0;
+  transition: opacity .21s;
+}
+
 /*video*/
 .video {
   position: relative;

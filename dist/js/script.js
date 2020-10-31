@@ -212,21 +212,23 @@ animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animatio
 (function () {
     'use strict';
 
-    template = function (data, template) {
+    template = function (data, template, sign) {
+        const s = sign || '%';
+
         let result = template;
 
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
-                result = result.replace(new RegExp('<%' + key + '%>', 'g'), data[key]);
+                result = result.replace(new RegExp('<' + s + key + s + '>', 'g'), data[key]);
             }
         }
 
-        result = result.replace(/<%if (\w+)%>(.*?)<%endif%>/gs, function (match, p1, p2, offset, input) {
+        result = result.replace(new RegExp('<' + s + 'if (\w+)' + s + '>(.*?)<' + s + 'endif' + s + '>', 'gs'), function (match, p1, p2, offset, input) {
             if (p1.indexOf('==') !== -1) {
                 if (condition) {
-                    
+
                 } else {
-                    
+
                 }
             } else {
                 if (data[p1] !== '' && data[p1] !== false && data[p1] !== undefined && data[p1] !== null) {
@@ -235,8 +237,6 @@ animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animatio
                     return '';
                 }
             }
-
-            
         });
 
         return result;
@@ -7135,7 +7135,7 @@ var SPA;
 
     SPA = {
         opt: null,
-        routeSubscribers: {},
+        routeSubscribers: [],
 
         init: function (opt) {
             this.opt = opt || {};
@@ -7155,7 +7155,7 @@ var SPA;
 
             window.addEventListener('popstate', () => {
                 // if (link) return;
-                
+
                 setTimeout(() => {
                     this.changeTemplate();
                 }, 121);
@@ -7166,26 +7166,42 @@ var SPA;
 
         route: function (path, fun) {
             if (typeof fun === 'function') {
-                const key = path ? path.replace(/\W/g, '') : 'isFrontSpaPage';
-                this.routeSubscribers[key] = fun;
+                this.routeSubscribers.push({ path, fun });
             }
 
             return this;
         },
 
         changeTemplate: function () {
-            const hash = window.location.hash.replace('#', ''),
-                key = hash.length ? hash.replace(/\W/g, '') : 'isFrontSpaPage';
+            const hash = window.location.hash;
 
-            if (!this.routeSubscribers[key]) return;
+            let fun, matches;
 
-            this.routeSubscribers[key](function (data) {
+            for (const item of this.routeSubscribers) {
+                if (!hash && !item.path) {
+                    fun = item.fun;
+                    break;
+
+                } else if (hash && item.path) {
+                    matches = hash.match(new RegExp(item.path));
+
+                    if (matches) {
+                        fun = item.fun;
+
+                        break;
+                    }
+                }
+            }
+
+            if (!fun) return;
+
+            fun(matches, (data) => {
                 const contEl = document.getElementById(data.container),
                     tplEl = document.getElementById(data.template);
 
                 if (!contEl || !tplEl) return;
 
-                contEl.innerHTML = template(data, tplEl.innerHTML);
+                contEl.innerHTML = template(data, tplEl.innerHTML, this.opt.tplSign);
             });
         }
     };

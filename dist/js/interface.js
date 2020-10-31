@@ -43,7 +43,7 @@ try {
     console.log(error);
 }
 
-SPA.route('', function (cb) {
+SPA.route('', function (params, cb) {
     cb({
         page: 'it is Firts page',
         template: 'head-tpl',
@@ -57,7 +57,7 @@ SPA.route('', function (cb) {
         container: 'content'
     });
 
-}).route('home-page', function (cb) {
+}).route('#home-page', function (params, cb) {
     cb({
         page: 'it is Home page',
         template: 'head-tpl',
@@ -71,7 +71,7 @@ SPA.route('', function (cb) {
         container: 'content'
     });
 
-}).route('about-page', function (cb) {
+}).route('#about-page$', function (params, cb) {
     cb({
         page: 'it is About page',
         template: 'head-tpl',
@@ -85,7 +85,22 @@ SPA.route('', function (cb) {
         container: 'content'
     });
 
-}).route('about-page/team', function (cb) {
+}).route('#about-page/(.+)', function (params, cb) {
+    console.log(params[1]);
+    cb({
+        page: 'it is About page 2',
+        template: 'head-tpl',
+        container: 'head'
+    });
+
+    cb({
+        title: 'About page',
+        text: 'This is about page. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi cupiditate saepe nemo aspernatur, voluptates tempore maxime itaque voluptatem in magni incidunt modi tempora esse, aperiam, ipsa harum reprehenderit odio. Laudantium.',
+        template: 'home-page-content-tpl',
+        container: 'content'
+    });
+
+}).route('#about-page/team', function (params, cb) {
     cb({
         page: 'it is About Team page',
         template: 'head-tpl',
