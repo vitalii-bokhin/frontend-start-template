@@ -6,6 +6,7 @@ var ValidateForm, Form;
     // validate form
     ValidateForm = {
         input: null,
+        formSelector: null,
 
         errorTip: function (err, errInd, errorTxt) {
             const field = this.input.closest('.form__field') || this.input.parentElement,
@@ -550,21 +551,32 @@ var ValidateForm, Form;
         },
 
         init: function (formSelector) {
-            document.addEventListener('input', (e) => {
-                var elem = e.target.closest(formSelector + ' input[type="text"],' + formSelector + ' input[type="password"],' + formSelector + ' input[type="number"],' + formSelector + ' input[type="tel"],' + formSelector + ' textarea');
+            this.formSelector = formSelector;
 
-                if (elem && elem.hasAttribute('data-tested')) {
-                    this.validateOnInput(elem);
-                }
-            });
+            document.removeEventListener('input', this.inpH);
+            document.removeEventListener('change', this.chH);
 
-            document.addEventListener('change', (e) => {
-                var elem = e.target.closest(formSelector + ' input[type="radio"],' + formSelector + ' input[type="checkbox"]');
+            this.inpH = this.inpH.bind(this);
+            this.chH = this.chH.bind(this);
 
-                if (elem) {
-                    this[elem.type](elem);
-                }
-            });
+            document.addEventListener('input', this.inpH);
+            document.addEventListener('change', this.chH);
+        },
+
+        inpH: function (e) {
+            const elem = e.target.closest(this.formSelector + ' input[type="text"],' + this.formSelector + ' input[type="password"],' + this.formSelector + ' input[type="number"],' + this.formSelector + ' input[type="tel"],' + this.formSelector + ' textarea');
+
+            if (elem && elem.hasAttribute('data-tested')) {
+                this.validateOnInput(elem);
+            }
+        },
+
+        chH: function (e) {
+            const elem = e.target.closest(this.formSelector + ' input[type="radio"],' + this.formSelector + ' input[type="checkbox"]');
+
+            if (elem) {
+                this[elem.type](elem);
+            }
         }
     };
 
@@ -592,39 +604,54 @@ var ValidateForm, Form;
 
     // form
     Form = {
+        formSelector: null,
         onSubmitSubscribers: [],
+
+        sH: function (e) {
+            const formElem = e.target.closest(this.formSelector);
+
+            if (formElem) {
+                this.submitForm(formElem, e);
+            }
+        },
+
+        kH: function (e) {
+            const formElem = e.target.closest(this.formSelector);
+
+            if (!formElem) return;
+
+            const key = e.code;
+
+            if (e.target.closest('.fieldset__item') && key == 'Enter') {
+                e.preventDefault();
+                e.target.closest('.fieldset__item').querySelector('.js-next-fieldset-btn').click();
+
+            } else if (e.ctrlKey && key == 'Enter') {
+                e.preventDefault();
+                this.submitForm(formElem, e);
+            }
+        },
 
         init: function (formSelector) {
             if (!document.querySelector(formSelector)) return;
 
+            this.formSelector = formSelector;
+
+            initScripst();
+
             ValidateForm.init(formSelector);
 
             // submit event
-            document.addEventListener('submit', (e) => {
-                const formElem = e.target.closest(formSelector);
+            document.removeEventListener('submit', this.sH);
 
-                if (formElem) {
-                    this.submitForm(formElem, e);
-                }
-            });
+            this.sH = this.sH.bind(this);
+            document.addEventListener('submit', this.sH);
 
             // keyboard event
-            document.addEventListener('keydown', (e) => {
-                const formElem = e.target.closest(formSelector);
+            document.removeEventListener('submit', this.kH);
 
-                if (!formElem) return;
-
-                const key = e.code;
-
-                if (e.target.closest('.fieldset__item') && key == 'Enter') {
-                    e.preventDefault();
-                    e.target.closest('.fieldset__item').querySelector('.js-next-fieldset-btn').click();
-
-                } else if (e.ctrlKey && key == 'Enter') {
-                    e.preventDefault();
-                    this.submitForm(formElem, e);
-                }
-            });
+            this.kH = this.kH.bind(this);
+            document.addEventListener('keydown', this.kH);
         },
 
         submitForm: function (formElem, e) {
@@ -812,10 +839,11 @@ var ValidateForm, Form;
     }*/
 
     // init scripts
-    document.addEventListener('DOMContentLoaded', function () {
+    function initScripst() {
         BindLabels('input[type="text"], input[type="number"], input[type="tel"], input[type="checkbox"], input[type="radio"]');
+        Placeholder.init('input[type="text"], input[type="number"], input[type="tel"], input[type="password"], textarea');
         // SetTabindex('input[type="text"], input[type="password"], textarea');
         varHeightTextarea.init();
         DuplicateForm.init('.js-dupicate-form-btn', '.js-remove-dupicated-form-btn');
-    });
+    }
 })();

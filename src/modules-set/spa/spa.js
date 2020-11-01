@@ -65,13 +65,15 @@ var SPA;
 
             if (!fun) return;
 
-            fun(matches, (data) => {
+            fun(matches, (data, cb) => {
                 const contEl = document.getElementById(data.container),
                     tplEl = document.getElementById(data.template);
 
                 if (!contEl || !tplEl) return;
 
                 contEl.innerHTML = template(data, tplEl.innerHTML, this.opt.tplSign);
+
+                if (cb) cb();
             });
         }
     };

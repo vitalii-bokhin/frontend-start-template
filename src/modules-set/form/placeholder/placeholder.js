@@ -1,96 +1,106 @@
 ; var Placeholder;
 
 (function () {
-	'use strict';
+    'use strict';
 
-	Placeholder = {
-		init: function (elementsStr) {
-			var elements = document.querySelectorAll(elementsStr);
+    Placeholder = {
+        elementsStr: null,
 
-			if (!elements.length) return;
+        init: function (elementsStr) {
+            var elements = document.querySelectorAll(elementsStr);
 
-			for (var i = 0; i < elements.length; i++) {
-				var elem = elements[i];
+            if (!elements.length) return;
 
-				if (elem.placeholder) {
+            this.elementsStr = elementsStr;
 
-					var elemFor = (elem.id) ? elem.id : 'placeholder-index-' + i,
-						label = document.createElement('label');
+            for (var i = 0; i < elements.length; i++) {
+                var elem = elements[i];
 
-					label.htmlFor = elemFor;
-					label.className = 'placeholder';
-					label.innerHTML = elem.placeholder;
+                if (elem.placeholder) {
 
-					if (elem.hasAttribute('data-hide-placeholder')) {
-						label.setAttribute('data-hide-placeholder', elem.getAttribute('data-hide-placeholder'));
-					}
+                    var elemFor = (elem.id) ? elem.id : 'placeholder-index-' + i,
+                        label = document.createElement('label');
 
-					elem.parentElement.insertBefore(label, elem);
+                    label.htmlFor = elemFor;
+                    label.className = 'placeholder';
+                    label.innerHTML = elem.placeholder;
 
-					elem.removeAttribute('placeholder');
-					elem.removeAttribute('data-hide-placeholder');
+                    if (elem.hasAttribute('data-hide-placeholder')) {
+                        label.setAttribute('data-hide-placeholder', elem.getAttribute('data-hide-placeholder'));
+                    }
 
-					if (!elem.id) {
-						elem.id = elemFor;
-					}
+                    elem.parentElement.insertBefore(label, elem);
 
-				}
+                    elem.removeAttribute('placeholder');
+                    elem.removeAttribute('data-hide-placeholder');
 
-				if (elem.value.length) {
-					this.hide(elem, true);
-				}
-			}
+                    if (!elem.id) {
+                        elem.id = elemFor;
+                    }
 
-			//events
-			document.addEventListener('input', (e) => {
-				var elem = e.target.closest(elementsStr);
+                }
 
-				if (!elem) return;
+                if (elem.value.length) {
+                    this.hide(elem, true);
+                }
+            }
 
-				if (elem.value.length > 0) {
-					this.hide(elem, true, 'input');
-				} else {
-					this.hide(elem, false, 'input');
-				}
-			});
+            //events
+            document.removeEventListener('input', this.iH);
+            document.removeEventListener('focus', this.fH, true);
+            document.removeEventListener('blur', this.bH, true);
 
-			document.addEventListener('focus', (e) => {
-				var elem = e.target.closest(elementsStr);
+            this.iH = this.iH.bind(this);
+            this.fH = this.fH.bind(this);
+            this.bH = this.bH.bind(this);
 
-				if (elem) {
-					this.hide(elem, true, 'focus');
-				}
-			}, true);
+            document.addEventListener('input', this.iH);
+            document.addEventListener('focus', this.fH, true);
+            document.addEventListener('blur', this.bH, true);
+        },
 
-			document.addEventListener('blur', (e) => {
-				var elem = e.target.closest(elementsStr);
+        iH: function (e) {
+            const elem = e.target.closest(this.elementsStr);
 
-				if (elem) {
-					this.hide(elem, false);
-				}
-			}, true);
-		},
+            if (!elem) return;
 
-		hide: function (elem, hide, ev) {
-			var label = document.querySelector('label.placeholder[for="' + elem.id + '"]');
+            if (elem.value.length > 0) {
+                this.hide(elem, true, 'input');
+            } else {
+                this.hide(elem, false, 'input');
+            }
+        },
 
-			if (!label) return;
+        fH: function (e) {
+            const elem = e.target.closest(this.elementsStr);
 
+            if (elem) {
+                this.hide(elem, true, 'focus');
+            }
+        },
 
+        bH: function (e) {
+            const elem = e.target.closest(this.elementsStr);
 
-			if (hide) {
-				if (ev == 'focus' && label.getAttribute('data-hide-placeholder') == 'input') return;
+            if (elem) {
+                this.hide(elem, false);
+            }
+        },
 
-				label.style.display = 'none';
+        hide: function (elem, hide, ev) {
+            var label = document.querySelector('label.placeholder[for="' + elem.id + '"]');
 
-			} else if (!elem.value.length) {
-				label.style.display = '';
-			}
-		}
-	};
+            if (!label) return;
 
-	//init scripts
-	document.addEventListener('DOMContentLoaded', function () {
-		Placeholder.init('input[type="text"], input[type="number"], input[type="tel"], input[type="password"], textarea');
-	});
+            if (hide) {
+                if (ev == 'focus' && label.getAttribute('data-hide-placeholder') == 'input') return;
+
+                label.style.display = 'none';
+
+            } else if (!elem.value.length) {
+                label.style.display = '';
+            }
+        }
+    };
+
 })();

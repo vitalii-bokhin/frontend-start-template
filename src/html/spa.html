@@ -15,7 +15,7 @@
             <!-- content -->
         </div>
     </div>
-
+    
 </main>
 <!--/MAIN-->
 
@@ -36,18 +36,20 @@
     <p>
         <%text%>
     </p>
-
+    
     <%if desc%>
     <p>
         <%desc%>
     </p>
     <%endif%>
     
+    <ul>
+        <%forEach list%>
+        <li id="<%id%>"><%name%></li> 
+        <%end%>
+    </ul>
     
-    <%forEach list%>
-    <li id="<%id%>"><%name%></li> 
-    <%end%>
-
+    
     <p>
         <a href="#about-page" class="spa-link">About</a>
     </p>
@@ -55,7 +57,7 @@
 
 <script type="text/template" id="form-page-content-tpl">
     <h1><%title%></h1>
-
+    
     <form id="form-ajax" action="send-mail.php" method="POST" enctype="multipart/form-data" class="form">
         <div class="row">
             <div class="col-12">
@@ -105,7 +107,7 @@
             </div>
         </div>
     </form>
-
+    
     <p>
         <a href="#about-page" class="spa-link">About</a>
     </p>

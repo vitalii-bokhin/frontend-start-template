@@ -83,6 +83,7 @@ SPA.route('', function (params, cb) {
     cb({
         title: 'About page',
         text: 'This is about page. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi cupiditate saepe nemo aspernatur, voluptates tempore maxime itaque voluptatem in magni incidunt modi tempora esse, aperiam, ipsa harum reprehenderit odio. Laudantium.',
+        desc: 'Description',
         list: [
             {id: 21, name: 'priv'},
             {id: 22, name: 'priv2'},
