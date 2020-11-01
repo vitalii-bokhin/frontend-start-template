@@ -1,6 +1,7 @@
 // submit form
 try {
     Form.onSubmit(function (form, callback) {
+        console.log('submit');
         switch (form.id) {
             case 'form-no-ajax':
             case 'search-form':
@@ -35,6 +36,7 @@ try {
                     },
                     error: function (response) {
                         console.log(response);
+                        callback({ clearForm: false, unlockSubmitButton: true });
                     }
                 });
         }
@@ -81,6 +83,11 @@ SPA.route('', function (params, cb) {
     cb({
         title: 'About page',
         text: 'This is about page. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi cupiditate saepe nemo aspernatur, voluptates tempore maxime itaque voluptatem in magni incidunt modi tempora esse, aperiam, ipsa harum reprehenderit odio. Laudantium.',
+        list: [
+            {id: 21, name: 'priv'},
+            {id: 22, name: 'priv2'},
+            {id: 23, name: 'priv2 3'}
+        ],
         template: 'home-page-content-tpl',
         container: 'content'
     });
@@ -112,5 +119,20 @@ SPA.route('', function (params, cb) {
         text: 'This is about page. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi cupiditate saepe nemo aspernatur, voluptates tempore maxime itaque voluptatem in magni incidunt modi tempora esse, aperiam, ipsa harum reprehenderit odio. Laudantium.',
         template: 'home-page-content-tpl',
         container: 'content'
+    });
+
+}).route('#form-page', function (params, cb) {
+    cb({
+        page: 'Form page',
+        template: 'head-tpl',
+        container: 'head'
+    });
+
+    cb({
+        title: 'Form page',
+        template: 'form-page-content-tpl',
+        container: 'content'
+    }, function () {
+        Form.init('.form');
     });
 });

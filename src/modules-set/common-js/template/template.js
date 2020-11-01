@@ -14,7 +14,7 @@
             }
         }
 
-        result = result.replace(new RegExp('<' + s + 'if (\w+)' + s + '>(.*?)<' + s + 'endif' + s + '>', 'gs'), function (match, p1, p2, offset, input) {
+        result = result.replace(new RegExp('<' + s + 'if (\\w+)' + s + '>(.*?)<' + s + 'endif' + s + '>', 'gs'), function (match, p1, p2, offset, input) {
             if (p1.indexOf('==') !== -1) {
                 if (condition) {
 
