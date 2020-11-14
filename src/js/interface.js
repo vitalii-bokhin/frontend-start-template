@@ -87,7 +87,9 @@ SPA.route('', function (params, cb) {
         list: [
             {id: 21, name: 'priv'},
             {id: 22, name: 'priv2'},
-            {id: 23, name: 'priv2 3'}
+            {id: 23, name: 'priv2 3'},
+            'string1',
+            'string2',
         ],
         template: 'home-page-content-tpl',
         container: 'content'

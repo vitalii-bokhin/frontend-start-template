@@ -44,11 +44,10 @@
     <%endif%>
     
     <ul>
-        <%forEach list%>
-        <li id="<%id%>"><%name%></li> 
-        <%end%>
+        <%for list as item%>
+        <li id="<%item%>"><%item.name%></li>
+        <%endfor%>
     </ul>
-    
     
     <p>
         <a href="#about-page" class="spa-link">About</a>

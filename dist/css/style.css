@@ -5675,7 +5675,7 @@ table.table tr td:last-child {
 }
 
 .custom-checkbox__input:checked + .custom-checkbox__label:before {
-  background-size: 35.41667% auto;
+  background-size: 546.42857% auto;
 }
 
 .v-btn::after {
