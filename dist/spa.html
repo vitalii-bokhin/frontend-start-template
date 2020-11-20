@@ -305,6 +305,24 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form__field">
+                    <select class="custom-select" name="favorite-animal" data-placeholder="Select an animal*" data-required="true">
+                        <option value="monkey">Monkey</option>
+                        <option value="cat">Cat</option>
+                        <option>Dog</option>
+                        <option value="lion" data-second-value="lionID">Lion</option>
+                        <option value="crocodile">Crocodile</option>
+                        <option value="elephant">Elephant</option>
+                        <option value="other" data-hide-elements="#hide-animal-field">Hide</option>
+                        <option value="other" data-show-elements="#other-animal-field">Other</option>
+                    </select>
+                    <div class="field-error-tip">Select an animal</div>
+                </div>
+            </div>
+        </div>
         
         <div id="duplicate-model" class="hidden">
             <div class="row">

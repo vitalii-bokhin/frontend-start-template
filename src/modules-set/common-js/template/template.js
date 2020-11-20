@@ -8,17 +8,21 @@
 
         let result = template;
 
-        result = result.replace(new RegExp('<' + s + 'forEach (\\w+) as (\\w+)' + s + '>(.*?)<' + s + 'end' + s + '>', 'gs'), function (match, p1, p2, offset, input) {
+        result = result.replace(new RegExp('<' + s + 'for (\\w+) as (\\w+)' + s + '>(.*?)<' + s + 'endfor' + s + '>', 'gs'), function (match, p1, p2, p3, offset, input) {
 
             if (!data[p1]) return '';
 
             return data[p1].map(function (item) {
-                let res = p2;
+                let res = p3;
 
-                for (const key in item) {
-                    if (item.hasOwnProperty(key)) {
-                        res = res.replace(new RegExp('<' + s + key + s + '>', 'g'), item[key]);
+                if (typeof item === 'object') {
+                    for (const key in item) {
+                        if (item.hasOwnProperty(key)) {
+                            res = res.replace(new RegExp('<' + s + p2 + '.' + key + s + '>', 'g'), item[key]);
+                        }
                     }
+                } else {
+                    res = res.replace(new RegExp('<' + s + p2 + s + '>', 'g'), item);
                 }
 
                 return res;
@@ -26,6 +30,19 @@
         });
 
         result = result.replace(new RegExp('<' + s + 'if (\\w+)' + s + '>(.*?)<' + s + 'endif' + s + '>', 'gs'), function (match, p1, p2, offset, input) {
+            const m = data[p1];
+
+            if (
+                m === '' || m === false || m == undefined || m == null ||
+                (Array.isArray(m) && !m.length)
+            ) {
+                return '';
+            } else {
+                return p2;
+            }
+        });
+
+        result = result.replace(new RegExp('<' + s + '{2}if (\\w+)' + s + '>(.*?)<' + s + '{2}endif' + s + '>', 'gs'), function (match, p1, p2, offset, input) {
             const m = data[p1];
 
             if (

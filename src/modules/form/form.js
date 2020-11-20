@@ -648,7 +648,7 @@ var ValidateForm, Form;
             document.addEventListener('submit', this.sH);
 
             // keyboard event
-            document.removeEventListener('submit', this.kH);
+            document.removeEventListener('keydown', this.kH);
 
             this.kH = this.kH.bind(this);
             document.addEventListener('keydown', this.kH);
@@ -841,9 +841,10 @@ var ValidateForm, Form;
     // init scripts
     function initScripst() {
         BindLabels('input[type="text"], input[type="number"], input[type="tel"], input[type="checkbox"], input[type="radio"]');
-        Placeholder.init('input[type="text"], input[type="number"], input[type="tel"], input[type="password"], textarea');
+        if (window.Placeholder) Placeholder.init('input[type="text"], input[type="number"], input[type="tel"], input[type="password"], textarea');
         // SetTabindex('input[type="text"], input[type="password"], textarea');
         varHeightTextarea.init();
         DuplicateForm.init('.js-dupicate-form-btn', '.js-remove-dupicated-form-btn');
+        if (window.Select) Select.init('.custom-select');
     }
 })();

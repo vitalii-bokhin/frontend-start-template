@@ -42,6 +42,19 @@
             }
         });
 
+        result = result.replace(new RegExp('<' + s + '{2}if (\\w+)' + s + '>(.*?)<' + s + '{2}endif' + s + '>', 'gs'), function (match, p1, p2, offset, input) {
+            const m = data[p1];
+
+            if (
+                m === '' || m === false || m == undefined || m == null ||
+                (Array.isArray(m) && !m.length)
+            ) {
+                return '';
+            } else {
+                return p2;
+            }
+        });
+
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
                 result = result.replace(new RegExp('<' + s + key + s + '>', 'g'), data[key]);
