@@ -846,5 +846,6 @@ var ValidateForm, Form;
         varHeightTextarea.init();
         DuplicateForm.init('.js-dupicate-form-btn', '.js-remove-dupicated-form-btn');
         if (window.Select) Select.init('.custom-select');
+        if (window.Checkbox) Checkbox.init({ focusOnTarget: true });
     }
 })();

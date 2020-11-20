@@ -1,74 +1,82 @@
-/* Checkbox.onChange(function(el, state) {
-	// body
-}); */
+/* 
+*   Checkbox.onChange(function(el, state) {
+*       // body
+*   }); 
+*/
 
 var Checkbox;
 
 (function () {
-	'use strict';
+    'use strict';
 
-	//show element on checkbox change
-	Checkbox = {
-		hideCssClass: 'hidden',
-		opt: {},
-		onChangeSubscribers: [],
+    Checkbox = {
+        hideCssClass: 'hidden',
+        opt: {},
+        onChangeSubscribers: [],
 
-		init: function (options) {
-			options = options || {};
+        init: function (options) {
+            options = options || {};
 
-			this.opt.focusOnTarget = (options.focusOnTarget !== undefined) ? options.focusOnTarget : false;
+            this.opt.focusOnTarget = (options.focusOnTarget !== undefined) ? options.focusOnTarget : false;
 
-			document.addEventListener('change', (e) => {
-				var elem = e.target.closest('input[type="checkbox"]');
+            const elems = document.querySelectorAll('input[type="checkbox"]');
 
-				if (elem) {
-					this.change(elem);
-				}
-			});
-		},
+            for (let i = 0; i < elems.length; i++) {
+                this.change(elems[i], true);
+            }
 
-		change: function (elem) {
-			this.onChangeSubscribers.forEach(item => {
-				item(elem, elem.checked);
-			});
-			
-			var targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
+            // change event
+            document.removeEventListener('change', this.changeHandler);
 
-			if (!targetElements.length) {
-				return;
-			}
+            this.changeHandler = this.changeHandler.bind(this);
+            document.addEventListener('change', this.changeHandler);
+        },
 
-			for (var i = 0; i < targetElements.length; i++) {
-				var targetElem = targetElements[i];
+        changeHandler: function (e) {
+            const elem = e.target.closest('input[type="checkbox"]');
 
-				targetElem.style.display = (elem.checked) ? 'block' : 'none';
+            if (elem) {
+                this.change(elem);
+            }
+        },
 
-				if (elem.checked) {
-					targetElem.classList.remove(this.hideCssClass);
+        change: function (elem, onInit) {
+            if (!onInit) {
+                this.onChangeSubscribers.forEach(function (item) {
+                    item(elem, elem.checked);
+                });
+            }
 
-					const inpEls = targetElem.querySelectorAll('input[type="text"]');
+            const targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
 
-					for (var j = 0; j < inpEls.length; j++) {
-						var inpEl = inpEls[j];
+            if (!targetElements.length) return;
 
-						inpEl.focus();
-					}
+            for (let i = 0; i < targetElements.length; i++) {
+                const targetElem = targetElements[i];
 
-				} else {
-					targetElem.classList.add(this.hideCssClass);
-				}
-			}
-		},
+                targetElem.style.display = (elem.checked) ? 'block' : 'none';
 
-		onChange: function (fun) {
-			if (typeof fun === 'function') {
-				this.onChangeSubscribers.push(fun);
-			}
-		}
-	};
+                if (elem.checked) {
+                    targetElem.classList.remove(this.hideCssClass);
 
-	//init scripts
-	document.addEventListener('DOMContentLoaded', function () {
-		Checkbox.init({ focusOnTarget: true });
-	});
+                    const inpEls = targetElem.querySelectorAll('input[type="text"]');
+
+                    for (var j = 0; j < inpEls.length; j++) {
+                        var inpEl = inpEls[j];
+
+                        inpEl.focus();
+                    }
+
+                } else {
+                    targetElem.classList.add(this.hideCssClass);
+                }
+            }
+        },
+
+        onChange: function (fun) {
+            if (typeof fun === 'function') {
+                this.onChangeSubscribers.push(fun);
+            }
+        }
+    };
 })();
