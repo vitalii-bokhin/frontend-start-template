@@ -7,7 +7,7 @@ const gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     rename = require('gulp-rename'),
     fileinclude = require('gulp-file-include'),
-    replace = require('gulp-replace'),
+    gulpReplace = require('gulp-replace'),
     notify = require('gulp-notify'),
     del = require('del'),
     fs = require('fs'),
@@ -68,7 +68,8 @@ const modulesOn = [
     'cursor',
     'spa'
 ],
-    dist_path = 'dist';
+    dist_path = 'dist',
+    cssPref = 'l-';
 
 let assets = {
     slickslider: ['src/assets/slick.min.js'],
@@ -217,7 +218,7 @@ gulp.task('svgs', function (done) {
                 }
             }
         }))
-        .pipe(replace(dist_path + '/', ''))
+        .pipe(gulpReplace(dist_path + '/', ''))
         .pipe(gulp.dest('.'))
         .pipe(notify({
             title: 'SVG',
@@ -303,6 +304,7 @@ function CSS(dist) {
                 .pipe(sourcemaps.init())
                 .pipe(sass({ outputStyle: 'compact' }).on('error', sass.logError))
                 .pipe(autoprefixer(['last 3 versions']))
+                // .pipe(gulpReplace(/(?<!url.*)\.([a-z])/gi, '.' + cssPref + '$1'))
                 .pipe(rename('style.css'))
                 .pipe(sourcemaps.write('.'))
                 .pipe(gulp.dest(dist_path + '/css'))
@@ -362,6 +364,9 @@ function HTML(src, dist) {
         return gulp.src(src, { base: 'src/html/' })
             .pipe(fileinclude())
             .on('error', notify.onError(function (err) { return err; }))
+            // .pipe(gulpReplace(/class="([\w\s-]+)"/gi, function (match, p1, offset, string) {
+            //     return 'class="' + p1.replace(/([\w-]+)/gi, cssPref + '$1') + '"';
+            // }))
             .pipe(gulp.dest(dist_path))
             .pipe(notify({
                 title: 'HTML',

@@ -1,13 +1,14 @@
-/* Checkbox.onChange(function(el, state) {
-    // body
-}); */
+/* 
+*   Checkbox.onChange(function(el, state) {
+*       // body
+*   }); 
+*/
 
 var Checkbox;
 
 (function () {
     'use strict';
 
-    //show element on checkbox change
     Checkbox = {
         hideCssClass: 'hidden',
         opt: {},
@@ -17,6 +18,12 @@ var Checkbox;
             options = options || {};
 
             this.opt.focusOnTarget = (options.focusOnTarget !== undefined) ? options.focusOnTarget : false;
+
+            const elems = document.querySelectorAll('input[type="checkbox"]');
+
+            for (let i = 0; i < elems.length; i++) {
+                this.change(elems[i], true);
+            }
 
             // change event
             document.removeEventListener('change', this.changeHandler);
@@ -33,19 +40,19 @@ var Checkbox;
             }
         },
 
-        change: function (elem) {
-            this.onChangeSubscribers.forEach(item => {
-                item(elem, elem.checked);
-            });
-
-            var targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
-
-            if (!targetElements.length) {
-                return;
+        change: function (elem, onInit) {
+            if (!onInit) {
+                this.onChangeSubscribers.forEach(function (item) {
+                    item(elem, elem.checked);
+                });
             }
 
-            for (var i = 0; i < targetElements.length; i++) {
-                var targetElem = targetElements[i];
+            const targetElements = (elem.hasAttribute('data-target-elements')) ? document.querySelectorAll(elem.getAttribute('data-target-elements')) : {};
+
+            if (!targetElements.length) return;
+
+            for (let i = 0; i < targetElements.length; i++) {
+                const targetElem = targetElements[i];
 
                 targetElem.style.display = (elem.checked) ? 'block' : 'none';
 

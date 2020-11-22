@@ -5659,11 +5659,11 @@ table.table tr td:last-child {
 
 /* sprites */
 .accord__button:after {
-  background-size: 29.88281% auto;
+  background-size: 425% auto;
 }
 
 .arrow-btn:after {
-  background-size: 34.15179% auto;
+  background-size: 478.125% auto;
 }
 
 .plus-btn:after {
@@ -5671,7 +5671,7 @@ table.table tr td:last-child {
 }
 
 .form__btn_search:before {
-  background-size: 29.88281% auto;
+  background-size: 425% auto;
 }
 
 .custom-checkbox__input:checked + .custom-checkbox__label:before {
@@ -5679,24 +5679,24 @@ table.table tr td:last-child {
 }
 
 .v-btn::after {
-  background-size: 26.5625% auto;
+  background-size: 425% auto;
 }
 
 .f-btn::after {
-  background-size: 34.15179% auto;
+  background-size: 478.125% auto;
 }
 
 .o-btn::after {
-  background-size: 47.8125% auto;
+  background-size: 637.5% auto;
 }
 
 .t-btn::after {
-  background-size: 29.88281% auto;
+  background-size: 425% auto;
 }
 
 .video__btn-play,
 .icon:before {
-  background-size: 26.5625% auto;
+  background-size: 425% auto;
 }
 
 /* margin */
