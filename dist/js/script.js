@@ -1182,9 +1182,10 @@ ScrollSmooth.init();
 })();
 /*
 Toggle.init({
-	button: '.js-tgl-btn',
-	offButton: '.js-tgl-off',
-	toggledClass: 'some-class' // def: toggled
+    button: '.js-tgl-btn',
+    offButton: '.js-tgl-off',
+    toggledClass: 'some-class' // def: toggled,
+    targetsToggledClass: 'some-class' // def: toggled
 });
 
 Toggle.onChange(function (btnEl, targetElems, state) {
@@ -1195,144 +1196,149 @@ Toggle.onChange(function (btnEl, targetElems, state) {
 ; var Toggle;
 
 (function () {
-	'use strict';
+    'use strict';
 
-	Toggle = {
-		toggledClass: 'toggled',
-		onChangeSubscribers: [],
+    Toggle = {
+        toggledClass: 'toggled',
+        targetsToggledClass: 'toggled',
+        onChangeSubscribers: [],
 
-		target: function (btnEl, state) {
-			var targetElements = document.querySelectorAll(btnEl.getAttribute('data-target-elements'));
+        target: function (btnEl, state) {
+            var targetElements = document.querySelectorAll(btnEl.getAttribute('data-target-elements'));
 
-			if (!targetElements.length) return;
+            if (!targetElements.length) return;
 
-			if (state) {
-				for (var i = 0; i < targetElements.length; i++) {
-					targetElements[i].classList.add(this.toggledClass);
-				}
-			} else {
-				for (var i = 0; i < targetElements.length; i++) {
-					targetElements[i].classList.remove(this.toggledClass);
-				}
-			}
+            if (state) {
+                for (var i = 0; i < targetElements.length; i++) {
+                    targetElements[i].classList.add(this.targetsToggledClass);
+                }
+            } else {
+                for (var i = 0; i < targetElements.length; i++) {
+                    targetElements[i].classList.remove(this.targetsToggledClass);
+                }
+            }
 
-			//call onChange
-			if (this.onChangeSubscribers.length) {
-				this.onChangeSubscribers.forEach(function (item) {
-					item(btnEl, targetElements, state);
-				});
-			}
-		},
+            //call onChange
+            if (this.onChangeSubscribers.length) {
+                this.onChangeSubscribers.forEach(function (item) {
+                    item(btnEl, targetElements, state);
+                });
+            }
+        },
 
-		toggle: function (toggleElem, off) {
-			var state;
+        toggle: function (toggleElem, off) {
+            var state;
 
-			if (toggleElem.classList.contains(this.toggledClass)) {
-				toggleElem.classList.remove(this.toggledClass);
+            if (toggleElem.classList.contains(this.toggledClass)) {
+                toggleElem.classList.remove(this.toggledClass);
 
-				state = false;
+                state = false;
 
-				if (toggleElem.hasAttribute('data-first-text')) {
-					toggleElem.innerHTML = toggleElem.getAttribute('data-first-text');
-				}
-			} else if (!off) {
-				if (toggleElem.getAttribute('data-type') != 'button') {
-					toggleElem.classList.add(this.toggledClass);
-				}
+                if (toggleElem.hasAttribute('data-first-text')) {
+                    toggleElem.innerHTML = toggleElem.getAttribute('data-first-text');
+                }
+            } else if (!off) {
+                if (toggleElem.getAttribute('data-type') != 'button') {
+                    toggleElem.classList.add(this.toggledClass);
+                }
 
-				state = true;
+                state = true;
 
-				if (toggleElem.hasAttribute('data-second-text')) {
-					toggleElem.setAttribute('data-first-text', toggleElem.innerHTML);
+                if (toggleElem.hasAttribute('data-second-text')) {
+                    toggleElem.setAttribute('data-first-text', toggleElem.innerHTML);
 
-					toggleElem.innerHTML = toggleElem.getAttribute('data-second-text');
-				}
-			}
+                    toggleElem.innerHTML = toggleElem.getAttribute('data-second-text');
+                }
+            }
 
-			//target
-			if (toggleElem.hasAttribute('data-target-elements')) {
-				this.target(toggleElem, state);
-			}
+            //target
+            if (toggleElem.hasAttribute('data-target-elements')) {
+                this.target(toggleElem, state);
+            }
 
-			if (!state) return;
+            if (!state) return;
 
-			//dependence elements
-			if (toggleElem.hasAttribute('data-dependence-target-elements')) {
-				const dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
+            //dependence elements
+            if (toggleElem.hasAttribute('data-dependence-target-elements')) {
+                const dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
 
-				for (let i = 0; i < dependenceTargetElements.length; i++) {
-					const el = dependenceTargetElements[i];
+                for (let i = 0; i < dependenceTargetElements.length; i++) {
+                    const el = dependenceTargetElements[i];
 
-					dependenceTargetElements[i].classList.remove(this.toggledClass);
+                    dependenceTargetElements[i].classList.remove(this.toggledClass);
 
-					if (el.hasAttribute('data-target-elements')) {
-						this.target(el, false);
-					}
-				}
-			}
-		},
+                    if (el.hasAttribute('data-target-elements')) {
+                        this.target(el, false);
+                    }
+                }
+            }
+        },
 
-		toggleOff: function (btnEl) {
-			const targetEls = btnEl.getAttribute('data-target-elements'),
-				toggleBtnEls = document.querySelectorAll('.' + this.toggledClass +
-					'[data-target-elements*="' + targetEls + '"]');
+        toggleOff: function (btnEl) {
+            const targetEls = btnEl.getAttribute('data-target-elements'),
+                toggleBtnEls = document.querySelectorAll('.' + this.toggledClass +
+                    '[data-target-elements*="' + targetEls + '"]');
 
-			this.target(btnEl, false);
+            this.target(btnEl, false);
 
-			for (let i = 0; i < toggleBtnEls.length; i++) {
-				toggleBtnEls[i].classList.remove(this.toggledClass);
-			}
-		},
+            for (let i = 0; i < toggleBtnEls.length; i++) {
+                toggleBtnEls[i].classList.remove(this.toggledClass);
+            }
+        },
 
-		onDocClickOff: function (e, targetBtnEl) {
-			const toggleElements = document.querySelectorAll('[data-toggle-off="document"].' + this.toggledClass);
+        onDocClickOff: function (e, targetBtnEl) {
+            const toggleElements = document.querySelectorAll('[data-toggle-off="document"].' + this.toggledClass);
 
-			for (let i = 0; i < toggleElements.length; i++) {
-				const elem = toggleElements[i];
+            for (let i = 0; i < toggleElements.length; i++) {
+                const elem = toggleElements[i];
 
-				if (targetBtnEl === elem) continue;
+                if (targetBtnEl === elem) continue;
 
-				if (elem.hasAttribute('data-target-elements')) {
-					const targetSelectors = elem.getAttribute('data-target-elements');
+                if (elem.hasAttribute('data-target-elements')) {
+                    const targetSelectors = elem.getAttribute('data-target-elements');
 
-					if (!e.target.closest(targetSelectors)) {
-						this.toggle(elem, true);
-					}
-				} else {
-					this.toggle(elem, true);
-				}
-			}
-		},
+                    if (!e.target.closest(targetSelectors)) {
+                        this.toggle(elem, true);
+                    }
+                } else {
+                    this.toggle(elem, true);
+                }
+            }
+        },
 
-		onChange: function (fun) {
-			if (typeof fun === 'function') {
-				this.onChangeSubscribers.push(fun);
-			}
-		},
+        onChange: function (fun) {
+            if (typeof fun === 'function') {
+                this.onChangeSubscribers.push(fun);
+            }
+        },
 
-		init: function (opt) {
-			if (opt.toggledClass) {
-				this.toggledClass = opt.toggledClass;
-			}
+        init: function (opt) {
+            if (opt.toggledClass) {
+                this.toggledClass = opt.toggledClass;
+            }
 
-			document.addEventListener('click', (e) => {
-				const btnEl = e.target.closest(opt.button),
-					offBtnEl = e.target.closest(opt.offButton);
+            if (opt.targetsToggledClass) {
+                this.targetsToggledClass = opt.targetsToggledClass;
+            }
 
-				if (btnEl) {
-					e.preventDefault();
+            document.addEventListener('click', (e) => {
+                const btnEl = e.target.closest(opt.button),
+                    offBtnEl = e.target.closest(opt.offButton);
 
-					this.toggle(btnEl);
-				} else if (offBtnEl) {
-					e.preventDefault();
+                if (btnEl) {
+                    e.preventDefault();
 
-					this.toggleOff(offBtnEl);
-				}
+                    this.toggle(btnEl);
+                } else if (offBtnEl) {
+                    e.preventDefault();
 
-				this.onDocClickOff(e, btnEl);
-			});
-		}
-	};
+                    this.toggleOff(offBtnEl);
+                }
+
+                this.onDocClickOff(e, btnEl);
+            });
+        }
+    };
 })();
 ; var FlexImg;
 
@@ -7228,46 +7234,19 @@ var SPA;
 (function () {
     'use strict';
 
-    SPA = {
-        opt: null,
-        routeSubscribers: [],
+    SPA = function (opt) {
+        this.opt = opt || {};
+        this.routeSubscribers = [];
 
-        init: function (opt) {
-            this.opt = opt || {};
-
-            // let link;
-
-            // document.addEventListener('click', (e) => {
-            //     link = e.target.closest(this.opt.link);
-
-            //     if (link) {
-            //         setTimeout(() => {
-            //             this.changeTemplate();
-            //             link = null;
-            //         }, 121);
-            //     }
-            // });
-
-            window.addEventListener('popstate', () => {
-                // if (link) return;
-
-                setTimeout(() => {
-                    this.changeTemplate();
-                }, 121);
-            });
-
-            this.changeTemplate();
-        },
-
-        route: function (path, fun) {
+        this.route = function (path, fun) {
             if (typeof fun === 'function') {
                 this.routeSubscribers.push({ path, fun });
             }
 
             return this;
-        },
+        }
 
-        changeTemplate: function () {
+        this.changeTemplate = function () {
             const hash = window.location.hash;
 
             let fun, matches;
@@ -7301,7 +7280,92 @@ var SPA;
                 if (cb) cb();
             });
         }
-    };
+
+        window.addEventListener('popstate', () => {
+            // if (link) return;
+
+            setTimeout(() => {
+                this.changeTemplate();
+            }, 121);
+        });
+
+        this.changeTemplate();
+    }
+
+    // SPA = {
+    //     opt: null,
+    //     routeSubscribers: [],
+
+    //     init: function (opt) {
+    //         this.opt = opt || {};
+
+    //         // let link;
+
+    //         // document.addEventListener('click', (e) => {
+    //         //     link = e.target.closest(this.opt.link);
+
+    //         //     if (link) {
+    //         //         setTimeout(() => {
+    //         //             this.changeTemplate();
+    //         //             link = null;
+    //         //         }, 121);
+    //         //     }
+    //         // });
+
+    //         window.addEventListener('popstate', () => {
+    //             // if (link) return;
+
+    //             setTimeout(() => {
+    //                 this.changeTemplate();
+    //             }, 121);
+    //         });
+
+    //         this.changeTemplate();
+    //     },
+
+    //     route: function (path, fun) {
+    //         if (typeof fun === 'function') {
+    //             this.routeSubscribers.push({ path, fun });
+    //         }
+
+    //         return this;
+    //     },
+
+    //     changeTemplate: function () {
+    //         const hash = window.location.hash;
+
+    //         let fun, matches;
+
+    //         for (const item of this.routeSubscribers) {
+    //             if (!hash && !item.path) {
+    //                 fun = item.fun;
+    //                 break;
+
+    //             } else if (hash && item.path) {
+    //                 matches = hash.match(new RegExp(item.path));
+
+    //                 if (matches) {
+    //                     fun = item.fun;
+
+    //                     break;
+    //                 }
+    //             }
+    //         }
+
+    //         if (!fun) return;
+
+    //         fun(matches, (data, cb) => {
+    //             const contEl = document.getElementById(data.container),
+    //                 tplEl = document.getElementById(data.template);
+
+    //             if (!contEl || !tplEl) return;
+
+    //             contEl.innerHTML = template(data, tplEl.innerHTML, this.opt.tplSign);
+
+    //             if (cb) cb();
+    //         });
+    //     }
+    // };
 
 })();
 //# sourceMappingURL=script.js.map
