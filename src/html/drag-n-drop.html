@@ -1,0 +1,50 @@
+@@include('_head.html', {"title": "Home page"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html', {"menu_item_current": "home", "user_item": "logged", "user_item": "not_logged"})
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+    <div class="row">
+        <div class="col-12">
+            <h1>Grid</h1>
+            
+            <div class="row">
+                <div class="col-3">
+                    <div class="dropable" style="height: 200px; border: 1px solid grey;">
+                        <div class="dragable" style="height: 50px; background: blue;">
+                            Привет Мир!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="dropable" style="height: 200px; border: 1px solid grey;">
+
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="dropable" style="height: 200px; border: 1px solid grey;">
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</main>
+<!--/MAIN-->
+
+<!--FOOTER/-->
+@@include('../modules/footer/footer.html')
+<!--/FOOTER-->
+
+<!--POPUPs/-->
+@@include('../modules/popup/popup.html')
+<!--/POPUPs-->
+
+@@include('_javascript.html')
+
+</body>
+</html>

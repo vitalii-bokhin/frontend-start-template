@@ -66,7 +66,8 @@ const modulesOn = [
     'scrollpane',
     'zoom',
     'cursor',
-    'spa'
+    'spa',
+    'drag-n-drop'
 ],
     dist_path = 'dist',
     cssPref = 'l-';

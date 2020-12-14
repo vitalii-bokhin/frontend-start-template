@@ -554,10 +554,12 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(error);
     }
 
-    // sp app
-    SPA.init({
-        link: '.spa-link'
-    });
+    // drag'n'drop
+    try {
+        DragAndDrop.init();
+    } catch (error) {
+        console.log(error);
+    }
 
 });
 

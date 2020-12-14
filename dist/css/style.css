@@ -5471,6 +5471,14 @@ hr {
   }
 }
 
+.dragable {
+  cursor: move;
+}
+
+.dragable_active {
+  position: fixed;
+}
+
 /* main */
 .main {
   flex: 1 0 auto;

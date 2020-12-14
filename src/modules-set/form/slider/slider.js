@@ -76,7 +76,7 @@ var FormSlider;
             }
         },
 
-        //on mouse down
+        // on mouse down
         mouseDown: function (e) {
             if (e.type == 'mousedown' && e.which != 1) {
                 return;
@@ -99,7 +99,7 @@ var FormSlider;
 
             var clientX = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX;
 
-            //dragable options 
+            // dragable options 
             this.dragElemObj.elem = elem;
             this.dragElemObj.X = elem.getBoundingClientRect().left;
             this.dragElemObj.shiftX = clientX - this.dragElemObj.X;
@@ -152,7 +152,7 @@ var FormSlider;
 
         },
 
-        //on mouse move
+        // on mouse move
         mouseMove: function (e) {
             if (!this.dragElemObj.elem) {
                 return;
@@ -187,7 +187,7 @@ var FormSlider;
             this.setInputVal();
         },
 
-        //end drag
+        // end drag
         mouseUp: function (e) {
             document.removeEventListener('mousemove', this.mM);
             document.removeEventListener('touchmove', this.mM);

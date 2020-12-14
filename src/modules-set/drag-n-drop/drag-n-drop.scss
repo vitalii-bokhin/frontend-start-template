@@ -1,0 +1,6 @@
+.dragable{
+    cursor: move;
+    &_active{
+        position: fixed;
+    }
+}
