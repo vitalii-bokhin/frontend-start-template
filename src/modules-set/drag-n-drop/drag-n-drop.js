@@ -5,9 +5,6 @@ var DragAndDrop;
 
     DragAndDrop = {
         opt: null,
-        mD: null,
-        mM: null,
-        mU: null,
         dragElemObj: {},
 
         init: function (opt) {
@@ -37,19 +34,37 @@ var DragAndDrop;
             clientY = (e.type == 'touchstart') ? e.targetTouches[0].clientY : e.clientY;
 
             // dragable options 
-            this.dragElemObj.dragEl = dragEl;
+            this.dragElemObj.elem = dragEl;
             this.dragElemObj.X = dragEl.getBoundingClientRect().left;
             this.dragElemObj.Y = dragEl.getBoundingClientRect().top;
             this.dragElemObj.shiftX = clientX - this.dragElemObj.X;
-            this.dragElemObj.shiftX = clientX - this.dragElemObj.X;
-            this.dragElemObj.index = dragEl.getAttribute('data-index');
+            this.dragElemObj.shiftY = clientY - this.dragElemObj.Y;
             this.dragElemObj.width = dragEl.offsetWidth;
             this.dragElemObj.height = dragEl.offsetHeight;
 
             dragEl.style.width = this.dragElemObj.width + 'px';
             dragEl.style.height = this.dragElemObj.height + 'px';
+            dragEl.style.left = this.dragElemObj.X + 'px';
+            dragEl.style.top = this.dragElemObj.Y + 'px';
             
             dragEl.classList.add('dragable_active');
+        },
+
+        mM: function(e) {
+            if (!this.dragElemObj.elem) return;
+
+            const clientX = (e.type == 'touchmove') ? e.targetTouches[0].clientX : e.clientX,
+            clientY = (e.type == 'touchstart') ? e.targetTouches[0].clientY : e.clientY;
+
+            const moveX = clientX - this.dragElemObj.shiftX,
+            moveY = clientY - this.dragElemObj.shiftY;
+
+            this.dragElemObj.elem.style.left = moveX + 'px';
+            this.dragElemObj.elem.style.top = moveY + 'px';
+        },
+
+        mU: function(e) {
+            // body
         }
     };
 })();
