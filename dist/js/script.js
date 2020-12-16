@@ -7379,6 +7379,7 @@ var DragAndDrop;
         parentDropElem: null,
         curentDropElem: null,
         maskDiv: null,
+        lastInsertPos: '',
 
         init: function (opt) {
             this.opt = opt || {};
@@ -7399,11 +7400,9 @@ var DragAndDrop;
 
             this.mM = this.mM.bind(this);
             this.mU = this.mU.bind(this);
-            this.mO = this.mO.bind(this);
 
             document.addEventListener('mousemove', this.mM);
             document.addEventListener('mouseup', this.mU);
-            document.addEventListener('mouseover', this.mO);
 
             const clientX = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX,
                 clientY = (e.type == 'touchstart') ? e.targetTouches[0].clientY : e.clientY;
@@ -7436,63 +7435,89 @@ var DragAndDrop;
 
             this.dragElemObj.elem.style.left = moveX + 'px';
             this.dragElemObj.elem.style.top = moveY + 'px';
-        },
 
-        mO: function (e) {
             const dropEl = e.target.closest('.dropable');
 
-            if (!dropEl) return;
+            if (dropEl && dropEl !== this.curentDropElem) {
+                this.curentDropElem = dropEl;
 
-            this.curentDropElem = dropEl;
+                if (this.maskDiv) this.maskDiv.parentElement.removeChild(this.maskDiv);
 
-            if (this.maskDiv) this.maskDiv.parentElement.removeChild(this.maskDiv);
+                this.maskDiv = document.createElement('div');
 
-            const maskDiv = document.createElement('div');
+                this.maskDiv.className = 'dropable__mask';
+                this.maskDiv.style.height = this.dragElemObj.height + 'px';
 
-            maskDiv.className = 'dropable__mask';
-            maskDiv.style.height = this.dragElemObj.height + 'px';
+                dropEl.appendChild(this.maskDiv);
 
-            dropEl.appendChild(maskDiv);
+                this.lastInsertPos = '';
+            }
 
-            this.maskDiv = maskDiv;
+            const siblingDragEl = e.target.closest('.dragable');
+
+            if (siblingDragEl) {
+                const siblingDragElCenter = siblingDragEl.getBoundingClientRect().top + (siblingDragEl.offsetHeight / 2);
+
+                if (clientY >= siblingDragElCenter) {
+                    if (this.maskDiv && this.lastInsertPos != 'after') {
+                        this.lastInsertPos = 'after'
+                        siblingDragEl.after(this.maskDiv);
+                    }
+
+                } else {
+                    console.log(this.lastInsertPos);
+                    if (this.maskDiv && this.lastInsertPos != 'before') {
+                        this.lastInsertPos = 'before';
+                        siblingDragEl.before(this.maskDiv);
+                    }
+                }
+
+            }
         },
 
         mU: function (e) {
             document.removeEventListener('mousemove', this.mM);
-            document.removeEventListener('mouseover', this.mO);
 
-            if (!this.curentDropElem || this.curentDropElem == this.parentDropElem) {
-                this.dragElemObj.elem.style.left = this.dragElemObj.X + 'px';
-                this.dragElemObj.elem.style.top = this.dragElemObj.Y + 'px';
+            if (this.curentDropElem == this.parentDropElem && !this.maskDiv) {
+                if (this.dragElemObj.elem) {
+                    this.dragElemObj.elem.style.left = this.dragElemObj.X + 'px';
+                    this.dragElemObj.elem.style.top = this.dragElemObj.Y + 'px';
 
-                this.dragElemObj.elem.classList.remove('dragable_active');
+                    this.dragElemObj.elem.classList.remove('dragable_active');
 
-                this.dragElemObj.elem.style = '';
+                    this.dragElemObj.elem.style = '';
+                }
 
             } else {
-                const dropX = this.curentDropElem.getBoundingClientRect().left,
-                    dropY = this.curentDropElem.getBoundingClientRect().top,
-                    div = document.createElement('div');
+                // const dropX = this.curentDropElem.getBoundingClientRect().left,
+                //     dropY = this.curentDropElem.getBoundingClientRect().top,
+                //     div = document.createElement('div');
 
                 if (this.dragElemObj.elem) {
-                    this.dragElemObj.elem.style.left = dropX + 'px';
-                    this.dragElemObj.elem.style.top = dropY + 'px';
+                    // this.dragElemObj.elem.style.left = dropX + 'px';
+                    // this.dragElemObj.elem.style.top = dropY + 'px';
 
-                    div.className = 'dragable';
-                    div.innerHTML = this.dragElemObj.elem.innerHTML;
+                    // div.className = 'dragable';
+                    // div.innerHTML = this.dragElemObj.elem.innerHTML;
 
-                    this.curentDropElem.appendChild(div);
+                    // this.curentDropElem.appendChild(div);
 
-                    this.dragElemObj.elem.parentElement.removeChild(this.dragElemObj.elem);
+                    // this.dragElemObj.elem.parentElement.removeChild(this.dragElemObj.elem);
+
+                    this.dragElemObj.elem.classList.remove('dragable_active');
+
+                    this.dragElemObj.elem.style = '';
+                    
+                    if (this.maskDiv) {
+                        this.maskDiv.replaceWith(this.dragElemObj.elem);
+                    }
                 }
 
                 this.dragElemObj = {};
             }
 
-            if (this.maskDiv) {
-                this.maskDiv.parentElement.removeChild(this.maskDiv);
-                this.maskDiv = null;
-            }
+            this.maskDiv = null;
+            this.curentDropElem = null;
         }
     };
 })();
