@@ -7389,6 +7389,24 @@ var DragAndDrop;
             this.mD = this.mD.bind(this);
 
             document.addEventListener('mousedown', this.mD);
+
+            this.setInd();
+        },
+
+        setInd: function () {
+            const dropEls = document.querySelectorAll('.dropable');
+
+            for (let i = 0; i < dropEls.length; i++) {
+                const dropEl = dropEls[i];
+
+                const dragEls = dropEl.querySelectorAll('.dragable');
+
+                for (let i = 0; i < dragEls.length; i++) {
+                    const dragEl = dragEls[i];
+
+                    dragEl.setAttribute('data-index', i);
+                }
+            }
         },
 
         mD: function (e) {
@@ -7507,7 +7525,7 @@ var DragAndDrop;
                     this.dragElemObj.elem.classList.remove('dragable_active');
 
                     this.dragElemObj.elem.style = '';
-                    
+
                     if (this.maskDiv) {
                         this.maskDiv.replaceWith(this.dragElemObj.elem);
                     }
@@ -7518,6 +7536,8 @@ var DragAndDrop;
 
             this.maskDiv = null;
             this.curentDropElem = null;
+
+            this.setInd();
         }
     };
 })();
