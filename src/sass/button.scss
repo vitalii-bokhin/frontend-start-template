@@ -1,206 +1,206 @@
 /* buttons */
 .btn{
-	@extend %btn;
-	width: 150px;
-	height: 43px;
-	color: #FFF;
-	background: $bk;
-	padding: 0 15px;
-	letter-spacing: 1px;
+    @extend %btn;
+    width: 150px;
+    height: 43px;
+    color: #FFF;
+    background: $bk;
+    padding: 0 15px;
+    letter-spacing: 1px;
 }
 
 .arrow-btn{
-	@extend %btn;
-	height: 43px;
-	color: #FFF;
-	padding: 0 15px;
-	padding-right: 43px;
-	background: $bk;
-	letter-spacing: 1px;
-	&:after{
-		@extend %btn-icon;
-		width: 15px;
-		height: 16px;
-		right: 15px;
-		margin-top: -8px;
-	}
+    @extend %btn;
+    height: 43px;
+    color: #FFF;
+    padding: 0 15px;
+    padding-right: 43px;
+    background: $bk;
+    letter-spacing: 1px;
+    &:after{
+        @extend %btn-icon;
+        width: 15px;
+        height: 16px;
+        right: 15px;
+        margin-top: -8px;
+    }
 }
 
 .plus-btn{
-	@extend %btn;
-	border-radius: 32px;
-	height: 43px;
-	color: #FFF;
-	background: $bk;
-	padding: 0 15px;
-	padding-left: 55px;
-	letter-spacing: 1px;
-	&:after{
-		@extend %btn-icon;
-		width: 32px;
-		height: 32px;
-		left: 6px;
-		margin-top: -16px;
-	}
+    @extend %btn;
+    border-radius: 32px;
+    height: 43px;
+    color: #FFF;
+    background: $bk;
+    padding: 0 15px;
+    padding-left: 55px;
+    letter-spacing: 1px;
+    &:after{
+        @extend %btn-icon;
+        width: 32px;
+        height: 32px;
+        left: 6px;
+        margin-top: -16px;
+    }
 }
 
 .v-btn,
 .f-btn,
 .o-btn,
 .t-btn{
-	@extend %icon-btn;
-	width: 94px;
-	height: 94px;
-	border: 7px solid #fff;
-	border-radius: 50%;
-	&::after{
-		@extend %btn-icon;
-		left: 50%;
-	}
-	&:hover{
-		opacity: .75;
-	}
+    @extend %icon-btn;
+    width: 94px;
+    height: 94px;
+    border: 7px solid #fff;
+    border-radius: 50%;
+    &::after{
+        @extend %btn-icon;
+        left: 50%;
+    }
+    &:hover{
+        opacity: .75;
+    }
 }
 
 .v-btn{
-	&::after{
-		width: per(53,80);
-		height: per(32,80);
-		margin: per(-14,80) 0 0 per(-28,80);
-	}
+    &::after{
+        width: per(53,80);
+        height: per(32,80);
+        margin: per(-14,80) 0 0 per(-28,80);
+    }
 }
 .f-btn{
-	&::after{
-		width: per(25,80);
-		height: per(47,80);
-		margin: per(-23,80) 0 0 per(-13,80);
-	}
+    &::after{
+        width: per(25,80);
+        height: per(47,80);
+        margin: per(-23,80) 0 0 per(-13,80);
+    }
 }
 .o-btn{
-	&::after{
-		width: per(31,80);
-		height: per(50,80);
-		margin: per(-25,80) 0 0 per(-15,80);
-	}
+    &::after{
+        width: per(31,80);
+        height: per(50,80);
+        margin: per(-25,80) 0 0 per(-15,80);
+    }
 }
 .t-btn{
-	&::after{
-		width: per(53,80);
-		height: per(32,80);
-		margin: per(-14,80) 0 0 per(-28,80);
-	}
+    &::after{
+        width: per(53,80);
+        height: per(32,80);
+        margin: per(-14,80) 0 0 per(-28,80);
+    }
 }
 
 .sc{
-	display: flex;
-	justify-content: center;
-	list-style: none;
-	&__item{
-		flex: 0 1 auto;
-		padding: 0 5px;
-	}
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    &__item{
+        flex: 0 1 auto;
+        padding: 0 5px;
+    }
 }
 
 .img-icon-btn{
-	@extend %btn;
-	font-size: 18px;
-	height: em(60,18);
-	border-radius: em(8,18);
-	padding: em(2,18) em(32,18) 0 em(72,18);
-	text-align: left;
-	background: #ffbf00;
-	color: #715502;
-	&__img{
-		@extend %btn-icon;
-		font-size: inherit;
-		left: em(37,18);
-		width: em(20,18) !important;
-		height: em(30,18);
-		margin-top: em(-16,18);
-		@extend %c-img-wr;
-		img{
-			@extend %fw-img;
-			max-height: 100%;
-		}
-	}
-	&:hover{
-		opacity: .7;
-	}
+    @extend %btn;
+    font-size: 18px;
+    height: em(60,18);
+    border-radius: em(8,18);
+    padding: em(2,18) em(32,18) 0 em(72,18);
+    text-align: left;
+    background: #ffbf00;
+    color: #715502;
+    &__img{
+        @extend %btn-icon;
+        font-size: inherit;
+        left: em(37,18);
+        width: em(20,18) !important;
+        height: em(30,18);
+        margin-top: em(-16,18);
+        @extend %c-img-wr;
+        img{
+            @extend %fw-img;
+            max-height: 100%;
+        }
+    }
+    &:hover{
+        opacity: .7;
+    }
 }
 
 .link{
-	@extend %link;
-	color: $be;
-	border-bottom: 1px solid $be;
-	&:hover{
-		border-bottom-color: transparent;
-	}
+    @extend %link;
+    color: $be;
+    border-bottom: 1px solid $be;
+    &:hover{
+        border-bottom-color: transparent;
+    }
 }
 .green-link{
-	@extend %link;
-	color: $gn;
-	border-bottom: 1px solid $gn;
-	&_dash{
-		border-bottom-style: dashed;
-	}
-	&_rev{
-		border-bottom-color: transparent;
-		&:hover{
-			border-bottom-color: $gn;
-		}
-	}
+    @extend %link;
+    color: $gn;
+    border-bottom: 1px solid $gn;
+    &_dash{
+        border-bottom-style: dashed;
+    }
+    &_rev{
+        border-bottom-color: transparent;
+        &:hover{
+            border-bottom-color: $gn;
+        }
+    }
 }
 
 .icon-link{
-	@extend %icon-link;
-	border-bottom: 1px solid $be;
-	margin-left: 48px;
-	&::before{
-		width: 35px;
-		height: 30px;
-		margin-top: -15px;
-		left: -48px;
-	}
-	&:hover{
-		border-bottom-color: transparent;
-	}
+    @extend %icon-link;
+    border-bottom: 1px solid $be;
+    margin-left: 48px;
+    &::before{
+        width: 35px;
+        height: 30px;
+        margin-top: -15px;
+        left: -48px;
+    }
+    &:hover{
+        border-bottom-color: transparent;
+    }
 }
 
 .paginate{
-	list-style: none;
-	text-align: center;
-	&__item{
-		display: inline-block;
-		vertical-align: middle;
-		margin: 0 3px;
-	}
-	&__a,
-	&__curr{
-		display: block;
-		width: 36px;
-		height: 36px;
-		line-height: 36px;
-		font-size: 21px;
-		color: #000000;
-		text-align: center;
-		text-decoration: none;
-	}
-	&__a{
-		opacity: .3;
-		transition: .21s;
-		&:hover{
-			opacity: .7;
-		}
-	}
-	&__prev,
-	&__next{
-		display: block;
-		width: 40px;
-		height: 40px;
-		line-height: 40px;
-		margin: 0 7px;
-		&_disabled{
-			opacity: .2;
-		}
-	}
+    list-style: none;
+    text-align: center;
+    &__item{
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 3px;
+    }
+    &__a,
+    &__curr{
+        display: block;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        font-size: 21px;
+        color: #000000;
+        text-align: center;
+        text-decoration: none;
+    }
+    &__a{
+        opacity: .3;
+        transition: .21s;
+        &:hover{
+            opacity: .7;
+        }
+    }
+    &__prev,
+    &__next{
+        display: block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        margin: 0 7px;
+        &_disabled{
+            opacity: .2;
+        }
+    }
 }

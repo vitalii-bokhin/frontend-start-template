@@ -1,191 +1,191 @@
 .wrp{
-	margin: 0 auto;
-	max-width: 1180px;
-	padding: 15px;
+    margin: 0 auto;
+    max-width: 1180px;
+    padding: 15px;
 }
 
 .row{
-	display: flex;
-	flex: 1 0 100%;
-	flex-wrap: wrap;
-	margin: 0 -15px;
-	&_wrp{
-		margin: 0 auto;
-		max-width: 1180px;
-	}
-	&_nw{
-		flex-wrap: nowrap;
-	}
-	&_column{
-		flex-direction: column;
-	}
-	&_col-center{
-		justify-content: center;
-	}
-	&_col-between{
-		justify-content: space-between;
-	}
-	&_col-middle{
-		align-items: center;
-	}
-	&_col-bottom{
-		align-items: flex-end;
-	}
-	& > [class*="col"]{
-		padding: 15px;
-	}
-	@media(min-width: 1001px){
-		&_md-x-nw{
-			flex-wrap: nowrap;
-		}
-	}
-	@media(min-width: 751px){
-		&_sm-x-nw{
-			flex-wrap: nowrap;
-		}
-	}
-	@media(max-width: 750px){
-		&:not(.row_nw) > [class*="col"]:not([class*="xs-col"]){
-			flex: 0 0 100%;
-			max-width: 100%;
-			margin-left: 0;
-			margin-right: 0;
-		}
-	}
+    display: flex;
+    flex: 1 0 100%;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+    &_wrp{
+        margin: 0 auto;
+        max-width: 1180px;
+    }
+    &_nw{
+        flex-wrap: nowrap;
+    }
+    &_column{
+        flex-direction: column;
+    }
+    &_col-center{
+        justify-content: center;
+    }
+    &_col-between{
+        justify-content: space-between;
+    }
+    &_col-middle{
+        align-items: center;
+    }
+    &_col-bottom{
+        align-items: flex-end;
+    }
+    & > [class*="col"]{
+        padding: 15px;
+    }
+    @media(min-width: 1001px){
+        &_md-x-nw{
+            flex-wrap: nowrap;
+        }
+    }
+    @media(min-width: 751px){
+        &_sm-x-nw{
+            flex-wrap: nowrap;
+        }
+    }
+    @media(max-width: 750px){
+        &:not(.row_nw) > [class*="col"]:not([class*="xs-col"]){
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
 }
- 
+
 @mixin cols {
-	flex: 0 1 auto;
-	max-width: none;
-
-	&-fill{
-		flex: 1 1 100%;
-		max-width: none;
-	}
-	
-	$cC: 12;
-	@for $i from 1 through $cC {
-		&-#{$i}{
-			flex: 0 0 (100 / $cC) * $i * 1%;
-			max-width: (100 / $cC) * $i * 1%;
-			@if $i == $cC {
-				margin-left: 0;
-				margin-right: 0;
-			}
-		}
-		&-offset-#{$i}{
-			margin-left: (100 / $cC) * $i * 1%;
-		}
-	}
-	
-	$cC: 11;
-	@for $i from 1 through $cC {
-		&-#{$i}{
-			.row_#{$cC} > &{
-				flex: 0 0 (100 / $cC) * $i * 1%;
-				max-width: (100 / $cC) * $i * 1%;
-				@if $i == $cC {
-					margin-left: 0;
-					margin-right: 0;
-				}
-			}
-		}
-		&-offset-#{$i}{
-			.row_#{$cC} > &{
-				margin-left: (100 / $cC) * $i * 1%;
-			}
-		}
-	}
-
-	$cC: 15;
-	@for $i from 1 through $cC {
-		&-#{$i}{
-			.row_#{$cC} > &{
-				flex: 0 0 (100 / $cC) * $i * 1%;
-				max-width: (100 / $cC) * $i * 1%;
-				@if $i == $cC {
-					margin-left: 0;
-					margin-right: 0;
-				}
-			}
-		}
-		&-offset-#{$i}{
-			.row_#{$cC} > &{
-				margin-left: (100 / $cC) * $i * 1%;
-			}
-		}
-	}
-	
-	&_center{
-		margin-left: auto;
-		margin-right: auto;
-	}
-	&_middle{
-		align-self: center;
-	}
-	&_right{
-		margin-left: auto;
-	}
-	&_grow{
-		flex-grow: 1;
-	}
-	&_first{
-		order: -1;
-	}
+    flex: 0 1 auto;
+    max-width: none;
+    
+    &-fill{
+        flex: 1 1 100%;
+        max-width: none;
+    }
+    
+    $cC: 12;
+    @for $i from 1 through $cC {
+        &-#{$i}{
+            flex: 0 0 (100 / $cC) * $i * 1%;
+            max-width: (100 / $cC) * $i * 1%;
+            @if $i == $cC {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+        &-offset-#{$i}{
+            margin-left: (100 / $cC) * $i * 1%;
+        }
+    }
+    
+    $cC: 11;
+    @for $i from 1 through $cC {
+        &-#{$i}{
+            .row_#{$cC} > &{
+                flex: 0 0 (100 / $cC) * $i * 1%;
+                max-width: (100 / $cC) * $i * 1%;
+                @if $i == $cC {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+        }
+        &-offset-#{$i}{
+            .row_#{$cC} > &{
+                margin-left: (100 / $cC) * $i * 1%;
+            }
+        }
+    }
+    
+    $cC: 15;
+    @for $i from 1 through $cC {
+        &-#{$i}{
+            .row_#{$cC} > &{
+                flex: 0 0 (100 / $cC) * $i * 1%;
+                max-width: (100 / $cC) * $i * 1%;
+                @if $i == $cC {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+        }
+        &-offset-#{$i}{
+            .row_#{$cC} > &{
+                margin-left: (100 / $cC) * $i * 1%;
+            }
+        }
+    }
+    
+    &_center{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    &_middle{
+        align-self: center;
+    }
+    &_right{
+        margin-left: auto;
+    }
+    &_grow{
+        flex-grow: 1;
+    }
+    &_first{
+        order: -1;
+    }
 }
 
 .col{
-	@include cols;
+    @include cols;
 }
 
 @media(max-width: 1600px){
-	.lg{
-		&-col{
-			@include cols;
-		}
-	}
+    .lg{
+        &-col{
+            @include cols;
+        }
+    }
 }
 
 @media(max-width: 1200px){
-	.md{
-		&-row{
-			&-col-fw{
-				& > [class*="col"]{
-					flex: 0 0 100%;
-					max-width: 100%;
-					margin-left: 0;
-					margin-right: 0;
-				}
-			}
-		}
-		&-col{
-			@include cols;
-		}
-	}
+    .md{
+        &-row{
+            &-col-fw{
+                & > [class*="col"]{
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+        }
+        &-col{
+            @include cols;
+        }
+    }
 }
 
 @media(max-width: 1000px){
-	.sm{
-		&-row{
-			&-col-fw{
-				& > [class*="col"]{
-					flex: 0 0 100%;
-					max-width: 100%;
-					margin-left: 0;
-					margin-right: 0;
-				}
-			}
-		}
-		&-col{
-			@include cols;
-		}
-	}
+    .sm{
+        &-row{
+            &-col-fw{
+                & > [class*="col"]{
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+        }
+        &-col{
+            @include cols;
+        }
+    }
 }
 
 @media(max-width: 750px){
-	.xs{
-		&-col{
-			@include cols;
-		}
-	}
+    .xs{
+        &-col{
+            @include cols;
+        }
+    }
 }
