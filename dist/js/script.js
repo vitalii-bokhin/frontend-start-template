@@ -7369,6 +7369,11 @@ var SPA;
 
 })();
 var DragAndDrop;
+/* 
+DragAndDrop.onDragged(function () {
+    // code
+});
+*/
 
 (function () {
     'use strict';
@@ -7380,6 +7385,7 @@ var DragAndDrop;
         curentDropElem: null,
         maskDiv: null,
         lastInsertPos: '',
+        onDragSubscribers: [],
 
         init: function (opt) {
             this.opt = opt || {};
@@ -7442,6 +7448,13 @@ var DragAndDrop;
             dragEl.classList.add('dragable_active');
 
             this.parentDropElem = dragEl.closest('.dropable');
+
+            this.maskDiv = document.createElement('div');
+
+            this.maskDiv.className = 'dropable__mask';
+            this.maskDiv.style.height = this.dragElemObj.height + 'px';
+
+            this.dragElemObj.elem.after(this.maskDiv);
         },
 
         mM: function (e) {
@@ -7459,14 +7472,7 @@ var DragAndDrop;
             if (dropEl && dropEl !== this.curentDropElem) {
                 this.curentDropElem = dropEl;
 
-                if (this.maskDiv) this.maskDiv.parentElement.removeChild(this.maskDiv);
-
-                this.maskDiv = document.createElement('div');
-
-                this.maskDiv.className = 'dropable__mask';
-                this.maskDiv.style.height = this.dragElemObj.height + 'px';
-
-                dropEl.appendChild(this.maskDiv);
+                dropEl.prepend(this.maskDiv);
 
                 this.lastInsertPos = '';
             }
@@ -7483,7 +7489,6 @@ var DragAndDrop;
                     }
 
                 } else {
-                    console.log(this.lastInsertPos);
                     if (this.maskDiv && this.lastInsertPos != 'before') {
                         this.lastInsertPos = 'before';
                         siblingDragEl.before(this.maskDiv);
@@ -7493,51 +7498,32 @@ var DragAndDrop;
             }
         },
 
-        mU: function (e) {
+        mU: function () {
             document.removeEventListener('mousemove', this.mM);
 
-            if (this.curentDropElem == this.parentDropElem && !this.maskDiv) {
-                if (this.dragElemObj.elem) {
-                    this.dragElemObj.elem.style.left = this.dragElemObj.X + 'px';
-                    this.dragElemObj.elem.style.top = this.dragElemObj.Y + 'px';
+            if (this.dragElemObj.elem && this.maskDiv) {
+                this.dragElemObj.elem.classList.remove('dragable_active');
 
-                    this.dragElemObj.elem.classList.remove('dragable_active');
+                this.dragElemObj.elem.style = '';
 
-                    this.dragElemObj.elem.style = '';
-                }
+                this.maskDiv.replaceWith(this.dragElemObj.elem);
 
-            } else {
-                // const dropX = this.curentDropElem.getBoundingClientRect().left,
-                //     dropY = this.curentDropElem.getBoundingClientRect().top,
-                //     div = document.createElement('div');
+                this.setInd();
 
-                if (this.dragElemObj.elem) {
-                    // this.dragElemObj.elem.style.left = dropX + 'px';
-                    // this.dragElemObj.elem.style.top = dropY + 'px';
-
-                    // div.className = 'dragable';
-                    // div.innerHTML = this.dragElemObj.elem.innerHTML;
-
-                    // this.curentDropElem.appendChild(div);
-
-                    // this.dragElemObj.elem.parentElement.removeChild(this.dragElemObj.elem);
-
-                    this.dragElemObj.elem.classList.remove('dragable_active');
-
-                    this.dragElemObj.elem.style = '';
-
-                    if (this.maskDiv) {
-                        this.maskDiv.replaceWith(this.dragElemObj.elem);
-                    }
-                }
-
-                this.dragElemObj = {};
+                this.onDragSubscribers.forEach(function (fun) {
+                    fun();
+                });
             }
 
+            this.dragElemObj = {};
             this.maskDiv = null;
             this.curentDropElem = null;
+        },
 
-            this.setInd();
+        onDragged: function (fun) {
+            if (typeof fun === 'function') {
+                this.onDragSubscribers.push(fun);
+            }
         }
     };
 })();

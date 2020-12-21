@@ -3225,6 +3225,19 @@ hr {
   transition: .21s;
 }
 
+.select__options::-webkit-scrollbar {
+  width: 7px;
+}
+
+.select__options::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.select__options::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
 .select__options li {
   border-top: 1px solid #c3c3c3;
 }

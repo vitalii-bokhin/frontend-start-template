@@ -557,6 +557,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // drag'n'drop
     try {
         DragAndDrop.init();
+
+        DragAndDrop.onDragged(function () {
+            console.log('dragged');
+        });
     } catch (error) {
         console.log(error);
     }
