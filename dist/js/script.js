@@ -7472,7 +7472,7 @@ DragAndDrop.onDragged(function () {
             if (dropEl && dropEl !== this.curentDropElem) {
                 this.curentDropElem = dropEl;
 
-                dropEl.prepend(this.maskDiv);
+                dropEl.querySelector('.dropable__inner').prepend(this.maskDiv);
 
                 this.lastInsertPos = '';
             }
