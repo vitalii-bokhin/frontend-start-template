@@ -1,140 +1,178 @@
 var Maskinput;
 
 (function () {
-	'use strict';
+    'use strict';
 
-	Maskinput = function (inputElem, type, opt) {
-		if (!inputElem) return;
+    Maskinput = function (inputSel, type, opt) {
+        // if (!this.inputElem) return;
 
-		opt = opt || {};
+        opt = opt || {};
 
-		var defValue = '';
+        var defValue = '';
 
-		this.tel = function (evStr) {
-			if (evStr == 'focus' && !inputElem.value.length) {
-				inputElem.value = '+7(';
-			}
+        this.inputElem = null;
 
-			if (!/[\+\d\(\)\-]*/.test(inputElem.value)) {
-				inputElem.value = defValue;
-			} else {
-				var reg = /^(\+7?)?(\(\d{0,3})?(\)\d{0,3})?(\-\d{0,2}){0,2}$/,
-					cursPos = inputElem.selectionStart;
+        this.tel = function (evStr) {
+            if (evStr == 'focus' && !this.inputElem.value.length) {
+                this.inputElem.value = '+7(';
+            }
 
-				if (!reg.test(inputElem.value)) {
-					inputElem.value = inputElem.value.replace(/^(?:\+7?)?\(?(\d{0,3})\)?(\d{0,3})\-?(\d{0,2})\-?(\d{0,2})$/, function (str, p1, p2, p3, p4) {
-						var res = '';
+            if (!/[\+\d\(\)\-]*/.test(this.inputElem.value)) {
+                this.inputElem.value = defValue;
+            } else {
+                var reg = /^(\+7?)?(\(\d{0,3})?(\)\d{0,3})?(\-\d{0,2}){0,2}$/,
+                    cursPos = this.inputElem.selectionStart;
 
-						if (p4 != '') {
-							res = '+7(' + p1 + ')' + p2 + '-' + p3 + '-' + p4;
-						} else if (p3 != '') {
-							res = '+7(' + p1 + ')' + p2 + '-' + p3;
-						} else if (p2 != '') {
-							res = '+7(' + p1 + ')' + p2;
-						} else if (p1 != '') {
-							res = '+7(' + p1;
-						}
+                if (!reg.test(this.inputElem.value)) {
+                    this.inputElem.value = this.inputElem.value.replace(/^(?:\+7?)?\(?(\d{0,3})\)?(\d{0,3})\-?(\d{0,2})\-?(\d{0,2})$/, function (str, p1, p2, p3, p4) {
+                        var res = '';
 
-						return res;
-					});
-				}
+                        if (p4 != '') {
+                            res = '+7(' + p1 + ')' + p2 + '-' + p3 + '-' + p4;
+                        } else if (p3 != '') {
+                            res = '+7(' + p1 + ')' + p2 + '-' + p3;
+                        } else if (p2 != '') {
+                            res = '+7(' + p1 + ')' + p2;
+                        } else if (p1 != '') {
+                            res = '+7(' + p1;
+                        }
 
-				if (!reg.test(inputElem.value)) {
-					inputElem.value = defValue;
-				} else {
-					defValue = inputElem.value;
-				}
-			}
-		}
+                        return res;
+                    });
+                }
 
-		this.date = function (ev) {
-			if (ev == 'focus') return;
+                if (!reg.test(this.inputElem.value)) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
+                }
+            }
+        }
 
-			if (!/[\d\/]*/.test(inputElem.value)) {
-				inputElem.value = defValue;
-			} else {
-				const reg = /^\d{0,2}(\/\d{0,2}(\/\d{0,4})?)?$/;
+        this.date = function (ev) {
+            if (ev == 'focus') return;
 
-				if (!reg.test(inputElem.value)) {
-					inputElem.value = inputElem.value.replace(/^(\d{0,2})\/?(\d{0,2})\/?(\d{0,4})$/, function (str, p1, p2, p3) {
-						let res;
+            if (!/[\d\/]*/.test(this.inputElem.value)) {
+                this.inputElem.value = defValue;
+            } else {
+                const reg = /^\d{0,2}(\/\d{0,2}(\/\d{0,4})?)?$/;
 
-						if (p3 != '') {
-							res = p1 + '/' + p2 + '/' + p3;
-						} else if (p2 != '') {
-							res = p1 + '/' + p2;
-						}
+                if (!reg.test(this.inputElem.value)) {
+                    this.inputElem.value = this.inputElem.value.replace(/^(\d{0,2})\/?(\d{0,2})\/?(\d{0,4})$/, function (str, p1, p2, p3) {
+                        let res;
 
-						return res;
-					});
-				}
+                        if (p3 != '') {
+                            res = p1 + '/' + p2 + '/' + p3;
+                        } else if (p2 != '') {
+                            res = p1 + '/' + p2;
+                        }
 
-				if (!reg.test(inputElem.value)) {
-					inputElem.value = defValue;
-				} else {
-					defValue = inputElem.value;
-				}
-			}
-		}
+                        return res;
+                    });
+                }
 
-		this.gmail = function (ev) {
-			if (ev == 'focus') return;
+                if (!reg.test(this.inputElem.value)) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
+                }
+            }
+        }
 
-			if (!/[@\w.-]*/.test(inputElem.value)) {
-				inputElem.value = defValue;
-			} else {
-				const reg = /^[\w.-]*(@gmail\.com)?$/;
+        this.gmail = function (ev) {
+            if (ev == 'focus') return;
 
-				if (!reg.test(inputElem.value)) {
-					inputElem.value = inputElem.value.replace(/^([\w.-]*)@(?:gmail\.com)?$/, '$1@gmail.com');
-				}
+            if (!/[@\w.-]*/.test(this.inputElem.value)) {
+                this.inputElem.value = defValue;
+            } else {
+                const reg = /^[\w.-]*(@gmail\.com)?$/;
 
-				if (!reg.test(inputElem.value)) {
-					inputElem.value = defValue;
-				} else {
-					defValue = inputElem.value;
-				}
-			}
-		}
+                if (!reg.test(this.inputElem.value)) {
+                    this.inputElem.value = this.inputElem.value.replace(/^([\w.-]*)@(?:gmail\.com)?$/, '$1@gmail.com');
+                }
 
-		this.number = function (ev) {
-			if (ev == 'focus') return;
+                if (!reg.test(this.inputElem.value)) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
+                }
+            }
+        }
 
-			if (opt.maxLength && inputElem.value.length > opt.maxLength) {
-				inputElem.value = defValue;
-			} else {
-				if (!/^\d*$/.test(inputElem.value)) {
-					inputElem.value = defValue;
-				} else {
-					defValue = inputElem.value;
-				}
-			}
-		}
+        this.number = function (ev) {
+            if (ev == 'focus') return;
 
-		this.cyr = function (ev) {
-			if (ev == 'focus') return;
+            if (opt.maxLength && this.inputElem.value.length > opt.maxLength) {
+                this.inputElem.value = defValue;
+            } else {
+                if (!/^\d*$/.test(this.inputElem.value)) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
+                }
+            }
+        }
 
-			if (!/^[а-я\s]*$/i.test(inputElem.value)) {
-				inputElem.value = defValue;
-			} else {
-				defValue = inputElem.value;
-			}
-		}
+        this.float = function (ev) {
+            if (ev == 'focus') return;
 
-		inputElem.addEventListener('input', () => {
-			try {
-				this[type]();
-			} catch (error) {
-				console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
-			}
-		});
+            if (opt.maxLength && this.inputElem.value.length > opt.maxLength) {
+                this.inputElem.value = defValue;
+            } else {
+                if (!/^\d[\d.,]*?$/.test(this.inputElem.value)) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
+                }
+            }
+        }
 
-		inputElem.addEventListener('focus', () => {
-			try {
-				this[type]('focus');
-			} catch (error) {
-				console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
-			}
-		}, true);
-	}
+        this.cyr = function (ev) {
+            if (ev == 'focus') return;
+
+            if (!/^[а-я\s]*$/i.test(this.inputElem.value)) {
+                this.inputElem.value = defValue;
+            } else {
+                defValue = this.inputElem.value;
+            }
+        }
+
+        console.log(type);
+
+        document.addEventListener('input', (e) => {
+            const inpEl = e.target.closest(inputSel);
+
+            console.log(inputSel);
+            console.log(e.target);
+            console.log(inpEl);
+
+            if (inpEl) {
+                this.inputElem = inpEl;
+
+                console.log(this);
+
+                try {
+                    this[type]();
+                } catch (error) {
+                    console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+                }
+            }
+        });
+
+        // this.inputElem.addEventListener('input', () => {
+        //     try {
+        //         this[type]();
+        //     } catch (error) {
+        //         console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+        //     }
+        // });
+
+        // this.inputElem.addEventListener('focus', () => {
+        //     try {
+        //         this[type]('focus');
+        //     } catch (error) {
+        //         console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+        //     }
+        // }, true);
+    }
 })();

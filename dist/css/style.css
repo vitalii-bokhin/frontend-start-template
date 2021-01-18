@@ -244,20 +244,20 @@ hr {
 
 .wrp {
   margin: 0 auto;
-  max-width: 1180px;
-  padding: 15px;
+  max-width: 73.75rem;
+  padding: 0.9375rem;
 }
 
 .row {
   display: flex;
   flex: 1 0 100%;
   flex-wrap: wrap;
-  margin: 0 -15px;
+  margin: 0 -0.9375rem;
 }
 
 .row_wrp {
   margin: 0 auto;
-  max-width: 1180px;
+  max-width: 73.75rem;
 }
 
 .row_nw {
@@ -285,7 +285,7 @@ hr {
 }
 
 .row > [class*="col"] {
-  padding: 15px;
+  padding: 0.9375rem;
 }
 
 @media (min-width: 1001px) {
@@ -5515,6 +5515,16 @@ hr {
   overflow: hidden;
 }
 
+.first-screen > .row_col-middle {
+  height: 100%;
+}
+
+@media (min-width: 1201px) {
+  .first-screen {
+    height: 100vh;
+  }
+}
+
 /* section */
 .section {
   padding-top: 30px;
@@ -5778,6 +5788,20 @@ table.table tr td:last-child {
 /* display */
 .hidden {
   display: none !important;
+}
+
+/* position */
+.pos-r {
+  position: relative !important;
+}
+
+/* align */
+.ta-c {
+  text-align: center !important;
+}
+
+.ta-r {
+  text-align: right !important;
 }
 
 @media (max-width: 1600px) {

@@ -69,6 +69,23 @@
     display: none !important;
 }
 
+/* position */
+.pos{
+    &-r{
+        position: relative !important;
+    }
+}
+
+/* align */
+.ta{
+    &-c{
+        text-align: center !important;
+    }
+    &-r{
+        text-align: right !important;
+    }
+}
+
 @media(max-width: 1600px){
     .lg{
         &-hidden{

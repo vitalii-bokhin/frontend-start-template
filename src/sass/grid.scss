@@ -1,17 +1,17 @@
 .wrp{
     margin: 0 auto;
-    max-width: 1180px;
-    padding: 15px;
+    max-width: rem(1180);
+    padding: rem(15);
 }
 
 .row{
     display: flex;
     flex: 1 0 100%;
     flex-wrap: wrap;
-    margin: 0 -15px;
+    margin: 0 rem(-15);
     &_wrp{
         margin: 0 auto;
-        max-width: 1180px;
+        max-width: rem(1180);
     }
     &_nw{
         flex-wrap: nowrap;
@@ -32,7 +32,7 @@
         align-items: flex-end;
     }
     & > [class*="col"]{
-        padding: 15px;
+        padding: rem(15);
     }
     @media(min-width: 1001px){
         &_md-x-nw{

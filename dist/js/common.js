@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const fsElem = document.getElementById('js-first-screen');
+    const fsElem = document.getElementById('first-screen');
 
     (function initFun() {
         if (fsElem) {
@@ -529,12 +529,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // masked inputs
     try {
-        $('input[data-type="tel"]').each(function () {
-            new Maskinput(this, 'tel');
-        });
-        $('input[data-type="name"]').each(function () {
-            new Maskinput(this, 'cyr');
-        });
+        new Maskinput('input[data-type="tel"]', 'tel');
+        new Maskinput('input[data-type="name"]', 'cyr');
     } catch (error) {
         console.log(error);
     }
