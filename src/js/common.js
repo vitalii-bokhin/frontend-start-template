@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // accord
     try {
-        Accord.init('.accord__button');
+        new Accord('.accord__button', 750).init();
     } catch (error) {
         console.log(error);
     }

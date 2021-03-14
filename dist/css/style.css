@@ -5733,116 +5733,111 @@ table.table tr td:last-child {
   background-size: 425% auto;
 }
 
-/* margin */
-.mt-0 {
-  margin-top: 0 !important;
+body .mt-0 {
+  margin-top: 0;
 }
 
-.mb-0 {
-  margin-bottom: 0 !important;
+body .mb-0 {
+  margin-bottom: 0;
 }
 
-.ml-0 {
-  margin-left: 0 !important;
+body .ml-0 {
+  margin-left: 0;
 }
 
-.mr-0 {
-  margin-right: 0 !important;
+body .mr-0 {
+  margin-right: 0;
 }
 
-.m-0 {
-  margin: 0 !important;
+body .m-0 {
+  margin: 0;
 }
 
-/* padding */
-.pt-0 {
-  padding-top: 0 !important;
+body .pt-0 {
+  padding-top: 0;
 }
 
-.pb-0 {
-  padding-bottom: 0 !important;
+body .pb-0 {
+  padding-bottom: 0;
 }
 
-.pl-0 {
-  padding-left: 0 !important;
+body .pl-0 {
+  padding-left: 0;
 }
 
-.pr-0 {
-  padding-right: 0 !important;
+body .pr-0 {
+  padding-right: 0;
 }
 
-.p-x-0 {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+body .p-x-0 {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.p-y-0 {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+body .p-y-0 {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.p-0 {
-  padding: 0 !important;
+body .p-0 {
+  padding: 0;
 }
 
-/* display */
-.hidden {
-  display: none !important;
+body .hidden {
+  display: none;
 }
 
-/* position */
-.pos-r {
-  position: relative !important;
+body .pos-r {
+  position: relative;
 }
 
-/* align */
-.ta-c {
-  text-align: center !important;
+body .ta-c {
+  text-align: center;
 }
 
-.ta-r {
-  text-align: right !important;
+body .ta-r {
+  text-align: right;
 }
 
 @media (max-width: 1600px) {
-  .lg-hidden {
-    display: none !important;
+  body .lg-hidden {
+    display: none;
   }
 }
 
 @media (min-width: 1201px) {
-  .lg-x-hidden {
-    display: none !important;
+  body .lg-x-hidden {
+    display: none;
   }
 }
 
 @media (max-width: 1200px) {
-  .md-hidden {
-    display: none !important;
+  body .md-hidden {
+    display: none;
   }
 }
 
 @media (min-width: 1001px) {
-  .md-x-hidden {
-    display: none !important;
+  body .md-x-hidden {
+    display: none;
   }
 }
 
 @media (max-width: 1000px) {
-  .sm-hidden {
-    display: none !important;
+  body .sm-hidden {
+    display: none;
   }
 }
 
 @media (min-width: 751px) {
-  .sm-x-hidden {
-    display: none !important;
+  body .sm-x-hidden {
+    display: none;
   }
 }
 
 @media (max-width: 750px) {
-  .xs-hidden {
-    display: none !important;
+  body .xs-hidden {
+    display: none;
   }
 }
 

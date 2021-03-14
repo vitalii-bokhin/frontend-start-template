@@ -1,4 +1,4 @@
-var ValidateForm, Form;
+var ValidateForm, Form, DuplicateForm;
 
 (function () {
     'use strict';
@@ -763,7 +763,7 @@ var ValidateForm, Form;
     }
 
     // duplicate form
-    var DuplicateForm = {
+    DuplicateForm = {
         add: function (btnElem) {
             var modelElem = (btnElem.hasAttribute('data-form-model')) ? document.querySelector(btnElem.getAttribute('data-form-model')) : null,
                 destElem = (btnElem.hasAttribute('data-duplicated-dest')) ? document.querySelector(btnElem.getAttribute('data-duplicated-dest')) : null;
@@ -801,6 +801,10 @@ var ValidateForm, Form;
                     }
                 }
             }
+
+            if (window.Select) Select.init('.custom-select');
+
+            if (this.onChange) this.onChange();
         },
 
         remove: function (btnElem) {
@@ -809,19 +813,30 @@ var ValidateForm, Form;
             if (duplElem) {
                 duplElem.innerHTML = '';
             }
+
+            if (this.onChange) this.onChange();
         },
 
         init: function (addBtnSelector, removeBtnSelector) {
-            document.addEventListener('click', (e) => {
-                var addBtnElem = e.target.closest(addBtnSelector),
-                    removeBtnElem = e.target.closest(removeBtnSelector);
+            this.addBtnSelector = addBtnSelector;
+            this.removeBtnSelector = removeBtnSelector;
 
-                if (addBtnElem) {
-                    this.add(addBtnElem);
-                } else if (removeBtnElem) {
-                    this.remove(removeBtnElem);
-                }
-            });
+            // click event
+            document.removeEventListener('click', this.clickHandler);
+
+            this.clickHandler = this.clickHandler.bind(this);
+            document.addEventListener('click', this.clickHandler);
+        },
+
+        clickHandler: function (e) {
+            const addBtnElem = e.target.closest(this.addBtnSelector),
+                removeBtnElem = e.target.closest(this.removeBtnSelector);
+
+            if (addBtnElem) {
+                this.add(addBtnElem);
+            } else if (removeBtnElem) {
+                this.remove(removeBtnElem);
+            }
         }
     };
 

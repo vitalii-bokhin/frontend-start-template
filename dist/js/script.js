@@ -3722,7 +3722,7 @@ var NextFieldset;
     });
 
 })();
-var ValidateForm, Form;
+var ValidateForm, Form, DuplicateForm;
 
 (function () {
     'use strict';
@@ -4487,7 +4487,7 @@ var ValidateForm, Form;
     }
 
     // duplicate form
-    var DuplicateForm = {
+    DuplicateForm = {
         add: function (btnElem) {
             var modelElem = (btnElem.hasAttribute('data-form-model')) ? document.querySelector(btnElem.getAttribute('data-form-model')) : null,
                 destElem = (btnElem.hasAttribute('data-duplicated-dest')) ? document.querySelector(btnElem.getAttribute('data-duplicated-dest')) : null;
@@ -4525,6 +4525,10 @@ var ValidateForm, Form;
                     }
                 }
             }
+
+            if (window.Select) Select.init('.custom-select');
+
+            if (this.onChange) this.onChange();
         },
 
         remove: function (btnElem) {
@@ -4533,19 +4537,30 @@ var ValidateForm, Form;
             if (duplElem) {
                 duplElem.innerHTML = '';
             }
+
+            if (this.onChange) this.onChange();
         },
 
         init: function (addBtnSelector, removeBtnSelector) {
-            document.addEventListener('click', (e) => {
-                var addBtnElem = e.target.closest(addBtnSelector),
-                    removeBtnElem = e.target.closest(removeBtnSelector);
+            this.addBtnSelector = addBtnSelector;
+            this.removeBtnSelector = removeBtnSelector;
 
-                if (addBtnElem) {
-                    this.add(addBtnElem);
-                } else if (removeBtnElem) {
-                    this.remove(removeBtnElem);
-                }
-            });
+            // click event
+            document.removeEventListener('click', this.clickHandler);
+
+            this.clickHandler = this.clickHandler.bind(this);
+            document.addEventListener('click', this.clickHandler);
+        },
+
+        clickHandler: function (e) {
+            const addBtnElem = e.target.closest(this.addBtnSelector),
+                removeBtnElem = e.target.closest(this.removeBtnSelector);
+
+            if (addBtnElem) {
+                this.add(addBtnElem);
+            } else if (removeBtnElem) {
+                this.remove(removeBtnElem);
+            }
         }
     };
 
@@ -4574,60 +4589,68 @@ var ValidateForm, Form;
     }
 })();
 /*
-* call Accord.init(Str button selector);
+* call new Accord(Str button selector [, autoScroll viewport width]).init();
 */
 var Accord;
 
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	Accord = {
-		init: function(elementStr) {
-			if (!document.querySelectorAll('.accord').length) return;
+    Accord = function (btnSel, autoScroll) {
+        this.btnSel = btnSel;
+        this.initialized = false;
+        this.autoScroll = autoScroll;
 
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
+        this.init = function () {
+            if (this.initialized || !document.querySelectorAll('.accord').length) return;
 
-				if (!elem || elem.closest('.accord_closed')) return;
+            this.initialized = true;
 
-				e.preventDefault();
+            document.addEventListener('click', (e) => {
+                const btnEl = e.target.closest(this.btnSel);
 
-				this.toggle(elem);
-			});
-		},
+                if (!btnEl || btnEl.closest('.accord_closed')) return;
 
-		toggle: function(elem) {
-			var contentElem = elem.nextElementSibling;
+                e.preventDefault();
 
-			if (elem.classList.contains('accord__button_active')) {
-				contentElem.style.height = 0;
+                this.toggle(btnEl);
+            });
+        }
 
-				elem.classList.remove('accord__button_active');
+        this.toggle = function (elem) {
+            const contentElem = elem.nextElementSibling;
 
-			} else {
-				var mainElem = elem.closest('.accord'),
-				allButtonElem = mainElem.querySelectorAll('.accord__button'),
-				allContentElem = mainElem.querySelectorAll('.accord__content');
+            if (elem.classList.contains('accord__button_active')) {
+                contentElem.style.height = 0;
 
-				for (var i = 0; i < allButtonElem.length; i++) {
-					allButtonElem[i].classList.remove('accord__button_active');
-					allContentElem[i].style.height = 0;
-				}
+                elem.classList.remove('accord__button_active');
 
-				contentElem.style.height = contentElem.scrollHeight +'px';
+            } else {
+                const mainElem = elem.closest('.accord'),
+                    allButtonElem = mainElem.querySelectorAll('.accord__button'),
+                    allContentElem = mainElem.querySelectorAll('.accord__content');
 
-				elem.classList.add('accord__button_active');
+                for (let i = 0; i < allButtonElem.length; i++) {
+                    allButtonElem[i].classList.remove('accord__button_active');
+                    allContentElem[i].style.height = 0;
+                }
 
-				this.scroll(elem);
-			}
-		},
+                contentElem.style.height = contentElem.scrollHeight + 'px';
 
-		scroll: function(elem) {
-			setTimeout(function() {
-				$('html, body').stop().animate({scrollTop: $(elem).position().top - 20}, 721);
-			}, 321);
-		}
-	};
+                elem.classList.add('accord__button_active');
+
+                if (this.autoScroll && window.innerWidth <= this.autoScroll) {
+                    this.scroll(elem);
+                }
+            }
+        }
+
+        this.scroll = function (elem) {
+            setTimeout(function () {
+                $('html, body').stop().animate({ scrollTop: $(elem).position().top - 20 }, 721);
+            }, 121);
+        }
+    };
 })();
 /*
 Ajax.init(Str button selector);
@@ -4727,106 +4750,109 @@ var More;
 /*
 call to init:
 Tab.init({
-	container: '.tab',
-	button: '.tab__button',
-	item: '.tab__item',
-	changeOnHover: true // default: false
+    container: '.tab',
+    button: '.tab__button',
+    item: '.tab__item',
+    changeOnHover: true // default: false
 });
 */
 ; var Tab;
 
-(function() {
-	'use strict';
-	
-	Tab = {
-		options: null,
-		
-		change: function(btnElem) {
-			if (btnElem.classList.contains('active')) return;
-			
-			var contElem = btnElem.closest(this.options.container),
-			btnElements = contElem.querySelectorAll(this.options.button),
-			tabItemElements = contElem.querySelectorAll(this.options.item);
-			
-			//remove active state
-			for (var i = 0; i < btnElements.length; i++) {
-				btnElements[i].classList.remove('active');
-				
-				tabItemElements[i].classList.remove('active');
-			}
-			
-			//get current tab item
-			var tabItemElem = contElem.querySelector(this.options.item +'[data-index="'+ btnElem.getAttribute('data-index') +'"]');
-			
-			//set active state
-			tabItemElem.classList.add('active');
-			
-			btnElem.classList.add('active');
-			
-			//set height
-			this.setHeight(tabItemElem);
-		},
-		
-		setHeight: function(tabItemElem) {
-			tabItemElem.parentElement.style.height = tabItemElem.offsetHeight +'px';
-		},
-		
-		reInit: function() {
-			if (!this.options) return;
-			
-			var contElements = document.querySelectorAll(this.options.container);
-			
-			for (var i = 0; i < contElements.length; i++) {
-				this.setHeight(contElements[i].querySelector(this.options.item +'.active'));
-			}
-		},
-		
-		init: function(options) {
-			const contElements = document.querySelectorAll(options.container);
-			
-			if (!contElements.length) return;
-			
-			this.options = options;
-			
-			//init tabs
-			for (let i = 0; i < contElements.length; i++) {
-				var contElem = contElements[i],
-				btnElements = contElem.querySelectorAll(options.button),
-				tabItemElements = contElem.querySelectorAll(options.item),
-				tabItemElemActive = contElem.querySelector(this.options.item +'.active');
-				
-				this.setHeight(tabItemElemActive);
-				
-				for (let i = 0; i < btnElements.length; i++) {
-					btnElements[i].setAttribute('data-index', i);
-					
-					tabItemElements[i].setAttribute('data-index', i);
-				}
-			}
-			
-			//btn event
-			if (options.changeOnHover) {
-				document.addEventListener('mouseover', (e) => {
-					const btnElem = e.target.closest(options.button);
-					
-					if (!btnElem) return;
-					
-					this.change(btnElem);
-				});
-			} else {
-				document.addEventListener('click', (e) => {
-					const btnElem = e.target.closest(options.button);
-					
-					if (!btnElem) return;
-					
-					e.preventDefault();
-					
-					this.change(btnElem);
-				});
-			}
-			
-		}
-	};
+(function () {
+    'use strict';
+
+    Tab = {
+        options: null,
+
+        change: function (btnElem) {
+            if (btnElem.classList.contains('active')) return;
+
+            const contElem = btnElem.closest(this.options.container),
+                btnElements = contElem.querySelectorAll(this.options.button),
+                tabItemElements = contElem.querySelectorAll(this.options.item);
+
+            //remove active state
+            for (let i = 0; i < btnElements.length; i++) {
+                btnElements[i].classList.remove('active');
+            }
+
+            for (let i = 0; i < tabItemElements.length; i++) {
+                tabItemElements[i].classList.remove('active');
+            }
+
+            //get current tab item
+            const tabItemElem = contElem.querySelector(this.options.item + '[data-index="' + btnElem.getAttribute('data-index') + '"]');
+
+            //set active state
+            tabItemElem.classList.add('active');
+
+            btnElem.classList.add('active');
+
+            //set height
+            this.setHeight(tabItemElem);
+        },
+
+        setHeight: function (tabItemElem) {
+            tabItemElem.parentElement.style.height = tabItemElem.offsetHeight + 'px';
+        },
+
+        reInit: function () {
+            if (!this.options) return;
+
+            const contElements = document.querySelectorAll(this.options.container);
+
+            for (let i = 0; i < contElements.length; i++) {
+                this.setHeight(contElements[i].querySelector(this.options.item + '.active'));
+            }
+        },
+
+        init: function (options) {
+            const contElements = document.querySelectorAll(options.container);
+
+            if (!contElements.length) return;
+
+            this.options = options;
+
+            //init tabs
+            for (let i = 0; i < contElements.length; i++) {
+                const contElem = contElements[i],
+                    btnElements = contElem.querySelectorAll(options.button),
+                    tabItemElements = contElem.querySelectorAll(options.item),
+                    tabItemElemActive = contElem.querySelector(this.options.item + '.active');
+
+                this.setHeight(tabItemElemActive);
+
+                for (let i = 0; i < btnElements.length; i++) {
+                    btnElements[i].setAttribute('data-index', i);
+
+                    tabItemElements[i].setAttribute('data-index', i);
+                }
+            }
+
+            //btn event
+            if (options.changeOnHover) {
+                document.addEventListener('mouseover', (e) => {
+                    const btnElem = e.target.closest(options.button);
+
+                    if (!btnElem) return;
+
+                    this.change(btnElem);
+                });
+                
+            } else {
+                document.addEventListener('click', (e) => {
+                    const btnElem = e.target.closest(options.button);
+
+                    if (!btnElem) return;
+
+                    e.preventDefault();
+
+                    this.change(btnElem);
+                });
+            }
+
+        }
+    };
 })();
 /*
 new Alert({

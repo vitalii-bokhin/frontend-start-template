@@ -117,7 +117,11 @@ gulp.task('include_modules', function (done) {
     } else {
         return gulp.src(modulesOn.map((m) => 'src/modules-set/' + m + '/*.*'), { base: 'src/modules-set/' })
             .pipe(gulp.dest('src/modules/'))
-            .pipe(notify('Module included!'));
+            .pipe(notify({
+                onLast: true,
+                title: 'Custom Modules',
+                message: 'Custom modules included!'
+            }));
     }
 });
 
