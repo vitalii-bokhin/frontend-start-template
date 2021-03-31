@@ -298,7 +298,7 @@
 	};
 	
 	// init scripts
-	document.addEventListener('DOMContentLoaded', function () {
-		AutoComplete.init({getAllValuesIfEmpty: true});
-	});
+	// document.addEventListener('DOMContentLoaded', function () {
+	// 	AutoComplete.init({getAllValuesIfEmpty: true});
+	// });
 })();

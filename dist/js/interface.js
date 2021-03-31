@@ -19,7 +19,7 @@ try {
                     url: form.action,
                     send: new FormData(form),
                     success: function (response) {
-                        var response = JSON.parse(response);
+                        response = JSON.parse(response);
 
                         if (response.status == 'sent') {
 

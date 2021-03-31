@@ -42,16 +42,6 @@
 	height: 28px;
 }
 
-%svg-check-wh {
-	@extend %svg-common;
-	background-position: 78.125% 90%;
-}
-
-%svg-check-wh-dims {
-	width: 25px;
-	height: 25px;
-}
-
 %svg-facebook {
 	@extend %svg-common;
 	background-position: 0 52.17391304347826%;
@@ -64,7 +54,7 @@
 
 %svg-facebook-wh {
 	@extend %svg-common;
-	background-position: 100% 0;
+	background-position: 78.125% 90%;
 }
 
 %svg-facebook-wh-dims {
@@ -74,7 +64,7 @@
 
 %svg-instagram {
 	@extend %svg-common;
-	background-position: 100% 31.25%;
+	background-position: 100% 0;
 }
 
 %svg-instagram-dims {
@@ -124,7 +114,7 @@
 
 %svg-twitter-wh {
 	@extend %svg-common;
-	background-position: 100% 62.5%;
+	background-position: 100% 31.25%;
 }
 
 %svg-twitter-wh-dims {

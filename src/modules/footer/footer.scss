@@ -19,14 +19,12 @@
 }
 
 .foot-nav{
-	@include clr;
 	list-style: none;
+	display: flex;
 	&__item{
-		float: left;
+		flex: 0 1 auto;
 		margin-left: 35px;
-		&:first-child{
-			margin-left: 0;
-		}
+		@include fch(l);
 	}
 	&__a{
 		color: $be;

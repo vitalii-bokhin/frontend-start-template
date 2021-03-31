@@ -1,17 +1,17 @@
 .wrp{
     margin: 0 auto;
-    max-width: rem(1180);
-    padding: rem(15);
+    max-width: rem(1020);
+    padding: rem(10);
 }
 
 .row{
     display: flex;
     flex: 1 0 100%;
     flex-wrap: wrap;
-    margin: 0 rem(-15);
+    margin: 0 rem(-10);
     &_wrp{
         margin: 0 auto;
-        max-width: rem(1180);
+        max-width: rem(1020);
     }
     &_nw{
         flex-wrap: nowrap;
@@ -31,8 +31,19 @@
     &_col-bottom{
         align-items: flex-end;
     }
-    & > [class*="col"]{
-        padding: rem(15);
+    &_g-5{
+        margin-left: rem(-5);
+        margin-right: rem(-5);
+        &.row_wrp{
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: rem(5);
+            padding-right: rem(5);
+        }
+        & > [class*="col"]{
+            padding-left: rem(5);
+            padding-right: rem(5);
+        }
     }
     @media(min-width: 1001px){
         &_md-x-nw{
@@ -57,10 +68,12 @@
 @mixin cols {
     flex: 0 1 auto;
     max-width: none;
+    padding: rem(10);
     
     &-fill{
         flex: 1 1 100%;
         max-width: none;
+        padding: rem(10);
     }
     
     $cC: 12;
@@ -68,6 +81,7 @@
         &-#{$i}{
             flex: 0 0 (100 / $cC) * $i * 1%;
             max-width: (100 / $cC) * $i * 1%;
+            padding: rem(10);
             @if $i == $cC {
                 margin-left: 0;
                 margin-right: 0;
@@ -84,6 +98,7 @@
             .row_#{$cC} > &{
                 flex: 0 0 (100 / $cC) * $i * 1%;
                 max-width: (100 / $cC) * $i * 1%;
+                padding: rem(10);
                 @if $i == $cC {
                     margin-left: 0;
                     margin-right: 0;
@@ -103,6 +118,7 @@
             .row_#{$cC} > &{
                 flex: 0 0 (100 / $cC) * $i * 1%;
                 max-width: (100 / $cC) * $i * 1%;
+                padding: rem(10);
                 @if $i == $cC {
                     margin-left: 0;
                     margin-right: 0;

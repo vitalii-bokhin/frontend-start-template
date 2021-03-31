@@ -3,6 +3,9 @@ $base-font-size: 16;
 @function rem($px, $base: $base-font-size) {
     @return ($px / $base) * 1rem;
 }
+@function r($px, $base: $base-font-size) {
+    @return ($px / $base) * 1rem;
+}
 
 // em
 @function em($px, $base: $base-font-size) {
@@ -15,7 +18,8 @@ $base-font-size: 16;
 }
 
 // vw
-@function vw($px, $base) {
+$def-vw-base: 1920;
+@function vw($px, $base: $def-vw-base) {
     @return $px * (100 / $base) * 1vw;
 }
 

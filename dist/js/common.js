@@ -3,15 +3,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     (function initFun() {
         if (fsElem) {
-            let padTop = 100;
+            fsElem.style.height = '';
 
-            if (window.innerWidth < 1200) {
-                padTop = 60;
+            if (fsElem.offsetHeight < window.innerHeight) {
+                fsElem.style.height = window.innerHeight + 'px';
             }
-
-            fsElem.style.height = (window.innerHeight - padTop) + 'px';
         }
-
+        
         try {
             FlexImg('.flex-img');
         } catch (error) {
@@ -85,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
         Toggle.init({
             button: '.js-toggle',
-            onDocumenClickOff: '.js-document-toggle-off',
             offButton: '.js-tgl-off',
             toggledClass: 'toggled' // def: toggled
         });
@@ -459,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var contries;
 
         // autocomplete data
-        AutoComplete.getValues = function (inpElem, returnFun) {
+        AutoComplete.setValues = function (inpElem, returnFun) {
             switch (inpElem.name) {
                 case 'fruits':
                     returnFun([
@@ -472,16 +469,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     ], 'value', 'val', 'id');
                     break;
 
-                case 'country':
-                    if (contries) {
-                        returnFun(contries, 'name', 'name', 'id');
-                    } else {
-                        dAirGet.countries(function (c) {
-                            contries = JSON.parse(c);
-                            returnFun(contries, 'name', 'name', 'id');
-                        });
-                    }
-                    break;
+                // case 'country':
+                //     if (contries) {
+                //         returnFun(contries, 'name', 'name', 'id');
+                //     } else {
+                //         dAirGet.countries(function (c) {
+                //             contries = JSON.parse(c);
+                //             returnFun(contries, 'name', 'name', 'id');
+                //         });
+                //     }
+                //     break;
 
                 default:
                     break;
@@ -493,6 +490,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
         });
+
+        AutoComplete.init({getAllValuesIfEmpty: true});
+
     } catch (error) {
         console.log(error);
     }

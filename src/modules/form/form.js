@@ -173,7 +173,7 @@ var ValidateForm, Form, DuplicateForm;
         email: function () {
             var err = false;
 
-            if (!/^[a-z0-9]+[\w\-\.]*@([\w\-]{2,}\.)+[a-z]{2,6}$/i.test(this.input.value)) {
+            if (!/^[a-z0-9]+[\w\-\.]*@([\w\-]{2,}\.)+[a-z]{2,}$/i.test(this.input.value)) {
                 this.errorTip(true, 2);
                 err = true;
             } else {
