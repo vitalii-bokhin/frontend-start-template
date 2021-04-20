@@ -58,7 +58,7 @@ var Accord;
         this.scroll = function (elem) {
             setTimeout(function () {
                 $('html, body').stop().animate({ scrollTop: $(elem).position().top - 20 }, 721);
-            }, 121);
+            }, 321);
         }
     };
 })();

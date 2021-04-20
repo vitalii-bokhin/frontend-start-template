@@ -168,14 +168,16 @@
 
 .paginate{
     list-style: none;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &__item{
-        display: inline-block;
-        vertical-align: middle;
+        flex: 0 1 auto;
         margin: 0 3px;
     }
     &__a,
-    &__curr{
+    &__curr,
+    &__dots{
         display: block;
         width: 36px;
         height: 36px;
@@ -197,10 +199,35 @@
         display: block;
         width: 40px;
         height: 40px;
-        line-height: 40px;
+        background: #000000;
         margin: 0 7px;
+        position: relative;
+        transition: .21s;
+        &::after{
+            @extend %ab;
+            width: 10px;
+            height: 10px;
+            border: 2px solid transparent;
+            border-top-color: #FFF;
+            border-left-color: #FFF;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -7px;
+        }
         &_disabled{
             opacity: .2;
         }
+        &:hover{
+            opacity: .7;
+        }
+    }
+    &__prev::after{
+        margin-left: -3px;
+        transform: rotate(-45deg);
+    }
+    &__next::after{
+        margin-left: -10px;
+        transform: rotate(135deg);
     }
 }
