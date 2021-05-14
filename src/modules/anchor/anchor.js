@@ -4,64 +4,64 @@ Anchor.init(Str anchor selector[, Int duration ms[, Int shift px]]);
 
 var Anchor;
 
-(function() {
-	"use strict";
+(function () {
+    "use strict";
 
-	Anchor = {
-		duration: 1000,
-		shift: 0,
+    Anchor = {
+        duration: 1000,
+        shift: 0,
 
-		scroll: function(anchorId, e) {
-			const anchorSectionElem = document.getElementById(anchorId +'-anchor');
+        scroll: function (anchorId, e) {
+            const anchorSectionElem = document.getElementById(anchorId + '-anchor');
 
-			if (!anchorSectionElem) {
-				return;
-			}
+            if (!anchorSectionElem) {
+                return;
+            }
 
-			if (e) {
-				e.preventDefault();
-			}
+            if (e) {
+                e.preventDefault();
+            }
 
-			let scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
-			ownShift = +anchorSectionElem.getAttribute('data-shift') || 0;
+            let scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
+                ownShift = +anchorSectionElem.getAttribute('data-shift') || 0;
 
-			if (window.innerWidth < 1000 && anchorSectionElem.hasAttribute('data-sm-shift')) {
-				ownShift = +anchorSectionElem.getAttribute('data-sm-shift');
-			}
-			
-			scrollTo = scrollTo - this.shift - ownShift;
+            if (window.innerWidth < 1000 && anchorSectionElem.hasAttribute('data-sm-shift')) {
+                ownShift = +anchorSectionElem.getAttribute('data-sm-shift');
+            }
 
-			animate(function(progress) {
-				window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
-			}, this.duration, 'easeInOutQuad');
-		},
+            scrollTo = scrollTo - this.shift - ownShift;
 
-		init: function(elementStr, duration, shift) {
-			if (duration) {
-				this.duration = duration;
-			}
+            animate(function (progress) {
+                window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
+            }, this.duration, 'easeInOutQuad');
+        },
 
-			if (shift) {
-				this.shift = shift;
-			}
+        init: function (elementStr, duration, shift) {
+            if (duration) {
+                this.duration = duration;
+            }
 
-			//click anchor
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
+            if (shift) {
+                this.shift = shift;
+            }
 
-				if (elem) {
-					const anchId = (elem.hasAttribute('href')) ? elem.getAttribute('href').split('#')[1] : elem.getAttribute('data-anchor-id');
-					
-					this.scroll(anchId, e);
-				}
-			});
+            //click anchor
+            document.addEventListener('click', (e) => {
+                var elem = e.target.closest(elementStr);
 
-			//hash anchor
-			if (window.location.hash) {
-				window.addEventListener('load', () => {
-					this.scroll(window.location.hash.split('#')[1]);
-				});
-			}
-		}
-	};
+                if (elem) {
+                    const anchId = (elem.hasAttribute('href')) ? elem.getAttribute('href').split('#')[1] : elem.getAttribute('data-anchor-id');
+
+                    this.scroll(anchId, e);
+                }
+            });
+
+            //hash anchor
+            if (window.location.hash) {
+                window.addEventListener('load', () => {
+                    this.scroll(window.location.hash.split('#')[1]);
+                });
+            }
+        }
+    };
 })();

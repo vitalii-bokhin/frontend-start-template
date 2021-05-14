@@ -121,9 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // menu
     try {
-        if (window.innerWidth < 1000) {
-            Menu.init('.menu__item_has-children', '.menu__sub-menu');
-        }
+        Menu.init('.menu__item_has-children', '.menu__sub-menu', 1000);
     } catch (error) {
         console.log(error);
     }
@@ -467,12 +465,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     ], 'value', 'val', 'id');
                     break;
 
-                // case 'country':
-                //     dAirGet.countries(function (c) {
-                //         contries = JSON.parse(c);
-                //         returnFun(contries, 'name', 'name', 'id');
-                //     });
-                //     break;
+                case 'country':
+                    returnFun([
+                        { val: "mc", value: "Pinapple", id: 1 },
+                        { val: "vn", value: "Apple", id: 2 },
+                        { val: "eth", value: "Berry", id: 3 },
+                        { val: "ms", value: "Cherry", id: 4 },
+                        { val: "mn", value: "Mandarin", id: 5 },
+                        { val: "mk", value: "Marakuja", id: 6 }
+                    ], 'value', 'val', 'id');
+                    break;
+
+                case 'country2':
+                    returnFun();
+                    break;
 
                 default:
                     break;

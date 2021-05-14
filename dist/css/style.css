@@ -2623,18 +2623,12 @@ hr {
 
 /*menu*/
 .menu {
+  display: flex;
   list-style: none;
 }
 
-.menu:after {
-  display: block;
-  content: "";
-  width: 100%;
-  clear: both;
-}
-
 .menu__item {
-  float: left;
+  flex: 0 1 auto;
   margin-left: 45px;
 }
 
@@ -2694,6 +2688,7 @@ hr {
 @media (max-width: 1000px) {
   .menu {
     padding: 10px 25px;
+    flex-direction: column;
   }
   .menu__item {
     float: none;
@@ -2758,11 +2753,11 @@ hr {
   .sub-menu {
     width: auto;
     left: 0;
-    padding: 14px 0 0;
     box-shadow: none !important;
     position: relative;
     height: 0;
     overflow: hidden;
+    padding: 0;
   }
   .sub-menu__item {
     float: none;

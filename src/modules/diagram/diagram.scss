@@ -1,8 +1,8 @@
 .diagram{
-	@include fixprop;
-	position: relative;
-	
-	&__canvas{
-		@extend %fwh;
-	}
+    @include fixprop;
+    position: relative;
+    
+    &__canvas{
+        @extend %fwh;
+    }
 }

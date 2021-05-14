@@ -22,16 +22,27 @@ Toggle.onChange(function (btnEl, targetElems, state) {
         onChangeSubscribers: [],
 
         target: function (btnEl, state) {
-            var targetElements = document.querySelectorAll(btnEl.getAttribute('data-target-elements'));
+            const target = btnEl.getAttribute('data-target-elements');
+
+            let targetElements;
+
+            if (target.indexOf('->') !== -1) {
+                const selArr = target.split('->');
+
+                targetElements = btnEl.closest(selArr[0]).querySelectorAll(selArr[1]);
+
+            } else {
+                targetElements = document.querySelectorAll(target);
+            }
 
             if (!targetElements.length) return;
 
             if (state) {
-                for (var i = 0; i < targetElements.length; i++) {
+                for (let i = 0; i < targetElements.length; i++) {
                     targetElements[i].classList.add(this.targetsToggledClass);
                 }
             } else {
-                for (var i = 0; i < targetElements.length; i++) {
+                for (let i = 0; i < targetElements.length; i++) {
                     targetElements[i].classList.remove(this.targetsToggledClass);
                 }
             }

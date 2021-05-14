@@ -46,32 +46,42 @@
                 const preReg = new RegExp('(' + this.inputElem.value + ')', 'i');
 
                 this.setValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
-                    for (let i = 0; i < valuesData.length; i++) {
-                        const valData = valuesData[i];
+                    if (valuesData) {
+                        for (let i = 0; i < valuesData.length; i++) {
+                            const valData = valuesData[i];
 
-                        if (!permOpened) {
-                            if (nameKey !== undefined) {
-                                if (valData[nameKey].match(preReg)) {
-                                    values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey].replace(preReg, '<span>$1</span>') + '</button></li>';
+                            if (!permOpened) {
+                                if (nameKey !== undefined) {
+                                    if (valData[nameKey].match(preReg)) {
+                                        values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey].replace(preReg, '<span>$1</span>') + '</button></li>';
+                                    }
+                                } else {
+                                    if (valData.match(preReg)) {
+                                        values += '<li><button type="button" class="autocomplete__val">' + valData.replace(preReg, '<span>$1</span>') + '</button></li>';
+                                    }
                                 }
+
                             } else {
-                                if (valData.match(preReg)) {
-                                    values += '<li><button type="button" class="autocomplete__val">' + valData.replace(preReg, '<span>$1</span>') + '</button></li>';
-                                }
+                                values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey].replace(preReg, '<span>$1</span>') + '</button></li>';
                             }
-
-                        } else {
-                            values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey].replace(preReg, '<span>$1</span>') + '</button></li>';
                         }
                     }
 
                     if (values == '') {
-                        if (this.inputElem.hasAttribute('data-other-value')) {
+                        if (!valuesData || !valuesData.length) {
+                            values = '<li class="autocomplete__options-empty">' + this.inputElem.getAttribute('data-empty-text') + '</li>';
+
+                            this.optionsElem.innerHTML = values;
+
+                            this.open(this.optionsElem.querySelector('.autocomplete__options-empty').offsetHeight);
+
+                        } else if (this.inputElem.hasAttribute('data-other-value')) {
                             values = '<li class="autocomplete__options-other"><button type="button" class="autocomplete__val">' + this.inputElem.getAttribute('data-other-value') + '</button></li>';
 
                             this.optionsElem.innerHTML = values;
 
                             this.open(this.optionsElem.querySelector('.autocomplete__options-other').offsetHeight);
+
                         } else {
                             values = '<li class="autocomplete__options-empty">' + this.inputElem.getAttribute('data-nf-text') + '</li>';
 
@@ -90,19 +100,22 @@
             } else {
                 if (this.opt.getAllValuesIfEmpty) {
                     this.setValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
-                        for (let i = 0; i < valuesData.length; i++) {
-                            const valData = valuesData[i];
+                        if (valuesData) {
+                            for (let i = 0; i < valuesData.length; i++) {
+                                const valData = valuesData[i];
 
-                            if (nameKey !== undefined) {
-                                values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey] + '</button></li>';
-                            } else {
-                                values += '<li><button type="button" class="autocomplete__val">' + valData + '</button></li>';
+                                if (nameKey !== undefined) {
+                                    values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey] + '</button></li>';
+                                } else {
+                                    values += '<li><button type="button" class="autocomplete__val">' + valData + '</button></li>';
+                                }
                             }
-                        }
 
-                        this.optionsElem.innerHTML = values;
-                        this.open();
+                            this.optionsElem.innerHTML = values;
+                            this.open();
+                        }
                     });
+
                 } else {
                     this.optionsElem.innerHTML = '';
                     this.close();
