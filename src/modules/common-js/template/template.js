@@ -4,7 +4,12 @@
     'use strict';
 
     template = function (data, template, sign) {
-        const s = sign || '%';
+        const s = sign || '%',
+            tplEl = document.getElementById(template);
+
+        if (tplEl) {
+            template = tplEl.innerHTML;
+        }
 
         let result = template;
 
