@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 fsElem.style.height = window.innerHeight + 'px';
             }
         }
-        
+
         try {
             FlexImg('.flex-img');
         } catch (error) {
@@ -453,8 +453,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // autocomplete
     try {
-        var contries;
-
         // autocomplete data
         AutoComplete.setValues = function (inpElem, returnFun) {
             switch (inpElem.name) {
@@ -470,14 +468,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
 
                 // case 'country':
-                //     if (contries) {
+                //     dAirGet.countries(function (c) {
+                //         contries = JSON.parse(c);
                 //         returnFun(contries, 'name', 'name', 'id');
-                //     } else {
-                //         dAirGet.countries(function (c) {
-                //             contries = JSON.parse(c);
-                //             returnFun(contries, 'name', 'name', 'id');
-                //         });
-                //     }
+                //     });
                 //     break;
 
                 default:
@@ -491,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        AutoComplete.init({getAllValuesIfEmpty: true});
+        AutoComplete.init({ getAllValuesIfEmpty: true });
 
     } catch (error) {
         console.log(error);

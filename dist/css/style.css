@@ -3646,54 +3646,55 @@ hr {
 
 .autocomplete {
   position: relative;
+  z-index: 1;
 }
 
 .autocomplete__input {
-  padding-right: 45px;
+  padding-right: 5rem !important;
+  position: relative;
+  z-index: 2;
 }
 
 .autocomplete__arr {
   display: block;
-  width: 40px;
-  height: 44px;
+  width: 5rem;
+  height: 100%;
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 3;
+  z-index: 7;
   border: none;
   background: none;
 }
 
 .autocomplete__arr:after {
-  width: 0;
-  height: 0;
-  border: 4px solid transparent;
-  border-top: 6px solid #ff0000;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-left: 1px solid #212121;
+  border-bottom: 1px solid #212121;
   position: absolute;
-  right: 13px;
+  right: 1.875rem;
   top: 50%;
-  margin-top: -2px;
+  margin-top: -0.875rem;
+  transform: rotate(-45deg);
 }
 
 .autocomplete__options {
   list-style: none;
-  position: absolute;
-  left: 0;
-  top: 100%;
-  width: 100%;
   height: 0;
-  max-height: 117px;
+  max-height: 250px;
   overflow: hidden;
-  z-index: 5;
-  border: 1px solid #c3c3c3;
-  border-top: none;
-  background: #F0F1F2;
   visibility: hidden;
   transition: .21s;
 }
 
 .autocomplete__options li {
-  border-top: 1px solid #c3c3c3;
+  margin-top: 1.25rem;
+}
+
+.autocomplete__options li:first-child {
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .autocomplete__options li.hidden {
@@ -3705,12 +3706,25 @@ hr {
 }
 
 .autocomplete__options li.hover .autocomplete__val {
-  background: #aaaaaa;
-  color: #fff;
+  color: #ff0000;
 }
 
 .autocomplete__options.ovfauto {
   overflow: auto;
+}
+
+.autocomplete__options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.autocomplete__options::-webkit-scrollbar-track {
+  background: rgba(192, 192, 192, 0.35);
+  border-radius: 6px;
+}
+
+.autocomplete__options::-webkit-scrollbar-thumb {
+  background: #ff0000;
+  border-radius: 6px;
 }
 
 .autocomplete__options-empty {
@@ -3718,14 +3732,30 @@ hr {
   text-align: center;
 }
 
+.autocomplete__options-wrap {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  padding: 4rem 1.875rem 1.25rem 2.25rem;
+  border: 1px solid #ff0000;
+  border-top: none;
+  border-radius: 0 0 1.875rem 1.875rem;
+  background: #fff;
+  box-shadow: 4px 6px 13px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  visibility: hidden;
+}
+
 .autocomplete__val {
   display: block;
   width: 100%;
-  padding: 10px 15px;
-  font-weight: 300;
+  font-size: 1.6875rem;
+  color: #aaaaaa;
   text-decoration: none;
   text-align: left;
   border: none;
+  background: none;
   transition: .21s;
 }
 
@@ -3734,12 +3764,25 @@ hr {
 }
 
 .autocomplete__val:hover {
-  background: #aaaaaa;
-  color: #fff;
+  color: #ff0000;
 }
 
-.autocomplete_opened .autocomplete__options {
+.autocomplete_opened {
+  z-index: 3;
+}
+
+.autocomplete_opened .autocomplete__input {
+  border-color: #ff0000;
+  color: #ff0000;
+}
+
+.autocomplete_opened .autocomplete__options,
+.autocomplete_opened .autocomplete__options-wrap {
   visibility: visible;
+}
+
+.autocomplete .placeholder {
+  z-index: 3;
 }
 
 .custom-file:after {
