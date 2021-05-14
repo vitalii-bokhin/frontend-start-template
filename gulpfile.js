@@ -32,6 +32,7 @@ const modulesOn = [
     'lazy-load',
     'video',
     'popup', // popup media video needs video module
+    'form/validate',
     'form/checkbox',
     'form/radio',
     'form/select',

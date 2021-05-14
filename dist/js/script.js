@@ -213,7 +213,12 @@ animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animatio
     'use strict';
 
     template = function (data, template, sign) {
-        const s = sign || '%';
+        const s = sign || '%',
+            tplEl = document.getElementById(template);
+
+        if (tplEl) {
+            template = tplEl.innerHTML;
+        }
 
         let result = template;
 
@@ -1824,6 +1829,625 @@ var Popup, MediaPopup;
     };
 
 })();
+var ValidateForm;
+
+(function() {
+    'use strict';
+
+    ValidateForm = {
+        input: null,
+        formSelector: null,
+
+        errorTip: function (err, errInd, errorTxt) {
+            const field = this.input.closest('.form__field') || this.input.parentElement,
+                tipEl = field.querySelector('.field-error-tip');
+
+            if (err) {
+                field.classList.remove('field-success');
+                field.classList.add('field-error');
+
+                if (errInd) {
+                    if (tipEl) {
+                        if (!tipEl.hasAttribute('data-error-text')) {
+                            tipEl.setAttribute('data-error-text', tipEl.innerHTML);
+                        }
+                        tipEl.innerHTML = (errInd != 'custom') ? tipEl.getAttribute('data-error-text-' + errInd) : errorTxt;
+                    }
+
+                    field.setAttribute('data-error-index', errInd);
+
+                } else {
+                    if (tipEl && tipEl.hasAttribute('data-error-text')) {
+                        tipEl.innerHTML = tipEl.getAttribute('data-error-text');
+                    }
+
+                    field.removeAttribute('data-error-index');
+                }
+
+            } else {
+                field.classList.remove('field-error');
+                field.classList.add('field-success');
+                field.removeAttribute('data-error-index');
+            }
+        },
+
+        customErrorTip: function (input, errorTxt, isLockForm) {
+            if (!input) return;
+
+            this.input = input;
+
+            if (errorTxt) {
+                this.errorTip(true, 'custom', errorTxt);
+
+                if (isLockForm) {
+                    input.setAttribute('data-custom-error', 'true');
+                }
+            } else {
+                this.errorTip(false);
+                input.removeAttribute('data-custom-error');
+
+                this.validate(input.closest('form'));
+            }
+        },
+
+        formError: function (formElem, err, errTxt) {
+            const errTipElem = formElem.querySelector('.form-error-tip');
+
+            if (err) {
+                formElem.classList.add('form-error');
+
+                if (!errTipElem) return;
+
+                if (errTxt) {
+                    if (!errTipElem.hasAttribute('data-error-text')) {
+                        errTipElem.setAttribute('data-error-text', errTipElem.innerHTML);
+                    }
+
+                    errTipElem.innerHTML = errTxt;
+                } else if (errTipElem.hasAttribute('data-error-text')) {
+                    errTipElem.innerHTML = errTipElem.getAttribute('data-error-text');
+                }
+            } else {
+                formElem.classList.remove('form-error');
+            }
+        },
+
+        customFormErrorTip: function (formElem, errorTxt) {
+            if (!formElem) return;
+
+            if (errorTxt) {
+                this.formError(formElem, true, errorTxt);
+            } else {
+                this.formError(formElem, false);
+            }
+        },
+
+        txt: function () {
+            let err = false;
+
+            if (!/^[0-9a-zа-яё_,.:;@-\s]*$/i.test(this.input.value)) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        num: function () {
+            let err = false;
+
+            if (!/^[0-9.,-]*$/.test(this.input.value)) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        cardNumber: function () {
+            let err = false;
+
+            if (!/^\d{4}\-\d{4}\-\d{4}\-\d{4}$/.test(this.input.value)) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        name: function () {
+            let err = false;
+
+            if (!/^[a-zа-яё'\s-]{2,21}(\s[a-zа-яё'\s-]{2,21})?(\s[a-zа-яё'\s-]{2,21})?$/i.test(this.input.value)) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        date: function () {
+            let err = false,
+                errDate = false,
+                matches = this.input.value.match(/^(\d{2}).(\d{2}).(\d{4})$/);
+
+            if (!matches) {
+                errDate = 1;
+            } else {
+                var compDate = new Date(matches[3], (matches[2] - 1), matches[1]),
+                    curDate = new Date();
+
+                if (this.input.hasAttribute('data-min-years-passed')) {
+                    var interval = curDate.valueOf() - new Date(curDate.getFullYear() - (+this.input.getAttribute('data-min-years-passed')), curDate.getMonth(), curDate.getDate()).valueOf();
+
+                    if (curDate.valueOf() < compDate.valueOf() || (curDate.getFullYear() - matches[3]) > 100) {
+                        errDate = 1;
+                    } else if ((curDate.valueOf() - compDate.valueOf()) < interval) {
+                        errDate = 2;
+                    }
+                }
+
+                if (compDate.getFullYear() != matches[3] || compDate.getMonth() != (matches[2] - 1) || compDate.getDate() != matches[1]) {
+                    errDate = 1;
+                }
+            }
+
+            if (errDate == 1) {
+                this.errorTip(true, 2);
+                err = true;
+            } else if (errDate == 2) {
+                this.errorTip(true, 3);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        time: function () {
+            const matches = this.input.value.match(/^(\d{1,2}):(\d{1,2})$/);
+
+            let err = false;
+
+            if (!matches || Number(matches[1]) > 23 || Number(matches[2]) > 59) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        email: function () {
+            let err = false;
+
+            if (!/^[a-z0-9]+[\w\-\.]*@([\w\-]{2,}\.)+[a-z]{2,}$/i.test(this.input.value)) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        url: function () {
+            let err = false;
+
+            if (!/^(https?\:\/\/)?[а-я\w-.]+\.[a-zа-я]{2,11}[/?а-я\w/=-]+$/i.test(this.input.value)) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        tel: function () {
+            let err = false;
+
+            if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        pass: function () {
+            let err = false,
+                minLng = this.input.getAttribute('data-min-length');
+
+            if (minLng && this.input.value.length < minLng) {
+                this.errorTip(true, 2);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        checkbox: function (elem) {
+            this.input = elem;
+
+            var group = elem.closest('.form__chbox-group');
+
+            if (group && group.getAttribute('data-tested')) {
+                var checkedElements = 0,
+                    elements = group.querySelectorAll('input[type="checkbox"]');
+
+                for (var i = 0; i < elements.length; i++) {
+                    if (elements[i].checked) {
+                        checkedElements++;
+                    }
+                }
+
+                if (checkedElements < group.getAttribute('data-min')) {
+                    group.classList.add('form__chbox-group_error');
+                } else {
+                    group.classList.remove('form__chbox-group_error');
+                }
+
+            } else if (elem.getAttribute('data-tested')) {
+                if (elem.getAttribute('data-required') && !elem.checked) {
+                    this.errorTip(true);
+                } else {
+                    this.errorTip(false);
+                }
+            }
+        },
+
+        radio: function (elem) {
+            this.input = elem;
+
+            var checkedElement = false,
+                group = elem.closest('.form__radio-group');
+
+            if (!group) return;
+
+            var elements = group.querySelectorAll('input[type="radio"]');
+
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].checked) {
+                    checkedElement = true;
+                }
+            }
+
+            if (!checkedElement) {
+                group.classList.add('form__radio-group_error');
+            } else {
+                group.classList.remove('form__radio-group_error');
+            }
+        },
+
+        select: function (elem) {
+            let err = false;
+
+            this.input = elem;
+
+            if (elem.getAttribute('data-required') && !elem.value.length) {
+                this.errorTip(true);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        file: function (elem, filesArr) {
+            this.input = elem;
+
+            let err = false,
+                errCount = { ext: 0, size: 0 },
+                maxFiles = +this.input.getAttribute('data-max-files'),
+                extRegExp = new RegExp('(?:\\.' + this.input.getAttribute('data-ext').replace(/,/g, '|\\.') + ')$', 'i'),
+                maxSize = +this.input.getAttribute('data-max-size'),
+                fileItemElements = this.input.closest('.custom-file').querySelectorAll('.custom-file__item');;
+
+            for (var i = 0; i < filesArr.length; i++) {
+                var file = filesArr[i];
+
+                if (!file.name.match(extRegExp)) {
+                    errCount.ext++;
+
+                    if (fileItemElements[i]) {
+                        fileItemElements[i].classList.add('file-error');
+                    }
+
+                    continue;
+                }
+
+                if (file.size > maxSize) {
+                    errCount.size++;
+
+                    if (fileItemElements[i]) {
+                        fileItemElements[i].classList.add('file-error');
+                    }
+                }
+            }
+
+            if (maxFiles && filesArr.length > maxFiles) {
+                this.errorTip(true, 4);
+                err = true;
+            } else if (errCount.ext) {
+                this.errorTip(true, 2);
+                err = true;
+            } else if (errCount.size) {
+                this.errorTip(true, 3);
+                err = true;
+            } else {
+                this.errorTip(false);
+            }
+
+            return err;
+        },
+
+        validateOnInput: function (elem) {
+            this.input = elem;
+
+            const dataType = elem.getAttribute('data-type');
+
+            if (elem.getAttribute('data-required') && (!elem.value.length || /^\s+$/.test(elem.value))) {
+                this.errorTip(true);
+            } else if (elem.value.length) {
+                if (dataType) {
+                    try {
+                        this[dataType]();
+                    } catch (error) {
+                        console.log('Error while process', dataType)
+                    }
+                } else {
+                    this.errorTip(false);
+                }
+            } else {
+                this.errorTip(false);
+            }
+        },
+
+        validate: function (formElem) {
+            let err = 0;
+
+            // text, password, textarea
+            const elements = formElem.querySelectorAll('input[type="text"], input[type="password"], input[type="number"], input[type="tel"], textarea');
+
+            const checkElems = (elements) => {
+                for (let i = 0; i < elements.length; i++) {
+                    const elem = elements[i];
+
+                    if (elemIsHidden(elem)) continue;
+
+                    this.input = elem;
+
+                    elem.setAttribute('data-tested', 'true');
+
+                    const dataType = elem.getAttribute('data-type');
+
+                    if (elem.getAttribute('data-required') && (!elem.value.length || /^\s+$/.test(elem.value))) {
+                        this.errorTip(true);
+                        err++;
+                    } else if (elem.value.length) {
+                        if (elem.hasAttribute('data-custom-error')) {
+                            err++;
+                        } else if (dataType) {
+                            try {
+                                if (this[dataType]()) {
+                                    err++;
+                                }
+                            } catch (error) {
+                                console.log('Error while process', dataType)
+                            }
+                        } else {
+                            this.errorTip(false);
+                        }
+                    } else {
+                        this.errorTip(false);
+                    }
+                }
+            }
+
+            checkElems(elements);
+
+            if (formElem.id) {
+                const elements = document.querySelectorAll('input[form="' + formElem.id + '"]');
+
+                checkElems(elements);
+            }
+
+            // select
+            const selectElements = formElem.querySelectorAll('.select__input');
+
+            for (let i = 0; i < selectElements.length; i++) {
+                const selectElem = selectElements[i];
+
+                if (elemIsHidden(selectElem.parentElement)) continue;
+
+                if (this.select(selectElem)) {
+                    err++;
+                }
+            }
+
+            // checkboxes
+            const chboxEls = formElem.querySelectorAll('input[type="checkbox"]');
+
+            for (let i = 0; i < chboxEls.length; i++) {
+                const elem = chboxEls[i];
+
+                if (elemIsHidden(elem)) {
+                    continue;
+                }
+
+                this.input = elem;
+
+                elem.setAttribute('data-tested', 'true');
+
+                if (elem.getAttribute('data-required') && !elem.checked) {
+                    this.errorTip(true);
+                    err++;
+                } else {
+                    this.errorTip(false);
+                }
+            }
+
+            // checkbox group
+            const chboxGrEls = formElem.querySelectorAll('.form__chbox-group');
+
+            for (let i = 0; i < chboxGrEls.length; i++) {
+                var group = chboxGrEls[i],
+                    checkedElements = 0;
+
+                if (elemIsHidden(group)) {
+                    continue;
+                }
+
+                group.setAttribute('data-tested', 'true');
+
+                const chboxInGrEls = group.querySelectorAll('input[type="checkbox"]');
+
+                for (let i = 0; i < chboxInGrEls.length; i++) {
+                    if (chboxInGrEls[i].checked) {
+                        checkedElements++;
+                    }
+                }
+
+                if (checkedElements < group.getAttribute('data-min')) {
+                    group.classList.add('form__chbox-group_error');
+                    err++;
+                } else {
+                    group.classList.remove('form__chbox-group_error');
+                }
+            }
+
+            // radio group
+            const radGrEls = formElem.querySelectorAll('.form__radio-group');
+
+            for (let i = 0; i < radGrEls.length; i++) {
+                var group = radGrEls[i],
+                    checkedElement = false;
+
+                if (elemIsHidden(group)) {
+                    continue;
+                }
+
+                group.setAttribute('data-tested', 'true');
+
+                const radInGrEls = group.querySelectorAll('input[type="radio"]');
+
+                for (let i = 0; i < radInGrEls.length; i++) {
+                    if (radInGrEls[i].checked) {
+                        checkedElement = true;
+                    }
+                }
+
+                if (!checkedElement) {
+                    group.classList.add('form__radio-group_error');
+                    err++;
+                } else {
+                    group.classList.remove('form__radio-group_error');
+                }
+            }
+
+            // file
+            const fileEls = formElem.querySelectorAll('input[type="file"]');
+
+            for (var i = 0; i < fileEls.length; i++) {
+                var elem = fileEls[i];
+
+                if (elemIsHidden(elem)) {
+                    continue;
+                }
+
+                this.input = elem;
+
+                if (CustomFile.inputFiles(elem).length) {
+                    if (this.file(elem, CustomFile.inputFiles(elem))) {
+                        err++;
+                    }
+                } else if (elem.getAttribute('data-required')) {
+                    this.errorTip(true);
+                    err++;
+                } else {
+                    this.errorTip(false);
+                }
+            }
+
+            // passwords compare
+            const pwdCompEls = formElem.querySelectorAll('input[data-pass-compare-input]');
+
+            for (var i = 0; i < pwdCompEls.length; i++) {
+                var elem = pwdCompEls[i];
+
+                if (elemIsHidden(elem)) {
+                    continue;
+                }
+
+                this.input = elem;
+
+                var val = elem.value;
+
+                if (val.length) {
+                    var compElemVal = formElem.querySelector(elem.getAttribute('data-pass-compare-input')).value;
+
+                    if (val !== compElemVal) {
+                        this.errorTip(true, 2);
+                        err++;
+                    } else {
+                        this.errorTip(false);
+                    }
+                }
+            }
+
+            this.formError(formElem, err);
+
+            return (err) ? false : true;
+        },
+
+        init: function (formSelector) {
+            this.formSelector = formSelector;
+
+            document.removeEventListener('input', this.inpH);
+            document.removeEventListener('change', this.chH);
+
+            this.inpH = this.inpH.bind(this);
+            this.chH = this.chH.bind(this);
+
+            document.addEventListener('input', this.inpH);
+            document.addEventListener('change', this.chH);
+        },
+
+        inpH: function (e) {
+            const elem = e.target.closest(this.formSelector + ' input[type="text"],' + this.formSelector + ' input[type="password"],' + this.formSelector + ' input[type="number"],' + this.formSelector + ' input[type="tel"],' + this.formSelector + ' textarea, input[type="text"][form]');
+
+            if (elem && elem.hasAttribute('data-tested')) {
+                setTimeout(() => {
+                    this.validateOnInput(elem);
+                }, 121);
+            }
+        },
+
+        chH: function (e) {
+            const elem = e.target.closest(this.formSelector + ' input[type="radio"],' + this.formSelector + ' input[type="checkbox"]');
+
+            if (elem) {
+                this[elem.type](elem);
+            }
+        }
+    };
+})();
 /* 
 *   Checkbox.onChange(function(el, state) {
 *       // body
@@ -3047,217 +3671,226 @@ var FormSlider;
 ; var CustomFile;
 
 (function() {
-	'use strict';
-	
-	//custom file
-	CustomFile = {
-		input: null,
-		filesObj: {},
-		filesArrayObj: {},
-		
-		clear: function(elem) {
-			if (elem.hasAttribute('data-preview-elem')) {
-				document.querySelector(elem.getAttribute('data-preview-elem')).innerHTML = '';
-			}
-			
-			elem.closest('.custom-file').querySelector('.custom-file__items').innerHTML = '';
-			
-			this.filesObj[elem.id] = {};
-			this.filesArrayObj[elem.id] = [];
-			
-			this.labelText(elem);
-		},
-		
-		fieldClass: function(inputElem) {
-			const fieldElem = inputElem.closest('.custom-file');
-			
-			if (this.filesArrayObj[inputElem.id].length) {
-				fieldElem.classList.add('custom-file_loaded');
-				
-				if (this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
-					fieldElem.classList.add('custom-file_max-loaded');
-				} else {
-					fieldElem.classList.remove('custom-file_max-loaded');
-				}
-			} else {
-				fieldElem.classList.remove('custom-file_loaded');
-				fieldElem.classList.remove('custom-file_max-loaded');
-			}
-		},
+    'use strict';
+    
+    //custom file
+    CustomFile = {
+        input: null,
+        filesObj: {},
+        filesArrayObj: {},
+        filesIsReady: null,
 
-		lockUpload: function(inputElem) {
-			if (inputElem.classList.contains('custom-file__input_lock') && inputElem.multiple && inputElem.hasAttribute('data-max-files') && this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
-				inputElem.setAttribute('disabled', 'disable');
-			} else {
-				inputElem.removeAttribute('disabled');
-			}
-		},
-		
-		labelText: function(inputElem) {
-			const labTxtElem = inputElem.closest('.custom-file').querySelector('.custom-file__label-text');
-			
-			if (!labTxtElem || !labTxtElem.hasAttribute('data-label-text-2')) return;
-			
-			const maxFiles = (inputElem.multiple) ? (+this.input.getAttribute('data-max-files')) : 1;
-			
-			if (this.filesArrayObj[inputElem.id].length >= maxFiles) {
-				if (!labTxtElem.hasAttribute('data-label-text')) {
-					labTxtElem.setAttribute('data-label-text', labTxtElem.innerHTML);
-				}
-				labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text-2');
-			} else if (labTxtElem.hasAttribute('data-label-text')) {
-				labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text');
-			}
-		},
-		
-		loadPreview: function(file, fileItem) {
-			var reader = new FileReader(),
-			previewDiv;
-			
-			if (this.input.hasAttribute('data-preview-elem')) {
-				previewDiv = document.querySelector(this.input.getAttribute('data-preview-elem'));
-			} else {
-				previewDiv = document.createElement('div');
-				
-				previewDiv.className = 'custom-file__preview';
-				
-				fileItem.insertBefore(previewDiv, fileItem.firstChild);
-			}
-			
-			reader.onload = function(e) {
-				setTimeout(function() {
-					var imgDiv = document.createElement('div');
-					
-					imgDiv.innerHTML = (file.type.match(/image.*/)) ? '<img src="'+ e.target.result +'">' : '<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCAzMDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzMDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNCOEQ4RkYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIi8+DQo8cG9seWdvbiBmaWxsPSIjN0M3QzdDIiBwb2ludHM9IjUxLDI2Ny42NjY5OTIyIDExMSwxOTcgMTUxLDI0My42NjY5OTIyIDI4OC4zMzMwMDc4LDEyMSAzMDAuMTY2OTkyMiwxMzQuMTY2NTAzOSAzMDAsMzAwIDAsMzAwIA0KCTAsMjA4LjgzMzk4NDQgIi8+DQo8cG9seWdvbiBmaWxsPSIjQUZBRkFGIiBwb2ludHM9IjAuMTI1LDI2Ny4xMjUgNDguODMzNDk2MSwxNzQuNjY2OTkyMiAxMDMuNSwyNjQuNSAyMDMuODc1LDY1LjMzMzAwNzggMzAwLjE2Njk5MjIsMjU0LjUgMzAwLDMwMCANCgkwLDMwMCAiLz4NCjxjaXJjbGUgZmlsbD0iI0VBRUFFQSIgY3g9Ijc3LjAwMDI0NDEiIGN5PSI3MSIgcj0iMzYuNjY2NzQ4Ii8+DQo8L3N2Zz4NCg==">';
-					
-					previewDiv.appendChild(imgDiv);
-				}, 121);
-			}
-			
-			reader.readAsDataURL(file);
-		},
-		
-		changeInput: function(elem) {
-			var fileItems = elem.closest('.custom-file').querySelector('.custom-file__items');
-			
-			if (elem.getAttribute('data-action') == 'clear' || !elem.multiple) {
-				this.clear(elem);
-			}
-			
-			for (var i = 0; i < elem.files.length; i++) {
-				var file = elem.files[i];
-				
-				if (this.filesObj[elem.id] && this.filesObj[elem.id][file.name] != undefined) continue;
-				
-				var fileItem = document.createElement('div');
-				
-				fileItem.className = 'custom-file__item';
-				fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div><button type="button" class="custom-file__del-btn" data-ind="'+ file.name +'"></button>';
-				
-				fileItems.appendChild(fileItem);
-				
-				this.loadPreview(file, fileItem);
-			}
-			
-			this.setFilesObj(elem.files);
-		},
-		
-		setFilesObj: function(filesList, objKey) {
-			var inputElem = this.input;
-			
-			if (!inputElem.id.length) {
-				inputElem.id = 'custom-file-input-'+ new Date().valueOf();
-			}
-			
-			if (filesList) {
-				this.filesObj[inputElem.id] = this.filesObj[inputElem.id] || {};
-				
-				for (var i = 0; i < filesList.length; i++) {
-					this.filesObj[inputElem.id][filesList[i].name] = filesList[i];
-				}
-			} else {
-				delete this.filesObj[inputElem.id][objKey];
-			}
-			
-			this.filesArrayObj[inputElem.id] = [];
-			
-			for (var key in this.filesObj[inputElem.id]) {
-				this.filesArrayObj[inputElem.id].push(this.filesObj[inputElem.id][key]);
-			}
-			
-			this.fieldClass(inputElem);
-			
-			this.labelText(inputElem);
+        init: function() {
+            document.addEventListener('change', (e) => {
+                const elem = e.target.closest('input[type="file"]');
+                
+                if (!elem) return;
+                
+                this.input = elem;
+                
+                this.changeInput(elem);
+            });
+            
+            document.addEventListener('click', (e) => {
+                const delBtnElem = e.target.closest('.custom-file__del-btn'),
+                clearBtnElem = e.target.closest('.custom-file__clear-btn'),
+                inputElem = e.target.closest('input[type="file"]');
+                
+                if (inputElem && inputElem.multiple) inputElem.value = null;
+                
+                if (delBtnElem) {
+                    this.input = delBtnElem.closest('.custom-file').querySelector('.custom-file__input');
 
-			this.lockUpload(inputElem);
-			
-			ValidateForm.file(inputElem, this.filesArrayObj[inputElem.id]);
-		},
-		
-		inputFiles: function(inputElem) {
-			return this.filesArrayObj[inputElem.id] || [];
-		},
-		
-		getFiles: function(formElem) {
-			var inputFileElements = formElem.querySelectorAll('.custom-file__input'),
-			filesArr = [];
-			
-			if (inputFileElements.length == 1) {
-				filesArr = this.filesArrayObj[inputFileElements[0].id];
-			} else {
-				for (var i = 0; i < inputFileElements.length; i++) {
-					if (this.filesArrayObj[inputFileElements[i].id]) {
-						filesArr.push({name: inputFileElements[i].name, files: this.filesArrayObj[inputFileElements[i].id]});
-					}
-				}
-			}
-			
-			return filesArr;
-		},
-		
-		init: function() {
-			document.addEventListener('change', (e) => {
-				var elem = e.target.closest('input[type="file"]');
-				
-				if (!elem) return;
-				
-				this.input = elem;
-				
-				this.changeInput(elem);
-			});
-			
-			document.addEventListener('click', (e) => {
-				var delBtnElem = e.target.closest('.custom-file__del-btn'),
-				clearBtnElem = e.target.closest('.custom-file__clear-btn'),
-				inputElem = e.target.closest('input[type="file"]');
-				
-				if (inputElem && inputElem.multiple) {
-					inputElem.value = null;
-				}
-				
-				if (delBtnElem) {
-					this.input = delBtnElem.closest('.custom-file').querySelector('.custom-file__input');
-					
-					delBtnElem.closest('.custom-file__items').removeChild(delBtnElem.closest('.custom-file__item'));
-					
-					this.setFilesObj(false, delBtnElem.getAttribute('data-ind'));
-				}
-				
-				if (clearBtnElem) {
-					var inputElem = clearBtnElem.closest('.custom-file').querySelector('.custom-file__input');
-					
-					inputElem.value = null;
-					
-					this.clear(inputElem);
-				}
-			});
-		}
-	};
-	
-	//init script
-	document.addEventListener('DOMContentLoaded', function() {
-		CustomFile.init();
-	});
+                    this.input.value = null;
+                    
+                    delBtnElem.closest('.custom-file__items').removeChild(delBtnElem.closest('.custom-file__item'));
+                    
+                    this.setFilesObj(false, delBtnElem.getAttribute('data-ind'));
+
+                    if (this.filesDeleted) this.filesDeleted(this.input);
+                }
+                
+                if (clearBtnElem) {
+                    const inputElem = clearBtnElem.closest('.custom-file').querySelector('.custom-file__input');
+                    
+                    inputElem.value = null;
+                    
+                    this.clear(inputElem);
+                }
+            });
+        },
+        
+        clear: function(inpEl, resetVal) {
+            if (inpEl.hasAttribute('data-preview-elem')) {
+                document.querySelector(inpEl.getAttribute('data-preview-elem')).innerHTML = '';
+            }
+            
+            inpEl.closest('.custom-file').querySelector('.custom-file__items').innerHTML = '';
+
+            if (resetVal !== false) inpEl.value = null;
+            
+            this.filesObj[inpEl.id] = {};
+            this.filesArrayObj[inpEl.id] = [];
+            
+            this.labelText(inpEl);
+        },
+        
+        fieldClass: function(inputElem) {
+            const fieldElem = inputElem.closest('.custom-file');
+            
+            if (this.filesArrayObj[inputElem.id].length) {
+                fieldElem.classList.add('custom-file_loaded');
+                
+                if (this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
+                    fieldElem.classList.add('custom-file_max-loaded');
+                } else {
+                    fieldElem.classList.remove('custom-file_max-loaded');
+                }
+            } else {
+                fieldElem.classList.remove('custom-file_loaded');
+                fieldElem.classList.remove('custom-file_max-loaded');
+            }
+        },
+        
+        lockUpload: function(inputElem) {
+            if (inputElem.classList.contains('custom-file__input_lock') && inputElem.multiple && inputElem.hasAttribute('data-max-files') && this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
+                inputElem.setAttribute('disabled', 'disable');
+            } else {
+                inputElem.removeAttribute('disabled');
+            }
+        },
+        
+        labelText: function(inputElem) {
+            const labTxtElem = inputElem.closest('.custom-file').querySelector('.custom-file__label-text');
+            
+            if (!labTxtElem || !labTxtElem.hasAttribute('data-label-text-2')) return;
+            
+            const maxFiles = (inputElem.multiple) ? (+this.input.getAttribute('data-max-files')) : 1;
+            
+            if (this.filesArrayObj[inputElem.id].length >= maxFiles) {
+                if (!labTxtElem.hasAttribute('data-label-text')) {
+                    labTxtElem.setAttribute('data-label-text', labTxtElem.innerHTML);
+                }
+                labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text-2');
+            } else if (labTxtElem.hasAttribute('data-label-text')) {
+                labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text');
+            }
+        },
+        
+        loadPreview: function(file, fileItem) {
+            var reader = new FileReader(),
+            previewDiv;
+            
+            if (this.input.hasAttribute('data-preview-elem')) {
+                previewDiv = document.querySelector(this.input.getAttribute('data-preview-elem'));
+            } else {
+                previewDiv = document.createElement('div');
+                
+                previewDiv.className = 'custom-file__preview';
+                
+                fileItem.insertBefore(previewDiv, fileItem.firstChild);
+            }
+            
+            reader.onload = function(e) {
+                setTimeout(function() {
+                    var imgDiv = document.createElement('div');
+                    
+                    imgDiv.innerHTML = (file.type.match(/image.*/)) ? '<img src="'+ e.target.result +'">' : '<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCAzMDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzMDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNCOEQ4RkYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIi8+DQo8cG9seWdvbiBmaWxsPSIjN0M3QzdDIiBwb2ludHM9IjUxLDI2Ny42NjY5OTIyIDExMSwxOTcgMTUxLDI0My42NjY5OTIyIDI4OC4zMzMwMDc4LDEyMSAzMDAuMTY2OTkyMiwxMzQuMTY2NTAzOSAzMDAsMzAwIDAsMzAwIA0KCTAsMjA4LjgzMzk4NDQgIi8+DQo8cG9seWdvbiBmaWxsPSIjQUZBRkFGIiBwb2ludHM9IjAuMTI1LDI2Ny4xMjUgNDguODMzNDk2MSwxNzQuNjY2OTkyMiAxMDMuNSwyNjQuNSAyMDMuODc1LDY1LjMzMzAwNzggMzAwLjE2Njk5MjIsMjU0LjUgMzAwLDMwMCANCgkwLDMwMCAiLz4NCjxjaXJjbGUgZmlsbD0iI0VBRUFFQSIgY3g9Ijc3LjAwMDI0NDEiIGN5PSI3MSIgcj0iMzYuNjY2NzQ4Ii8+DQo8L3N2Zz4NCg==">';
+                    
+                    previewDiv.appendChild(imgDiv);
+                }, 121);
+            }
+            
+            reader.readAsDataURL(file);
+        },
+        
+        changeInput: function(elem) {
+            var fileItems = elem.closest('.custom-file').querySelector('.custom-file__items');
+            
+            if (elem.getAttribute('data-action') == 'clear' || !elem.multiple) {
+                this.clear(elem, false);
+            }
+            
+            for (var i = 0; i < elem.files.length; i++) {
+                var file = elem.files[i];
+                
+                if (this.filesObj[elem.id] && this.filesObj[elem.id][file.name] != undefined) continue;
+                
+                var fileItem = document.createElement('div');
+                
+                fileItem.className = 'custom-file__item';
+                fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div><button type="button" class="custom-file__del-btn" data-ind="'+ file.name +'"></button>';
+                
+                fileItems.appendChild(fileItem);
+                
+                this.loadPreview(file, fileItem);
+            }
+            
+            this.setFilesObj(elem.files);
+
+            if (this.filesIsReady) {
+                this.filesIsReady(elem);
+            }
+        },
+        
+        setFilesObj: function(filesList, objKey) {
+            var inputElem = this.input;
+            
+            if (!inputElem.id.length) {
+                inputElem.id = 'custom-file-input-'+ new Date().valueOf();
+            }
+            
+            if (filesList) {
+                this.filesObj[inputElem.id] = this.filesObj[inputElem.id] || {};
+                
+                for (var i = 0; i < filesList.length; i++) {
+                    this.filesObj[inputElem.id][filesList[i].name] = filesList[i];
+                }
+            } else {
+                delete this.filesObj[inputElem.id][objKey];
+            }
+            
+            this.filesArrayObj[inputElem.id] = [];
+            
+            for (var key in this.filesObj[inputElem.id]) {
+                this.filesArrayObj[inputElem.id].push(this.filesObj[inputElem.id][key]);
+            }
+            
+            this.fieldClass(inputElem);
+            
+            this.labelText(inputElem);
+            
+            this.lockUpload(inputElem);
+            
+            ValidateForm.file(inputElem, this.filesArrayObj[inputElem.id]);
+        },
+        
+        inputFiles: function(inputElem) {
+            return this.filesArrayObj[inputElem.id] || [];
+        },
+        
+        getFiles: function(formElem) {
+            var inputFileElements = formElem.querySelectorAll('.custom-file__input'),
+            filesArr = [];
+            
+            if (inputFileElements.length == 1) {
+                filesArr = this.filesArrayObj[inputFileElements[0].id];
+            } else {
+                for (var i = 0; i < inputFileElements.length; i++) {
+                    if (this.filesArrayObj[inputFileElements[i].id]) {
+                        filesArr.push({name: inputFileElements[i].name, files: this.filesArrayObj[inputFileElements[i].id]});
+                    }
+                }
+            }
+            
+            return filesArr;
+        }
+    };
+    
+    //init script
+    document.addEventListener('DOMContentLoaded', function() {
+        CustomFile.init();
+    });
 })();
 ; var Placeholder;
 
@@ -3371,16 +4004,42 @@ var Maskinput;
     'use strict';
 
     Maskinput = function (inputSel, type, opt) {
-        // if (!this.inputElem) return;
-
         opt = opt || {};
 
-        var defValue = '';
+        let defValue = '';
 
         this.inputElem = null;
 
-        this.tel = function (evStr) {
-            if (evStr == 'focus' && !this.inputElem.value.length) {
+        document.addEventListener('input', (e) => {
+            const inpEl = e.target.closest(inputSel);
+
+            if (inpEl) {
+                this.inputElem = inpEl;
+
+                try {
+                    this[type]();
+                } catch (error) {
+                    console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+                }
+            }
+        });
+
+        document.addEventListener('focus', (e) => {
+            const inpEl = e.target.closest(inputSel);
+
+            if (inpEl) {
+                this.inputElem = inpEl;
+
+                try {
+                    this[type]('focus');
+                } catch (error) {
+                    console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+                }
+            }
+        }, true);
+
+        this.tel = function (ev) {
+            if (ev == 'focus' && !this.inputElem.value.length) {
                 this.inputElem.value = '+7(';
             }
 
@@ -3419,26 +4078,73 @@ var Maskinput;
         this.date = function (ev) {
             if (ev == 'focus') return;
 
-            if (!/[\d\/]*/.test(this.inputElem.value)) {
+            if (!/^[\d\.]*$/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
             } else {
-                const reg = /^\d{0,2}(\/\d{0,2}(\/\d{0,4})?)?$/;
-
-                if (!reg.test(this.inputElem.value)) {
-                    this.inputElem.value = this.inputElem.value.replace(/^(\d{0,2})\/?(\d{0,2})\/?(\d{0,4})$/, function (str, p1, p2, p3) {
+                if (this.inputElem.value.length > defValue.length) {
+                    this.inputElem.value = this.inputElem.value.replace(/^(\d{0,2})\.?(\d{0,2})\.?(\d{0,4})$/, function (str, p1, p2, p3) {
                         let res;
 
+                        if (+p1[0] > 3 || Number(p1) > 31) return defValue;
+
                         if (p3 != '') {
-                            res = p1 + '/' + p2 + '/' + p3;
+                            res = p1 + '.' + p2 + '.' + p3;
                         } else if (p2 != '') {
-                            res = p1 + '/' + p2;
+                            if (+p2[0] > 1 || Number(p2) > 12) return defValue;
+
+                            if (p2.length == 2) {
+                                res = p1 + '.' + p2 + '.';
+                            } else {
+                                res = p1 + '.' + p2;
+                            }
+                        } else if (p1.length == 2) {
+                            res = p1 + '.';
+                        } else {
+                            res = p1;
                         }
 
                         return res;
                     });
                 }
 
-                if (!reg.test(this.inputElem.value)) {
+                if (!/^\d{0,2}(\.\d{0,2}(\.\d{0,4})?)?$/.test(this.inputElem.value)) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
+                }
+            }
+        }
+
+        this.time = function (ev) {
+            if (ev == 'focus') return;
+
+            if (!/^[\d\:]*$/.test(this.inputElem.value)) {
+                this.inputElem.value = defValue;
+            } else {
+                const reg = /^\d{0,2}(\:\d{0,2})?$/;
+
+                if (this.inputElem.value.length > defValue.length) {
+                    this.inputElem.value = this.inputElem.value.replace(/^(\d{0,2})\:?(\d{0,2})$/, function (str, p1, p2) {
+                        let res;
+
+                        if (p2 != '') {
+                            if (+p2[0] > 5 || Number(p2) > 59) return defValue;
+
+                            res = p1 + ':' + p2;
+
+                        } else {
+                            if (+p1[0] > 2 || Number(p1) > 23) return defValue;
+
+                            res = p1;
+
+                            if (p1.length == 2) res += ':';
+                        }
+
+                        return res;
+                    });
+                }
+
+                if (!/^\d{0,2}(\:\d{0,2})?$/.test(this.inputElem.value)) {
                     this.inputElem.value = defValue;
                 } else {
                     defValue = this.inputElem.value;
@@ -3504,43 +4210,46 @@ var Maskinput;
             }
         }
 
-        console.log(type);
+        this.cardNumber = function (ev) {
+            if (ev == 'focus') return;
 
-        document.addEventListener('input', (e) => {
-            const inpEl = e.target.closest(inputSel);
+            if (!/^[\d\-]*$/.test(this.inputElem.value)) {
+                this.inputElem.value = defValue;
+            } else {
+                if (this.inputElem.value.length > defValue.length) {
+                    this.inputElem.value = this.inputElem.value.replace(/^(\d{0,4})\-?(\d{0,4})\-?(\d{0,4})\-?(\d{0,4})$/, function (str, p1, p2, p3, p4) {
+                        let res;
 
-            console.log(inputSel);
-            console.log(e.target);
-            console.log(inpEl);
+                        if (p4 != '') {
+                            res = p1 + '-' + p2 + '-' + p3 + '-' + p4;
 
-            if (inpEl) {
-                this.inputElem = inpEl;
+                        } else if (p3 != '') {
+                            res = p1 + '-' + p2 + '-' + p3;
 
-                console.log(this);
+                            if (p3.length == 4) res += '-';
 
-                try {
-                    this[type]();
-                } catch (error) {
-                    console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
+                        } else if (p2 != '') {
+                            res = p1 + '-' + p2;
+
+                            if (p2.length == 4) res += '-';
+
+                        } else {
+                            res = p1;
+
+                            if (p1.length == 4) res += '-'
+                        }
+
+                        return res;
+                    });
+                }
+
+                if (!/^\d{0,4}(\-\d{0,4}(\-\d{0,4}(\-\d{0,4})?)?)?$/.test(this.inputElem.value)) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
                 }
             }
-        });
-
-        // this.inputElem.addEventListener('input', () => {
-        //     try {
-        //         this[type]();
-        //     } catch (error) {
-        //         console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
-        //     }
-        // });
-
-        // this.inputElem.addEventListener('focus', () => {
-        //     try {
-        //         this[type]('focus');
-        //     } catch (error) {
-        //         console.log(error, 'Add valid type in {new Maskinput(this, Str type);}');
-        //     }
-        // }, true);
+        }
     }
 })();
 // NextFieldset.init(...params);
@@ -3727,583 +4436,6 @@ var ValidateForm, Form, DuplicateForm;
 (function () {
     'use strict';
 
-    // validate form
-    ValidateForm = {
-        input: null,
-        formSelector: null,
-
-        errorTip: function (err, errInd, errorTxt) {
-            const field = this.input.closest('.form__field') || this.input.parentElement,
-                tipEl = field.querySelector('.field-error-tip');
-
-            if (err) {
-                field.classList.remove('field-success');
-                field.classList.add('field-error');
-
-                if (errInd) {
-                    if (tipEl) {
-                        if (!tipEl.hasAttribute('data-error-text')) {
-                            tipEl.setAttribute('data-error-text', tipEl.innerHTML);
-                        }
-                        tipEl.innerHTML = (errInd != 'custom') ? tipEl.getAttribute('data-error-text-' + errInd) : errorTxt;
-                    }
-
-                    field.setAttribute('data-error-index', errInd);
-
-                } else {
-                    if (tipEl && tipEl.hasAttribute('data-error-text')) {
-                        tipEl.innerHTML = tipEl.getAttribute('data-error-text');
-                    }
-
-                    field.removeAttribute('data-error-index');
-                }
-
-            } else {
-                field.classList.remove('field-error');
-                field.classList.add('field-success');
-                field.removeAttribute('data-error-index');
-            }
-        },
-
-        customErrorTip: function (input, errorTxt, isLockForm) {
-            if (!input) return;
-
-            this.input = input;
-
-            if (errorTxt) {
-                this.errorTip(true, 'custom', errorTxt);
-
-                if (isLockForm) {
-                    input.setAttribute('data-custom-error', 'true');
-                }
-            } else {
-                this.errorTip(false);
-                input.removeAttribute('data-custom-error');
-
-                this.validate(input.closest('form'));
-            }
-        },
-
-        formError: function (formElem, err, errTxt) {
-            const errTipElem = formElem.querySelector('.form-error-tip');
-
-            if (err) {
-                formElem.classList.add('form-error');
-
-                if (!errTipElem) return;
-
-                if (errTxt) {
-                    if (!errTipElem.hasAttribute('data-error-text')) {
-                        errTipElem.setAttribute('data-error-text', errTipElem.innerHTML);
-                    }
-
-                    errTipElem.innerHTML = errTxt;
-                } else if (errTipElem.hasAttribute('data-error-text')) {
-                    errTipElem.innerHTML = errTipElem.getAttribute('data-error-text');
-                }
-            } else {
-                formElem.classList.remove('form-error');
-            }
-        },
-
-        customFormErrorTip: function (formElem, errorTxt) {
-            if (!formElem) return;
-
-            if (errorTxt) {
-                this.formError(formElem, true, errorTxt);
-            } else {
-                this.formError(formElem, false);
-            }
-        },
-
-        txt: function () {
-            var err = false;
-
-            if (!/^[0-9a-zа-яё_,.:;@-\s]*$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        num: function () {
-            var err = false;
-
-            if (!/^[0-9.,-]*$/.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        name: function () {
-            var err = false;
-
-            if (!/^[a-zа-яё'\s-]{2,21}(\s[a-zа-яё'\s-]{2,21})?(\s[a-zа-яё'\s-]{2,21})?$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        date: function () {
-            var err = false,
-                errDate = false,
-                matches = this.input.value.match(/^(\d{2}).(\d{2}).(\d{4})$/);
-
-            if (!matches) {
-                errDate = 1;
-            } else {
-                var compDate = new Date(matches[3], (matches[2] - 1), matches[1]),
-                    curDate = new Date();
-
-                if (this.input.hasAttribute('data-min-years-passed')) {
-                    var interval = curDate.valueOf() - new Date(curDate.getFullYear() - (+this.input.getAttribute('data-min-years-passed')), curDate.getMonth(), curDate.getDate()).valueOf();
-
-                    if (curDate.valueOf() < compDate.valueOf() || (curDate.getFullYear() - matches[3]) > 100) {
-                        errDate = 1;
-                    } else if ((curDate.valueOf() - compDate.valueOf()) < interval) {
-                        errDate = 2;
-                    }
-                }
-
-                if (compDate.getFullYear() != matches[3] || compDate.getMonth() != (matches[2] - 1) || compDate.getDate() != matches[1]) {
-                    errDate = 1;
-                }
-            }
-
-            if (errDate == 1) {
-                this.errorTip(true, 2);
-                err = true;
-            } else if (errDate == 2) {
-                this.errorTip(true, 3);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        email: function () {
-            var err = false;
-
-            if (!/^[a-z0-9]+[\w\-\.]*@([\w\-]{2,}\.)+[a-z]{2,}$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        url: function () {
-            var err = false;
-
-            if (!/^(https?\:\/\/)?[а-я\w-.]+\.[a-zа-я]{2,11}[/?а-я\w/=-]+$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        tel: function () {
-            var err = false;
-
-            if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        pass: function () {
-            var err = false,
-                minLng = this.input.getAttribute('data-min-length');
-
-            if (minLng && this.input.value.length < minLng) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        checkbox: function (elem) {
-            this.input = elem;
-
-            var group = elem.closest('.form__chbox-group');
-
-            if (group && group.getAttribute('data-tested')) {
-                var checkedElements = 0,
-                    elements = group.querySelectorAll('input[type="checkbox"]');
-
-                for (var i = 0; i < elements.length; i++) {
-                    if (elements[i].checked) {
-                        checkedElements++;
-                    }
-                }
-
-                if (checkedElements < group.getAttribute('data-min')) {
-                    group.classList.add('form__chbox-group_error');
-                } else {
-                    group.classList.remove('form__chbox-group_error');
-                }
-
-            } else if (elem.getAttribute('data-tested')) {
-                if (elem.getAttribute('data-required') && !elem.checked) {
-                    this.errorTip(true);
-                } else {
-                    this.errorTip(false);
-                }
-            }
-        },
-
-        radio: function (elem) {
-            this.input = elem;
-
-            var checkedElement = false,
-                group = elem.closest('.form__radio-group');
-
-            if (!group) return;
-
-            var elements = group.querySelectorAll('input[type="radio"]');
-
-            for (var i = 0; i < elements.length; i++) {
-                if (elements[i].checked) {
-                    checkedElement = true;
-                }
-            }
-
-            if (!checkedElement) {
-                group.classList.add('form__radio-group_error');
-            } else {
-                group.classList.remove('form__radio-group_error');
-            }
-        },
-
-        select: function (elem) {
-            var err = false;
-
-            this.input = elem;
-
-            if (elem.getAttribute('data-required') && !elem.value.length) {
-                this.errorTip(true);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        file: function (elem, filesArr) {
-            this.input = elem;
-
-            var err = false,
-                errCount = { ext: 0, size: 0 },
-                maxFiles = +this.input.getAttribute('data-max-files'),
-                extRegExp = new RegExp('(?:\\.' + this.input.getAttribute('data-ext').replace(/,/g, '|\\.') + ')$', 'i'),
-                maxSize = +this.input.getAttribute('data-max-size'),
-                fileItemElements = this.input.closest('.custom-file').querySelectorAll('.custom-file__item');;
-
-            for (var i = 0; i < filesArr.length; i++) {
-                var file = filesArr[i];
-
-                if (!file.name.match(extRegExp)) {
-                    errCount.ext++;
-
-                    if (fileItemElements[i]) {
-                        fileItemElements[i].classList.add('file-error');
-                    }
-
-                    continue;
-                }
-
-                if (file.size > maxSize) {
-                    errCount.size++;
-
-                    if (fileItemElements[i]) {
-                        fileItemElements[i].classList.add('file-error');
-                    }
-                }
-            }
-
-            if (maxFiles && filesArr.length > maxFiles) {
-                this.errorTip(true, 4);
-                err = true;
-            } else if (errCount.ext) {
-                this.errorTip(true, 2);
-                err = true;
-            } else if (errCount.size) {
-                this.errorTip(true, 3);
-                err = true;
-            } else {
-                this.errorTip(false);
-            }
-
-            return err;
-        },
-
-        validateOnInput: function (elem) {
-            this.input = elem;
-
-            var dataType = elem.getAttribute('data-type');
-
-            if (elem.getAttribute('data-required') && (!elem.value.length || /^\s+$/.test(elem.value))) {
-                this.errorTip(true);
-            } else if (elem.value.length) {
-                if (dataType) {
-                    try {
-                        this[dataType]();
-                    } catch (error) {
-                        console.log('Error while process', dataType)
-                    }
-                } else {
-                    this.errorTip(false);
-                }
-            } else {
-                this.errorTip(false);
-            }
-        },
-
-        validate: function (formElem) {
-            var err = 0;
-
-            // text, password, textarea
-            var elements = formElem.querySelectorAll('input[type="text"], input[type="password"], input[type="number"], input[type="tel"], textarea');
-
-            for (var i = 0; i < elements.length; i++) {
-                var elem = elements[i];
-
-                if (elemIsHidden(elem)) {
-                    continue;
-                }
-
-                this.input = elem;
-
-                elem.setAttribute('data-tested', 'true');
-
-                var dataType = elem.getAttribute('data-type');
-
-                if (elem.getAttribute('data-required') && (!elem.value.length || /^\s+$/.test(elem.value))) {
-                    this.errorTip(true);
-                    err++;
-                } else if (elem.value.length) {
-                    if (elem.hasAttribute('data-custom-error')) {
-                        err++;
-                    } else if (dataType) {
-                        try {
-                            if (this[dataType]()) {
-                                err++;
-                            }
-                        } catch (error) {
-                            console.log('Error while process', dataType)
-                        }
-                    } else {
-                        this.errorTip(false);
-                    }
-                } else {
-                    this.errorTip(false);
-                }
-            }
-
-            // select
-            const selectElements = formElem.querySelectorAll('.select__input');
-
-            for (let i = 0; i < selectElements.length; i++) {
-                const selectElem = selectElements[i];
-
-                if (elemIsHidden(selectElem.parentElement)) continue;
-
-                if (this.select(selectElem)) {
-                    err++;
-                }
-            }
-
-            // checkboxes
-            var elements = formElem.querySelectorAll('input[type="checkbox"]');
-
-            for (var i = 0; i < elements.length; i++) {
-                var elem = elements[i];
-
-                if (elemIsHidden(elem)) {
-                    continue;
-                }
-
-                this.input = elem;
-
-                elem.setAttribute('data-tested', 'true');
-
-                if (elem.getAttribute('data-required') && !elem.checked) {
-                    this.errorTip(true);
-                    err++;
-                } else {
-                    this.errorTip(false);
-                }
-            }
-
-            // checkbox group
-            var groups = formElem.querySelectorAll('.form__chbox-group');
-
-            for (let i = 0; i < groups.length; i++) {
-                var group = groups[i],
-                    checkedElements = 0;
-
-                if (elemIsHidden(group)) {
-                    continue;
-                }
-
-                group.setAttribute('data-tested', 'true');
-
-                var elements = group.querySelectorAll('input[type="checkbox"]');
-
-                for (let i = 0; i < elements.length; i++) {
-                    if (elements[i].checked) {
-                        checkedElements++;
-                    }
-                }
-
-                if (checkedElements < group.getAttribute('data-min')) {
-                    group.classList.add('form__chbox-group_error');
-                    err++;
-                } else {
-                    group.classList.remove('form__chbox-group_error');
-                }
-            }
-
-            // radio group
-            var groups = formElem.querySelectorAll('.form__radio-group');
-
-            for (let i = 0; i < groups.length; i++) {
-                var group = groups[i],
-                    checkedElement = false;
-
-                if (elemIsHidden(group)) {
-                    continue;
-                }
-
-                group.setAttribute('data-tested', 'true');
-
-                var elements = group.querySelectorAll('input[type="radio"]');
-
-                for (let i = 0; i < elements.length; i++) {
-                    if (elements[i].checked) {
-                        checkedElement = true;
-                    }
-                }
-
-                if (!checkedElement) {
-                    group.classList.add('form__radio-group_error');
-                    err++;
-                } else {
-                    group.classList.remove('form__radio-group_error');
-                }
-            }
-
-            // file
-            var elements = formElem.querySelectorAll('input[type="file"]');
-
-            for (var i = 0; i < elements.length; i++) {
-                var elem = elements[i];
-
-                if (elemIsHidden(elem)) {
-                    continue;
-                }
-
-                this.input = elem;
-
-                if (CustomFile.inputFiles(elem).length) {
-                    if (this.file(elem, CustomFile.inputFiles(elem))) {
-                        err++;
-                    }
-                } else if (elem.getAttribute('data-required')) {
-                    this.errorTip(true);
-                    err++;
-                } else {
-                    this.errorTip(false);
-                }
-            }
-
-            // passwords compare
-            var elements = formElem.querySelectorAll('input[data-pass-compare-input]');
-
-            for (var i = 0; i < elements.length; i++) {
-                var elem = elements[i];
-
-                if (elemIsHidden(elem)) {
-                    continue;
-                }
-
-                this.input = elem;
-
-                var val = elem.value;
-
-                if (val.length) {
-                    var compElemVal = formElem.querySelector(elem.getAttribute('data-pass-compare-input')).value;
-
-                    if (val !== compElemVal) {
-                        this.errorTip(true, 2);
-                        err++;
-                    } else {
-                        this.errorTip(false);
-                    }
-                }
-            }
-
-            this.formError(formElem, err);
-
-            return (err) ? false : true;
-        },
-
-        init: function (formSelector) {
-            this.formSelector = formSelector;
-
-            document.removeEventListener('input', this.inpH);
-            document.removeEventListener('change', this.chH);
-
-            this.inpH = this.inpH.bind(this);
-            this.chH = this.chH.bind(this);
-
-            document.addEventListener('input', this.inpH);
-            document.addEventListener('change', this.chH);
-        },
-
-        inpH: function (e) {
-            const elem = e.target.closest(this.formSelector + ' input[type="text"],' + this.formSelector + ' input[type="password"],' + this.formSelector + ' input[type="number"],' + this.formSelector + ' input[type="tel"],' + this.formSelector + ' textarea');
-
-            if (elem && elem.hasAttribute('data-tested')) {
-                this.validateOnInput(elem);
-            }
-        },
-
-        chH: function (e) {
-            const elem = e.target.closest(this.formSelector + ' input[type="radio"],' + this.formSelector + ' input[type="checkbox"]');
-
-            if (elem) {
-                this[elem.type](elem);
-            }
-        }
-    };
-
     // variable height textarea
     var varHeightTextarea = {
         setHeight: function (elem) {
@@ -4433,7 +4565,7 @@ var ValidateForm, Form, DuplicateForm;
         },
 
         clearForm: function (formElem) {
-            var elements = formElem.querySelectorAll('input[type="text"], input[type="number"],input[type="tel"], input[type="password"], textarea');
+            const elements = formElem.querySelectorAll('input[type="text"], input[type="number"],input[type="tel"], input[type="password"], textarea');
 
             for (var i = 0; i < elements.length; i++) {
                 var elem = elements[i];
@@ -4448,7 +4580,15 @@ var ValidateForm, Form, DuplicateForm;
                 Select.reset();
             }
 
-            var textareaMirrors = formElem.querySelectorAll('.var-height-textarea__mirror');
+            if (window.CustomFile) {
+                const inpFileEls = formElem.querySelectorAll('.custom-file__input');
+
+                for (let i = 0; i < inpFileEls.length; i++) {
+                    CustomFile.clear(inpFileEls[i]);
+                }
+            }
+
+            const textareaMirrors = formElem.querySelectorAll('.var-height-textarea__mirror');
 
             for (var i = 0; i < textareaMirrors.length; i++) {
                 textareaMirrors[i].innerHTML = '';
@@ -4648,7 +4788,7 @@ var Accord;
         this.scroll = function (elem) {
             setTimeout(function () {
                 $('html, body').stop().animate({ scrollTop: $(elem).position().top - 20 }, 721);
-            }, 121);
+            }, 321);
         }
     };
 })();
