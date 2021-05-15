@@ -3,47 +3,47 @@
 */
 var Menu;
 
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	Menu = {
-		toggle: function(elem, elementStr, subMenuStr) {
-			var subMenuElem = elem.querySelector(subMenuStr);
+    Menu = {
+        toggle: function (elem, elementStr, subMenuStr) {
+            var subMenuElem = elem.querySelector(subMenuStr);
 
-			if (!subMenuElem) {
-				return;
-			}
+            if (!subMenuElem) {
+                return;
+            }
 
-			if (elem.classList.contains('active')) {
-				subMenuElem.style.height = 0;
+            if (elem.classList.contains('active')) {
+                subMenuElem.style.height = 0;
 
-				elem.classList.remove('active');
-			} else {
-				var mainElem = elem.closest('.menu'),
-				itemElements = mainElem.querySelectorAll(elementStr),
-				subMenuElements = mainElem.querySelectorAll(subMenuStr);
+                elem.classList.remove('active');
+            } else {
+                var mainElem = elem.closest('.menu'),
+                    itemElements = mainElem.querySelectorAll(elementStr),
+                    subMenuElements = mainElem.querySelectorAll(subMenuStr);
 
-				for (var i = 0; i < itemElements.length; i++) {
-					itemElements[i].classList.remove('accord__button_active');
-					subMenuElements[i].style.height = 0;
-				}
+                for (var i = 0; i < itemElements.length; i++) {
+                    itemElements[i].classList.remove('accord__button_active');
+                    subMenuElements[i].style.height = 0;
+                }
 
-				subMenuElem.style.height = subMenuElem.scrollHeight +'px';
+                subMenuElem.style.height = subMenuElem.scrollHeight + 'px';
 
-				elem.classList.add('active');
-			}
-		},
+                elem.classList.add('active');
+            }
+        },
 
-		init: function(elementStr, subMenuStr) {
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
+        init: function (elementStr, subMenuStr, viewport) {
+            document.addEventListener('click', (e) => {
+                var elem = e.target.closest(elementStr);
 
-				if (!elem) return;
+                if (!elem || window.innerWidth > viewport) return;
 
-				if (e.target.getAttribute('href') == '#') e.preventDefault();
+                if (e.target.getAttribute('href') == '#') e.preventDefault();
 
-				this.toggle(elem, elementStr, subMenuStr);
-			});
-		}
-	};
+                this.toggle(elem, elementStr, subMenuStr);
+            });
+        }
+    };
 })();

@@ -1647,6 +1647,123 @@ var Popup, MediaPopup;
         _onclose: null,
         onOpenSubscribers: [],
         headerSelector: '.header',
+        delay: 300,
+
+        init: function (elementStr) {
+            document.addEventListener('click', (e) => {
+                var btnElem = e.target.closest(elementStr),
+                    closeBtnElem = e.target.closest('.js-popup-close');
+
+                if (btnElem) {
+                    e.preventDefault();
+                    this.open(btnElem.getAttribute('data-popup'), false, btnElem);
+                } else if (
+                    closeBtnElem ||
+                    (
+                        !e.target.closest('.popup__window') &&
+                        e.target.closest('.popup') &&
+                        !e.target.closest('.popup[data-btn-close-only="true"]')
+                    )
+                ) {
+                    this.close('closeButton');
+                }
+            });
+
+            if (window.location.hash) {
+                this.open(window.location.hash);
+            }
+        },
+
+        open: function (elementStr, callback, btnElem) {
+            const winEl = document.querySelector(elementStr);
+
+            if (!winEl || !winEl.classList.contains('popup__window')) return;
+
+            this.close('openPopup', winEl);
+
+            const elemParent = winEl.parentElement;
+
+            elemParent.style.display = 'block';
+
+            setTimeout(function () {
+                elemParent.style.opacity = '1';
+            }, 121);
+
+            elemParent.scrollTop = 0;
+
+            setTimeout(function () {
+                winEl.style.display = 'inline-block';
+
+                if (winEl.offsetHeight < window.innerHeight) {
+                    winEl.style.top = ((window.innerHeight - winEl.offsetHeight) / 2) + 'px';
+                }
+
+                winEl.style.opacity = '1';
+
+                setTimeout(() => {
+                    winEl.classList.add('popup__window_visible');
+                }, this.delay);
+            }, this.delay);
+
+
+            if (callback) this._onclose = callback;
+
+            this.fixBody(true);
+
+            this.onOpenSubscribers.forEach(function (item) {
+                item(elementStr, btnElem);
+            });
+
+            return winEl;
+        },
+
+        onOpen: function (fun) {
+            if (typeof fun === 'function') {
+                this.onOpenSubscribers.push(fun);
+            }
+        },
+
+        message: function (msg, winSel, callback) {
+            const winEl = this.open(winSel || '#message-popup', callback);
+
+            winEl.querySelector('.popup__message').innerHTML = msg;
+        },
+
+        close: function (evInit, openedWinEl) {
+            const visWinElems = document.querySelectorAll('.popup__window_visible');
+
+            if (!visWinElems.length) return;
+
+            for (let i = 0; i < visWinElems.length; i++) {
+                const winEl = visWinElems[i];
+
+                if (!winEl.classList.contains('popup__window_visible')) continue;
+
+                winEl.style.opacity = '0';
+
+                const samePop = openedWinEl ? winEl.parentElement === openedWinEl.parentElement : false;
+
+                setTimeout(() => {
+                    winEl.classList.remove('popup__window_visible');
+                    winEl.style.display = 'none';
+
+                    if (evInit !== 'openPopup' || !samePop) winEl.parentElement.style.opacity = '0';
+
+                    setTimeout(() => {
+                        if (evInit !== 'openPopup' || !samePop) winEl.parentElement.style.display = 'none';
+
+                        if (evInit == 'closeButton') this.fixBody(false);
+                    }, this.delay);
+                }, this.delay);
+            }
+
+            if (this._onclose) {
+                this._onclose();
+                this._onclose = null;
+            } else if (this.onClose) {
+                this.onClose();
+            }
+        },
 
         fixBody: function (st) {
             var headerElem = document.querySelector(this.headerSelector);
@@ -1659,112 +1776,25 @@ var Popup, MediaPopup;
                 document.body.classList.add('popup-is-opened');
 
                 if (headerElem) {
+                    headerElem.style.transition = '0s';
                     headerElem.style.right = offset + 'px';
                 }
 
                 document.body.style.right = offset + 'px';
 
                 document.body.style.top = (-this.winScrollTop) + 'px';
+
             } else if (!st) {
                 if (headerElem) {
                     headerElem.style.right = '';
+                    setTimeout(function () {
+                        headerElem.style.transition = '';
+                    }, 321);
                 }
 
                 document.body.classList.remove('popup-is-opened');
 
                 window.scrollTo(0, this.winScrollTop);
-            }
-        },
-
-        open: function (elementStr, callback, btnElem) {
-            var elem = document.querySelector(elementStr);
-
-            if (!elem || !elem.classList.contains('popup__window')) {
-                return;
-            }
-
-            this.close();
-
-            var elemParent = elem.parentElement;
-
-            elemParent.classList.add('popup_visible');
-
-            elemParent.scrollTop = 0;
-
-            elem.classList.add('popup__window_visible');
-
-            if (callback) {
-                this._onclose = callback;
-            }
-
-            this.fixBody(true);
-
-            this.onOpenSubscribers.forEach(function (item) {
-                item(elementStr, btnElem);
-            });
-
-            return elem;
-        },
-
-        onOpen: function (fun) {
-            if (typeof fun === 'function') {
-                this.onOpenSubscribers.push(fun);
-            }
-        },
-
-        message: function (msg, elementStr, callback) {
-            const elemStr = elementStr || '#message-popup',
-                elem = this.open(elemStr, callback);
-
-            elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message m-0">' + msg + '</div>';
-        },
-
-        close: function () {
-            var elements = document.querySelectorAll('.popup__window');
-
-            if (!elements.length) {
-                return;
-            }
-
-            for (var i = 0; i < elements.length; i++) {
-                var elem = elements[i];
-
-                if (!elem.classList.contains('popup__window_visible')) {
-                    continue;
-                }
-
-                elem.classList.remove('popup__window_visible');
-
-                elem.parentElement.classList.remove('popup_visible');
-            }
-
-            if (this._onclose) {
-                this._onclose();
-                this._onclose = null;
-            } else if (this.onClose) {
-                this.onClose();
-            }
-        },
-
-        init: function (elementStr) {
-            document.addEventListener('click', (e) => {
-                var btnElem = e.target.closest(elementStr),
-                    closeBtnElem = e.target.closest('.js-popup-close');
-
-                if (btnElem) {
-                    e.preventDefault();
-                    this.open(btnElem.getAttribute('data-popup'), false, btnElem);
-                } else if (
-                    closeBtnElem ||
-                    (!e.target.closest('.popup__window') && e.target.closest('.popup') && !e.target.closest('.btn-close-only'))
-                ) {
-                    this.fixBody(false);
-                    this.close();
-                }
-            });
-
-            if (window.location.hash) {
-                this.open(window.location.hash);
             }
         }
     };
