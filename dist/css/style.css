@@ -2178,10 +2178,11 @@ hr {
 .f-btn,
 .o-btn,
 .t-btn {
-  width: 94px;
-  height: 94px;
-  border: 7px solid #fff;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
+  background: #c4c4c4;
+  border: 3px solid #212121;
 }
 
 .v-btn::after,
@@ -2199,27 +2200,27 @@ hr {
 }
 
 .v-btn::after {
-  width: 66.25%;
-  height: 40%;
-  margin: -17.5% 0 0 -35%;
+  width: 81.81818%;
+  height: 72.72727%;
+  margin: -31.81818% 0 0 -43.18182%;
 }
 
 .f-btn::after {
-  width: 31.25%;
-  height: 58.75%;
-  margin: -28.75% 0 0 -16.25%;
+  width: 56.81818%;
+  height: 56.81818%;
+  margin: -27.27273% 0 0 -29.54545%;
 }
 
 .o-btn::after {
-  width: 38.75%;
-  height: 62.5%;
-  margin: -31.25% 0 0 -18.75%;
+  width: 50%;
+  height: 77.27273%;
+  margin: -38.63636% 0 0 -25%;
 }
 
 .t-btn::after {
-  width: 66.25%;
-  height: 40%;
-  margin: -17.5% 0 0 -35%;
+  width: 72.72727%;
+  height: 59.09091%;
+  margin: -29.54545% 0 0 -36.36364%;
 }
 
 .sc {
@@ -4329,6 +4330,10 @@ hr {
   height: 0;
   overflow: hidden;
   transition: .21s;
+}
+
+.accord__content-inner {
+  padding: 1.25rem;
 }
 
 .more {

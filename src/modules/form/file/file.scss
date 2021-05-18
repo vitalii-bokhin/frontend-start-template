@@ -107,6 +107,11 @@
             background-size: 100% 100%;
             animation: form_loading_icon .9s infinite linear;
         }
+        &_loaded{
+            &::after{
+                display: none;
+            }
+        }
     }
 
     &__name {

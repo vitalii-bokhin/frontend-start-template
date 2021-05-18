@@ -88,5 +88,8 @@
         height: 0;
         overflow: hidden;
         transition: .21s;
+        &-inner{
+            padding: r(20);
+        }
     }
 }

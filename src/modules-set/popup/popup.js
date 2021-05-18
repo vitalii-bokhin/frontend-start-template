@@ -22,7 +22,11 @@ var Popup, MediaPopup;
                     this.open(btnElem.getAttribute('data-popup'), false, btnElem);
                 } else if (
                     closeBtnElem ||
-                    (!e.target.closest('.popup__window') && e.target.closest('.popup') && !e.target.closest('.btn-close-only'))
+                    (
+                        !e.target.closest('.popup__window') &&
+                        e.target.closest('.popup') &&
+                        !e.target.closest('.popup[data-btn-close-only="true"]')
+                    )
                 ) {
                     this.close('closeButton');
                 }
@@ -142,6 +146,7 @@ var Popup, MediaPopup;
                 document.body.style.right = offset + 'px';
 
                 document.body.style.top = (-this.winScrollTop) + 'px';
+
             } else if (!st) {
                 if (headerElem) {
                     headerElem.style.right = '';

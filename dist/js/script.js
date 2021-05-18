@@ -279,131 +279,131 @@ animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animatio
     }
 })();
 /* 
-	MobNav.init({
-		openBtn: '.js-open-menu',
-		closeBtn: '.js-close-menu',
-		headerId: 'header',
-		closeLink: '.menu a.js-anchor'
-	});
+    MobNav.init({
+        openBtn: '.js-open-menu',
+        closeBtn: '.js-close-menu',
+        headerId: 'header',
+        closeLink: '.menu a.js-anchor'
+    });
 */
 
 ; var MobNav;
 
 (function () {
-	'use strict';
+    'use strict';
 
-	// fix header
-	document.addEventListener('DOMContentLoaded', function () {
-		const headerElem = document.getElementById('header');
+    // fix header
+    document.addEventListener('DOMContentLoaded', function () {
+        const headerElem = document.getElementById('header');
 
-		let scrTop = 0,
-			scrAccUp = 0,
-			scrAccDown = 0;
+        let scrTop = 0,
+            scrAccUp = 0,
+            scrAccDown = 0;
 
-		function fixHeader() {
-			if (headerElem) {
-				if (window.pageYOffset > 21) {
-					headerElem.classList.add('header_fixed');
+        function fixHeader() {
+            if (headerElem) {
+                if (window.pageYOffset > 21) {
+                    headerElem.classList.add('header_fixed');
 
-					if (window.pageYOffset > scrTop) {
-						scrAccDown++;
-						scrAccUp = 0;
-					} else {
-						scrAccUp++;
-						scrAccDown = 0;
-					}
+                    if (window.pageYOffset > scrTop) {
+                        scrAccDown++;
+                        scrAccUp = 0;
+                    } else {
+                        scrAccUp++;
+                        scrAccDown = 0;
+                    }
 
-					scrTop = window.pageYOffset;
+                    scrTop = window.pageYOffset;
 
-					if (scrAccDown > 3) {
-						headerElem.classList.add('header_hide');
-					} else if (scrAccUp > 1) {
-						headerElem.classList.remove('header_hide');
-					}
+                    if (scrAccDown > 3) {
+                        headerElem.classList.add('header_hide');
+                    } else if (scrAccUp > 1) {
+                        headerElem.classList.remove('header_hide');
+                    }
 
-				} else if (
-					!document.body.classList.contains('popup-is-opened') &&
-					!document.body.classList.contains('mob-nav-is-opened')
-				) {
-					headerElem.classList.remove('header_fixed');
-					headerElem.classList.remove('header_hide');
-				}
-			}
-		}
+                } else if (
+                    !document.body.classList.contains('popup-is-opened') &&
+                    !document.body.classList.contains('mob-nav-is-opened')
+                ) {
+                    headerElem.classList.remove('header_fixed');
+                    headerElem.classList.remove('header_hide');
+                }
+            }
+        }
 
-		fixHeader();
+        fixHeader();
 
-		window.addEventListener('scroll', fixHeader);
-	});
+        window.addEventListener('scroll', fixHeader);
+    });
 
-	//mob menu
-	MobNav = {
-		options: null,
-		winScrollTop: 0,
+    //mob menu
+    MobNav = {
+        options: null,
+        winScrollTop: 0,
 
-		fixBody: function (st) {
-			if (st) {
-				this.winScrollTop = window.pageYOffset;
+        fixBody: function (st) {
+            if (st) {
+                this.winScrollTop = window.pageYOffset;
 
-				document.body.classList.add('mob-nav-is-opened');
-				document.body.style.top = -this.winScrollTop + 'px';
-			} else {
-				document.body.classList.remove('mob-nav-is-opened');
+                document.body.classList.add('mob-nav-is-opened');
+                document.body.style.top = -this.winScrollTop + 'px';
+            } else {
+                document.body.classList.remove('mob-nav-is-opened');
 
-				if (this.winScrollTop > 0) {
-					window.scrollTo(0, this.winScrollTop);
-				}
-			}
-		},
+                if (this.winScrollTop > 0) {
+                    window.scrollTo(0, this.winScrollTop);
+                }
+            }
+        },
 
-		open: function (btnElem) {
-			var headerElem = document.getElementById(this.options.headerId);
+        open: function (btnElem) {
+            var headerElem = document.getElementById(this.options.headerId);
 
-			if (!headerElem) return;
+            if (!headerElem) return;
 
-			if (btnElem.classList.contains('opened')) {
-				this.close();
-			} else {
-				btnElem.classList.add('opened');
-				headerElem.classList.add('opened');
-				this.fixBody(true);
-			}
-		},
+            if (btnElem.classList.contains('opened')) {
+                this.close();
+            } else {
+                btnElem.classList.add('opened');
+                headerElem.classList.add('opened');
+                this.fixBody(true);
+            }
+        },
 
-		close: function () {
-			var headerElem = document.getElementById(this.options.headerId);
+        close: function () {
+            var headerElem = document.getElementById(this.options.headerId);
 
-			if (!headerElem) return;
+            if (!headerElem) return;
 
-			headerElem.classList.remove('opened');
+            headerElem.classList.remove('opened');
 
-			var openBtnElements = document.querySelectorAll(this.options.openBtn);
+            var openBtnElements = document.querySelectorAll(this.options.openBtn);
 
-			for (var i = 0; i < openBtnElements.length; i++) {
-				openBtnElements[i].classList.remove('opened');
-			}
+            for (var i = 0; i < openBtnElements.length; i++) {
+                openBtnElements[i].classList.remove('opened');
+            }
 
-			this.fixBody(false);
-		},
+            this.fixBody(false);
+        },
 
-		init: function (options) {
-			this.options = options;
+        init: function (options) {
+            this.options = options;
 
-			document.addEventListener('click', (e) => {
-				const openElem = e.target.closest(options.openBtn);
+            document.addEventListener('click', (e) => {
+                const openElem = e.target.closest(options.openBtn);
 
-				if (openElem) {
-					e.preventDefault();
-					this.open(openElem);
-				} else if (e.target.closest(options.closeBtn)) {
-					e.preventDefault();
-					this.close();
-				} else if (e.target.closest(options.closeLink)) {
-					this.close();
-				}
-			});
-		}
-	};
+                if (openElem) {
+                    e.preventDefault();
+                    this.open(openElem);
+                } else if (e.target.closest(options.closeBtn)) {
+                    e.preventDefault();
+                    this.close();
+                } else if (e.target.closest(options.closeLink)) {
+                    this.close();
+                }
+            });
+        }
+    };
 })();
 /*
 * call Menu.init(Str menu item selector, Str sub menu selector);

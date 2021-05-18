@@ -54,15 +54,13 @@
         line-height: 1.2;
     }
     &-close-btn{
-        display: block;
+        @extend %btn;
         width: r(25);
         height: r(25);
         position:absolute;
         right: r(25);
         top: r(25);
         z-index: 4;
-        background: none;
-        border: none;
         backface-visibility: hidden;
         &:after,
         &:before{

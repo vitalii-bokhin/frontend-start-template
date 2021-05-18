@@ -49,10 +49,11 @@
 .o-btn,
 .t-btn{
     @extend %icon-btn;
-    width: 94px;
-    height: 94px;
-    border: 7px solid #fff;
+    width: r(44);
+    height: r(44);
     border-radius: 50%;
+    background: #c4c4c4;
+    border: 3px solid $bk;
     &::after{
         @extend %btn-icon;
         left: 50%;
@@ -64,30 +65,30 @@
 
 .v-btn{
     &::after{
-        width: per(53,80);
-        height: per(32,80);
-        margin: per(-14,80) 0 0 per(-28,80);
+        width: per(36,44);
+        height: per(32,44);
+        margin: per(-14,44) 0 0 per(-19,44);
     }
 }
 .f-btn{
     &::after{
-        width: per(25,80);
-        height: per(47,80);
-        margin: per(-23,80) 0 0 per(-13,80);
+        width: per(25,44);
+        height: per(25,44);
+        margin: per(-12,44) 0 0 per(-13,44);
     }
 }
 .o-btn{
     &::after{
-        width: per(31,80);
-        height: per(50,80);
-        margin: per(-25,80) 0 0 per(-15,80);
+        width: per(22,44);
+        height: per(34,44);
+        margin: per(-17,44) 0 0 per(-11,44);
     }
 }
 .t-btn{
     &::after{
-        width: per(53,80);
-        height: per(32,80);
-        margin: per(-14,80) 0 0 per(-28,80);
+        width: per(32,44);
+        height: per(26,44);
+        margin: per(-13,44) 0 0 per(-16,44);
     }
 }
 
