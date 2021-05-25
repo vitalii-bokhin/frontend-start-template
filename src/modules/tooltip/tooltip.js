@@ -5,6 +5,10 @@ ToolTip.init({
     evClick: true // def: false
 });
 
+ToolTip.beforeShow = function(btnEl, tooltipDivEl) {
+
+}
+
 ToolTip.onShow = function(btnEl, tooltipDivEl) {
 
 }
@@ -23,7 +27,7 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
         onShow: null,
         opt: null,
 
-        init: function (opt) {
+        init: function (opt) { 
             this.opt = opt || {};
 
             this.opt.notHide = (opt.notHide !== undefined) ? opt.notHide : false;
@@ -86,6 +90,10 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
             if (this.opt.evClick) html += '<button type="button" class="tooltip__close"></button>';
 
             this.tooltipDiv.innerHTML = html;
+
+            if (this.beforeShow) {
+                this.onShow(elem, this.tooltipDiv);
+            }
 
             this.tooltipClass = elem.getAttribute('data-tooltip-class');
 
@@ -159,13 +167,13 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
                     coordY = elemRect.bottom + window.pageYOffset;
                     break;
 
-                default:
+                default: // topOut
                     coordY = elemRect.top + window.pageYOffset - this.tooltipDiv.offsetHeight;
                     break;
             }
 
-            if (coordY < 0) {
-                coordY = 0;
+            if (coordY < window.pageYOffset) {
+                coordY = window.pageYOffset;
                 bubleStyle.marginTop = '0';
             }
 

@@ -1,9 +1,9 @@
 /* 
 var timer = new Timer({
-	elemId: 'timer', // Str element id,
-	format: 'extended', // default - false
-	stopwatch: true, // default - false
-	continue: false // default - false
+    elemId: 'timer', // Str element id,
+    format: 'extended', // default - false
+    stopwatch: true, // default - false
+    continue: false // default - false
 });
 
 timer.onStop = function () {
@@ -13,154 +13,162 @@ timer.onStop = function () {
 timer.start(Int interval in seconds);
 */
 
-; var Timer;
+; var Timer, numToWord;
 
 (function () {
-	'use strict';
+    'use strict';
 
-	Timer = function (options) {
-		options = options || {};
+    numToWord = function (num, wordsArr) {
+        num %= 100;
 
-		var elem = document.getElementById(options.elemId);
+        if (num > 20) {
+            num %= 10;
+        }
 
-		let tickSubscribers = [];
+        switch (num) {
+            case 1:
+                return wordsArr[0];
 
-		options.continue = (options.continue !== undefined) ? options.continue : false;
+            case 2:
+            case 3:
+            case 4:
+                return wordsArr[1];
 
-		function setCookie() {
-			if (options.continue) {
-				document.cookie = 'lastTimestampValue-' + options.elemId + '=' + Date.now() + '; expires=' + new Date(Date.now() + 259200000).toUTCString();
-			}
-		}
+            default:
+                return wordsArr[2];
+        }
+    }
 
-		function output(time) {
-			let day = time > 86400 ? Math.floor(time / 86400) : 0,
-				hour = time > 3600 ? Math.floor(time / 3600) : 0,
-				min = time > 60 ? Math.floor(time / 60) : 0,
-				sec = time > 60 ? Math.round(time % 60) : time;
+    Timer = function (options) {
+        options = options || {};
 
-			if (hour > 24) {
-				hour = hour % 24;
-			}
+        options.continue = (options.continue !== undefined) ? options.continue : false;
 
-			if (min > 60) {
-				min = min % 60;
-			}
+        this.opt = options;
 
-			let timerOut;
+        this.elem = document.getElementById(options.elemId);
 
-			if (options.format == 'extended') {
-				function numToWord(num, wordsArr) {
-					num %= 100;
+        this.tickSubscribers = [];
 
-					if (num > 20) {
-						num %= 10;
-					}
+        this.setCookie = function () {
+            document.cookie = 'lastTimestampValue-' + options.elemId + '=' + Date.now() + '; expires=' + new Date(Date.now() + 259200000).toUTCString();
+        }
 
-					switch (num) {
-						case 1:
-							return wordsArr[0];
+        this.onTick = function (fun) {
+            if (typeof fun === 'function') {
+                this.tickSubscribers.push(fun);
+            }
+        }
 
-						case 2:
-						case 3:
-						case 4:
-							return wordsArr[1];
+        this.stop = function () {
+            clearInterval(this.interval);
 
-						default:
-							return wordsArr[2];
-					}
-				}
+            if (this.onStop) {
+                setTimeout(this.onStop);
+            }
+        }
 
-				var minTxt = numToWord(min, ['минуту', 'минуты', 'минут']),
-					secTxt = numToWord(sec, ['секунду', 'секунды', 'секунд']);
+        this.pause = function () {
+            clearInterval(this.interval);
+        }
+    }
 
-				var minOut = (min != 0) ? min + ' ' + minTxt : '',
-					secNum = (sec < 10) ? '0' + sec : sec;
+    Timer.prototype.output = function (time) {
+        let day = time > 86400 ? Math.floor(time / 86400) : 0,
+            hour = time > 3600 ? Math.floor(time / 3600) : 0,
+            min = time > 60 ? Math.floor(time / 60) : 0,
+            sec = time > 60 ? Math.round(time % 60) : time;
 
-				timerOut = ((min) ? min + ' ' + minTxt + ' ' : '') + '' + sec + ' ' + secTxt;
-			} else {
-				var minNum = (min < 10) ? '0' + min : min,
-					secNum = (sec < 10) ? '0' + sec : sec;
+        if (hour > 24) {
+            hour = hour % 24;
+        }
 
-				timerOut = minNum + ':' + secNum;
-			}
+        if (min > 60) {
+            min = min % 60;
+        }
 
-			if (elem) elem.innerHTML = timerOut;
+        let timerOut;
 
-			if (tickSubscribers.length) {
-				tickSubscribers.forEach(function (item) {
-					item(time, { day, hour, min, sec });
-				});
-			}
-		}
+        if (this.opt.format == 'extended') {
+            var minTxt = numToWord(min, ['минуту', 'минуты', 'минут']),
+                secTxt = numToWord(sec, ['секунду', 'секунды', 'секунд']);
 
-		this.onTick = function (fun) {
-			if (typeof fun === 'function') {
-				tickSubscribers.push(fun);
-			}
-		}
+            var minOut = (min != 0) ? min + ' ' + minTxt : '',
+                secNum = (sec < 10) ? '0' + sec : sec;
 
-		this.stop = function () {
-			clearInterval(this.interval);
+            timerOut = ((min) ? min + ' ' + minTxt + ' ' : '') + '' + sec + ' ' + secTxt;
 
-			if (this.onStop) {
-				setTimeout(this.onStop);
-			}
-		}
+        } else {
+            var minNum = (min < 10) ? '0' + min : min,
+                secNum = (sec < 10) ? '0' + sec : sec;
 
-		this.pause = function () {
-			clearInterval(this.interval);
-		}
+            timerOut = minNum + ':' + secNum;
+        }
 
-		this.start = function (startTime) {
-			this.time = +startTime || 0;
+        if (this.elem) {
+            this.elem.innerHTML = timerOut;
+        }
 
-			var lastTimestampValue = (function (cookie) {
-				if (cookie) {
-					var reg = new RegExp('lastTimestampValue-' + options.elemId + '=(\\d+)', 'i'),
-						matchArr = cookie.match(reg);
+        if (this.tickSubscribers.length) {
+            this.tickSubscribers.forEach(function (item) {
+                item(time, { day, hour, min, sec });
+            });
+        }
+    }
 
-					return matchArr ? matchArr[1] : null;
-				}
-			})(document.cookie);
+    Timer.prototype.start = function (startTime) {
+        this.time = +startTime || 0;
 
-			if (lastTimestampValue) {
-				var delta = Math.round((Date.now() - lastTimestampValue) / 1000);
+        var lastTimestampValue = ((cookie) => {
+            if (this.opt.continue) {
+                return false;
+            }
 
-				if (options.stopwatch) {
-					this.time += delta;
-				} else {
-					if (this.time > delta) {
-						this.time -= delta;
-					} else {
-						setCookie();
-					}
-				}
-			} else {
-				setCookie();
-			}
+            if (cookie) {
+                var reg = new RegExp('lastTimestampValue-' + this.opt.elemId + '=(\\d+)', 'i'),
+                    matchArr = cookie.match(reg);
 
-			output(this.time);
+                return matchArr ? matchArr[1] : null;
+            }
+        })(document.cookie);
 
-			if (this.interval !== undefined) {
-				clearInterval(this.interval);
-			}
+        if (lastTimestampValue) {
+            var delta = Math.round((Date.now() - lastTimestampValue) / 1000);
 
-			this.interval = setInterval(() => {
-				if (options.stopwatch) {
-					this.time++;
+            if (this.opt.stopwatch) {
+                this.time += delta;
+            } else {
+                if (this.time > delta) {
+                    this.time -= delta;
+                } else {
+                    this.setCookie();
+                }
+            }
 
-					output(this.time);
-				} else {
-					this.time--;
+        } else if (this.opt.continue) {
+            this.setCookie();
+        }
 
-					if (this.time <= 0) {
-						this.stop();
-					} else {
-						output(this.time);
-					}
-				}
-			}, 1000);
-		}
-	}
+        this.output(this.time);
+
+        if (this.interval !== undefined) {
+            clearInterval(this.interval);
+        }
+
+        this.interval = setInterval(() => {
+            if (this.opt.stopwatch) {
+                this.time++;
+
+                this.output(this.time);
+            } else {
+                this.time--;
+
+                if (this.time <= 0) {
+                    this.stop();
+                } else {
+                    this.output(this.time);
+                }
+            }
+        }, 1000);
+    }
 })();

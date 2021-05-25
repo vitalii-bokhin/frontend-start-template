@@ -144,6 +144,10 @@ document.addEventListener('DOMContentLoaded', function () {
             element: '.js-tooltip'
         });
 
+        ToolTip.beforeShow = function(btnEl, tooltipDivEl) {
+
+        }
+
         ToolTip.onShow = function (btnEl, tooltipDivEl) {
 
         }

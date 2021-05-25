@@ -1,6 +1,8 @@
 const gulp = require('gulp'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
+    gcmq = require('gulp-group-css-media-queries'),
+    cleanCSS = require('gulp-clean-css'),
     babel = require('gulp-babel'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
@@ -306,13 +308,15 @@ function CSS(dist) {
 
     setTimeout(function () {
         if (dist) {
+            del([dist_path + '/css/*.css.map']);
+
             gulp.src('src/sass/common.scss')
-                .pipe(sourcemaps.init())
-                .pipe(sass({ outputStyle: 'compact' }).on('error', sass.logError))
+                .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
                 .pipe(autoprefixer(['last 3 versions']))
                 // .pipe(gulpReplace(/(?<!url.*)\.([a-z])/gi, '.' + cssPref + '$1'))
+                .pipe(gcmq())
+                .pipe(cleanCSS({ format: 'keep-breaks' }))
                 .pipe(rename('style.css'))
-                .pipe(sourcemaps.write('.'))
                 .pipe(gulp.dest(dist_path + '/css'))
                 .pipe(notify({
                     title: 'CSS',
@@ -339,12 +343,14 @@ function JS(src, dist) {
     if (!src.length) return;
 
     if (dist) {
+        del([dist_path + '/js/*.js.map']);
+
         gulp.src(src)
-            .pipe(sourcemaps.init())
+            // .pipe(sourcemaps.init())
             .pipe(babel())
             .on('error', notify.onError(function (err) { return err; }))
             .pipe(concat('script.js'))
-            .pipe(sourcemaps.write('.'))
+            // .pipe(sourcemaps.write('.'))
             .pipe(gulp.dest(dist_path + '/js'))
             .pipe(notify({
                 title: 'JS',

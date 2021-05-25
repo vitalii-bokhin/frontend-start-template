@@ -134,13 +134,19 @@ var ValidateForm, Form, DuplicateForm;
         clearForm: function (formElem) {
             const elements = formElem.querySelectorAll('input[type="text"], input[type="number"],input[type="tel"], input[type="password"], textarea');
 
-            for (var i = 0; i < elements.length; i++) {
-                var elem = elements[i];
+            for (let i = 0; i < elements.length; i++) {
+                const elem = elements[i];
                 elem.value = '';
 
                 if (window.Placeholder) {
                     Placeholder.hide(elem, false);
                 }
+            }
+
+            const checkboxEls = formElem.querySelectorAll('input[type="checkbox"]');
+
+            for (let i = 0; i < checkboxEls.length; i++) {
+                checkboxEls[i].checked = false;
             }
 
             if (window.Select) {

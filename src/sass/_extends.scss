@@ -126,3 +126,19 @@
         left: 0;
     }
 }
+
+// table
+%table{
+    width: 100%;
+    border-collapse: collapse;
+    tr{
+        td, th{
+            &:last-child{
+                text-align: right;
+            }
+            &:first-child{
+                text-align: left;
+            }
+        }
+    }
+}

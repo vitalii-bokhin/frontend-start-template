@@ -19,7 +19,12 @@ var Accord;
             document.addEventListener('click', (e) => {
                 const btnEl = e.target.closest(this.btnSel);
 
-                if (!btnEl || btnEl.closest('.accord_closed')) return;
+                if (
+                    !btnEl || btnEl.closest('.accord_closed') ||
+                    (maxViewport && window.innerWidth > maxViewport)
+                ) {
+                    return;
+                }
 
                 e.preventDefault();
 
