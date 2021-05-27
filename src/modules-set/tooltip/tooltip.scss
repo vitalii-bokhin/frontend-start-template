@@ -1,42 +1,59 @@
 .tooltip{
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 8;
-	background: #000;
-	padding: 15px;
-	width: 0;
-	width: 200px;
-	margin-top: -10px;
-	border-radius: 2px !important;
-	color: #ffffff;
-	line-height: 1.2;
-	visibility: hidden;
-	opacity: 0;
-	transition: opacity .5s;
-	&:after{
-		@extend %ab;
-		width: 0;
-		height: 0;
-		border: 10px solid transparent;
-		border-left: 10px solid #000;
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		margin-left: -10px;
-		transform: rotate(90deg);
-	}
-	&_rd{
-		background: $rd;
-		&:after{
-			border-left-color: $rd;
-		}
-	}
-	&_visible{
-		visibility: visible;
-		opacity: 1;
-	}
-	@media(max-width: 750px){
-		font-size: 13px;
-	}
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    background: $rd;
+    padding: r(37) 10px;
+    width: 0;
+    width: r(184);
+    font-size: 12px;
+    color: #ffffff;
+    line-height: (16/12);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .5s;
+    text-align: center;
+    margin: -10px 0 0 25px;
+    p{
+        font-size: r(20);
+        font-weight: 900;
+        margin-bottom: em(15,20);
+    }
+    &__close{
+        display: block;
+        width:18px;
+        height:18px;
+        position: absolute;
+        right: 8px;
+        top: 10px;
+        background: none;
+        border: none;
+        -webkit-appearance: none;
+        &:after,
+        &:before{
+            @extend %ab;
+            position: absolute;
+            width: 130%;
+            height: 2px;
+            background: #ffffff;
+            left: -15%;
+            top: 50%;
+            margin-top: -2px;
+        }
+        &:after{
+            transform: rotate(-45deg);
+        }
+        &:before{
+            transform: rotate(45deg);
+        }
+    }
+    &_visible{
+        visibility: visible;
+        opacity: 1;
+    }
+    @media(max-width: 750px){
+        width: 300px;
+        margin: 0;
+    }
 }
