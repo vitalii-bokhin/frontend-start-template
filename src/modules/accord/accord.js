@@ -6,7 +6,7 @@ var Accord;
 (function () {
     'use strict';
 
-    Accord = function (btnSel, autoScroll) {
+    Accord = function (btnSel, autoScroll, maxViewport) {
         this.btnSel = btnSel;
         this.initialized = false;
         this.autoScroll = autoScroll;
@@ -33,7 +33,7 @@ var Accord;
         }
 
         this.toggle = function (elem) {
-            const contentElem = elem.nextElementSibling;
+            const contentElem = elem.closest('.accord__item').querySelector('.accord__content');
 
             if (elem.classList.contains('accord__button_active')) {
                 contentElem.style.height = 0;

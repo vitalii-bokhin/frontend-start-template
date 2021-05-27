@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(error);
     }
 
-    // submit form
+    // init form
     try {
         Form.init('.form');
     } catch (error) {

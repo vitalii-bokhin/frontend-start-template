@@ -23,7 +23,7 @@
 
                     label.htmlFor = elemFor;
                     label.className = 'placeholder';
-                    label.innerHTML = elem.placeholder;
+                    label.innerHTML = '<span>' + elem.placeholder + '</span>';
 
                     if (elem.hasAttribute('data-hide-placeholder')) {
                         label.setAttribute('data-hide-placeholder', elem.getAttribute('data-hide-placeholder'));

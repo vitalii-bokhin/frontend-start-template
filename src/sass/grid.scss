@@ -1,9 +1,9 @@
 .wrp{
     margin: 0 auto;
     max-width: rem(1020);
-    padding: rem(10);
+    padding: 0 rem(10);
     @media(max-width: 1000px){
-        padding: 10px 15px;
+        padding: 0 15px;
     }
 }
 
@@ -34,18 +34,15 @@
     &_col-bottom{
         align-items: flex-end;
     }
-    &_g-5{
-        margin-left: rem(-5);
-        margin-right: rem(-5);
-        &.row_wrp{
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: rem(5);
-            padding-right: rem(5);
+    &-5cols{
+        .col{
+            flex: 0 0 20%;
+            max-width: 20%;
         }
-        & > [class*="col"]{
-            padding-left: rem(5);
-            padding-right: rem(5);
+    }
+    @media(max-width: 1200px){
+        &-md_col-center{
+            justify-content: center;
         }
     }
     @media(min-width: 1001px){
@@ -62,8 +59,14 @@
             padding-left: 5px !important;
             padding-right: 5px !important;
         }
-        & > [class*="col"]{
-            padding: 10px;
+        &_sm-2cols{
+            .col{
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+        &-sm_col-center{
+            justify-content: center;
         }
     }
     @media(min-width: 751px){
@@ -72,11 +75,19 @@
         }
     }
     @media(max-width: 750px){
-        &:not(.row_nw) > [class*="col"]:not([class*="xs-col"]){
+        &:not(.row_nw):not(.row_xs-2cols) > [class*="col"]:not([class*="xs-col"]){
             flex: 0 0 100%;
             max-width: 100%;
             margin-left: 0;
             margin-right: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        &_xs-2cols{
+            .col{
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
         }
     }
 }
@@ -84,12 +95,12 @@
 @mixin cols {
     flex: 0 1 auto;
     max-width: none;
-    padding: rem(10);
+    padding: 0 rem(10);
     
     &-fill{
         flex: 1 1 100%;
         max-width: none;
-        padding: rem(10);
+        padding: 0 rem(10);
     }
     
     $cC: 12;
@@ -97,7 +108,7 @@
         &-#{$i}{
             flex: 0 0 (100 / $cC) * $i * 1%;
             max-width: (100 / $cC) * $i * 1%;
-            padding: rem(10);
+            padding: 0 rem(10);
             @if $i == $cC {
                 margin-left: 0;
                 margin-right: 0;
@@ -114,7 +125,7 @@
             .row_#{$cC} > &{
                 flex: 0 0 (100 / $cC) * $i * 1%;
                 max-width: (100 / $cC) * $i * 1%;
-                padding: rem(10);
+                padding: 0 rem(10);
                 @if $i == $cC {
                     margin-left: 0;
                     margin-right: 0;
@@ -134,7 +145,7 @@
             .row_#{$cC} > &{
                 flex: 0 0 (100 / $cC) * $i * 1%;
                 max-width: (100 / $cC) * $i * 1%;
-                padding: rem(10);
+                padding: 0 rem(10);
                 @if $i == $cC {
                     margin-left: 0;
                     margin-right: 0;
@@ -187,6 +198,8 @@
                     max-width: 100%;
                     margin-left: 0;
                     margin-right: 0;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
                 }
             }
         }
@@ -205,6 +218,8 @@
                     max-width: 100%;
                     margin-left: 0;
                     margin-right: 0;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
                 }
             }
         }

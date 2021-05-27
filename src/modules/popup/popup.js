@@ -19,7 +19,7 @@ var Popup, MediaPopup;
 
                 if (btnElem) {
                     e.preventDefault();
-                    this.open(btnElem.getAttribute('data-popup'), false, btnElem);
+                    this.open(btnElem.getAttribute('data-popup') || btnElem.getAttribute('href'), false, btnElem);
                 } else if (
                     closeBtnElem ||
                     (
@@ -83,6 +83,10 @@ var Popup, MediaPopup;
         onOpen: function (fun) {
             if (typeof fun === 'function') {
                 this.onOpenSubscribers.push(fun);
+            }
+
+            if (window.location.hash) {
+                this.open(window.location.hash);
             }
         },
 
