@@ -119,11 +119,13 @@
 // icon
 %icon{
     position: relative;
-    &:before{
+    &::before{
         display: block;
         content: "";
         position: absolute;
         left: 0;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
 

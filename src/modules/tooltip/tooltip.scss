@@ -10,7 +10,6 @@
     font-size: 12px;
     color: #ffffff;
     line-height: (16/12);
-    visibility: hidden;
     opacity: 0;
     transition: opacity .5s;
     text-align: center;
@@ -49,7 +48,6 @@
         }
     }
     &_visible{
-        visibility: visible;
         opacity: 1;
     }
     @media(max-width: 750px){

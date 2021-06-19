@@ -205,8 +205,8 @@ gulp.task('build_svgs', function () {
         .pipe(svgSprite({
             shape: {
                 dimension: {
-                    maxWidth: 32,
-                    maxHeight: 32
+                    maxWidth: 256,
+                    maxHeight: 256
                 },
                 spacing: {
                     padding: 2
@@ -337,6 +337,7 @@ function HTML(src, dist) {
             // .pipe(gulpReplace(/class="([\w\s-]+)"/gi, function (match, p1, offset, string) {
             //     return 'class="' + p1.replace(/([\w-]+)/gi, cssPref + '$1') + '"';
             // }))
+            .pipe(gulpReplace('@version@', Date.now()))
             .pipe(gulp.dest(dist_path))
             .pipe(notify({
                 title: 'HTML',
@@ -346,6 +347,7 @@ function HTML(src, dist) {
         return gulp.src(src, { base: 'src/html/' })
             .pipe(fileinclude())
             .on('error', notify.onError(function (err) { return err; }))
+            .pipe(gulpReplace('@version@', Date.now()))
             .pipe(gulp.dest(dist_path))
             .pipe(notify({
                 onLast: true,
