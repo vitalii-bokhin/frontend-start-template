@@ -1,0 +1,109 @@
+.popup-media{
+    width: auto;
+    max-width: none;
+    .popup{
+        &__inner{
+            padding: 15px;
+        }
+        &-close-btn{
+            right: 3px;
+            top: 38px;
+            background: #ffffff;
+            width: 30px;
+            height: 30px;
+            &::before,
+            &::after{
+                width: 100%;
+                left: 0;
+            }
+        }
+    }
+    &__box{
+        position: relative;
+    }
+    &__image{
+        max-width: 85vw;
+        max-height: 70vh;
+        display: none;
+        &_visible{
+            display: inline-block;
+        }
+    }
+    &__video{
+        width: 85vw;
+        max-width: 130vh;
+        display: none;
+        &_visible{
+            display: block;
+        }
+    }
+    &__bar{
+        padding-top: 34px;
+        font-size: 14px;
+        display: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        padding: 10px 50px;
+        &-date{
+            font-size: 14px;
+            color: #666;
+        }
+        &-tit{
+            font-size: 14px;
+            font-weight: 700;
+        }
+    }
+    &__arr{
+        position: absolute;
+        width: 12px;
+        height: 20px;
+        top: 50%;
+        margin-top: -10px;
+        z-index: 3;
+        display: none;
+        &_l{
+            left: 53px;
+            background-position: -24px -72px;
+        }
+        &_r{
+            right: 53px;
+            background-position: -38px -72px;
+        }
+    }
+    @media(max-width: 1200px){
+        &__bar{
+            padding: 28px 50px;
+        }
+        &__arr{
+            &_l{
+                left: 35px;
+            }
+            &_r{
+                right: 35px;
+            }
+        }
+    }
+    @media(max-width: 1000px){
+        &__arr{
+            &_l{
+                left: 15px;
+            }
+            &_r{
+                right: 15px;
+            }
+        }
+        &__bar{
+            padding: 18px;
+            font-size: 13px;
+            &-tit{
+                margin-bottom: 24px;
+            }
+            .ta-r{
+                text-align: left !important;
+            }
+        }
+    }
+}

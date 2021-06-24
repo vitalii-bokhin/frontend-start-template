@@ -33,7 +33,8 @@ const modulesOn = [
     'cover-image',
     'lazy-load',
     'video',
-    'popup', // popup media video needs video module
+    'popup', 
+    'popup/media', // popup media video needs video module
     'form/validate',
     'form/checkbox',
     'form/radio',

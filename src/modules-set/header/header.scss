@@ -27,6 +27,7 @@
     }
     @media(max-width: 1000px){
         height: 65px;
+        top: 0 !important;
         &__row{
             position: fixed;
             top: 65px;

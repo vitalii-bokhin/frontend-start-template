@@ -12,6 +12,10 @@ ToolTip.beforeShow = function(btnEl, tooltipDivEl) {
 ToolTip.onShow = function(btnEl, tooltipDivEl) {
 
 }
+
+ToolTip.onHide = function() {
+
+}
 */
 
 ; var ToolTip;
@@ -27,7 +31,7 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
         onShow: null,
         opt: null,
 
-        init: function (opt) { 
+        init: function (opt) {
             this.opt = opt || {};
 
             this.opt.notHide = (opt.notHide !== undefined) ? opt.notHide : false;
@@ -85,6 +89,8 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
         },
 
         show: function (elem) {
+            clearTimeout(this.hideTimeout);
+            
             let html = elem.hasAttribute('data-tooltip') ? elem.getAttribute('data-tooltip').replace(/\[(\/?\w+)\]/gi, '<$1>') : '';
 
             if (this.opt.evClick) html += '<button type="button" class="tooltip__close"></button>';
@@ -102,7 +108,7 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
             } else if (elem.hasAttribute('data-tooltip-pos-x')) {
                 this.position.X = elem.getAttribute('data-tooltip-pos-x');
             } else {
-                this.position.X = 'leftIn';
+                this.position.X = 'rout';
             }
 
             if (elem.hasAttribute('data-tooltip-pos-y')) {
@@ -110,6 +116,10 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
             }
 
             if (!this.position.Y) this.position.Y = 'bottomOut';
+
+            if (window.matchMedia('(max-width: 750px) and (min-height: 550px)').matches) {
+                this.position.Y = 'bottomOut';
+            }
 
             if (this.tooltipClass) this.tooltipDiv.classList.add(this.tooltipClass);
 
@@ -199,15 +209,23 @@ ToolTip.onShow = function(btnEl, tooltipDivEl) {
             if (this.opt.notHide) return;
 
             this.tooltipDiv.classList.remove('tooltip_visible');
-            this.tooltipDiv.removeAttribute('style');
-            this.tooltipDiv.innerHTML = '';
-            this.position = {};
 
-            if (this.tooltipClass) {
-                this.tooltipDiv.classList.remove(this.tooltipClass);
+            this.hideTimeout = setTimeout(() => {
+                this.tooltipDiv.removeAttribute('style');
+                this.tooltipDiv.innerHTML = '';
+                this.position = {};
 
-                this.tooltipClass = null;
-            }
+                if (this.tooltipClass) {
+                    this.tooltipDiv.classList.remove(this.tooltipClass);
+
+                    this.tooltipClass = null;
+                }
+
+                if (this.onHide) {
+                    this.onHide();
+                }
+            }, 550);
+
         },
 
         mouseOut: function (e) {
