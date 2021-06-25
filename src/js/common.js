@@ -22,12 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(error);
         }
 
-        try {
-            Tab.reInit();
-        } catch (error) {
-            console.log(error);
-        }
-
         // resize events
         window.removeEventListener('winResized', initFun);
         window.removeEventListener('winWidthResized', initFun);
@@ -187,15 +181,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // tab
-    try {
+    // try {
         Tab.init({
             container: '.tab',
             button: '.tab__button',
-            item: '.tab__item'
+            item: '.tab__item',
+            hash: true
         });
-    } catch (error) {
-        console.log(error);
-    }
+    // } catch (error) {
+    //     console.log(error);
+    // }
 
     // video
     try {

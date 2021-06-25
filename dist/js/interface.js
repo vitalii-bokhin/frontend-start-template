@@ -18,7 +18,7 @@ try {
                 ajax({
                     url: form.action,
                     send: new FormData(form),
-                    success: function success(response) {
+                    success: function (response) {
                         response = JSON.parse(response);
 
                         if (response.status == 'sent') {
@@ -34,7 +34,7 @@ try {
                             console.log(response);
                         }
                     },
-                    error: function error(response) {
+                    error: function (response) {
                         console.log(response);
                         callback({ clearForm: false, unlockSubmitButton: true });
                     }
@@ -55,6 +55,7 @@ try {
             template: 'home-page-content-tpl',
             container: 'content'
         });
+
     }).route('#home-page', function (params, cb) {
         cb({
             page: 'it is Home page',
@@ -68,6 +69,7 @@ try {
             template: 'home-page-content-tpl',
             container: 'content'
         });
+
     }).route('#about-page$', function (params, cb) {
         cb({
             page: 'it is About page',
@@ -79,10 +81,17 @@ try {
             title: 'About page',
             text: 'This is about page. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi cupiditate saepe nemo aspernatur, voluptates tempore maxime itaque voluptatem in magni incidunt modi tempora esse, aperiam, ipsa harum reprehenderit odio. Laudantium.',
             desc: 'Description',
-            list: [{ id: 21, name: 'priv' }, { id: 22, name: 'priv2' }, { id: 23, name: 'priv2 3' }, 'string1', 'string2'],
+            list: [
+                { id: 21, name: 'priv' },
+                { id: 22, name: 'priv2' },
+                { id: 23, name: 'priv2 3' },
+                'string1',
+                'string2',
+            ],
             template: 'home-page-content-tpl',
             container: 'content'
         });
+
     }).route('#about-page/(.+)', function (params, cb) {
         console.log(params[1]);
         cb({
@@ -97,6 +106,7 @@ try {
             template: 'home-page-content-tpl',
             container: 'content'
         });
+
     }).route('#about-page/team', function (params, cb) {
         cb({
             page: 'it is About Team page',
@@ -110,6 +120,7 @@ try {
             template: 'home-page-content-tpl',
             container: 'content'
         });
+
     }).route('#form-page', function (params, cb) {
         cb({
             page: 'Form page',
@@ -125,6 +136,7 @@ try {
             Form.init('.form');
         });
     });
+
 } catch (error) {
     console.log(error);
 }
