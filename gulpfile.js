@@ -135,7 +135,7 @@ gulp.task('clean_js_folder', function () {
 
 gulp.task('dev', gulp.series('copy_modules', 'clean_modules_folder', 'include_modules', 'clean_js_folder', function (done) {
     // html dev
-    HTML(['src/html/**/*.html', '!src/html/**/_*.html']);
+    HTML(['src/html/**/*.*', '!src/html/**/_*.html']);
 
     // build scss
     const cssCode = cssSrc.map(src => '@import "' + src + '"').join('; ');
@@ -181,19 +181,14 @@ gulp.task('dev', gulp.series('copy_modules', 'clean_modules_folder', 'include_mo
     }));
 
     // watch html
-    const htmlWatcher = gulp.watch(['src/html/**/*.html', '!src/html/**/_*.html']);
+    const htmlWatcher = gulp.watch(['src/html/**/*.*', '!src/html/**/_*.html']);
 
     htmlWatcher.on('change', function (path) {
         return HTML([path, '!src/html/**/_*.html']);
     });
 
-    // gulp.watch(['!src/html/**/_*.html', 'src/html/**/*.html'], function (done) {
-    // 	return HTML(['!src/html/**/_*.html', event.path]);
-    // 	done();
-    // });
-
     gulp.watch(['src/html/**/_*.html'].concat(modulesOn.map((m) => 'src/modules/' + m + '/*.html')), gulp.series(function (done) {
-        HTML(['src/html/**/*.html', '!src/html/**/_*.html']);
+        HTML(['src/html/**/*.*', '!src/html/**/_*.html']);
         done();
     }));
 
@@ -246,7 +241,7 @@ gulp.task('svgs', gulp.series('build_svgs', function(done) {
 
 // DISTRIBUTION
 gulp.task('dist', function (done) {
-    HTML(['src/html/**/*.html', '!src/html/**/_*.html'], true);
+    HTML(['src/html/**/*.*', '!src/html/**/_*.*'], true);
 
     CSS(true);
 

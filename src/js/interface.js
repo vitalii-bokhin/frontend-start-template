@@ -19,9 +19,15 @@ try {
                     url: form.action,
                     send: new FormData(form),
                     success: function (response) {
-                        response = JSON.parse(response);
+                        let res = {};
 
-                        if (response.status == 'sent') {
+                        try {
+                            res = JSON.parse(response);
+                        } catch (error) {
+                            console.log(error);
+                        }
+
+                        if (res.status == 'sent') {
 
                             Popup.message('Форма отправлена');
                             // ValidateForm.customErrorTip(input, errorTxt, isLockForm);

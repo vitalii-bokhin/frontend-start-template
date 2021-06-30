@@ -14,14 +14,13 @@
         background: $gy;
         font-size: 1rem;
         &.active{
-            background: $og;
+            background: $rd;
         }
     }
     &__section{
         position: relative;
         overflow: hidden;
         margin-top: r(20);
-        transition: height .5s;
     }
     &__item{
         position: absolute;
@@ -30,9 +29,7 @@
         width: 100%;
         visibility: hidden;
         opacity: 0;
-        transition: .21s;
         &.active{
-            position: relative;
             visibility: visible;
             opacity: 1;
         }

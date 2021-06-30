@@ -1,5 +1,4 @@
 /*
-call to init:
 Tab.init({
     container: '.tab',
     button: '.tab__button',
@@ -12,7 +11,8 @@ Tab.onChange(function(btnElem) {
     // body
 });
 */
-; var Tab;
+
+var Tab;
 
 (function () {
     'use strict';
@@ -20,6 +20,7 @@ Tab.onChange(function(btnElem) {
     Tab = {
         options: null,
         onChangeSubscribers: [],
+        changing: false,
 
         init: function (options) {
             const contElements = document.querySelectorAll(options.container);
@@ -35,12 +36,21 @@ Tab.onChange(function(btnElem) {
                     tabItemElements = contElem.querySelectorAll(options.item),
                     tabItemElemActive = contElem.querySelector(this.options.item + '.active');
 
-                this.setHeight(tabItemElemActive);
-
                 for (let i = 0; i < btnElements.length; i++) {
                     btnElements[i].setAttribute('data-index', i);
-
                     tabItemElements[i].setAttribute('data-index', i);
+                }
+
+                if (options.hash && window.location.hash) {
+                    const btnElem = contElem.querySelector(options.button + '[href*="' + window.location.hash + '"]');
+
+                    if (btnElem) {
+                        this.change(btnElem, true);
+                    } else {
+                        tabItemElemActive.style.position = 'relative';
+                    }
+                } else {
+                    tabItemElemActive.style.position = 'relative';
                 }
             }
 
@@ -67,14 +77,6 @@ Tab.onChange(function(btnElem) {
                     this.change(btnElem);
                 });
             }
-
-            if (window.location.hash) {
-                const btnElem = document.querySelector(options.button + '[href*="' + window.location.hash + '"]');
-
-                if (btnElem) {
-                    this.change(btnElem);
-                }
-            }
         },
 
         onChange: function (fun) {
@@ -83,8 +85,12 @@ Tab.onChange(function(btnElem) {
             }
         },
 
-        change: function (btnElem) {
-            if (btnElem.classList.contains('active')) return;
+        change: function (btnElem, immly) {
+            if ((btnElem.classList.contains('active') && !immly) || this.changing) {
+                return;
+            }
+
+            this.changing = true;
 
             const contElem = btnElem.closest(this.options.container),
                 btnElements = contElem.querySelectorAll(this.options.button),
@@ -95,43 +101,48 @@ Tab.onChange(function(btnElem) {
                 btnElements[i].classList.remove('active');
             }
 
+            if (!immly) {
+                tabItemElements[0].parentElement.style.height = tabItemElements[0].parentElement.offsetHeight + 'px';
+            }
+
             for (let i = 0; i < tabItemElements.length; i++) {
                 tabItemElements[i].classList.remove('active');
+                tabItemElements[i].style.position = '';
             }
 
             //get current tab item
             const tabItemElem = contElem.querySelector(this.options.item + '[data-index="' + btnElem.getAttribute('data-index') + '"]');
 
             //set active state
+            tabItemElem.style.transition = immly ? '0s' : '.21s';
             tabItemElem.classList.add('active');
 
             btnElem.classList.add('active');
 
             //set height
-            this.setHeight(tabItemElem);
+            if (immly) {
+                tabItemElem.style.position = 'relative';
+                this.changing = false;
+
+            } else {
+                setTimeout(() => {
+                    tabItemElem.parentElement.style.transition = 'height .5s';
+                    tabItemElem.parentElement.style.height = tabItemElem.offsetHeight + 'px';
+
+                    setTimeout(() => {
+                        tabItemElem.parentElement.style.transition = '';
+                        tabItemElem.parentElement.style.height = '';
+                        tabItemElem.style.position = 'relative';
+
+                        this.changing = false;
+                    }, 500);
+                }, 210);
+            }
 
             // on change
             this.onChangeSubscribers.forEach(function (item) {
                 item(btnElem);
             });
-        },
-
-        setHeight: function (tabItemElem) {
-            tabItemElem.parentElement.style.height = tabItemElem.offsetHeight + 'px';
-
-            setTimeout(function () {
-                tabItemElem.parentElement.style.height = '';
-            }, 1000);
-        },
-
-        reInit: function () {
-            if (!this.options) return;
-
-            const contElements = document.querySelectorAll(this.options.container);
-
-            for (let i = 0; i < contElements.length; i++) {
-                this.setHeight(contElements[i].querySelector(this.options.item + '.active'));
-            }
         }
     };
 })();

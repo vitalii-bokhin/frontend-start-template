@@ -86,7 +86,9 @@ var Tab;
         },
 
         change: function (btnElem, immly) {
-            if (btnElem.classList.contains('active') || this.changing) return;
+            if ((btnElem.classList.contains('active') && !immly) || this.changing) {
+                return;
+            }
 
             this.changing = true;
 
