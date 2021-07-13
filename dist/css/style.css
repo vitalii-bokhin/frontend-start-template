@@ -4103,14 +4103,13 @@ hr {
   border-color: #212121;
 }
 
-.form .row {
-  padding-left: 8px;
-  padding-right: 8px;
+.form > .row {
+  margin-top: 1.25em;
 }
 
-.form .row > div[class*="col"] {
-  padding-left: 7px;
-  padding-right: 7px;
+.form > .row:first-child {
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .form__textarea {

@@ -7,23 +7,25 @@
         elementsStr: null,
 
         init: function (elementsStr) {
-            var elements = document.querySelectorAll(elementsStr);
+            const elements = document.querySelectorAll(elementsStr);
 
-            if (!elements.length) return;
+            if (!elements.length) {
+                return;
+            }
 
             this.elementsStr = elementsStr;
 
-            for (var i = 0; i < elements.length; i++) {
-                var elem = elements[i];
+            for (let i = 0; i < elements.length; i++) {
+                const elem = elements[i];
 
                 if (elem.placeholder) {
 
-                    var elemFor = (elem.id) ? elem.id : 'placeholder-index-' + i,
+                    const elemFor = (elem.id) ? elem.id : 'placeholder-index-' + i,
                         label = document.createElement('label');
 
                     label.htmlFor = elemFor;
                     label.className = 'placeholder';
-                    label.innerHTML = '<span>' + elem.placeholder + '</span>';
+                    label.innerHTML = elem.placeholder;
 
                     if (elem.hasAttribute('data-hide-placeholder')) {
                         label.setAttribute('data-hide-placeholder', elem.getAttribute('data-hide-placeholder'));
@@ -88,9 +90,11 @@
         },
 
         hide: function (elem, hide, ev) {
-            var label = document.querySelector('label.placeholder[for="' + elem.id + '"]');
+            const label = document.querySelector('label.placeholder[for="' + elem.id + '"]');
 
-            if (!label) return;
+            if (!label) {
+                return;
+            }
 
             if (hide) {
                 if (ev == 'focus' && label.getAttribute('data-hide-placeholder') == 'input') return;
@@ -100,7 +104,10 @@
             } else if (!elem.value.length) {
                 label.style.display = '';
             }
+        },
+
+        reInit: function () {
+            this.init(this.elementsStr);
         }
     };
-
 })();

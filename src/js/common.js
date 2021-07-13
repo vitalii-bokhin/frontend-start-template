@@ -451,10 +451,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // autocomplete
     try {
         // autocomplete data
-        AutoComplete.setValues = function (inpElem, returnFun) {
+        AutoComplete.setValues = function (inpElem, callback) {
             switch (inpElem.name) {
                 case 'fruits':
-                    returnFun([
+                    callback([
                         { val: "mc", value: "Pinapple", id: 1 },
                         { val: "vn", value: "Apple", id: 2 },
                         { val: "eth", value: "Berry", id: 3 },
@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
 
                 case 'country':
-                    returnFun([
+                    callback([
                         { val: "mc", value: "Pinapple", id: 1 },
                         { val: "vn", value: "Apple", id: 2 },
                         { val: "eth", value: "Berry", id: 3 },
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
 
                 case 'country2':
-                    returnFun();
+                    callback();
                     break;
 
                 default:

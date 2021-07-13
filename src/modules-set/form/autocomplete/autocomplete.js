@@ -45,6 +45,8 @@
             if (this.inputElem.value.length) {
                 const preReg = new RegExp('(' + this.inputElem.value + ')', 'i');
 
+                console.log(preReg);
+
                 this.setValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
                     if (valuesData) {
                         for (let i = 0; i < valuesData.length; i++) {
@@ -53,11 +55,19 @@
                             if (!permOpened) {
                                 if (nameKey !== undefined) {
                                     if (valData[nameKey].match(preReg)) {
+                                        console.log('b1');
                                         values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey].replace(preReg, '<span>$1</span>') + '</button></li>';
+                                    } else {
+                                        this.optionsElem.innerHTML = '';
+                                        this.close();
                                     }
                                 } else {
                                     if (valData.match(preReg)) {
+                                        console.log('b2');
                                         values += '<li><button type="button" class="autocomplete__val">' + valData.replace(preReg, '<span>$1</span>') + '</button></li>';
+                                    } else {
+                                        this.optionsElem.innerHTML = '';
+                                        this.close();
                                     }
                                 }
 
@@ -82,7 +92,7 @@
 
                             this.open(this.optionsElem.querySelector('.autocomplete__options-other').offsetHeight);
 
-                        } else {
+                        } else if (this.inputElem.hasAttribute('data-nf-text')) {
                             values = '<li class="autocomplete__options-empty">' + this.inputElem.getAttribute('data-nf-text') + '</li>';
 
                             this.optionsElem.innerHTML = values;
