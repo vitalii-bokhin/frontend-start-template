@@ -1,13 +1,9 @@
 @import "form-extends";
 
 .form{
-    .row{
-        padding-left: 8px;
-        padding-right: 8px;
-        & > div[class*="col"]{
-            padding-left: 7px;
-            padding-right: 7px;
-        }
+    & > .row{
+        margin-top: e(20);
+        @include fch(t);
     }
     &__text-input,
     &__textarea{

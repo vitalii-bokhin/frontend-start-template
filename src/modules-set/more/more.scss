@@ -1,15 +1,49 @@
 .more{
-	position: relative;
-	padding-bottom: 30px;
-	&__content{
-		height: 97px;
-		overflow: hidden;
-		transition: .21s;
-	}
-	&__btn{
-		display: block;
-		position: absolute;
-		bottom: 0;
-		right: 0;
-	}
+    position: relative;
+    padding-bottom: r(146);
+    &__content{
+        height: 97px;
+        overflow: hidden;
+        transition: .21s;
+        position: relative;
+        &::after{
+            @extend %ab;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: r(214);
+            background: linear-gradient(180deg, transparent 0%, #ffffff 89%);
+            transition: .35s;
+            pointer-events: none;
+            .more_toggled &{
+                opacity: 0;
+            }
+        }
+    }
+    &__buttons{
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    &__btn{
+        &::after{
+            display: inline-block;
+            content: "";
+            width: 17px;
+            height: 13px;
+            position: relative;
+            left: 3px;
+        }
+        &.active{
+            &::after{
+                transform: rotate(180deg);
+            }
+        }
+    }
+    @media(max-width: 750px){
+        padding-bottom: 160px;
+    }
 }

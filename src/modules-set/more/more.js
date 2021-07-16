@@ -4,46 +4,59 @@ More.init(Str button selector);
 */
 var More;
 
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	More = {
-		toggle: function(elem) {
-			var contentElem = elem.previousElementSibling;
+    More = {
+        toggle: function (elem) {
+            var contentElem = elem.closest('.more').querySelector('.more__content');
 
-			if (elem.classList.contains('active')) {
-				contentElem.style.height = contentElem.getAttribute('data-height') +'px';
+            if (elem.classList.contains('active')) {
+                contentElem.style.height = contentElem.getAttribute('data-height') + 'px';
 
-				elem.classList.remove('active');
-			} else {
-				contentElem.setAttribute('data-height', contentElem.offsetHeight);
+                elem.classList.remove('active');
 
-				contentElem.style.height = contentElem.scrollHeight +'px';
+                elem.closest('.more').classList.remove('more_toggled');
 
-				elem.classList.add('active');
-			}
+                $('html,body').stop().animate({scrollTop: $(elem).attr('data-scroll-top')}, 210);
 
-			setTimeout(function() {
-				var btnTxt = elem.innerHTML;
+            } else {
+                elem.setAttribute('data-scroll-top', $(window).scrollTop());
 
-				elem.innerHTML = elem.getAttribute('data-btn-text');
+                contentElem.setAttribute('data-height', contentElem.offsetHeight);
 
-				elem.setAttribute('data-btn-text', btnTxt);
-			}, 321);
-		},
+                contentElem.style.height = contentElem.scrollHeight + 'px';
 
-		init: function(elementStr) {
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
+                elem.classList.add('active');
 
-				if (!elem) {
-					return;
-				}
+                elem.closest('.more').classList.add('more_toggled');
 
-				e.preventDefault();
+                setTimeout(function() {
+                    contentElem.style.height = 'auto';
+                }, 321);
+            }
 
-				this.toggle(elem);
-			});
-		}
-	};
+            setTimeout(function () {
+                var btnTxt = elem.innerHTML;
+
+                elem.innerHTML = elem.getAttribute('data-btn-text');
+
+                elem.setAttribute('data-btn-text', btnTxt);
+            }, 321);
+        },
+
+        init: function (elementStr) {
+            document.addEventListener('click', (e) => {
+                var elem = e.target.closest(elementStr);
+
+                if (!elem) {
+                    return;
+                }
+
+                e.preventDefault();
+
+                this.toggle(elem);
+            });
+        }
+    };
 })();

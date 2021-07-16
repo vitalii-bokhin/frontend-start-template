@@ -116,7 +116,7 @@ body {
   line-height: 1;
 }
 
-.paginate__prev::after, .paginate__next::after, .menu-close-btn:after, .menu-close-btn:before, .toggle:before, .toggle:after, .video__frame::before, .popup-close-btn:after, .popup-close-btn:before, .custom-checkbox__label:before, .custom-radio__input:checked + .custom-radio__label:after, .custom-radio__label:before, .select__button:after, .select__arr:after, .autocomplete__arr:after, .custom-file__btn:after, .custom-file__preview:after, .number__btn_min::before, .number__btn_plus::before, .number__btn_plus::after, .form__btn:before, .form_sending .form__loader:before, .form_sending .form__submit:before, .form_sending .form__submit:after, .accord__button:after, .accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before, .accord__btn-btn:after, .alert__close-btn:after, .alert__close-btn:before, .tooltip__close:after, .tooltip__close:before, .slick-arrow:after, .list li:before {
+.paginate__prev::after, .paginate__next::after, .menu-close-btn:after, .menu-close-btn:before, .toggle:before, .toggle:after, .video__frame::before, .popup-close-btn:after, .popup-close-btn:before, .custom-checkbox__label:before, .custom-radio__input:checked + .custom-radio__label:after, .custom-radio__label:before, .select__button:after, .select__arr:after, .autocomplete__arr:after, .custom-file__btn:after, .custom-file__preview:after, .number__btn_min::before, .number__btn_plus::before, .number__btn_plus::after, .form__btn:before, .form_sending .form__loader:before, .form_sending .form__submit:before, .form_sending .form__submit:after, .accord__button:after, .accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before, .accord__btn-btn:after, .more__content::after, .alert__close-btn:after, .alert__close-btn:before, .tooltip__close:after, .tooltip__close:before, .slick-arrow:after, .list li:before {
   display: block;
   content: "";
 }
@@ -151,7 +151,7 @@ body {
   height: auto;
 }
 
-.btn, .arrow-btn, .plus-btn, .img-icon-btn, .popup-close-btn, .formslider__drag, .number__btn {
+.btn, .arrow-btn, .plus-btn, .img-icon-btn, .popup-close-btn, .formslider__drag, .number__btn, .more__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -166,7 +166,7 @@ body {
   transition: .21s;
 }
 
-.btn span, .arrow-btn span, .plus-btn span, .img-icon-btn span, .popup-close-btn span, .formslider__drag span, .number__btn span {
+.btn span, .arrow-btn span, .plus-btn span, .img-icon-btn span, .popup-close-btn span, .formslider__drag span, .number__btn span, .more__btn span {
   display: block;
   width: 100%;
 }
@@ -4394,20 +4394,46 @@ hr {
 
 .more {
   position: relative;
-  padding-bottom: 30px;
+  padding-bottom: 3.125em;
 }
 
 .more__content {
   height: 97px;
   overflow: hidden;
-  transition: .21s;
+  position: relative;
+}
+
+.more__content::after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3.375em;
+  background: linear-gradient(180deg, transparent 0%, #ffffff 89%);
+  transition: .35s;
+  pointer-events: none;
+}
+
+.more_toggled .more__content::after {
+  opacity: 0;
+}
+
+.more__buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .more__btn {
-  display: block;
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  width: 15.625em;
+  height: 2.8125em;
+  background: #212121;
+  color: #ffffff;
+}
+
+.more__btn.active {
+  opacity: .7;
 }
 
 .tab__buttons {

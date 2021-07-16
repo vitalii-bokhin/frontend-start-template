@@ -3477,9 +3477,7 @@ var FormSlider;
             let values = '';
 
             if (this.inputElem.value.length) {
-                const preReg = new RegExp('(' + this.inputElem.value + ')', 'i');
-
-                console.log(preReg);
+                const preReg = new RegExp('(' + this.inputElem.value.replace(/(\(|\))/g,'\\$1') + ')', 'i');
 
                 this.setValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
                     if (valuesData) {
@@ -3489,7 +3487,6 @@ var FormSlider;
                             if (!permOpened) {
                                 if (nameKey !== undefined) {
                                     if (valData[nameKey].match(preReg)) {
-                                        console.log('b1');
                                         values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey].replace(preReg, '<span>$1</span>') + '</button></li>';
                                     } else {
                                         this.optionsElem.innerHTML = '';
@@ -3497,7 +3494,6 @@ var FormSlider;
                                     }
                                 } else {
                                     if (valData.match(preReg)) {
-                                        console.log('b2');
                                         values += '<li><button type="button" class="autocomplete__val">' + valData.replace(preReg, '<span>$1</span>') + '</button></li>';
                                     } else {
                                         this.optionsElem.innerHTML = '';
@@ -4948,52 +4944,77 @@ Ajax.success = function(response) {
 })();
 /*
 call to init:
-More.init(Str button selector);
+More.init(Str button selector[, transition ms]);
 */
 var More;
 
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	More = {
-		toggle: function(elem) {
-			var contentElem = elem.previousElementSibling;
+    More = {
+        speed: 500,
 
-			if (elem.classList.contains('active')) {
-				contentElem.style.height = contentElem.getAttribute('data-height') +'px';
+        init: function (elementStr, speed) {
+            if (speed) {
+                this.speed = speed;
+            }
 
-				elem.classList.remove('active');
-			} else {
-				contentElem.setAttribute('data-height', contentElem.offsetHeight);
+            document.addEventListener('click', (e) => {
+                var btnEl = e.target.closest(elementStr);
 
-				contentElem.style.height = contentElem.scrollHeight +'px';
+                if (!btnEl) {
+                    return;
+                }
 
-				elem.classList.add('active');
-			}
+                e.preventDefault();
 
-			setTimeout(function() {
-				var btnTxt = elem.innerHTML;
+                this.toggle(btnEl);
+            });
+        },
 
-				elem.innerHTML = elem.getAttribute('data-btn-text');
+        toggle: function (btnEl) {
+            const contentElem = btnEl.closest('.more').querySelector('.more__content');
 
-				elem.setAttribute('data-btn-text', btnTxt);
-			}, 321);
-		},
+            contentElem.style.transition = this.speed + 'ms';
 
-		init: function(elementStr) {
-			document.addEventListener('click', (e) => {
-				var elem = e.target.closest(elementStr);
+            if (btnEl.classList.contains('active')) {
+                contentElem.style.height = contentElem.offsetHeight + 'px';
 
-				if (!elem) {
-					return;
-				}
+                setTimeout(function () {
+                    contentElem.style.height = contentElem.getAttribute('data-height') + 'px';
 
-				e.preventDefault();
+                    btnEl.classList.remove('active');
 
-				this.toggle(elem);
-			});
-		}
-	};
+                    btnEl.closest('.more').classList.remove('more_toggled');
+
+                    $('html,body').stop().animate({ scrollTop: $(btnEl).attr('data-scroll-top') }, 210);
+                }, 21);
+
+            } else {
+                btnEl.setAttribute('data-scroll-top', $(window).scrollTop());
+
+                contentElem.setAttribute('data-height', contentElem.offsetHeight);
+
+                contentElem.style.height = contentElem.scrollHeight + 'px';
+
+                btnEl.classList.add('active');
+
+                btnEl.closest('.more').classList.add('more_toggled');
+
+                setTimeout(function () {
+                    contentElem.style.height = 'auto';
+                }, this.speed);
+            }
+
+            setTimeout(function () {
+                const btnTxt = btnEl.innerHTML;
+
+                btnEl.innerHTML = btnEl.getAttribute('data-btn-text');
+
+                btnEl.setAttribute('data-btn-text', btnTxt);
+            }, this.speed / 2);
+        }
+    };
 })();
 /*
 Tab.init({
