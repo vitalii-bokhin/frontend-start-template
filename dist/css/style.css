@@ -215,17 +215,30 @@ body {
   top: 50%;
 }
 
-.icon {
+.icon, .tel-icon {
+  display: inline-block;
   position: relative;
+  transition: .21s;
 }
 
-.icon::before {
+.icon::before, .tel-icon::before,
+.icon svg,
+.tel-icon svg {
   display: block;
   content: "";
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
+  transition: .21s;
+}
+
+.tile-wrap > div {
+  display: flex;
+}
+
+.tile {
+  flex: 1 1 100%;
 }
 
 html,
@@ -2414,6 +2427,21 @@ hr {
   top: 0;
 }
 
+.tel-icon {
+  width: 1.75em;
+  height: 1.75em;
+  background: rgba(49, 51, 51, 0.2);
+}
+
+.tel-icon svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.tel-icon::before {
+  display: none;
+}
+
 .img-icon {
   position: relative;
   padding: 0.625em 0 0.625em 2.8125em;
@@ -4547,8 +4575,7 @@ hr {
 
 .tooltip {
   position: absolute;
-  top: 0;
-  left: 0;
+  left: -999px;
   z-index: 8;
   background: #ff0000;
   padding: 2.3125rem 10px;
@@ -4653,6 +4680,7 @@ hr {
 }
 
 .foot-nav__a {
+  line-height: normal;
   color: #0000ff;
   letter-spacing: 0.8px;
   text-decoration: none;
@@ -5968,14 +5996,6 @@ ol.list li:before {
 }
 
 /* tile */
-.tile-wrap > div {
-  display: flex;
-}
-
-.tile-wrap > div .tile {
-  flex: 1 0 100%;
-}
-
 .accord__button:after, .arrow-btn:after, .custom-checkbox__input:checked + .custom-checkbox__label:before,
 .f-btn::after,
 .o-btn::after, .plus-btn:after, .form__btn_search:before,

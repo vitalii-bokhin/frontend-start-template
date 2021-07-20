@@ -1,7 +1,6 @@
 .tooltip{
     position: absolute;
-    top: 0;
-    left: 0;
+    left: -999px;
     z-index: 8;
     background: $rd;
     padding: r(37) 10px;

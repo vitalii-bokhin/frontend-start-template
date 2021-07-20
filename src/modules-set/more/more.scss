@@ -1,10 +1,9 @@
 .more{
     position: relative;
-    padding-bottom: r(146);
+    padding-bottom: e(50);
     &__content{
         height: 97px;
         overflow: hidden;
-        transition: .21s;
         position: relative;
         &::after{
             @extend %ab;
@@ -12,7 +11,7 @@
             left: 0;
             bottom: 0;
             width: 100%;
-            height: r(214);
+            height: em(54);
             background: linear-gradient(180deg, transparent 0%, #ffffff 89%);
             transition: .35s;
             pointer-events: none;
@@ -22,28 +21,19 @@
         }
     }
     &__buttons{
-        display: block;
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
     }
     &__btn{
-        &::after{
-            display: inline-block;
-            content: "";
-            width: 17px;
-            height: 13px;
-            position: relative;
-            left: 3px;
-        }
+        @extend %btn;
+        width: em(250);
+        height: em(45);
+        background: $bk;
+        color: #ffffff;
         &.active{
-            &::after{
-                transform: rotate(180deg);
-            }
+            opacity: .7;
         }
-    }
-    @media(max-width: 750px){
-        padding-bottom: 160px;
     }
 }

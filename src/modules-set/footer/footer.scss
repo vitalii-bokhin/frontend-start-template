@@ -27,6 +27,7 @@
         @include fch(l);
     }
     &__a{
+        line-height: normal;
         color: $be;
         letter-spacing: 0.8px;
         text-decoration: none;

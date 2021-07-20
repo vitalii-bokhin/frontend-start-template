@@ -11,7 +11,7 @@
         overflow: hidden;
     }
 }
- 
+
 /* first screen */
 .first-screen{
     overflow: hidden;
@@ -96,12 +96,8 @@ ol.list{
 
 /* tile */
 .tile{
-	&-wrap{
-		& > div{
-			display: flex;
-			.tile{
-				flex: 1 0 100%;
-			}
-		}
-	}
+    @extend %tile-item;
+    &-wrap{
+        @extend %tile-wrap;
+    }
 }

@@ -118,14 +118,18 @@
 
 // icon
 %icon{
+    display: inline-block;
     position: relative;
-    &::before{
+    transition: .21s;
+    &::before,
+    svg{
         display: block;
         content: "";
         position: absolute;
-        left: 0;
+        left: 50%;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translate(-50%, -50%);
+        transition: .21s;
     }
 }
 
@@ -143,4 +147,14 @@
             }
         }
     }
+}
+
+// tile
+%tile-wrap{
+    & > div{
+        display: flex;
+    }
+}
+%tile-item{
+    flex: 1 1 100%;
 }

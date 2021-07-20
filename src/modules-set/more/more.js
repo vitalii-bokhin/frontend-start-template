@@ -1,6 +1,6 @@
 /*
 call to init:
-More.init(Str button selector);
+More.init(Str button selector[, transition ms]);
 */
 var More;
 
@@ -8,55 +8,70 @@ var More;
     'use strict';
 
     More = {
-        toggle: function (elem) {
-            var contentElem = elem.closest('.more').querySelector('.more__content');
+        speed: 500,
 
-            if (elem.classList.contains('active')) {
-                contentElem.style.height = contentElem.getAttribute('data-height') + 'px';
-
-                elem.classList.remove('active');
-
-                elem.closest('.more').classList.remove('more_toggled');
-
-                $('html,body').stop().animate({scrollTop: $(elem).attr('data-scroll-top')}, 210);
-
-            } else {
-                elem.setAttribute('data-scroll-top', $(window).scrollTop());
-
-                contentElem.setAttribute('data-height', contentElem.offsetHeight);
-
-                contentElem.style.height = contentElem.scrollHeight + 'px';
-
-                elem.classList.add('active');
-
-                elem.closest('.more').classList.add('more_toggled');
-
-                setTimeout(function() {
-                    contentElem.style.height = 'auto';
-                }, 321);
+        init: function (elementStr, speed) {
+            if (speed) {
+                this.speed = speed;
             }
 
-            setTimeout(function () {
-                var btnTxt = elem.innerHTML;
-
-                elem.innerHTML = elem.getAttribute('data-btn-text');
-
-                elem.setAttribute('data-btn-text', btnTxt);
-            }, 321);
-        },
-
-        init: function (elementStr) {
             document.addEventListener('click', (e) => {
-                var elem = e.target.closest(elementStr);
+                var btnEl = e.target.closest(elementStr);
 
-                if (!elem) {
+                if (!btnEl) {
                     return;
                 }
 
                 e.preventDefault();
 
-                this.toggle(elem);
+                this.toggle(btnEl);
             });
+        },
+
+        toggle: function (btnEl) {
+            const contentElem = btnEl.closest('.more').querySelector('.more__content');
+
+            contentElem.style.transition = this.speed + 'ms';
+
+            if (btnEl.classList.contains('active')) {
+                contentElem.style.height = contentElem.offsetHeight + 'px';
+
+                setTimeout(function () {
+                    contentElem.style.height = contentElem.getAttribute('data-height') + 'px';
+
+                    btnEl.classList.remove('active');
+
+                    btnEl.closest('.more').classList.remove('more_toggled');
+
+                    $('html,body').stop().animate({ scrollTop: $(btnEl).attr('data-scroll-top') }, 210);
+                }, 21);
+
+            } else {
+                btnEl.setAttribute('data-scroll-top', $(window).scrollTop());
+
+                contentElem.setAttribute('data-height', contentElem.offsetHeight);
+
+                contentElem.style.height = contentElem.scrollHeight + 'px';
+
+                btnEl.classList.add('active');
+
+                btnEl.closest('.more').classList.add('more_toggled');
+
+                setTimeout(function () {
+                    contentElem.style.height = 'auto';
+                }, this.speed);
+            }
+
+            setTimeout(function () {
+                const btnTxt = btnEl.innerHTML;
+
+                if (btnEl.hasAttribute('data-btn-text')) {
+                    btnEl.innerHTML = btnEl.getAttribute('data-btn-text');
+
+                    btnEl.setAttribute('data-btn-text', btnTxt);
+                }
+                
+            }, this.speed / 2);
         }
     };
 })();

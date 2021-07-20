@@ -196,8 +196,8 @@ gulp.task('dev', gulp.series('copy_modules', 'clean_modules_folder', 'include_mo
 }));
 
 // svg sprite
-gulp.task('build_svgs', function () {
-    return gulp.src('src/images/svg/*.svg')
+gulp.task('build_image_sprite', function () {
+    return gulp.src('src/images/svg/image/*.svg')
         .pipe(svgSprite({
             shape: {
                 dimension: {
@@ -216,9 +216,6 @@ gulp.task('build_svgs', function () {
                     render: {
                         scss: { dest: '../src/sass/_sprite-extends.scss' }
                     }
-                },
-                symbol: {
-                    sprite: '../src/images/sprite-symbol.svg',
                 }
             }
         }))
@@ -226,13 +223,29 @@ gulp.task('build_svgs', function () {
         .pipe(gulp.dest('.'))
         .pipe(notify({
             title: 'SVG',
-            message: 'SVG Sprites had built!'
+            message: 'SVG Sprites Image had built!'
         }));
 });
 
-gulp.task('svgs', gulp.series('build_svgs', function(done) {
+gulp.task('build_symbol_sprite', function () {
+    return gulp.src('src/images/svg/symbol/*.svg')
+        .pipe(svgSprite({
+            mode: {
+                symbol: {
+                    sprite: '../src/images/sprite-symbol.svg',
+                }
+            }
+        }))
+        .pipe(gulp.dest('.'))
+        .pipe(notify({
+            title: 'SVG',
+            message: 'SVG Symbol Sprites had built!'
+        }));
+});
+
+gulp.task('svgs', gulp.series('build_image_sprite', 'build_symbol_sprite', function(done) {
     gulp.src('src/images/*.svg')
-    .pipe(gulpReplace(/(fill|stroke)=".*?"/g, ''))
+    .pipe(gulpReplace(/(fill|stroke|fill-opacity)=".*?"/g, ''))
     .pipe(gulpReplace('<?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">', ''))
     .pipe(gulp.dest('src/images'));
 

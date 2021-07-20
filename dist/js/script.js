@@ -5009,9 +5009,12 @@ var More;
             setTimeout(function () {
                 const btnTxt = btnEl.innerHTML;
 
-                btnEl.innerHTML = btnEl.getAttribute('data-btn-text');
+                if (btnEl.hasAttribute('data-btn-text')) {
+                    btnEl.innerHTML = btnEl.getAttribute('data-btn-text');
 
-                btnEl.setAttribute('data-btn-text', btnTxt);
+                    btnEl.setAttribute('data-btn-text', btnTxt);
+                }
+                
             }, this.speed / 2);
         }
     };
