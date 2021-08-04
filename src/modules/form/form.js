@@ -1,4 +1,4 @@
-var ValidateForm, Form, DuplicateForm;
+var Form, DuplicateForm;
 
 (function () {
     'use strict';
@@ -79,7 +79,9 @@ var ValidateForm, Form, DuplicateForm;
 
         submitForm: function (formElem, e) {
             if (!ValidateForm.validate(formElem)) {
-                if (e) e.preventDefault();
+                if (e) {
+                    e.preventDefault();
+                }
 
                 const errFieldEl = formElem.querySelector('.field-error');
 
@@ -94,15 +96,22 @@ var ValidateForm, Form, DuplicateForm;
 
             formElem.classList.add('form_sending');
 
-            if (!this.onSubmitSubscribers.length) {
-                formElem.submit();
+            if (
+                !this.onSubmitSubscribers.length ||
+                formElem.method.toLowerCase() != 'post' ||
+                formElem.getAttribute('data-ajax') == 'false'
+            ) {
                 return;
             }
 
-            let fReturn;
+            if (e) {
+                e.preventDefault();
+            }
+
+            this.actSubmitBtn(false, formElem);
 
             this.onSubmitSubscribers.forEach(item => {
-                fReturn = item(formElem, (obj) => {
+                item(formElem, (obj) => {
                     obj = obj || {};
 
                     setTimeout(() => {
@@ -116,13 +125,6 @@ var ValidateForm, Form, DuplicateForm;
                     }
                 });
             });
-
-            if (fReturn === true) {
-                formElem.submit();
-            } else {
-                if (e) e.preventDefault();
-                this.actSubmitBtn(false, formElem);
-            }
         },
 
         onSubmit: function (fun) {

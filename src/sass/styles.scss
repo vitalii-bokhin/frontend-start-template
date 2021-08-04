@@ -33,7 +33,7 @@
 .list{
     list-style: none;
     li{
-        padding-left: rem(30);
+        padding-left: em(30);
         @include fch(t);
         position: relative;
         &:before{
@@ -45,8 +45,8 @@
 ul.list{
     li{
         &:before{
-            width: rem(20);
-            height: rem(20);
+            width: em(20);
+            height: em(20);
             left: 0;
             top: 0;
             background: $rd;
