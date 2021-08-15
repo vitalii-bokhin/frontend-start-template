@@ -1,4 +1,4 @@
-var ValidateForm, Form, DuplicateForm;
+var Form, DuplicateForm;
 
 (function () {
     'use strict';
@@ -78,6 +78,10 @@ var ValidateForm, Form, DuplicateForm;
         },
 
         submitForm: function (formElem, e) {
+            if (this.beforeSubmit) {
+                this.beforeSubmit(formElem);
+            }
+            
             if (!ValidateForm.validate(formElem)) {
                 if (e) e.preventDefault();
 

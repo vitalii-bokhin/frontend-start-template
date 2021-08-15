@@ -78,10 +78,12 @@ var Form, DuplicateForm;
         },
 
         submitForm: function (formElem, e) {
+            if (this.beforeSubmit) {
+                this.beforeSubmit(formElem);
+            }
+            
             if (!ValidateForm.validate(formElem)) {
-                if (e) {
-                    e.preventDefault();
-                }
+                if (e) e.preventDefault();
 
                 const errFieldEl = formElem.querySelector('.field-error');
 
@@ -96,22 +98,15 @@ var Form, DuplicateForm;
 
             formElem.classList.add('form_sending');
 
-            if (
-                !this.onSubmitSubscribers.length ||
-                formElem.method.toLowerCase() != 'post' ||
-                formElem.getAttribute('data-ajax') == 'false'
-            ) {
+            if (!this.onSubmitSubscribers.length) {
+                formElem.submit();
                 return;
             }
 
-            if (e) {
-                e.preventDefault();
-            }
-
-            this.actSubmitBtn(false, formElem);
+            let fReturn;
 
             this.onSubmitSubscribers.forEach(item => {
-                item(formElem, (obj) => {
+                fReturn = item(formElem, (obj) => {
                     obj = obj || {};
 
                     setTimeout(() => {
@@ -125,6 +120,13 @@ var Form, DuplicateForm;
                     }
                 });
             });
+
+            if (fReturn === true) {
+                formElem.submit();
+            } else {
+                if (e) e.preventDefault();
+                this.actSubmitBtn(false, formElem);
+            }
         },
 
         onSubmit: function (fun) {

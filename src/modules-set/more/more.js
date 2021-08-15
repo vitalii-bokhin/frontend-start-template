@@ -37,6 +37,8 @@ var More;
                 contentElem.style.height = contentElem.offsetHeight + 'px';
 
                 setTimeout(function () {
+                    contentElem.style.overflow = 'hidden';
+                    
                     contentElem.style.height = contentElem.getAttribute('data-height') + 'px';
 
                     btnEl.classList.remove('active');
@@ -59,6 +61,7 @@ var More;
 
                 setTimeout(function () {
                     contentElem.style.height = 'auto';
+                    contentElem.style.overflow = 'visible';
                 }, this.speed);
             }
 

@@ -60,6 +60,12 @@ document.addEventListener('DOMContentLoaded', function () {
             horizontal: true,
             bar: true
         });
+
+        new Scrollbox('#both-scroll', {
+            horizontal: true,
+            vertical: true,
+            bar: true
+        });
     } catch (error) {
         console.log(error);
     }

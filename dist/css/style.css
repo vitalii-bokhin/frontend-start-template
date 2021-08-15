@@ -87,7 +87,6 @@ img {
   max-width: 100%;
   vertical-align: bottom;
   border: none;
-  transform: translateZ(0);
 }
 
 b,
@@ -5922,7 +5921,7 @@ hr {
 }
 
 .list li {
-  padding-left: 1.875rem;
+  padding-left: 1.875em;
   position: relative;
 }
 
@@ -5936,8 +5935,8 @@ hr {
 }
 
 ul.list li:before {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.25em;
+  height: 1.25em;
   left: 0;
   top: 0;
   background: #ff0000;
@@ -6005,47 +6004,47 @@ ol.list li:before {
 }
 
 .accord__button:after {
-  background-position: 20.512820512820515% 0;
+  background-position: 25.153374233128833% 0;
 }
 
 .arrow-btn:after {
-  background-position: 49.586776859504134% 0;
+  background-position: 61.98830409356725% 0;
 }
 
 .custom-checkbox__input:checked + .custom-checkbox__label:before {
-  background-position: 57.6% 93.50649350649351%;
+  background-position: 58.8235294117647% 71.8232044198895%;
 }
 
 
 .f-btn::after {
-  background-position: 0 52.17391304347826%;
+  background-position: 0 52.84552845528455%;
 }
 
 
 .o-btn::after {
-  background-position: 24.8062015503876% 52.17391304347826%;
+  background-position: 30.481283422459892% 52.84552845528455%;
 }
 
 .plus-btn:after {
-  background-position: 47.863247863247864% 52.17391304347826%;
+  background-position: 60.122699386503065% 52.84552845528455%;
 }
 
 .form__btn_search:before {
-  background-position: 78.63247863247864% 0;
+  background-position: 100% 0;
 }
 
 
 .t-btn::after {
-  background-position: 78.63247863247864% 52.17391304347826%;
+  background-position: 100% 52.84552845528455%;
 }
 
 .v-btn::after {
-  background-position: 0 99.22822491730982%;
+  background-position: 0 99.91545615248634%;
 }
 
 .video__btn-play,
 .icon:before {
-  background-position: 30.76923076923077% 99.22822491730982%;
+  background-position: 39.877300613496935% 99.91545615248634%;
 }
 
 /* sprites */

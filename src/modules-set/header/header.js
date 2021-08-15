@@ -35,7 +35,7 @@
 
                     scrTop = window.pageYOffset;
 
-                    if (scrAccDown > 3) {
+                    if (scrAccDown > 2 && window.pageYOffset > headerElem.offsetHeight) {
                         headerElem.classList.add('header_hide');
                     } else if (scrAccUp > 1) {
                         headerElem.classList.remove('header_hide');
