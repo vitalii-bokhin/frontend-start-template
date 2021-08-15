@@ -4738,6 +4738,11 @@ hr {
   height: auto !important;
 }
 
+.scrollbox_cursor-drag .scrollbox__window {
+  user-select: none;
+  cursor: move;
+}
+
 .scrollbox__horizontal-bar {
   height: 6px;
   position: absolute;

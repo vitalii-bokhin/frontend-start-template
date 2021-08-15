@@ -747,4 +747,16 @@
             document.removeEventListener('mouseup', mouseUp);
         }
     }
+
+    Scrollbox.prototype.drag = function() {
+        
+        if (!this.initialized && !destroy) {
+            document.addEventListener('mousedown', mouseDown);
+            document.addEventListener('mouseup', mouseUp);
+
+        } else if (destroy) {
+            document.removeEventListener('mousedown', mouseDown);
+            document.removeEventListener('mouseup', mouseUp);
+        }
+    }
 })();
