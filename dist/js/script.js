@@ -7365,6 +7365,8 @@ function Mouseparallax(elSel, options) {
             mouseDelta = { X: 0, Y: 0 },
             lastScroll = { X: 0, Y: 0 };
 
+        let dragTimeout = null;
+
         const mouseMove = (e) => {
             mouseDelta.X = e.clientX - mouseStart.X;
             mouseDelta.Y = e.clientY - mouseStart.Y;
@@ -7386,6 +7388,8 @@ function Mouseparallax(elSel, options) {
             document.removeEventListener('mousemove', mouseMove);
 
             this.scrBoxEl.classList.remove('scrollbox_cursor-drag');
+
+            window.clearTimeout(dragTimeout);
         }
 
         const mouseDown = (e) => {
@@ -7402,7 +7406,9 @@ function Mouseparallax(elSel, options) {
                 lastScroll.X = this.scrolled.X;
                 lastScroll.Y = this.scrolled.Y;
 
-                this.scrBoxEl.classList.add('scrollbox_cursor-drag');
+                dragTimeout = setTimeout(() => {
+                    this.scrBoxEl.classList.add('scrollbox_cursor-drag');
+                }, 721);
             }
         }
 

@@ -4743,6 +4743,10 @@ hr {
   cursor: move;
 }
 
+.scrollbox_cursor-drag .scrollbox__inner {
+  pointer-events: none;
+}
+
 .scrollbox__horizontal-bar {
   height: 6px;
   position: absolute;
@@ -4777,10 +4781,6 @@ hr {
   background: #ff0000;
   border-radius: 6px;
   cursor: pointer;
-}
-
-.scrollbox_vertical .scrollbox__window {
-  max-height: 200px;
 }
 
 .scrollbox_dragging {
