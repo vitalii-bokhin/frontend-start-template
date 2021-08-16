@@ -9,6 +9,10 @@
       #routes-scroll &{
          height: auto !important;
       }
+      .scrollbox_cursor-drag &{
+         user-select: none;
+         cursor: move;
+      }
    }
    &__horizontal-bar{
       height: 6px;

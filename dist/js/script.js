@@ -6670,6 +6670,8 @@ function Mouseparallax(elSel, options) {
             this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
         }
 
+        let wheelHandler;
+
         const init = () => {
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
@@ -6704,6 +6706,7 @@ function Mouseparallax(elSel, options) {
 
                         if (innerH > winH) {
                             scrBoxEl.classList.add('srollbox_scrollable-vertical');
+                            scrBoxEl.addEventListener('wheel', wheelHandler);
                         }
 
                         this.winSize.Y = winH;
@@ -6716,7 +6719,6 @@ function Mouseparallax(elSel, options) {
 
                 scrBoxEl.setAttribute('data-position-vertical', 'atStart');
             }
-
 
             if (opt.nestedScrollbox) {
                 this.nestedSbEls = scrBoxEl.querySelectorAll(opt.nestedScrollbox);
@@ -6826,7 +6828,7 @@ function Mouseparallax(elSel, options) {
         }
 
         // wheel event handler
-        const wheelHandler = (e) => {
+        wheelHandler = (e) => {
             e.preventDefault();
 
             if (
@@ -6882,8 +6884,6 @@ function Mouseparallax(elSel, options) {
 
             scrollAnim({ Y: scrTo }, e, undefined, delta);
         }
-
-        scrBoxEl.addEventListener('wheel', wheelHandler);
 
         // keyboard events
         document.addEventListener('keydown', (e) => {
@@ -7389,7 +7389,6 @@ function Mouseparallax(elSel, options) {
         }
 
         const mouseDown = (e) => {
-            console.log(e);
             if (e.type == 'mousedown' && e.which != 1) return;
 
             const winEl = e.target.closest('.scrollbox__window');
@@ -7408,7 +7407,6 @@ function Mouseparallax(elSel, options) {
         }
 
         if (!this.initialized && !destroy) {
-            console.log('init drag');
             document.addEventListener('mousedown', mouseDown);
             document.addEventListener('mouseup', mouseUp);
 

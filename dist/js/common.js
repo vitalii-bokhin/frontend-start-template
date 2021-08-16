@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', function () {
             bar: true
         });
 
+        new Scrollbox('#test-scroll', {
+            bar: true
+        });
+
         new Scrollbox('#hor-scroll', {
             horizontal: true,
             bar: true

@@ -64,6 +64,8 @@
             this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
         }
 
+        let wheelHandler;
+
         const init = () => {
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
@@ -98,6 +100,7 @@
 
                         if (innerH > winH) {
                             scrBoxEl.classList.add('srollbox_scrollable-vertical');
+                            scrBoxEl.addEventListener('wheel', wheelHandler);
                         }
 
                         this.winSize.Y = winH;
@@ -110,7 +113,6 @@
 
                 scrBoxEl.setAttribute('data-position-vertical', 'atStart');
             }
-
 
             if (opt.nestedScrollbox) {
                 this.nestedSbEls = scrBoxEl.querySelectorAll(opt.nestedScrollbox);
@@ -220,7 +222,7 @@
         }
 
         // wheel event handler
-        const wheelHandler = (e) => {
+        wheelHandler = (e) => {
             e.preventDefault();
 
             if (
@@ -276,8 +278,6 @@
 
             scrollAnim({ Y: scrTo }, e, undefined, delta);
         }
-
-        scrBoxEl.addEventListener('wheel', wheelHandler);
 
         // keyboard events
         document.addEventListener('keydown', (e) => {
@@ -783,7 +783,6 @@
         }
 
         const mouseDown = (e) => {
-            console.log(e);
             if (e.type == 'mousedown' && e.which != 1) return;
 
             const winEl = e.target.closest('.scrollbox__window');
@@ -802,7 +801,6 @@
         }
 
         if (!this.initialized && !destroy) {
-            console.log('init drag');
             document.addEventListener('mousedown', mouseDown);
             document.addEventListener('mouseup', mouseUp);
 
