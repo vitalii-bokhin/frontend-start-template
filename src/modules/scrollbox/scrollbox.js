@@ -355,6 +355,7 @@
         }
 
         this.reInit = function () {
+            this.innerEl.style = '';
             init();
         }
 

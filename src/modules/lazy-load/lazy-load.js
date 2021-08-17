@@ -1,7 +1,8 @@
 /* 
 new LazyLoad({
    selector: @Str,
-   event: false
+   event: false,
+   flexible: true
 });
 
 const lazy = new LazyLoad().load;
@@ -15,6 +16,10 @@ lazy('.el-sel');
 
     LazyLoad = function (opt) {
         opt = opt || {};
+
+        this.opt = opt;
+
+        this.opt.flexible = this.opt.flexible || false;
 
         const elements = document.querySelectorAll(opt.selector);
 
@@ -36,8 +41,7 @@ lazy('.el-sel');
 
         return {
             load: (sel) => {
-                const elements = document.querySelectorAll(sel);
-                this.doLoad(elements);
+                this.doLoad(document.querySelectorAll(sel));
             }
         }
     }
@@ -46,10 +50,36 @@ lazy('.el-sel');
         for (let i = 0; i < elems.length; i++) {
             const elem = elems[i];
 
-            if (elem.hasAttribute('data-src')) {
-                elem.src = elem.getAttribute('data-src');
-            } else if (elem.hasAttribute('data-bg-url')) {
-                elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
+            if (this.opt.flexible) {
+                if (elem.hasAttribute('data-src')) {
+                    const arr = elem.getAttribute('data-src').split(',');
+
+                    arr.forEach(function (arrItem) {
+                        const props = arrItem.split('->');
+
+                        if (window.innerWidth < (+props[0])) {
+                            elem.src = props[1];
+                        }
+                    });
+
+                } else if (elem.hasAttribute('data-bg-url')) {
+                    const arr = elem.getAttribute('data-bg-url').split(',');
+
+                    arr.forEach(function (arrItem) {
+                        const props = arrItem.split('->');
+
+                        if (window.innerWidth < (+props[0])) {
+                            elem.style.backgroundImage = 'url(' + props[1] + ')';
+                        }
+                    });
+                }
+
+            } else {
+                if (elem.hasAttribute('data-src')) {
+                    elem.src = elem.getAttribute('data-src');
+                } else if (elem.hasAttribute('data-bg-url')) {
+                    elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
+                }
             }
         }
     }

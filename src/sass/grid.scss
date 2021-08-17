@@ -75,32 +75,6 @@ $wrapper: 1020;
             flex-wrap: nowrap;
         }
     }
-    @media(max-width: 750px){
-        margin-left: -10px;
-        margin-right: -10px;
-        &_wrp{
-            margin-left: 5px;
-            margin-right: 5px;
-        }
-        &:not(.row_nw):not(.row_xs-2cols) > [class*="col"]:not([class*="xs-col"]){
-            flex: 0 0 100%;
-            max-width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        &_xs-2cols{
-            .col{
-                flex: 0 0 50%;
-                max-width: 50%;
-            }
-        }
-        & > [class*="col"]{
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-    }
 }
 
 @mixin cols {
@@ -244,6 +218,32 @@ $wrapper: 1020;
     .xs{
         &-col{
             @include cols;
+        }
+    }
+    .row{
+        margin-left: -10px;
+        margin-right: -10px;
+        &_wrp{
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        &:not(.row_nw):not(.row_xs-2cols) > [class*="col"]:not([class*="xs-col"]){
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        &_xs-2cols{
+            .col{
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+        & > [class*="col"]{
+            padding-left: 10px;
+            padding-right: 10px;
         }
     }
 }

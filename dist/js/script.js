@@ -6961,6 +6961,7 @@ function Mouseparallax(elSel, options) {
         }
 
         this.reInit = function () {
+            this.innerEl.style = '';
             init();
         }
 
