@@ -145,17 +145,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // tooltip
     try {
-        ToolTip.init({
-            element: '.js-tooltip'
+        const tt = new ToolTip({
+            btnSelector: '.js-tooltip',
+            notHide: false, // def: false
+            clickEvent: true, // def: false
+            tipElClass: 'some-class', // def: null
         });
 
-        ToolTip.beforeShow = function(btnEl, tooltipDivEl) {
+        new ToolTip({
+            btnSelector: '.js-tooltip-hov'
+        });
 
-        }
+        new ToolTip({
+            btnSelector: '.js-tooltip-bot',
+            positionY: 'bottom'
+        });
 
-        ToolTip.onShow = function (btnEl, tooltipDivEl) {
-
-        }
+        new ToolTip({
+            btnSelector: '.js-tooltip-right',
+            positionX: 'right'
+        });
     } catch (error) {
         console.log(error);
     }

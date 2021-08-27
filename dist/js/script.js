@@ -1504,7 +1504,8 @@ CoverImg.reInit([Str parent element selector]);
 /* 
 new LazyLoad({
    selector: @Str,
-   event: false
+   event: false,
+   flexible: true
 });
 
 const lazy = new LazyLoad().load;
@@ -1518,6 +1519,10 @@ lazy('.el-sel');
 
     LazyLoad = function (opt) {
         opt = opt || {};
+
+        this.opt = opt;
+
+        this.opt.flexible = this.opt.flexible || false;
 
         const elements = document.querySelectorAll(opt.selector);
 
@@ -1539,8 +1544,7 @@ lazy('.el-sel');
 
         return {
             load: (sel) => {
-                const elements = document.querySelectorAll(sel);
-                this.doLoad(elements);
+                this.doLoad(document.querySelectorAll(sel));
             }
         }
     }
@@ -1549,10 +1553,36 @@ lazy('.el-sel');
         for (let i = 0; i < elems.length; i++) {
             const elem = elems[i];
 
-            if (elem.hasAttribute('data-src')) {
-                elem.src = elem.getAttribute('data-src');
-            } else if (elem.hasAttribute('data-bg-url')) {
-                elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
+            if (this.opt.flexible) {
+                if (elem.hasAttribute('data-src')) {
+                    const arr = elem.getAttribute('data-src').split(',');
+
+                    arr.forEach(function (arrItem) {
+                        const props = arrItem.split('->');
+
+                        if (window.innerWidth < (+props[0])) {
+                            elem.src = props[1];
+                        }
+                    });
+
+                } else if (elem.hasAttribute('data-bg-url')) {
+                    const arr = elem.getAttribute('data-bg-url').split(',');
+
+                    arr.forEach(function (arrItem) {
+                        const props = arrItem.split('->');
+
+                        if (window.innerWidth < (+props[0])) {
+                            elem.style.backgroundImage = 'url(' + props[1] + ')';
+                        }
+                    });
+                }
+
+            } else {
+                if (elem.hasAttribute('data-src')) {
+                    elem.src = elem.getAttribute('data-src');
+                } else if (elem.hasAttribute('data-bg-url')) {
+                    elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
+                }
             }
         }
     }
@@ -3188,7 +3218,8 @@ var FormSlider;
         edge: {},
         input: null,
         valUnit: 0,
-        dragElemLeft: 0,
+        dragElemDistance: 0,
+        dragSubscribers: [],
         dragEndSubscribers: [],
         formaters: {},
 
@@ -3204,7 +3235,7 @@ var FormSlider;
                 if (isRange) {
                     dragElem = '<button type="button" class="formslider__drag" data-index="0" data-input="' + sliderEl.getAttribute('data-first-input') + '"></button><button type="button" class="formslider__drag" data-index="1" data-input="' + sliderEl.getAttribute('data-second-input') + '"></button>';
                 } else {
-                    dragElem = '<button type="button" class="formslider__drag" data-input="' + sliderEl.getAttribute('data-input') + '></button>';
+                    dragElem = '<button type="button" class="formslider__drag" data-input="' + sliderEl.getAttribute('data-input') + '"></button>';
                 }
 
                 sliderEl.innerHTML = '<div class="formslider__bar"><div class="formslider__track"></div>' + dragElem + '</div>';
@@ -3268,37 +3299,49 @@ var FormSlider;
             this.mU = this.mouseUp.bind(this);
 
             document.addEventListener('mousemove', this.mM);
-            document.addEventListener('touchmove', this.mM);
+            document.addEventListener('touchmove', this.mM, {passive: false});
 
             document.addEventListener('mouseup', this.mU);
             document.addEventListener('touchend', this.mU);
 
-            var clientX = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX;
+            const clientX = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX,
+                clientY = (e.type == 'touchstart') ? e.targetTouches[0].clientY : e.clientY;
 
-            // dragable options 
-            this.dragElemObj.elem = elem;
-            this.dragElemObj.X = elem.getBoundingClientRect().left;
-            this.dragElemObj.shiftX = clientX - this.dragElemObj.X;
-            this.dragElemObj.index = elem.getAttribute('data-index');
-            this.dragElemObj.width = elem.offsetWidth;
-            elem.setAttribute('data-active', 'true');
-
-            //formslider options
+            // formslider options
             var formslider = elem.closest('.formslider');
             this.formsliderObj.X = formslider.getBoundingClientRect().left;
+            this.formsliderObj.Y = formslider.getBoundingClientRect().bottom;
             this.formsliderObj.width = formslider.offsetWidth;
+            this.formsliderObj.height = formslider.offsetHeight;
             this.formsliderObj.isRange = formslider.getAttribute('data-range');
+            this.formsliderObj.isVertical = formslider.getAttribute('data-vertical') === 'true' || false;
             this.formsliderObj.min = +formslider.getAttribute('data-min');
 
-            //one unit of value
-            this.valUnit = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / (formslider.offsetWidth - elem.offsetWidth);
+            // dragable options
+            this.dragElemObj.elem = elem;
+            this.dragElemObj.X = elem.getBoundingClientRect().left;
+            this.dragElemObj.Y = elem.getBoundingClientRect().bottom;
+            this.dragElemObj.shiftX = clientX - this.dragElemObj.X;
+            this.dragElemObj.shiftY = this.dragElemObj.Y - clientY;
+            this.dragElemObj.index = elem.getAttribute('data-index');
+            this.dragElemObj.width = elem.offsetWidth;
+            this.dragElemObj.height = elem.offsetHeight;
+            elem.setAttribute('data-active', 'true');
+
+            // one unit of value
+            if (this.formsliderObj.isVertical) {
+                this.valUnit = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / (formslider.offsetHeight - elem.offsetHeight);
+            } else {
+                this.valUnit = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / (formslider.offsetWidth - elem.offsetWidth);
+            }
+
 
             this.oneValPerc = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / 100;
 
-            //track
+            // track
             this.track = formslider.querySelector('.formslider__track');
 
-            //get parameters of slider
+            // get parameters of slider
             if (this.formsliderObj.isRange) {
 
                 if (this.dragElemObj.index == 0) {
@@ -3316,16 +3359,19 @@ var FormSlider;
                     this.edge.L = siblElem.getBoundingClientRect().left - this.formsliderObj.X + siblElem.offsetWidth;
 
                     this.edge.R = this.formsliderObj.width - elem.offsetWidth;
-
                 }
-
-                this.input = document.getElementById(elem.getAttribute('data-input'));
 
             } else {
                 this.edge.L = 0;
-                this.edge.R = this.formsliderObj.width - elem.offsetWidth;
+
+                if (this.formsliderObj.isVertical) {
+                    this.edge.R = this.formsliderObj.height - elem.offsetHeight;
+                } else {
+                    this.edge.R = this.formsliderObj.width - elem.offsetWidth;
+                }
             }
 
+            this.input = document.getElementById(elem.getAttribute('data-input'));
         },
 
         // on mouse move
@@ -3334,37 +3380,55 @@ var FormSlider;
                 return;
             }
 
-            var clientX = (e.type == 'touchmove') ? e.targetTouches[0].clientX : e.clientX;
+            e.preventDefault();
 
-            var dragElemLeft = clientX - this.dragElemObj.shiftX - this.formsliderObj.X;
+            const clientX = (e.type == 'touchmove') ? e.targetTouches[0].clientX : e.clientX,
+                clientY = (e.type == 'touchmove') ? e.targetTouches[0].clientY : e.clientY;
 
-            if (dragElemLeft < this.edge.L) {
-                dragElemLeft = this.edge.L;
-            } else if (dragElemLeft > this.edge.R) {
-                dragElemLeft = this.edge.R;
+            let dragElemDistance = 0;
+
+            if (this.formsliderObj.isVertical) {
+                dragElemDistance = this.formsliderObj.Y - clientY - this.dragElemObj.shiftY;
+            } else {
+                dragElemDistance = clientX - this.dragElemObj.shiftX - this.formsliderObj.X;
+            }
+
+            if (dragElemDistance < this.edge.L) {
+                dragElemDistance = this.edge.L;
+
+            } else if (dragElemDistance > this.edge.R) {
+                dragElemDistance = this.edge.R;
             }
 
             if (this.formsliderObj.isRange) {
 
                 if (this.dragElemObj.index == 0) {
-                    this.track.style.left = (dragElemLeft + 5) + 'px';
+                    this.track.style.left = (dragElemDistance + 5) + 'px';
                 } else if (this.dragElemObj.index == 1) {
-                    this.track.style.right = (this.formsliderObj.width - dragElemLeft - 5) + 'px';
+                    this.track.style.right = (this.formsliderObj.width - dragElemDistance - 5) + 'px';
                 }
 
             } else {
-                this.track.style.width = (dragElemLeft + 5) + 'px';
+                if (this.formsliderObj.isVertical) {
+                    this.track.style.height = (dragElemDistance + 5) + 'px';
+                } else {
+                    this.track.style.width = (dragElemDistance + 5) + 'px';
+                }
             }
 
-            this.dragElemObj.elem.style.left = dragElemLeft + 'px';
+            if (this.formsliderObj.isVertical) {
+                this.dragElemObj.elem.style.bottom = dragElemDistance + 'px';
+            } else {
+                this.dragElemObj.elem.style.left = dragElemDistance + 'px';
+            }
 
-            this.dragElemLeft = dragElemLeft;
+            this.dragElemDistance = dragElemDistance;
 
             this.setInputVal();
         },
 
         // end drag
-        mouseUp: function (e) {
+        mouseUp: function () {
             document.removeEventListener('mousemove', this.mM);
             document.removeEventListener('touchmove', this.mM);
 
@@ -3379,43 +3443,72 @@ var FormSlider;
                 item();
             });
 
-            //reset properties
+            // reset properties
             this.dragElemObj = {};
             this.formsliderObj = {};
             this.track = null;
             this.edge = {};
             this.input = null;
             this.valUnit = 0;
-            this.dragElemLeft = 0;
+            this.dragElemDistance = 0;
+        },
+
+        onDrag: function (fun) {
+            if (typeof fun === 'function') {
+                this.dragSubscribers.push(fun);
+            }
         },
 
         onDragEnd: function (fun) {
-			if (typeof fun === 'function') {
-				this.dragEndSubscribers.push(fun);
-			}
-		},
+            if (typeof fun === 'function') {
+                this.dragEndSubscribers.push(fun);
+            }
+        },
 
-        //set hidden input value
+        // set hidden input value
         setInputVal: function () {
             let val;
 
             if (this.formsliderObj.isRange) {
                 if (this.dragElemObj.index == 0) {
-                    val = Math.round((this.dragElemLeft / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
+                    val = Math.round((this.dragElemDistance / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
                 } else {
-                    val = Math.round(((this.dragElemLeft - this.dragElemObj.width) / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
+                    val = Math.round(((this.dragElemDistance - this.dragElemObj.width) / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
                 }
+
+            } else {
+                val = Math.round((this.dragElemDistance / ((this.formsliderObj.height - this.dragElemObj.height) / 100)) * this.oneValPerc);
             }
 
-            val = val + this.formsliderObj.min;
+            let inpVal = val + this.formsliderObj.min,
+                labelVal = val + this.formsliderObj.min;
 
             const formatId = this.input.getAttribute('data-format');
 
             if (formatId !== null && this.formaters[formatId]) {
-                val = this.formaters[formatId](val)
+                inpVal = this.formaters[formatId](inpVal);
             }
 
-            this.input.value = val;
+            this.input.value = inpVal;
+
+            if (this.dragSubscribers.length) {
+                this.dragSubscribers.forEach(item => {
+                    item(this.input, inpVal);
+                });
+            }
+
+            const labelId = this.input.getAttribute('data-label-id');
+
+            if (labelId) {
+                const labelEl = document.getElementById(labelId),
+                    formatId = labelEl.getAttribute('data-format');
+
+                if (formatId !== null && this.formaters[formatId]) {
+                    labelVal = this.formaters[formatId](labelVal);
+                }
+
+                labelEl.innerHTML = labelVal;
+            }
         },
 
         format: function (id, fun) {
@@ -3423,7 +3516,7 @@ var FormSlider;
         }
     };
 
-    document.addEventListener('DOMContentLoaded', function (e) {
+    document.addEventListener('DOMContentLoaded', function () {
         FormSlider.init();
 
         window.addEventListener('winResized', function () {
@@ -5256,246 +5349,206 @@ new Alert({
     }
 })();
 /*
-ToolTip.init({
-    element: '.js-tooltip',
-    notHide: true // def: false,
-    evClick: true // def: false
+const tt = new ToolTip({
+    btnSelector: '.js-tooltip',
+    notHide: true, // def: false
+    clickEvent: true, // def: false
+    tipElClass: 'some-class', // def: null
+    positionX: 'left' | 'right', // def: 'center'
+    positionY: 'bottom', // def: 'top'
 });
 
-ToolTip.beforeShow = function(btnEl, tooltipDivEl) {
-
+tt.beforeShow = function(btnEl, tooltipDivEl) {
+    # code...
 }
 
-ToolTip.onShow = function(btnEl, tooltipDivEl) {
-
+tt.onShow = function(btnEl, tooltipDivEl) {
+    # code...
 }
 
-ToolTip.onHide = function() {
-
+tt.onHide = function() {
+    # code...
 }
 */
 
-; var ToolTip;
+var ToolTip;
 
 (function () {
     'use strict';
 
-    ToolTip = {
-        tooltipDiv: null,
-        tooltipClass: null,
-        canBeHidden: false,
-        position: {},
-        onShow: null,
-        opt: null,
+    ToolTip = function (options) {
+        this.opt = options || {};
 
-        init: function (opt) {
-            this.opt = opt || {};
+        this.tooltipDiv = null;
+        this.tooltipClass = null;
+        this.canBeHidden = false;
+        this.position = {};
+        this.onShow = null;
+        this.mO = null;
 
-            this.opt.notHide = (opt.notHide !== undefined) ? opt.notHide : false;
-            this.opt.evClick = (opt.evClick !== undefined) ? opt.evClick : false;
+        this.opt.notHide = (this.opt.notHide !== undefined) ? this.opt.notHide : false;
+        this.opt.evClick = (this.opt.clickEvent !== undefined) ? this.opt.clickEvent : false;
+        this.opt.tipElClass = (this.opt.tipElClass !== undefined) ? this.opt.tipElClass : null;
 
-            let mouseOver = (e) => {
-                if (this.canBeHidden) {
-                    if (!e.target.closest(opt.element) && !e.target.closest('.tooltip')) {
-                        this.hide();
+        this.position.X = (this.opt.positionX !== undefined) ? this.opt.positionX : 'center';
+        this.position.Y = (this.opt.positionY !== undefined) ? this.opt.positionY : 'top';
 
-                        this.canBeHidden = false;
-                    }
-                } else {
-                    const elem = e.target.closest(opt.element);
+        let mouseOver = (e) => {
+            if (this.canBeHidden) {
+                if (!e.target.closest(this.opt.btnSelector) && !e.target.closest('.tooltip')) {
+                    this.hide();
 
-                    if (elem) {
-                        this.show(elem);
-                    }
+                    this.canBeHidden = false;
                 }
-            }
-
-            let mouseClick = (e) => {
-                const elem = e.target.closest(opt.element);
+            } else {
+                const elem = e.target.closest(this.opt.btnSelector);
 
                 if (elem) {
-                    e.preventDefault();
-
-                    this.hide();
                     this.show(elem);
                 }
             }
+        }
 
-            if (document.ontouchstart !== undefined || this.opt.evClick) {
-                document.addEventListener('click', mouseClick);
+        let mouseClick = (e) => {
+            const elem = e.target.closest(this.opt.btnSelector);
 
-            } else {
-                document.addEventListener('mouseover', mouseOver);
+            if (elem) {
+                e.preventDefault();
 
-                document.addEventListener('click', function (e) {
-                    if (e.target.closest(opt.element)) e.preventDefault();
-                });
-            }
-
-            document.addEventListener('click', (e) => {
-                const closeBtn = e.target.closest('.tooltip__close');
-
-                if (closeBtn) this.hide();
-            });
-
-            //add tooltip to DOM
-            this.tooltipDiv = document.createElement('div');
-            this.tooltipDiv.className = 'tooltip';
-
-            document.body.appendChild(this.tooltipDiv);
-        },
-
-        show: function (elem) {
-            clearTimeout(this.hideTimeout);
-            
-            let html = elem.hasAttribute('data-tooltip') ? elem.getAttribute('data-tooltip').replace(/\[(\/?\w+)\]/gi, '<$1>') : '';
-
-            if (this.opt.evClick) html += '<button type="button" class="tooltip__close"></button>';
-
-            this.tooltipDiv.innerHTML = html;
-
-            if (this.beforeShow) {
-                this.onShow(elem, this.tooltipDiv);
-            }
-
-            this.tooltipClass = elem.getAttribute('data-tooltip-class');
-
-            if (window.innerWidth < 750) {
-                this.position.X = 'center';
-            } else if (elem.hasAttribute('data-tooltip-pos-x')) {
-                this.position.X = elem.getAttribute('data-tooltip-pos-x');
-            } else {
-                this.position.X = 'rout';
-            }
-
-            if (elem.hasAttribute('data-tooltip-pos-y')) {
-                this.position.Y = elem.getAttribute('data-tooltip-pos-y');
-            }
-
-            if (!this.position.Y) this.position.Y = 'bottomOut';
-
-            if (window.matchMedia('(max-width: 750px) and (min-height: 550px)').matches) {
-                this.position.Y = 'bottomOut';
-            }
-
-            if (this.tooltipClass) this.tooltipDiv.classList.add(this.tooltipClass);
-
-            let bubleStyle = this.tooltipDiv.style,
-                elemRect = elem.getBoundingClientRect(),
-                winW = window.innerWidth,
-                coordX,
-                coordY;
-
-            switch (this.position.X) {
-                case 'center':
-                    coordX = (elemRect.left + ((elemRect.right - elemRect.left) / 2)) - (this.tooltipDiv.offsetWidth / 2);
-
-                    if (coordX < 10) {
-                        coordX = 10;
-                    }
-
-                    bubleStyle.left = coordX + 'px';
-                    bubleStyle.marginLeft = '0';
-                    bubleStyle.marginRight = '0';
-                    break;
-
-                case 'leftIn':
-                    coordX = elemRect.left;
-                    bubleStyle.left = coordX + 'px';
-                    break;
-
-                case 'rightIn':
-                    coordX = window.innerWidth - elemRect.right;
-                    bubleStyle.right = coordX + 'px';
-                    break;
-
-                default:
-                    coordX = elemRect.right;
-                    bubleStyle.left = coordX + 'px';
-                    break;
-            }
-
-            if ((this.tooltipDiv.offsetWidth + coordX) > winW) {
-                bubleStyle.width = (winW - coordX - 10) + 'px';
-            }
-
-            // if (tooltipPotentWidth < tooltipMinWidth) {
-            // 	tooltipPotentWidth = tooltipMinWidth;
-
-            // 	coordX = window.innerWidth - tooltipMinWidth - 10;
-            // }
-
-            switch (this.position.Y) {
-                case 'bottomIn':
-                    coordY = elemRect.bottom + window.pageYOffset - this.tooltipDiv.offsetHeight;
-                    break;
-
-                case 'bottomOut':
-                    coordY = elemRect.bottom + window.pageYOffset;
-                    break;
-
-                default: // topOut
-                    coordY = elemRect.top + window.pageYOffset - this.tooltipDiv.offsetHeight;
-                    break;
-            }
-
-            if (coordY < window.pageYOffset) {
-                coordY = window.pageYOffset;
-                bubleStyle.marginTop = '0';
-            }
-
-            bubleStyle.top = coordY + 'px';
-
-            if (this.onShow) {
-                this.onShow(elem, this.tooltipDiv);
-            }
-
-            this.tooltipDiv.classList.add('tooltip_visible');
-
-            this.canBeHidden = true;
-
-            if (document.ontouchstart !== undefined) {
-                document.addEventListener('touchstart', this.mouseOut.bind(this));
-
-            } else if (this.opt.evClick) {
-                document.addEventListener('wheel', this.mouseOut.bind(this));
-            }
-        },
-
-        hide: function () {
-            if (this.opt.notHide) return;
-
-            this.tooltipDiv.classList.remove('tooltip_visible');
-
-            this.hideTimeout = setTimeout(() => {
-                this.tooltipDiv.removeAttribute('style');
-                this.tooltipDiv.innerHTML = '';
-                this.position = {};
-
-                if (this.tooltipClass) {
-                    this.tooltipDiv.classList.remove(this.tooltipClass);
-
-                    this.tooltipClass = null;
-                }
-
-                if (this.onHide) {
-                    this.onHide();
-                }
-            }, 550);
-
-        },
-
-        mouseOut: function (e) {
-            if (this.canBeHidden && !e.target.closest(this.opt.element) && !e.target.closest('.tooltip')) {
                 this.hide();
 
                 this.canBeHidden = false;
 
-                document.removeEventListener('touchstart', this.mouseOut);
-                document.removeEventListener('wheel', this.mouseOut);
+                this.show(elem);
             }
         }
-    };
+
+        if (document.ontouchstart !== undefined || this.opt.evClick) {
+            document.addEventListener('click', mouseClick);
+
+        } else {
+            document.addEventListener('mouseover', mouseOver);
+
+            document.addEventListener('click', (e) => {
+                if (e.target.closest(this.opt.btnSelector)) e.preventDefault();
+            });
+        }
+
+        this.tooltipDiv = document.createElement('div');
+        this.tooltipDiv.className = 'tooltip' + (this.opt.tipElClass ? ' ' + this.opt.tipElClass : '');
+
+        document.body.appendChild(this.tooltipDiv);
+
+        document.addEventListener('click', (e) => {
+            const closeBtn = e.target.closest('.tooltip__close');
+
+            if (closeBtn || (this.canBeHidden && !e.target.closest('.tooltip'))) {
+                this.hide();
+            }
+        });
+    }
+
+    ToolTip.prototype.show = function (elem) {
+        clearTimeout(this.hideTimeout);
+
+        let html = elem.hasAttribute('data-tooltip') ? elem.getAttribute('data-tooltip').replace(/\[(\/?\w+)\]/gi, '<$1>') : '';
+
+        if (this.opt.evClick) html += '<button type="button" class="tooltip__close"></button>';
+
+        this.tooltipDiv.innerHTML = html;
+
+        if (this.beforeShow) {
+            this.beforeShow(elem, this.tooltipDiv);
+        }
+
+        this.tooltipClass = elem.getAttribute('data-tooltip-class');
+
+        if (this.tooltipClass) {
+            this.tooltipDiv.classList.add(this.tooltipClass);
+        }
+
+        const bubleStyle = this.tooltipDiv.style,
+            elemRect = elem.getBoundingClientRect();
+
+        let coordX, coordY;
+
+        if (this.position.X == 'center') {
+            coordX = (elemRect.left + ((elemRect.right - elemRect.left) / 2)) - (this.tooltipDiv.offsetWidth / 2);
+        } else if (this.position.X == 'left') {
+            coordX = elemRect.left - this.tooltipDiv.offsetWidth;
+        } else if (this.position.X == 'right') {
+            coordX = elemRect.right;
+        }
+
+        if (this.position.Y == 'top') {
+            coordY = elemRect.top + window.pageYOffset - this.tooltipDiv.offsetHeight;
+
+        } else if (this.position.Y == 'bottom') {
+            coordY = elemRect.bottom + window.pageYOffset;
+        }
+
+        bubleStyle.left = coordX + 'px';
+        bubleStyle.top = coordY + 'px';
+
+        const tipElRect = this.tooltipDiv.getBoundingClientRect();
+
+        if (tipElRect.top < 0) {
+            bubleStyle.top = (coordY - tipElRect.top) + 'px';
+        }
+
+        if (this.onShow) {
+            this.onShow(elem, this.tooltipDiv);
+        }
+
+        this.tooltipDiv.classList.add('tooltip_visible');
+
+        setTimeout(() => {
+            this.canBeHidden = true;
+        }, 21);
+
+        this.mO = this.mouseOut.bind(this);
+
+        if (document.ontouchstart !== undefined) {
+            document.addEventListener('touchstart', this.mO);
+
+        } else if (this.opt.evClick) {
+            document.addEventListener('wheel', this.mO);
+        }
+    }
+
+    ToolTip.prototype.hide = function () {
+        if (this.opt.notHide) {
+            return;
+        }
+
+        this.tooltipDiv.classList.remove('tooltip_visible');
+
+        this.hideTimeout = setTimeout(() => {
+            this.tooltipDiv.removeAttribute('style');
+            this.tooltipDiv.innerHTML = '';
+
+            if (this.tooltipClass) {
+                this.tooltipDiv.classList.remove(this.tooltipClass);
+
+                this.tooltipClass = null;
+            }
+
+            if (this.onHide) {
+                this.onHide();
+            }
+        }, 550);
+    }
+
+    ToolTip.prototype.mouseOut = function (e) {
+        if (this.canBeHidden && !e.target.closest(this.opt.btnSelector) && !e.target.closest('.tooltip')) {
+            this.hide();
+
+            this.canBeHidden = false;
+
+            document.removeEventListener('touchstart', this.mO);
+            document.removeEventListener('wheel', this.mO);
+        }
+    }
 })();
 /*
 Anchor.init(Str anchor selector[, Int duration ms[, Int shift px]]);

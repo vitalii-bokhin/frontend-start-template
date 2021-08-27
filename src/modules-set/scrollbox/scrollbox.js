@@ -64,6 +64,8 @@
             this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
         }
 
+        let wheelHandler;
+
         const init = () => {
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
@@ -98,6 +100,7 @@
 
                         if (innerH > winH) {
                             scrBoxEl.classList.add('srollbox_scrollable-vertical');
+                            scrBoxEl.addEventListener('wheel', wheelHandler);
                         }
 
                         this.winSize.Y = winH;
@@ -110,7 +113,6 @@
 
                 scrBoxEl.setAttribute('data-position-vertical', 'atStart');
             }
-
 
             if (opt.nestedScrollbox) {
                 this.nestedSbEls = scrBoxEl.querySelectorAll(opt.nestedScrollbox);
@@ -220,7 +222,7 @@
         }
 
         // wheel event handler
-        const wheelHandler = (e) => {
+        wheelHandler = (e) => {
             e.preventDefault();
 
             if (
@@ -276,8 +278,6 @@
 
             scrollAnim({ Y: scrTo }, e, undefined, delta);
         }
-
-        scrBoxEl.addEventListener('wheel', wheelHandler);
 
         // keyboard events
         document.addEventListener('keydown', (e) => {
@@ -355,6 +355,7 @@
         }
 
         this.reInit = function () {
+            this.innerEl.style = '';
             init();
         }
 
@@ -759,6 +760,8 @@
             mouseDelta = { X: 0, Y: 0 },
             lastScroll = { X: 0, Y: 0 };
 
+        let dragTimeout = null;
+
         const mouseMove = (e) => {
             mouseDelta.X = e.clientX - mouseStart.X;
             mouseDelta.Y = e.clientY - mouseStart.Y;
@@ -780,10 +783,11 @@
             document.removeEventListener('mousemove', mouseMove);
 
             this.scrBoxEl.classList.remove('scrollbox_cursor-drag');
+
+            window.clearTimeout(dragTimeout);
         }
 
         const mouseDown = (e) => {
-            console.log(e);
             if (e.type == 'mousedown' && e.which != 1) return;
 
             const winEl = e.target.closest('.scrollbox__window');
@@ -797,12 +801,13 @@
                 lastScroll.X = this.scrolled.X;
                 lastScroll.Y = this.scrolled.Y;
 
-                this.scrBoxEl.classList.add('scrollbox_cursor-drag');
+                dragTimeout = setTimeout(() => {
+                    this.scrBoxEl.classList.add('scrollbox_cursor-drag');
+                }, 721);
             }
         }
 
         if (!this.initialized && !destroy) {
-            console.log('init drag');
             document.addEventListener('mousedown', mouseDown);
             document.addEventListener('mouseup', mouseUp);
 

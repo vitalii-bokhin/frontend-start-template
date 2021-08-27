@@ -353,33 +353,6 @@ hr {
   }
 }
 
-@media (max-width: 750px) {
-  .row {
-    margin-left: -10px;
-    margin-right: -10px;
-  }
-  .row_wrp {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-  .row:not(.row_nw):not(.row_xs-2cols) > [class*="col"]:not([class*="xs-col"]) {
-    flex: 0 0 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .row_xs-2cols .col {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  .row > [class*="col"] {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
-
 .col {
   flex: 0 1 auto;
   max-width: none;
@@ -2168,6 +2141,30 @@ hr {
   }
   .xs-col_first {
     order: -1;
+  }
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  .row_wrp {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .row:not(.row_nw):not(.row_xs-2cols) > [class*="col"]:not([class*="xs-col"]) {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .row_xs-2cols .col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .row > [class*="col"] {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
@@ -4575,22 +4572,20 @@ hr {
 .tooltip {
   position: absolute;
   left: -999px;
-  z-index: 8;
+  z-index: 9;
   background: #ff0000;
-  padding: 2.3125rem 10px;
-  width: 0;
-  width: 11.5rem;
-  font-size: 12px;
+  padding: 1.5625em;
+  width: 11.5em;
   color: #ffffff;
   line-height: 1.33333;
   opacity: 0;
   transition: opacity .5s;
   text-align: center;
-  margin: -10px 0 0 25px;
+  margin-top: -10px;
 }
 
 .tooltip p {
-  font-size: 1.25rem;
+  font-size: 1.25em;
   font-weight: 900;
   margin-bottom: 0.75em;
 }

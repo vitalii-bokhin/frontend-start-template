@@ -12,7 +12,8 @@ var FormSlider;
         edge: {},
         input: null,
         valUnit: 0,
-        dragElemLeft: 0,
+        dragElemDistance: 0,
+        dragSubscribers: [],
         dragEndSubscribers: [],
         formaters: {},
 
@@ -28,7 +29,7 @@ var FormSlider;
                 if (isRange) {
                     dragElem = '<button type="button" class="formslider__drag" data-index="0" data-input="' + sliderEl.getAttribute('data-first-input') + '"></button><button type="button" class="formslider__drag" data-index="1" data-input="' + sliderEl.getAttribute('data-second-input') + '"></button>';
                 } else {
-                    dragElem = '<button type="button" class="formslider__drag" data-input="' + sliderEl.getAttribute('data-input') + '></button>';
+                    dragElem = '<button type="button" class="formslider__drag" data-input="' + sliderEl.getAttribute('data-input') + '"></button>';
                 }
 
                 sliderEl.innerHTML = '<div class="formslider__bar"><div class="formslider__track"></div>' + dragElem + '</div>';
@@ -92,37 +93,49 @@ var FormSlider;
             this.mU = this.mouseUp.bind(this);
 
             document.addEventListener('mousemove', this.mM);
-            document.addEventListener('touchmove', this.mM);
+            document.addEventListener('touchmove', this.mM, {passive: false});
 
             document.addEventListener('mouseup', this.mU);
             document.addEventListener('touchend', this.mU);
 
-            var clientX = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX;
+            const clientX = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX,
+                clientY = (e.type == 'touchstart') ? e.targetTouches[0].clientY : e.clientY;
 
-            // dragable options 
-            this.dragElemObj.elem = elem;
-            this.dragElemObj.X = elem.getBoundingClientRect().left;
-            this.dragElemObj.shiftX = clientX - this.dragElemObj.X;
-            this.dragElemObj.index = elem.getAttribute('data-index');
-            this.dragElemObj.width = elem.offsetWidth;
-            elem.setAttribute('data-active', 'true');
-
-            //formslider options
+            // formslider options
             var formslider = elem.closest('.formslider');
             this.formsliderObj.X = formslider.getBoundingClientRect().left;
+            this.formsliderObj.Y = formslider.getBoundingClientRect().bottom;
             this.formsliderObj.width = formslider.offsetWidth;
+            this.formsliderObj.height = formslider.offsetHeight;
             this.formsliderObj.isRange = formslider.getAttribute('data-range');
+            this.formsliderObj.isVertical = formslider.getAttribute('data-vertical') === 'true' || false;
             this.formsliderObj.min = +formslider.getAttribute('data-min');
 
-            //one unit of value
-            this.valUnit = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / (formslider.offsetWidth - elem.offsetWidth);
+            // dragable options
+            this.dragElemObj.elem = elem;
+            this.dragElemObj.X = elem.getBoundingClientRect().left;
+            this.dragElemObj.Y = elem.getBoundingClientRect().bottom;
+            this.dragElemObj.shiftX = clientX - this.dragElemObj.X;
+            this.dragElemObj.shiftY = this.dragElemObj.Y - clientY;
+            this.dragElemObj.index = elem.getAttribute('data-index');
+            this.dragElemObj.width = elem.offsetWidth;
+            this.dragElemObj.height = elem.offsetHeight;
+            elem.setAttribute('data-active', 'true');
+
+            // one unit of value
+            if (this.formsliderObj.isVertical) {
+                this.valUnit = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / (formslider.offsetHeight - elem.offsetHeight);
+            } else {
+                this.valUnit = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / (formslider.offsetWidth - elem.offsetWidth);
+            }
+
 
             this.oneValPerc = (+formslider.getAttribute('data-max') - this.formsliderObj.min) / 100;
 
-            //track
+            // track
             this.track = formslider.querySelector('.formslider__track');
 
-            //get parameters of slider
+            // get parameters of slider
             if (this.formsliderObj.isRange) {
 
                 if (this.dragElemObj.index == 0) {
@@ -140,16 +153,19 @@ var FormSlider;
                     this.edge.L = siblElem.getBoundingClientRect().left - this.formsliderObj.X + siblElem.offsetWidth;
 
                     this.edge.R = this.formsliderObj.width - elem.offsetWidth;
-
                 }
-
-                this.input = document.getElementById(elem.getAttribute('data-input'));
 
             } else {
                 this.edge.L = 0;
-                this.edge.R = this.formsliderObj.width - elem.offsetWidth;
+
+                if (this.formsliderObj.isVertical) {
+                    this.edge.R = this.formsliderObj.height - elem.offsetHeight;
+                } else {
+                    this.edge.R = this.formsliderObj.width - elem.offsetWidth;
+                }
             }
 
+            this.input = document.getElementById(elem.getAttribute('data-input'));
         },
 
         // on mouse move
@@ -158,37 +174,55 @@ var FormSlider;
                 return;
             }
 
-            var clientX = (e.type == 'touchmove') ? e.targetTouches[0].clientX : e.clientX;
+            e.preventDefault();
 
-            var dragElemLeft = clientX - this.dragElemObj.shiftX - this.formsliderObj.X;
+            const clientX = (e.type == 'touchmove') ? e.targetTouches[0].clientX : e.clientX,
+                clientY = (e.type == 'touchmove') ? e.targetTouches[0].clientY : e.clientY;
 
-            if (dragElemLeft < this.edge.L) {
-                dragElemLeft = this.edge.L;
-            } else if (dragElemLeft > this.edge.R) {
-                dragElemLeft = this.edge.R;
+            let dragElemDistance = 0;
+
+            if (this.formsliderObj.isVertical) {
+                dragElemDistance = this.formsliderObj.Y - clientY - this.dragElemObj.shiftY;
+            } else {
+                dragElemDistance = clientX - this.dragElemObj.shiftX - this.formsliderObj.X;
+            }
+
+            if (dragElemDistance < this.edge.L) {
+                dragElemDistance = this.edge.L;
+
+            } else if (dragElemDistance > this.edge.R) {
+                dragElemDistance = this.edge.R;
             }
 
             if (this.formsliderObj.isRange) {
 
                 if (this.dragElemObj.index == 0) {
-                    this.track.style.left = (dragElemLeft + 5) + 'px';
+                    this.track.style.left = (dragElemDistance + 5) + 'px';
                 } else if (this.dragElemObj.index == 1) {
-                    this.track.style.right = (this.formsliderObj.width - dragElemLeft - 5) + 'px';
+                    this.track.style.right = (this.formsliderObj.width - dragElemDistance - 5) + 'px';
                 }
 
             } else {
-                this.track.style.width = (dragElemLeft + 5) + 'px';
+                if (this.formsliderObj.isVertical) {
+                    this.track.style.height = (dragElemDistance + 5) + 'px';
+                } else {
+                    this.track.style.width = (dragElemDistance + 5) + 'px';
+                }
             }
 
-            this.dragElemObj.elem.style.left = dragElemLeft + 'px';
+            if (this.formsliderObj.isVertical) {
+                this.dragElemObj.elem.style.bottom = dragElemDistance + 'px';
+            } else {
+                this.dragElemObj.elem.style.left = dragElemDistance + 'px';
+            }
 
-            this.dragElemLeft = dragElemLeft;
+            this.dragElemDistance = dragElemDistance;
 
             this.setInputVal();
         },
 
         // end drag
-        mouseUp: function (e) {
+        mouseUp: function () {
             document.removeEventListener('mousemove', this.mM);
             document.removeEventListener('touchmove', this.mM);
 
@@ -203,43 +237,72 @@ var FormSlider;
                 item();
             });
 
-            //reset properties
+            // reset properties
             this.dragElemObj = {};
             this.formsliderObj = {};
             this.track = null;
             this.edge = {};
             this.input = null;
             this.valUnit = 0;
-            this.dragElemLeft = 0;
+            this.dragElemDistance = 0;
+        },
+
+        onDrag: function (fun) {
+            if (typeof fun === 'function') {
+                this.dragSubscribers.push(fun);
+            }
         },
 
         onDragEnd: function (fun) {
-			if (typeof fun === 'function') {
-				this.dragEndSubscribers.push(fun);
-			}
-		},
+            if (typeof fun === 'function') {
+                this.dragEndSubscribers.push(fun);
+            }
+        },
 
-        //set hidden input value
+        // set hidden input value
         setInputVal: function () {
             let val;
 
             if (this.formsliderObj.isRange) {
                 if (this.dragElemObj.index == 0) {
-                    val = Math.round((this.dragElemLeft / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
+                    val = Math.round((this.dragElemDistance / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
                 } else {
-                    val = Math.round(((this.dragElemLeft - this.dragElemObj.width) / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
+                    val = Math.round(((this.dragElemDistance - this.dragElemObj.width) / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
                 }
+
+            } else {
+                val = Math.round((this.dragElemDistance / ((this.formsliderObj.height - this.dragElemObj.height) / 100)) * this.oneValPerc);
             }
 
-            val = val + this.formsliderObj.min;
+            let inpVal = val + this.formsliderObj.min,
+                labelVal = val + this.formsliderObj.min;
 
             const formatId = this.input.getAttribute('data-format');
 
             if (formatId !== null && this.formaters[formatId]) {
-                val = this.formaters[formatId](val)
+                inpVal = this.formaters[formatId](inpVal);
             }
 
-            this.input.value = val;
+            this.input.value = inpVal;
+
+            if (this.dragSubscribers.length) {
+                this.dragSubscribers.forEach(item => {
+                    item(this.input, inpVal);
+                });
+            }
+
+            const labelId = this.input.getAttribute('data-label-id');
+
+            if (labelId) {
+                const labelEl = document.getElementById(labelId),
+                    formatId = labelEl.getAttribute('data-format');
+
+                if (formatId !== null && this.formaters[formatId]) {
+                    labelVal = this.formaters[formatId](labelVal);
+                }
+
+                labelEl.innerHTML = labelVal;
+            }
         },
 
         format: function (id, fun) {
@@ -247,7 +310,7 @@ var FormSlider;
         }
     };
 
-    document.addEventListener('DOMContentLoaded', function (e) {
+    document.addEventListener('DOMContentLoaded', function () {
         FormSlider.init();
 
         window.addEventListener('winResized', function () {
