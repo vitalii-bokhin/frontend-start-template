@@ -1,20 +1,18 @@
 .tooltip{
     position: absolute;
     left: -999px;
-    z-index: 8;
+    z-index: 9;
     background: $rd;
-    padding: r(37) 10px;
-    width: 0;
-    width: r(184);
-    font-size: 12px;
+    padding: em(25);
+    width: em(184);
     color: #ffffff;
     line-height: (16/12);
     opacity: 0;
     transition: opacity .5s;
     text-align: center;
-    margin: -10px 0 0 25px;
+    margin-top: -10px;
     p{
-        font-size: r(20);
+        font-size: em(20);
         font-weight: 900;
         margin-bottom: em(15,20);
     }

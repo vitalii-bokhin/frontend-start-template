@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css?v=1630009427669">
+    <link rel="stylesheet" href="css/style.css?v=1630717702176">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <title>Form Custom | startTemplate</title>
 </head>
@@ -104,6 +104,9 @@
 			</li>
 			<li class="sub-menu__item ">
 				<a href="form-custom.html" class="sub-menu__a">Custom Form</a>
+			</li>
+			<li class="sub-menu__item ">
+				<a href="form-select.html" class="sub-menu__a">Select</a>
 			</li>
 			<li class="sub-menu__item ">
 				<a href="form-autocomplete.html" class="sub-menu__a">Autocomplete</a>
@@ -255,70 +258,19 @@
                 </div>
             </div>
             
-            <div class="row">
-                <div class="col-6">
-                    <div class="form__field">
-                        <select name="favorite-animal" data-placeholder="Select an animal*" data-required="true">
-                            <option value="monkey">Monkey</option>
-                            <option value="cat">Cat</option>
-                            <option>Dog</option>
-                            <option value="lion">Lion</option>
-                            <option value="crocodile">Crocodile</option>
-                            <option value="elephant">Elephant</option>
-                            <option value="other" data-target-elements="#other-animal-field">Other</option>
-                        </select>
-                        <div class="field-error-tip">Select an animal</div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form__field">
-                        <select name="favorite-animal2" data-required="true">
-                            <option value="monkey">Monkey</option>
-                            <option value="cat">Cat</option>
-                            <option>Dog</option>
-                            <option value="lion">Lion</option>
-                            <option value="crocodile">Crocodile</option>
-                            <option value="elephant">Elephant</option>
-                            <option value="other" data-target-elements="#other-animal-field">Other</option>
-                        </select>
-                        <div class="field-error-tip">Select an animal</div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div id="other-animal-field" class="form__field hidden">
-                        <input type="text" data-required="true" placeholder="Other animal" class="form__text-input" value="">
-                        <div class="field-error-tip">Enter other animal</div>
-                    </div>
-                </div>
-            </div>
+            
             
             <script id="duplicate-model" type="text/template">
                 <div class="row">
                     <div class="col-6">
                         <div class="form__field">
-                            <select name="favorite-animal" data-placeholder="Select an animal*" data-required="true">
-                                <option value="monkey">Monkey</option>
-                                <option value="cat">Cat</option>
-                                <option>Dog</option>
-                                <option value="lion">Lion</option>
-                                <option value="crocodile">Crocodile</option>
-                                <option value="elephant">Elephant</option>
-                                <option value="other" data-target-elements="#other-animal-field">Other</option>
-                            </select>
+                            
                             <div class="field-error-tip">Select an animal</div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form__field">
-                            <select name="favorite-animal2" data-required="true">
-                                <option value="monkey">Monkey</option>
-                                <option value="cat">Cat</option>
-                                <option>Dog</option>
-                                <option value="lion">Lion</option>
-                                <option value="crocodile">Crocodile</option>
-                                <option value="elephant">Elephant</option>
-                                <option value="other" data-target-elements="#other-animal-field">Other</option>
-                            </select>
+                            
                             <div class="field-error-tip">Select an animal</div>
                         </div>
                     </div>
@@ -353,14 +305,7 @@
             <div class="row">
                 <div class="col-6">
                     <div class="form__field">
-                        <select name="pets[]" multiple data-placeholder="Select pets*" data-required="true">
-                            <option value="cat">Cat</option>
-                            <option value="dog">Dog</option>
-                            <option value="parrot">Parrot</option>
-                            <option value="cavy">Cavy</option>
-                            <option value="hamster">Hamster</option>
-                            <option value="other" data-target-elements="#other-pets-field">Other</option>
-                        </select>
+                        
                         <div class="field-error-tip">Select pets</div>
                     </div>
                 </div>
@@ -384,17 +329,12 @@
             <div class="row">
                 <div class="col-6">
                     <div class="form__field countries">
-                        <select name="country" data-placeholder="Select your country*" data-required="true">
-                            <!--options-->
-                        </select>
+                        
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form__field cities">
-                        <select name="city" data-placeholder="Select your city*" data-required="true">
-                            <!--options-->
-                            <option value="0">Select country first</option>
-                        </select>
+                        
                     </div>
                 </div>
             </div>
@@ -413,17 +353,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form__field">
-                        <select name="planet" data-type="autocomplete" data-placeholder="Select a planet*" data-required="true">
-                            <option>Mercury</option>
-                            <option>Venus</option>
-                            <option>Earth</option>
-                            <option>Mars</option>
-                            <option>Jupiter</option>
-                            <option>Saturn</option>
-                            <option>Uranus</option>
-                            <option>Neptune</option>
-                            <option>Pluto</option>
-                        </select>
+                        
                         <div class="field-error-tip">Select a planet</div>
                     </div>
                 </div>
@@ -432,17 +362,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form__field">
-                        <select name="planet2" data-type="autocomplete" data-required="true">
-                            <option>Mercury</option>
-                            <option>Venus</option>
-                            <option>Earth</option>
-                            <option>Mars</option>
-                            <option>Jupiter</option>
-                            <option>Saturn</option>
-                            <option>Uranus</option>
-                            <option>Neptune</option>
-                            <option>Pluto</option>
-                        </select>
+                        
                         <div class="field-error-tip">Select a planet</div>
                     </div>
                 </div>
@@ -460,20 +380,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form__field">
-                        <select name="zodiac_sign" data-type="autocomplete" data-placeholder="Select a Zodiac sign*" data-required="true">
-                            <option>Aries</option>
-                            <option>Taurus</option>
-                            <option>Gemini</option>
-                            <option>Cancer</option>
-                            <option>Leo</option>
-                            <option selected>Virgo</option>
-                            <option>Libra</option>
-                            <option>Scorpio</option>
-                            <option>Sagittarius</option>
-                            <option>Capricorn</option>
-                            <option>Aquarius</option>
-                            <option>Pisces</option>
-                        </select>
+                        
                         <div class="field-error-tip">Select a Zodiac sign</div>
                     </div>
                 </div>
@@ -675,9 +582,9 @@
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/slick.min.js"></script>
 <script src="js/scrollpane.min.js"></script>
-<script src="js/script.js?v=1630009427669"></script>
-<script src="js/common.js?v=1630009427669"></script>
-<script src="js/interface.js?v=1630009427669"></script>
+<script src="js/script.js?v=1630717702176"></script>
+<script src="js/common.js?v=1630717702176"></script>
+<script src="js/interface.js?v=1630717702176"></script>
 
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 

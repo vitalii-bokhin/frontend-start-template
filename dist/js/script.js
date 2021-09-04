@@ -1929,7 +1929,7 @@ var MediaPopup;
 })();
 var ValidateForm;
 
-(function() {
+(function () {
     'use strict';
 
     ValidateForm = {
@@ -1972,7 +1972,7 @@ var ValidateForm;
 
             const dataType = elem.getAttribute('data-type');
 
-            if (elem.getAttribute('data-required') && (!elem.value.length || /^\s+$/.test(elem.value))) {
+            if (elem.getAttribute('data-required') === 'true' && (!elem.value.length || /^\s+$/.test(elem.value))) {
                 this.errorTip(true);
             } else if (elem.value.length) {
                 if (dataType) {
@@ -2007,7 +2007,7 @@ var ValidateForm;
 
                     const dataType = elem.getAttribute('data-type');
 
-                    if (elem.getAttribute('data-required') && (!elem.value.length || /^\s+$/.test(elem.value))) {
+                    if (elem.getAttribute('data-required') === 'true' && (!elem.value.length || /^\s+$/.test(elem.value))) {
                         this.errorTip(true);
                         err++;
                     } else if (elem.value.length) {
@@ -2065,7 +2065,7 @@ var ValidateForm;
 
                 elem.setAttribute('data-tested', 'true');
 
-                if (elem.getAttribute('data-required') && !elem.checked) {
+                if (elem.getAttribute('data-required') === 'true' && !elem.checked) {
                     this.errorTip(true);
                     err++;
                 } else {
@@ -2147,7 +2147,7 @@ var ValidateForm;
                     if (this.file(elem, CustomFile.inputFiles(elem))) {
                         err++;
                     }
-                } else if (elem.getAttribute('data-required')) {
+                } else if (elem.getAttribute('data-required') === 'true') {
                     this.errorTip(true);
                     err++;
                 } else {
@@ -2451,7 +2451,7 @@ var ValidateForm;
                 }
 
             } else if (elem.getAttribute('data-tested')) {
-                if (elem.getAttribute('data-required') && !elem.checked) {
+                if (elem.getAttribute('data-required') === 'true' && !elem.checked) {
                     this.errorTip(true);
                 } else {
                     this.errorTip(false);
@@ -2487,7 +2487,7 @@ var ValidateForm;
 
             this.input = elem;
 
-            if (elem.getAttribute('data-required') && !elem.value.length) {
+            if (elem.getAttribute('data-required') === 'true' && !elem.value.length) {
                 this.errorTip(true);
                 err = true;
             } else {
@@ -3086,8 +3086,7 @@ var Checkbox;
 
                 customElem.innerHTML = head + '<ul class="select__options">' + optionsList + '</ul>' + hiddenInp + multiple.inpDiv;
 
-                parent.insertBefore(customElem, parent.firstChild);
-                parent.removeChild(parent.children[1]);
+                parent.replaceChild(customElem, elem);
             }
         },
 

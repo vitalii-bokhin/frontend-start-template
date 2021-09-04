@@ -118,10 +118,11 @@ body {
 .paginate__prev::after, .paginate__next::after, .menu-close-btn:after, .menu-close-btn:before, .toggle:before, .toggle:after, .video__frame::before, .popup-close-btn:after, .popup-close-btn:before, .custom-checkbox__label:before, .custom-radio__input:checked + .custom-radio__label:after, .custom-radio__label:before, .select__button:after, .select__arr:after, .autocomplete__arr:after, .custom-file__btn:after, .custom-file__preview:after, .number__btn_min::before, .number__btn_plus::before, .number__btn_plus::after, .form__btn:before, .form_sending .form__loader:before, .form_sending .form__submit:before, .form_sending .form__submit:after, .accord__button:after, .accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before, .accord__btn-btn:after, .more__content::after, .alert__close-btn:after, .alert__close-btn:before, .tooltip__close:after, .tooltip__close:before, .slick-arrow:after, .list li:before {
   display: block;
   content: "";
+  box-sizing: border-box;
 }
 
 .img-icon__ico span, .user__button, .screen, .screen_inner-scroll__in, .screen-container, .video__preview, .video__frame, .video__frame iframe,
-.video__frame video, .custom-file__preview > div, .form_sending .form__submit:before, .var-height-textarea__textarea, .diagram__canvas, .webgl__canvas, .cursor-wrap, .main__full-page {
+.video__frame video, .custom-file__preview > div, .form_sending .form__submit:before, .var-height-textarea__textarea, .diagram__canvas, .webgl__canvas, .scrollbox_fwh, .scrollbox_fwh .scrollbox__window, .cursor-wrap, .main__full-page {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -252,6 +253,11 @@ body {
 body {
   display: flex;
   flex-direction: column;
+}
+
+body > svg {
+  width: 0;
+  height: 0;
 }
 
 a:hover {
@@ -3124,7 +3130,7 @@ hr {
   width: 100%;
   height: 100%;
   overflow: auto;
-  z-index: 9;
+  z-index: 21;
   text-align: center;
   background: rgba(0, 0, 0, 0.5);
   font-size: 0;
@@ -4780,6 +4786,10 @@ hr {
 
 .scrollbox_dragging {
   user-select: none;
+}
+
+.scrollbox_fwh {
+  position: absolute;
 }
 
 @media (max-width: 1200px) {

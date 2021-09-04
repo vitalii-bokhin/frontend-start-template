@@ -8,6 +8,10 @@ html, body {
 body{
     display: flex;
     flex-direction: column;
+    & > svg{
+        width: 0;
+        height: 0;
+    }
 }
 a:hover{
     text-decoration: none;

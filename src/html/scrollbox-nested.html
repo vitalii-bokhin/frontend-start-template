@@ -1,0 +1,42 @@
+@@include('_head.html', {"title": "Home page"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html', {"menu_item_current": "home", "user_item": "logged", "user_item": "not_logged"})
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+	<div id="main-scroll" class="scrollbox scrollbox_fwh">
+		<div class="scrollbox__window">
+			<div class="scrollbox__inner">
+
+				<div class="scrollbox scrollbox_fwh">
+					<div class="scrollbox__window">
+						<div class="scrollbox__inner">
+							
+						</div>
+					</div>
+					<div class="scrollbox__vertical-bar"></div>
+				</div>
+
+			</div>
+		</div>
+		<div class="scrollbox__vertical-bar"></div>
+	</div>
+</main>
+<!--/MAIN-->
+
+<!--FOOTER/-->
+@@include('../modules/footer/footer.html')
+<!--/FOOTER-->
+
+<!--POPUPs/-->
+@@include('../modules/popup/popup.html')
+<!--/POPUPs-->
+
+@@include('../images/sprite-symbol.svg')
+
+@@include('_javascript.html')
+
+</body>
+</html>

@@ -392,8 +392,7 @@
 
                 customElem.innerHTML = head + '<ul class="select__options">' + optionsList + '</ul>' + hiddenInp + multiple.inpDiv;
 
-                parent.insertBefore(customElem, parent.firstChild);
-                parent.removeChild(parent.children[1]);
+                parent.replaceChild(customElem, elem);
             }
         },
 

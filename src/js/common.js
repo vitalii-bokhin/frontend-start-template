@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
             bar: true,
             drag: true
         });
+
+        // nested scrollbox
+        new Scrollbox('#main-scroll', {
+            bar: true
+        });
+
     } catch (error) {
         console.log(error);
     }

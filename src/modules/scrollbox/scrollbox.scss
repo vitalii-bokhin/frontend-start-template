@@ -61,6 +61,13 @@
    &_dragging{
       user-select: none;
    }
+   &_fwh{
+      @extend %fwh;
+      position: absolute;
+      .scrollbox__window{
+         @extend %fwh;
+      }
+   }
    @media(max-width: 1200px){
       &__vertical-bar,
       &__horizontal-bar{
