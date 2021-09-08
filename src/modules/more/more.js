@@ -45,7 +45,10 @@ var More;
 
                     btnEl.closest('.more').classList.remove('more_toggled');
 
-                    $('html,body').stop().animate({ scrollTop: $(btnEl).attr('data-scroll-top') }, 210);
+                    if (elem.closest('.more').getAttribute('data-scroll-after-collapse') !== 'false') {
+                        $('html,body').stop().animate({ scrollTop: $(btnEl).attr('data-scroll-top') }, 210);
+                    }
+                    
                 }, 21);
 
             } else {

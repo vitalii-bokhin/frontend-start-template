@@ -30,6 +30,8 @@ var Maskinput;
             if (inpEl) {
                 this.inputElem = inpEl;
 
+                defValue = inpEl.value;
+
                 try {
                     this[type]('focus');
                 } catch (error) {
@@ -76,7 +78,9 @@ var Maskinput;
         }
 
         this.date = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/^[\d\.]*$/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -116,7 +120,9 @@ var Maskinput;
         }
 
         this.time = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/^[\d\:]*$/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -153,7 +159,9 @@ var Maskinput;
         }
 
         this.gmail = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/[@\w.-]*/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -172,8 +180,10 @@ var Maskinput;
             }
         }
 
-        this.number = function (ev) {
-            if (ev == 'focus') return;
+        this.integer = function (ev) {
+            if (ev == 'focus') {
+                return;
+            }
 
             if (opt.maxLength && this.inputElem.value.length > opt.maxLength) {
                 this.inputElem.value = defValue;
@@ -187,12 +197,14 @@ var Maskinput;
         }
 
         this.float = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (opt.maxLength && this.inputElem.value.length > opt.maxLength) {
                 this.inputElem.value = defValue;
             } else {
-                if (!/^\d[\d.,]*?$/.test(this.inputElem.value)) {
+                if (!/^\d?[\d.,]*?$/.test(this.inputElem.value)) {
                     this.inputElem.value = defValue;
                 } else {
                     defValue = this.inputElem.value;
@@ -201,7 +213,9 @@ var Maskinput;
         }
 
         this.cyr = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/^[а-я\s]*$/i.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -211,7 +225,9 @@ var Maskinput;
         }
 
         this.cardNumber = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/^[\d\-]*$/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;

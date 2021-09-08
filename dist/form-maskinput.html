@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css?v=1631058263623">
+    <link rel="stylesheet" href="css/style.css?v=1631059905976">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-    <title>Parallax | startTemplate</title>
+    <title>Maskinput | startTemplate</title>
 </head>
 <body>
-
-<style>
-.parallax-element{
-	width: 50px;
-	height: 50px;
-	margin: 100px;
-}
-</style>
 
 <!--HEADER/-->
 <header id="header" class="header">
@@ -103,11 +95,11 @@
 			</li>
 		</ul>
 	</li>
-	<li class="menu__item menu__item_has-children ">
+	<li class="menu__item menu__item_has-children menu__item_current">
 		<a href="form.html" class="menu__a">Form</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
-			<li class="sub-menu__item ">
+			<li class="sub-menu__item sub-menu__item_current">
 				<a href="form-maskinput.html" class="sub-menu__a">Maskinput</a>
 			</li>
 			<li class="sub-menu__item ">
@@ -143,6 +135,21 @@
                 <div class="col col_right p-0">
                     <!--User/-->
                     
+    <div class="user">
+        <span class="user__name">
+            Lufter
+        </span>
+        <span class="user__thumb">
+            <img src="images/avatar.png" alt="avatar">
+        </span>
+        
+        <button data-target-elements="#user-menu" class="js-toggle user__button"></button>
+        
+        <div id="user-menu" class="user__bubble">
+            
+        </div>
+    </div>
+
 
 
                     <!--/User-->
@@ -158,25 +165,54 @@
 
 <!--MAIN/-->
 <main class="main">
+    <div class="section">
+        <form action="#" class="form">
+            <div class="row row_wrp">
+                <div class="col-4">
+                    <div class="form__field">
+                        <input type="text" placeholder="Телефон +7(xxx)xxx-xx-xx" class="form__text-input maskinp-tel">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form__field">
+                        <input type="text" placeholder="Gmail address" class="form__text-input maskinp-gmail">
+                    </div>
+                </div>
+            </div>
 
-	<div id="sec1" class="section" style="background: gray; width: 90%; margin: auto;">
-		
-		<!-- <div class="parallax-element el1" data-delta-x="150" style="background: red"></div> -->
-		<div class="parallax-element el2" data-range-x="20,0" style="background: blue"></div>
-		<!-- <div class="parallax-element el3" style="background: green"></div> -->
+            <div class="row row_wrp">
+                <div class="col-4">
+                    <div class="form__field">
+                        <input type="text" placeholder="Дата" class="form__text-input maskinp-date">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form__field">
+                        <input type="text" placeholder="Время" class="form__text-input maskinp-time">
+                    </div>
+                </div>
+                
+            </div>
 
-
-	</div>
-
-	<div id="sec2" class="section" style="background: gray; width: 90%; margin: auto;">
-		
-		<!-- <div class="parallax-element el1" data-delta-x="150" style="background: red"></div> -->
-		<!-- <div class="parallax-element el2" data-range-x="20,0" style="background: blue"></div> -->
-		<div class="parallax-element el3" style="background: green"></div>
-
-
-	</div>
-
+            <div class="row row_wrp">
+                <div class="col-4">
+                    <div class="form__field">
+                        <input type="text" placeholder="Целое число" class="form__text-input maskinp-int">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form__field">
+                        <input type="text" placeholder="Десятичная дробь" class="form__text-input maskinp-float">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form__field">
+                        <input type="text" placeholder="Кириллица" class="form__text-input maskinp-cyr">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </main>
 <!--/MAIN-->
 
@@ -309,9 +345,9 @@
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/slick.min.js"></script>
 <script src="js/scrollpane.min.js"></script>
-<script src="js/script.js?v=1631058263623"></script>
-<script src="js/common.js?v=1631058263623"></script>
-<script src="js/interface.js?v=1631058263623"></script>
+<script src="js/script.js?v=1631059905976"></script>
+<script src="js/common.js?v=1631059905976"></script>
+<script src="js/interface.js?v=1631059905976"></script>
 
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 
@@ -343,5 +379,7 @@
 // });
 </script>
 
+
 </body>
+
 </html>

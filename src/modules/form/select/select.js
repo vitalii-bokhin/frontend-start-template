@@ -141,6 +141,32 @@
                     for (let i = 0; i < showEls.length; i++) {
                         const sEl = showEls[i];
 
+                        sEl.style.display = 'none';
+                        sEl.classList.add(this.hideCssClass);
+                    }
+                }
+
+                if (vEl.hasAttribute('data-hide-elements')) {
+                    const hideEls = document.querySelectorAll(vEl.getAttribute('data-hide-elements'));
+
+                    for (let i = 0; i < hideEls.length; i++) {
+                        const hEl = hideEls[i];
+
+                        hEl.style.display = 'block';
+                        hEl.classList.remove(this.hideCssClass);
+                    }
+                }
+            }
+
+            for (let i = 0; i < valEls.length; i++) {
+                const vEl = valEls[i];
+
+                if (vEl.hasAttribute('data-show-elements')) {
+                    const showEls = document.querySelectorAll(vEl.getAttribute('data-show-elements'));
+
+                    for (let i = 0; i < showEls.length; i++) {
+                        const sEl = showEls[i];
+
                         if (vEl.classList.contains('select__val_checked')) {
                             sEl.style.display = 'block';
                             sEl.classList.remove(this.hideCssClass);
@@ -151,9 +177,6 @@
                             if (txtInpEl) {
                                 txtInpEl.focus();
                             }
-                        } else {
-                            sEl.style.display = 'none';
-                            sEl.classList.add(this.hideCssClass);
                         }
                     }
                 }
@@ -167,9 +190,6 @@
                         if (vEl.classList.contains('select__val_checked')) {
                             hEl.style.display = 'none';
                             hEl.classList.add(this.hideCssClass);
-                        } else {
-                            hEl.style.display = 'block';
-                            hEl.classList.remove(this.hideCssClass);
                         }
                     }
                 }

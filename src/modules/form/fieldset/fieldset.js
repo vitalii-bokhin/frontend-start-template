@@ -55,6 +55,10 @@ var NextFieldset;
 					if (inpEl) inpEl.focus();
 				}
 
+                $('html,body').stop().animate({
+                    scrollTop: $(currentFieldset).closest('.fieldset').offset().top - $('.header').innerHeight() - 35
+                }, 210);
+
                 if (this.onChange) {
                     this.onChange(currentFieldset, nextFieldset);
                 }

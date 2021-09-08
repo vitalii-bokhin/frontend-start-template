@@ -74,10 +74,13 @@
 			</li>
 		</ul>
 	</li>
-	<li class="menu__item menu__item_has-children @@if (menu_item_current === 'form' || menu_item_current === 'form_file' || menu_item_current === 'form_autocomplete' || menu_item_current === 'form_select') {menu__item_current}">
+	<li class="menu__item menu__item_has-children @@if (menu_item_current === 'form' || menu_item_current === 'form_file' || menu_item_current === 'form_autocomplete' || menu_item_current === 'form_select' || menu_item_current === 'maskinput') {menu__item_current}">
 		<a href="form.html" class="menu__a">Form</a>
 		<button class="menu__arr"></button>
 		<ul class="sub-menu menu__sub-menu">
+			<li class="sub-menu__item @@if (menu_item_current === 'maskinput') {sub-menu__item_current}">
+				<a href="form-maskinput.html" class="sub-menu__a">Maskinput</a>
+			</li>
 			<li class="sub-menu__item @@if (menu_item_current === 'form_file') {sub-menu__item_current}">
 				<a href="form-file.html" class="sub-menu__a">File</a>
 			</li>

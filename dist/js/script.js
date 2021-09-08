@@ -2835,6 +2835,32 @@ var Checkbox;
                     for (let i = 0; i < showEls.length; i++) {
                         const sEl = showEls[i];
 
+                        sEl.style.display = 'none';
+                        sEl.classList.add(this.hideCssClass);
+                    }
+                }
+
+                if (vEl.hasAttribute('data-hide-elements')) {
+                    const hideEls = document.querySelectorAll(vEl.getAttribute('data-hide-elements'));
+
+                    for (let i = 0; i < hideEls.length; i++) {
+                        const hEl = hideEls[i];
+
+                        hEl.style.display = 'block';
+                        hEl.classList.remove(this.hideCssClass);
+                    }
+                }
+            }
+
+            for (let i = 0; i < valEls.length; i++) {
+                const vEl = valEls[i];
+
+                if (vEl.hasAttribute('data-show-elements')) {
+                    const showEls = document.querySelectorAll(vEl.getAttribute('data-show-elements'));
+
+                    for (let i = 0; i < showEls.length; i++) {
+                        const sEl = showEls[i];
+
                         if (vEl.classList.contains('select__val_checked')) {
                             sEl.style.display = 'block';
                             sEl.classList.remove(this.hideCssClass);
@@ -2845,9 +2871,6 @@ var Checkbox;
                             if (txtInpEl) {
                                 txtInpEl.focus();
                             }
-                        } else {
-                            sEl.style.display = 'none';
-                            sEl.classList.add(this.hideCssClass);
                         }
                     }
                 }
@@ -2861,9 +2884,6 @@ var Checkbox;
                         if (vEl.classList.contains('select__val_checked')) {
                             hEl.style.display = 'none';
                             hEl.classList.add(this.hideCssClass);
-                        } else {
-                            hEl.style.display = 'block';
-                            hEl.classList.remove(this.hideCssClass);
                         }
                     }
                 }
@@ -4215,6 +4235,8 @@ var Maskinput;
             if (inpEl) {
                 this.inputElem = inpEl;
 
+                defValue = inpEl.value;
+
                 try {
                     this[type]('focus');
                 } catch (error) {
@@ -4261,7 +4283,9 @@ var Maskinput;
         }
 
         this.date = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/^[\d\.]*$/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -4301,7 +4325,9 @@ var Maskinput;
         }
 
         this.time = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/^[\d\:]*$/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -4338,7 +4364,9 @@ var Maskinput;
         }
 
         this.gmail = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/[@\w.-]*/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -4357,8 +4385,10 @@ var Maskinput;
             }
         }
 
-        this.number = function (ev) {
-            if (ev == 'focus') return;
+        this.integer = function (ev) {
+            if (ev == 'focus') {
+                return;
+            }
 
             if (opt.maxLength && this.inputElem.value.length > opt.maxLength) {
                 this.inputElem.value = defValue;
@@ -4372,12 +4402,14 @@ var Maskinput;
         }
 
         this.float = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (opt.maxLength && this.inputElem.value.length > opt.maxLength) {
                 this.inputElem.value = defValue;
             } else {
-                if (!/^\d[\d.,]*?$/.test(this.inputElem.value)) {
+                if (!/^\d?[\d.,]*?$/.test(this.inputElem.value)) {
                     this.inputElem.value = defValue;
                 } else {
                     defValue = this.inputElem.value;
@@ -4386,7 +4418,9 @@ var Maskinput;
         }
 
         this.cyr = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/^[а-я\s]*$/i.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -4396,7 +4430,9 @@ var Maskinput;
         }
 
         this.cardNumber = function (ev) {
-            if (ev == 'focus') return;
+            if (ev == 'focus') {
+                return;
+            }
 
             if (!/^[\d\-]*$/.test(this.inputElem.value)) {
                 this.inputElem.value = defValue;
@@ -4493,6 +4529,10 @@ var NextFieldset;
 
 					if (inpEl) inpEl.focus();
 				}
+
+                $('html,body').stop().animate({
+                    scrollTop: $(currentFieldset).closest('.fieldset').offset().top - $('.header').innerHeight() - 35
+                }, 210);
 
                 if (this.onChange) {
                     this.onChange(currentFieldset, nextFieldset);
@@ -5085,7 +5125,10 @@ var More;
 
                     btnEl.closest('.more').classList.remove('more_toggled');
 
-                    $('html,body').stop().animate({ scrollTop: $(btnEl).attr('data-scroll-top') }, 210);
+                    if (elem.closest('.more').getAttribute('data-scroll-after-collapse') !== 'false') {
+                        $('html,body').stop().animate({ scrollTop: $(btnEl).attr('data-scroll-top') }, 210);
+                    }
+                    
                 }, 21);
 
             } else {
