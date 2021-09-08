@@ -61,6 +61,8 @@ var ValidateForm;
         },
 
         validate: function (formElem) {
+            const errElems = [];
+
             let err = 0;
 
             // text, password, textarea
@@ -81,13 +83,16 @@ var ValidateForm;
                     if (elem.getAttribute('data-required') === 'true' && (!elem.value.length || /^\s+$/.test(elem.value))) {
                         this.errorTip(true);
                         err++;
+                        errElems.push(elem);
                     } else if (elem.value.length) {
                         if (elem.hasAttribute('data-custom-error')) {
                             err++;
+                            errElems.push(elem);
                         } else if (dataType) {
                             try {
                                 if (this[dataType]()) {
                                     err++;
+                                    errElems.push(elem);
                                 }
                             } catch (error) {
                                 console.log('Error while process', dataType)
@@ -119,6 +124,7 @@ var ValidateForm;
 
                 if (this.select(selectElem)) {
                     err++;
+                    errElems.push(selectElem);
                 }
             }
 
@@ -139,6 +145,7 @@ var ValidateForm;
                 if (elem.getAttribute('data-required') === 'true' && !elem.checked) {
                     this.errorTip(true);
                     err++;
+                    errElems.push(elem);
                 } else {
                     this.errorTip(false);
                 }
@@ -168,6 +175,7 @@ var ValidateForm;
                 if (checkedElements < group.getAttribute('data-min')) {
                     group.classList.add('form__chbox-group_error');
                     err++;
+                    errElems.push(group);
                 } else {
                     group.classList.remove('form__chbox-group_error');
                 }
@@ -197,6 +205,7 @@ var ValidateForm;
                 if (!checkedElement) {
                     group.classList.add('form__radio-group_error');
                     err++;
+                    errElems.push(group);
                 } else {
                     group.classList.remove('form__radio-group_error');
                 }
@@ -217,10 +226,12 @@ var ValidateForm;
                 if (CustomFile.inputFiles(elem).length) {
                     if (this.file(elem, CustomFile.inputFiles(elem))) {
                         err++;
+                        errElems.push(elem);
                     }
                 } else if (elem.getAttribute('data-required') === 'true') {
                     this.errorTip(true);
                     err++;
+                    errElems.push(elem);
                 } else {
                     this.errorTip(false);
                 }
@@ -246,6 +257,7 @@ var ValidateForm;
                     if (val !== compElemVal) {
                         this.errorTip(true, 2);
                         err++;
+                        errElems.push(elem);
                     } else {
                         this.errorTip(false);
                     }
@@ -253,6 +265,8 @@ var ValidateForm;
             }
 
             this.formError(formElem, err);
+
+            this.scrollToErrElem(errElems);
 
             return (err) ? false : true;
         },
@@ -339,6 +353,27 @@ var ValidateForm;
             } else {
                 this.formError(formElem, false);
             }
+        },
+
+        scrollToErrElem: function(elems) {
+            let offsetTop = 99999;
+
+            const headerHeight = document.querySelector('.header').offsetHeight;
+
+            for (let i = 0; i < elems.length; i++) {
+                const el = elems[i],
+                epOffsetTop = el.getBoundingClientRect().top;
+                
+                if (epOffsetTop < headerHeight && epOffsetTop < offsetTop) {
+                    offsetTop = epOffsetTop;
+                }
+            }
+
+            const scrTo = offsetTop + window.scrollY - headerHeight;
+
+            animate(function (progress) {
+                window.scrollTo(0, scrTo * progress + (1 - progress) * window.scrollY);
+            }, 1000, 'easeInOutQuad');
         },
 
         txt: function () {
