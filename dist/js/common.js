@@ -171,7 +171,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         new ToolTip({
             btnSelector: '.js-tooltip-right',
-            positionX: 'right'
+            positionX: 'right',
+            fadeSpeed: 3500
         });
     } catch (error) {
         console.log(error);

@@ -6,6 +6,7 @@ const tt = new ToolTip({
     tipElClass: 'some-class', // def: null
     positionX: 'left' | 'right', // def: 'center'
     positionY: 'bottom', // def: 'top'
+    fadeSpeed: 1500 // def: 1000
 });
 
 tt.beforeShow = function(btnEl, tooltipDivEl) {
@@ -39,6 +40,7 @@ var ToolTip;
         this.opt.notHide = (this.opt.notHide !== undefined) ? this.opt.notHide : false;
         this.opt.evClick = (this.opt.clickEvent !== undefined) ? this.opt.clickEvent : false;
         this.opt.tipElClass = (this.opt.tipElClass !== undefined) ? this.opt.tipElClass : null;
+        this.opt.fadeSpeed = (this.opt.fadeSpeed !== undefined) ? this.opt.fadeSpeed : 1000;
 
         this.position.X = (this.opt.positionX !== undefined) ? this.opt.positionX : 'center';
         this.position.Y = (this.opt.positionY !== undefined) ? this.opt.positionY : 'top';
@@ -117,23 +119,36 @@ var ToolTip;
             this.tooltipDiv.classList.add(this.tooltipClass);
         }
 
+
+
         const bubleStyle = this.tooltipDiv.style,
             elemRect = elem.getBoundingClientRect();
 
-        let coordX, coordY;
+        let coordX,
+            coordY,
+            posX = this.position.X,
+            posY = this.position.Y;
 
-        if (this.position.X == 'center') {
+        if (elem.hasAttribute('data-tip-position-x')) {
+            posX = elem.getAttribute('data-tip-position-x');
+        }
+
+        if (elem.hasAttribute('data-tip-position-y')) {
+            posY = elem.getAttribute('data-tip-position-y');
+        }
+
+        if (posX == 'center') {
             coordX = (elemRect.left + ((elemRect.right - elemRect.left) / 2)) - (this.tooltipDiv.offsetWidth / 2);
-        } else if (this.position.X == 'left') {
+        } else if (posX == 'left') {
             coordX = elemRect.left - this.tooltipDiv.offsetWidth;
-        } else if (this.position.X == 'right') {
+        } else if (posX == 'right') {
             coordX = elemRect.right;
         }
 
-        if (this.position.Y == 'top') {
+        if (posY == 'top') {
             coordY = elemRect.top + window.pageYOffset - this.tooltipDiv.offsetHeight;
 
-        } else if (this.position.Y == 'bottom') {
+        } else if (posY == 'bottom') {
             coordY = elemRect.bottom + window.pageYOffset;
         }
 
@@ -150,7 +165,8 @@ var ToolTip;
             this.onShow(elem, this.tooltipDiv);
         }
 
-        this.tooltipDiv.classList.add('tooltip_visible');
+        this.tooltipDiv.style.transition = 'opacity ' + this.opt.fadeSpeed + 'ms';
+        this.tooltipDiv.style.opacity = '1';
 
         setTimeout(() => {
             this.canBeHidden = true;
@@ -171,7 +187,7 @@ var ToolTip;
             return;
         }
 
-        this.tooltipDiv.classList.remove('tooltip_visible');
+        this.tooltipDiv.style.opacity = '0';
 
         this.hideTimeout = setTimeout(() => {
             this.tooltipDiv.removeAttribute('style');
@@ -186,7 +202,7 @@ var ToolTip;
             if (this.onHide) {
                 this.onHide();
             }
-        }, 550);
+        }, this.opt.fadeSpeed);
     }
 
     ToolTip.prototype.mouseOut = function (e) {

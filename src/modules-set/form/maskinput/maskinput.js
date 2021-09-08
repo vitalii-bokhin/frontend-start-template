@@ -28,9 +28,9 @@ var Maskinput;
             const inpEl = e.target.closest(inputSel);
 
             if (inpEl) {
-                defValue = '';
-
                 this.inputElem = inpEl;
+
+                defValue = inpEl.value;
 
                 try {
                     this[type]('focus');
@@ -180,7 +180,7 @@ var Maskinput;
             }
         }
 
-        this.number = function (ev) {
+        this.int = function (ev) {
             if (ev == 'focus') {
                 return;
             }

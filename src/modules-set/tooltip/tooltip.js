@@ -6,6 +6,7 @@ const tt = new ToolTip({
     tipElClass: 'some-class', // def: null
     positionX: 'left' | 'right', // def: 'center'
     positionY: 'bottom', // def: 'top'
+    fadeSpeed: 1500 // def: 1000
 });
 
 tt.beforeShow = function(btnEl, tooltipDivEl) {
@@ -39,6 +40,7 @@ var ToolTip;
         this.opt.notHide = (this.opt.notHide !== undefined) ? this.opt.notHide : false;
         this.opt.evClick = (this.opt.clickEvent !== undefined) ? this.opt.clickEvent : false;
         this.opt.tipElClass = (this.opt.tipElClass !== undefined) ? this.opt.tipElClass : null;
+        this.opt.fadeSpeed = (this.opt.fadeSpeed !== undefined) ? this.opt.fadeSpeed : 1000;
 
         this.position.X = (this.opt.positionX !== undefined) ? this.opt.positionX : 'center';
         this.position.Y = (this.opt.positionY !== undefined) ? this.opt.positionY : 'top';
@@ -150,7 +152,9 @@ var ToolTip;
             this.onShow(elem, this.tooltipDiv);
         }
 
-        this.tooltipDiv.classList.add('tooltip_visible');
+        this.tooltipDiv.style.transitionProperty = 'opacity';
+        this.tooltipDiv.style.transitionDuration = this.opt.fadeSpeed + 'ms';
+        this.tooltipDiv.style.opacity = '1';
 
         setTimeout(() => {
             this.canBeHidden = true;
