@@ -4385,7 +4385,7 @@ var Maskinput;
             }
         }
 
-        this.integer = function (ev) {
+        this.int = function (ev) {
             if (ev == 'focus') {
                 return;
             }

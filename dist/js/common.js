@@ -561,7 +561,7 @@ document.addEventListener('DOMContentLoaded', function () {
         new Maskinput('.maskinp-cyr, input[data-type="name"]', 'cyr');
         new Maskinput('.maskinp-date', 'date');
         new Maskinput('.maskinp-time', 'time');
-        new Maskinput('.maskinp-int', 'integer');
+        new Maskinput('.maskinp-int', 'int');
         new Maskinput('.maskinp-float', 'float');
     } catch (error) {
         console.log(error);
