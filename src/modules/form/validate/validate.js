@@ -124,7 +124,7 @@ var ValidateForm;
 
                 if (this.select(selectElem)) {
                     err++;
-                    errElems.push(selectElem);
+                    errElems.push(selectElem.parentElement);
                 }
             }
 
@@ -266,7 +266,9 @@ var ValidateForm;
 
             this.formError(formElem, err);
 
-            this.scrollToErrElem(errElems);
+            if (err) {
+                this.scrollToErrElem(errElems);
+            }
 
             return (err) ? false : true;
         },
