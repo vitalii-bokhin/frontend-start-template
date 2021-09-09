@@ -21,6 +21,111 @@ Toggle.onChange(function (btnEl, targetElems, state) {
         targetsToggledClass: 'toggled',
         onChangeSubscribers: [],
 
+        init: function (opt) {
+            if (opt.toggledClass) {
+                this.toggledClass = opt.toggledClass;
+            }
+
+            if (opt.targetsToggledClass) {
+                this.targetsToggledClass = opt.targetsToggledClass;
+            }
+
+            document.addEventListener('click', (e) => {
+                const btnEl = e.target.closest(opt.button),
+                    offBtnEl = e.target.closest(opt.offButton);
+
+                if (btnEl) {
+                    e.preventDefault();
+
+                    if (btnEl.hasAttribute('data-switch')) {
+                        this.switchBtns(btnEl);
+                    } else {
+                        this.toggle(btnEl);
+                    }
+                } else if (offBtnEl) {
+                    e.preventDefault();
+
+                    this.toggleOff(offBtnEl);
+                }
+
+                this.onDocClickOff(e, btnEl);
+            });
+        },
+
+        toggle: function (toggleElem, off) {
+            let state;
+
+            if (toggleElem.classList.contains(this.toggledClass)) {
+                toggleElem.classList.remove(this.toggledClass);
+
+                state = false;
+
+                if (toggleElem.hasAttribute('data-first-text')) {
+                    toggleElem.innerHTML = toggleElem.getAttribute('data-first-text');
+                }
+            } else if (!off) {
+                if (toggleElem.getAttribute('data-type') != 'button') {
+                    toggleElem.classList.add(this.toggledClass);
+                }
+
+                state = true;
+
+                if (toggleElem.hasAttribute('data-second-text')) {
+                    toggleElem.setAttribute('data-first-text', toggleElem.innerHTML);
+
+                    toggleElem.innerHTML = toggleElem.getAttribute('data-second-text');
+                }
+            }
+
+            //target
+            if (toggleElem.hasAttribute('data-target-elements')) {
+                this.target(toggleElem, state);
+            }
+
+            if (!state) {
+                return;
+            }
+
+            //dependence elements
+            if (toggleElem.hasAttribute('data-dependence-target-elements')) {
+                const dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
+
+                for (let i = 0; i < dependenceTargetElements.length; i++) {
+                    const el = dependenceTargetElements[i];
+
+                    dependenceTargetElements[i].classList.remove(this.toggledClass);
+
+                    if (el.hasAttribute('data-target-elements')) {
+                        this.target(el, false);
+                    }
+                }
+            }
+        },
+
+        switchBtns: function (btnEl) {
+            if (btnEl.classList.contains(this.toggledClass)) {
+                return;
+            }
+
+            const btnElems = document.querySelectorAll('[data-switch="' + btnEl.getAttribute('data-switch') + '"]');
+
+            for (let i = 0; i < btnElems.length; i++) {
+                const bEl = btnElems[i];
+
+                bEl.classList.remove(this.toggledClass);
+
+                if (bEl.hasAttribute('data-target-elements')) {
+                    this.target(bEl, false);
+                }
+            }
+
+            btnEl.classList.add(this.toggledClass);
+
+            if (btnEl.hasAttribute('data-target-elements')) {
+                this.target(btnEl, true);
+            }
+        },
+
         target: function (btnEl, state) {
             const target = btnEl.getAttribute('data-target-elements');
 
@@ -52,54 +157,6 @@ Toggle.onChange(function (btnEl, targetElems, state) {
                 this.onChangeSubscribers.forEach(function (item) {
                     item(btnEl, targetElements, state);
                 });
-            }
-        },
-
-        toggle: function (toggleElem, off) {
-            var state;
-
-            if (toggleElem.classList.contains(this.toggledClass)) {
-                toggleElem.classList.remove(this.toggledClass);
-
-                state = false;
-
-                if (toggleElem.hasAttribute('data-first-text')) {
-                    toggleElem.innerHTML = toggleElem.getAttribute('data-first-text');
-                }
-            } else if (!off) {
-                if (toggleElem.getAttribute('data-type') != 'button') {
-                    toggleElem.classList.add(this.toggledClass);
-                }
-
-                state = true;
-
-                if (toggleElem.hasAttribute('data-second-text')) {
-                    toggleElem.setAttribute('data-first-text', toggleElem.innerHTML);
-
-                    toggleElem.innerHTML = toggleElem.getAttribute('data-second-text');
-                }
-            }
-
-            //target
-            if (toggleElem.hasAttribute('data-target-elements')) {
-                this.target(toggleElem, state);
-            }
-
-            if (!state) return;
-
-            //dependence elements
-            if (toggleElem.hasAttribute('data-dependence-target-elements')) {
-                const dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
-
-                for (let i = 0; i < dependenceTargetElements.length; i++) {
-                    const el = dependenceTargetElements[i];
-
-                    dependenceTargetElements[i].classList.remove(this.toggledClass);
-
-                    if (el.hasAttribute('data-target-elements')) {
-                        this.target(el, false);
-                    }
-                }
             }
         },
 
@@ -139,33 +196,6 @@ Toggle.onChange(function (btnEl, targetElems, state) {
             if (typeof fun === 'function') {
                 this.onChangeSubscribers.push(fun);
             }
-        },
-
-        init: function (opt) {
-            if (opt.toggledClass) {
-                this.toggledClass = opt.toggledClass;
-            }
-
-            if (opt.targetsToggledClass) {
-                this.targetsToggledClass = opt.targetsToggledClass;
-            }
-
-            document.addEventListener('click', (e) => {
-                const btnEl = e.target.closest(opt.button),
-                    offBtnEl = e.target.closest(opt.offButton);
-
-                if (btnEl) {
-                    e.preventDefault();
-
-                    this.toggle(btnEl);
-                } else if (offBtnEl) {
-                    e.preventDefault();
-
-                    this.toggleOff(offBtnEl);
-                }
-
-                this.onDocClickOff(e, btnEl);
-            });
         }
     };
 })();

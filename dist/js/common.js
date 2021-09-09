@@ -79,6 +79,60 @@ document.addEventListener('DOMContentLoaded', function () {
             bar: true
         });
 
+        new Scrollbox('#actions-scroll', {
+            actionPoints: [
+                {
+                    point: 0,
+                    elements: {
+                        s1: {
+                            opacity: '1'
+                        }
+                    }
+                },
+                {
+                    point: window.innerHeight,
+                    elements: {
+                        s1: {
+                            opacity: '0'
+                        }
+                    }
+                },
+                {
+                    point: window.innerHeight * 2,
+                    elements: {
+                        s2: {
+                            opacity: '0'
+                        }
+                    }
+                },
+                {
+                    point: window.innerHeight * 3,
+                    elements: {
+                        s2: {
+                            opacity: '1'
+                        }
+                    }
+                }
+            ],
+
+            actionElsParams: {
+                s1: [{
+                    start: {
+                        offset: 0,
+                        properties: [{
+                            opacity: '1'
+                        }]
+                    },
+                    stop: {
+                        offset: window.innerHeight,
+                        properties: [{
+                            opacity: '0'
+                        }]
+                    }
+                }]
+            }
+        });
+
     } catch (error) {
         console.log(error);
     }

@@ -1,0 +1,38 @@
+@@include('_head.html', {"title": "Home page"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html', {"menu_item_current": "home", "user_item": "logged", "user_item": "not_logged"})
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+	<div id="actions-scroll" class="scrollbox scrollbox_fwh">
+		<div class="scrollbox__window">
+			<div class="scrollbox__inner" style="height: 400vh;">
+				<div style="height: 100vh; background: darkcyan;" data-action-element="s1"></div>
+
+				<div style="height: 200vh; background: rgb(72, 0, 139); position: fixed; top: 100%; left: 0; width: 100%; z-index: 2;" data-action-element="t1"></div>
+
+				<div style="height: 200vh; background: rgb(139, 0, 93); margin-top: -100vh; opacity: 0;" data-action-element="s2"></div>
+			</div>
+
+		</div>
+		<div class="scrollbox__vertical-bar"></div>
+	</div>
+</main>
+<!--/MAIN-->
+
+<!--FOOTER/-->
+@@include('../modules/footer/footer.html')
+<!--/FOOTER-->
+
+<!--POPUPs/-->
+@@include('../modules/popup/popup.html')
+<!--/POPUPs-->
+
+@@include('../images/sprite-symbol.svg')
+
+@@include('_javascript.html')
+
+</body>
+</html>

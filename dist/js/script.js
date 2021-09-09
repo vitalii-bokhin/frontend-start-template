@@ -6805,6 +6805,7 @@ function Mouseparallax(elSel, options) {
             opt.vertical = true;
         }
 
+        opt.scrollStep = (opt.scrollStep !== undefined) ? opt.scrollStep : false;
         opt.fullSizeStep = (opt.fullSizeStep !== undefined) ? opt.fullSizeStep : false;
         opt.nestedScrollbox = (opt.nestedScrollbox !== undefined) ? opt.nestedScrollbox : null;
         opt.parentScrollbox = (opt.parentScrollbox !== undefined) ? opt.parentScrollbox : null;
@@ -6814,9 +6815,15 @@ function Mouseparallax(elSel, options) {
         opt.bar = (opt.bar !== undefined) ? opt.bar : false;
         opt.barSize = (opt.barSize !== undefined) ? opt.barSize : null;
         opt.drag = (opt.drag !== undefined) ? opt.drag : false;
+        opt.mouseWheel = (opt.mouseWheel !== undefined) ? opt.mouseWheel : true;
+        opt.actionPoints = (opt.actionPoints !== undefined) ? opt.actionPoints : null;
 
-        const winEl = scrBoxEl.querySelector('.scrollbox__window'),
-            innerEl = scrBoxEl.querySelector('.scrollbox__inner');
+        const winEl = scrBoxEl.querySelector('.scrollbox__window');
+        let innerEl = scrBoxEl.querySelector('.scrollbox__inner');
+
+        if (innerEl.parentElement !== winEl) {
+            innerEl = null;
+        }
 
         scrBoxEl.setAttribute('tabindex', '-1');
 
@@ -6843,6 +6850,9 @@ function Mouseparallax(elSel, options) {
         this.innerEl = innerEl || null;
         this.innerSize = { X: null, Y: null };
         this.endBreak = { X: null, Y: null };
+        this.scrollStep = opt.scrollStep;
+        this.actionEls = [];
+        this.actionPoints = opt.actionPoints;
 
         if (opt.parentScrollbox) {
             this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
@@ -6884,7 +6894,10 @@ function Mouseparallax(elSel, options) {
 
                         if (innerH > winH) {
                             scrBoxEl.classList.add('srollbox_scrollable-vertical');
-                            scrBoxEl.addEventListener('wheel', wheelHandler);
+
+                            if (opt.mouseWheel) {
+                                scrBoxEl.addEventListener('wheel', wheelHandler);
+                            }
                         }
 
                         this.winSize.Y = winH;
@@ -6916,56 +6929,62 @@ function Mouseparallax(elSel, options) {
                 }
             }
 
-            this.actionEls = [];
-
-            const actionEls = winEl.querySelectorAll('[data-action-points]');
+            const actionEls = winEl.querySelectorAll('[data-action-element]');
 
             for (let i = 0; i < actionEls.length; i++) {
-                const actEl = actionEls[i],
-                    points = actEl.getAttribute('data-action-points').split(','),
-                    actionProp = actEl.getAttribute('data-action-prop'),
-                    actionRange = actEl.getAttribute('data-range').split(','),
-                    reverse = actEl.getAttribute('data-reverse');
+                const actEl = actionEls[i];
 
-                let start, end, startFrom, endTo;
-
-                points.forEach(function (item, i) {
-                    const pts = item.split('-'),
-                        rng = actionRange[i].split('-');
-
-                    if (!i) {
-                        start = +pts[0];
-                        startFrom = +rng[0];
-                    }
-
-                    if (i == points.length - 1) {
-                        end = +pts[1];
-                        endTo = +rng[1];
-                    }
+                this.actionEls.push({
+                    id: actEl.getAttribute('data-action-element'),
+                    el: actEl
                 });
 
-                points.forEach((item, i) => {
-                    const pts = item.split('-'),
-                        rng = actionRange[i].split('-');
 
-                    this.actionEls.push({
-                        el: actEl,
-                        startAction: +pts[0],
-                        endAction: +pts[1],
-                        actionFrom: +rng[0],
-                        actionTo: +rng[1],
-                        actionProp,
-                        start,
-                        end,
-                        startFrom,
-                        endTo,
-                        reverse
-                    });
+                // const actEl = actionEls[i],
+                //     points = actEl.getAttribute('data-action-points').split(','),
+                //     actionProp = actEl.getAttribute('data-action-prop'),
+                //     actionRange = actEl.getAttribute('data-range').split(','),
+                //     reverse = actEl.getAttribute('data-reverse');
 
-                    if (+pts[1] > this.endBreak) {
-                        this.endBreak = +pts[1];
-                    }
-                });
+                // let start, end, startFrom, endTo;
+
+                // points.forEach(function (item, i) {
+                //     const pts = item.split('-'),
+                //         rng = actionRange[i].split('-');
+
+                //     if (!i) {
+                //         start = +pts[0];
+                //         startFrom = +rng[0];
+                //     }
+
+                //     if (i == points.length - 1) {
+                //         end = +pts[1];
+                //         endTo = +rng[1];
+                //     }
+                // });
+
+                // points.forEach((item, i) => {
+                //     const pts = item.split('-'),
+                //         rng = actionRange[i].split('-');
+
+                //     this.actionEls.push({
+                //         el: actEl,
+                //         startAction: +pts[0],
+                //         endAction: +pts[1],
+                //         actionFrom: +rng[0],
+                //         actionTo: +rng[1],
+                //         actionProp,
+                //         start,
+                //         end,
+                //         startFrom,
+                //         endTo,
+                //         reverse
+                //     });
+
+                //     if (+pts[1] > this.endBreak) {
+                //         this.endBreak = +pts[1];
+                //     }
+                // });
             }
 
             if (opt.drag) {
@@ -7229,38 +7248,74 @@ function Mouseparallax(elSel, options) {
             scrTo = this.scrTo;
         }
 
-        this.actionEls.forEach(function (item) {
-            let sign = '-';
+        const actionPointsRange = [];
 
-            if (item.reverse === 'true') {
-                sign = '';
+        for (let i = 0; i < this.actionPoints.length; i++) {
+            const pointItem = this.actionPoints[i];
+
+            if (scrTo.Y >= pointItem.point) {
+                actionPointsRange[0] = pointItem;
             }
+        }
 
-            if (scrTo >= item.startAction && scrTo <= item.endAction) {
-                const progress = (scrTo - item.startAction) / ((item.endAction - item.startAction)),
-                    moveTo = (item.actionTo - item.actionFrom) * progress + item.actionFrom;
+        for (let i = this.actionPoints.length - 1; i >= 0; i--) {
+            const pointItem = this.actionPoints[i];
 
-                if (item.actionProp === 'left') {
-                    item.el.style.left = sign + moveTo + '%';
-                } else {
-                    item.el.style.transform = 'translate(' + sign + moveTo + '%, 0)';
-                }
+            if (scrTo.Y <= pointItem.point) {
+                actionPointsRange[1] = pointItem;
+            }
+        }
 
-            } else if (scrTo < item.start) {
-                if (item.actionProp === 'left') {
-                    item.el.style.left = sign + item.startFrom + '%';
-                } else {
-                    item.el.style.transform = 'translate(' + sign + item.startFrom + '%, 0)';
-                }
+        // console.log(actionPointsRange);
 
-            } else if (scrTo > item.end) {
-                if (item.actionProp === 'left') {
-                    item.el.style.left = sign + item.endTo + '%';
-                } else {
-                    item.el.style.transform = 'translate(' + sign + item.endTo + '%, 0)';
+        const actionsElems = {};
+
+        actionPointsRange.forEach(function (point) {
+            for (const elId in point.elements) {
+                if (Object.hasOwnProperty.call(point.elements, elId)) {
+                    if (!actionsElems[elId]) {
+                        actionsElems[elId] = [];
+                    }
+
+                    actionsElems[elId].push(point.elements[elId]);
                 }
             }
         });
+
+        console.log(actionsElems);
+
+        // this.actionEls.forEach(function (item) {
+        //     let sign = '-';
+
+        //     if (item.reverse === 'true') {
+        //         sign = '';
+        //     }
+
+        //     if (scrTo >= item.startAction && scrTo <= item.endAction) {
+        //         const progress = (scrTo - item.startAction) / ((item.endAction - item.startAction)),
+        //             moveTo = (item.actionTo - item.actionFrom) * progress + item.actionFrom;
+
+        //         if (item.actionProp === 'left') {
+        //             item.el.style.left = sign + moveTo + '%';
+        //         } else {
+        //             item.el.style.transform = 'translate(' + sign + moveTo + '%, 0)';
+        //         }
+
+        //     } else if (scrTo < item.start) {
+        //         if (item.actionProp === 'left') {
+        //             item.el.style.left = sign + item.startFrom + '%';
+        //         } else {
+        //             item.el.style.transform = 'translate(' + sign + item.startFrom + '%, 0)';
+        //         }
+
+        //     } else if (scrTo > item.end) {
+        //         if (item.actionProp === 'left') {
+        //             item.el.style.left = sign + item.endTo + '%';
+        //         } else {
+        //             item.el.style.transform = 'translate(' + sign + item.endTo + '%, 0)';
+        //         }
+        //     }
+        // });
 
         let posX, posY;
 
@@ -7450,8 +7505,12 @@ function Mouseparallax(elSel, options) {
         let barSlEl = null;
 
         const mouseMove = (e) => {
+            e.preventDefault();
+
             if (barSlEl === this.horizontalBarSlEl) {
-                mouseDelta.X = e.clientX - mouseStart.X;
+                const clientX = (e.type == 'touchmove') ? e.targetTouches[0].clientX : e.clientX;
+
+                mouseDelta.X = clientX - mouseStart.X;
 
                 let shift = mouseDelta.X + barSlStart.X - bar.X;
 
@@ -7470,7 +7529,9 @@ function Mouseparallax(elSel, options) {
                 this.scroll({ X }, null, 'bar');
 
             } else if (barSlEl === this.verticalBarSlEl) {
-                mouseDelta.Y = e.clientY - mouseStart.Y;
+                const clientY = (e.type == 'touchmove') ? e.targetTouches[0].clientY : e.clientY;
+
+                mouseDelta.Y = clientY - mouseStart.Y;
 
                 let shift = mouseDelta.Y + barSlStart.Y - bar.Y;
 
@@ -7492,6 +7553,7 @@ function Mouseparallax(elSel, options) {
 
         const mouseUp = () => {
             document.removeEventListener('mousemove', mouseMove);
+            document.removeEventListener('touchmove', mouseMove);
 
             this.scrBoxEl.classList.remove('scrollbox_dragging');
 
@@ -7499,14 +7561,17 @@ function Mouseparallax(elSel, options) {
         }
 
         const mouseDown = (e) => {
-            if (e.type == 'mousedown' && e.which != 1) return;
+            if (e.type == 'mousedown' && e.which != 1) {
+                return;
+            }
 
             barSlEl = e.target.closest('div');
 
             if (barSlEl === this.horizontalBarSlEl) {
                 document.addEventListener('mousemove', mouseMove);
+                document.addEventListener('touchmove', mouseMove, { passive: false });
 
-                mouseStart.X = e.clientX;
+                mouseStart.X = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX;
 
                 bar.X = barSlEl.parentElement.getBoundingClientRect().left;
                 bar.W = barSlEl.parentElement.offsetWidth;
@@ -7517,8 +7582,9 @@ function Mouseparallax(elSel, options) {
 
             } else if (barSlEl === this.verticalBarSlEl) {
                 document.addEventListener('mousemove', mouseMove);
+                document.addEventListener('touchmove', mouseMove, { passive: false });
 
-                mouseStart.Y = e.clientY;
+                mouseStart.Y = (e.type == 'touchstart') ? e.targetTouches[0].clientY : e.clientY;
 
                 bar.Y = barSlEl.parentElement.getBoundingClientRect().top;
                 bar.H = barSlEl.parentElement.offsetHeight;
@@ -7531,11 +7597,17 @@ function Mouseparallax(elSel, options) {
 
         if (!this.initialized && !destroy) {
             document.addEventListener('mousedown', mouseDown);
+            document.addEventListener('touchstart', mouseDown, { passive: false });
+
             document.addEventListener('mouseup', mouseUp);
+            document.addEventListener('touchend', mouseUp);
 
         } else if (destroy) {
             document.removeEventListener('mousedown', mouseDown);
+            document.removeEventListener('touchstart', mouseDown);
+
             document.removeEventListener('mouseup', mouseUp);
+            document.removeEventListener('touchend', mouseUp);
         }
     }
 
@@ -7547,8 +7619,13 @@ function Mouseparallax(elSel, options) {
         let dragTimeout = null;
 
         const mouseMove = (e) => {
-            mouseDelta.X = e.clientX - mouseStart.X;
-            mouseDelta.Y = e.clientY - mouseStart.Y;
+            e.preventDefault();
+
+            const clientX = (e.type == 'touchmove') ? e.targetTouches[0].clientX : e.clientX,
+                clientY = (e.type == 'touchmove') ? e.targetTouches[0].clientY : e.clientY;
+
+            mouseDelta.X = clientX - mouseStart.X;
+            mouseDelta.Y = clientY - mouseStart.Y;
 
             const scrTo = {};
 
@@ -7565,6 +7642,7 @@ function Mouseparallax(elSel, options) {
 
         const mouseUp = () => {
             document.removeEventListener('mousemove', mouseMove);
+            document.removeEventListener('touchmove', mouseMove);
 
             this.scrBoxEl.classList.remove('scrollbox_cursor-drag');
 
@@ -7577,13 +7655,17 @@ function Mouseparallax(elSel, options) {
             const winEl = e.target.closest('.scrollbox__window');
 
             if (winEl) {
-                document.addEventListener('mousemove', mouseMove);
+                const clientX = (e.type == 'touchstart') ? e.targetTouches[0].clientX : e.clientX,
+                    clientY = (e.type == 'touchstart') ? e.targetTouches[0].clientY : e.clientY;
 
-                mouseStart.X = e.clientX;
-                mouseStart.Y = e.clientY;
+                mouseStart.X = clientX;
+                mouseStart.Y = clientY;
 
                 lastScroll.X = this.scrolled.X;
                 lastScroll.Y = this.scrolled.Y;
+
+                document.addEventListener('mousemove', mouseMove);
+                document.addEventListener('touchmove', mouseMove, { passive: false });
 
                 dragTimeout = setTimeout(() => {
                     this.scrBoxEl.classList.add('scrollbox_cursor-drag');
@@ -7593,11 +7675,17 @@ function Mouseparallax(elSel, options) {
 
         if (!this.initialized && !destroy) {
             document.addEventListener('mousedown', mouseDown);
+            document.addEventListener('touchstart', mouseDown, { passive: false });
+
             document.addEventListener('mouseup', mouseUp);
+            document.addEventListener('touchend', mouseUp);
 
         } else if (destroy) {
             document.removeEventListener('mousedown', mouseDown);
+            document.removeEventListener('touchstart', mouseDown);
+
             document.removeEventListener('mouseup', mouseUp);
+            document.removeEventListener('touchend', mouseUp);
         }
     }
 })();

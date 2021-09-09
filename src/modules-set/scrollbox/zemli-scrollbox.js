@@ -21,7 +21,6 @@
             opt.vertical = true;
         }
 
-        opt.scrollStep = (opt.scrollStep !== undefined) ? opt.scrollStep : false;
         opt.fullSizeStep = (opt.fullSizeStep !== undefined) ? opt.fullSizeStep : false;
         opt.nestedScrollbox = (opt.nestedScrollbox !== undefined) ? opt.nestedScrollbox : null;
         opt.parentScrollbox = (opt.parentScrollbox !== undefined) ? opt.parentScrollbox : null;
@@ -32,14 +31,9 @@
         opt.barSize = (opt.barSize !== undefined) ? opt.barSize : null;
         opt.drag = (opt.drag !== undefined) ? opt.drag : false;
         opt.mouseWheel = (opt.mouseWheel !== undefined) ? opt.mouseWheel : true;
-        opt.actionPoints = (opt.actionPoints !== undefined) ? opt.actionPoints : null;
 
-        const winEl = scrBoxEl.querySelector('.scrollbox__window');
-        let innerEl = scrBoxEl.querySelector('.scrollbox__inner');
-
-        if (innerEl.parentElement !== winEl) {
-            innerEl = null;
-        }
+        const winEl = scrBoxEl.querySelector('.scrollbox__window'),
+            innerEl = scrBoxEl.querySelector('.scrollbox__inner');
 
         scrBoxEl.setAttribute('tabindex', '-1');
 
@@ -66,9 +60,6 @@
         this.innerEl = innerEl || null;
         this.innerSize = { X: null, Y: null };
         this.endBreak = { X: null, Y: null };
-        this.scrollStep = opt.scrollStep;
-        this.actionEls = [];
-        this.actionPoints = opt.actionPoints;
 
         if (opt.parentScrollbox) {
             this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
@@ -145,62 +136,56 @@
                 }
             }
 
-            const actionEls = winEl.querySelectorAll('[data-action-element]');
+            this.actionEls = [];
+
+            const actionEls = winEl.querySelectorAll('[data-action-points]');
 
             for (let i = 0; i < actionEls.length; i++) {
-                const actEl = actionEls[i];
+                const actEl = actionEls[i],
+                    points = actEl.getAttribute('data-action-points').split(','),
+                    actionProp = actEl.getAttribute('data-action-prop'),
+                    actionRange = actEl.getAttribute('data-range').split(','),
+                    reverse = actEl.getAttribute('data-reverse');
 
-                this.actionEls.push({
-                    id: actEl.getAttribute('data-action-element'),
-                    el: actEl
+                let start, end, startFrom, endTo;
+
+                points.forEach(function (item, i) {
+                    const pts = item.split('-'),
+                        rng = actionRange[i].split('-');
+
+                    if (!i) {
+                        start = +pts[0];
+                        startFrom = +rng[0];
+                    }
+
+                    if (i == points.length - 1) {
+                        end = +pts[1];
+                        endTo = +rng[1];
+                    }
                 });
 
+                points.forEach((item, i) => {
+                    const pts = item.split('-'),
+                        rng = actionRange[i].split('-');
 
-                // const actEl = actionEls[i],
-                //     points = actEl.getAttribute('data-action-points').split(','),
-                //     actionProp = actEl.getAttribute('data-action-prop'),
-                //     actionRange = actEl.getAttribute('data-range').split(','),
-                //     reverse = actEl.getAttribute('data-reverse');
+                    this.actionEls.push({
+                        el: actEl,
+                        startAction: +pts[0],
+                        endAction: +pts[1],
+                        actionFrom: +rng[0],
+                        actionTo: +rng[1],
+                        actionProp,
+                        start,
+                        end,
+                        startFrom,
+                        endTo,
+                        reverse
+                    });
 
-                // let start, end, startFrom, endTo;
-
-                // points.forEach(function (item, i) {
-                //     const pts = item.split('-'),
-                //         rng = actionRange[i].split('-');
-
-                //     if (!i) {
-                //         start = +pts[0];
-                //         startFrom = +rng[0];
-                //     }
-
-                //     if (i == points.length - 1) {
-                //         end = +pts[1];
-                //         endTo = +rng[1];
-                //     }
-                // });
-
-                // points.forEach((item, i) => {
-                //     const pts = item.split('-'),
-                //         rng = actionRange[i].split('-');
-
-                //     this.actionEls.push({
-                //         el: actEl,
-                //         startAction: +pts[0],
-                //         endAction: +pts[1],
-                //         actionFrom: +rng[0],
-                //         actionTo: +rng[1],
-                //         actionProp,
-                //         start,
-                //         end,
-                //         startFrom,
-                //         endTo,
-                //         reverse
-                //     });
-
-                //     if (+pts[1] > this.endBreak) {
-                //         this.endBreak = +pts[1];
-                //     }
-                // });
+                    if (+pts[1] > this.endBreak) {
+                        this.endBreak = +pts[1];
+                    }
+                });
             }
 
             if (opt.drag) {
@@ -464,74 +449,38 @@
             scrTo = this.scrTo;
         }
 
-        const actionPointsRange = [];
+        this.actionEls.forEach(function (item) {
+            let sign = '-';
 
-        for (let i = 0; i < this.actionPoints.length; i++) {
-            const pointItem = this.actionPoints[i];
-
-            if (scrTo.Y >= pointItem.point) {
-                actionPointsRange[0] = pointItem;
+            if (item.reverse === 'true') {
+                sign = '';
             }
-        }
 
-        for (let i = this.actionPoints.length - 1; i >= 0; i--) {
-            const pointItem = this.actionPoints[i];
+            if (scrTo >= item.startAction && scrTo <= item.endAction) {
+                const progress = (scrTo - item.startAction) / ((item.endAction - item.startAction)),
+                    moveTo = (item.actionTo - item.actionFrom) * progress + item.actionFrom;
 
-            if (scrTo.Y <= pointItem.point) {
-                actionPointsRange[1] = pointItem;
-            }
-        }
+                if (item.actionProp === 'left') {
+                    item.el.style.left = sign + moveTo + '%';
+                } else {
+                    item.el.style.transform = 'translate(' + sign + moveTo + '%, 0)';
+                }
 
-        // console.log(actionPointsRange);
+            } else if (scrTo < item.start) {
+                if (item.actionProp === 'left') {
+                    item.el.style.left = sign + item.startFrom + '%';
+                } else {
+                    item.el.style.transform = 'translate(' + sign + item.startFrom + '%, 0)';
+                }
 
-        const actionsElems = {};
-
-        actionPointsRange.forEach(function (point) {
-            for (const elId in point.elements) {
-                if (Object.hasOwnProperty.call(point.elements, elId)) {
-                    if (!actionsElems[elId]) {
-                        actionsElems[elId] = [];
-                    }
-
-                    actionsElems[elId].push(point.elements[elId]);
+            } else if (scrTo > item.end) {
+                if (item.actionProp === 'left') {
+                    item.el.style.left = sign + item.endTo + '%';
+                } else {
+                    item.el.style.transform = 'translate(' + sign + item.endTo + '%, 0)';
                 }
             }
         });
-
-        console.log(actionsElems);
-
-        // this.actionEls.forEach(function (item) {
-        //     let sign = '-';
-
-        //     if (item.reverse === 'true') {
-        //         sign = '';
-        //     }
-
-        //     if (scrTo >= item.startAction && scrTo <= item.endAction) {
-        //         const progress = (scrTo - item.startAction) / ((item.endAction - item.startAction)),
-        //             moveTo = (item.actionTo - item.actionFrom) * progress + item.actionFrom;
-
-        //         if (item.actionProp === 'left') {
-        //             item.el.style.left = sign + moveTo + '%';
-        //         } else {
-        //             item.el.style.transform = 'translate(' + sign + moveTo + '%, 0)';
-        //         }
-
-        //     } else if (scrTo < item.start) {
-        //         if (item.actionProp === 'left') {
-        //             item.el.style.left = sign + item.startFrom + '%';
-        //         } else {
-        //             item.el.style.transform = 'translate(' + sign + item.startFrom + '%, 0)';
-        //         }
-
-        //     } else if (scrTo > item.end) {
-        //         if (item.actionProp === 'left') {
-        //             item.el.style.left = sign + item.endTo + '%';
-        //         } else {
-        //             item.el.style.transform = 'translate(' + sign + item.endTo + '%, 0)';
-        //         }
-        //     }
-        // });
 
         let posX, posY;
 
