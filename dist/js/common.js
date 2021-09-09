@@ -82,55 +82,49 @@ document.addEventListener('DOMContentLoaded', function () {
         new Scrollbox('#actions-scroll', {
             actionPoints: [
                 {
-                    point: 0,
+                    range: [0, window.innerHeight],
                     elements: {
                         s1: {
-                            opacity: '1'
+                            opacity: [1,0],
+                            margin: [35,88]
+                        },
+                        s33: {
+                            opacity: [1,0],
+                            margin: [35,88]
                         }
                     }
                 },
                 {
-                    point: window.innerHeight,
-                    elements: {
-                        s1: {
-                            opacity: '0'
-                        }
-                    }
-                },
-                {
-                    point: window.innerHeight * 2,
+                    range: [window.innerHeight, window.innerHeight * 2],
                     elements: {
                         s2: {
-                            opacity: '0'
-                        }
-                    }
-                },
-                {
-                    point: window.innerHeight * 3,
-                    elements: {
-                        s2: {
-                            opacity: '1'
+                            opacity: [0,1],
+                            margin: [35,88]
+                        },
+                        s33: {
+                            opacity: [1,0],
+                            margin: [35,88]
                         }
                     }
                 }
             ],
 
-            actionElsParams: {
-                s1: [{
-                    start: {
-                        offset: 0,
-                        properties: [{
-                            opacity: '1'
-                        }]
-                    },
-                    stop: {
-                        offset: window.innerHeight,
-                        properties: [{
-                            opacity: '0'
-                        }]
-                    }
-                }]
-            }
+            // actionElsParams: {
+            //     s1: [{
+            //         start: {
+            //             offset: 0,
+            //             properties: [{
+            //                 opacity: '1'
+            //             }]
+            //         },
+            //         stop: {
+            //             offset: window.innerHeight,
+            //             properties: [{
+            //                 opacity: '0'
+            //             }]
+            //         }
+            //     }]
+            // }
         });
 
     } catch (error) {

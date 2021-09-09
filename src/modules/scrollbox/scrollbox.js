@@ -67,7 +67,7 @@
         this.innerSize = { X: null, Y: null };
         this.endBreak = { X: null, Y: null };
         this.scrollStep = opt.scrollStep;
-        this.actionEls = [];
+        this.actionElems = {};
         this.actionPoints = opt.actionPoints;
 
         if (opt.parentScrollbox) {
@@ -150,11 +150,7 @@
             for (let i = 0; i < actionEls.length; i++) {
                 const actEl = actionEls[i];
 
-                this.actionEls.push({
-                    id: actEl.getAttribute('data-action-element'),
-                    el: actEl
-                });
-
+                this.actionElems[actEl.getAttribute('data-action-element')] = actEl;
 
                 // const actEl = actionEls[i],
                 //     points = actEl.getAttribute('data-action-points').split(','),
@@ -183,7 +179,7 @@
                 //     const pts = item.split('-'),
                 //         rng = actionRange[i].split('-');
 
-                //     this.actionEls.push({
+                //     this.actionElems.push({
                 //         el: actEl,
                 //         startAction: +pts[0],
                 //         endAction: +pts[1],
@@ -397,9 +393,11 @@
 
             innerEl.style.transform = '';
 
-            this.actionEls.forEach(function (item) {
-                item.el.style.transform = '';
-            });
+            for (const key in this.actionElems) {
+                if (Object.hasOwnProperty.call(this.actionElems, key)) {
+                    this.actionElems[key].removeAttribute('style');
+                }
+            }
 
             this.scrollBar(true);
             this.drag(true);
@@ -464,43 +462,83 @@
             scrTo = this.scrTo;
         }
 
-        const actionPointsRange = [];
+        // action points
+        const currentActionPoints = [];
 
-        for (let i = 0; i < this.actionPoints.length; i++) {
-            const pointItem = this.actionPoints[i];
-
-            if (scrTo.Y >= pointItem.point) {
-                actionPointsRange[0] = pointItem;
+        this.actionPoints.forEach(function (pointItem) {
+            if (pointItem.range[0] <= scrTo.Y && scrTo.Y <= pointItem.range[1]) {
+                currentActionPoints.push(pointItem);
             }
-        }
+        });
 
-        for (let i = this.actionPoints.length - 1; i >= 0; i--) {
-            const pointItem = this.actionPoints[i];
+        currentActionPoints.forEach(pointItem => {
+            const progress = (scrTo.Y - pointItem.range[0]) / (pointItem.range[1] - pointItem.range[0]);
 
-            if (scrTo.Y <= pointItem.point) {
-                actionPointsRange[1] = pointItem;
-            }
-        }
+            for (const elKey in pointItem.elements) {
+                if (Object.hasOwnProperty.call(pointItem.elements, elKey)) {
+                    const elemProps = pointItem.elements[elKey];
 
-        // console.log(actionPointsRange);
+                    for (const property in elemProps) {
+                        if (Object.hasOwnProperty.call(elemProps, property)) {
+                            const propsRange = elemProps[property],
+                                goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
 
-        const actionsElems = {};
+                            console.log(property, goTo, this.actionElems[elKey]);
 
-        actionPointsRange.forEach(function (point) {
-            for (const elId in point.elements) {
-                if (Object.hasOwnProperty.call(point.elements, elId)) {
-                    if (!actionsElems[elId]) {
-                        actionsElems[elId] = [];
+                            if (this.actionElems[elKey]) {
+                                this.actionElems[elKey].style[property] = goTo;
+                            }
+                        }
                     }
-
-                    actionsElems[elId].push(point.elements[elId]);
                 }
             }
         });
 
-        console.log(actionsElems);
+        // for (let i = 0; i < this.actionPoints.length; i++) {
+        //     const pointItem = this.actionPoints[i];
 
-        // this.actionEls.forEach(function (item) {
+        //     if (scrTo.Y >= pointItem.point) {
+        //         currentActionPoints[0] = pointItem;
+        //     }
+        // }
+
+        // for (let i = this.actionPoints.length - 1; i >= 0; i--) {
+        //     const pointItem = this.actionPoints[i];
+
+        //     if (scrTo.Y <= pointItem.point) {
+        //         currentActionPoints[1] = pointItem;
+        //     }
+        // }
+
+        // console.log(currentActionPoints);
+
+        // const actionsElems = {};
+
+        // currentActionPoints.forEach(function (point, i) {
+        //     for (const elId in point.elements) {
+        //         if (Object.hasOwnProperty.call(point.elements, elId)) {
+        //             if (!actionsElems[elId]) {
+        //                 actionsElems[elId] = {};
+        //             }
+
+        //             for (const propKey in point.elements[elId]) {
+        //                 if (Object.hasOwnProperty.call(point.elements[elId], propKey)) {
+        //                     const propVal = point.elements[elId][propKey];
+
+        //                     if (!actionsElems[elId][propKey]) {
+        //                         actionsElems[elId][propKey] = [];
+        //                     }
+
+        //                     actionsElems[elId][propKey][i] = propVal;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
+
+        // console.log(actionsElems);
+
+        // this.actionElems.forEach(function (item) {
         //     let sign = '-';
 
         //     if (item.reverse === 'true') {
