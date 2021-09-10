@@ -4740,6 +4740,13 @@ hr {
   pointer-events: none;
 }
 
+.scrollbox__screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
 .scrollbox__horizontal-bar {
   height: 6px;
   position: absolute;
@@ -4759,13 +4766,14 @@ hr {
 }
 
 .scrollbox__vertical-bar {
-  width: 6px;
+  width: 8px;
   position: absolute;
   top: 0;
-  right: -20px;
+  right: 2px;
   height: 100%;
   background: #aaaaaa;
   border-radius: 6px;
+  z-index: 4;
 }
 
 .scrollbox__vertical-bar div {
@@ -4780,8 +4788,10 @@ hr {
   user-select: none;
 }
 
-.scrollbox_fwh {
-  position: absolute;
+.scrollbox__height {
+  position: relative;
+  z-index: 999;
+  pointer-events: none;
 }
 
 @media (max-width: 1200px) {

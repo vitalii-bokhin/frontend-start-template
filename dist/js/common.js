@@ -80,30 +80,38 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         new Scrollbox('#actions-scroll', {
+            bar: true,
+            windowScrollEvent: true,
             actionPoints: [
                 {
-                    range: [0, window.innerHeight],
+                    breakpoints: [0, window.innerHeight],
                     elements: {
                         s1: {
-                            opacity: [1,0],
-                            margin: [35,88]
-                        },
-                        s33: {
-                            opacity: [1,0],
-                            margin: [35,88]
+                            opacity: [1,0]
                         }
                     }
                 },
                 {
-                    range: [window.innerHeight, window.innerHeight * 2],
+                    breakpoints: [0, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight],
                     elements: {
-                        s2: {
-                            opacity: [0,1],
-                            margin: [35,88]
-                        },
-                        s33: {
-                            opacity: [1,0],
-                            margin: [35,88]
+                        t1: {
+                            marginTop: [0, -(window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight), '$px']
+                        }
+                    }
+                },
+                {
+                    breakpoints: [document.querySelector('[data-action-element="t1"]').offsetHeight, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight],
+                    elements: {
+                        ms: {
+                            opacity: [0,1]
+                        }
+                    }
+                },
+                {
+                    breakpoints: [window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight + document.querySelector('[data-action-element="ms"]').offsetHeight],
+                    elements: {
+                        ms: {
+                            transform: [0, -document.querySelector('[data-action-element="ms"]').offsetHeight, 'translateY($px)']
                         }
                     }
                 }
@@ -126,6 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
             //     }]
             // }
         });
+
+        document.querySelector('.scrollbox__height').style.height = window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight + document.querySelector('[data-action-element="ms"]').offsetHeight + 'px';
 
     } catch (error) {
         console.log(error);

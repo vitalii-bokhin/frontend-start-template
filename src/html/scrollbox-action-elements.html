@@ -1,36 +1,35 @@
 @@include('_head.html', {"title": "Home page"})
 
 <!--HEADER/-->
-@@include('../modules/header/header.html', {"menu_item_current": "home", "user_item": "logged", "user_item": "not_logged"})
+<!-- @@include('../modules/header/header.html', {"menu_item_current": "home", "user_item": "logged", "user_item": "not_logged"}) -->
 <!--/HEADER-->
 
 <!--MAIN/-->
 <main class="main">
 	<div id="actions-scroll" class="scrollbox scrollbox_fwh">
-		<div class="scrollbox__window">
-			<div class="scrollbox__inner" style="height: 400vh;">
-				<div style="height: 80vh; background: darkcyan;" data-action-element="s1"></div>
+		<div class="scrollbox__window" style="position: fixed;">
+			<div style="height: 80vh; background: darkcyan;" data-action-element="s1" class="scrollbox__screen"></div>
+			
+			<div style="height: 200vh; background: rgb(72, 0, 139); top: 100%; z-index: 2;" data-action-element="t1" class="scrollbox__screen"></div>
 
-				<div style="height: 200vh; background: rgb(72, 0, 139); position: fixed; top: 100%; left: 0; width: 100%; z-index: 2;" data-action-element="t1"></div>
-
-				<div style="height: 200vh; background: rgb(139, 0, 93); margin-top: -100vh; opacity: 0;" data-action-element="s2"></div>
-			</div>
-
+			<div style="height: 500vh; background: rgb(12, 139, 0); opacity: 0; border-bottom: 10px solid yellow;" data-action-element="ms" class="scrollbox__screen"></div>
+			
+			<div class="scrollbox__vertical-bar"></div>
 		</div>
-		<div class="scrollbox__vertical-bar"></div>
+		<div class="scrollbox__height"></div>
 	</div>
 </main>
 <!--/MAIN-->
 
 <!--FOOTER/-->
-@@include('../modules/footer/footer.html')
+<!-- @@include('../modules/footer/footer.html') -->
 <!--/FOOTER-->
 
 <!--POPUPs/-->
-@@include('../modules/popup/popup.html')
+<!-- @@include('../modules/popup/popup.html') -->
 <!--/POPUPs-->
 
-@@include('../images/sprite-symbol.svg')
+<!-- @@include('../images/sprite-symbol.svg') -->
 
 @@include('_javascript.html')
 

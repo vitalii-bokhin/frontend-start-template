@@ -222,18 +222,18 @@ $('document').ready(function() {
     });
     
     if (window.innerWidth < 1200) {
-        $('.float-slider').swipe({
-            swipe: function(event, direction) {
-                if (direction == 'right') {
-                    FlSlider.change('prev');
-                } else if(direction == 'left') {
-                    FlSlider.change('next');
-                }
-            },
-            triggerOnTouchEnd: false,
-            excludedElements: '',
-            threshold: 21,
-        });
+        // $('.float-slider').swipe({
+        //     swipe: function(event, direction) {
+        //         if (direction == 'right') {
+        //             FlSlider.change('prev');
+        //         } else if(direction == 'left') {
+        //             FlSlider.change('next');
+        //         }
+        //     },
+        //     triggerOnTouchEnd: false,
+        //     excludedElements: '',
+        //     threshold: 21,
+        // });
     }
     
 });

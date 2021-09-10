@@ -33,11 +33,12 @@
         opt.drag = (opt.drag !== undefined) ? opt.drag : false;
         opt.mouseWheel = (opt.mouseWheel !== undefined) ? opt.mouseWheel : true;
         opt.actionPoints = (opt.actionPoints !== undefined) ? opt.actionPoints : null;
+        opt.windowScrollEvent = (opt.windowScrollEvent !== undefined) ? opt.windowScrollEvent : false;
 
         const winEl = scrBoxEl.querySelector('.scrollbox__window');
         let innerEl = scrBoxEl.querySelector('.scrollbox__inner');
 
-        if (innerEl.parentElement !== winEl) {
+        if (innerEl && innerEl.parentElement !== winEl) {
             innerEl = null;
         }
 
@@ -69,6 +70,7 @@
         this.scrollStep = opt.scrollStep;
         this.actionElems = {};
         this.actionPoints = opt.actionPoints;
+        this.windowScrollEvent = opt.windowScrollEvent;
 
         if (opt.parentScrollbox) {
             this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
@@ -104,22 +106,33 @@
                 scrBoxEl.classList.add('scrollbox_vertical');
 
                 setTimeout(() => {
+                    const winH = winEl.offsetHeight;
+
+                    let innerH = 0;
+
                     if (this.innerEl) {
-                        const innerH = winEl.scrollHeight,
-                            winH = winEl.offsetHeight;
-
-                        if (innerH > winH) {
-                            scrBoxEl.classList.add('srollbox_scrollable-vertical');
-
-                            if (opt.mouseWheel) {
-                                scrBoxEl.addEventListener('wheel', wheelHandler);
-                            }
-                        }
-
-                        this.winSize.Y = winH;
-                        this.innerSize.Y = innerH;
-                        this.endBreak.Y = innerH - winH;
+                        innerH = winEl.scrollHeight;
                     }
+
+                    if (opt.actionPoints) {
+                        opt.actionPoints.forEach(function (pointItem) {
+                            if (pointItem.breakpoints[1] >= innerH) {
+                                innerH = pointItem.breakpoints[1];
+                            }
+                        });
+                    }
+
+                    if (innerH > winH) {
+                        scrBoxEl.classList.add('srollbox_scrollable-vertical');
+
+                        if (opt.mouseWheel && !opt.windowScrollEvent) {
+                            scrBoxEl.addEventListener('wheel', wheelHandler);
+                        }
+                    }
+
+                    this.winSize.Y = winH;
+                    this.innerSize.Y = innerH;
+                    this.endBreak.Y = innerH - winH;
 
                     this.scrollBar(false, 'vertical');
                 }, 21);
@@ -294,6 +307,12 @@
             scrollAnim({ Y: scrTo }, e, undefined, delta);
         }
 
+        if (opt.windowScrollEvent) {
+            window.addEventListener('scroll', () => {
+                this.scroll({ Y: window.scrollY }, null);
+            });
+        }
+
         // keyboard events
         document.addEventListener('keydown', (e) => {
             if (this.isScrolling) return;
@@ -370,7 +389,10 @@
         }
 
         this.reInit = function () {
-            this.innerEl.style = '';
+            if (this.innerEl) {
+                this.innerEl.style = '';
+            }
+
             init();
         }
 
@@ -391,7 +413,9 @@
                 scrBoxEl.classList.remove(cl);
             });
 
-            innerEl.style.transform = '';
+            if (this.innerEl) {
+                this.innerEl.style = '';
+            }
 
             for (const key in this.actionElems) {
                 if (Object.hasOwnProperty.call(this.actionElems, key)) {
@@ -462,115 +486,7 @@
             scrTo = this.scrTo;
         }
 
-        // action points
-        const currentActionPoints = [];
-
-        this.actionPoints.forEach(function (pointItem) {
-            if (pointItem.range[0] <= scrTo.Y && scrTo.Y <= pointItem.range[1]) {
-                currentActionPoints.push(pointItem);
-            }
-        });
-
-        currentActionPoints.forEach(pointItem => {
-            const progress = (scrTo.Y - pointItem.range[0]) / (pointItem.range[1] - pointItem.range[0]);
-
-            for (const elKey in pointItem.elements) {
-                if (Object.hasOwnProperty.call(pointItem.elements, elKey)) {
-                    const elemProps = pointItem.elements[elKey];
-
-                    for (const property in elemProps) {
-                        if (Object.hasOwnProperty.call(elemProps, property)) {
-                            const propsRange = elemProps[property],
-                                goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
-
-                            console.log(property, goTo, this.actionElems[elKey]);
-
-                            if (this.actionElems[elKey]) {
-                                this.actionElems[elKey].style[property] = goTo;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // for (let i = 0; i < this.actionPoints.length; i++) {
-        //     const pointItem = this.actionPoints[i];
-
-        //     if (scrTo.Y >= pointItem.point) {
-        //         currentActionPoints[0] = pointItem;
-        //     }
-        // }
-
-        // for (let i = this.actionPoints.length - 1; i >= 0; i--) {
-        //     const pointItem = this.actionPoints[i];
-
-        //     if (scrTo.Y <= pointItem.point) {
-        //         currentActionPoints[1] = pointItem;
-        //     }
-        // }
-
-        // console.log(currentActionPoints);
-
-        // const actionsElems = {};
-
-        // currentActionPoints.forEach(function (point, i) {
-        //     for (const elId in point.elements) {
-        //         if (Object.hasOwnProperty.call(point.elements, elId)) {
-        //             if (!actionsElems[elId]) {
-        //                 actionsElems[elId] = {};
-        //             }
-
-        //             for (const propKey in point.elements[elId]) {
-        //                 if (Object.hasOwnProperty.call(point.elements[elId], propKey)) {
-        //                     const propVal = point.elements[elId][propKey];
-
-        //                     if (!actionsElems[elId][propKey]) {
-        //                         actionsElems[elId][propKey] = [];
-        //                     }
-
-        //                     actionsElems[elId][propKey][i] = propVal;
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
-
-        // console.log(actionsElems);
-
-        // this.actionElems.forEach(function (item) {
-        //     let sign = '-';
-
-        //     if (item.reverse === 'true') {
-        //         sign = '';
-        //     }
-
-        //     if (scrTo >= item.startAction && scrTo <= item.endAction) {
-        //         const progress = (scrTo - item.startAction) / ((item.endAction - item.startAction)),
-        //             moveTo = (item.actionTo - item.actionFrom) * progress + item.actionFrom;
-
-        //         if (item.actionProp === 'left') {
-        //             item.el.style.left = sign + moveTo + '%';
-        //         } else {
-        //             item.el.style.transform = 'translate(' + sign + moveTo + '%, 0)';
-        //         }
-
-        //     } else if (scrTo < item.start) {
-        //         if (item.actionProp === 'left') {
-        //             item.el.style.left = sign + item.startFrom + '%';
-        //         } else {
-        //             item.el.style.transform = 'translate(' + sign + item.startFrom + '%, 0)';
-        //         }
-
-        //     } else if (scrTo > item.end) {
-        //         if (item.actionProp === 'left') {
-        //             item.el.style.left = sign + item.endTo + '%';
-        //         } else {
-        //             item.el.style.transform = 'translate(' + sign + item.endTo + '%, 0)';
-        //         }
-        //     }
-        // });
-
+        // break path
         let posX, posY;
 
         if (scrTo.X >= this.endBreak.X) {
@@ -584,12 +500,6 @@
             posX = 'atStart';
         }
 
-        if (posX) {
-            this.scrBoxEl.setAttribute('data-position-horizontal', posX);
-        } else {
-            this.scrBoxEl.removeAttribute('data-position-horizontal');
-        }
-
         if (scrTo.Y >= this.endBreak.Y) {
             scrTo.Y = this.endBreak.Y;
 
@@ -599,6 +509,12 @@
             scrTo.Y = 0;
 
             posY = 'atStart';
+        }
+
+        if (posX) {
+            this.scrBoxEl.setAttribute('data-position-horizontal', posX);
+        } else {
+            this.scrBoxEl.removeAttribute('data-position-horizontal');
         }
 
         if (posY) {
@@ -624,6 +540,7 @@
             }
         }
 
+        // move bars
         if ((this.horizontalBarSlEl || this.verticalBarSlEl) && ev != 'bar') {
             if (this.horizontal) {
                 const barW = this.horizontalBarSlEl.parentElement.offsetWidth;
@@ -638,9 +555,7 @@
             }
         }
 
-        this.scrolled = scrTo;
-
-        // move
+        // move inner element
         if (this.innerEl) {
             if (this.horizontal && this.vertical) {
                 this.innerEl.style.transform = 'translate(' + (-scrTo.X) + 'px, ' + (-scrTo.Y) + 'px)';
@@ -653,10 +568,54 @@
             }
         }
 
-        if (this.onScroll) this.onScroll(this.scrBoxEl, pos, ev, scrTo, this.params);
+        // move action points
+        const currentActionPoints = [];
+
+        this.actionPoints.forEach(function (pointItem) {
+            if (pointItem.breakpoints[0] <= scrTo.Y && scrTo.Y <= pointItem.breakpoints[1]) {
+                currentActionPoints.push(pointItem);
+            }
+        });
+
+        currentActionPoints.forEach((pointItem) => {
+            const progress = (scrTo.Y - pointItem.breakpoints[0]) / (pointItem.breakpoints[1] - pointItem.breakpoints[0]);
+
+            for (const elKey in pointItem.elements) {
+                if (Object.hasOwnProperty.call(pointItem.elements, elKey)) {
+                    const elemProps = pointItem.elements[elKey];
+
+                    for (const property in elemProps) {
+                        if (Object.hasOwnProperty.call(elemProps, property)) {
+                            const propsRange = elemProps[property],
+                                goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
+
+                            console.log(property, goTo, this.actionElems[elKey]);
+
+                            if (this.actionElems[elKey]) {
+                                if (propsRange[2]) {
+                                    this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
+                                } else {
+                                    this.actionElems[elKey].style[property] = goTo;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        
+        this.scrolled = scrTo;
+
+        if (this.onScroll) {
+            this.onScroll(this.scrBoxEl, pos, ev, scrTo, this.params);
+        }
+
+        this.scrBoxEl.setAttribute('data-scr', scrTo.Y);
 
         // after scroll
         if (aftScroll) {
+            this.scrBoxEl.setAttribute('data-scr', scrTo.Y);
             this.scrolled = scrTo;
             this.isBreak = false;
 
