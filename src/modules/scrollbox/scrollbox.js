@@ -36,7 +36,8 @@
         opt.windowScrollEvent = (opt.windowScrollEvent !== undefined) ? opt.windowScrollEvent : false;
 
         const winEl = scrBoxEl.querySelector('.scrollbox__window');
-        let innerEl = scrBoxEl.querySelector('.scrollbox__inner');
+        let innerEl = scrBoxEl.querySelector('.scrollbox__inner'),
+            wheelHandler;
 
         if (innerEl && innerEl.parentElement !== winEl) {
             innerEl = null;
@@ -44,41 +45,40 @@
 
         scrBoxEl.setAttribute('tabindex', '-1');
 
-        this.scrBoxEl = scrBoxEl;
-        this.winEl = winEl;
-        this.winSize = { X: 0, Y: 0 };
-        this.horizontal = opt.horizontal;
-        this.vertical = opt.vertical;
-        this.bar = opt.bar;
-        this.barSize = opt.barSize;
-        this.nestedSbEls = null;
-        this.parentEl = null;
-        this.verticalBarSlEl = null;
-        this.horizontalBarSlEl = null;
-        this.verticalBarSlElSize = 0;
-        this.horizontalBarSlElSize = 0;
-        this.scrolled = { X: 0, Y: 0 };
-        this.isScrolling = false;
-        this.isBreak = false;
-        this.delta = 0;
-        this.initialized = false;
-        this.ts = Date.now();
-        this.params = null;
-        this.innerEl = innerEl || null;
-        this.innerSize = { X: null, Y: null };
-        this.endBreak = { X: null, Y: null };
-        this.scrollStep = opt.scrollStep;
-        this.actionElems = {};
-        this.actionPoints = opt.actionPoints;
-        this.windowScrollEvent = opt.windowScrollEvent;
-
-        if (opt.parentScrollbox) {
-            this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
-        }
-
-        let wheelHandler;
-
         const init = () => {
+            this.scrBoxEl = scrBoxEl;
+            this.winEl = winEl;
+            this.winSize = { X: 0, Y: 0 };
+            this.horizontal = opt.horizontal;
+            this.vertical = opt.vertical;
+            this.bar = opt.bar;
+            this.barSize = opt.barSize;
+            this.nestedSbEls = null;
+            this.parentEl = null;
+            this.verticalBarSlEl = null;
+            this.horizontalBarSlEl = null;
+            this.verticalBarSlElSize = 0;
+            this.horizontalBarSlElSize = 0;
+            this.scrolled = { X: 0, Y: 0 };
+            this.isScrolling = false;
+            this.isBreak = false;
+            this.delta = 0;
+            this.initialized = false;
+            this.ts = Date.now();
+            this.params = null;
+            this.innerEl = innerEl || null;
+            this.innerSize = { X: null, Y: null };
+            this.endBreak = { X: null, Y: null };
+            this.scrollStep = opt.scrollStep;
+            this.actionElems = {};
+            this.actionPoints = opt.actionPoints;
+            this.windowScrollEvent = opt.windowScrollEvent;
+
+            if (opt.parentScrollbox) {
+                this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
+            }
+
+
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
 
@@ -385,12 +385,22 @@
         }
 
         this.setOptions = function (options) {
-
+            for (const key in options) {
+                if (Object.hasOwnProperty.call(options, key)) {
+                    const val = options[key];
+                    
+                    opt[key] = val;
+                }
+            }
         }
 
         this.reInit = function () {
             if (this.innerEl) {
                 this.innerEl.style = '';
+            }
+
+            if (this.bar) {
+                this.scrollBar(true);
             }
 
             init();
@@ -604,7 +614,7 @@
             }
         });
 
-        
+
         this.scrolled = scrTo;
 
         if (this.onScroll) {

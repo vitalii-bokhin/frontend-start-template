@@ -70,15 +70,16 @@
    }
    &_fwh{
       @extend %fwh;
-      // position: absolute;
+      position: absolute;
       .scrollbox__window{
          @extend %fwh;
       }
    }
-   &__height{
-      position: relative;
-      z-index: 999;
-      pointer-events: none;
+   &_screens{
+      .scrollbox__window{
+         @extend %fwh;
+         position: fixed;
+      }
    }
    @media(max-width: 1200px){
       &__vertical-bar,
