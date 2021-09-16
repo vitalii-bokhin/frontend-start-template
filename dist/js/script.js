@@ -1889,9 +1889,68 @@ var MediaPopup;
     'use strict';
 
     MediaPopup = {
+        groupBtnElems: null,
+        curGroupBtnIndex: null,
+        popupEl: null,
+
+        init: function (btnSel) {
+            document.addEventListener('click', (e) => {
+                const btnEl = e.target.closest(btnSel),
+                    arrBtnEl = e.target.closest('.popup-media__arr'),
+                    dotBtnEl = e.target.closest('.popup-media__dots-btn');
+
+                if (btnEl) {
+                    e.preventDefault();
+
+                    this.popupEl = Popup.open(btnEl.getAttribute('data-popup') || '#media-popup', null, btnEl);
+
+                    this.show(btnEl);
+                    this.group(btnEl);
+
+                } else if (arrBtnEl) {
+                    this.next(arrBtnEl.getAttribute('data-dir'));
+                } else if (dotBtnEl) {
+                    if (!dotBtnEl.classList.contains('active')) {
+                        const dotBtnElems = document.querySelectorAll('.popup-media__dots-btn');
+
+                        for (let i = 0; i < dotBtnElems.length; i++) {
+                            dotBtnElems[i].classList.remove('active');
+                        }
+
+                        dotBtnEl.classList.add('active');
+
+                        this.goTo(+dotBtnEl.getAttribute('data-ind'));
+                    }
+                }
+            });
+        },
+
+        show: function (btnEl) {
+            const type = btnEl.getAttribute('data-type'),
+                caption = btnEl.getAttribute('data-caption'),
+                args = {
+                    href: btnEl.href,
+                    preview: btnEl.getAttribute('data-preview')
+                },
+                captEl = this.popupEl.querySelector('.popup-media__caption');
+
+            if (caption) {
+                captEl.innerHTML = caption.replace(/\[(\/?\w+)\]/gi, '<$1>');
+                captEl.style.display = '';
+
+            } else {
+                captEl.style.display = 'none';
+            }
+
+            if (type == 'image') {
+                this.image(args);
+            } else if (type == 'video') {
+                this.video(args);
+            }
+        },
+
         image: function (args) {
-            const elemPopup = Popup.open(args.popupStr),
-                elemImg = elemPopup.querySelector('.popup-media__image');
+            const elemImg = this.popupEl.querySelector('.popup-media__image');
 
             Popup.onClose = function () {
                 elemImg.src = '#';
@@ -1904,56 +1963,101 @@ var MediaPopup;
         },
 
         video: function (args) {
-            const elemPopup = Popup.open(args.popupStr),
-                videoEl = elemPopup.querySelector('.popup-media__video'),
-                prevEl = videoEl.querySelector('.popup-media__preview'),
+            const videoEl = this.popupEl.querySelector('.popup-media__video'),
+                previewEl = videoEl.querySelector('.popup-media__preview'),
                 btnPlayEl = videoEl.querySelector('.popup-media__btn-play');
 
             Popup.onClose = function () {
                 Video.stop();
-                prevEl.src = '#';
+                previewEl.src = '#';
                 videoEl.classList.remove('popup-media__video_visible');
             }
 
-            prevEl.src = args.preview;
+            previewEl.src = args.preview;
             btnPlayEl.setAttribute('data-src', args.href);
             videoEl.classList.add('popup-media__video_visible');
         },
 
-        next: function (elem) {
-            if (!elem.hasAttribute('data-group')) {
+        group: function (elem) {
+            const group = elem.getAttribute('data-group'),
+                arrBtnElems = document.querySelectorAll('.popup-media__arr'),
+                dotsEl = this.popupEl.querySelector('.popup-media__dots');
+
+            if (!group) {
+                this.groupBtnElems = null;
+                this.curGroupBtnIndex = null;
+
+                for (let i = 0; i < arrBtnElems.length; i++) {
+                    arrBtnElems[i].style.display = 'none';
+                }
+
+                dotsEl.style.display = 'none';
+
                 return;
             }
 
-            var group = elem.getAttribute('data-group'),
-                index = [].slice.call(document.querySelectorAll('[data-group="' + group + '"]')).indexOf(elem);
-        },
+            this.groupBtnElems = document.querySelectorAll('[data-group="' + group + '"]');
+            this.curGroupBtnIndex = [].slice.call(this.groupBtnElems).indexOf(elem);
 
-        init: function (btnSel) {
-            document.addEventListener('click', (e) => {
-                const btnEl = e.target.closest(btnSel);
-
-                if (!btnEl) return;
-
-                e.preventDefault();
-
-                const type = btnEl.getAttribute('data-type'),
-                    args = {
-                        href: btnEl.href,
-                        preview: btnEl.getAttribute('data-preview'),
-                        caption: btnEl.getAttribute('data-caption'),
-                        group: btnEl.getAttribute('data-group'),
-                        popupStr: btnEl.getAttribute('data-popup') || '#media-popup'
-                    };
-
-                if (type == 'image') {
-                    this.image(args);
-                } else if (type == 'video') {
-                    this.video(args);
+            if (this.groupBtnElems.length) {
+                for (let i = 0; i < arrBtnElems.length; i++) {
+                    arrBtnElems[i].style.display = '';
                 }
 
-                this.next(btnEl);
-            });
+                dotsEl.style.display = '';
+                dotsEl.innerHTML = '';
+
+                for (let i = 0; i < this.groupBtnElems.length; i++) {
+                    const dot = document.createElement('li');
+                    dot.innerHTML = '<button class="popup-media__dots-btn' + (i == this.curGroupBtnIndex ? ' active' : '') + '" data-ind="' + i + '"></button>';
+
+                    dotsEl.appendChild(dot);
+                }
+
+            } else {
+                for (let i = 0; i < arrBtnElems.length; i++) {
+                    arrBtnElems[i].style.display = 'none';
+                }
+
+                dotsEl.style.display = 'none';
+            }
+        },
+
+        next: function (dir) {
+            let btnEl;
+
+            if (dir == 'next') {
+                this.curGroupBtnIndex++;
+
+                if (this.groupBtnElems[this.curGroupBtnIndex]) {
+                    btnEl = this.groupBtnElems[this.curGroupBtnIndex];
+
+                } else {
+                    this.curGroupBtnIndex = 0;
+                    btnEl = this.groupBtnElems[0];
+                }
+
+            } else {
+                this.curGroupBtnIndex--;
+
+                if (this.groupBtnElems[this.curGroupBtnIndex]) {
+                    btnEl = this.groupBtnElems[this.curGroupBtnIndex];
+
+                } else {
+                    this.curGroupBtnIndex = this.groupBtnElems.length - 1;
+                    btnEl = this.groupBtnElems[this.curGroupBtnIndex];
+                }
+            }
+
+            this.show(btnEl);
+        },
+
+        goTo: function (ind) {
+            this.curGroupBtnIndex = ind;
+
+            let btnEl = this.groupBtnElems[ind];
+
+            this.show(btnEl);
         }
     };
 })();
@@ -2330,11 +2434,13 @@ var ValidateForm;
                 }
             }
 
-            const scrTo = offsetTop + window.scrollY - headerHeight;
+            if (offsetTop != 99999) {
+                const scrTo = offsetTop + window.scrollY - headerHeight;
 
-            animate(function (progress) {
-                window.scrollTo(0, scrTo * progress + (1 - progress) * window.scrollY);
-            }, 1000, 'easeInOutQuad');
+                animate(function (progress) {
+                    window.scrollTo(0, scrTo * progress + (1 - progress) * window.scrollY);
+                }, 1000, 'easeInOutQuad');
+            }
         },
 
         txt: function () {
@@ -6792,7 +6898,9 @@ function Mouseparallax(elSel, options) {
     Scrollbox = function (elem, options) {
         const scrBoxEl = (typeof elem === 'string') ? document.querySelector(elem) : elem;
 
-        if (!scrBoxEl) return;
+        if (!scrBoxEl) {
+            return;
+        }
 
         // options
         const opt = options || {};
@@ -6820,7 +6928,8 @@ function Mouseparallax(elSel, options) {
         opt.windowScrollEvent = (opt.windowScrollEvent !== undefined) ? opt.windowScrollEvent : false;
 
         const winEl = scrBoxEl.querySelector('.scrollbox__window');
-        let innerEl = scrBoxEl.querySelector('.scrollbox__inner');
+        let innerEl = scrBoxEl.querySelector('.scrollbox__inner'),
+            wheelHandler;
 
         if (innerEl && innerEl.parentElement !== winEl) {
             innerEl = null;
@@ -6828,41 +6937,40 @@ function Mouseparallax(elSel, options) {
 
         scrBoxEl.setAttribute('tabindex', '-1');
 
-        this.scrBoxEl = scrBoxEl;
-        this.winEl = winEl;
-        this.winSize = { X: 0, Y: 0 };
-        this.horizontal = opt.horizontal;
-        this.vertical = opt.vertical;
-        this.bar = opt.bar;
-        this.barSize = opt.barSize;
-        this.nestedSbEls = null;
-        this.parentEl = null;
-        this.verticalBarSlEl = null;
-        this.horizontalBarSlEl = null;
-        this.verticalBarSlElSize = 0;
-        this.horizontalBarSlElSize = 0;
-        this.scrolled = { X: 0, Y: 0 };
-        this.isScrolling = false;
-        this.isBreak = false;
-        this.delta = 0;
-        this.initialized = false;
-        this.ts = Date.now();
-        this.params = null;
-        this.innerEl = innerEl || null;
-        this.innerSize = { X: null, Y: null };
-        this.endBreak = { X: null, Y: null };
-        this.scrollStep = opt.scrollStep;
-        this.actionElems = {};
-        this.actionPoints = opt.actionPoints;
-        this.windowScrollEvent = opt.windowScrollEvent;
-
-        if (opt.parentScrollbox) {
-            this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
-        }
-
-        let wheelHandler;
-
         const init = () => {
+            this.scrBoxEl = scrBoxEl;
+            this.winEl = winEl;
+            this.winSize = { X: 0, Y: 0 };
+            this.horizontal = opt.horizontal;
+            this.vertical = opt.vertical;
+            this.bar = opt.bar;
+            this.barSize = opt.barSize;
+            this.nestedSbEls = null;
+            this.parentEl = null;
+            this.verticalBarSlEl = null;
+            this.horizontalBarSlEl = null;
+            this.verticalBarSlElSize = 0;
+            this.horizontalBarSlElSize = 0;
+            this.scrolled = { X: 0, Y: 0 };
+            this.isScrolling = false;
+            this.isBreak = false;
+            this.delta = 0;
+            this.initialized = false;
+            this.ts = Date.now();
+            this.params = null;
+            this.innerEl = innerEl || null;
+            this.innerSize = { X: null, Y: null };
+            this.endBreak = { X: null, Y: null };
+            this.scrollStep = opt.scrollStep;
+            this.actionElems = {};
+            this.actionPoints = opt.actionPoints;
+            this.windowScrollEvent = opt.windowScrollEvent;
+
+            if (opt.parentScrollbox) {
+                this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
+            }
+
+
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
 
@@ -6948,52 +7056,6 @@ function Mouseparallax(elSel, options) {
                 const actEl = actionEls[i];
 
                 this.actionElems[actEl.getAttribute('data-action-element')] = actEl;
-
-                // const actEl = actionEls[i],
-                //     points = actEl.getAttribute('data-action-points').split(','),
-                //     actionProp = actEl.getAttribute('data-action-prop'),
-                //     actionRange = actEl.getAttribute('data-range').split(','),
-                //     reverse = actEl.getAttribute('data-reverse');
-
-                // let start, end, startFrom, endTo;
-
-                // points.forEach(function (item, i) {
-                //     const pts = item.split('-'),
-                //         rng = actionRange[i].split('-');
-
-                //     if (!i) {
-                //         start = +pts[0];
-                //         startFrom = +rng[0];
-                //     }
-
-                //     if (i == points.length - 1) {
-                //         end = +pts[1];
-                //         endTo = +rng[1];
-                //     }
-                // });
-
-                // points.forEach((item, i) => {
-                //     const pts = item.split('-'),
-                //         rng = actionRange[i].split('-');
-
-                //     this.actionElems.push({
-                //         el: actEl,
-                //         startAction: +pts[0],
-                //         endAction: +pts[1],
-                //         actionFrom: +rng[0],
-                //         actionTo: +rng[1],
-                //         actionProp,
-                //         start,
-                //         end,
-                //         startFrom,
-                //         endTo,
-                //         reverse
-                //     });
-
-                //     if (+pts[1] > this.endBreak) {
-                //         this.endBreak = +pts[1];
-                //     }
-                // });
             }
 
             if (opt.drag) {
@@ -7017,7 +7079,7 @@ function Mouseparallax(elSel, options) {
 
             const scrolled = this.scrolled;
 
-            duration = (duration !== undefined) ? duration : opt.duration;
+            duration = (duration !== undefined && duration !== null) ? duration : opt.duration;
 
             if (duration == 0) {
                 this.scroll({ Y: (scrTo.Y - scrolled.Y) * 1 + scrolled.Y }, true, ev);
@@ -7061,19 +7123,26 @@ function Mouseparallax(elSel, options) {
                 ) return;
             }
 
-            if (opt.fullSizeStep) {
+            if (this.scrollStep) {
                 if (delta > 0) {
-                    scrTo = this.scrolled.Y + this.winSize;
+                    scrTo = this.scrolled.Y + this.scrollStep;
                 } else if (delta < 0) {
-                    scrTo = this.scrolled.Y - this.winSize;
+                    scrTo = this.scrolled.Y - this.scrollStep;
+                }
+
+            } else if (opt.fullSizeStep) {
+                if (delta > 0) {
+                    scrTo = this.scrolled.Y + this.winSize.Y;
+                } else if (delta < 0) {
+                    scrTo = this.scrolled.Y - this.winSize.Y;
                 }
 
             } else {
-                if (Math.abs(delta) > this.winSize) {
+                if (Math.abs(delta) > this.winSize.Y) {
                     if (delta > 0) {
-                        delta = this.winSize;
+                        delta = this.winSize.Y;
                     } else if (delta < 0) {
-                        delta = -this.winSize;
+                        delta = -this.winSize.Y;
                     }
                 }
 
@@ -7088,11 +7157,15 @@ function Mouseparallax(elSel, options) {
                 scrTo = this.scrolled.Y + delta;
             }
 
-            scrollAnim({ Y: scrTo }, e, undefined, delta);
+            scrollAnim({ Y: scrTo }, e, null, delta);
         }
 
         if (opt.windowScrollEvent) {
+            let winScroll = 0;
+
             window.addEventListener('scroll', () => {
+                this.delta = window.scrollY - winScroll;
+                winScroll = window.scrollY;
                 this.scroll({ Y: window.scrollY }, null);
             });
         }
@@ -7152,7 +7225,7 @@ function Mouseparallax(elSel, options) {
         this.scrollTo = function (scrTo, dur, params) {
             this.params = params;
 
-            scrollAnim(scrTo, 'scrollTo', dur);
+            scrollAnim(scrTo, 'scrollTo', dur, scrTo - this.scrolled.Y);
 
             scrBoxEl.removeAttribute('data-scroll-able');
 
@@ -7169,12 +7242,22 @@ function Mouseparallax(elSel, options) {
         }
 
         this.setOptions = function (options) {
+            for (const key in options) {
+                if (Object.hasOwnProperty.call(options, key)) {
+                    const val = options[key];
 
+                    opt[key] = val;
+                }
+            }
         }
 
         this.reInit = function () {
             if (this.innerEl) {
                 this.innerEl.style = '';
+            }
+
+            if (this.bar) {
+                this.scrollBar(true);
             }
 
             init();
@@ -7339,7 +7422,7 @@ function Mouseparallax(elSel, options) {
             }
         }
 
-        // move inner element
+        // inner element
         if (this.innerEl) {
             if (this.horizontal && this.vertical) {
                 this.innerEl.style.transform = 'translate(' + (-scrTo.X) + 'px, ' + (-scrTo.Y) + 'px)';
@@ -7352,47 +7435,138 @@ function Mouseparallax(elSel, options) {
             }
         }
 
-        // move action points
-        const currentActionPoints = [];
+        // action points
+        if (this.actionPoints) {
+            let currentActionPoints = [],
+                prevActionPoints = [],
+                nextActionPoints = [],
+                lastUsedElemsProps = [];
 
-        this.actionPoints.forEach(function (pointItem) {
-            if (pointItem.breakpoints[0] <= scrTo.Y && scrTo.Y <= pointItem.breakpoints[1]) {
-                currentActionPoints.push(pointItem);
-            }
-        });
+            this.actionPoints.forEach((pointItem) => {
+                if (pointItem.breakpoints[0] < scrTo.Y && scrTo.Y < pointItem.breakpoints[1]) {
+                    currentActionPoints.push(pointItem);
+                } else if (this.delta > 0 && pointItem.breakpoints[1] <= scrTo.Y) {
+                    prevActionPoints.push(pointItem);
+                } else if (this.delta < 0 && scrTo.Y <= pointItem.breakpoints[0]) {
+                    nextActionPoints.push(pointItem);
+                }
+            });
 
-        currentActionPoints.forEach((pointItem) => {
-            const progress = (scrTo.Y - pointItem.breakpoints[0]) / (pointItem.breakpoints[1] - pointItem.breakpoints[0]);
+            currentActionPoints.forEach((pointItem) => {
+                const progress = (scrTo.Y - pointItem.breakpoints[0]) / (pointItem.breakpoints[1] - pointItem.breakpoints[0]);
 
-            for (const elKey in pointItem.elements) {
-                if (Object.hasOwnProperty.call(pointItem.elements, elKey)) {
+                for (const elKey in pointItem.elements) {
                     const elemProps = pointItem.elements[elKey];
 
                     for (const property in elemProps) {
-                        if (Object.hasOwnProperty.call(elemProps, property)) {
-                            const propsRange = elemProps[property],
-                                goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
+                        if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                            continue;
+                        }
 
-                            console.log(property, goTo, this.actionElems[elKey]);
+                        lastUsedElemsProps.push(elKey + '_' + property);
+
+                        const propsRange = elemProps[property],
+                            goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
+
+                        if (this.actionElems[elKey]) {
+                            if (propsRange[2]) {
+                                this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
+                            } else {
+                                this.actionElems[elKey].style[property] = goTo;
+
+                                if (property == 'opacity') {
+                                    if (goTo > 0) {
+                                        this.actionElems[elKey].style.visibility = 'visible';
+                                    } else {
+                                        this.actionElems[elKey].style.visibility = 'hidden';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            if (this.delta > 0) {
+                prevActionPoints.sort((a, b) => b.breakpoints[1] - a.breakpoints[1]);
+
+                prevActionPoints.forEach((pointItem) => {
+                    for (const elKey in pointItem.elements) {
+                        const elemProps = pointItem.elements[elKey];
+
+                        for (const property in elemProps) {
+                            if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                                continue;
+                            }
+
+                            lastUsedElemsProps.push(elKey + '_' + property);
+
+                            const propsRange = elemProps[property],
+                                goTo = propsRange[1];
 
                             if (this.actionElems[elKey]) {
                                 if (propsRange[2]) {
                                     this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
                                 } else {
                                     this.actionElems[elKey].style[property] = goTo;
+
+                                    if (property == 'opacity') {
+                                        if (goTo > 0) {
+                                            this.actionElems[elKey].style.visibility = 'visible';
+                                        } else {
+                                            this.actionElems[elKey].style.visibility = 'hidden';
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
+                });
             }
-        });
 
-        
+            if (this.delta < 0) {
+                nextActionPoints.sort((a, b) => a.breakpoints[0] - b.breakpoints[0]);
+
+                nextActionPoints.forEach((pointItem) => {
+                    for (const elKey in pointItem.elements) {
+                        const elemProps = pointItem.elements[elKey];
+
+                        for (const property in elemProps) {
+                            if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                                continue;
+                            }
+
+                            lastUsedElemsProps.push(elKey + '_' + property);
+
+                            const propsRange = elemProps[property],
+                                goTo = propsRange[0];
+
+                            if (this.actionElems[elKey]) {
+                                if (propsRange[2]) {
+                                    this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
+                                } else {
+                                    this.actionElems[elKey].style[property] = goTo;
+
+                                    if (property == 'opacity') {
+                                        if (goTo > 0) {
+                                            this.actionElems[elKey].style.visibility = 'visible';
+                                        } else {
+                                            this.actionElems[elKey].style.visibility = 'hidden';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // scrolled
         this.scrolled = scrTo;
 
         if (this.onScroll) {
-            this.onScroll(this.scrBoxEl, pos, ev, scrTo, this.params);
+            this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
         }
 
         this.scrBoxEl.setAttribute('data-scr', scrTo.Y);
@@ -7403,7 +7577,13 @@ function Mouseparallax(elSel, options) {
             this.scrolled = scrTo;
             this.isBreak = false;
 
-            if (this.afterScroll) this.afterScroll(this.scrBoxEl, pos, ev, scrTo, this.params);
+            if (this.onScroll) {
+                this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
+            }
+
+            if (this.afterScroll) {
+                this.afterScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
+            }
 
             this.params = null;
         }
@@ -7509,6 +7689,8 @@ function Mouseparallax(elSel, options) {
 
                 mouseDelta.X = clientX - mouseStart.X;
 
+                this.delta = mouseDelta.X;
+
                 let shift = mouseDelta.X + barSlStart.X - bar.X;
 
                 const limit = bar.W - this.horizontalBarSlElSize;
@@ -7529,6 +7711,8 @@ function Mouseparallax(elSel, options) {
                 const clientY = (e.type == 'touchmove') ? e.targetTouches[0].clientY : e.clientY;
 
                 mouseDelta.Y = clientY - mouseStart.Y;
+
+                this.delta = mouseDelta.Y;
 
                 let shift = mouseDelta.Y + barSlStart.Y - bar.Y;
 

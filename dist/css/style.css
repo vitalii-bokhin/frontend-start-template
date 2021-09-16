@@ -122,7 +122,7 @@ body {
 }
 
 .img-icon__ico span, .user__button, .screen, .screen_inner-scroll__in, .screen-container, .video__preview, .video__frame, .video__frame iframe,
-.video__frame video, .custom-file__preview > div, .form_sending .form__submit:before, .var-height-textarea__textarea, .diagram__canvas, .webgl__canvas, .scrollbox_fwh, .scrollbox_fwh .scrollbox__window, .cursor-wrap, .main__full-page {
+.video__frame video, .custom-file__preview > div, .form_sending .form__submit:before, .var-height-textarea__textarea, .diagram__canvas, .webgl__canvas, .scrollbox_fwh, .scrollbox_fwh .scrollbox__window, .scrollbox_screens .scrollbox__window, .cursor-wrap, .main__full-page {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -3258,6 +3258,7 @@ hr {
   max-width: 85vw;
   max-height: 70vh;
   display: none;
+  transform-origin: 0 0;
 }
 
 .popup-media__image_visible {
@@ -3274,26 +3275,10 @@ hr {
   display: block;
 }
 
-.popup-media__bar {
-  padding-top: 34px;
+.popup-media__caption {
   font-size: 14px;
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
   padding: 10px 50px;
-}
-
-.popup-media__bar-date {
-  font-size: 14px;
-  color: #666;
-}
-
-.popup-media__bar-tit {
-  font-size: 14px;
-  font-weight: 700;
+  background: #fff;
 }
 
 .popup-media__arr {
@@ -3303,7 +3288,6 @@ hr {
   top: 50%;
   margin-top: -10px;
   z-index: 3;
-  display: none;
 }
 
 .popup-media__arr_l {
@@ -3314,6 +3298,36 @@ hr {
 .popup-media__arr_r {
   right: 53px;
   background-position: -38px -72px;
+}
+
+.popup-media__zoom {
+  position: absolute;
+  width: 12px;
+  height: 20px;
+  top: 20px;
+  z-index: 3;
+}
+
+.popup-media__zoom_min {
+  left: 20px;
+}
+
+.popup-media__zoom_plus {
+  left: 40px;
+}
+
+.popup-media__dots {
+  list-style: none;
+  display: flex;
+}
+
+.popup-media__dots-btn {
+  width: 12px;
+  height: 12px;
+}
+
+.popup-media__dots-btn.active {
+  background: #212121;
 }
 
 @media (max-width: 1200px) {
@@ -4788,10 +4802,12 @@ hr {
   user-select: none;
 }
 
-.scrollbox__height {
-  position: relative;
-  z-index: 999;
-  pointer-events: none;
+.scrollbox_fwh {
+  position: absolute;
+}
+
+.scrollbox_screens .scrollbox__window {
+  position: fixed;
 }
 
 @media (max-width: 1200px) {

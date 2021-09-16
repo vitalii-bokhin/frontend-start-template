@@ -8,7 +8,9 @@
     Scrollbox = function (elem, options) {
         const scrBoxEl = (typeof elem === 'string') ? document.querySelector(elem) : elem;
 
-        if (!scrBoxEl) return;
+        if (!scrBoxEl) {
+            return;
+        }
 
         // options
         const opt = options || {};
@@ -164,52 +166,6 @@
                 const actEl = actionEls[i];
 
                 this.actionElems[actEl.getAttribute('data-action-element')] = actEl;
-
-                // const actEl = actionEls[i],
-                //     points = actEl.getAttribute('data-action-points').split(','),
-                //     actionProp = actEl.getAttribute('data-action-prop'),
-                //     actionRange = actEl.getAttribute('data-range').split(','),
-                //     reverse = actEl.getAttribute('data-reverse');
-
-                // let start, end, startFrom, endTo;
-
-                // points.forEach(function (item, i) {
-                //     const pts = item.split('-'),
-                //         rng = actionRange[i].split('-');
-
-                //     if (!i) {
-                //         start = +pts[0];
-                //         startFrom = +rng[0];
-                //     }
-
-                //     if (i == points.length - 1) {
-                //         end = +pts[1];
-                //         endTo = +rng[1];
-                //     }
-                // });
-
-                // points.forEach((item, i) => {
-                //     const pts = item.split('-'),
-                //         rng = actionRange[i].split('-');
-
-                //     this.actionElems.push({
-                //         el: actEl,
-                //         startAction: +pts[0],
-                //         endAction: +pts[1],
-                //         actionFrom: +rng[0],
-                //         actionTo: +rng[1],
-                //         actionProp,
-                //         start,
-                //         end,
-                //         startFrom,
-                //         endTo,
-                //         reverse
-                //     });
-
-                //     if (+pts[1] > this.endBreak) {
-                //         this.endBreak = +pts[1];
-                //     }
-                // });
             }
 
             if (opt.drag) {
@@ -233,7 +189,7 @@
 
             const scrolled = this.scrolled;
 
-            duration = (duration !== undefined) ? duration : opt.duration;
+            duration = (duration !== undefined && duration !== null) ? duration : opt.duration;
 
             if (duration == 0) {
                 this.scroll({ Y: (scrTo.Y - scrolled.Y) * 1 + scrolled.Y }, true, ev);
@@ -277,19 +233,26 @@
                 ) return;
             }
 
-            if (opt.fullSizeStep) {
+            if (this.scrollStep) {
                 if (delta > 0) {
-                    scrTo = this.scrolled.Y + this.winSize;
+                    scrTo = this.scrolled.Y + this.scrollStep;
                 } else if (delta < 0) {
-                    scrTo = this.scrolled.Y - this.winSize;
+                    scrTo = this.scrolled.Y - this.scrollStep;
+                }
+
+            } else if (opt.fullSizeStep) {
+                if (delta > 0) {
+                    scrTo = this.scrolled.Y + this.winSize.Y;
+                } else if (delta < 0) {
+                    scrTo = this.scrolled.Y - this.winSize.Y;
                 }
 
             } else {
-                if (Math.abs(delta) > this.winSize) {
+                if (Math.abs(delta) > this.winSize.Y) {
                     if (delta > 0) {
-                        delta = this.winSize;
+                        delta = this.winSize.Y;
                     } else if (delta < 0) {
-                        delta = -this.winSize;
+                        delta = -this.winSize.Y;
                     }
                 }
 
@@ -304,11 +267,15 @@
                 scrTo = this.scrolled.Y + delta;
             }
 
-            scrollAnim({ Y: scrTo }, e, undefined, delta);
+            scrollAnim({ Y: scrTo }, e, null, delta);
         }
 
         if (opt.windowScrollEvent) {
+            let winScroll = 0;
+
             window.addEventListener('scroll', () => {
+                this.delta = window.scrollY - winScroll;
+                winScroll = window.scrollY;
                 this.scroll({ Y: window.scrollY }, null);
             });
         }
@@ -368,7 +335,7 @@
         this.scrollTo = function (scrTo, dur, params) {
             this.params = params;
 
-            scrollAnim(scrTo, 'scrollTo', dur);
+            scrollAnim(scrTo, 'scrollTo', dur, scrTo - this.scrolled.Y);
 
             scrBoxEl.removeAttribute('data-scroll-able');
 
@@ -388,7 +355,7 @@
             for (const key in options) {
                 if (Object.hasOwnProperty.call(options, key)) {
                     const val = options[key];
-                    
+
                     opt[key] = val;
                 }
             }
@@ -565,7 +532,7 @@
             }
         }
 
-        // move inner element
+        // inner element
         if (this.innerEl) {
             if (this.horizontal && this.vertical) {
                 this.innerEl.style.transform = 'translate(' + (-scrTo.X) + 'px, ' + (-scrTo.Y) + 'px)';
@@ -578,47 +545,138 @@
             }
         }
 
-        // move action points
-        const currentActionPoints = [];
+        // action points
+        if (this.actionPoints) {
+            let currentActionPoints = [],
+                prevActionPoints = [],
+                nextActionPoints = [],
+                lastUsedElemsProps = [];
 
-        this.actionPoints.forEach(function (pointItem) {
-            if (pointItem.breakpoints[0] <= scrTo.Y && scrTo.Y <= pointItem.breakpoints[1]) {
-                currentActionPoints.push(pointItem);
-            }
-        });
+            this.actionPoints.forEach((pointItem) => {
+                if (pointItem.breakpoints[0] < scrTo.Y && scrTo.Y < pointItem.breakpoints[1]) {
+                    currentActionPoints.push(pointItem);
+                } else if (this.delta > 0 && pointItem.breakpoints[1] <= scrTo.Y) {
+                    prevActionPoints.push(pointItem);
+                } else if (this.delta < 0 && scrTo.Y <= pointItem.breakpoints[0]) {
+                    nextActionPoints.push(pointItem);
+                }
+            });
 
-        currentActionPoints.forEach((pointItem) => {
-            const progress = (scrTo.Y - pointItem.breakpoints[0]) / (pointItem.breakpoints[1] - pointItem.breakpoints[0]);
+            currentActionPoints.forEach((pointItem) => {
+                const progress = (scrTo.Y - pointItem.breakpoints[0]) / (pointItem.breakpoints[1] - pointItem.breakpoints[0]);
 
-            for (const elKey in pointItem.elements) {
-                if (Object.hasOwnProperty.call(pointItem.elements, elKey)) {
+                for (const elKey in pointItem.elements) {
                     const elemProps = pointItem.elements[elKey];
 
                     for (const property in elemProps) {
-                        if (Object.hasOwnProperty.call(elemProps, property)) {
-                            const propsRange = elemProps[property],
-                                goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
+                        if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                            continue;
+                        }
 
-                            console.log(property, goTo, this.actionElems[elKey]);
+                        lastUsedElemsProps.push(elKey + '_' + property);
+
+                        const propsRange = elemProps[property],
+                            goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
+
+                        if (this.actionElems[elKey]) {
+                            if (propsRange[2]) {
+                                this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
+                            } else {
+                                this.actionElems[elKey].style[property] = goTo;
+
+                                if (property == 'opacity') {
+                                    if (goTo > 0) {
+                                        this.actionElems[elKey].style.visibility = 'visible';
+                                    } else {
+                                        this.actionElems[elKey].style.visibility = 'hidden';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            if (this.delta > 0) {
+                prevActionPoints.sort((a, b) => b.breakpoints[1] - a.breakpoints[1]);
+
+                prevActionPoints.forEach((pointItem) => {
+                    for (const elKey in pointItem.elements) {
+                        const elemProps = pointItem.elements[elKey];
+
+                        for (const property in elemProps) {
+                            if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                                continue;
+                            }
+
+                            lastUsedElemsProps.push(elKey + '_' + property);
+
+                            const propsRange = elemProps[property],
+                                goTo = propsRange[1];
 
                             if (this.actionElems[elKey]) {
                                 if (propsRange[2]) {
                                     this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
                                 } else {
                                     this.actionElems[elKey].style[property] = goTo;
+
+                                    if (property == 'opacity') {
+                                        if (goTo > 0) {
+                                            this.actionElems[elKey].style.visibility = 'visible';
+                                        } else {
+                                            this.actionElems[elKey].style.visibility = 'hidden';
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
+                });
             }
-        });
 
+            if (this.delta < 0) {
+                nextActionPoints.sort((a, b) => a.breakpoints[0] - b.breakpoints[0]);
 
+                nextActionPoints.forEach((pointItem) => {
+                    for (const elKey in pointItem.elements) {
+                        const elemProps = pointItem.elements[elKey];
+
+                        for (const property in elemProps) {
+                            if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                                continue;
+                            }
+
+                            lastUsedElemsProps.push(elKey + '_' + property);
+
+                            const propsRange = elemProps[property],
+                                goTo = propsRange[0];
+
+                            if (this.actionElems[elKey]) {
+                                if (propsRange[2]) {
+                                    this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
+                                } else {
+                                    this.actionElems[elKey].style[property] = goTo;
+
+                                    if (property == 'opacity') {
+                                        if (goTo > 0) {
+                                            this.actionElems[elKey].style.visibility = 'visible';
+                                        } else {
+                                            this.actionElems[elKey].style.visibility = 'hidden';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // scrolled
         this.scrolled = scrTo;
 
         if (this.onScroll) {
-            this.onScroll(this.scrBoxEl, pos, ev, scrTo, this.params);
+            this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
         }
 
         this.scrBoxEl.setAttribute('data-scr', scrTo.Y);
@@ -629,7 +687,13 @@
             this.scrolled = scrTo;
             this.isBreak = false;
 
-            if (this.afterScroll) this.afterScroll(this.scrBoxEl, pos, ev, scrTo, this.params);
+            if (this.onScroll) {
+                this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
+            }
+
+            if (this.afterScroll) {
+                this.afterScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
+            }
 
             this.params = null;
         }
@@ -735,6 +799,8 @@
 
                 mouseDelta.X = clientX - mouseStart.X;
 
+                this.delta = mouseDelta.X;
+
                 let shift = mouseDelta.X + barSlStart.X - bar.X;
 
                 const limit = bar.W - this.horizontalBarSlElSize;
@@ -755,6 +821,8 @@
                 const clientY = (e.type == 'touchmove') ? e.targetTouches[0].clientY : e.clientY;
 
                 mouseDelta.Y = clientY - mouseStart.Y;
+
+                this.delta = mouseDelta.Y;
 
                 let shift = mouseDelta.Y + barSlStart.Y - bar.Y;
 

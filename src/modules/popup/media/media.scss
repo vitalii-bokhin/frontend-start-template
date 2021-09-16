@@ -25,6 +25,7 @@
         max-width: 85vw;
         max-height: 70vh;
         display: none;
+        transform-origin: 0 0;
         &_visible{
             display: inline-block;
         }
@@ -37,24 +38,10 @@
             display: block;
         }
     }
-    &__bar{
-        padding-top: 34px;
+    &__caption{
         font-size: 14px;
-        display: none;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
         padding: 10px 50px;
-        &-date{
-            font-size: 14px;
-            color: #666;
-        }
-        &-tit{
-            font-size: 14px;
-            font-weight: 700;
-        }
+        background: #fff;
     }
     &__arr{
         position: absolute;
@@ -63,7 +50,6 @@
         top: 50%;
         margin-top: -10px;
         z-index: 3;
-        display: none;
         &_l{
             left: 53px;
             background-position: -24px -72px;
@@ -71,6 +57,30 @@
         &_r{
             right: 53px;
             background-position: -38px -72px;
+        }
+    }
+    &__zoom{
+        position: absolute;
+        width: 12px;
+        height: 20px;
+        top: 20px;
+        z-index: 3;
+        &_min{
+            left: 20px;
+        }
+        &_plus{
+            left: 40px;
+        }
+    }
+    &__dots{
+        list-style: none;
+        display: flex;
+        &-btn{
+            width: 12px;
+            height: 12px;
+            &.active{
+                background: $bk;
+            }
         }
     }
     @media(max-width: 1200px){

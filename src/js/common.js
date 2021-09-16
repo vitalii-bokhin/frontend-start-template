@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     breakpoints: [0, window.innerHeight],
                     elements: {
                         s1: {
-                            opacity: [1,0]
+                            opacity: [1, 0]
                         }
                     }
                 },
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     breakpoints: [document.querySelector('[data-action-element="t1"]').offsetHeight, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight],
                     elements: {
                         ms: {
-                            opacity: [0,1]
+                            opacity: [0, 1]
                         }
                     }
                 },
@@ -115,27 +115,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 }
-            ],
-
-            // actionElsParams: {
-            //     s1: [{
-            //         start: {
-            //             offset: 0,
-            //             properties: [{
-            //                 opacity: '1'
-            //             }]
-            //         },
-            //         stop: {
-            //             offset: window.innerHeight,
-            //             properties: [{
-            //                 opacity: '0'
-            //             }]
-            //         }
-            //     }]
-            // }
+            ]
         });
 
-        document.querySelector('.scrollbox__height').style.height = window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight + document.querySelector('[data-action-element="ms"]').offsetHeight + 'px';
+        document.getElementById('actions-scroll').style.height = window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight + document.querySelector('[data-action-element="ms"]').offsetHeight + 'px';
 
     } catch (error) {
         console.log(error);
@@ -178,14 +161,54 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
+    
+
     // popup
     try {
         Popup.init('.js-open-popup');
+
         MediaPopup.init('.js-open-media-popup');
+        
+        let popupScrollImage;
 
         Popup.onOpen(function (elSel, btnEl) {
             console.log(elSel, btnEl);
+
+            if (elSel == '#media-popup') {
+                if (!popupScrollImage) {
+                    popupScrollImage = new Scrollbox('#popup-scroll-image', {
+                        horizontal: true,
+                        vertical: true,
+                        bar: true,
+                        drag: true
+                    });
+                } else {
+                    popupScrollImage.reInit();
+                }
+            }
         });
+
+        let scale = 1;
+
+        $('body').on('click', '.popup-media__zoom', function() {
+            let dir = $(this).attr('data-dir');
+
+            if (dir == 'plus') {
+                scale++;
+            } else if (scale > 1) {
+                scale--;
+            }
+
+            $('.popup-media__image').css('transform', 'scale('+ scale +')');
+
+            popupScrollImage.reInit();
+
+        }).on('click', '.popup-media__arr, .popup-media__dots-btn:not(.active)', function() {
+            $('.popup-media__image').css('transform', 'scale(1)');
+
+            popupScrollImage.reInit();
+        });
+
     } catch (error) {
         console.log(error);
     }

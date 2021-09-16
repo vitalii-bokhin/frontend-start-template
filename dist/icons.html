@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css?v=1631196376096">
+    <link rel="stylesheet" href="css/style.css?v=1631818876760">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <title>Icons | startTemplate</title>
 </head>
@@ -263,7 +263,15 @@
             
             <div class="popup-media__box">
                 
-                <img src="#" class="popup-media__image" alt="photo">
+                <div id="popup-scroll-image" class="popup-media__img scrollbox">
+                    <div class="scrollbox__window">
+                        <div class="scrollbox__inner">
+                            <img src="#" class="popup-media__image" alt="photo">
+                        </div>
+                    </div>
+                    <div class="scrollbox__vertical-bar"></div>
+				    <div class="scrollbox__horizontal-bar"></div>
+                </div>
                 
                 <!-- <div class="popup-media__video">
                     <a href="#" class="popup-media__play"></a>
@@ -280,16 +288,15 @@
                 
                 <button class="popup-media__arr popup-media__arr_l" data-dir="prev"></button>
                 <button class="popup-media__arr popup-media__arr_r" data-dir="next"></button>
+
+                <button class="popup-media__zoom popup-media__zoom_min" data-dir="min">-</button>
+                <button class="popup-media__zoom popup-media__zoom_plus" data-dir="plus">+</button>
                 
+                <ul class="popup-media__dots"></ul>
             </div>
             
-            <div class="popup-media__bar row-col-mid">
-                <div class="popup-media__bar-date popup-media__data-0 col vw1000-col-12">
-                    <!--data string 1-->
-                </div>
-                <div class="popup-media__bar-tit popup-media__data-1 col vw1000-col-12">
-                    <!--data string 2-->
-                </div>
+            <div class="popup-media__caption">
+                <!-- caption -->
             </div>
         </div>
     </div>
@@ -325,9 +332,9 @@
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/slick.min.js"></script>
 <script src="js/scrollpane.min.js"></script>
-<script src="js/script.js?v=1631196376096"></script>
-<script src="js/common.js?v=1631196376096"></script>
-<script src="js/interface.js?v=1631196376096"></script>
+<script src="js/script.js?v=1631818876760"></script>
+<script src="js/common.js?v=1631818876760"></script>
+<script src="js/interface.js?v=1631818876760"></script>
 
 <script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
 

@@ -21,7 +21,15 @@
             
             <div class="popup-media__box">
                 
-                <img src="#" class="popup-media__image" alt="photo">
+                <div id="popup-scroll-image" class="popup-media__img scrollbox">
+                    <div class="scrollbox__window">
+                        <div class="scrollbox__inner">
+                            <img src="#" class="popup-media__image" alt="photo">
+                        </div>
+                    </div>
+                    <div class="scrollbox__vertical-bar"></div>
+				    <div class="scrollbox__horizontal-bar"></div>
+                </div>
                 
                 <!-- <div class="popup-media__video">
                     <a href="#" class="popup-media__play"></a>
@@ -38,16 +46,15 @@
                 
                 <button class="popup-media__arr popup-media__arr_l" data-dir="prev"></button>
                 <button class="popup-media__arr popup-media__arr_r" data-dir="next"></button>
+
+                <button class="popup-media__zoom popup-media__zoom_min" data-dir="min">-</button>
+                <button class="popup-media__zoom popup-media__zoom_plus" data-dir="plus">+</button>
                 
+                <ul class="popup-media__dots"></ul>
             </div>
             
-            <div class="popup-media__bar row-col-mid">
-                <div class="popup-media__bar-date popup-media__data-0 col vw1000-col-12">
-                    <!--data string 1-->
-                </div>
-                <div class="popup-media__bar-tit popup-media__data-1 col vw1000-col-12">
-                    <!--data string 2-->
-                </div>
+            <div class="popup-media__caption">
+                <!-- caption -->
             </div>
         </div>
     </div>

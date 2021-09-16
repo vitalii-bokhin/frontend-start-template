@@ -371,11 +371,13 @@ var ValidateForm;
                 }
             }
 
-            const scrTo = offsetTop + window.scrollY - headerHeight;
+            if (offsetTop != 99999) {
+                const scrTo = offsetTop + window.scrollY - headerHeight;
 
-            animate(function (progress) {
-                window.scrollTo(0, scrTo * progress + (1 - progress) * window.scrollY);
-            }, 1000, 'easeInOutQuad');
+                animate(function (progress) {
+                    window.scrollTo(0, scrTo * progress + (1 - progress) * window.scrollY);
+                }, 1000, 'easeInOutQuad');
+            }
         },
 
         txt: function () {
