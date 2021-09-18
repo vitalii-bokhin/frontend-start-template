@@ -134,7 +134,12 @@
 
                     this.winSize.Y = winH;
                     this.innerSize.Y = innerH;
-                    this.endBreak.Y = innerH - winH;
+                    
+                    if (this.innerEl) {
+                        this.endBreak.Y = innerH - winH;
+                    } else {
+                        this.endBreak.Y = innerH;
+                    }
 
                     this.scrollBar(false, 'vertical');
                 }, 21);
@@ -362,6 +367,16 @@
         }
 
         this.reInit = function () {
+            [
+                'scrollbox_vertical',
+                'scrollbox_horizontal',
+                'srollbox_scrollable-vertical',
+                'srollbox_scrollable-horizontal',
+                'srollbox_dragging'
+            ].forEach(function (cl) {
+                scrBoxEl.classList.remove(cl);
+            });
+
             if (this.innerEl) {
                 this.innerEl.style = '';
             }
@@ -379,14 +394,13 @@
 
             scrBoxEl.removeEventListener('wheel', wheelHandler);
 
-            const cssClass = [
+            [
                 'scrollbox_vertical',
+                'scrollbox_horizontal',
                 'srollbox_scrollable-vertical',
                 'srollbox_scrollable-horizontal',
                 'srollbox_dragging'
-            ];
-
-            cssClass.forEach(function (cl) {
+            ].forEach(function (cl) {
                 scrBoxEl.classList.remove(cl);
             });
 

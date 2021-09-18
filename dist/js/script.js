@@ -2026,6 +2026,12 @@ var MediaPopup;
         next: function (dir) {
             let btnEl;
 
+            const dotBtnEls = this.popupEl.querySelectorAll('.popup-media__dots-btn');
+
+            for (let i = 0; i < dotBtnEls.length; i++) {
+                dotBtnEls[i].classList.remove('active');
+            }
+
             if (dir == 'next') {
                 this.curGroupBtnIndex++;
 
@@ -2048,6 +2054,8 @@ var MediaPopup;
                     btnEl = this.groupBtnElems[this.curGroupBtnIndex];
                 }
             }
+
+            dotBtnEls[this.curGroupBtnIndex].classList.add('active');
 
             this.show(btnEl);
         },
@@ -7024,7 +7032,12 @@ function Mouseparallax(elSel, options) {
 
                     this.winSize.Y = winH;
                     this.innerSize.Y = innerH;
-                    this.endBreak.Y = innerH - winH;
+                    
+                    if (this.innerEl) {
+                        this.endBreak.Y = innerH - winH;
+                    } else {
+                        this.endBreak.Y = innerH;
+                    }
 
                     this.scrollBar(false, 'vertical');
                 }, 21);
@@ -7252,6 +7265,16 @@ function Mouseparallax(elSel, options) {
         }
 
         this.reInit = function () {
+            [
+                'scrollbox_vertical',
+                'scrollbox_horizontal',
+                'srollbox_scrollable-vertical',
+                'srollbox_scrollable-horizontal',
+                'srollbox_dragging'
+            ].forEach(function (cl) {
+                scrBoxEl.classList.remove(cl);
+            });
+
             if (this.innerEl) {
                 this.innerEl.style = '';
             }
@@ -7269,14 +7292,13 @@ function Mouseparallax(elSel, options) {
 
             scrBoxEl.removeEventListener('wheel', wheelHandler);
 
-            const cssClass = [
+            [
                 'scrollbox_vertical',
+                'scrollbox_horizontal',
                 'srollbox_scrollable-vertical',
                 'srollbox_scrollable-horizontal',
                 'srollbox_dragging'
-            ];
-
-            cssClass.forEach(function (cl) {
+            ].forEach(function (cl) {
                 scrBoxEl.classList.remove(cl);
             });
 

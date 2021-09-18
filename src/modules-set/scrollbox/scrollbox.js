@@ -134,7 +134,12 @@
 
                     this.winSize.Y = winH;
                     this.innerSize.Y = innerH;
-                    this.endBreak.Y = innerH - winH;
+
+                    if (this.innerEl && (this.innerEl.offsetHeight - winH) >= innerH) {
+                        this.endBreak.Y = innerH - winH;
+                    } else {
+                        this.endBreak.Y = innerH;
+                    }
 
                     this.scrollBar(false, 'vertical');
                 }, 21);
@@ -271,7 +276,11 @@
         }
 
         if (opt.windowScrollEvent) {
+            let winScroll = 0;
+
             window.addEventListener('scroll', () => {
+                this.delta = window.scrollY - winScroll;
+                winScroll = window.scrollY;
                 this.scroll({ Y: window.scrollY }, null);
             });
         }
@@ -358,6 +367,16 @@
         }
 
         this.reInit = function () {
+            [
+                'scrollbox_vertical',
+                'scrollbox_horizontal',
+                'srollbox_scrollable-vertical',
+                'srollbox_scrollable-horizontal',
+                'srollbox_dragging'
+            ].forEach(function (cl) {
+                scrBoxEl.classList.remove(cl);
+            });
+
             if (this.innerEl) {
                 this.innerEl.style = '';
             }
@@ -375,14 +394,13 @@
 
             scrBoxEl.removeEventListener('wheel', wheelHandler);
 
-            const cssClass = [
+            [
                 'scrollbox_vertical',
+                'scrollbox_horizontal',
                 'srollbox_scrollable-vertical',
                 'srollbox_scrollable-horizontal',
                 'srollbox_dragging'
-            ];
-
-            cssClass.forEach(function (cl) {
+            ].forEach(function (cl) {
                 scrBoxEl.classList.remove(cl);
             });
 
@@ -528,7 +546,7 @@
             }
         }
 
-        // move inner element
+        // inner element
         if (this.innerEl) {
             if (this.horizontal && this.vertical) {
                 this.innerEl.style.transform = 'translate(' + (-scrTo.X) + 'px, ' + (-scrTo.Y) + 'px)';
@@ -541,136 +559,138 @@
             }
         }
 
-        // move action points
-        let currentActionPoints = [],
-            prevActionPoints = [],
-            nextActionPoints = [],
-            lastUsedElemsProps = [];
-        
-        this.actionPoints.forEach((pointItem) => {
-            if (pointItem.breakpoints[0] < scrTo.Y && scrTo.Y < pointItem.breakpoints[1]) {
-                currentActionPoints.push(pointItem);
-            } else if (this.delta > 0 && pointItem.breakpoints[1] <= scrTo.Y) {
-                prevActionPoints.push(pointItem);
-            } else if (this.delta < 0 && scrTo.Y <= pointItem.breakpoints[0]) {
-                nextActionPoints.push(pointItem);
-            }
-        });
+        // action points
+        if (this.actionPoints) {
+            let currentActionPoints = [],
+                prevActionPoints = [],
+                nextActionPoints = [],
+                lastUsedElemsProps = [];
 
-        currentActionPoints.forEach((pointItem) => {
-            const progress = (scrTo.Y - pointItem.breakpoints[0]) / (pointItem.breakpoints[1] - pointItem.breakpoints[0]);
+            this.actionPoints.forEach((pointItem) => {
+                if (pointItem.breakpoints[0] < scrTo.Y && scrTo.Y < pointItem.breakpoints[1]) {
+                    currentActionPoints.push(pointItem);
+                } else if (this.delta > 0 && pointItem.breakpoints[1] <= scrTo.Y) {
+                    prevActionPoints.push(pointItem);
+                } else if (this.delta < 0 && scrTo.Y <= pointItem.breakpoints[0]) {
+                    nextActionPoints.push(pointItem);
+                }
+            });
 
-            for (const elKey in pointItem.elements) {
-                const elemProps = pointItem.elements[elKey];
+            currentActionPoints.forEach((pointItem) => {
+                const progress = (scrTo.Y - pointItem.breakpoints[0]) / (pointItem.breakpoints[1] - pointItem.breakpoints[0]);
 
-                for (const property in elemProps) {
-                    if (lastUsedElemsProps.includes(elKey + '_' + property)) {
-                        continue;
+                for (const elKey in pointItem.elements) {
+                    const elemProps = pointItem.elements[elKey];
+
+                    for (const property in elemProps) {
+                        if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                            continue;
+                        }
+
+                        lastUsedElemsProps.push(elKey + '_' + property);
+
+                        const propsRange = elemProps[property],
+                            goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
+
+                        if (this.actionElems[elKey]) {
+                            if (propsRange[2]) {
+                                this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
+                            } else {
+                                this.actionElems[elKey].style[property] = goTo;
+
+                                if (property == 'opacity') {
+                                    if (goTo > 0) {
+                                        this.actionElems[elKey].style.visibility = 'visible';
+                                    } else {
+                                        this.actionElems[elKey].style.visibility = 'hidden';
+                                    }
+                                }
+                            }
+                        }
                     }
+                }
+            });
 
-                    lastUsedElemsProps.push(elKey + '_' + property);
+            if (this.delta > 0) {
+                prevActionPoints.sort((a, b) => b.breakpoints[1] - a.breakpoints[1]);
 
-                    const propsRange = elemProps[property],
-                        goTo = (propsRange[1] - propsRange[0]) * progress + propsRange[0];
+                prevActionPoints.forEach((pointItem) => {
+                    for (const elKey in pointItem.elements) {
+                        const elemProps = pointItem.elements[elKey];
 
-                    if (this.actionElems[elKey]) {
-                        if (propsRange[2]) {
-                            this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
-                        } else {
-                            this.actionElems[elKey].style[property] = goTo;
+                        for (const property in elemProps) {
+                            if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                                continue;
+                            }
 
-                            if (property == 'opacity') {
-                                if (goTo > 0) {
-                                    this.actionElems[elKey].style.visibility = 'visible';
+                            lastUsedElemsProps.push(elKey + '_' + property);
+
+                            const propsRange = elemProps[property],
+                                goTo = propsRange[1];
+
+                            if (this.actionElems[elKey]) {
+                                if (propsRange[2]) {
+                                    this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
                                 } else {
-                                    this.actionElems[elKey].style.visibility = 'hidden';
+                                    this.actionElems[elKey].style[property] = goTo;
+
+                                    if (property == 'opacity') {
+                                        if (goTo > 0) {
+                                            this.actionElems[elKey].style.visibility = 'visible';
+                                        } else {
+                                            this.actionElems[elKey].style.visibility = 'hidden';
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
+                });
             }
-        });
 
-        if (this.delta > 0) {
-            prevActionPoints.sort((a, b) => b.breakpoints[1] - a.breakpoints[1]);
+            if (this.delta < 0) {
+                nextActionPoints.sort((a, b) => a.breakpoints[0] - b.breakpoints[0]);
 
-            prevActionPoints.forEach((pointItem) => {
-                for (const elKey in pointItem.elements) {
-                    const elemProps = pointItem.elements[elKey];
+                nextActionPoints.forEach((pointItem) => {
+                    for (const elKey in pointItem.elements) {
+                        const elemProps = pointItem.elements[elKey];
 
-                    for (const property in elemProps) {
-                        if (lastUsedElemsProps.includes(elKey + '_' + property)) {
-                            continue;
-                        }
+                        for (const property in elemProps) {
+                            if (lastUsedElemsProps.includes(elKey + '_' + property)) {
+                                continue;
+                            }
 
-                        lastUsedElemsProps.push(elKey + '_' + property);
+                            lastUsedElemsProps.push(elKey + '_' + property);
 
-                        const propsRange = elemProps[property],
-                            goTo = propsRange[1];
+                            const propsRange = elemProps[property],
+                                goTo = propsRange[0];
 
-                        if (this.actionElems[elKey]) {
-                            if (propsRange[2]) {
-                                this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
-                            } else {
-                                this.actionElems[elKey].style[property] = goTo;
+                            if (this.actionElems[elKey]) {
+                                if (propsRange[2]) {
+                                    this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
+                                } else {
+                                    this.actionElems[elKey].style[property] = goTo;
 
-                                if (property == 'opacity') {
-                                    if (goTo > 0) {
-                                        this.actionElems[elKey].style.visibility = 'visible';
-                                    } else {
-                                        this.actionElems[elKey].style.visibility = 'hidden';
+                                    if (property == 'opacity') {
+                                        if (goTo > 0) {
+                                            this.actionElems[elKey].style.visibility = 'visible';
+                                        } else {
+                                            this.actionElems[elKey].style.visibility = 'hidden';
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-            });
-        }
-
-        if (this.delta < 0) {
-            nextActionPoints.sort((a, b) => a.breakpoints[0] - b.breakpoints[0]);
-
-            nextActionPoints.forEach((pointItem) => {
-                for (const elKey in pointItem.elements) {
-                    const elemProps = pointItem.elements[elKey];
-
-                    for (const property in elemProps) {
-                        if (lastUsedElemsProps.includes(elKey + '_' + property)) {
-                            continue;
-                        }
-
-                        lastUsedElemsProps.push(elKey + '_' + property);
-
-                        const propsRange = elemProps[property],
-                            goTo = propsRange[0];
-
-                        if (this.actionElems[elKey]) {
-                            if (propsRange[2]) {
-                                this.actionElems[elKey].style[property] = propsRange[2].replace('$', goTo);
-                            } else {
-                                this.actionElems[elKey].style[property] = goTo;
-
-                                if (property == 'opacity') {
-                                    if (goTo > 0) {
-                                        this.actionElems[elKey].style.visibility = 'visible';
-                                    } else {
-                                        this.actionElems[elKey].style.visibility = 'hidden';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+                });
+            }
         }
 
         // scrolled
         this.scrolled = scrTo;
 
         if (this.onScroll) {
-            this.onScroll(this.scrBoxEl, {posX, posY}, ev, scrTo, this.params);
+            this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
         }
 
         this.scrBoxEl.setAttribute('data-scr', scrTo.Y);
@@ -682,11 +702,11 @@
             this.isBreak = false;
 
             if (this.onScroll) {
-                this.onScroll(this.scrBoxEl, {posX, posY}, ev, scrTo, this.params);
+                this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
             }
 
             if (this.afterScroll) {
-                this.afterScroll(this.scrBoxEl, {posX, posY}, ev, scrTo, this.params);
+                this.afterScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
             }
 
             this.params = null;

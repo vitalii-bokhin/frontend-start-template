@@ -141,6 +141,12 @@ var MediaPopup;
         next: function (dir) {
             let btnEl;
 
+            const dotBtnEls = this.popupEl.querySelectorAll('.popup-media__dots-btn');
+
+            for (let i = 0; i < dotBtnEls.length; i++) {
+                dotBtnEls[i].classList.remove('active');
+            }
+
             if (dir == 'next') {
                 this.curGroupBtnIndex++;
 
@@ -163,6 +169,8 @@ var MediaPopup;
                     btnEl = this.groupBtnElems[this.curGroupBtnIndex];
                 }
             }
+
+            dotBtnEls[this.curGroupBtnIndex].classList.add('active');
 
             this.show(btnEl);
         },
