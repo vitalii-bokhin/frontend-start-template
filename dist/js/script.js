@@ -1810,7 +1810,7 @@ var Popup;
         message: function (msg, winSel, callback) {
             const winEl = this.open(winSel || '#message-popup', callback);
 
-            winEl.querySelector('.popup__message').innerHTML = msg;
+            winEl.querySelector('.popup__message').innerHTML = msg.replace(/\[(\/?\w+)\]/gi, '<$1>');
         },
 
         close: function (evInit, openedWinEl) {
@@ -4770,6 +4770,26 @@ var NextFieldset;
         inputEl: null,
         defValue: 0,
 
+        init: function () {
+            document.addEventListener('click', (e) => {
+                const btnEl = e.target.closest('.number__btn');
+
+                if (btnEl) this.clickHandler(btnEl);
+            });
+
+            document.addEventListener('input', (e) => {
+                const inpEl = e.target.closest('.number__input');
+
+                if (inpEl) this.inputHandler(inpEl);
+            });
+
+            document.addEventListener('blur', (e) => {
+                const inpEl = e.target.closest('.number__input');
+
+                if (inpEl) this.blurHandler(inpEl);
+            }, true);
+        },
+
         clickHandler: function (btnEl) {
             this.contEl = btnEl.closest('.number');
             this.inputEl = this.contEl.querySelector('.number__input');
@@ -4798,6 +4818,10 @@ var NextFieldset;
             if (!/^\d*$/.test(this.inputEl.value)) {
                 this.inputEl.value = this.defValue;
             } else {
+                if (/^0+$/.test(this.inputEl.value)) {
+                    this.inputEl.value = 0;
+                }
+
                 this.defValue = this.inputEl.value;
             }
         },
@@ -4809,26 +4833,6 @@ var NextFieldset;
                 this.inputEl.value = 0;
                 this.defValue = 0;
             }
-        },
-
-        init: function () {
-            document.addEventListener('click', (e) => {
-                const btnEl = e.target.closest('.number__btn');
-
-                if (btnEl) this.clickHandler(btnEl);
-            });
-
-            document.addEventListener('input', (e) => {
-                const inpEl = e.target.closest('.number__input');
-
-                if (inpEl) this.inputHandler(inpEl);
-            });
-
-            document.addEventListener('blur', (e) => {
-                const inpEl = e.target.closest('.number__input');
-
-                if (inpEl) this.blurHandler(inpEl);
-            }, true);
         }
     };
 
@@ -6932,12 +6936,14 @@ function Mouseparallax(elSel, options) {
         opt.barSize = (opt.barSize !== undefined) ? opt.barSize : null;
         opt.drag = (opt.drag !== undefined) ? opt.drag : false;
         opt.mouseWheel = (opt.mouseWheel !== undefined) ? opt.mouseWheel : true;
-        opt.actionPoints = (opt.actionPoints !== undefined) ? opt.actionPoints : null;
+        opt.actionPoints = (opt.actionPoints !== undefined) ? opt.actionPoints : [];
+        opt.freezePoints = (opt.freezePoints !== undefined) ? opt.freezePoints : [];
         opt.windowScrollEvent = (opt.windowScrollEvent !== undefined) ? opt.windowScrollEvent : false;
 
         const winEl = scrBoxEl.querySelector('.scrollbox__window');
         let innerEl = scrBoxEl.querySelector('.scrollbox__inner'),
-            wheelHandler;
+            wheelHandler,
+            scrollHandler;
 
         if (innerEl && innerEl.parentElement !== winEl) {
             innerEl = null;
@@ -6945,7 +6951,7 @@ function Mouseparallax(elSel, options) {
 
         scrBoxEl.setAttribute('tabindex', '-1');
 
-        const init = () => {
+        const init = (cb) => {
             this.scrBoxEl = scrBoxEl;
             this.winEl = winEl;
             this.winSize = { X: 0, Y: 0 };
@@ -6972,12 +6978,12 @@ function Mouseparallax(elSel, options) {
             this.scrollStep = opt.scrollStep;
             this.actionElems = {};
             this.actionPoints = opt.actionPoints;
+            this.freezePoints = opt.freezePoints;
             this.windowScrollEvent = opt.windowScrollEvent;
 
             if (opt.parentScrollbox) {
                 this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
             }
-
 
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
@@ -7014,13 +7020,11 @@ function Mouseparallax(elSel, options) {
                         innerH = winEl.scrollHeight;
                     }
 
-                    if (opt.actionPoints) {
                         opt.actionPoints.forEach(function (pointItem) {
                             if (pointItem.breakpoints[1] >= innerH) {
                                 innerH = pointItem.breakpoints[1];
                             }
                         });
-                    }
 
                     if (innerH > winH) {
                         scrBoxEl.classList.add('srollbox_scrollable-vertical');
@@ -7028,11 +7032,15 @@ function Mouseparallax(elSel, options) {
                         if (opt.mouseWheel && !opt.windowScrollEvent) {
                             scrBoxEl.addEventListener('wheel', wheelHandler);
                         }
+
+                        if (opt.windowScrollEvent) {
+                            window.addEventListener('scroll', scrollHandler);
+                        }
                     }
 
                     this.winSize.Y = winH;
                     this.innerSize.Y = innerH;
-                    
+
                     if (this.innerEl) {
                         this.endBreak.Y = innerH - winH;
                     } else {
@@ -7077,27 +7085,44 @@ function Mouseparallax(elSel, options) {
 
             setTimeout(() => {
                 this.initialized = true;
+
+                if (cb) {
+                    cb();
+                }
             }, 21);
         }
 
         init();
 
         // scroll animation
-        const scrollAnim = (scrTo, ev, duration, delta) => {
+        const scrollAnim = (scrTo, ev, duration) => {
             if (this.isScrolling) return;
 
             this.isScrolling = true;
-
-            this.delta = delta;
 
             const scrolled = this.scrolled;
 
             duration = (duration !== undefined && duration !== null) ? duration : opt.duration;
 
             if (duration == 0) {
-                this.scroll({ Y: (scrTo.Y - scrolled.Y) * 1 + scrolled.Y }, true, ev);
+                this.scroll(scrTo, true, ev);
                 this.isScrolling = false;
                 return;
+            }
+
+            if (this.freezePoints.length) {
+                let scr = scrTo.Y;
+
+                this.freezePoints.forEach(point => {
+                    const from = point - Math.abs(this.delta / 2),
+                    to = point + Math.abs(this.delta / 2);
+
+                    if (from < scrTo.Y && scrTo.Y < to) {
+                        scr = point;
+                    }
+                });
+
+                scrTo.Y = scr;
             }
 
             animate((progr) => {
@@ -7109,6 +7134,9 @@ function Mouseparallax(elSel, options) {
         }
 
         // wheel event handler
+        let wheelDelta = 0,
+            wheelAccumulating = false;
+
         wheelHandler = (e) => {
             e.preventDefault();
 
@@ -7117,7 +7145,7 @@ function Mouseparallax(elSel, options) {
                 (opt.childrenScrollbox && e.target.closest(opt.childrenScrollbox))
             ) return;
 
-            let scrTo, delta;
+            let delta, scrTo;
 
             if (e.deltaX) {
                 delta = e.deltaX;
@@ -7125,120 +7153,151 @@ function Mouseparallax(elSel, options) {
                 delta = e.deltaY;
             }
 
-            // scroll able
-            if (scrBoxEl.hasAttribute('data-scroll-able')) {
-                const atr = scrBoxEl.getAttribute('data-scroll-able');
+            if (this.scrollStep || opt.fullSizeStep) {
+                if (scrBoxEl.hasAttribute('data-scroll-able')) {
+                    const atr = scrBoxEl.getAttribute('data-scroll-able');
 
-                if (
-                    (atr == 'toLeft' && delta < 0) ||
-                    (atr == 'toRight' && delta > 0) ||
-                    atr == 'false'
-                ) return;
-            }
-
-            if (this.scrollStep) {
-                if (delta > 0) {
-                    scrTo = this.scrolled.Y + this.scrollStep;
-                } else if (delta < 0) {
-                    scrTo = this.scrolled.Y - this.scrollStep;
+                    if (
+                        (atr == 'toLeft' && delta < 0) ||
+                        (atr == 'toRight' && delta > 0) ||
+                        atr == 'false'
+                    ) return;
                 }
 
-            } else if (opt.fullSizeStep) {
-                if (delta > 0) {
-                    scrTo = this.scrolled.Y + this.winSize.Y;
-                } else if (delta < 0) {
-                    scrTo = this.scrolled.Y - this.winSize.Y;
+                if (this.scrollStep) {
+                    if (delta > 0) {
+                        scrTo = this.scrolled.Y + this.scrollStep;
+                    } else if (delta < 0) {
+                        scrTo = this.scrolled.Y - this.scrollStep;
+                    }
+
+                } else if (opt.fullSizeStep) {
+                    if (delta > 0) {
+                        scrTo = this.scrolled.Y + this.winSize.Y;
+                    } else if (delta < 0) {
+                        scrTo = this.scrolled.Y - this.winSize.Y;
+                    }
                 }
+
+                this.delta = delta;
+
+                scrollAnim({ Y: scrTo }, e, null);
 
             } else {
-                if (Math.abs(delta) > this.winSize.Y) {
-                    if (delta > 0) {
-                        delta = this.winSize.Y;
-                    } else if (delta < 0) {
-                        delta = -this.winSize.Y;
-                    }
+                if (delta > 0) {
+                    delta = this.winSize.Y / 7;
+                } else if (delta < 0) {
+                    delta = -this.winSize.Y / 7;
                 }
 
-                if (Math.abs(delta) < 150) {
-                    if (delta > 0) {
-                        delta = 150;
-                    } else if (delta < 0) {
-                        delta = -150;
-                    }
+                wheelDelta += delta;
+
+                if (wheelAccumulating) {
+                    return;
                 }
 
-                scrTo = this.scrolled.Y + delta;
+                wheelAccumulating = true;
+
+                setTimeout(() => {
+                    if (scrBoxEl.hasAttribute('data-scroll-able')) {
+                        const atr = scrBoxEl.getAttribute('data-scroll-able');
+
+                        if (
+                            (atr == 'toLeft' && wheelDelta < 0) ||
+                            (atr == 'toRight' && wheelDelta > 0) ||
+                            atr == 'false'
+                        ) return;
+                    }
+
+                    if (Math.abs(wheelDelta) > this.winSize.Y) {
+                        if (wheelDelta > 0) {
+                            wheelDelta = this.winSize.Y;
+                        } else if (wheelDelta < 0) {
+                            wheelDelta = -this.winSize.Y;
+                        }
+                    }
+
+                    scrTo = this.scrolled.Y + wheelDelta;
+
+                    this.delta = wheelDelta;
+
+                    scrollAnim({ Y: scrTo }, e, null);
+
+                    wheelDelta = 0;
+                    wheelAccumulating = false;
+                }, 221);
             }
-
-            scrollAnim({ Y: scrTo }, e, null, delta);
         }
 
-        if (opt.windowScrollEvent) {
-            let winScroll = 0;
+        // window scroll handler
+        let winScroll = 0;
 
-            window.addEventListener('scroll', () => {
-                this.delta = window.scrollY - winScroll;
-                winScroll = window.scrollY;
-                this.scroll({ Y: window.scrollY }, null);
-            });
+        scrollHandler = () => {
+            this.delta = window.scrollY - winScroll;
+            winScroll = window.scrollY;
+            this.scroll({ Y: window.scrollY }, null);
         }
 
         // keyboard events
-        document.addEventListener('keydown', (e) => {
-            if (this.isScrolling) return;
+        // document.addEventListener('keydown', (e) => {
+        //     if (this.isScrolling) return;
 
-            let scrTo, delta;
+        //     let scrTo, delta;
 
-            if (opt.horizontal) {
-                if (e.code == 'ArrowRight') {
-                    delta = 1;
-                } else if (e.code == 'ArrowLeft') {
-                    delta = -1;
-                }
-            } else {
-                if (e.code == 'ArrowDown') {
-                    delta = 1;
-                } else if (e.code == 'ArrowUp') {
-                    delta = -1;
-                }
-            }
+        //     if (opt.horizontal) {
+        //         if (e.code == 'ArrowRight') {
+        //             delta = 1;
+        //         } else if (e.code == 'ArrowLeft') {
+        //             delta = -1;
+        //         }
+        //     } else {
+        //         if (e.code == 'ArrowDown') {
+        //             delta = 1;
+        //         } else if (e.code == 'ArrowUp') {
+        //             delta = -1;
+        //         }
+        //     }
 
-            // scroll able
-            if (scrBoxEl.hasAttribute('data-scroll-able')) {
-                const atr = scrBoxEl.getAttribute('data-scroll-able');
+        //     // scroll able
+        //     if (scrBoxEl.hasAttribute('data-scroll-able')) {
+        //         const atr = scrBoxEl.getAttribute('data-scroll-able');
 
-                if (
-                    (atr == 'toLeft' && delta < 0) ||
-                    (atr == 'toRight' && delta > 0) ||
-                    atr == 'false'
-                ) return;
-            }
+        //         if (
+        //             (atr == 'toLeft' && delta < 0) ||
+        //             (atr == 'toRight' && delta > 0) ||
+        //             atr == 'false'
+        //         ) return;
+        //     }
 
-            if (opt.fullSizeStep) {
-                if (delta > 0) {
-                    scrTo = this.scrolled + step;
-                } else if (delta < 0) {
-                    scrTo = this.scrolled - step;
-                }
-            } else {
-                if (delta > 0) {
-                    delta = 150;
-                } else if (delta < 0) {
-                    delta = -150;
-                }
+        //     if (opt.fullSizeStep) {
+        //         if (delta > 0) {
+        //             scrTo = this.scrolled + step;
+        //         } else if (delta < 0) {
+        //             scrTo = this.scrolled - step;
+        //         }
+        //     } else {
+        //         if (delta > 0) {
+        //             delta = 150;
+        //         } else if (delta < 0) {
+        //             delta = -150;
+        //         }
 
-                delta *= 2;
+        //         delta *= 2;
 
-                scrTo = this.scrolled + delta;
-            }
+        //         scrTo = this.scrolled + delta;
+        //     }
 
-            if (delta) scrollAnim(scrTo, e, undefined, delta);
-        });
+        //    this.delta = delta;
+
+        //     if (delta) scrollAnim(scrTo, e, undefined);
+        // });
 
         this.scrollTo = function (scrTo, dur, params) {
             this.params = params;
 
-            scrollAnim(scrTo, 'scrollTo', dur, scrTo - this.scrolled.Y);
+            this.delta = scrTo.Y - this.scrolled.Y;
+
+            scrollAnim(scrTo, 'scrollTo', dur);
 
             scrBoxEl.removeAttribute('data-scroll-able');
 
@@ -7279,11 +7338,28 @@ function Mouseparallax(elSel, options) {
                 this.innerEl.style = '';
             }
 
+            for (const key in this.actionElems) {
+                if (Object.hasOwnProperty.call(this.actionElems, key)) {
+                    const elSt = this.actionElems[key].style;
+
+                    elSt.transform = '';
+                    elSt.opacity = '';
+                    elSt.visibility = '';
+                }
+            }
+
             if (this.bar) {
                 this.scrollBar(true);
             }
 
-            init();
+            scrBoxEl.removeEventListener('wheel', wheelHandler);
+            window.removeEventListener('scroll', scrollHandler);
+
+            const scrolled = Object.assign({}, this.scrolled);
+
+            init(() => {
+                this.scrollTo(scrolled, 0);
+            });
         }
 
         this.destroy = function () {
@@ -7458,7 +7534,7 @@ function Mouseparallax(elSel, options) {
         }
 
         // action points
-        if (this.actionPoints) {
+        if (this.actionPoints.length) {
             let currentActionPoints = [],
                 prevActionPoints = [],
                 nextActionPoints = [],
@@ -7591,11 +7667,8 @@ function Mouseparallax(elSel, options) {
             this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
         }
 
-        this.scrBoxEl.setAttribute('data-scr', scrTo.Y);
-
         // after scroll
         if (aftScroll) {
-            this.scrBoxEl.setAttribute('data-scr', scrTo.Y);
             this.scrolled = scrTo;
             this.isBreak = false;
 

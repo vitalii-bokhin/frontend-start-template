@@ -83,37 +83,4 @@
             }
         }
     }
-    @media(max-width: 1200px){
-        &__bar{
-            padding: 28px 50px;
-        }
-        &__arr{
-            &_l{
-                left: 35px;
-            }
-            &_r{
-                right: 35px;
-            }
-        }
-    }
-    @media(max-width: 1000px){
-        &__arr{
-            &_l{
-                left: 15px;
-            }
-            &_r{
-                right: 15px;
-            }
-        }
-        &__bar{
-            padding: 18px;
-            font-size: 13px;
-            &-tit{
-                margin-bottom: 24px;
-            }
-            .ta-r{
-                text-align: left !important;
-            }
-        }
-    }
 }

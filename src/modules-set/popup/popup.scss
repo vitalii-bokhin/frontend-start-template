@@ -34,7 +34,7 @@
         transition: opacity .3s;
         &_visible{
             position: static;
-            transform: translate(0,0);
+            transform: none;
         }
     }
     &__inner{

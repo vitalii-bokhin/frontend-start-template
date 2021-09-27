@@ -92,7 +92,7 @@ var Popup;
         message: function (msg, winSel, callback) {
             const winEl = this.open(winSel || '#message-popup', callback);
 
-            winEl.querySelector('.popup__message').innerHTML = msg;
+            winEl.querySelector('.popup__message').innerHTML = msg.replace(/\[(\/?\w+)\]/gi, '<$1>');
         },
 
         close: function (evInit, openedWinEl) {

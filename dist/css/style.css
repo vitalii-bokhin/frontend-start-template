@@ -3162,7 +3162,7 @@ hr {
 
 .popup__window_visible {
   position: static;
-  transform: translate(0, 0);
+  transform: none;
 }
 
 .popup__inner {
@@ -3328,37 +3328,6 @@ hr {
 
 .popup-media__dots-btn.active {
   background: #212121;
-}
-
-@media (max-width: 1200px) {
-  .popup-media__bar {
-    padding: 28px 50px;
-  }
-  .popup-media__arr_l {
-    left: 35px;
-  }
-  .popup-media__arr_r {
-    right: 35px;
-  }
-}
-
-@media (max-width: 1000px) {
-  .popup-media__arr_l {
-    left: 15px;
-  }
-  .popup-media__arr_r {
-    right: 15px;
-  }
-  .popup-media__bar {
-    padding: 18px;
-    font-size: 13px;
-  }
-  .popup-media__bar-tit {
-    margin-bottom: 24px;
-  }
-  .popup-media__bar .ta-r {
-    text-align: left !important;
-  }
 }
 
 /*form error*/
