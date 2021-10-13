@@ -1,16 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     'use strict';
 
-    const fullHeightElems = document.querySelectorAll('.js-full-height');
+    const firstScreenEl = document.getElementById('first-screen');
 
     (function initFun() {
-        for (let i = 0; i < fullHeightElems.length; i++) {
-            const fHtEl = fullHeightElems[i];
+        if (firstScreenEl) {
+            firstScreenEl.style.height = '';
 
-            fHtEl.style.height = '';
-
-            if (fHtEl.offsetHeight < window.innerHeight) {
-                fHtEl.style.height = window.innerHeight + 'px';
+            if (firstScreenEl.offsetHeight < window.innerHeight) {
+                firstScreenEl.style.height = window.innerHeight + 'px';
             }
         }
 

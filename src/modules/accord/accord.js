@@ -36,7 +36,11 @@ var Accord;
             const contentElem = elem.closest('.accord__item').querySelector('.accord__content');
 
             if (elem.classList.contains('accord__button_active')) {
-                contentElem.style.height = 0;
+                contentElem.style.height = contentElem.offsetHeight + 'px';
+
+                setTimeout(function () {
+                    contentElem.style.height = '0';
+                }, 21);
 
                 elem.classList.remove('accord__button_active');
 
@@ -46,11 +50,22 @@ var Accord;
                     allContentElem = mainElem.querySelectorAll('.accord__content');
 
                 for (let i = 0; i < allButtonElem.length; i++) {
-                    allButtonElem[i].classList.remove('accord__button_active');
-                    allContentElem[i].style.height = 0;
+                    if (allButtonElem[i] != elem) {
+                        allButtonElem[i].classList.remove('accord__button_active');
+
+                        allContentElem[i].style.height = allContentElem[i].offsetHeight + 'px';
+
+                        setTimeout(function () {
+                            allContentElem[i].style.height = '0';
+                        }, 21);
+                    }
                 }
 
                 contentElem.style.height = contentElem.scrollHeight + 'px';
+
+                setTimeout(function () {
+                    contentElem.style.height = 'auto';
+                }, 300);
 
                 elem.classList.add('accord__button_active');
 
