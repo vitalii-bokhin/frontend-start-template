@@ -65,7 +65,7 @@
             this.horizontalBarSlElSize = 0;
             this.scrolled = { X: 0, Y: 0 };
             this.isScrolling = false;
-            this.isBreak = false;
+            this.breakOnNested = false;
             this.delta = 0;
             this.initialized = false;
             this.ts = Date.now();
@@ -118,11 +118,11 @@
                         innerH = winEl.scrollHeight;
                     }
 
-                        opt.actionPoints.forEach(function (pointItem) {
-                            if (pointItem.breakpoints[1] >= innerH) {
-                                innerH = pointItem.breakpoints[1];
-                            }
-                        });
+                    opt.actionPoints.forEach(function (pointItem) {
+                        if (pointItem.breakpoints[1] >= innerH) {
+                            innerH = pointItem.breakpoints[1];
+                        }
+                    });
 
                     if (innerH > winH) {
                         scrBoxEl.classList.add('srollbox_scrollable-vertical');
@@ -194,7 +194,9 @@
 
         // scroll animation
         const scrollAnim = (scrTo, ev, duration) => {
-            if (this.isScrolling) return;
+            if (this.isScrolling) {
+                return;
+            }
 
             this.isScrolling = true;
 
@@ -208,12 +210,12 @@
                 return;
             }
 
-            if (this.freezePoints.length) {
+            if (this.freezePoints.length && ev !== 'scrollTo') {
                 let scr = scrTo.Y;
 
                 this.freezePoints.forEach(point => {
                     const from = point - Math.abs(this.delta / 2),
-                    to = point + Math.abs(this.delta / 2);
+                        to = point + Math.abs(this.delta / 2);
 
                     if (from < scrTo.Y && scrTo.Y < to) {
                         scr = point;
@@ -399,7 +401,7 @@
 
             scrBoxEl.removeAttribute('data-scroll-able');
 
-            this.isBreak = false;
+            this.breakOnNested = false;
 
             if (opt.nestedScrollboxObj && opt.nestedScrollboxObj.length) {
                 opt.nestedScrollboxObj.forEach(function (item) {
@@ -419,6 +421,8 @@
                     opt[key] = val;
                 }
             }
+
+            this.reInit();
         }
 
         this.reInit = function () {
@@ -500,54 +504,56 @@
             scrTo.Y = this.scrolled.Y;
         }
 
-        if (!this.isBreak && this.nestedSbEls && ev != 'scrollTo') {
-            for (let i = 0; i < this.nestedSbEls.length; i++) {
-                const nEl = this.nestedSbEls[i],
-                    left = +nEl.getAttribute('data-offset'),
-                    pos = nEl.getAttribute('data-position');
+        // if (this.nestedSbEls && this.nestedSbEls.length) {
+        //     if (!this.breakOnNested && ev !== 'scrollTo') {
+        //         for (let i = 0; i < this.nestedSbEls.length; i++) {
+        //             const nEl = this.nestedSbEls[i],
+        //                 left = +nEl.getAttribute('data-offset'),
+        //                 pos = nEl.getAttribute('data-position');
 
-                if (
-                    left + nEl.offsetWidth > this.scrolled &&
-                    left < this.scrolled + this.winEl.offsetWidth
-                ) {
-                    if (
-                        this.delta > 0 && scrTo >= left &&
-                        !nEl.classList.contains('disabled')
-                    ) {
-                        if (pos != 'atEnd') {
-                            this.isBreak = true;
+        //             if (
+        //                 left + nEl.offsetWidth > this.scrolled &&
+        //                 left < this.scrolled + this.winEl.offsetWidth
+        //             ) {
+        //                 if (
+        //                     this.delta > 0 && scrTo >= left &&
+        //                     !nEl.classList.contains('disabled')
+        //                 ) {
+        //                     if (pos != 'atEnd') {
+        //                         this.breakOnNested = true;
 
-                            scrTo = left;
-                            this.scrTo = left;
+        //                         scrTo = left;
+        //                         this.scrTo = left;
 
-                            nEl.setAttribute('data-scroll-able', 'true');
+        //                         nEl.setAttribute('data-scroll-able', 'true');
 
-                        } else {
-                            nEl.setAttribute('data-scroll-able', 'false');
-                        }
+        //                     } else {
+        //                         nEl.setAttribute('data-scroll-able', 'false');
+        //                     }
 
-                    } else if (
-                        this.delta < 0 && scrTo <= left &&
-                        !nEl.classList.contains('disabled')
-                    ) {
-                        if (pos != 'atStart') {
-                            this.isBreak = true;
+        //                 } else if (
+        //                     this.delta < 0 && scrTo <= left &&
+        //                     !nEl.classList.contains('disabled')
+        //                 ) {
+        //                     if (pos != 'atStart') {
+        //                         this.breakOnNested = true;
 
-                            scrTo = left;
-                            this.scrTo = left;
+        //                         scrTo = left;
+        //                         this.scrTo = left;
 
-                            nEl.setAttribute('data-scroll-able', 'true');
+        //                         nEl.setAttribute('data-scroll-able', 'true');
 
-                        } else {
-                            nEl.setAttribute('data-scroll-able', 'false');
-                        }
+        //                     } else {
+        //                         nEl.setAttribute('data-scroll-able', 'false');
+        //                     }
 
-                    }
-                }
-            }
-        } else if (this.isBreak) {
-            scrTo = this.scrTo;
-        }
+        //                 }
+        //             }
+        //         }
+        //     } else if (this.breakOnNested) {
+        //         scrTo = this.scrTo;
+        //     }
+        // }
 
         // break path
         let posX, posY;
@@ -768,7 +774,7 @@
         // after scroll
         if (aftScroll) {
             this.scrolled = scrTo;
-            this.isBreak = false;
+            this.breakOnNested = false;
 
             if (this.onScroll) {
                 this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
@@ -776,6 +782,10 @@
 
             if (this.afterScroll) {
                 this.afterScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
+            }
+
+            if (this.windowScrollEvent) {
+                window.scroll(0, scrTo.Y);
             }
 
             this.params = null;
@@ -1015,8 +1025,8 @@
         }
 
         const mouseUp = () => {
-            document.removeEventListener('mousemove', mouseMove);
-            document.removeEventListener('touchmove', mouseMove);
+            this.scrBoxEl.removeEventListener('mousemove', mouseMove);
+            this.scrBoxEl.removeEventListener('touchmove', mouseMove);
 
             this.scrBoxEl.classList.remove('scrollbox_cursor-drag');
 
@@ -1038,8 +1048,8 @@
                 lastScroll.X = this.scrolled.X;
                 lastScroll.Y = this.scrolled.Y;
 
-                document.addEventListener('mousemove', mouseMove);
-                document.addEventListener('touchmove', mouseMove, { passive: false });
+                this.scrBoxEl.addEventListener('mousemove', mouseMove);
+                this.scrBoxEl.addEventListener('touchmove', mouseMove, { passive: false });
 
                 dragTimeout = setTimeout(() => {
                     this.scrBoxEl.classList.add('scrollbox_cursor-drag');
@@ -1048,18 +1058,18 @@
         }
 
         if (!this.initialized && !destroy) {
-            document.addEventListener('mousedown', mouseDown);
-            document.addEventListener('touchstart', mouseDown, { passive: false });
+            this.scrBoxEl.addEventListener('mousedown', mouseDown);
+            this.scrBoxEl.addEventListener('touchstart', mouseDown, { passive: false });
 
-            document.addEventListener('mouseup', mouseUp);
-            document.addEventListener('touchend', mouseUp);
+            this.scrBoxEl.addEventListener('mouseup', mouseUp);
+            this.scrBoxEl.addEventListener('touchend', mouseUp);
 
         } else if (destroy) {
-            document.removeEventListener('mousedown', mouseDown);
-            document.removeEventListener('touchstart', mouseDown);
+            this.scrBoxEl.removeEventListener('mousedown', mouseDown);
+            this.scrBoxEl.removeEventListener('touchstart', mouseDown);
 
-            document.removeEventListener('mouseup', mouseUp);
-            document.removeEventListener('touchend', mouseUp);
+            this.scrBoxEl.removeEventListener('mouseup', mouseUp);
+            this.scrBoxEl.removeEventListener('touchend', mouseUp);
         }
     }
 })();

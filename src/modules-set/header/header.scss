@@ -13,7 +13,7 @@
         box-shadow: 0 1px 21px rgba(0,0,0,.21);
     }
     &_hide{
-        top: -100px;
+        box-shadow: none;
     } 
     &__logo{
         display: inline-block;
@@ -24,6 +24,9 @@
     }
     @media(min-width: 1001px){
         transform: translate3d(0, 0, 0);
+        &_hide{
+            transform: translate3d(0, -100%, 0);
+        }
     }
     @media(max-width: 1000px){
         height: 65px;

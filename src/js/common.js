@@ -277,7 +277,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // accord
     try {
-        new Accord('.accord__button', 750).init();
+        new Accord({
+            btnSelector: '.accord__button',
+            autoScrollOnViewport: 700, // def: false
+            maxViewport: 1000, // def: false
+            collapseSiblings: false // def: true
+        });
     } catch (error) {
         console.log(error);
     }

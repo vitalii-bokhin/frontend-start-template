@@ -6,6 +6,26 @@
         inputEl: null,
         defValue: 0,
 
+        init: function () {
+            document.addEventListener('click', (e) => {
+                const btnEl = e.target.closest('.number__btn');
+
+                if (btnEl) this.clickHandler(btnEl);
+            });
+
+            document.addEventListener('input', (e) => {
+                const inpEl = e.target.closest('.number__input');
+
+                if (inpEl) this.inputHandler(inpEl);
+            });
+
+            document.addEventListener('blur', (e) => {
+                const inpEl = e.target.closest('.number__input');
+
+                if (inpEl) this.blurHandler(inpEl);
+            }, true);
+        },
+
         clickHandler: function (btnEl) {
             this.contEl = btnEl.closest('.number');
             this.inputEl = this.contEl.querySelector('.number__input');
@@ -34,6 +54,10 @@
             if (!/^\d*$/.test(this.inputEl.value)) {
                 this.inputEl.value = this.defValue;
             } else {
+                if (/^0+$/.test(this.inputEl.value)) {
+                    this.inputEl.value = 0;
+                }
+
                 this.defValue = this.inputEl.value;
             }
         },
@@ -45,26 +69,6 @@
                 this.inputEl.value = 0;
                 this.defValue = 0;
             }
-        },
-
-        init: function () {
-            document.addEventListener('click', (e) => {
-                const btnEl = e.target.closest('.number__btn');
-
-                if (btnEl) this.clickHandler(btnEl);
-            });
-
-            document.addEventListener('input', (e) => {
-                const inpEl = e.target.closest('.number__input');
-
-                if (inpEl) this.inputHandler(inpEl);
-            });
-
-            document.addEventListener('blur', (e) => {
-                const inpEl = e.target.closest('.number__input');
-
-                if (inpEl) this.blurHandler(inpEl);
-            }, true);
         }
     };
 

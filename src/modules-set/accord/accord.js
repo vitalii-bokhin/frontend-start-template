@@ -1,27 +1,37 @@
 /*
-* call new Accord(Str button selector [, autoScroll viewport width]).init();
+new Accord({
+    btnSelector: '.accord__button',
+    autoScrollOnViewport: 700, // def: false
+    maxViewport: 1000, // def: false
+    collapseSiblings: false // def: true
+});
 */
 var Accord;
 
 (function () {
     'use strict';
 
-    Accord = function (btnSel, autoScroll, maxViewport) {
-        this.btnSel = btnSel;
+    Accord = function (options) {
+        const opt = options || {};
+
+        this.btnSel = opt.btnSelector;
+        this.autoScroll = opt.autoScrollOnViewport || false;
+        this.collapseSiblings = opt.collapseSiblings !== undefined ? opt.collapseSiblings : true;
+
+        opt.maxViewport = opt.maxViewport || false;
+
         this.initialized = false;
-        this.autoScroll = autoScroll;
 
-        this.init = function () {
-            if (this.initialized || !document.querySelectorAll('.accord').length) return;
-
+        if (!this.initialized && document.querySelectorAll('.accord').length) {
             this.initialized = true;
 
             document.addEventListener('click', (e) => {
                 const btnEl = e.target.closest(this.btnSel);
 
                 if (
-                    !btnEl || btnEl.closest('.accord_closed') ||
-                    (maxViewport && window.innerWidth > maxViewport)
+                    !btnEl ||
+                    btnEl.closest('.accord_closed') ||
+                    (opt.maxViewport && window.innerWidth > opt.maxViewport)
                 ) {
                     return;
                 }
@@ -35,35 +45,58 @@ var Accord;
         this.toggle = function (elem) {
             const contentElem = elem.closest('.accord__item').querySelector('.accord__content');
 
-            if (elem.classList.contains('accord__button_active')) {
-                contentElem.style.height = 0;
+            if (elem.classList.contains('active')) {
+                contentElem.style.height = contentElem.offsetHeight + 'px';
 
-                elem.classList.remove('accord__button_active');
+                setTimeout(function () {
+                    contentElem.style.height = '0';
+                }, 21);
+
+                elem.classList.remove('active');
 
             } else {
-                const mainElem = elem.closest('.accord'),
-                    allButtonElem = mainElem.querySelectorAll('.accord__button'),
-                    allContentElem = mainElem.querySelectorAll('.accord__content');
+                const mainElem = elem.closest('.accord');
 
-                for (let i = 0; i < allButtonElem.length; i++) {
-                    allButtonElem[i].classList.remove('accord__button_active');
-                    allContentElem[i].style.height = 0;
+                if (this.collapseSiblings) {
+                    const allButtonElem = mainElem.querySelectorAll(this.btnSel),
+                        allContentElem = mainElem.querySelectorAll('.accord__content');
+
+                    for (let i = 0; i < allButtonElem.length; i++) {
+                        if (allButtonElem[i] != elem) {
+                            allButtonElem[i].classList.remove('active');
+                        }
+                    }
+
+                    for (let i = 0; i < allContentElem.length; i++) {
+                        if (allContentElem[i] != contentElem) {
+                            allContentElem[i].style.height = allContentElem[i].offsetHeight + 'px';
+
+                            setTimeout(function () {
+                                allContentElem[i].style.height = '0';
+                            }, 21);
+                        }
+                    }
                 }
 
                 contentElem.style.height = contentElem.scrollHeight + 'px';
 
-                elem.classList.add('accord__button_active');
+                setTimeout(() => {
+                    contentElem.style.height = 'auto';
 
-                if (this.autoScroll && window.innerWidth <= this.autoScroll) {
-                    this.scroll(elem);
-                }
+                    if (this.autoScroll && window.innerWidth <= this.autoScroll) {
+                        this.scroll(elem);
+                    }
+                }, 300);
+
+                elem.classList.add('active');
             }
         }
 
         this.scroll = function (elem) {
             setTimeout(function () {
-                $('html, body').stop().animate({ scrollTop: $(elem).position().top - 20 }, 721);
-            }, 321);
+                $('html, body').stop()
+                    .animate({ scrollTop: $(elem).offset().top - $('.header').innerHeight() - 5 }, 721);
+            }, 21);
         }
     };
 })();

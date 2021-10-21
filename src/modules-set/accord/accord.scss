@@ -29,7 +29,7 @@
             opacity: .38;
             transition: .21s;
         }
-        &_active{
+        &.active{
             &:after{
                 transform: rotate(180deg);
             }

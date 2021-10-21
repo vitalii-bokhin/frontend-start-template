@@ -33,13 +33,17 @@ var Tab;
             for (let i = 0; i < contElements.length; i++) {
                 const contElem = contElements[i],
                     btnElements = contElem.querySelectorAll(options.button),
-                    tabItemElements = contElem.querySelectorAll(options.item),
-                    tabItemElemActive = contElem.querySelector(this.options.item + '.active');
+                    tabItemElements = contElem.querySelectorAll(options.item);
 
                 for (let i = 0; i < btnElements.length; i++) {
                     btnElements[i].setAttribute('data-index', i);
                     tabItemElements[i].setAttribute('data-index', i);
                 }
+
+                btnElements[0].classList.add('active');
+                tabItemElements[0].classList.add('active');
+
+                const tabItemElemActive = contElem.querySelector(this.options.item + '.active');
 
                 if (options.hash && window.location.hash) {
                     const btnElem = contElem.querySelector(options.button + '[href*="' + window.location.hash + '"]');

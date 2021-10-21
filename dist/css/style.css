@@ -115,7 +115,7 @@ body {
   line-height: 1;
 }
 
-.paginate__prev::after, .paginate__next::after, .menu-close-btn:after, .menu-close-btn:before, .toggle:before, .toggle:after, .video__frame::before, .popup-close-btn:after, .popup-close-btn:before, .custom-checkbox__label:before, .custom-radio__input:checked + .custom-radio__label:after, .custom-radio__label:before, .select__button::after, .select__arr:after, .autocomplete__arr:after, .custom-file__btn:after, .custom-file__preview:after, .number__btn_min::before, .number__btn_plus::before, .number__btn_plus::after, .form__btn:before, .form_sending .form__loader:before, .form_sending .form__submit:before, .form_sending .form__submit:after, .accord__button:after, .accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before, .accord__btn-btn:after, .more__content::after, .alert__close-btn:after, .alert__close-btn:before, .tooltip__close:after, .tooltip__close:before, .slick-arrow:after, .list li:before {
+.paginate__prev::after, .paginate__next::after, .menu-close-btn:after, .menu-close-btn:before, .toggle:before, .toggle:after, .video__frame::before, .popup-close-btn:after, .popup-close-btn:before, .field-success::after, .custom-checkbox__label:before, .custom-radio__input:checked + .custom-radio__label:after, .custom-radio__label:before, .select__button::after, .select__arr:after, .autocomplete__arr:after, .custom-file__btn:after, .custom-file__preview:after, .number__btn_min::before, .number__btn_plus::before, .number__btn_plus::after, .form__btn:before, .form_sending .form__loader:before, .form_sending .form__submit:before, .form_sending .form__submit:after, .accord__button:after, .accord__button.active .accord__btn-btn:after, .accord__button.active .accord__btn-btn:before, .accord__btn-btn:after, .more__content::after, .alert__close-btn:after, .alert__close-btn:before, .tooltip__close:after, .tooltip__close:before, .slick-arrow:after, .list li:before {
   display: block;
   content: "";
   box-sizing: border-box;
@@ -2484,7 +2484,7 @@ hr {
 }
 
 .header_hide {
-  top: -100px;
+  box-shadow: none;
 }
 
 .header__logo {
@@ -2495,6 +2495,9 @@ hr {
 @media (min-width: 1001px) {
   .header {
     transform: translate3d(0, 0, 0);
+  }
+  .header_hide {
+    transform: translate3d(0, -100%, 0);
   }
 }
 
@@ -3363,6 +3366,17 @@ hr {
   border-color: #ff0000;
 }
 
+.field-success::after {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: -5px;
+  background: #00ff00;
+  z-index: 2;
+}
+
 .file-error {
   color: #ff0000;
 }
@@ -3666,6 +3680,33 @@ hr {
   transition: 0s;
   background: #aaaaaa;
   border-color: #aaaaaa;
+}
+
+.formslider_vertical {
+  width: 14px;
+  height: 320px;
+  margin: 0;
+}
+
+.formslider_vertical .formslider__bar {
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  margin-left: -1px;
+}
+
+.formslider_vertical .formslider__drag {
+  left: -12px;
+  top: auto;
+  bottom: 0;
+}
+
+.formslider_vertical .formslider__track {
+  top: auto;
+  bottom: 0;
+  width: 100%;
+  height: auto;
 }
 
 .autocomplete__input, .form__text-input, .form__textarea {
@@ -4340,11 +4381,11 @@ hr {
   transition: .21s;
 }
 
-.accord__button_active:after {
+.accord__button.active:after {
   transform: rotate(180deg);
 }
 
-.accord__button_active .accord__btn-btn:after, .accord__button_active .accord__btn-btn:before {
+.accord__button.active .accord__btn-btn:after, .accord__button.active .accord__btn-btn:before {
   width: 20px;
   height: 2px;
   background: #aaaaaa;
@@ -4355,11 +4396,11 @@ hr {
   border: none;
 }
 
-.accord__button_active .accord__btn-btn:after {
+.accord__button.active .accord__btn-btn:after {
   transform: rotate(-45deg);
 }
 
-.accord__button_active .accord__btn-btn:before {
+.accord__button.active .accord__btn-btn:before {
   transform: rotate(45deg);
 }
 

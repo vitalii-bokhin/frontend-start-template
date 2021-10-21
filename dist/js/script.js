@@ -99,7 +99,7 @@
             if (
                 compStyle.display == 'none' ||
                 compStyle.visibility == 'hidden' ||
-                (exclude.indexOf('opacity') == -1 && compStyle.opacity == '0')
+                (!exclude.includes('opacity') && compStyle.opacity == '0')
             ) return true;
 
             elem = elem.parentElement;
@@ -2094,7 +2094,7 @@ var ValidateForm;
         inpH: function (e) {
             const elem = e.target.closest(this.formSelector + ' input[type="text"],' + this.formSelector + ' input[type="password"],' + this.formSelector + ' input[type="number"],' + this.formSelector + ' input[type="tel"],' + this.formSelector + ' textarea, input[type="text"][form]');
 
-            if (elem && elem.hasAttribute('data-tested')) {
+            if (elem /* && elem.hasAttribute('data-tested') */) {
                 setTimeout(() => {
                     this.validateOnInput(elem);
                 }, 121);
@@ -2114,20 +2114,57 @@ var ValidateForm;
 
             const dataType = elem.getAttribute('data-type');
 
-            if (elem.getAttribute('data-required') === 'true' && (!elem.value.length || /^\s+$/.test(elem.value))) {
-                this.errorTip(true);
-            } else if (elem.value.length) {
-                if (dataType) {
-                    try {
-                        this[dataType]();
-                    } catch (error) {
-                        console.log('Error while process', dataType)
+            if (elem.hasAttribute('data-tested')) {
+                if (
+                    elem.getAttribute('data-required') === 'true' &&
+                    (!elem.value.length || /^\s+$/.test(elem.value))
+                ) {
+                    this.errorTip(true);
+                } else if (elem.value.length) {
+                    if (dataType) {
+                        try {
+                            const tE = this[dataType]();
+
+                            if (tE) {
+                                this.errorTip(true, tE);
+                                err++;
+                                errElems.push(elem);
+                            } else {
+                                this.errorTip(false);
+                            }
+                        } catch (error) {
+                            console.log('Error while process', dataType)
+                        }
+                    } else {
+                        this.errorTip(false);
                     }
                 } else {
                     this.errorTip(false);
                 }
+
             } else {
-                this.errorTip(false);
+                if (
+                    elem.getAttribute('data-required') === 'true' &&
+                    (!elem.value.length || /^\s+$/.test(elem.value))
+                ) {
+                    this.successTip(false);
+                } else if (elem.value.length) {
+                    if (dataType) {
+                        try {
+                            if (this[dataType]() === null) {
+                                this.successTip(true);
+                            } else {
+                                this.successTip(false);
+                            }
+                        } catch (error) {
+                            console.log('Error while process', dataType)
+                        }
+                    } else {
+                        this.successTip(true);
+                    }
+                } else {
+                    this.successTip(true);
+                }
             }
         },
 
@@ -2143,7 +2180,9 @@ var ValidateForm;
                 for (let i = 0; i < elements.length; i++) {
                     const elem = elements[i];
 
-                    if (elemIsHidden(elem)) continue;
+                    if (elemIsHidden(elem)) {
+                        continue;
+                    }
 
                     this.input = elem;
 
@@ -2151,7 +2190,10 @@ var ValidateForm;
 
                     const dataType = elem.getAttribute('data-type');
 
-                    if (elem.getAttribute('data-required') === 'true' && (!elem.value.length || /^\s+$/.test(elem.value))) {
+                    if (
+                        elem.getAttribute('data-required') === 'true' &&
+                        (!elem.value.length || /^\s+$/.test(elem.value))
+                    ) {
                         this.errorTip(true);
                         err++;
                         errElems.push(elem);
@@ -2161,9 +2203,14 @@ var ValidateForm;
                             errElems.push(elem);
                         } else if (dataType) {
                             try {
-                                if (this[dataType]()) {
+                                const tE = this[dataType]();
+
+                                if (tE) {
+                                    this.errorTip(true, tE);
                                     err++;
                                     errElems.push(elem);
+                                } else {
+                                    this.errorTip(false);
                                 }
                             } catch (error) {
                                 console.log('Error while process', dataType)
@@ -2344,6 +2391,16 @@ var ValidateForm;
             return (err) ? false : true;
         },
 
+        successTip: function (state) {
+            const field = this.input.closest('.form__field') || this.input.parentElement;
+
+            if (state) {
+                field.classList.add('field-success');
+            } else {
+                field.classList.remove('field-success');
+            }
+        },
+
         errorTip: function (err, errInd, errorTxt) {
             const field = this.input.closest('.form__field') || this.input.parentElement,
                 tipEl = field.querySelector('.field-error-tip');
@@ -2428,15 +2485,15 @@ var ValidateForm;
             }
         },
 
-        scrollToErrElem: function(elems) {
+        scrollToErrElem: function (elems) {
             let offsetTop = 99999;
 
             const headerHeight = document.querySelector('.header').offsetHeight;
 
             for (let i = 0; i < elems.length; i++) {
                 const el = elems[i],
-                epOffsetTop = el.getBoundingClientRect().top;
-                
+                    epOffsetTop = el.getBoundingClientRect().top;
+
                 if (epOffsetTop < headerHeight && epOffsetTop < offsetTop) {
                     offsetTop = epOffsetTop;
                 }
@@ -2452,60 +2509,39 @@ var ValidateForm;
         },
 
         txt: function () {
-            let err = false;
-
             if (!/^[0-9a-zа-яё_,.:;@-\s]*$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         num: function () {
-            let err = false;
-
             if (!/^[0-9.,-]*$/.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         cardNumber: function () {
-            let err = false;
-
             if (!/^\d{4}\-\d{4}\-\d{4}\-\d{4}$/.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         name: function () {
-            let err = false;
-
             if (!/^[a-zа-яё'\s-]{2,21}(\s[a-zа-яё'\s-]{2,21})?(\s[a-zа-яё'\s-]{2,21})?$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         date: function () {
-            let err = false,
-                errDate = false,
+            let errDate = false,
                 matches = this.input.value.match(/^(\d{2}).(\d{2}).(\d{4})$/);
 
             if (!matches) {
@@ -2530,70 +2566,46 @@ var ValidateForm;
             }
 
             if (errDate == 1) {
-                this.errorTip(true, 2);
-                err = true;
+                return 2;
             } else if (errDate == 2) {
-                this.errorTip(true, 3);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 3;
             }
 
-            return err;
+            return null;
         },
 
         time: function () {
             const matches = this.input.value.match(/^(\d{1,2}):(\d{1,2})$/);
 
-            let err = false;
-
             if (!matches || Number(matches[1]) > 23 || Number(matches[2]) > 59) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         email: function () {
-            let err = false;
-
             if (!/^[a-z0-9]+[\w\-\.]*@([\w\-]{2,}\.)+[a-z]{2,}$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         url: function () {
-            let err = false;
-
             if (!/^(https?\:\/\/)?[а-я\w-.]+\.[a-zа-я]{2,11}[/?а-я\w/=-]+$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         tel: function () {
-            let err = false;
-
             if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         pass: function () {
@@ -2601,13 +2613,10 @@ var ValidateForm;
                 minLng = this.input.getAttribute('data-min-length');
 
             if (minLng && this.input.value.length < minLng) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         checkbox: function (elem) {
@@ -4873,6 +4882,28 @@ var Form, DuplicateForm;
         formSelector: null,
         onSubmitSubscribers: [],
 
+        init: function (formSelector) {
+            if (!document.querySelector(formSelector)) return;
+
+            this.formSelector = formSelector;
+
+            initFormScripst();
+
+            ValidateForm.init(formSelector);
+
+            // submit event
+            document.removeEventListener('submit', this.sH);
+
+            this.sH = this.sH.bind(this);
+            document.addEventListener('submit', this.sH);
+
+            // keyboard event
+            document.removeEventListener('keydown', this.kH);
+
+            this.kH = this.kH.bind(this);
+            document.addEventListener('keydown', this.kH);
+        },
+
         sH: function (e) {
             const formElem = e.target.closest(this.formSelector);
 
@@ -4896,28 +4927,6 @@ var Form, DuplicateForm;
                 e.preventDefault();
                 this.submitForm(formElem, e);
             }
-        },
-
-        init: function (formSelector) {
-            if (!document.querySelector(formSelector)) return;
-
-            this.formSelector = formSelector;
-
-            initScripst();
-
-            ValidateForm.init(formSelector);
-
-            // submit event
-            document.removeEventListener('submit', this.sH);
-
-            this.sH = this.sH.bind(this);
-            document.addEventListener('submit', this.sH);
-
-            // keyboard event
-            document.removeEventListener('keydown', this.kH);
-
-            this.kH = this.kH.bind(this);
-            document.addEventListener('keydown', this.kH);
         },
 
         submitForm: function (formElem, e) {
@@ -5138,7 +5147,7 @@ var Form, DuplicateForm;
     }*/
 
     // init scripts
-    function initScripst() {
+    function initFormScripst() {
         BindLabels('input[type="text"], input[type="number"], input[type="tel"], input[type="checkbox"], input[type="radio"]');
         if (window.Placeholder) Placeholder.init('input[type="text"], input[type="number"], input[type="tel"], input[type="password"], textarea');
         // SetTabindex('input[type="text"], input[type="password"], textarea');
@@ -5149,29 +5158,39 @@ var Form, DuplicateForm;
     }
 })();
 /*
-* call new Accord(Str button selector [, autoScroll viewport width]).init();
+new Accord({
+    btnSelector: '.accord__button',
+    autoScrollOnViewport: 700, // def: false
+    maxViewport: 1000, // def: false
+    collapseSiblings: false // def: true
+});
 */
 var Accord;
 
 (function () {
     'use strict';
 
-    Accord = function (btnSel, autoScroll, maxViewport) {
-        this.btnSel = btnSel;
+    Accord = function (options) {
+        const opt = options || {};
+
+        this.btnSel = opt.btnSelector;
+        this.autoScroll = opt.autoScrollOnViewport || false;
+        this.collapseSiblings = opt.collapseSiblings !== undefined ? opt.collapseSiblings : true;
+
+        opt.maxViewport = opt.maxViewport || false;
+
         this.initialized = false;
-        this.autoScroll = autoScroll;
 
-        this.init = function () {
-            if (this.initialized || !document.querySelectorAll('.accord').length) return;
-
+        if (!this.initialized && document.querySelectorAll('.accord').length) {
             this.initialized = true;
 
             document.addEventListener('click', (e) => {
                 const btnEl = e.target.closest(this.btnSel);
 
                 if (
-                    !btnEl || btnEl.closest('.accord_closed') ||
-                    (maxViewport && window.innerWidth > maxViewport)
+                    !btnEl ||
+                    btnEl.closest('.accord_closed') ||
+                    (opt.maxViewport && window.innerWidth > opt.maxViewport)
                 ) {
                     return;
                 }
@@ -5185,35 +5204,58 @@ var Accord;
         this.toggle = function (elem) {
             const contentElem = elem.closest('.accord__item').querySelector('.accord__content');
 
-            if (elem.classList.contains('accord__button_active')) {
-                contentElem.style.height = 0;
+            if (elem.classList.contains('active')) {
+                contentElem.style.height = contentElem.offsetHeight + 'px';
 
-                elem.classList.remove('accord__button_active');
+                setTimeout(function () {
+                    contentElem.style.height = '0';
+                }, 21);
+
+                elem.classList.remove('active');
 
             } else {
-                const mainElem = elem.closest('.accord'),
-                    allButtonElem = mainElem.querySelectorAll('.accord__button'),
-                    allContentElem = mainElem.querySelectorAll('.accord__content');
+                const mainElem = elem.closest('.accord');
 
-                for (let i = 0; i < allButtonElem.length; i++) {
-                    allButtonElem[i].classList.remove('accord__button_active');
-                    allContentElem[i].style.height = 0;
+                if (this.collapseSiblings) {
+                    const allButtonElem = mainElem.querySelectorAll(this.btnSel),
+                        allContentElem = mainElem.querySelectorAll('.accord__content');
+
+                    for (let i = 0; i < allButtonElem.length; i++) {
+                        if (allButtonElem[i] != elem) {
+                            allButtonElem[i].classList.remove('active');
+                        }
+                    }
+
+                    for (let i = 0; i < allContentElem.length; i++) {
+                        if (allContentElem[i] != contentElem) {
+                            allContentElem[i].style.height = allContentElem[i].offsetHeight + 'px';
+
+                            setTimeout(function () {
+                                allContentElem[i].style.height = '0';
+                            }, 21);
+                        }
+                    }
                 }
 
                 contentElem.style.height = contentElem.scrollHeight + 'px';
 
-                elem.classList.add('accord__button_active');
+                setTimeout(() => {
+                    contentElem.style.height = 'auto';
 
-                if (this.autoScroll && window.innerWidth <= this.autoScroll) {
-                    this.scroll(elem);
-                }
+                    if (this.autoScroll && window.innerWidth <= this.autoScroll) {
+                        this.scroll(elem);
+                    }
+                }, 300);
+
+                elem.classList.add('active');
             }
         }
 
         this.scroll = function (elem) {
             setTimeout(function () {
-                $('html, body').stop().animate({ scrollTop: $(elem).position().top - 20 }, 721);
-            }, 321);
+                $('html, body').stop()
+                    .animate({ scrollTop: $(elem).offset().top - $('.header').innerHeight() - 5 }, 721);
+            }, 21);
         }
     };
 })();
@@ -5381,13 +5423,17 @@ var Tab;
             for (let i = 0; i < contElements.length; i++) {
                 const contElem = contElements[i],
                     btnElements = contElem.querySelectorAll(options.button),
-                    tabItemElements = contElem.querySelectorAll(options.item),
-                    tabItemElemActive = contElem.querySelector(this.options.item + '.active');
+                    tabItemElements = contElem.querySelectorAll(options.item);
 
                 for (let i = 0; i < btnElements.length; i++) {
                     btnElements[i].setAttribute('data-index', i);
                     tabItemElements[i].setAttribute('data-index', i);
                 }
+
+                btnElements[0].classList.add('active');
+                tabItemElements[0].classList.add('active');
+
+                const tabItemElemActive = contElem.querySelector(this.options.item + '.active');
 
                 if (options.hash && window.location.hash) {
                     const btnElem = contElem.querySelector(options.button + '[href*="' + window.location.hash + '"]');
@@ -6967,7 +7013,7 @@ function Mouseparallax(elSel, options) {
             this.horizontalBarSlElSize = 0;
             this.scrolled = { X: 0, Y: 0 };
             this.isScrolling = false;
-            this.isBreak = false;
+            this.breakOnNested = false;
             this.delta = 0;
             this.initialized = false;
             this.ts = Date.now();
@@ -7020,11 +7066,11 @@ function Mouseparallax(elSel, options) {
                         innerH = winEl.scrollHeight;
                     }
 
-                        opt.actionPoints.forEach(function (pointItem) {
-                            if (pointItem.breakpoints[1] >= innerH) {
-                                innerH = pointItem.breakpoints[1];
-                            }
-                        });
+                    opt.actionPoints.forEach(function (pointItem) {
+                        if (pointItem.breakpoints[1] >= innerH) {
+                            innerH = pointItem.breakpoints[1];
+                        }
+                    });
 
                     if (innerH > winH) {
                         scrBoxEl.classList.add('srollbox_scrollable-vertical');
@@ -7096,7 +7142,9 @@ function Mouseparallax(elSel, options) {
 
         // scroll animation
         const scrollAnim = (scrTo, ev, duration) => {
-            if (this.isScrolling) return;
+            if (this.isScrolling) {
+                return;
+            }
 
             this.isScrolling = true;
 
@@ -7110,12 +7158,12 @@ function Mouseparallax(elSel, options) {
                 return;
             }
 
-            if (this.freezePoints.length) {
+            if (this.freezePoints.length && ev !== 'scrollTo') {
                 let scr = scrTo.Y;
 
                 this.freezePoints.forEach(point => {
                     const from = point - Math.abs(this.delta / 2),
-                    to = point + Math.abs(this.delta / 2);
+                        to = point + Math.abs(this.delta / 2);
 
                     if (from < scrTo.Y && scrTo.Y < to) {
                         scr = point;
@@ -7301,7 +7349,7 @@ function Mouseparallax(elSel, options) {
 
             scrBoxEl.removeAttribute('data-scroll-able');
 
-            this.isBreak = false;
+            this.breakOnNested = false;
 
             if (opt.nestedScrollboxObj && opt.nestedScrollboxObj.length) {
                 opt.nestedScrollboxObj.forEach(function (item) {
@@ -7321,6 +7369,8 @@ function Mouseparallax(elSel, options) {
                     opt[key] = val;
                 }
             }
+
+            this.reInit();
         }
 
         this.reInit = function () {
@@ -7402,54 +7452,56 @@ function Mouseparallax(elSel, options) {
             scrTo.Y = this.scrolled.Y;
         }
 
-        if (!this.isBreak && this.nestedSbEls && ev != 'scrollTo') {
-            for (let i = 0; i < this.nestedSbEls.length; i++) {
-                const nEl = this.nestedSbEls[i],
-                    left = +nEl.getAttribute('data-offset'),
-                    pos = nEl.getAttribute('data-position');
+        // if (this.nestedSbEls && this.nestedSbEls.length) {
+        //     if (!this.breakOnNested && ev !== 'scrollTo') {
+        //         for (let i = 0; i < this.nestedSbEls.length; i++) {
+        //             const nEl = this.nestedSbEls[i],
+        //                 left = +nEl.getAttribute('data-offset'),
+        //                 pos = nEl.getAttribute('data-position');
 
-                if (
-                    left + nEl.offsetWidth > this.scrolled &&
-                    left < this.scrolled + this.winEl.offsetWidth
-                ) {
-                    if (
-                        this.delta > 0 && scrTo >= left &&
-                        !nEl.classList.contains('disabled')
-                    ) {
-                        if (pos != 'atEnd') {
-                            this.isBreak = true;
+        //             if (
+        //                 left + nEl.offsetWidth > this.scrolled &&
+        //                 left < this.scrolled + this.winEl.offsetWidth
+        //             ) {
+        //                 if (
+        //                     this.delta > 0 && scrTo >= left &&
+        //                     !nEl.classList.contains('disabled')
+        //                 ) {
+        //                     if (pos != 'atEnd') {
+        //                         this.breakOnNested = true;
 
-                            scrTo = left;
-                            this.scrTo = left;
+        //                         scrTo = left;
+        //                         this.scrTo = left;
 
-                            nEl.setAttribute('data-scroll-able', 'true');
+        //                         nEl.setAttribute('data-scroll-able', 'true');
 
-                        } else {
-                            nEl.setAttribute('data-scroll-able', 'false');
-                        }
+        //                     } else {
+        //                         nEl.setAttribute('data-scroll-able', 'false');
+        //                     }
 
-                    } else if (
-                        this.delta < 0 && scrTo <= left &&
-                        !nEl.classList.contains('disabled')
-                    ) {
-                        if (pos != 'atStart') {
-                            this.isBreak = true;
+        //                 } else if (
+        //                     this.delta < 0 && scrTo <= left &&
+        //                     !nEl.classList.contains('disabled')
+        //                 ) {
+        //                     if (pos != 'atStart') {
+        //                         this.breakOnNested = true;
 
-                            scrTo = left;
-                            this.scrTo = left;
+        //                         scrTo = left;
+        //                         this.scrTo = left;
 
-                            nEl.setAttribute('data-scroll-able', 'true');
+        //                         nEl.setAttribute('data-scroll-able', 'true');
 
-                        } else {
-                            nEl.setAttribute('data-scroll-able', 'false');
-                        }
+        //                     } else {
+        //                         nEl.setAttribute('data-scroll-able', 'false');
+        //                     }
 
-                    }
-                }
-            }
-        } else if (this.isBreak) {
-            scrTo = this.scrTo;
-        }
+        //                 }
+        //             }
+        //         }
+        //     } else if (this.breakOnNested) {
+        //         scrTo = this.scrTo;
+        //     }
+        // }
 
         // break path
         let posX, posY;
@@ -7670,7 +7722,7 @@ function Mouseparallax(elSel, options) {
         // after scroll
         if (aftScroll) {
             this.scrolled = scrTo;
-            this.isBreak = false;
+            this.breakOnNested = false;
 
             if (this.onScroll) {
                 this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
@@ -7678,6 +7730,10 @@ function Mouseparallax(elSel, options) {
 
             if (this.afterScroll) {
                 this.afterScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);
+            }
+
+            if (this.windowScrollEvent) {
+                window.scroll(0, scrTo.Y);
             }
 
             this.params = null;
@@ -7917,8 +7973,8 @@ function Mouseparallax(elSel, options) {
         }
 
         const mouseUp = () => {
-            document.removeEventListener('mousemove', mouseMove);
-            document.removeEventListener('touchmove', mouseMove);
+            this.scrBoxEl.removeEventListener('mousemove', mouseMove);
+            this.scrBoxEl.removeEventListener('touchmove', mouseMove);
 
             this.scrBoxEl.classList.remove('scrollbox_cursor-drag');
 
@@ -7940,8 +7996,8 @@ function Mouseparallax(elSel, options) {
                 lastScroll.X = this.scrolled.X;
                 lastScroll.Y = this.scrolled.Y;
 
-                document.addEventListener('mousemove', mouseMove);
-                document.addEventListener('touchmove', mouseMove, { passive: false });
+                this.scrBoxEl.addEventListener('mousemove', mouseMove);
+                this.scrBoxEl.addEventListener('touchmove', mouseMove, { passive: false });
 
                 dragTimeout = setTimeout(() => {
                     this.scrBoxEl.classList.add('scrollbox_cursor-drag');
@@ -7950,18 +8006,18 @@ function Mouseparallax(elSel, options) {
         }
 
         if (!this.initialized && !destroy) {
-            document.addEventListener('mousedown', mouseDown);
-            document.addEventListener('touchstart', mouseDown, { passive: false });
+            this.scrBoxEl.addEventListener('mousedown', mouseDown);
+            this.scrBoxEl.addEventListener('touchstart', mouseDown, { passive: false });
 
-            document.addEventListener('mouseup', mouseUp);
-            document.addEventListener('touchend', mouseUp);
+            this.scrBoxEl.addEventListener('mouseup', mouseUp);
+            this.scrBoxEl.addEventListener('touchend', mouseUp);
 
         } else if (destroy) {
-            document.removeEventListener('mousedown', mouseDown);
-            document.removeEventListener('touchstart', mouseDown);
+            this.scrBoxEl.removeEventListener('mousedown', mouseDown);
+            this.scrBoxEl.removeEventListener('touchstart', mouseDown);
 
-            document.removeEventListener('mouseup', mouseUp);
-            document.removeEventListener('touchend', mouseUp);
+            this.scrBoxEl.removeEventListener('mouseup', mouseUp);
+            this.scrBoxEl.removeEventListener('touchend', mouseUp);
         }
     }
 })();

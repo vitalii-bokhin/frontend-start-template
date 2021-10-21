@@ -99,7 +99,7 @@
             if (
                 compStyle.display == 'none' ||
                 compStyle.visibility == 'hidden' ||
-                (exclude.indexOf('opacity') == -1 && compStyle.opacity == '0')
+                (!exclude.includes('opacity') && compStyle.opacity == '0')
             ) return true;
 
             elem = elem.parentElement;
