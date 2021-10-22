@@ -30,6 +30,28 @@ var Form, DuplicateForm;
         formSelector: null,
         onSubmitSubscribers: [],
 
+        init: function (formSelector) {
+            if (!document.querySelector(formSelector)) return;
+
+            this.formSelector = formSelector;
+
+            initFormScripst();
+
+            ValidateForm.init(formSelector);
+
+            // submit event
+            document.removeEventListener('submit', this.sH);
+
+            this.sH = this.sH.bind(this);
+            document.addEventListener('submit', this.sH);
+
+            // keyboard event
+            document.removeEventListener('keydown', this.kH);
+
+            this.kH = this.kH.bind(this);
+            document.addEventListener('keydown', this.kH);
+        },
+
         sH: function (e) {
             const formElem = e.target.closest(this.formSelector);
 
@@ -53,28 +75,6 @@ var Form, DuplicateForm;
                 e.preventDefault();
                 this.submitForm(formElem, e);
             }
-        },
-
-        init: function (formSelector) {
-            if (!document.querySelector(formSelector)) return;
-
-            this.formSelector = formSelector;
-
-            initScripst();
-
-            ValidateForm.init(formSelector);
-
-            // submit event
-            document.removeEventListener('submit', this.sH);
-
-            this.sH = this.sH.bind(this);
-            document.addEventListener('submit', this.sH);
-
-            // keyboard event
-            document.removeEventListener('keydown', this.kH);
-
-            this.kH = this.kH.bind(this);
-            document.addEventListener('keydown', this.kH);
         },
 
         submitForm: function (formElem, e) {
@@ -295,7 +295,7 @@ var Form, DuplicateForm;
     }*/
 
     // init scripts
-    function initScripst() {
+    function initFormScripst() {
         BindLabels('input[type="text"], input[type="number"], input[type="tel"], input[type="checkbox"], input[type="radio"]');
         if (window.Placeholder) Placeholder.init('input[type="text"], input[type="number"], input[type="tel"], input[type="password"], textarea');
         // SetTabindex('input[type="text"], input[type="password"], textarea');

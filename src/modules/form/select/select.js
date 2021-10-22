@@ -213,10 +213,16 @@
 
                     valElem.classList.remove('select__val_checked');
                     valElem.disabled = false;
+                    
+                    valElem.parentElement.classList.remove('hidden');
                 }
 
                 elem.classList.add('select__val_checked');
                 elem.disabled = true;
+
+                if (this.field.classList.contains('select_hide-selected-option')) {
+                    elem.parentElement.classList.add('hidden');
+                }
 
                 if (button) {
                     button.children[0].innerHTML = toButtonValue;
@@ -379,11 +385,17 @@
                 for (let i = 0; i < options.length; i++) {
                     const opt = options[i];
 
+                    let liClass = '';
+
                     if (opt.hasAttribute('selected')) {
                         selectedOption = opt;
+
+                        if (elem.getAttribute('data-hide-selected-option') == 'true') {
+                            liClass = 'hidden';
+                        }
                     }
 
-                    optionsList += '<li><button type="button" tabindex="-1" class="select__val' + ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') + '"' + ((opt.hasAttribute('value')) ? ' data-value="' + opt.value + '"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="' + opt.getAttribute('data-second-value') + '"' : '') + ((opt.hasAttribute('data-show-elements')) ? ' data-show-elements="' + opt.getAttribute('data-show-elements') + '"' : '') + ((opt.hasAttribute('data-hide-elements')) ? ' data-hide-elements="' + opt.getAttribute('data-hide-elements') + '"' : '') + '>' + opt.innerHTML + '</button></li>';
+                    optionsList += '<li' + (liClass ? ' class="' + liClass + '"' : '') + '><button type="button" tabindex="-1" class="select__val' + ((opt.hasAttribute('selected')) ? ' select__val_checked' : '') + '"' + ((opt.hasAttribute('value')) ? ' data-value="' + opt.value + '"' : '') + ((opt.hasAttribute('data-second-value')) ? ' data-second-value="' + opt.getAttribute('data-second-value') + '"' : '') + ((opt.hasAttribute('data-show-elements')) ? ' data-show-elements="' + opt.getAttribute('data-show-elements') + '"' : '') + ((opt.hasAttribute('data-hide-elements')) ? ' data-hide-elements="' + opt.getAttribute('data-hide-elements') + '"' : '') + '>' + opt.innerHTML + '</button></li>';
                 }
 
                 const require = (elem.hasAttribute('data-required')) ? ' data-required="' + elem.getAttribute('data-required') + '" ' : '';
@@ -408,9 +420,9 @@
                 // output select
                 const customElem = document.createElement('div');
 
-                customElem.className = 'select' + multiple.class + ((selectedOption) ? ' select_changed' : '');
+                customElem.className = 'select' + multiple.class + ((selectedOption) ? ' select_changed' : '') + (elem.getAttribute('data-hide-selected-option') == 'true' ? ' select_hide-selected-option' : '');
 
-                customElem.innerHTML = head + '<ul class="select__options">' + optionsList + '</ul>' + hiddenInp + multiple.inpDiv;
+                customElem.innerHTML = head + '<div class="select__options-wrap"><ul class="select__options">' + optionsList + '</ul></div>' + hiddenInp + multiple.inpDiv;
 
                 parent.replaceChild(customElem, elem);
             }

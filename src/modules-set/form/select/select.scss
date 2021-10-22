@@ -1,5 +1,6 @@
 .select{
     position: relative;
+    z-index: 1;
     &__button{
         display: inline-flex;
         align-items: center;
@@ -11,7 +12,7 @@
         border-radius: em(6);
         text-align: left;
         position: relative;
-        z-index: 3;
+        z-index: 2;
         background: #ffffff;
         -webkit-appearance: none;
         transition: .21s;
@@ -41,6 +42,27 @@
             margin-top: em(-11);
             transform: rotate(-45deg);
         }
+        .select-currency &{
+            padding: 5px 22px 5px 10px;
+            background: none;
+            font-size: e(12);
+            text-transform: uppercase;
+            color: $gn;
+            height: auto;
+            &::after{
+                @extend %ab;
+                width: 6px;
+                height: 6px;
+                border: 1px solid transparent;
+                border-top-color: $gn;
+                border-left-color: $gn;
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                margin-top: -5px;
+                transform: rotate(-135deg);
+            }
+        }
     }
     &__arr{
         display: block;
@@ -66,17 +88,9 @@
     }
     &__options{
         list-style: none;
-        position: absolute;
-        left: 0;
-        top: 100%;
-        width: 100%;
         height: 0;
         max-height: 222px;
         overflow: hidden;
-        z-index: 5;
-        border: 1px solid rgba(19, 19, 19, .15);
-        border-top: none;
-        background: #F0F1F2;
         visibility: hidden;
         transition: .21s;
         &::-webkit-scrollbar {
@@ -108,6 +122,20 @@
             padding: 10px 15px;
             text-align: center;
         }
+        &-wrap{
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            background: #32373E;
+            border: 1px solid #4B5462;
+            visibility: hidden;
+            overflow: hidden;
+            .select-currency &{
+                top: 0;
+                padding-top: 26px;
+            }
+        }
     }
     &__val{
         display: block;
@@ -126,14 +154,31 @@
             background: $rd !important;
             color: #fff !important;
         }
+        .select-currency &{
+            padding: 5px 0 5px 10px;
+            background: none;
+            color: $gy;
+            text-transform: uppercase;
+            font-size: e(12);
+        }
     }
     &_opened{
+        z-index: 3;
         .select{
             &__button{
                 border-radius: em(6) em(6) 0 0;
             }
             &__options{
                 visibility: visible;
+                &-wrap{
+                    visibility: visible;
+                }
+            }
+        }
+        .select-currency &{
+            .select__button::after{
+                margin-top: -2px;
+                transform: rotate( 45deg);
             }
         }
     }
@@ -141,4 +186,10 @@
 
 .custom-select{
     visibility: hidden;
+}
+
+.select-currency{
+    &::after{
+        display: none;
+    }
 }

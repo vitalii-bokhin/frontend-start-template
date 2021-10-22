@@ -35,6 +35,20 @@
     }
 }
 
+.field-success{
+    &::after{
+        @extend %ab;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        margin-top: -5px;
+        background: $gn;
+        z-index: 2;
+    }
+}
+
 .file-error{
     color: $rd;
 }

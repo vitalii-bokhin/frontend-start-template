@@ -3477,6 +3477,7 @@ hr {
 
 .select {
   position: relative;
+  z-index: 1;
 }
 
 .select__button {
@@ -3490,7 +3491,7 @@ hr {
   border-radius: 0.375em;
   text-align: left;
   position: relative;
-  z-index: 3;
+  z-index: 2;
   background: #ffffff;
   -webkit-appearance: none;
   transition: .21s;
@@ -3550,17 +3551,9 @@ hr {
 
 .select__options {
   list-style: none;
-  position: absolute;
-  left: 0;
-  top: 100%;
-  width: 100%;
   height: 0;
   max-height: 222px;
   overflow: hidden;
-  z-index: 5;
-  border: 1px solid rgba(19, 19, 19, 0.15);
-  border-top: none;
-  background: #F0F1F2;
   visibility: hidden;
   transition: .21s;
 }
@@ -3600,6 +3593,18 @@ hr {
   text-align: center;
 }
 
+.select__options-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 3.125em;
+  width: 100%;
+  border: 1px solid rgba(19, 19, 19, 0.15);
+  background: #ffffff;
+  visibility: hidden;
+  overflow: hidden;
+}
+
 .select__val {
   display: block;
   width: 100%;
@@ -3621,11 +3626,19 @@ hr {
   color: #fff !important;
 }
 
+.select_opened {
+  z-index: 3;
+}
+
 .select_opened .select__button {
   border-radius: 0.375em 0.375em 0 0;
 }
 
 .select_opened .select__options {
+  visibility: visible;
+}
+
+.select_opened .select__options-wrap {
   visibility: visible;
 }
 

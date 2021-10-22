@@ -23,7 +23,7 @@ var ValidateForm;
         inpH: function (e) {
             const elem = e.target.closest(this.formSelector + ' input[type="text"],' + this.formSelector + ' input[type="password"],' + this.formSelector + ' input[type="number"],' + this.formSelector + ' input[type="tel"],' + this.formSelector + ' textarea, input[type="text"][form]');
 
-            if (elem && elem.hasAttribute('data-tested')) {
+            if (elem /* && elem.hasAttribute('data-tested') */) {
                 setTimeout(() => {
                     this.validateOnInput(elem);
                 }, 121);
@@ -43,20 +43,57 @@ var ValidateForm;
 
             const dataType = elem.getAttribute('data-type');
 
-            if (elem.getAttribute('data-required') === 'true' && (!elem.value.length || /^\s+$/.test(elem.value))) {
-                this.errorTip(true);
-            } else if (elem.value.length) {
-                if (dataType) {
-                    try {
-                        this[dataType]();
-                    } catch (error) {
-                        console.log('Error while process', dataType)
+            if (elem.hasAttribute('data-tested')) {
+                if (
+                    elem.getAttribute('data-required') === 'true' &&
+                    (!elem.value.length || /^\s+$/.test(elem.value))
+                ) {
+                    this.errorTip(true);
+                } else if (elem.value.length) {
+                    if (dataType) {
+                        try {
+                            const tE = this[dataType]();
+
+                            if (tE) {
+                                this.errorTip(true, tE);
+                                err++;
+                                errElems.push(elem);
+                            } else {
+                                this.errorTip(false);
+                            }
+                        } catch (error) {
+                            console.log('Error while process', dataType)
+                        }
+                    } else {
+                        this.errorTip(false);
                     }
                 } else {
                     this.errorTip(false);
                 }
+
             } else {
-                this.errorTip(false);
+                if (
+                    elem.getAttribute('data-required') === 'true' &&
+                    (!elem.value.length || /^\s+$/.test(elem.value))
+                ) {
+                    this.successTip(false);
+                } else if (elem.value.length) {
+                    if (dataType) {
+                        try {
+                            if (this[dataType]() === null) {
+                                this.successTip(true);
+                            } else {
+                                this.successTip(false);
+                            }
+                        } catch (error) {
+                            console.log('Error while process', dataType)
+                        }
+                    } else {
+                        this.successTip(true);
+                    }
+                } else {
+                    this.successTip(true);
+                }
             }
         },
 
@@ -72,7 +109,9 @@ var ValidateForm;
                 for (let i = 0; i < elements.length; i++) {
                     const elem = elements[i];
 
-                    if (elemIsHidden(elem)) continue;
+                    if (elemIsHidden(elem)) {
+                        continue;
+                    }
 
                     this.input = elem;
 
@@ -80,7 +119,10 @@ var ValidateForm;
 
                     const dataType = elem.getAttribute('data-type');
 
-                    if (elem.getAttribute('data-required') === 'true' && (!elem.value.length || /^\s+$/.test(elem.value))) {
+                    if (
+                        elem.getAttribute('data-required') === 'true' &&
+                        (!elem.value.length || /^\s+$/.test(elem.value))
+                    ) {
                         this.errorTip(true);
                         err++;
                         errElems.push(elem);
@@ -90,9 +132,14 @@ var ValidateForm;
                             errElems.push(elem);
                         } else if (dataType) {
                             try {
-                                if (this[dataType]()) {
+                                const tE = this[dataType]();
+
+                                if (tE) {
+                                    this.errorTip(true, tE);
                                     err++;
                                     errElems.push(elem);
+                                } else {
+                                    this.errorTip(false);
                                 }
                             } catch (error) {
                                 console.log('Error while process', dataType)
@@ -273,6 +320,16 @@ var ValidateForm;
             return (err) ? false : true;
         },
 
+        successTip: function (state) {
+            const field = this.input.closest('.form__field') || this.input.parentElement;
+
+            if (state) {
+                field.classList.add('field-success');
+            } else {
+                field.classList.remove('field-success');
+            }
+        },
+
         errorTip: function (err, errInd, errorTxt) {
             const field = this.input.closest('.form__field') || this.input.parentElement,
                 tipEl = field.querySelector('.field-error-tip');
@@ -357,15 +414,15 @@ var ValidateForm;
             }
         },
 
-        scrollToErrElem: function(elems) {
+        scrollToErrElem: function (elems) {
             let offsetTop = 99999;
 
             const headerHeight = document.querySelector('.header').offsetHeight;
 
             for (let i = 0; i < elems.length; i++) {
                 const el = elems[i],
-                epOffsetTop = el.getBoundingClientRect().top;
-                
+                    epOffsetTop = el.getBoundingClientRect().top;
+
                 if (epOffsetTop < headerHeight && epOffsetTop < offsetTop) {
                     offsetTop = epOffsetTop;
                 }
@@ -381,60 +438,39 @@ var ValidateForm;
         },
 
         txt: function () {
-            let err = false;
-
             if (!/^[0-9a-zа-яё_,.:;@-\s]*$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         num: function () {
-            let err = false;
-
             if (!/^[0-9.,-]*$/.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         cardNumber: function () {
-            let err = false;
-
             if (!/^\d{4}\-\d{4}\-\d{4}\-\d{4}$/.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         name: function () {
-            let err = false;
-
             if (!/^[a-zа-яё'\s-]{2,21}(\s[a-zа-яё'\s-]{2,21})?(\s[a-zа-яё'\s-]{2,21})?$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         date: function () {
-            let err = false,
-                errDate = false,
+            let errDate = false,
                 matches = this.input.value.match(/^(\d{2}).(\d{2}).(\d{4})$/);
 
             if (!matches) {
@@ -459,70 +495,46 @@ var ValidateForm;
             }
 
             if (errDate == 1) {
-                this.errorTip(true, 2);
-                err = true;
+                return 2;
             } else if (errDate == 2) {
-                this.errorTip(true, 3);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 3;
             }
 
-            return err;
+            return null;
         },
 
         time: function () {
             const matches = this.input.value.match(/^(\d{1,2}):(\d{1,2})$/);
 
-            let err = false;
-
             if (!matches || Number(matches[1]) > 23 || Number(matches[2]) > 59) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         email: function () {
-            let err = false;
-
             if (!/^[a-z0-9]+[\w\-\.]*@([\w\-]{2,}\.)+[a-z]{2,}$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         url: function () {
-            let err = false;
-
             if (!/^(https?\:\/\/)?[а-я\w-.]+\.[a-zа-я]{2,11}[/?а-я\w/=-]+$/i.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         tel: function () {
-            let err = false;
-
             if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         pass: function () {
@@ -530,13 +542,10 @@ var ValidateForm;
                 minLng = this.input.getAttribute('data-min-length');
 
             if (minLng && this.input.value.length < minLng) {
-                this.errorTip(true, 2);
-                err = true;
-            } else {
-                this.errorTip(false);
+                return 2;
             }
 
-            return err;
+            return null;
         },
 
         checkbox: function (elem) {

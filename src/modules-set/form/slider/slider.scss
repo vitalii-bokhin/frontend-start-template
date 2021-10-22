@@ -42,4 +42,29 @@
             border-color: $gy;
         }
     }
+    &_vertical{
+        width: 14px;
+        height: 320px;
+        margin: 0;
+        .formslider{
+            &__bar{
+                left: 50%;
+                top: 0;
+                width: 2px;
+                height: 100%;
+                margin-left: -1px;
+            }
+            &__drag{
+                left: -12px;
+                top: auto;
+                bottom: 0;
+            }
+            &__track{
+                top: auto;
+                bottom: 0;
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
 }
