@@ -2115,10 +2115,13 @@ var ValidateForm;
             const dataType = elem.getAttribute('data-type');
 
             if (elem.hasAttribute('data-tested')) {
+                this.formError(elem.closest('form'), false);
+
                 if (
                     elem.getAttribute('data-required') === 'true' &&
                     (!elem.value.length || /^\s+$/.test(elem.value))
                 ) {
+                    this.successTip(false);
                     this.errorTip(true);
                 } else if (elem.value.length) {
                     if (dataType) {
@@ -2126,27 +2129,28 @@ var ValidateForm;
                             const tE = this[dataType]();
 
                             if (tE) {
+                                this.successTip(false);
                                 this.errorTip(true, tE);
                                 err++;
                                 errElems.push(elem);
                             } else {
                                 this.errorTip(false);
+                                this.successTip(true);
                             }
                         } catch (error) {
                             console.log('Error while process', dataType)
                         }
                     } else {
                         this.errorTip(false);
+                        this.successTip(true);
                     }
                 } else {
                     this.errorTip(false);
+                    this.successTip(false);
                 }
 
             } else {
-                if (
-                    elem.getAttribute('data-required') === 'true' &&
-                    (!elem.value.length || /^\s+$/.test(elem.value))
-                ) {
+                if ((!elem.value.length || /^\s+$/.test(elem.value))) {
                     this.successTip(false);
                 } else if (elem.value.length) {
                     if (dataType) {
@@ -2162,8 +2166,6 @@ var ValidateForm;
                     } else {
                         this.successTip(true);
                     }
-                } else {
-                    this.successTip(true);
                 }
             }
         },
@@ -2406,7 +2408,8 @@ var ValidateForm;
                 tipEl = field.querySelector('.field-error-tip');
 
             if (err) {
-                field.classList.remove('field-success');
+                this.successTip(false);
+
                 field.classList.add('field-error');
 
                 if (errInd) {
@@ -2429,7 +2432,6 @@ var ValidateForm;
 
             } else {
                 field.classList.remove('field-error');
-                field.classList.add('field-success');
                 field.removeAttribute('data-error-index');
             }
         },
@@ -3453,7 +3455,7 @@ var FormSlider;
 
                 let dragElem;
 
-                if (isRange) {
+                if (isRange == 'true') {
                     dragElem = '<button type="button" class="formslider__drag" data-index="0" data-input="' + sliderEl.getAttribute('data-first-input') + '"></button><button type="button" class="formslider__drag" data-index="1" data-input="' + sliderEl.getAttribute('data-second-input') + '"></button>';
                 } else {
                     dragElem = '<button type="button" class="formslider__drag" data-input="' + sliderEl.getAttribute('data-input') + '"></button>';
@@ -3483,23 +3485,36 @@ var FormSlider;
                 sliderW = slider.offsetWidth,
                 min = +slider.getAttribute('data-min'),
                 max = +slider.getAttribute('data-max'),
-                isRange = slider.getAttribute('data-range');
+                isRange = slider.getAttribute('data-range'),
+                isVertical = slider.getAttribute('data-vertical');
 
-            if (isRange) {
+            if (isRange == 'true') {
                 for (let i = 0; i < dragElems.length; i++) {
                     const dragEl = dragElems[i],
                         inpEl = document.getElementById(dragEl.getAttribute('data-input')),
                         inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value,
-
                         left = ((inpVal - min) / ((max - min) / 100)) * ((sliderW - dragWidth) / 100);
 
                     dragEl.style.left = left + 'px';
 
-                    if (!i) {
+                    if (i == 0) {
                         trackEl.style.left = (left + dragWidth / 2) + 'px';
                     } else {
                         trackEl.style.right = (sliderW - left - dragWidth / 2) + 'px';
                     }
+                }
+
+            } else {
+                const dragEl = dragElems[0],
+                inpEl = document.getElementById(dragEl.getAttribute('data-input')),
+                inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value;
+
+                if (isVertical) {
+                    
+                } else {
+                    const left = ((inpVal - min) / ((max - min) / 100)) * ((sliderW - dragWidth) / 100);
+
+                    dragEl.style.left = left + 'px';
                 }
             }
         },
@@ -3696,9 +3711,12 @@ var FormSlider;
                 } else {
                     val = Math.round(((this.dragElemDistance - this.dragElemObj.width) / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
                 }
-
             } else {
-                val = Math.round((this.dragElemDistance / ((this.formsliderObj.height - this.dragElemObj.height) / 100)) * this.oneValPerc);
+                if (this.formsliderObj.isVertical) {
+                    val = Math.round((this.dragElemDistance / ((this.formsliderObj.height - this.dragElemObj.height) / 100)) * this.oneValPerc);
+                } else {
+                    val = Math.round((this.dragElemDistance / ((this.formsliderObj.width - this.dragElemObj.width) / 100)) * this.oneValPerc);
+                }
             }
 
             let inpVal = val + this.formsliderObj.min,
@@ -4068,9 +4086,9 @@ var FormSlider;
 })();
 ; var CustomFile;
 
-(function() {
+(function () {
     'use strict';
-    
+
     //custom file
     CustomFile = {
         input: null,
@@ -4078,67 +4096,71 @@ var FormSlider;
         filesArrayObj: {},
         filesIsReady: null,
 
-        init: function() {
+        init: function () {
             document.addEventListener('change', (e) => {
                 const elem = e.target.closest('input[type="file"]');
-                
+
                 if (!elem) return;
-                
+
                 this.input = elem;
-                
+
                 this.changeInput(elem);
             });
-            
+
             document.addEventListener('click', (e) => {
                 const delBtnElem = e.target.closest('.custom-file__del-btn'),
-                clearBtnElem = e.target.closest('.custom-file__clear-btn'),
-                inputElem = e.target.closest('input[type="file"]');
-                
+                    clearBtnElem = e.target.closest('.custom-file__clear-btn'),
+                    inputElem = e.target.closest('input[type="file"]');
+
                 if (inputElem && inputElem.multiple) inputElem.value = null;
-                
+
                 if (delBtnElem) {
                     this.input = delBtnElem.closest('.custom-file').querySelector('.custom-file__input');
 
                     this.input.value = null;
-                    
+
                     delBtnElem.closest('.custom-file__items').removeChild(delBtnElem.closest('.custom-file__item'));
-                    
+
                     this.setFilesObj(false, delBtnElem.getAttribute('data-ind'));
 
                     if (this.filesDeleted) this.filesDeleted(this.input);
                 }
-                
+
                 if (clearBtnElem) {
                     const inputElem = clearBtnElem.closest('.custom-file').querySelector('.custom-file__input');
-                    
+
                     inputElem.value = null;
-                    
+
                     this.clear(inputElem);
                 }
             });
         },
-        
-        clear: function(inpEl, resetVal) {
+
+        clear: function (inpEl, resetVal) {
             if (inpEl.hasAttribute('data-preview-elem')) {
                 document.querySelector(inpEl.getAttribute('data-preview-elem')).innerHTML = '';
             }
-            
-            inpEl.closest('.custom-file').querySelector('.custom-file__items').innerHTML = '';
+
+            const itemsEl = inpEl.closest('.custom-file').querySelector('.custom-file__items');
+
+            if (itemsEl) {
+                itemsEl.innerHTML = '';
+            }
 
             if (resetVal !== false) inpEl.value = null;
-            
+
             this.filesObj[inpEl.id] = {};
             this.filesArrayObj[inpEl.id] = [];
-            
+
             this.labelText(inpEl);
         },
-        
-        fieldClass: function(inputElem) {
+
+        fieldClass: function (inputElem) {
             const fieldElem = inputElem.closest('.custom-file');
-            
+
             if (this.filesArrayObj[inputElem.id].length) {
                 fieldElem.classList.add('custom-file_loaded');
-                
+
                 if (this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
                     fieldElem.classList.add('custom-file_max-loaded');
                 } else {
@@ -4149,146 +4171,156 @@ var FormSlider;
                 fieldElem.classList.remove('custom-file_max-loaded');
             }
         },
-        
-        lockUpload: function(inputElem) {
+
+        lockUpload: function (inputElem) {
             if (inputElem.classList.contains('custom-file__input_lock') && inputElem.multiple && inputElem.hasAttribute('data-max-files') && this.filesArrayObj[inputElem.id].length >= (+inputElem.getAttribute('data-max-files'))) {
                 inputElem.setAttribute('disabled', 'disable');
             } else {
                 inputElem.removeAttribute('disabled');
             }
         },
-        
-        labelText: function(inputElem) {
+
+        labelText: function (inputElem) {
             const labTxtElem = inputElem.closest('.custom-file').querySelector('.custom-file__label-text');
-            
-            if (!labTxtElem || !labTxtElem.hasAttribute('data-label-text-2')) return;
-            
+
+            if (!labTxtElem || !labTxtElem.hasAttribute('data-label-text-2')) {
+                return;
+            }
+
             const maxFiles = (inputElem.multiple) ? (+this.input.getAttribute('data-max-files')) : 1;
-            
+
             if (this.filesArrayObj[inputElem.id].length >= maxFiles) {
                 if (!labTxtElem.hasAttribute('data-label-text')) {
                     labTxtElem.setAttribute('data-label-text', labTxtElem.innerHTML);
                 }
-                labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text-2');
+
+                if (labTxtElem.getAttribute('data-label-text-2') == '%filename%') {
+                    labTxtElem.innerHTML = inputElem.files[0].name;
+                } else {
+                    labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text-2');
+                }
+
             } else if (labTxtElem.hasAttribute('data-label-text')) {
                 labTxtElem.innerHTML = labTxtElem.getAttribute('data-label-text');
             }
         },
-        
-        loadPreview: function(file, fileItem) {
+
+        loadPreview: function (file, fileItem) {
             var reader = new FileReader(),
-            previewDiv;
-            
+                previewDiv;
+
             if (this.input.hasAttribute('data-preview-elem')) {
                 previewDiv = document.querySelector(this.input.getAttribute('data-preview-elem'));
             } else {
                 previewDiv = document.createElement('div');
-                
+
                 previewDiv.className = 'custom-file__preview';
-                
+
                 fileItem.insertBefore(previewDiv, fileItem.firstChild);
             }
-            
-            reader.onload = function(e) {
-                setTimeout(function() {
+
+            reader.onload = function (e) {
+                setTimeout(function () {
                     var imgDiv = document.createElement('div');
-                    
-                    imgDiv.innerHTML = (file.type.match(/image.*/)) ? '<img src="'+ e.target.result +'">' : '<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCAzMDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzMDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNCOEQ4RkYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIi8+DQo8cG9seWdvbiBmaWxsPSIjN0M3QzdDIiBwb2ludHM9IjUxLDI2Ny42NjY5OTIyIDExMSwxOTcgMTUxLDI0My42NjY5OTIyIDI4OC4zMzMwMDc4LDEyMSAzMDAuMTY2OTkyMiwxMzQuMTY2NTAzOSAzMDAsMzAwIDAsMzAwIA0KCTAsMjA4LjgzMzk4NDQgIi8+DQo8cG9seWdvbiBmaWxsPSIjQUZBRkFGIiBwb2ludHM9IjAuMTI1LDI2Ny4xMjUgNDguODMzNDk2MSwxNzQuNjY2OTkyMiAxMDMuNSwyNjQuNSAyMDMuODc1LDY1LjMzMzAwNzggMzAwLjE2Njk5MjIsMjU0LjUgMzAwLDMwMCANCgkwLDMwMCAiLz4NCjxjaXJjbGUgZmlsbD0iI0VBRUFFQSIgY3g9Ijc3LjAwMDI0NDEiIGN5PSI3MSIgcj0iMzYuNjY2NzQ4Ii8+DQo8L3N2Zz4NCg==">';
-                    
+
+                    imgDiv.innerHTML = (file.type.match(/image.*/)) ? '<img src="' + e.target.result + '">' : '<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCAzMDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzMDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNCOEQ4RkYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIi8+DQo8cG9seWdvbiBmaWxsPSIjN0M3QzdDIiBwb2ludHM9IjUxLDI2Ny42NjY5OTIyIDExMSwxOTcgMTUxLDI0My42NjY5OTIyIDI4OC4zMzMwMDc4LDEyMSAzMDAuMTY2OTkyMiwxMzQuMTY2NTAzOSAzMDAsMzAwIDAsMzAwIA0KCTAsMjA4LjgzMzk4NDQgIi8+DQo8cG9seWdvbiBmaWxsPSIjQUZBRkFGIiBwb2ludHM9IjAuMTI1LDI2Ny4xMjUgNDguODMzNDk2MSwxNzQuNjY2OTkyMiAxMDMuNSwyNjQuNSAyMDMuODc1LDY1LjMzMzAwNzggMzAwLjE2Njk5MjIsMjU0LjUgMzAwLDMwMCANCgkwLDMwMCAiLz4NCjxjaXJjbGUgZmlsbD0iI0VBRUFFQSIgY3g9Ijc3LjAwMDI0NDEiIGN5PSI3MSIgcj0iMzYuNjY2NzQ4Ii8+DQo8L3N2Zz4NCg==">';
+
                     previewDiv.appendChild(imgDiv);
 
                     previewDiv.classList.add('custom-file__preview_loaded');
                 }, 121);
             }
-            
+
             reader.readAsDataURL(file);
         },
-        
-        changeInput: function(elem) {
+
+        changeInput: function (elem) {
             var fileItems = elem.closest('.custom-file').querySelector('.custom-file__items');
-            
+
             if (elem.getAttribute('data-action') == 'clear' || !elem.multiple) {
                 this.clear(elem, false);
             }
-            
+
             for (var i = 0; i < elem.files.length; i++) {
                 var file = elem.files[i];
-                
+
                 if (this.filesObj[elem.id] && this.filesObj[elem.id][file.name] != undefined) continue;
-                
+
                 var fileItem = document.createElement('div');
-                
+
                 fileItem.className = 'custom-file__item';
-                fileItem.innerHTML = '<div class="custom-file__name">'+ file.name +'</div><button type="button" class="custom-file__del-btn" data-ind="'+ file.name +'"></button>';
-                
-                fileItems.appendChild(fileItem);
-                
+                fileItem.innerHTML = '<div class="custom-file__name">' + file.name + '</div><button type="button" class="custom-file__del-btn" data-ind="' + file.name + '"></button>';
+
+                if (fileItems) {
+                    fileItems.appendChild(fileItem);
+                }
+
                 this.loadPreview(file, fileItem);
             }
-            
+
             this.setFilesObj(elem.files);
 
             if (this.filesIsReady) {
                 this.filesIsReady(elem);
             }
         },
-        
-        setFilesObj: function(filesList, objKey) {
+
+        setFilesObj: function (filesList, objKey) {
             var inputElem = this.input;
-            
+
             if (!inputElem.id.length) {
-                inputElem.id = 'custom-file-input-'+ new Date().valueOf();
+                inputElem.id = 'custom-file-input-' + new Date().valueOf();
             }
-            
+
             if (filesList) {
                 this.filesObj[inputElem.id] = this.filesObj[inputElem.id] || {};
-                
+
                 for (var i = 0; i < filesList.length; i++) {
                     this.filesObj[inputElem.id][filesList[i].name] = filesList[i];
                 }
             } else {
                 delete this.filesObj[inputElem.id][objKey];
             }
-            
+
             this.filesArrayObj[inputElem.id] = [];
-            
+
             for (var key in this.filesObj[inputElem.id]) {
                 this.filesArrayObj[inputElem.id].push(this.filesObj[inputElem.id][key]);
             }
-            
+
             this.fieldClass(inputElem);
-            
+
             this.labelText(inputElem);
-            
+
             this.lockUpload(inputElem);
-            
+
             ValidateForm.file(inputElem, this.filesArrayObj[inputElem.id]);
         },
-        
-        inputFiles: function(inputElem) {
+
+        inputFiles: function (inputElem) {
             return this.filesArrayObj[inputElem.id] || [];
         },
-        
-        getFiles: function(formElem) {
+
+        getFiles: function (formElem) {
             var inputFileElements = formElem.querySelectorAll('.custom-file__input'),
-            filesArr = [];
-            
+                filesArr = [];
+
             if (inputFileElements.length == 1) {
                 filesArr = this.filesArrayObj[inputFileElements[0].id];
             } else {
                 for (var i = 0; i < inputFileElements.length; i++) {
                     if (this.filesArrayObj[inputFileElements[i].id]) {
-                        filesArr.push({name: inputFileElements[i].name, files: this.filesArrayObj[inputFileElements[i].id]});
+                        filesArr.push({ name: inputFileElements[i].name, files: this.filesArrayObj[inputFileElements[i].id] });
                     }
                 }
             }
-            
+
             return filesArr;
         }
     };
-    
+
     //init script
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         CustomFile.init();
     });
 })();
@@ -6016,7 +6048,7 @@ var Numberspin;
 	Numberspin = function(options) {
 		const opt = options || {};
 
-		this.elements = document.querySelectorAll(opt.elemSel);
+		this.elements = document.querySelectorAll(opt.elemSelectors);
 		this.values = [];
 
 		for (var i = 0; i < this.elements.length; i++) {

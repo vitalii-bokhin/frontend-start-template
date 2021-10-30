@@ -53,13 +53,10 @@
         background: none;
     }
     @media(max-width: 1000px){
-        padding: 10px 25px;
         flex-direction: column;
         &__item{
-            float: none;
             text-align: center;
-            margin: 25px 0;
-            
+            margin: 25px 0 0;
             &_has-children{
                 .menu__a{
                     margin-left: 21px;

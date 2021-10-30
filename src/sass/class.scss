@@ -140,6 +140,14 @@ body{
             &-hidden{
                 display: none;
             }
+            &-ta{
+                &-c{
+                    text-align: center;
+                }
+                &-r{
+                    text-align: right;
+                }
+            }
         }
     }
 }

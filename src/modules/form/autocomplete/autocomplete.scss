@@ -58,15 +58,13 @@
             overflow: auto;
         }
         &::-webkit-scrollbar {
-            width: 6px;
+            width: 3px;
         }
         &::-webkit-scrollbar-track {
-            background: rgba(192, 192, 192, .35);
-            border-radius: 6px;
+            background-color: #22262D;
         }
         &::-webkit-scrollbar-thumb {
-            background: $rd;
-            border-radius: 6px;
+            background-color: #353E4C;
         }
         &-empty{
             padding: 10px 15px;

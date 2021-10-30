@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // numberspin
     try {
         var numberspin = new Numberspin({
-            elemSel: '.numberspin',
+            elemSelectors: '.numberspin',
             format: true
         });
 

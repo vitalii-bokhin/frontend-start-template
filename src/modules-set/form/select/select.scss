@@ -42,27 +42,6 @@
             margin-top: em(-11);
             transform: rotate(-45deg);
         }
-        .select-currency &{
-            padding: 5px 22px 5px 10px;
-            background: none;
-            font-size: e(12);
-            text-transform: uppercase;
-            color: $gn;
-            height: auto;
-            &::after{
-                @extend %ab;
-                width: 6px;
-                height: 6px;
-                border: 1px solid transparent;
-                border-top-color: $gn;
-                border-left-color: $gn;
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                margin-top: -5px;
-                transform: rotate(-135deg);
-            }
-        }
     }
     &__arr{
         display: block;
@@ -94,14 +73,13 @@
         visibility: hidden;
         transition: .21s;
         &::-webkit-scrollbar {
-            width: 7px;
+            width: 3px;
         }
         &::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: #22262D;
         }
         &::-webkit-scrollbar-thumb {
-            background-color: darkgrey;
-            outline: 1px solid slategrey;
+            background-color: #353E4C;
         }
         li{
             border-top: 1px solid rgba(19, 19, 19, .15);
@@ -125,16 +103,13 @@
         &-wrap{
             position: absolute;
             left: 0;
-            top: 50%;
+            top: 0;
+            padding-top: em(50);
             width: 100%;
-            background: #32373E;
-            border: 1px solid #4B5462;
+            border: 1px solid rgba(19, 19, 19, .15);
+            background: #ffffff;
             visibility: hidden;
             overflow: hidden;
-            .select-currency &{
-                top: 0;
-                padding-top: 26px;
-            }
         }
     }
     &__val{
@@ -154,13 +129,6 @@
             background: $rd !important;
             color: #fff !important;
         }
-        .select-currency &{
-            padding: 5px 0 5px 10px;
-            background: none;
-            color: $gy;
-            text-transform: uppercase;
-            font-size: e(12);
-        }
     }
     &_opened{
         z-index: 3;
@@ -175,21 +143,9 @@
                 }
             }
         }
-        .select-currency &{
-            .select__button::after{
-                margin-top: -2px;
-                transform: rotate( 45deg);
-            }
-        }
     }
 }
 
 .custom-select{
     visibility: hidden;
-}
-
-.select-currency{
-    &::after{
-        display: none;
-    }
 }

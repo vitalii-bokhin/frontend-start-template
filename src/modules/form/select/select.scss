@@ -73,14 +73,13 @@
         visibility: hidden;
         transition: .21s;
         &::-webkit-scrollbar {
-            width: 7px;
+            width: 3px;
         }
         &::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: #22262D;
         }
         &::-webkit-scrollbar-thumb {
-            background-color: darkgrey;
-            outline: 1px solid slategrey;
+            background-color: #353E4C;
         }
         li{
             border-top: 1px solid rgba(19, 19, 19, .15);

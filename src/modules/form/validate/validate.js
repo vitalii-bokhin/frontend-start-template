@@ -44,10 +44,13 @@ var ValidateForm;
             const dataType = elem.getAttribute('data-type');
 
             if (elem.hasAttribute('data-tested')) {
+                this.formError(elem.closest('form'), false);
+
                 if (
                     elem.getAttribute('data-required') === 'true' &&
                     (!elem.value.length || /^\s+$/.test(elem.value))
                 ) {
+                    this.successTip(false);
                     this.errorTip(true);
                 } else if (elem.value.length) {
                     if (dataType) {
@@ -55,27 +58,28 @@ var ValidateForm;
                             const tE = this[dataType]();
 
                             if (tE) {
+                                this.successTip(false);
                                 this.errorTip(true, tE);
                                 err++;
                                 errElems.push(elem);
                             } else {
                                 this.errorTip(false);
+                                this.successTip(true);
                             }
                         } catch (error) {
                             console.log('Error while process', dataType)
                         }
                     } else {
                         this.errorTip(false);
+                        this.successTip(true);
                     }
                 } else {
                     this.errorTip(false);
+                    this.successTip(false);
                 }
 
             } else {
-                if (
-                    elem.getAttribute('data-required') === 'true' &&
-                    (!elem.value.length || /^\s+$/.test(elem.value))
-                ) {
+                if ((!elem.value.length || /^\s+$/.test(elem.value))) {
                     this.successTip(false);
                 } else if (elem.value.length) {
                     if (dataType) {
@@ -91,8 +95,6 @@ var ValidateForm;
                     } else {
                         this.successTip(true);
                     }
-                } else {
-                    this.successTip(true);
                 }
             }
         },
@@ -335,7 +337,8 @@ var ValidateForm;
                 tipEl = field.querySelector('.field-error-tip');
 
             if (err) {
-                field.classList.remove('field-success');
+                this.successTip(false);
+
                 field.classList.add('field-error');
 
                 if (errInd) {
@@ -358,7 +361,6 @@ var ValidateForm;
 
             } else {
                 field.classList.remove('field-error');
-                field.classList.add('field-success');
                 field.removeAttribute('data-error-index');
             }
         },

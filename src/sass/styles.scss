@@ -75,22 +75,72 @@ ol.list{
 
 /* article */
 .article{
+    line-height: (28/16);
     h2{
-        font-size: 22px;
+        font-size: em(28);
         font-weight: 700;
-        line-height: 1.2;
-        margin: 45px 0 30px;
+        line-height: 1.35;
+        margin: em(30,28) 0 em(19,28);
         @include fch(t);
+        & + p{
+            margin-top: 0;
+        }
+    }
+    h3{
+        margin: em(30) 0 em(7);
+        font-weight: 700;
+        line-height: 1.35;
+        & + p{
+            margin-top: 0;
+        }
     }
     p{
-        line-height: 1.35;
-        margin-top: 25px;
+        margin-top: em(20);
         @include fch(t);
+        img{
+            margin: 0;
+        }
+    }
+    img{
+        @extend %fw-img;
+        margin-top: em(20);
     }
     blockquote{
-        line-height: 1.35;
-        margin-top: 35px;
+        font-size: em(20);
+        line-height: (28/20);
+        border-left: em(8,20) solid $gy;
+        padding-left: em(40,20);
+        margin: em(50,20) 0;
+    }
+    ul{
+        list-style: none;
+        margin: em(30) 0 em(19);
         @include fch(t);
+        & + p{
+            margin-top: 0;
+        }
+        li{
+            padding-left: em(49);
+            margin-top: em(20);
+            @include fch(t);
+            position: relative;
+            &:before{
+                @extend %ab;
+                position: absolute;
+                width: em(13);
+                height: em(13);
+                left: 0;
+                top: em(5);
+                border: 2px solid $gy;
+                border-radius: 50%;
+            }
+        }
+    }
+    @media(max-width: 750px){
+        font-size: 14px;
+        h2{
+            font-size: 20px;
+        }
     }
 }
 

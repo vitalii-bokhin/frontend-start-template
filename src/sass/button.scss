@@ -171,29 +171,41 @@
     list-style: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    &__item{
+    margin-left: em(-4);
+    margin-top: em(30);
+    li{
         flex: 0 1 auto;
-        margin: 0 3px;
+        padding: 0 em(4);
     }
     &__a,
     &__curr,
     &__dots{
         display: block;
-        width: 36px;
-        height: 36px;
-        line-height: 36px;
-        font-size: 21px;
-        color: #000000;
+        font-size: em(20);
+        min-width: em(36,20);
+        height: em(36,20);
+        padding: 0 em(12,20);
+        line-height: em(34,20);
+        font-weight: 700;
+        color: $gy;
+        border: 1px solid $gy;
         text-align: center;
         text-decoration: none;
     }
     &__a{
-        opacity: .3;
         transition: .21s;
         &:hover{
-            opacity: .7;
+            color: #000;
+            border-color: #000;
         }
+    }
+    &__curr{
+        color: #000;
+        border-color: #000;
+        cursor: not-allowed;
+    }
+    &__dots{
+        border: none;
     }
     &__prev,
     &__next{

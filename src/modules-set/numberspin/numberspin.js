@@ -6,7 +6,7 @@ var Numberspin;
 	Numberspin = function(options) {
 		const opt = options || {};
 
-		this.elements = document.querySelectorAll(opt.elemSel);
+		this.elements = document.querySelectorAll(opt.elemSelectors);
 		this.values = [];
 
 		for (var i = 0; i < this.elements.length; i++) {

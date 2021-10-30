@@ -12,7 +12,7 @@ $wrapper: 1020;
 
 .row{
     display: flex;
-    flex: 1 0 100%;
+    flex: 1 1 100%;
     flex-wrap: wrap;
     margin: 0 rem($gutter / -2);
     &_wrp{
@@ -183,8 +183,6 @@ $wrapper: 1020;
                     max-width: 100%;
                     margin-left: 0;
                     margin-right: 0;
-                    padding-top: 10px;
-                    padding-bottom: 10px;
                 }
             }
         }
@@ -203,8 +201,6 @@ $wrapper: 1020;
                     max-width: 100%;
                     margin-left: 0;
                     margin-right: 0;
-                    padding-top: 10px;
-                    padding-bottom: 10px;
                 }
             }
         }
@@ -232,8 +228,6 @@ $wrapper: 1020;
             max-width: 100%;
             margin-left: 0;
             margin-right: 0;
-            padding-top: 10px;
-            padding-bottom: 10px;
         }
         &_xs-2cols{
             .col{
