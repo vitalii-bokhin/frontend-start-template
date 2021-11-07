@@ -76,7 +76,7 @@
       }
    }
    &_screens{
-      .scrollbox__window{
+      & > .scrollbox__window{
          @extend %fwh;
          position: fixed;
       }

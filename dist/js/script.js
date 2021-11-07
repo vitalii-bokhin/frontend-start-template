@@ -7017,9 +7017,8 @@ function Mouseparallax(elSel, options) {
 
         opt.scrollStep = (opt.scrollStep !== undefined) ? opt.scrollStep : false;
         opt.fullSizeStep = (opt.fullSizeStep !== undefined) ? opt.fullSizeStep : false;
-        opt.nestedScrollbox = (opt.nestedScrollbox !== undefined) ? opt.nestedScrollbox : null;
-        opt.parentScrollbox = (opt.parentScrollbox !== undefined) ? opt.parentScrollbox : null;
-        opt.childrenScrollbox = (opt.childrenScrollbox !== undefined) ? opt.childrenScrollbox : null;
+        opt.childScrollboxesObjects = (opt.childScrollboxesObjects !== undefined) ? opt.childScrollboxesObjects : null;
+        opt.nestedScrBoxSelector = (opt.nestedScrBoxSelector !== undefined) ? opt.nestedScrBoxSelector : null;
         opt.evListenerEl = (opt.evListenerEl !== undefined) ? opt.evListenerEl : null;
         opt.duration = (opt.duration !== undefined) ? opt.duration : 1000;
         opt.bar = (opt.bar !== undefined) ? opt.bar : false;
@@ -7049,7 +7048,8 @@ function Mouseparallax(elSel, options) {
             this.vertical = opt.vertical;
             this.bar = opt.bar;
             this.barSize = opt.barSize;
-            this.nestedSbEls = null;
+            this.nestedScrBoxSelector = opt.nestedScrBoxSelector;
+            this.childScrollboxesObjects = opt.childScrollboxesObjects;
             this.parentEl = null;
             this.verticalBarSlEl = null;
             this.horizontalBarSlEl = null;
@@ -7069,11 +7069,8 @@ function Mouseparallax(elSel, options) {
             this.actionElems = {};
             this.actionPoints = opt.actionPoints;
             this.freezePoints = opt.freezePoints;
+            this.mouseWheel = opt.mouseWheel;
             this.windowScrollEvent = opt.windowScrollEvent;
-
-            if (opt.parentScrollbox) {
-                this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
-            }
 
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
@@ -7119,11 +7116,11 @@ function Mouseparallax(elSel, options) {
                     if (innerH > winH) {
                         scrBoxEl.classList.add('srollbox_scrollable-vertical');
 
-                        if (opt.mouseWheel && !opt.windowScrollEvent) {
+                        if (this.mouseWheel && !this.windowScrollEvent) {
                             scrBoxEl.addEventListener('wheel', wheelHandler);
                         }
 
-                        if (opt.windowScrollEvent) {
+                        if (this.windowScrollEvent) {
                             window.addEventListener('scroll', scrollHandler);
                         }
                     }
@@ -7137,28 +7134,37 @@ function Mouseparallax(elSel, options) {
                         this.endBreak.Y = innerH;
                     }
 
+                    if (this.windowScrollEvent) {
+                        scrBoxEl.style.height = innerH + 'px';
+                        scrBoxEl.style.minHeight = innerH + 'px';
+                        scrBoxEl.style.maxHeight = innerH + 'px';
+                    }
+
                     this.scrollBar(false, 'vertical');
                 }, 21);
 
                 scrBoxEl.setAttribute('data-position-vertical', 'atStart');
             }
 
-            if (opt.nestedScrollbox) {
-                this.nestedSbEls = scrBoxEl.querySelectorAll(opt.nestedScrollbox);
+            if (this.childScrollboxesObjects) {
+                setTimeout(() => {
+                    this.childScrollboxesObjects.forEach(obj => {
+                        this.endBreak.X += obj.endBreak.X;
+                        this.endBreak.Y += obj.endBreak.Y;
 
-                for (let i = 0; i < this.nestedSbEls.length; i++) {
-                    const nEl = this.nestedSbEls[i];
-
-                    if (!nEl.hasAttribute('data-offset')) {
-                        if (opt.horizontal) {
-                            nEl.setAttribute('data-offset', nEl.getBoundingClientRect().left - winEl.getBoundingClientRect().left);
-                        } else {
-                            nEl.setAttribute('data-offset', nEl.getBoundingClientRect().top - winEl.getBoundingClientRect().top);
+                        if (this.windowScrollEvent) {
+                            scrBoxEl.style.height = (this.innerSize.Y + obj.endBreak.Y) + 'px';
+                            scrBoxEl.style.minHeight = (this.innerSize.Y + obj.endBreak.Y) + 'px';
+                            scrBoxEl.style.maxHeight = (this.innerSize.Y + obj.endBreak.Y) + 'px';
                         }
-                    }
 
-                    nEl.setAttribute('data-scroll-able', 'false');
-                }
+                        obj.offset = {
+                            Y: obj.scrBoxEl.getBoundingClientRect().top - winEl.getBoundingClientRect().top
+                        };
+
+                        obj.setOptions({ mouseWheel: false });
+                    });
+                }, 21);
             }
 
             const actionEls = winEl.querySelectorAll('[data-action-element]');
@@ -7230,12 +7236,15 @@ function Mouseparallax(elSel, options) {
             wheelAccumulating = false;
 
         wheelHandler = (e) => {
+            if (this.nestedScrBoxSelector && e.target.closest(this.nestedScrBoxSelector)) {
+                return;
+            }
+
             e.preventDefault();
 
-            if (
-                this.isScrolling ||
-                (opt.childrenScrollbox && e.target.closest(opt.childrenScrollbox))
-            ) return;
+            if (this.isScrolling) {
+                return;
+            }
 
             let delta, scrTo;
 
@@ -7392,17 +7401,6 @@ function Mouseparallax(elSel, options) {
             scrollAnim(scrTo, 'scrollTo', dur);
 
             scrBoxEl.removeAttribute('data-scroll-able');
-
-            this.breakOnNested = false;
-
-            if (opt.nestedScrollboxObj && opt.nestedScrollboxObj.length) {
-                opt.nestedScrollboxObj.forEach(function (item) {
-                    item.scrBoxEl.setAttribute('data-scroll-able', 'false');
-                    item.scrBoxEl.setAttribute('data-position', 'atStart');
-                    item.scrolled = 0;
-                    item.innerEl.style.left = '0';
-                });
-            }
         }
 
         this.setOptions = function (options) {
@@ -7584,22 +7582,22 @@ function Mouseparallax(elSel, options) {
             this.scrBoxEl.removeAttribute('data-position-vertical');
         }
 
-        if (this.parentEl) {
-            if (this.delta > 0) {
-                if (pos == 'atEnd') {
-                    if (aftScroll) this.parentEl.setAttribute('data-scroll-able', 'true');
-                } else {
-                    this.parentEl.setAttribute('data-scroll-able', 'false');
-                }
+        // if (this.parentEl) {
+        //     if (this.delta > 0) {
+        //         if (pos == 'atEnd') {
+        //             if (aftScroll) this.parentEl.setAttribute('data-scroll-able', 'true');
+        //         } else {
+        //             this.parentEl.setAttribute('data-scroll-able', 'false');
+        //         }
 
-            } else if (this.delta < 0) {
-                if (pos == 'atStart') {
-                    if (aftScroll) this.parentEl.setAttribute('data-scroll-able', 'true');
-                } else {
-                    this.parentEl.setAttribute('data-scroll-able', 'false');
-                }
-            }
-        }
+        //     } else if (this.delta < 0) {
+        //         if (pos == 'atStart') {
+        //             if (aftScroll) this.parentEl.setAttribute('data-scroll-able', 'true');
+        //         } else {
+        //             this.parentEl.setAttribute('data-scroll-able', 'false');
+        //         }
+        //     }
+        // }
 
         // move bars
         if ((this.horizontalBarSlEl || this.verticalBarSlEl) && ev != 'bar') {
@@ -7616,15 +7614,43 @@ function Mouseparallax(elSel, options) {
             }
         }
 
+        // child scrolboxes
+        const scrToInner = { X: scrTo.X, Y: scrTo.Y };
+
+        if (this.childScrollboxesObjects && this.childScrollboxesObjects.length) {
+            const shift = { X: 0, Y: 0 };
+
+            this.childScrollboxesObjects.forEach(obj => {
+                if (this.horizontal) {
+                    if (obj.offset.X < scrTo.X && scrTo.X < obj.offset.X + obj.endBreak.X) {
+                        scrToInner.X = obj.offset.X;
+                    } else if (scrTo.X > obj.offset.X + obj.endBreak.X) {
+                        shift.X += obj.endBreak.X;
+                    }
+                } else {
+                    obj.scrollTo({ Y: scrTo.Y - obj.offset.Y }, 0);
+
+                    if (obj.offset.Y < scrTo.Y && scrTo.Y < obj.offset.Y + obj.endBreak.Y) {
+                        scrToInner.Y = obj.offset.Y;
+                    } else if (scrTo.Y > obj.offset.Y + obj.endBreak.Y) {
+                        shift.Y += obj.endBreak.Y;
+                    }
+                }
+            });
+
+            scrToInner.Y -= shift.X;
+            scrToInner.Y -= shift.Y;
+        }
+
         // inner element
         if (this.innerEl) {
             if (this.horizontal && this.vertical) {
-                this.innerEl.style.transform = 'translate(' + (-scrTo.X) + 'px, ' + (-scrTo.Y) + 'px)';
+                this.innerEl.style.transform = 'translate(' + (-scrToInner.X) + 'px, ' + (-scrToInner.Y) + 'px)';
             } else {
                 if (this.horizontal) {
-                    this.innerEl.style.transform = 'translateX(' + (-scrTo.X) + 'px)';
+                    this.innerEl.style.transform = 'translateX(' + (-scrToInner.X) + 'px)';
                 } else {
-                    this.innerEl.style.transform = 'translateY(' + (-scrTo.Y) + 'px)';
+                    this.innerEl.style.transform = 'translateY(' + (-scrToInner.Y) + 'px)';
                 }
             }
         }
@@ -7766,7 +7792,7 @@ function Mouseparallax(elSel, options) {
         // after scroll
         if (aftScroll) {
             this.scrolled = scrTo;
-            this.breakOnNested = false;
+            // this.breakOnNested = false;
 
             if (this.onScroll) {
                 this.onScroll(this.scrBoxEl, { posX, posY }, ev, scrTo, this.params);

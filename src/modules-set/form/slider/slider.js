@@ -26,7 +26,7 @@ var FormSlider;
 
                 let dragElem;
 
-                if (isRange) {
+                if (isRange == 'true') {
                     dragElem = '<button type="button" class="formslider__drag" data-index="0" data-input="' + sliderEl.getAttribute('data-first-input') + '"></button><button type="button" class="formslider__drag" data-index="1" data-input="' + sliderEl.getAttribute('data-second-input') + '"></button>';
                 } else {
                     dragElem = '<button type="button" class="formslider__drag" data-input="' + sliderEl.getAttribute('data-input') + '"></button>';
@@ -56,23 +56,36 @@ var FormSlider;
                 sliderW = slider.offsetWidth,
                 min = +slider.getAttribute('data-min'),
                 max = +slider.getAttribute('data-max'),
-                isRange = slider.getAttribute('data-range');
+                isRange = slider.getAttribute('data-range'),
+                isVertical = slider.getAttribute('data-vertical');
 
-            if (isRange) {
+            if (isRange == 'true') {
                 for (let i = 0; i < dragElems.length; i++) {
                     const dragEl = dragElems[i],
                         inpEl = document.getElementById(dragEl.getAttribute('data-input')),
                         inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value,
-
                         left = ((inpVal - min) / ((max - min) / 100)) * ((sliderW - dragWidth) / 100);
 
                     dragEl.style.left = left + 'px';
 
-                    if (!i) {
+                    if (i == 0) {
                         trackEl.style.left = (left + dragWidth / 2) + 'px';
                     } else {
                         trackEl.style.right = (sliderW - left - dragWidth / 2) + 'px';
                     }
+                }
+
+            } else {
+                const dragEl = dragElems[0],
+                inpEl = document.getElementById(dragEl.getAttribute('data-input')),
+                inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value;
+
+                if (isVertical) {
+                    
+                } else {
+                    const left = ((inpVal - min) / ((max - min) / 100)) * ((sliderW - dragWidth) / 100);
+
+                    dragEl.style.left = left + 'px';
                 }
             }
         },
@@ -269,9 +282,12 @@ var FormSlider;
                 } else {
                     val = Math.round(((this.dragElemDistance - this.dragElemObj.width) / ((this.formsliderObj.width - this.dragElemObj.width * 2) / 100)) * this.oneValPerc);
                 }
-
             } else {
-                val = Math.round((this.dragElemDistance / ((this.formsliderObj.height - this.dragElemObj.height) / 100)) * this.oneValPerc);
+                if (this.formsliderObj.isVertical) {
+                    val = Math.round((this.dragElemDistance / ((this.formsliderObj.height - this.dragElemObj.height) / 100)) * this.oneValPerc);
+                } else {
+                    val = Math.round((this.dragElemDistance / ((this.formsliderObj.width - this.dragElemObj.width) / 100)) * this.oneValPerc);
+                }
             }
 
             let inpVal = val + this.formsliderObj.min,

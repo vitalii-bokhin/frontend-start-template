@@ -43,6 +43,9 @@ $wrapper: 1020;
             max-width: 20%;
         }
     }
+    &_gap60{
+        margin: 0 rem(-30);
+    }
     @media(max-width: 1200px){
         &-md_col-center{
             justify-content: center;
@@ -94,6 +97,9 @@ $wrapper: 1020;
             flex: 0 0 (100 / $cC) * $i * 1%;
             max-width: (100 / $cC) * $i * 1%;
             padding: 0 rem($gutter / 2);
+            .row_gap60 > &{
+                padding: 0 rem(30);
+            }
             @if $i == $cC {
                 margin-left: 0;
                 margin-right: 0;

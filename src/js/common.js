@@ -74,11 +74,25 @@ document.addEventListener('DOMContentLoaded', function () {
             drag: true
         });
 
-        // nested scrollbox
-        new Scrollbox('#main-scroll', {
+        // nested scrollboxes
+        new Scrollbox('#main-nest-scroll', {
             bar: true
         });
 
+        new Scrollbox('#main-scroll', {
+            bar: true,
+            nestedScrBoxSelector: '#main-nest-scroll'
+        });
+
+        // child scrollboxes
+        const chSc = new Scrollbox('#main-child-scroll');
+
+        new Scrollbox('#main-scroll-parent', {
+            bar: true,
+            childScrollboxesObjects: [chSc]
+        });
+
+        // action points
         new Scrollbox('#actions-scroll', {
             bar: true,
             windowScrollEvent: true,
