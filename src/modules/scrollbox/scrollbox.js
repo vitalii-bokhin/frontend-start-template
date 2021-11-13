@@ -27,11 +27,10 @@
         opt.fullSizeStep = (opt.fullSizeStep !== undefined) ? opt.fullSizeStep : false;
         opt.childScrollboxesObjects = (opt.childScrollboxesObjects !== undefined) ? opt.childScrollboxesObjects : null;
         opt.nestedScrBoxSelector = (opt.nestedScrBoxSelector !== undefined) ? opt.nestedScrBoxSelector : null;
-        opt.evListenerEl = (opt.evListenerEl !== undefined) ? opt.evListenerEl : null;
         opt.duration = (opt.duration !== undefined) ? opt.duration : 1000;
         opt.bar = (opt.bar !== undefined) ? opt.bar : false;
         opt.barSize = (opt.barSize !== undefined) ? opt.barSize : null;
-        opt.drag = (opt.drag !== undefined) ? opt.drag : false;
+        opt.draggable = (opt.draggable !== undefined) ? opt.draggable : false;
         opt.mouseWheel = (opt.mouseWheel !== undefined) ? opt.mouseWheel : true;
         opt.actionPoints = (opt.actionPoints !== undefined) ? opt.actionPoints : [];
         opt.freezePoints = (opt.freezePoints !== undefined) ? opt.freezePoints : [];
@@ -65,7 +64,7 @@
             this.horizontalBarSlElSize = 0;
             this.scrolled = { X: 0, Y: 0 };
             this.isScrolling = false;
-            this.breakOnNested = false;
+            // this.breakOnNested = false;
             this.delta = 0;
             this.initialized = false;
             this.ts = Date.now();
@@ -79,6 +78,7 @@
             this.freezePoints = opt.freezePoints;
             this.mouseWheel = opt.mouseWheel;
             this.windowScrollEvent = opt.windowScrollEvent;
+            this.draggable = opt.draggable;
 
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
@@ -183,7 +183,7 @@
                 this.actionElems[actEl.getAttribute('data-action-element')] = actEl;
             }
 
-            if (opt.drag) {
+            if (this.draggable) {
                 this.drag();
             }
 
@@ -193,7 +193,11 @@
                 if (cb) {
                     cb();
                 }
-            }, 21);
+
+                if (this.onInit) {
+                    this.onInit();
+                }
+            }, 121);
         }
 
         init();

@@ -25,12 +25,18 @@
 
         opt.scrollStep = (opt.scrollStep !== undefined) ? opt.scrollStep : false;
         opt.fullSizeStep = (opt.fullSizeStep !== undefined) ? opt.fullSizeStep : false;
+        opt.nestedScrollbox = (opt.nestedScrollbox !== undefined) ? opt.nestedScrollbox : null;
+        opt.parentScrollbox = (opt.parentScrollbox !== undefined) ? opt.parentScrollbox : null;
+
+        // opt.childScrollboxes = (opt.childScrollboxes !== undefined) ? opt.childScrollboxes : null;
+
         opt.childScrollboxesObjects = (opt.childScrollboxesObjects !== undefined) ? opt.childScrollboxesObjects : null;
-        opt.nestedScrBoxSelector = (opt.nestedScrBoxSelector !== undefined) ? opt.nestedScrBoxSelector : null;
+
+        opt.evListenerEl = (opt.evListenerEl !== undefined) ? opt.evListenerEl : null;
         opt.duration = (opt.duration !== undefined) ? opt.duration : 1000;
         opt.bar = (opt.bar !== undefined) ? opt.bar : false;
         opt.barSize = (opt.barSize !== undefined) ? opt.barSize : null;
-        opt.draggable = (opt.draggable !== undefined) ? opt.draggable : false;
+        opt.drag = (opt.draggable !== undefined) ? opt.draggable : false;
         opt.mouseWheel = (opt.mouseWheel !== undefined) ? opt.mouseWheel : true;
         opt.actionPoints = (opt.actionPoints !== undefined) ? opt.actionPoints : [];
         opt.freezePoints = (opt.freezePoints !== undefined) ? opt.freezePoints : [];
@@ -55,7 +61,8 @@
             this.vertical = opt.vertical;
             this.bar = opt.bar;
             this.barSize = opt.barSize;
-            this.nestedScrBoxSelector = opt.nestedScrBoxSelector;
+            // this.childScrollboxes = opt.childScrollboxes;
+            // this.childScrollboxesElems = null;
             this.childScrollboxesObjects = opt.childScrollboxesObjects;
             this.parentEl = null;
             this.verticalBarSlEl = null;
@@ -64,7 +71,7 @@
             this.horizontalBarSlElSize = 0;
             this.scrolled = { X: 0, Y: 0 };
             this.isScrolling = false;
-            // this.breakOnNested = false;
+            this.breakOnNested = false;
             this.delta = 0;
             this.initialized = false;
             this.ts = Date.now();
@@ -78,7 +85,10 @@
             this.freezePoints = opt.freezePoints;
             this.mouseWheel = opt.mouseWheel;
             this.windowScrollEvent = opt.windowScrollEvent;
-            this.draggable = opt.draggable;
+
+            if (opt.parentScrollbox) {
+                this.parentEl = scrBoxEl.closest(opt.parentScrollbox);
+            }
 
             if (opt.horizontal) {
                 scrBoxEl.classList.add('scrollbox_horizontal');
@@ -155,24 +165,47 @@
             }
 
             if (this.childScrollboxesObjects) {
-                setTimeout(() => {
-                    this.childScrollboxesObjects.forEach(obj => {
-                        this.endBreak.X += obj.endBreak.X;
-                        this.endBreak.Y += obj.endBreak.Y;
+                // this.childScrollboxesElems = scrBoxEl.querySelectorAll(opt.childScrollboxes);
 
-                        if (this.windowScrollEvent) {
-                            scrBoxEl.style.height = (this.innerSize.Y + obj.endBreak.Y) + 'px';
-                            scrBoxEl.style.minHeight = (this.innerSize.Y + obj.endBreak.Y) + 'px';
-                            scrBoxEl.style.maxHeight = (this.innerSize.Y + obj.endBreak.Y) + 'px';
-                        }
+                // for (let i = 0; i < this.childScrollboxesElems.length; i++) {
+                //     const nEl = this.childScrollboxesElems[i];
 
-                        obj.offset = {
-                            Y: obj.scrBoxEl.getBoundingClientRect().top - winEl.getBoundingClientRect().top
-                        };
+                //     if (!nEl.hasAttribute('data-offset')) {
+                //         if (opt.horizontal) {
+                //             nEl.setAttribute('data-offset', nEl.getBoundingClientRect().left - winEl.getBoundingClientRect().left);
+                //         } else {
+                //             nEl.setAttribute('data-offset', nEl.getBoundingClientRect().top - winEl.getBoundingClientRect().top);
+                //         }
+                //     }
 
-                        obj.setOptions({ mouseWheel: false });
-                    });
-                }, 21);
+                //     nEl.setAttribute('data-scroll-able', 'false');
+                // }
+
+                try {
+                    if (!this.childScrollboxesObjects) {
+                        throw 'Need objects of child scrollboxes. {childScrollboxesObjects: []}';
+                    }
+
+                    setTimeout(() => {
+                        this.childScrollboxesObjects.forEach(obj => {
+                            this.endBreak.X += obj.endBreak.X;
+                            this.endBreak.Y += obj.endBreak.Y;
+
+                            if (this.windowScrollEvent) {
+                                scrBoxEl.style.height = (this.innerSize.Y + obj.endBreak.Y) + 'px';
+                                scrBoxEl.style.minHeight = (this.innerSize.Y + obj.endBreak.Y) + 'px';
+                                scrBoxEl.style.maxHeight = (this.innerSize.Y + obj.endBreak.Y) + 'px';
+                            }
+
+                            obj.offset = {
+                                Y: obj.scrBoxEl.getBoundingClientRect().top - winEl.getBoundingClientRect().top
+                            };
+                        });
+                    }, 21);
+
+                } catch (error) {
+                    console.error(new Error(error));
+                }
             }
 
             const actionEls = winEl.querySelectorAll('[data-action-element]');
@@ -183,7 +216,7 @@
                 this.actionElems[actEl.getAttribute('data-action-element')] = actEl;
             }
 
-            if (this.draggable) {
+            if (opt.drag) {
                 this.drag();
             }
 
@@ -197,7 +230,7 @@
                 if (this.onInit) {
                     this.onInit();
                 }
-            }, 121);
+            }, 221);
         }
 
         init();
@@ -248,10 +281,6 @@
             wheelAccumulating = false;
 
         wheelHandler = (e) => {
-            if (this.nestedScrBoxSelector && e.target.closest(this.nestedScrBoxSelector)) {
-                return;
-            }
-
             e.preventDefault();
 
             if (this.isScrolling) {
@@ -413,6 +442,17 @@
             scrollAnim(scrTo, 'scrollTo', dur);
 
             scrBoxEl.removeAttribute('data-scroll-able');
+
+            // this.breakOnNested = false;
+
+            // if (opt.nestedScrollboxObj && opt.nestedScrollboxObj.length) {
+            //     opt.nestedScrollboxObj.forEach(function (item) {
+            //         item.scrBoxEl.setAttribute('data-scroll-able', 'false');
+            //         item.scrBoxEl.setAttribute('data-position', 'atStart');
+            //         item.scrolled = 0;
+            //         item.innerEl.style.left = '0';
+            //     });
+            // }
         }
 
         this.setOptions = function (options) {
@@ -630,7 +670,7 @@
         const scrToInner = { X: scrTo.X, Y: scrTo.Y };
 
         if (this.childScrollboxesObjects && this.childScrollboxesObjects.length) {
-            const shift = { X: 0, Y: 0 };
+            const shift = {X: 0, Y: 0};
 
             this.childScrollboxesObjects.forEach(obj => {
                 if (this.horizontal) {
@@ -640,7 +680,7 @@
                         shift.X += obj.endBreak.X;
                     }
                 } else {
-                    obj.scrollTo({ Y: scrTo.Y - obj.offset.Y }, 0);
+                    obj.scrollTo({Y: scrTo.Y - obj.offset.Y}, 0);
 
                     if (obj.offset.Y < scrTo.Y && scrTo.Y < obj.offset.Y + obj.endBreak.Y) {
                         scrToInner.Y = obj.offset.Y;
