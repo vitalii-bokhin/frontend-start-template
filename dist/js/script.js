@@ -5965,6 +5965,7 @@ var Anchor;
 })();
 /*
 var diagram = new Diagram({
+    canvasEl: node elem,
     canvasId: Str elem id,
     charts: [
         {
@@ -5987,7 +5988,7 @@ diagram.animate(Int duration ms);
     'use strict';
     
     Diagram = function(options) {
-        var canvasElement = document.getElementById(options.canvasId);
+        const canvasElement = options.canvasEl || document.getElementById(options.canvasId);
         
         this.animate = function(duration) {
             if (!canvasElement) {
@@ -6023,7 +6024,7 @@ diagram.animate(Int duration ms);
         
         const startAngle = 1.5 * Math.PI;
         
-        var drawChart = (chart, i) => {
+        const drawChart = (chart, i) => {
             var endAngle = 2 * Math.PI * chart.value / options.maxValue + startAngle,
             radius = this.canvasWidth / 2 - chart.width / 2 - (chart.offset || 0) - this.prevChartsWidth;
             
