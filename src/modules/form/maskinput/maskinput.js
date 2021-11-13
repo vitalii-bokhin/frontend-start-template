@@ -187,6 +187,8 @@ var Maskinput;
 
             if (opt.maxLength && this.inputElem.value.length > opt.maxLength) {
                 this.inputElem.value = defValue;
+            } else if (opt.maxValue && Number(this.inputElem.value) > Number(opt.maxValue)) {
+                this.inputElem.value = defValue;
             } else {
                 if (!/^\d*$/.test(this.inputElem.value)) {
                     this.inputElem.value = defValue;

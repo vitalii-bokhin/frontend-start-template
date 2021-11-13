@@ -241,7 +241,7 @@
                 }
 
                 this.onSelectSubscribers.forEach(item => {
-                    item(input, toInputValue, elem.getAttribute('data-second-value'));
+                    item(input, toButtonValue, toInputValue, elem.getAttribute('data-second-value'));
                 });
             }
 

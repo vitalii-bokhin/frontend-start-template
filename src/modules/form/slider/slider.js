@@ -62,9 +62,15 @@ var FormSlider;
             if (isRange == 'true') {
                 for (let i = 0; i < dragElems.length; i++) {
                     const dragEl = dragElems[i],
-                        inpEl = document.getElementById(dragEl.getAttribute('data-input')),
-                        inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value,
-                        left = ((inpVal - min) / ((max - min) / 100)) * ((sliderW - dragWidth) / 100);
+                        inpEl = document.getElementById(dragEl.getAttribute('data-input'));
+
+                    let inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value;
+
+                    if (inpVal > max) {
+                        inpVal = max;
+                    }
+
+                    const left = ((inpVal - min) / ((max - min) / 100)) * ((sliderW - dragWidth) / 100);
 
                     dragEl.style.left = left + 'px';
 
@@ -77,11 +83,16 @@ var FormSlider;
 
             } else {
                 const dragEl = dragElems[0],
-                inpEl = document.getElementById(dragEl.getAttribute('data-input')),
-                inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value;
+                    inpEl = document.getElementById(dragEl.getAttribute('data-input'));
+
+                let inpVal = inpEl.hasAttribute('data-value') ? +inpEl.getAttribute('data-value') : +inpEl.value;
+
+                if (inpVal > max) {
+                    inpVal = max;
+                }
 
                 if (isVertical) {
-                    
+
                 } else {
                     const left = ((inpVal - min) / ((max - min) / 100)) * ((sliderW - dragWidth) / 100);
 

@@ -252,7 +252,25 @@ gulp.task('svgs', gulp.series('build_image_sprite', 'build_symbol_sprite', funct
     done();
 }));
 
-// DISTRIBUTION
+// DISTRIBUTION STYLES and SCRIPTS
+gulp.task('ssd', function (done) {
+    CSS(true);
+
+    JS(jsSrc, true);
+
+    gulp.src('src/js/*.js')
+        .pipe(babel())
+        .on('error', notify.onError(function (err) { return err; }))
+        .pipe(gulp.dest(dist_path + '/js'))
+        .pipe(notify({
+            title: 'JS',
+            message: 'Dist Common Script'
+        }));
+
+    done();
+});
+
+// DISTRIBUTION ALL
 gulp.task('dist', function (done) {
     HTML(['src/html/**/*.*', '!src/html/**/_*.*'], true);
 

@@ -45,14 +45,14 @@
             if (this.inputElem.value.length) {
                 const preReg = new RegExp('(' + this.inputElem.value.replace(/(\(|\))/g,'\\$1') + ')', 'i');
 
-                this.setValues(this.inputElem, (valuesData, nameKey, valKey, secValKey) => {
+                this.setValues(this.inputElem, (valuesData, nameKey, valKey, secValKey, searchMode = true) => {
                     if (valuesData) {
                         for (let i = 0; i < valuesData.length; i++) {
                             const valData = valuesData[i];
 
                             if (!permOpened) {
                                 if (nameKey !== undefined) {
-                                    if (valData[nameKey].match(preReg)) {
+                                    if (valData[nameKey].match(preReg) || !searchMode) {
                                         values += '<li><button type="button" data-value="' + valData[valKey] + '" data-second-value="' + valData[secValKey] + '" class="autocomplete__val">' + valData[nameKey].replace(preReg, '<span>$1</span>') + '</button></li>';
                                     } else {
                                         this.optionsElem.innerHTML = '';

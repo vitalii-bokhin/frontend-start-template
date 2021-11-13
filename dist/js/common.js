@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     'use strict';
 
-    const firstScreenEl = document.getElementById('first-screen');
+    var firstScreenEl = document.getElementById('first-screen');
 
     (function initFun() {
         if (firstScreenEl) {
@@ -37,17 +37,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // frames animate
     try {
-        const frAn = new FramesAnimate('stopmotion-frames', {
+        var frAn = new FramesAnimate('stopmotion-frames', {
             fps: 4
         });
 
         frAn.onLoad = function () {
             console.log('onLoad');
-        }
+        };
 
         frAn.onStop = function () {
             // code
-        }
+        };
     } catch (error) {
         console.log(error);
     }
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // child scrollboxes
-        const chSc = new Scrollbox('#main-child-scroll');
+        var chSc = new Scrollbox('#main-child-scroll');
 
         new Scrollbox('#main-scroll-parent', {
             bar: true,
@@ -96,48 +96,41 @@ document.addEventListener('DOMContentLoaded', function () {
         new Scrollbox('#actions-scroll', {
             bar: true,
             windowScrollEvent: true,
-            actionPoints: [
-                {
-                    breakpoints: [0, window.innerHeight],
-                    elements: {
-                        s1: {
-                            opacity: [1, 0]
-                        }
-                    }
-                },
-                {
-                    breakpoints: [0, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight],
-                    elements: {
-                        t1: {
-                            marginTop: [0, -(window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight), '$px']
-                        }
-                    }
-                },
-                {
-                    breakpoints: [document.querySelector('[data-action-element="t1"]').offsetHeight, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight],
-                    elements: {
-                        ms: {
-                            opacity: [0, 1]
-                        }
-                    }
-                },
-                {
-                    breakpoints: [window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight + document.querySelector('[data-action-element="ms"]').offsetHeight],
-                    elements: {
-                        ms: {
-                            transform: [0, -document.querySelector('[data-action-element="ms"]').offsetHeight, 'translateY($px)']
-                        }
+            actionPoints: [{
+                breakpoints: [0, window.innerHeight],
+                elements: {
+                    s1: {
+                        opacity: [1, 0]
                     }
                 }
-            ]
+            }, {
+                breakpoints: [0, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight],
+                elements: {
+                    t1: {
+                        marginTop: [0, -(window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight), '$px']
+                    }
+                }
+            }, {
+                breakpoints: [document.querySelector('[data-action-element="t1"]').offsetHeight, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight],
+                elements: {
+                    ms: {
+                        opacity: [0, 1]
+                    }
+                }
+            }, {
+                breakpoints: [window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight, window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight + document.querySelector('[data-action-element="ms"]').offsetHeight],
+                elements: {
+                    ms: {
+                        transform: [0, -document.querySelector('[data-action-element="ms"]').offsetHeight, 'translateY($px)']
+                    }
+                }
+            }]
         });
 
         document.getElementById('actions-scroll').style.height = window.innerHeight + document.querySelector('[data-action-element="t1"]').offsetHeight + document.querySelector('[data-action-element="ms"]').offsetHeight + 'px';
-
     } catch (error) {
         console.log(error);
     }
-
 
     // cover images
     try {
@@ -145,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (error) {
         console.log(error);
     }
-
 
     // toggle button
     try {
@@ -157,11 +149,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         Toggle.onChange = function (toggleElem, targetElements, state) {
             // code...
-        }
+        };
     } catch (error) {
         console.log(error);
     }
-
 
     // ajax button
     try {
@@ -169,21 +160,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         Ajax.success = function (response) {
             //  code...
-        }
+        };
     } catch (error) {
         console.log(error);
     }
-
-
-    
 
     // popup
     try {
         Popup.init('.js-open-popup');
 
         MediaPopup.init('.js-open-media-popup');
-        
-        let popupScrollImage;
+
+        var popupScrollImage = void 0;
 
         Popup.onOpen(function (elSel, btnEl) {
             console.log(elSel, btnEl);
@@ -202,10 +190,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        let scale = 1;
+        var scale = 1;
 
-        $('body').on('click', '.popup-media__zoom', function() {
-            let dir = $(this).attr('data-dir');
+        $('body').on('click', '.popup-media__zoom', function () {
+            var dir = $(this).attr('data-dir');
 
             if (dir == 'plus') {
                 scale++;
@@ -213,16 +201,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 scale--;
             }
 
-            $('.popup-media__image').css('transform', 'scale('+ scale +')');
+            $('.popup-media__image').css('transform', 'scale(' + scale + ')');
 
             popupScrollImage.reInit();
-
-        }).on('click', '.popup-media__arr, .popup-media__dots-btn:not(.active)', function() {
+        }).on('click', '.popup-media__arr, .popup-media__dots-btn:not(.active)', function () {
             $('.popup-media__image').css('transform', 'scale(1)');
 
             popupScrollImage.reInit();
         });
-
     } catch (error) {
         console.log(error);
     }
@@ -248,11 +234,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // tooltip
     try {
-        const tt = new ToolTip({
+        var tt = new ToolTip({
             btnSelector: '.js-tooltip',
             notHide: false, // def: false
             clickEvent: true, // def: false
-            tipElClass: 'some-class', // def: null
+            tipElClass: 'some-class' // def: null
         });
 
         new ToolTip({
@@ -307,7 +293,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (error) {
         console.log(error);
     }
-
 
     // tab
     try {
@@ -369,43 +354,36 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
         var diagram = new Diagram({
             canvasId: 'diagram',
-            charts: [
-                {
-                    value: 37,
-                    color: 'green',
-                    width: 20,
-                    numContId: 'diagram-num-1'
-                },
-                {
-                    value: 45,
-                    color: '#d0295e',
-                    width: 10,
-                    offset: 2,
-                    numContId: 'diagram-num-2'
-                }
-            ],
+            charts: [{
+                value: 37,
+                color: 'green',
+                width: 20,
+                numContId: 'diagram-num-1'
+            }, {
+                value: 45,
+                color: '#d0295e',
+                width: 10,
+                offset: 2,
+                numContId: 'diagram-num-2'
+            }],
             maxValue: 100
         });
-
 
         // diagram 2
         var diagram_2 = new Diagram({
             canvasId: 'diagram-2',
-            charts: [
-                {
-                    value: 84,
-                    color: '#fd8d40',
-                    width: 30,
-                    numContId: 'diagram-2-num-1'
-                },
-                {
-                    value: 39,
-                    color: '#0000ff',
-                    width: 30,
-                    offset: 2,
-                    numContId: 'diagram-2-num-2'
-                }
-            ],
+            charts: [{
+                value: 84,
+                color: '#fd8d40',
+                width: 30,
+                numContId: 'diagram-2-num-1'
+            }, {
+                value: 39,
+                color: '#0000ff',
+                width: 30,
+                offset: 2,
+                numContId: 'diagram-2-num-2'
+            }],
             maxValue: 100,
             animate: true
         });
@@ -415,35 +393,30 @@ document.addEventListener('DOMContentLoaded', function () {
         // diagram 2
         var diagram_3 = new Diagram({
             canvasId: 'diagram-3',
-            charts: [
-                {
-                    value: 67,
-                    color: '#fd8d40',
-                    width: 15,
-                    numContId: 'diagram-3-num-1'
-                },
-                {
-                    value: 75,
-                    color: '#d0295e',
-                    width: 15,
-                    offset: 2,
-                    numContId: 'diagram-3-num-2'
-                },
-                {
-                    value: 83,
-                    color: 'green',
-                    width: 15,
-                    offset: 2,
-                    numContId: 'diagram-3-num-3'
-                },
-                {
-                    value: 91,
-                    color: '#0000ff',
-                    width: 15,
-                    offset: 2,
-                    numContId: 'diagram-3-num-4'
-                }
-            ],
+            charts: [{
+                value: 67,
+                color: '#fd8d40',
+                width: 15,
+                numContId: 'diagram-3-num-1'
+            }, {
+                value: 75,
+                color: '#d0295e',
+                width: 15,
+                offset: 2,
+                numContId: 'diagram-3-num-2'
+            }, {
+                value: 83,
+                color: 'green',
+                width: 15,
+                offset: 2,
+                numContId: 'diagram-3-num-3'
+            }, {
+                value: 91,
+                color: '#0000ff',
+                width: 15,
+                offset: 2,
+                numContId: 'diagram-3-num-4'
+            }],
             maxValue: 100,
             animate: true
         });
@@ -482,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             timer.onStop = function () {
                 Popup.message('Timer Stopped');
-            }
+            };
 
             timer.start(50);
 
@@ -494,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             timer2.onStop = function () {
                 Popup.message('Timer 2 Stopped');
-            }
+            };
 
             timer2.start(130);
 
@@ -506,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             stopwatch.onStop = function () {
                 Popup.message('Stopwatch Stopped');
-            }
+            };
 
             stopwatch.start(0);
 
@@ -519,11 +492,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             stopwatch2.onStop = function () {
                 Popup.message('Stopwatch Stopped');
-            }
+            };
 
             stopwatch2.start(0);
         }
-
     } catch (error) {
         console.log(error);
     }
@@ -538,11 +510,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // cursor
     try {
         if (window.innerWidth > 1100) {
-            Cursor.init([
-                { selector: '.curs-link', class: 'hover-a' },
-                { selector: '.curs-btn', class: 'hover-btn' },
-                { selector: '.curs-main' }
-            ]);
+            Cursor.init([{ selector: '.curs-link', class: 'hover-a' }, { selector: '.curs-btn', class: 'hover-btn' }, { selector: '.curs-main' }]);
         }
     } catch (error) {
         console.log(error);
@@ -561,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var result = response.match(/\<div id\="source"\>([\s\S]*?)\<\/div\>/);
 
             return result[1];
-        }
+        };
     } catch (error) {
         console.log(error);
     }
@@ -572,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         NextFieldset.onChange = function (prevFsEl, curFsEl) {
             // ...
-        }
+        };
     } catch (error) {
         console.log(error);
     }
@@ -583,25 +551,11 @@ document.addEventListener('DOMContentLoaded', function () {
         AutoComplete.setValues = function (inpElem, callback) {
             switch (inpElem.name) {
                 case 'fruits':
-                    callback([
-                        { val: "mc", value: "Pinapple", id: 1 },
-                        { val: "vn", value: "Apple", id: 2 },
-                        { val: "eth", value: "Berry", id: 3 },
-                        { val: "ms", value: "Cherry", id: 4 },
-                        { val: "mn", value: "Mandarin", id: 5 },
-                        { val: "mk", value: "Marakuja", id: 6 }
-                    ], 'value', 'val', 'id');
+                    callback([{ val: "mc", value: "Pinapple", id: 1 }, { val: "vn", value: "Apple", id: 2 }, { val: "eth", value: "Berry", id: 3 }, { val: "ms", value: "Cherry", id: 4 }, { val: "mn", value: "Mandarin", id: 5 }, { val: "mk", value: "Marakuja", id: 6 }], 'value', 'val', 'id');
                     break;
 
                 case 'country':
-                    callback([
-                        { val: "mc", value: "Pinapple", id: 1 },
-                        { val: "vn", value: "Apple", id: 2 },
-                        { val: "eth", value: "Berry", id: 3 },
-                        { val: "ms", value: "Cherry", id: 4 },
-                        { val: "mn", value: "Mandarin", id: 5 },
-                        { val: "mk", value: "Marakuja", id: 6 }
-                    ], 'value', 'val', 'id');
+                    callback([{ val: "mc", value: "Pinapple", id: 1 }, { val: "vn", value: "Apple", id: 2 }, { val: "eth", value: "Berry", id: 3 }, { val: "ms", value: "Cherry", id: 4 }, { val: "mn", value: "Mandarin", id: 5 }, { val: "mk", value: "Marakuja", id: 6 }], 'value', 'val', 'id');
                     break;
 
                 case 'country2':
@@ -611,16 +565,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 default:
                     break;
             }
-        }
+        };
 
         AutoComplete.onSelect(function (inpElem, val, secVal) {
-            if (inpElem.name == 'country') {
-
-            }
+            if (inpElem.name == 'country') {}
         });
 
         AutoComplete.init({ getAllValuesIfEmpty: true });
-
     } catch (error) {
         console.log(error);
     }
@@ -646,7 +597,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (error) {
         console.log(error);
     }
-
 
     // scroll pane
     try {
@@ -693,7 +643,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (error) {
         console.log(error);
     }
-
 });
 
 // GetCountriesAndCitiesList
