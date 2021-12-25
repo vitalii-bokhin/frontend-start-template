@@ -33,7 +33,7 @@ const modulesOn = [
     'cover-image',
     'lazy-load',
     'video',
-    'popup', 
+    'popup',
     'popup/media', // popup media video needs video module
     'form/validate',
     'form/checkbox',
@@ -71,9 +71,11 @@ const modulesOn = [
     'zoom',
     'cursor',
     'spa',
-    'drag-n-drop'
-],
-    dist_path = 'dist',
+    'drag-n-drop',
+    'fix-on-scroll'
+];
+
+const dist_path = 'dist',
     cssPref = 'l-';
 
 let assets = {
@@ -243,11 +245,11 @@ gulp.task('build_symbol_sprite', function () {
         }));
 });
 
-gulp.task('svgs', gulp.series('build_image_sprite', 'build_symbol_sprite', function(done) {
+gulp.task('svgs', gulp.series('build_image_sprite', 'build_symbol_sprite', function (done) {
     gulp.src('src/images/*.svg')
-    .pipe(gulpReplace(/(fill|stroke|fill-opacity)=".*?"/g, ''))
-    .pipe(gulpReplace('<?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">', ''))
-    .pipe(gulp.dest('src/images'));
+        .pipe(gulpReplace(/(fill|stroke|fill-opacity)=".*?"/g, ''))
+        .pipe(gulpReplace('<?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">', ''))
+        .pipe(gulp.dest('src/images'));
 
     done();
 }));

@@ -132,12 +132,12 @@ var Popup;
         },
 
         fixBody: function (st) {
-            var headerElem = document.querySelector(this.headerSelector);
+            const headerElem = document.querySelector(this.headerSelector);
 
             if (st && !document.body.classList.contains('popup-is-opened')) {
                 this.winScrollTop = window.pageYOffset;
 
-                var offset = window.innerWidth - document.documentElement.clientWidth;
+                const offset = window.innerWidth - document.documentElement.clientWidth;
 
                 document.body.classList.add('popup-is-opened');
 

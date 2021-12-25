@@ -18,7 +18,7 @@ var Numberspin;
 			if (opt.format) {
 				const numStr = String(num);
 
-				elem.innerHTML = numStr.replace(/(\d)?(?=(\d{3})+$)/g, '$1 ');
+				elem.innerHTML = numStr.replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
 			} else {
 				elem.innerHTML = num;
 			}

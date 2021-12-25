@@ -1534,12 +1534,10 @@ CoverImg.reInit([Str parent element selector]);
 /* 
 new LazyLoad({
    selector: @Str,
-   event: false,
-   flexible: true
+   event: true,  // def: false
+   flexible: true, // def: false
+   onDemand: true // def: false
 });
-
-const lazy = new LazyLoad().load;
-lazy('.el-sel');
 */
 
 ; var LazyLoad;
@@ -1550,11 +1548,17 @@ lazy('.el-sel');
     LazyLoad = function (opt) {
         opt = opt || {};
 
-        this.opt = opt;
+        opt.event = opt.event || false;
+        opt.flexible = opt.flexible || false;
+        opt.onDemand = opt.onDemand || false;
 
-        this.opt.flexible = this.opt.flexible || false;
+        this.opt = opt;
+        this.suff = '';
+        this.initialized = false;
 
         const elements = document.querySelectorAll(opt.selector);
+
+        this.elements = elements;
 
         if (elements) {
             if (opt.event) {
@@ -1565,58 +1569,82 @@ lazy('.el-sel');
                         }
                     });
                 }
-            } else {
-                setTimeout(() => {
-                    this.doLoad(elements);
-                }, 1000);
-            }
-        }
+            } else if (!opt.onDemand) {
+                window.addEventListener('load', () => {
+                    Modernizr.on('webp', (result) => {
+                        if (result) {
+                            this.suff = '-webp';
+                        }
 
-        return {
-            load: (sel) => {
-                this.doLoad(document.querySelectorAll(sel));
+                        this.initialized = true;
+
+                        this.doLoad();
+                    });
+                });
             }
         }
     }
 
-    LazyLoad.prototype.doLoad = function (elems) {
-        for (let i = 0; i < elems.length; i++) {
-            const elem = elems[i];
+    LazyLoad.prototype.doLoad = function () {
+        for (let i = 0; i < this.elements.length; i++) {
+            const elem = this.elements[i];
+
+            let suff = this.suff;
+
+            if (!elem.hasAttribute('data-src' + suff) && !elem.hasAttribute('data-bg-url' + suff)) {
+                suff = '';
+            }
 
             if (this.opt.flexible) {
-                if (elem.hasAttribute('data-src')) {
-                    const arr = elem.getAttribute('data-src').split(',');
+                if (elem.hasAttribute('data-src' + suff)) {
+                    const arr = elem.getAttribute('data-src' + suff).split(',');
+
+                    let resultImg;
 
                     arr.forEach(function (arrItem) {
                         const props = arrItem.split('->');
 
                         if (window.innerWidth < (+props[0])) {
-                            elem.src = props[1];
+                            resultImg = props[1];
                         }
                     });
 
-                } else if (elem.hasAttribute('data-bg-url')) {
-                    const arr = elem.getAttribute('data-bg-url').split(',');
+                    elem.src = resultImg;
+
+                } else if (elem.hasAttribute('data-bg-url' + suff)) {
+                    const arr = elem.getAttribute('data-bg-url' + suff).split(',');
+
+                    let resultImg;
 
                     arr.forEach(function (arrItem) {
                         const props = arrItem.split('->');
 
                         if (window.innerWidth < (+props[0])) {
-                            elem.style.backgroundImage = 'url(' + props[1] + ')';
+                            resultImg = props[1];
                         }
                     });
+
+                    elem.style.backgroundImage = 'url(' + resultImg + ')';
                 }
 
             } else {
-                if (elem.hasAttribute('data-src')) {
-                    elem.src = elem.getAttribute('data-src');
-                } else if (elem.hasAttribute('data-bg-url')) {
-                    elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url') + ')';
+                if (elem.hasAttribute('data-src' + suff)) {
+                    elem.src = elem.getAttribute('data-src' + suff);
+                } else if (elem.hasAttribute('data-bg-url' + suff)) {
+                    elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url' + suff) + ')';
                 }
             }
+        }
+    }
+
+    LazyLoad.prototype.reInit = function () {
+        if (this.initialized) {
+            this.doLoad();
         }
     }
 })();
+
+!function (e, n, A) { function o(e, n) { return typeof e === n } function t() { var e, n, A, t, a, i, l; for (var f in r) if (r.hasOwnProperty(f)) { if (e = [], n = r[f], n.name && (e.push(n.name.toLowerCase()), n.options && n.options.aliases && n.options.aliases.length)) for (A = 0; A < n.options.aliases.length; A++)e.push(n.options.aliases[A].toLowerCase()); for (t = o(n.fn, "function") ? n.fn() : n.fn, a = 0; a < e.length; a++)i = e[a], l = i.split("."), 1 === l.length ? Modernizr[l[0]] = t : (!Modernizr[l[0]] || Modernizr[l[0]] instanceof Boolean || (Modernizr[l[0]] = new Boolean(Modernizr[l[0]])), Modernizr[l[0]][l[1]] = t), s.push((t ? "" : "no-") + l.join("-")) } } function a(e) { var n = u.className, A = Modernizr._config.classPrefix || ""; if (c && (n = n.baseVal), Modernizr._config.enableJSClass) { var o = new RegExp("(^|\\s)" + A + "no-js(\\s|$)"); n = n.replace(o, "$1" + A + "js$2") } Modernizr._config.enableClasses && (n += " " + A + e.join(" " + A), c ? u.className.baseVal = n : u.className = n) } function i(e, n) { if ("object" == typeof e) for (var A in e) f(e, A) && i(A, e[A]); else { e = e.toLowerCase(); var o = e.split("."), t = Modernizr[o[0]]; if (2 == o.length && (t = t[o[1]]), "undefined" != typeof t) return Modernizr; n = "function" == typeof n ? n() : n, 1 == o.length ? Modernizr[o[0]] = n : (!Modernizr[o[0]] || Modernizr[o[0]] instanceof Boolean || (Modernizr[o[0]] = new Boolean(Modernizr[o[0]])), Modernizr[o[0]][o[1]] = n), a([(n && 0 != n ? "" : "no-") + o.join("-")]), Modernizr._trigger(e, n) } return Modernizr } var s = [], r = [], l = { _version: "3.6.0", _config: { classPrefix: "", enableClasses: !0, enableJSClass: !0, usePrefixes: !0 }, _q: [], on: function (e, n) { var A = this; setTimeout(function () { n(A[e]) }, 0) }, addTest: function (e, n, A) { r.push({ name: e, fn: n, options: A }) }, addAsyncTest: function (e) { r.push({ name: null, fn: e }) } }, Modernizr = function () { }; Modernizr.prototype = l, Modernizr = new Modernizr; var f, u = n.documentElement, c = "svg" === u.nodeName.toLowerCase(); !function () { var e = {}.hasOwnProperty; f = o(e, "undefined") || o(e.call, "undefined") ? function (e, n) { return n in e && o(e.constructor.prototype[n], "undefined") } : function (n, A) { return e.call(n, A) } }(), l._l = {}, l.on = function (e, n) { this._l[e] || (this._l[e] = []), this._l[e].push(n), Modernizr.hasOwnProperty(e) && setTimeout(function () { Modernizr._trigger(e, Modernizr[e]) }, 0) }, l._trigger = function (e, n) { if (this._l[e]) { var A = this._l[e]; setTimeout(function () { var e, o; for (e = 0; e < A.length; e++)(o = A[e])(n) }, 0), delete this._l[e] } }, Modernizr._q.push(function () { l.addTest = i }), Modernizr.addAsyncTest(function () { function e(e, n, A) { function o(n) { var o = n && "load" === n.type ? 1 == t.width : !1, a = "webp" === e; i(e, a && o ? new Boolean(o) : o), A && A(n) } var t = new Image; t.onerror = o, t.onload = o, t.src = n } var n = [{ uri: "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=", name: "webp" }, { uri: "data:image/webp;base64,UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAABBxAR/Q9ERP8DAABWUDggGAAAADABAJ0BKgEAAQADADQlpAADcAD++/1QAA==", name: "webp.alpha" }, { uri: "data:image/webp;base64,UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA", name: "webp.animation" }, { uri: "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=", name: "webp.lossless" }], A = n.shift(); e(A.name, A.uri, function (A) { if (A && "load" === A.type) for (var o = 0; o < n.length; o++)e(n[o].name, n[o].uri) }) }), t(), a(s), delete l.addTest, delete l.addAsyncTest; for (var p = 0; p < Modernizr._q.length; p++)Modernizr._q[p](); e.Modernizr = Modernizr }(window, document);
 /*
 Video.init(Str button selector);
 
@@ -1850,12 +1878,12 @@ var Popup;
         },
 
         fixBody: function (st) {
-            var headerElem = document.querySelector(this.headerSelector);
+            const headerElem = document.querySelector(this.headerSelector);
 
             if (st && !document.body.classList.contains('popup-is-opened')) {
                 this.winScrollTop = window.pageYOffset;
 
-                var offset = window.innerWidth - document.documentElement.clientWidth;
+                const offset = window.innerWidth - document.documentElement.clientWidth;
 
                 document.body.classList.add('popup-is-opened');
 
@@ -6074,7 +6102,7 @@ var Numberspin;
 			if (opt.format) {
 				const numStr = String(num);
 
-				elem.innerHTML = numStr.replace(/(\d)?(?=(\d{3})+$)/g, '$1 ');
+				elem.innerHTML = numStr.replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
 			} else {
 				elem.innerHTML = num;
 			}
@@ -6667,162 +6695,205 @@ frAn.onStop = function () {
 }
 */
 
-'use strict';
+var FramesAnimate;
 
-function FramesAnimate(elemId, options) {
-    const contEl = document.getElementById(elemId);
+(function () {
+    'use strict';
 
-    if (!contEl) return;
+    FramesAnimate = function (elemId, options) {
+        const contEl = document.getElementById(elemId);
 
-    const opt = options || {},
-        count = +contEl.getAttribute('data-count'),
-        path = contEl.getAttribute('data-path'),
-        _this = this;
+        if (!contEl) return;
 
-    opt.fps = (opt.fps !== undefined) ? opt.fps : 30;
-    opt.autoplay = (opt.autoplay !== undefined) ? opt.autoplay : true;
-    opt.backward = (opt.backward !== undefined) ? opt.backward : false;
-    opt.infinite = (opt.infinite !== undefined) ? opt.infinite : true;
+        const opt = options || {},
+            count = +contEl.getAttribute('data-count'),
+            path = contEl.getAttribute('data-path'),
+            folderPath = contEl.getAttribute('data-folder'),
+            ext = contEl.getAttribute('data-ext'),
+            _this = this;
 
-    this.opt = opt;
-    this.contEl = contEl;
-    this.loadedImages = [];
-    this.fps = opt.fps;
-    this.autoplay = opt.autoplay;
-    this.infinite = opt.infinite;
-    this.animated = false;
-    this.onStop = null;
-    this.onLoad = null;
-    this.loaded = false;
-    this.loadedImages = [];
-    this.count = count;
+        opt.fps = (opt.fps !== undefined) ? opt.fps : 30;
+        opt.autoplay = (opt.autoplay !== undefined) ? opt.autoplay : true;
+        opt.backward = (opt.backward !== undefined) ? opt.backward : false;
+        opt.infinite = (opt.infinite !== undefined) ? opt.infinite : true;
 
-    
+        this.opt = opt;
+        this.contEl = contEl;
+        this.fps = opt.fps;
+        this.autoplay = opt.autoplay;
+        this.infinite = opt.infinite;
+        this.animated = false;
+        this.onStop = null;
+        this.onLoad = null;
+        this.loaded = false;
+        this.loadedImages = [];
+        this.loadedCount = 0;
+        this.count = count;
+        this.loadedImg = null;
 
-    try {
-        this.ctx = contEl.getContext('2d');
-    } catch (error) {
-        console.log(error, 'Elem Id: ' + elemId);
-    }
-
-    this.img = { W: 0, H: 0 };
-    this.imgDims = { W: 0, H: 0 };
-    this.viewportDims = { W: 0, H: 0, X: 0 };
-
-    const init = () => {
-        this.contElWidth = contEl.offsetWidth;
-        this.contElHeight = contEl.offsetHeight;
-
-        contEl.width = this.contElWidth;
-        contEl.height = this.contElHeight;
-
-        this.imgDims.W = this.img.W / count;
-        this.imgDims.H = this.img.H;
-
-        this.viewportDims.W = this.contElHeight * this.imgDims.W / this.img.H;
-        this.viewportDims.H = this.contElHeight;
-        this.viewportDims.X = this.contElWidth / 2 - this.viewportDims.W / 2;
-    }
-
-    const imgEl = new Image();
-
-    imgEl.onload = function () {
-        _this.loadedImg = this;
-
-        _this.img.W = this.width;
-        _this.img.H = this.height;
-
-        init();
-
-        _this.loaded = true;
-
-        if (_this.onLoad) {
-            _this.onLoad();
+        try {
+            this.ctx = contEl.getContext('2d');
+        } catch (error) {
+            console.log(error, 'Elem Id: ' + elemId);
         }
 
-        if (_this.autoplay) {
-            _this.play();
+        this.img = { W: 0, H: 0 };
+        this.imgDims = { W: 0, H: 0 };
+        this.viewportDims = { W: 0, H: 0, X: 0 };
+
+        const init = () => {
+            this.contElWidth = contEl.offsetWidth;
+            this.contElHeight = contEl.offsetHeight;
+
+            contEl.width = this.contElWidth;
+            contEl.height = this.contElHeight;
+
+            this.imgDims.W = this.img.W / count;
+            this.imgDims.H = this.img.H;
+
+            this.viewportDims.W = this.contElHeight * this.imgDims.W / this.img.H;
+            this.viewportDims.H = this.contElHeight;
+            this.viewportDims.X = this.contElWidth / 2 - this.viewportDims.W / 2;
         }
-    }
 
-    imgEl.src = path;
+        if (folderPath) {
+            for (let i = 0; i < count; i++) {
+                const imgEl = new Image();
 
-    this.reInit = function () {
-        if (this.loaded) init();
-    }
-}
+                imgEl.onload = function () {
+                    _this.loadedImages[i] = this;
 
-FramesAnimate.prototype.animate = function (dir) {
-    this.animated = true;
+                    _this.img.W = this.width;
+                    _this.img.H = this.height;
 
-    let i = 0,
-        back = false;
+                    _this.loadedCount++;
 
-    if (dir == 'back') {
-        back = true;
-        i = this.count - 1;
-    }
+                    if (_this.loadedCount == count) {
+                        init();
 
-    let start = performance.now();
+                        _this.loaded = true;
 
-    requestAnimationFrame(function anim(time) {
-        if (time - start > 1000 / this.fps) {
-            this.ctx.clearRect(0, 0, this.contElWidth, this.contElHeight);
+                        if (_this.onLoad) {
+                            _this.onLoad();
+                        }
 
-            const sx = this.imgDims.W * i;
+                        if (_this.autoplay) {
+                            _this.play();
+                        }
+                    }
+                }
 
-            this.ctx.drawImage(this.loadedImg, sx, 0, this.imgDims.W, this.imgDims.H, this.viewportDims.X, 0, this.viewportDims.W, this.viewportDims.H);
+                imgEl.src = folderPath + '/' + (i + 1) + '.' + ext;
+            }
 
-            if (!this.infinite) {
-                if ((back && !i) || (!back && i == this.count - 1)) {
-                    this.stop();
-                    return;
+        } else {
+            const imgEl = new Image();
+
+            imgEl.onload = function () {
+                _this.loadedImg = this;
+
+                _this.img.W = this.width;
+                _this.img.H = this.height;
+
+                init();
+
+                _this.loaded = true;
+
+                if (_this.onLoad) {
+                    _this.onLoad();
+                }
+
+                if (_this.autoplay) {
+                    _this.play();
                 }
             }
 
-            if (this.opt.backward) {
-                // if (i == this.count) {
-                //     back = true;
-                //     i = this.count - 1;
-                // } else if (i < 0) {
-                //     back = false;
-                //     i = 0;
-                // }
-            } else {
-                if (this.opt.infinite && !back && i == this.count - 1) {
-                    i = -1;
-                }
-            }
-
-            if (back) {
-                i--;
-            } else {
-                i++;
-            }
-
-            start = time;
+            imgEl.src = path;
         }
 
-        if (this.animated) requestAnimationFrame(anim.bind(this));
-    }.bind(this));
-}
-
-FramesAnimate.prototype.play = function (dir) {
-    if (this.loaded) {
-        this.animate(dir);
-    } else {
-        setTimeout(this.play.bind(this), 121);
+        this.reInit = function () {
+            if (this.loaded) init();
+        }
     }
-}
 
-FramesAnimate.prototype.stop = function () {
-    this.autoplay = false;
-    this.animated = false;
+    FramesAnimate.prototype.animate = function (dir) {
+        this.animated = true;
 
-    if (this.onStop) {
-        this.onStop();
+        let i = 0,
+            back = false;
+
+        if (dir == 'back') {
+            back = true;
+            i = this.count - 1;
+        }
+
+        let start = performance.now();
+
+        requestAnimationFrame(function anim(time) {
+            if (time - start > 1000 / this.fps) {
+                this.ctx.clearRect(0, 0, this.contElWidth, this.contElHeight);
+
+                if (this.loadedImages.length) {
+                    console.log(i+1);
+                    this.ctx.drawImage(this.loadedImages[i], 0, 0, this.contElWidth, this.contElHeight);
+
+                } else {
+                    const sx = this.imgDims.W * i;
+
+                    this.ctx.drawImage(this.loadedImg, sx, 0, this.imgDims.W, this.imgDims.H, this.viewportDims.X, 0, this.viewportDims.W, this.viewportDims.H);
+                }
+
+                if (!this.infinite) {
+                    if ((back && !i) || (!back && i == this.count - 1)) {
+                        this.stop();
+                        return;
+                    }
+                }
+
+                if (this.opt.backward) {
+                    // if (i == this.count) {
+                    //     back = true;
+                    //     i = this.count - 1;
+                    // } else if (i < 0) {
+                    //     back = false;
+                    //     i = 0;
+                    // }
+                } else {
+                    if (this.opt.infinite && !back && i == this.count - 1) {
+                        i = -1;
+                    }
+                }
+
+                if (back) {
+                    i--;
+                } else {
+                    i++;
+                }
+
+                start = time;
+            }
+
+            if (this.animated) requestAnimationFrame(anim.bind(this));
+        }.bind(this));
     }
-}
+
+    FramesAnimate.prototype.play = function (dir) {
+        if (this.loaded) {
+            this.animate(dir);
+        } else {
+            setTimeout(this.play.bind(this), 121);
+        }
+    }
+
+    FramesAnimate.prototype.stop = function () {
+        this.autoplay = false;
+        this.animated = false;
+
+        if (this.onStop) {
+            this.onStop();
+        }
+    }
+})();
 ; var WEBGL;
 
 (function() {
@@ -8809,5 +8880,71 @@ DragAndDrop.onDragged(function () {
             }
         }
     };
+})();
+var FixOnScroll;
+
+(function () {
+    'use strict';
+
+    FixOnScroll = function (elSel, options) {
+        this.opt = options || {};
+
+        this.opt.bottomPosition = this.opt.bottomPosition !== undefined ? this.opt.bottomPosition : null;
+
+        this.opt.hideOnTop = window.innerHeight;
+
+        const elem = document.querySelector(elSel);
+
+        this.init = () => {
+            if (typeof this.opt.bottomPosition === 'function') {
+                this.opt.botPos = this.opt.bottomPosition();
+            } else {
+                this.opt.botPos = this.opt.bottomPosition;
+            }
+
+            const initElBound = elem.getBoundingClientRect();
+
+            elem.parentElement.style.width = elem.offsetWidth + 'px';
+            elem.parentElement.style.height = elem.offsetHeight + 'px';
+
+            this.hide(elem);
+
+            if (initElBound.top > window.innerHeight) {
+                elem.style.position = 'fixed';
+                elem.style.left = initElBound.left + 'px';
+                elem.style.bottom = this.opt.botPos + 'px';
+            }
+        }
+
+        this.init();
+
+        window.addEventListener('scroll', () => {
+            const parentElBound = elem.parentElement.getBoundingClientRect();
+
+            this.hide(elem);
+
+            if (window.innerHeight - parentElBound.bottom <= this.opt.botPos) {
+                elem.style.position = 'fixed';
+                elem.style.left = parentElBound.left + 'px';
+                elem.style.bottom = this.opt.botPos + 'px';
+            } else {
+                elem.style.position = '';
+                elem.style.left = '';
+                elem.style.bottom = '';
+            }
+        });
+
+        this.reInit = this.init;
+    }
+
+    FixOnScroll.prototype.hide = function (elem) {
+        if (this.opt.hideOnTop && this.opt.hideOnTop > window.scrollY) {
+            elem.style.visibility = 'hidden';
+            elem.style.opacity = '0';
+        } else {
+            elem.style.visibility = 'visible';
+            elem.style.opacity = '1';
+        }
+    }
 })();
 //# sourceMappingURL=script.js.map
