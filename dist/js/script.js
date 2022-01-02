@@ -1534,7 +1534,7 @@ CoverImg.reInit([Str parent element selector]);
 /* 
 new LazyLoad({
    selector: @Str,
-   event: true,  // def: false
+   onEvent: 'scrollTo',  // def: false
    flexible: true, // def: false
    onDemand: true // def: false
 });
@@ -1561,11 +1561,25 @@ new LazyLoad({
         this.elements = elements;
 
         if (elements) {
-            if (opt.event) {
-                if (opt.event == 'scroll') {
-                    window.addEventListener('scroll', function (e) {
+            if (opt.onEvent) {
+                if (opt.onEvent == 'scrollTo') {
+                    window.addEventListener('scroll', () => {
                         for (let i = 0; i < elements.length; i++) {
                             const el = elements[i];
+
+                            const elOffset = el.getBoundingClientRect().top;
+
+                            if (elOffset < window.innerHeight + 100) {
+                                Modernizr.on('webp', (result) => {
+                                    let suff = '';
+
+                                    if (result) {
+                                        suff = '-webp';
+                                    }
+                    
+                                    this.doLoad(el, suff);
+                                });
+                            }
                         }
                     });
                 }
@@ -1585,11 +1599,13 @@ new LazyLoad({
         }
     }
 
-    LazyLoad.prototype.doLoad = function () {
-        for (let i = 0; i < this.elements.length; i++) {
-            const elem = this.elements[i];
+    LazyLoad.prototype.doLoad = function (el, suff) {
+        const elements = el ? [el] : this.elements;
 
-            let suff = this.suff;
+        for (let i = 0; i < elements.length; i++) {
+            const elem = elements[i];
+
+            suff = (suff !== undefined) ? suff : this.suff;
 
             if (!elem.hasAttribute('data-src' + suff) && !elem.hasAttribute('data-bg-url' + suff)) {
                 suff = '';
@@ -1640,6 +1656,22 @@ new LazyLoad({
     LazyLoad.prototype.reInit = function () {
         if (this.initialized) {
             this.doLoad();
+        }
+    }
+
+    LazyLoad.prototype.load = function () {
+        if (this.opt.onDemand) {
+            this.elements = document.querySelectorAll(this.opt.selector);
+            
+            Modernizr.on('webp', (result) => {
+                if (result) {
+                    this.suff = '-webp';
+                }
+
+                this.initialized = true;
+
+                this.doLoad();
+            });
         }
     }
 })();
@@ -2554,6 +2586,20 @@ var ValidateForm;
             return null;
         },
 
+        int: function () {
+            if (!/^[0-9]*$/.test(this.input.value)) {
+                return 2;
+            }
+
+            if (this.input.hasAttribute('data-min')) {
+                if (+this.input.value < +this.input.getAttribute('data-min')) {
+                    return 3;
+                }
+            }
+
+            return null;
+        },
+
         cardNumber: function () {
             if (!/^\d{4}\-\d{4}\-\d{4}\-\d{4}$/.test(this.input.value)) {
                 return 2;
@@ -2631,7 +2677,15 @@ var ValidateForm;
         },
 
         tel: function () {
-            if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
+            if (!/^\+?[\d)(\s-]+$/.test(this.input.value)) {
+                return 2;
+            }
+
+            return null;
+        },
+
+        tel_RU: function () {
+            if (!/^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/.test(this.input.value)) {
                 return 2;
             }
 
@@ -4519,6 +4573,34 @@ var Maskinput;
         }, true);
 
         this.tel = function (ev) {
+            if (ev == 'focus' && !this.inputElem.value.length) {
+                this.inputElem.value = '+';
+            } else if (ev == 'focus') {
+                const val = this.inputElem.value.replace(/\D/ig, '');
+                this.inputElem.value = val.replace(/(\d*)/, '+$1');
+                defValue = this.inputElem.value;
+            }
+
+            if (!/[\+\d]*/.test(this.inputElem.value)) {
+                this.inputElem.value = defValue;
+            } else {
+                const reg = /^\+\d*$/;
+                console.log('else', this.inputElem.value, reg.test(this.inputElem.value));
+
+                if (!reg.test(this.inputElem.value) && this.inputElem.value.length) {
+                    const val = this.inputElem.value.replace(/\D/ig, '');
+                    this.inputElem.value = val.replace(/(\d*)/, '+$1');
+                }
+
+                if (!reg.test(this.inputElem.value) && this.inputElem.value.length) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
+                }
+            }
+        }
+
+        this.tel_RU = function (ev) {
             if (ev == 'focus' && !this.inputElem.value.length) {
                 this.inputElem.value = '+7(';
             }
@@ -8895,6 +8977,10 @@ var FixOnScroll;
 
         const elem = document.querySelector(elSel);
 
+        if (!elem) {
+            return;
+        }
+
         this.init = () => {
             if (typeof this.opt.bottomPosition === 'function') {
                 this.opt.botPos = this.opt.bottomPosition();
@@ -8933,8 +9019,6 @@ var FixOnScroll;
                 elem.style.bottom = '';
             }
         });
-
-        this.reInit = this.init;
     }
 
     FixOnScroll.prototype.hide = function (elem) {
@@ -8944,6 +9028,12 @@ var FixOnScroll;
         } else {
             elem.style.visibility = 'visible';
             elem.style.opacity = '1';
+        }
+    }
+
+    FixOnScroll.prototype.reInit = function () {
+        if (this.init) {
+            this.init();
         }
     }
 })();

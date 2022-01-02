@@ -42,6 +42,34 @@ var Maskinput;
 
         this.tel = function (ev) {
             if (ev == 'focus' && !this.inputElem.value.length) {
+                this.inputElem.value = '+';
+            } else if (ev == 'focus') {
+                const val = this.inputElem.value.replace(/\D/ig, '');
+                this.inputElem.value = val.replace(/(\d*)/, '+$1');
+                defValue = this.inputElem.value;
+            }
+
+            if (!/[\+\d]*/.test(this.inputElem.value)) {
+                this.inputElem.value = defValue;
+            } else {
+                const reg = /^\+\d*$/;
+                console.log('else', this.inputElem.value, reg.test(this.inputElem.value));
+
+                if (!reg.test(this.inputElem.value) && this.inputElem.value.length) {
+                    const val = this.inputElem.value.replace(/\D/ig, '');
+                    this.inputElem.value = val.replace(/(\d*)/, '+$1');
+                }
+
+                if (!reg.test(this.inputElem.value) && this.inputElem.value.length) {
+                    this.inputElem.value = defValue;
+                } else {
+                    defValue = this.inputElem.value;
+                }
+            }
+        }
+
+        this.tel_RU = function (ev) {
+            if (ev == 'focus' && !this.inputElem.value.length) {
                 this.inputElem.value = '+7(';
             }
 

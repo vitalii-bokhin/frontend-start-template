@@ -12,6 +12,10 @@ var FixOnScroll;
 
         const elem = document.querySelector(elSel);
 
+        if (!elem) {
+            return;
+        }
+
         this.init = () => {
             if (typeof this.opt.bottomPosition === 'function') {
                 this.opt.botPos = this.opt.bottomPosition();
@@ -50,8 +54,6 @@ var FixOnScroll;
                 elem.style.bottom = '';
             }
         });
-
-        this.reInit = this.init;
     }
 
     FixOnScroll.prototype.hide = function (elem) {
@@ -61,6 +63,12 @@ var FixOnScroll;
         } else {
             elem.style.visibility = 'visible';
             elem.style.opacity = '1';
+        }
+    }
+
+    FixOnScroll.prototype.reInit = function () {
+        if (this.init) {
+            this.init();
         }
     }
 })();

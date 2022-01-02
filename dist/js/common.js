@@ -658,6 +658,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // masked inputs
     try {
         new Maskinput('.maskinp-tel, input[data-type="tel"]', 'tel');
+        new Maskinput('.maskinp-tel-ru, input[data-type="tel_RU"]', 'tel_RU');
         new Maskinput('.maskinp-gmail', 'gmail');
         new Maskinput('.maskinp-cyr, input[data-type="name"]', 'cyr');
         new Maskinput('.maskinp-date', 'date');
