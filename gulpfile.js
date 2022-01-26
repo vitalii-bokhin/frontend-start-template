@@ -20,6 +20,7 @@ const modulesOn = [
     'common-js',
     'common-js/animate',
     'common-js/template',
+    'common-js/image',
     'header',
     'header/user',
     'header/menu',

@@ -34,6 +34,7 @@ var FramesAnimate;
             count = +canvasElem.getAttribute('data-frames-count'),
             scheme = canvasElem.hasAttribute('data-frames-scheme') ? canvasElem.getAttribute('data-frames-scheme').split(':') : [count, 1],
             path = window.innerWidth < 1000 && canvasElem.hasAttribute('data-path-mob') ? canvasElem.getAttribute('data-path-mob') : canvasElem.getAttribute('data-path'),
+            pathWebP = window.innerWidth < 1000 && canvasElem.hasAttribute('data-path-webp-mob') ? canvasElem.getAttribute('data-path-webp-mob') : canvasElem.getAttribute('data-path-webp'),
             ext = canvasElem.getAttribute('data-frames-ext'),
             _this = this;
 
@@ -164,7 +165,17 @@ var FramesAnimate;
                 }
             }
 
-            imgEl.src = path;
+            if (pathWebP) {
+                isWebpSupport(function(res) {
+                    if (res) {
+                        imgEl.src = pathWebP;
+                    } else {
+                        imgEl.src = path;
+                    }
+                });
+            } else {
+                imgEl.src = path;
+            }
         }
 
         this.reInit = function () {
