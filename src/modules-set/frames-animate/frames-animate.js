@@ -3,12 +3,19 @@ const frAn = new FramesAnimate('stopmotion-frames', {
     fps: 30,
     autoplay: true,
     infinite: true,
-    backward: false
+    backward: false,
+    folder: true
 });
+
+frAn.onLoad = function () {
+    // code
+}
 
 frAn.onStop = function () {
     // code
 }
+
+frAn.play(); // direction?: 'back'
 */
 
 var FramesAnimate;
@@ -17,24 +24,28 @@ var FramesAnimate;
     'use strict';
 
     FramesAnimate = function (elemId, options) {
-        const contEl = document.getElementById(elemId);
+        const canvasElem = document.getElementById(elemId);
 
-        if (!contEl) return;
+        if (!canvasElem) {
+            return;
+        }
 
         const opt = options || {},
-            count = +contEl.getAttribute('data-count'),
-            path = contEl.getAttribute('data-path'),
-            folderPath = contEl.getAttribute('data-folder'),
-            ext = contEl.getAttribute('data-ext'),
+            count = +canvasElem.getAttribute('data-frames-count'),
+            scheme = canvasElem.hasAttribute('data-frames-scheme') ? canvasElem.getAttribute('data-frames-scheme').split(':') : [count, 1],
+            path = window.innerWidth < 1000 && canvasElem.hasAttribute('data-path-mob') ? canvasElem.getAttribute('data-path-mob') : canvasElem.getAttribute('data-path'),
+            ext = canvasElem.getAttribute('data-frames-ext'),
             _this = this;
 
         opt.fps = (opt.fps !== undefined) ? opt.fps : 30;
         opt.autoplay = (opt.autoplay !== undefined) ? opt.autoplay : true;
         opt.backward = (opt.backward !== undefined) ? opt.backward : false;
         opt.infinite = (opt.infinite !== undefined) ? opt.infinite : true;
+        opt.folder = (opt.folder !== undefined) ? opt.folder : false;
+        opt.minWidth = (opt.minWidth !== undefined) ? opt.minWidth : null;
 
         this.opt = opt;
-        this.contEl = contEl;
+        this.canvasElem = canvasElem;
         this.fps = opt.fps;
         this.autoplay = opt.autoplay;
         this.infinite = opt.infinite;
@@ -43,51 +54,78 @@ var FramesAnimate;
         this.onLoad = null;
         this.loaded = false;
         this.loadedImages = [];
-        this.loadedCount = 0;
+        this.loadedImagesCount = 0;
         this.count = count;
-        this.loadedImg = null;
+        this.scheme = scheme;
+        this.folder = opt.folder;
 
         try {
-            this.ctx = contEl.getContext('2d');
+            this.ctx = canvasElem.getContext('2d');
         } catch (error) {
             console.log(error, 'Elem Id: ' + elemId);
         }
 
         this.img = { W: 0, H: 0 };
         this.imgDims = { W: 0, H: 0 };
-        this.viewportDims = { W: 0, H: 0, X: 0 };
+
+        this.gap = 2;
+        this.iX = 0;
+        this.iY = 0;
+        this.grid = [];
 
         const init = () => {
-            this.contElWidth = contEl.offsetWidth;
-            this.contElHeight = contEl.offsetHeight;
+            if (opt.folder) {
+                this.imgDims.W = this.img.W;
+                this.imgDims.H = this.img.H;
 
-            contEl.width = this.contElWidth;
-            contEl.height = this.contElHeight;
+            } else {
+                this.imgDims.W = this.img.W / scheme[0] - this.gap;
+                this.imgDims.H = this.img.H / scheme[1] - this.gap;
 
-            this.imgDims.W = this.img.W / count;
-            this.imgDims.H = this.img.H;
+                for (let i = 0; i < this.count; i++) {
+                    this.grid.push([this.iX, this.iY]);
 
-            this.viewportDims.W = this.contElHeight * this.imgDims.W / this.img.H;
-            this.viewportDims.H = this.contElHeight;
-            this.viewportDims.X = this.contElWidth / 2 - this.viewportDims.W / 2;
+                    if (this.iX == this.scheme[0] - 1) {
+                        this.iX = 0;
+                        this.iY++;
+                    } else {
+                        this.iX++;
+                    }
+                }
+            }
+
+            this.canvasElWidth = canvasElem.offsetWidth;
+            this.canvasElHeight = canvasElem.offsetHeight;
+
+            if (opt.minWidth !== null && this.canvasElWidth < opt.minWidth) {
+                const proportion = this.canvasElWidth / this.canvasElHeight;
+
+                this.canvasElWidth = opt.minWidth;
+                this.canvasElHeight = opt.minWidth / proportion;
+            }
+
+            canvasElem.width = this.canvasElWidth;
+            canvasElem.height = this.canvasElHeight;
         }
 
-        if (folderPath) {
+        if (opt.folder) {
             for (let i = 0; i < count; i++) {
-                const imgEl = new Image();
+                const img = new Image();
 
-                imgEl.onload = function () {
+                img.onload = function () {
+                    _this.loadedImagesCount++;
+
                     _this.loadedImages[i] = this;
 
-                    _this.img.W = this.width;
-                    _this.img.H = this.height;
+                    if (_this.loadedImagesCount == count) {
+                        _this.img.W = this.width;
+                        _this.img.H = this.height;
 
-                    _this.loadedCount++;
-
-                    if (_this.loadedCount == count) {
                         init();
 
                         _this.loaded = true;
+
+                        _this.slideTo(opt.backward ? count - 1 : 0);
 
                         if (_this.onLoad) {
                             _this.onLoad();
@@ -99,7 +137,7 @@ var FramesAnimate;
                     }
                 }
 
-                imgEl.src = folderPath + '/' + (i + 1) + '.' + ext;
+                img.src = path + '/' + (i + 1) + '.' + ext;
             }
 
         } else {
@@ -114,6 +152,8 @@ var FramesAnimate;
                 init();
 
                 _this.loaded = true;
+
+                _this.slideTo(opt.backward ? count - 1 : 0);
 
                 if (_this.onLoad) {
                     _this.onLoad();
@@ -135,10 +175,13 @@ var FramesAnimate;
     FramesAnimate.prototype.animate = function (dir) {
         this.animated = true;
 
+        const _this = this,
+            fps = 1000 / this.fps;
+
         let i = 0,
             back = false;
 
-        if (dir == 'back') {
+        if (dir == 'back' || _this.opt.backward) {
             back = true;
             i = this.count - 1;
         }
@@ -146,39 +189,7 @@ var FramesAnimate;
         let start = performance.now();
 
         requestAnimationFrame(function anim(time) {
-            if (time - start > 1000 / this.fps) {
-                this.ctx.clearRect(0, 0, this.contElWidth, this.contElHeight);
-
-                if (this.loadedImages.length) {
-                    console.log(i+1);
-                    this.ctx.drawImage(this.loadedImages[i], 0, 0, this.contElWidth, this.contElHeight);
-
-                } else {
-                    const sx = this.imgDims.W * i;
-
-                    this.ctx.drawImage(this.loadedImg, sx, 0, this.imgDims.W, this.imgDims.H, this.viewportDims.X, 0, this.viewportDims.W, this.viewportDims.H);
-                }
-
-                if (!this.infinite) {
-                    if ((back && !i) || (!back && i == this.count - 1)) {
-                        this.stop();
-                        return;
-                    }
-                }
-
-                if (this.opt.backward) {
-                    // if (i == this.count) {
-                    //     back = true;
-                    //     i = this.count - 1;
-                    // } else if (i < 0) {
-                    //     back = false;
-                    //     i = 0;
-                    // }
-                } else {
-                    if (this.opt.infinite && !back && i == this.count - 1) {
-                        i = -1;
-                    }
-                }
+            if (time - start > fps) {
 
                 if (back) {
                     i--;
@@ -186,18 +197,41 @@ var FramesAnimate;
                     i++;
                 }
 
+                _this.slideTo(i);
+
+                if (!_this.infinite) {
+                    if ((back && !i) || (!back && i == _this.count - 1)) {
+                        _this.stop();
+                        return;
+                    }
+                }
+
+                if (_this.opt.backward) {
+                    if (_this.opt.infinite && i == 0) {
+                        i = _this.count;
+                    }
+                } else {
+                    if (_this.opt.infinite && !back && i == _this.count - 1) {
+                        i = -1;
+                    }
+                }
+
                 start = time;
             }
 
-            if (this.animated) requestAnimationFrame(anim.bind(this));
-        }.bind(this));
+            if (_this.animated) {
+                requestAnimationFrame(anim);
+            }
+        });
     }
 
     FramesAnimate.prototype.play = function (dir) {
-        if (this.loaded) {
-            this.animate(dir);
-        } else {
-            setTimeout(this.play.bind(this), 121);
+        if (!this.animated) {
+            if (this.loaded) {
+                this.animate(dir);
+            } else {
+                setTimeout(this.play.bind(this), 121);
+            }
         }
     }
 
@@ -209,4 +243,19 @@ var FramesAnimate;
             this.onStop();
         }
     }
+
+    FramesAnimate.prototype.slideTo = function (i) {
+        this.ctx.clearRect(0, 0, this.canvasElWidth, this.canvasElHeight);
+
+        if (this.folder) {
+            this.ctx.drawImage(this.loadedImages[i], 0, 0, this.canvasElWidth, this.canvasElHeight);
+
+        } else {
+            const sx = this.imgDims.W * this.grid[i][0] + this.gap * this.grid[i][0] + this.gap / 2,
+                sy = this.imgDims.H * this.grid[i][1] + this.gap * this.grid[i][1] + this.gap / 2;
+
+            this.ctx.drawImage(this.loadedImg, sx, sy, this.imgDims.W, this.imgDims.H, 0, 0, this.canvasElWidth, this.canvasElHeight);
+        }
+    }
+
 })();

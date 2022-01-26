@@ -22,6 +22,10 @@ var Anchor;
                 e.preventDefault();
             }
 
+            if (this.beforeScroll) {
+                this.beforeScroll();
+            }
+
             let scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
                 ownShift = +anchorSectionElem.getAttribute('data-shift') || 0;
 
@@ -33,7 +37,11 @@ var Anchor;
 
             animate(function (progress) {
                 window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
-            }, this.duration, 'easeInOutQuad');
+            }, this.duration, 'easeInOutQuad', () => {
+                if (this.afterScroll) {
+                    this.afterScroll();
+                }
+            });
         },
 
         init: function (elementStr, duration, shift) {

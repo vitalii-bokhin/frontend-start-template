@@ -67,7 +67,6 @@ const modulesOn = [
     'scrollbox',
     'floatslider',
     'slickslider',
-    'scrollpane',
     'zoom',
     'cursor',
     'spa',
@@ -80,7 +79,6 @@ const dist_path = 'dist',
 
 let assets = {
     slickslider: ['src/assets/slick.min.js'],
-    scrollpane: ['src/assets/scrollpane.min.js', 'src/assets/mousewheel.js'],
     screens: ['src/assets/jquery.touchSwipe.min.js']
 },
     jsAssets = ['src/assets/jquery-3.1.1.min.js'];

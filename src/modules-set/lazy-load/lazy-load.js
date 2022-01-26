@@ -20,49 +20,76 @@ new LazyLoad({
         opt.onDemand = opt.onDemand || false;
 
         this.opt = opt;
-        this.suff = '';
         this.initialized = false;
+        this.suff = '';
 
-        const elements = document.querySelectorAll(opt.selector);
+        this.elements = document.querySelectorAll(opt.selector);
 
-        this.elements = elements;
+        const scrollHandler = () => {
+            if (this.scrollHandlerLocked) {
+                return;
+            }
 
-        if (elements) {
-            if (opt.onEvent) {
-                if (opt.onEvent == 'scrollTo') {
-                    window.addEventListener('scroll', () => {
-                        for (let i = 0; i < elements.length; i++) {
-                            const el = elements[i];
+            for (let i = 0; i < this.elements.length; i++) {
+                const el = this.elements[i];
 
-                            const elOffset = el.getBoundingClientRect().top;
+                const elOffset = el.getBoundingClientRect();
 
-                            if (elOffset < window.innerHeight + 100) {
-                                Modernizr.on('webp', (result) => {
-                                    let suff = '';
+                if (elOffset.width !== 0 || elOffset.height !== 0) {
+                    if (elOffset.top < window.innerHeight + 100 && elOffset.bottom > -100) {
+                        Modernizr.on('webp', (result) => {
+                            let suff = '';
 
-                                    if (result) {
-                                        suff = '-webp';
-                                    }
-                    
-                                    this.doLoad(el, suff);
-                                });
+                            if (result) {
+                                suff = '-webp';
                             }
-                        }
-                    });
+
+                            this.doLoad(el, suff);
+                        });
+                    }
                 }
-            } else if (!opt.onDemand) {
-                window.addEventListener('load', () => {
-                    Modernizr.on('webp', (result) => {
-                        if (result) {
-                            this.suff = '-webp';
-                        }
+            }
+        }
+
+        const init = () => {
+            this.scrollHandlerLocked = false;
+
+            if (this.elements) {
+                if (opt.onEvent) {
+                    if (opt.onEvent == 'scrollTo') {
+                        window.removeEventListener('scroll', scrollHandler);
+                        window.addEventListener('scroll', scrollHandler);
+
+                        scrollHandler();
 
                         this.initialized = true;
+                    }
+                } else if (!opt.onDemand) {
+                    window.addEventListener('load', () => {
+                        Modernizr.on('webp', (result) => {
+                            if (result) {
+                                this.suff = '-webp';
+                            }
 
-                        this.doLoad();
+                            this.initialized = true;
+
+                            this.doLoad();
+                        });
                     });
-                });
+                }
             }
+        }
+
+        init();
+
+        this.reInit = function () {
+            if (this.initialized) {
+                init();
+            }
+        }
+
+        this.disable = function () {
+            this.scrollHandlerLocked = true;
         }
     }
 
@@ -92,7 +119,7 @@ new LazyLoad({
                         }
                     });
 
-                    elem.src = resultImg;
+                    this.draw(elem, resultImg, true);
 
                 } else if (elem.hasAttribute('data-bg-url' + suff)) {
                     const arr = elem.getAttribute('data-bg-url' + suff).split(',');
@@ -107,29 +134,33 @@ new LazyLoad({
                         }
                     });
 
-                    elem.style.backgroundImage = 'url(' + resultImg + ')';
+                    this.draw(elem, resultImg);
                 }
 
             } else {
                 if (elem.hasAttribute('data-src' + suff)) {
-                    elem.src = elem.getAttribute('data-src' + suff);
+                    this.draw(elem, elem.getAttribute('data-src' + suff), true);
                 } else if (elem.hasAttribute('data-bg-url' + suff)) {
-                    elem.style.backgroundImage = 'url(' + elem.getAttribute('data-bg-url' + suff) + ')';
+                    this.draw(elem, elem.getAttribute('data-bg-url' + suff));
                 }
             }
         }
     }
 
-    LazyLoad.prototype.reInit = function () {
-        if (this.initialized) {
-            this.doLoad();
+    LazyLoad.prototype.draw = function (elem, src, isImg) {
+        if (isImg) {
+            if (src !== elem.getAttribute('src')) {
+                elem.src = src;
+            }
+        } else {
+            elem.style.backgroundImage = 'url(' + src + ')';
         }
     }
 
     LazyLoad.prototype.load = function () {
         if (this.opt.onDemand) {
             this.elements = document.querySelectorAll(this.opt.selector);
-            
+
             Modernizr.on('webp', (result) => {
                 if (result) {
                     this.suff = '-webp';

@@ -45,9 +45,28 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('onLoad');
         }
 
-        frAn.onStop = function () {
-            // code
-        }
+        // frAn.onStop = function () {
+        //     // code
+        // }
+        
+        const frM = new FramesAnimate('mmg-stopmotion-frames', {
+            fps: 10,
+        });
+
+        // frM.onLoad = function () {
+        //     frM.slideTo(15);
+        // }
+
+        const fr = new FramesAnimate('moms-stopmotion-frames', {
+            folder: true,
+            fps: 5,
+            autoplay: false,
+            backward: true
+        });
+
+        $('body').on('click', '#moms-stopmotion-frames', function() {
+            fr.play();
+        });
     } catch (error) {
         console.log(error);
     }

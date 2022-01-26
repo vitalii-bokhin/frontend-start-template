@@ -455,6 +455,20 @@ var ValidateForm;
             return null;
         },
 
+        int: function () {
+            if (!/^[0-9]*$/.test(this.input.value)) {
+                return 2;
+            }
+
+            if (this.input.hasAttribute('data-min')) {
+                if (+this.input.value < +this.input.getAttribute('data-min')) {
+                    return 3;
+                }
+            }
+
+            return null;
+        },
+
         cardNumber: function () {
             if (!/^\d{4}\-\d{4}\-\d{4}\-\d{4}$/.test(this.input.value)) {
                 return 2;
@@ -532,7 +546,15 @@ var ValidateForm;
         },
 
         tel: function () {
-            if (!/^\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(this.input.value)) {
+            if (!/^\+?[\d)(\s-]+$/.test(this.input.value)) {
+                return 2;
+            }
+
+            return null;
+        },
+
+        tel_RU: function () {
+            if (!/^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/.test(this.input.value)) {
                 return 2;
             }
 
