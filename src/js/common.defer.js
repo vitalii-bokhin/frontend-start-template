@@ -1,7 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
-    'use strict';
-
-    const firstScreenEl = document.getElementById('first-screen');
+const firstScreenEl = document.getElementById('first-screen');
 
     (function initFun() {
         if (firstScreenEl) {
@@ -48,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // frAn.onStop = function () {
         //     // code
         // }
-        
+
         const frM = new FramesAnimate('mmg-stopmotion-frames', {
             fps: 10,
         });
@@ -64,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
             backward: true
         });
 
-        $('body').on('click', '#moms-stopmotion-frames', function() {
+        $('body').on('click', '#moms-stopmotion-frames', function () {
             fr.play();
         });
     } catch (error) {
@@ -194,14 +191,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    
+
 
     // popup
     try {
         Popup.init('.js-open-popup');
 
         MediaPopup.init('.js-open-media-popup');
-        
+
         let popupScrollImage;
 
         Popup.onOpen(function (elSel, btnEl) {
@@ -223,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let scale = 1;
 
-        $('body').on('click', '.popup-media__zoom', function() {
+        $('body').on('click', '.popup-media__zoom', function () {
             let dir = $(this).attr('data-dir');
 
             if (dir == 'plus') {
@@ -232,11 +229,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 scale--;
             }
 
-            $('.popup-media__image').css('transform', 'scale('+ scale +')');
+            $('.popup-media__image').css('transform', 'scale(' + scale + ')');
 
             popupScrollImage.reInit();
 
-        }).on('click', '.popup-media__arr, .popup-media__dots-btn:not(.active)', function() {
+        }).on('click', '.popup-media__arr, .popup-media__dots-btn:not(.active)', function () {
             $('.popup-media__image').css('transform', 'scale(1)');
 
             popupScrollImage.reInit();
@@ -666,14 +663,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(error);
     }
 
-
-    // scroll pane
-    try {
-        $('.scroll-pane').jScrollPane();
-    } catch (error) {
-        console.log(error);
-    }
-
     // masked inputs
     try {
         new Maskinput('.maskinp-tel, input[data-type="tel"]', 'tel');
@@ -714,7 +703,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(error);
     }
 
-});
 
 // GetCountriesAndCitiesList
 function dAirGetInit() {

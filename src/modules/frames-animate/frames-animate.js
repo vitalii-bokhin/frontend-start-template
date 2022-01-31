@@ -35,6 +35,7 @@ var FramesAnimate;
             scheme = canvasElem.hasAttribute('data-frames-scheme') ? canvasElem.getAttribute('data-frames-scheme').split(':') : [count, 1],
             path = window.innerWidth < 1000 && canvasElem.hasAttribute('data-path-mob') ? canvasElem.getAttribute('data-path-mob') : canvasElem.getAttribute('data-path'),
             pathWebP = window.innerWidth < 1000 && canvasElem.hasAttribute('data-path-webp-mob') ? canvasElem.getAttribute('data-path-webp-mob') : canvasElem.getAttribute('data-path-webp'),
+            srcDims = window.innerWidth < 1000 && canvasElem.hasAttribute('data-src-dims-mob') ? canvasElem.getAttribute('data-src-dims-mob') : canvasElem.getAttribute('data-src-dims'),
             ext = canvasElem.getAttribute('data-frames-ext'),
             _this = this;
 
@@ -59,6 +60,7 @@ var FramesAnimate;
         this.count = count;
         this.scheme = scheme;
         this.folder = opt.folder;
+        this.amend = [1, 1];
 
         try {
             this.ctx = canvasElem.getContext('2d');
@@ -80,8 +82,12 @@ var FramesAnimate;
                 this.imgDims.H = this.img.H;
 
             } else {
-                this.imgDims.W = this.img.W / scheme[0] - this.gap;
-                this.imgDims.H = this.img.H / scheme[1] - this.gap;
+                const srcDimsArr = srcDims.split('x');
+
+                this.amend = [+srcDimsArr[0] / this.img.W, +srcDimsArr[1] / this.img.H];
+
+                this.imgDims.W = (this.img.W / scheme[0] - this.gap / this.amend[0]) / this.amend[0];
+                this.imgDims.H = (this.img.H / scheme[1] - this.gap / this.amend[1]) / this.amend[1];
 
                 for (let i = 0; i < this.count; i++) {
                     this.grid.push([this.iX, this.iY]);
@@ -95,8 +101,8 @@ var FramesAnimate;
                 }
             }
 
-            this.canvasElWidth = canvasElem.offsetWidth;
-            this.canvasElHeight = canvasElem.offsetHeight;
+            this.canvasElWidth = canvasElem.offsetWidth * window.devicePixelRatio;
+            this.canvasElHeight = canvasElem.offsetHeight * window.devicePixelRatio;
 
             if (opt.minWidth !== null && this.canvasElWidth < opt.minWidth) {
                 const proportion = this.canvasElWidth / this.canvasElHeight;
@@ -166,7 +172,7 @@ var FramesAnimate;
             }
 
             if (pathWebP) {
-                isWebpSupport(function(res) {
+                isWebpSupport(function (res) {
                     if (res) {
                         imgEl.src = pathWebP;
                     } else {
@@ -262,8 +268,9 @@ var FramesAnimate;
             this.ctx.drawImage(this.loadedImages[i], 0, 0, this.canvasElWidth, this.canvasElHeight);
 
         } else {
-            const sx = this.imgDims.W * this.grid[i][0] + this.gap * this.grid[i][0] + this.gap / 2,
-                sy = this.imgDims.H * this.grid[i][1] + this.gap * this.grid[i][1] + this.gap / 2;
+            const gap = [this.gap / this.amend[0], this.gap / this.amend[1]],
+                sx = this.imgDims.W * this.grid[i][0] + gap[0] * this.grid[i][0] + gap[0] / 2,
+                sy = this.imgDims.H * this.grid[i][1] + gap[1] * this.grid[i][1] + gap[1] / 2;
 
             this.ctx.drawImage(this.loadedImg, sx, sy, this.imgDims.W, this.imgDims.H, 0, 0, this.canvasElWidth, this.canvasElHeight);
         }

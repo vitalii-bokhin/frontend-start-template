@@ -1,7 +1,7 @@
 /*video*/
 .video{
 	position: relative;
-	@include fixprop;
+	@include fixprop(522,200);
 	&__preview{
 		@extend %fwh;
 		background-repeat: no-repeat;
@@ -9,18 +9,32 @@
 		background-size: cover;
 	}
 	&__btn-play{
+		@extend %btn;
 		display: block;
-		width: per(60,560);
-		height: per(54,315);
+		width: em(68);
+		height: em(48);
 		position: absolute;
 		left: 50%;
 		top: 50%;
 		z-index: 2;
-		margin: per(-27,560) 0 0 per(-30,560);
-		border: none;
-		transition: .21s;
+		transform: translate(-50%,-50%);
+		svg{
+			display: block;
+			width: 100%;
+			height: 100%;
+			.bg-path{
+				fill: #212121;
+    			fill-opacity: .8;
+				transition: .21s;
+			}
+		}
 		&:hover{
-			opacity: .7;
+			svg{
+				.bg-path{
+					fill: #f00;
+    				fill-opacity: 1;
+				}
+			}
 		}
 	}
 	&__frame{

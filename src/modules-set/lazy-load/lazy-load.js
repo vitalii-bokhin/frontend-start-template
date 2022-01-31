@@ -23,8 +23,6 @@ new LazyLoad({
         this.initialized = false;
         this.suff = '';
 
-        this.elements = document.querySelectorAll(opt.selector);
-
         const scrollHandler = () => {
             if (this.scrollHandlerLocked) {
                 return;
@@ -52,6 +50,8 @@ new LazyLoad({
         }
 
         const init = () => {
+            this.elements = document.querySelectorAll(opt.selector);
+            
             this.scrollHandlerLocked = false;
 
             if (this.elements) {

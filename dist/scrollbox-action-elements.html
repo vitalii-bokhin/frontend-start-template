@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css?v=1643182668199">
+    <link rel="stylesheet" href="css/style.css?v=1643602335549">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <title>Home page | startTemplate</title>
 </head>
@@ -39,41 +39,25 @@
 
 
 
-<script src="js/jquery-3.1.1.min.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/script.js?v=1643182668199"></script>
-<script src="js/common.js?v=1643182668199"></script>
-<script src="js/interface.js?v=1643182668199"></script>
-
-<script async src="https://get.dealersair.com/api/geo/?key=lufter21"></script>
+<link rel="stylesheet" href="css/styles.css?v=1643602335549">
 
 <script>
-// script loading
-// document.addEventListener('DOMContentLoaded', function() {
-// 	var scriptsSrcArr = ['/js/script.js', '/js/common.js'],
-// 	count = 0;
+    function deferScriptsStartLoading() {
 
-// 	function loaded() {
-// 		count++;
-      
-// 		if (count == scriptsSrcArr.length) {
-// 			scriptLoaded();
-// 		}
-// 	}
+    }
 
-// 	for (var i = 0; i < scriptsSrcArr.length; i++) {
-// 		var src = scriptsSrcArr[i],
-// 		scriptElem = document.createElement('script');
-      
-// 		scriptElem.async = true;
-// 		scriptElem.src = src;
-
-// 		scriptElem.addEventListener('load', loaded);
-
-// 		document.body.appendChild(scriptElem);
-// 	}
-// });
+    var headScript = 'js/script.head.js?v=1643602335549';
+    var deferScripts = [
+        'js/jquery-3.1.1.min.js',
+        'js/slick.min.js',
+        'js/script.defer.js?v=1643602335549',
+        'js/common.defer.js?v=1643602335549',
+        'js/interface.js?v=1643602335549',
+        'https://get.dealersair.com/api/geo/?key=lufter21'
+    ];
 </script>
+
+<script src="js/script.js?v=1643602335549"></script>
 
 </body>
 </html>
