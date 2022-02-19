@@ -67,11 +67,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         loading = true;
 
+        let i = 0;
+
         deferScripts.forEach(function (src) {
             const scrEl = document.createElement('script');
             scrEl.async = false;
             scrEl.defer = true;
             scrEl.src = src;
+            scrEl.onload = function() {
+                i++;
+
+                if (i === deferScripts.length) {
+                    if (deferScriptsHaveBeenLoaded) {
+                        deferScriptsHaveBeenLoaded();
+                    }
+                }
+            }
             document.body.appendChild(scrEl);
         });
     }
