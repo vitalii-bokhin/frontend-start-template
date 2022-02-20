@@ -1,54 +1,31 @@
+let tplScripts = [
+    'js/slick.min.js',
+    'js/script.defer.js?v=@version@',
+    'js/common.defer.js?v=@version@',
+    'js/interface.js?v=@version@'
+].map(src => sJS.assetsDirPath + src);
+
+if (sJS.deferScriptsBefore) {
+    tplScripts = sJS.deferScriptsBefore.concat(tplScripts);
+}
+
+if (sJS.deferScriptsAfter) {
+    tplScripts = tplScripts.concat(sJS.deferScriptsAfter);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     'use strict';
 
-    const scrEl = document.createElement('script');
-    scrEl.src = headScript;
-    scrEl.onload = function () {
-
-        const firstScreenEl = document.getElementById('first-screen');
-
-        (function initFun() {
-            if (firstScreenEl) {
-                firstScreenEl.style.height = '';
-
-                if (firstScreenEl.offsetHeight < window.innerHeight) {
-                    firstScreenEl.style.height = window.innerHeight + 'px';
-                }
-            }
-
-            // resize events
-            window.removeEventListener('winResized', initFun);
-            window.removeEventListener('winWidthResized', initFun);
-
-            if (window.innerWidth > 1200) {
-                window.addEventListener('winResized', initFun);
-            } else {
-                window.addEventListener('winWidthResized', initFun);
-            }
-        })();
-
-        // menu
-        try {
-            Menu.init('.menu__item_has-children', '.menu__sub-menu', 1000);
-        } catch (error) {
-            console.log(error);
-        }
-
-        // mobile nav
-        try {
-            MobNav.init({
-                openBtn: '.js-open-menu',
-                closeBtn: '.js-close-menu',
-                headerId: 'header',
-                closeLink: '.menu a.js-anchor'
-            });
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
-
-    document.body.appendChild(scrEl);
+    [
+        sJS.assetsDirPath + 'js/script.head.js?v=@version@',
+        sJS.assetsDirPath + 'js/common.head.js?v=@version@'
+    ].forEach(function (src) {
+        const scrEl = document.createElement('script');
+        scrEl.async = false;
+        scrEl.defer = true;
+        scrEl.src = src;
+        document.body.appendChild(scrEl);
+    });
 
     // defer scripts
     let loading = false;
@@ -61,16 +38,27 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        if (deferScriptsStartLoading) {
-            deferScriptsStartLoading();
+        if (sJS.deferScriptsStartLoading) {
+            sJS.deferScriptsStartLoading();
         }
 
         loading = true;
 
-        deferScripts.forEach(function (src) {
+        let i = 0;
+
+        tplScripts.forEach(function (src) {
             const scrEl = document.createElement('script');
             scrEl.async = false;
             scrEl.defer = true;
+
+            scrEl.addEventListener('load', function () {
+                i++;
+
+                if (i === tplScripts.length && sJS.deferScriptsHaveBeenLoaded) {
+                    sJS.deferScriptsHaveBeenLoaded();
+                }
+            });
+
             scrEl.src = src;
             document.body.appendChild(scrEl);
         });

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css?v=1643602335549">
+    <link rel="stylesheet" href="css/style.head.css?v=1645374793854">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <title>Home page | startTemplate</title>
 </head>
@@ -39,25 +39,21 @@
 
 
 
-<link rel="stylesheet" href="css/styles.css?v=1643602335549">
+<link rel="stylesheet" href="css/style.foot.css?v=1645374793854">
 
 <script>
-    function deferScriptsStartLoading() {
-
-    }
-
-    var headScript = 'js/script.head.js?v=1643602335549';
-    var deferScripts = [
-        'js/jquery-3.1.1.min.js',
-        'js/slick.min.js',
-        'js/script.defer.js?v=1643602335549',
-        'js/common.defer.js?v=1643602335549',
-        'js/interface.js?v=1643602335549',
-        'https://get.dealersair.com/api/geo/?key=lufter21'
-    ];
+    var sJS = {
+        assetsDirPath: '',
+        deferScriptsStartLoading: function () {
+            // code...
+        },
+        deferScriptsBefore: [],
+        deferScriptsAfter: ['https://get.dealersair.com/api/geo/?key=lufter21'],
+    };
 </script>
 
-<script src="js/script.js?v=1643602335549"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/script.js?v=1645374793854"></script>
 
 </body>
 </html>

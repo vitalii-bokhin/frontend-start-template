@@ -1,16 +1,6 @@
 'use strict';
 
-const firstScreenEl = document.getElementById('first-screen');
-
 (function initFun() {
-    if (firstScreenEl) {
-        firstScreenEl.style.height = '';
-
-        if (firstScreenEl.offsetHeight < window.innerHeight) {
-            firstScreenEl.style.height = window.innerHeight + 'px';
-        }
-    }
-
     try {
         FlexImg('.flex-img');
     } catch (error) {
@@ -312,7 +302,7 @@ try {
     new Accord({
         btnSelector: '.accord__button',
         autoScrollOnViewport: 700, // def: false
-        maxViewport: 1000, // def: false
+        // maxViewport: 1000, // def: false
         collapseSiblings: false // def: true
     });
 } catch (error) {
