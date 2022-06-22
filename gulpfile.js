@@ -1,5 +1,5 @@
 const gulp = require('gulp'),
-    sass = require('gulp-sass'),
+    sass = require('gulp-sass')(require('node-sass'));
     autoprefixer = require('gulp-autoprefixer'),
     gcmq = require('gulp-group-css-media-queries'),
     cleanCSS = require('gulp-clean-css'),
@@ -46,6 +46,7 @@ const modulesOn = [
     'form/slider',
     'form/autocomplete',
     'form/file',
+    'form/upload',
     'form/placeholder',
     'form/maskinput',
     'form/fieldset',

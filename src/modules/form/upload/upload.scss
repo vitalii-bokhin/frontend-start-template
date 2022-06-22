@@ -1,0 +1,225 @@
+.upload-form__files-delete:after,
+.upload-form__files-delete:before {
+    display: block;
+    content: "";
+    box-sizing: border-box;
+}
+
+.upload-form__label,
+.upload-form__files-inner img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.upload-form__button,
+.upload-form__files-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: normal;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: bottom;
+    border: none;
+    background: none;
+    user-select: none;
+    position: relative;
+    transition: 0.21s;
+}
+
+.upload-form__button span,
+.upload-form__files-delete span {
+    display: block;
+    width: 100%;
+}
+
+.upload-form {
+    overflow: hidden;
+    position: relative;
+    min-height: 300px;
+    background: skyblue;
+}
+
+.upload-form__note {
+    font-size: 0.75em;
+    color: #bbb;
+    margin-bottom: 1.25em;
+}
+
+.upload-form__button {
+    font-weight: 700;
+    border: 1px solid #fafafa;
+    width: 100%;
+    height: 4em;
+    color: #fafafa;
+    max-width: 24em;
+    position: relative;
+    z-index: 3;
+}
+
+.upload-form__button:disabled {
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.upload-form__button:not(:disabled):hover {
+    background: #fafafa;
+    color: #303030;
+}
+
+.upload-form__label {
+    display: block;
+    z-index: 2;
+    cursor: pointer;
+    transition: 0.21s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.upload-form__label-cloud {
+    display: block;
+    width: 50%;
+    max-width: 120px;
+    margin: 0 auto 15px;
+}
+
+.upload-form__label-cloud::before {
+    display: block;
+    content: '';
+    padding-bottom: 78%;
+    background: url('../images/cloud.svg') no-repeat;
+    background-size: 100% 100%;
+}
+
+.upload-form__label-tit {
+    display: block;
+    text-align: center;
+}
+
+.upload-form__label.highlight {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.upload-form__label.upload-form__label_hide-cloud .upload-form__label-cloud,
+.upload-form__label.upload-form__label_hide-cloud .upload-form__label-tit {
+    visibility: hidden;
+}
+
+.upload-form__input {
+    position: absolute;
+    left: -9999px;
+}
+
+.upload-form__files {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.upload-form__files::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.upload-form__files_visible {
+    visibility: visible;
+    opacity: 1;
+    position: relative;
+    z-index: 3;
+}
+
+.upload-form__files-item {
+    width: 200px;
+    padding: 0.75em;
+    display: block;
+    float: left;
+    position: relative;
+}
+
+.upload-form__files-item_hidden {
+    display: none;
+}
+
+.upload-form__files-inner {
+    display: block;
+    position: relative;
+    border: 1px solid #fafafa;
+}
+
+.upload-form__files-inner:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-bottom: 100%;
+}
+
+.upload-form__files-inner img {
+    object-fit: cover;
+    object-position: center;
+}
+
+.upload-form__files-delete {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    right: 0.625rem;
+    bottom: 0.625rem;
+    background: black;
+    z-index: 3;
+    backface-visibility: hidden;
+    cursor: pointer;
+}
+
+.upload-form__files-error {
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    padding: 0 2.45rem 0 7px;
+    font-size: .8rem;
+    color: red;
+    z-index: 2;
+}
+
+.upload-form__files-error+.upload-form__files-delete {
+    background: red;
+}
+
+.upload-form__files-delete:after,
+.upload-form__files-delete:before {
+    width: 80%;
+    height: 2px;
+    background: #fafafa;
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    margin-top: -1px;
+    transition: 0.21s;
+}
+
+.upload-form__files-delete:after {
+    transform: rotate(-45deg);
+}
+
+.upload-form__files-delete:before {
+    transform: rotate(45deg);
+}
+
+.upload-form__files-delete:hover {
+    opacity: 0.7;
+}
+
+
+
+.popup__inner .upload-form {
+    padding: 6.25rem;
+}
+
+@media (max-width: 750px) {
+    .upload-form{
+        min-height: 200px;
+    }
+}

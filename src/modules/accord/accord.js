@@ -7,7 +7,7 @@ new Accord({
 });
 */
 var Accord;
-
+ 
 (function () {
     'use strict';
 
