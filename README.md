@@ -17,6 +17,6 @@ Slick Slider - Copyright (c) 2017 Ken Wheeler
 
 ### License
 
-Copyright (c) 2018 Vitalii Bokhin, https://vitaliibokhin.com
+Copyright (c) 2018 Vitalii Bokhin, https://bokhin.com
 
 Licensed under MIT License
