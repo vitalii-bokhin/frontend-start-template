@@ -419,7 +419,7 @@ var ValidateForm;
         scrollToErrElem: function (elems) {
             let offsetTop = 99999;
 
-            const headerHeight = document.querySelector('.header').offsetHeight;
+            const headerHeight = document.querySelector('header') ? document.querySelector('header').offsetHeight : 0;
 
             for (let i = 0; i < elems.length; i++) {
                 const el = elems[i],
@@ -433,9 +433,14 @@ var ValidateForm;
             if (offsetTop != 99999) {
                 const scrTo = offsetTop + window.scrollY - headerHeight;
 
-                animate(function (progress) {
-                    window.scrollTo(0, scrTo * progress + (1 - progress) * window.scrollY);
-                }, 1000, 'easeInOutQuad');
+                try {
+                    animate(function (progress) {
+                        window.scrollTo(0, scrTo * progress + (1 - progress) * window.scrollY);
+                    }, 1000, 'easeInOutQuad');
+                } catch (error) {
+                    console.log(new Error(error));
+                }
+
             }
         },
 
