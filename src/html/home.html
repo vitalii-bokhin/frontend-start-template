@@ -1,36 +1,204 @@
 @@include('_head.html', {"title": "Home page"})
 
-<!--HEADER/-->
-@@include('../modules/header/header.html', {"menu_item_current": "home", "user_item": "logged", "user_item": "not_logged"})
-<!--/HEADER-->
-
-<!--MAIN/-->
-<main class="main">
-	<div class="row">
-		<div class="col-12">
-			<h1>Grid</h1>
-			
-			<h2>
-				Default columns
-			</h2>
-			
+<div class="wpd">
+	<div class="wpd__head">
+		<div class="wpd__head-left">
+			<span>
+				Rzeczpospolita<br>
+				Polska
+			</span>
+		</div>
+		<div class="wpd__head-right">
+			<div class="wpd__head-right-top">
+				PL/UKR
+			</div>
+			<div class="wpd__head-right-bot">
+				wersja 4
+			</div>
 		</div>
 	</div>
-	
-</main>
-<!--/MAIN-->
+	<div class="wpd__subhead">
+		Wniosek o nadanie numeru PESEL w związku z konfliktem na Ukrainie / Заява про присвоєння номера
+		PESEL у зв’язку з конфліктом в Україні
+	</div>
+	<hr>
+	<div class="wpd__descr">
+		<b>UWAGA!</b> Wniosek wypełnij tylko jeśli nie posiadasz zezwolenia na pobyt stały, zezwolenia na pobyt czasowy,
+		zezwolenia na pobyt rezydenta długoterminowego Unii
+		Europejskiej, statusu uchodźcy, ochrony uzupełniającej, zgody na pobyt tolerowany, zgody na pobyt ze względów
+		humanitarnych, nie złożyłeś wniosku o ochronę
+		międzynarodową. Nie wypełniaj jeśli posiadasz obywatelstwo polskie. <b>/ УВАГА! Заповнюйте заяву, якщо у Вас не
+			має
+			дозволу на постійне проживання,
+			дозволу на тимчасове проживання, дозволу на проживання довгострокового резидента Європейського Союзу,
+			статусу
+			біженця, додаткового
+			захисту, дозволу на толерантне перебування, дозволу на проживання з гуманітарних міркувань, якщо не подане
+			клопотання про міжнародний
+			захист. Залиште поле порожнім, якщо у вас є польське громадянство.</b>
+	</div>
+	<div class="wpd__border">
+		<p>
+			WYPEŁNIAJ WIELKIMI LITERAMI W ALFABECIE ŁACIŃSKIM / Заповніть великими літерами латинського алфавіту
+		</p>
+	</div>
+	<div class="wpd__block">
+		<div class="wpd__block-head">
+			1. Dane osoby, której ma zostać nadany numer PESEL / Дані про особу, якій присвоюється номер PESEL
+		</div>
 
-<!--FOOTER/-->
-@@include('../modules/footer/footer.html')
-<!--/FOOTER-->
+		<div class="wpd__row">
+			<div class="wpd__row-left">
+				<div class="wpd__label">
+					Nazwisko / <b>Прізвище</b>
+				</div>
+			</div>
+			<div class="wpd__row-right">
+				<div class="wpd__field">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+		</div>
 
-<!--POPUPs/-->
-@@include('../modules/popup/popup.html')
-<!--/POPUPs-->
+		<div class="wpd__row">
+			<div class="wpd__row-left">
+				<div class="wpd__label">
+					Imię (imiona) / <b>Ім’я (імена)</b>
+				</div>
+			</div>
+			<div class="wpd__row-right">
+				<div class="wpd__field">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+		</div>
 
-@@include('../images/sprite-symbol.svg')
+		<div class="wpd__row">
+			<div class="wpd__row-left">
+				<div class="wpd__label">
+					Data urodzenia / <b>Дата народження</b>
+				</div>
+			</div>
+			<div class="wpd__row-right">
+				<div class="wpd__field">
+					<span>1</span>
+					<span>2</span>
+					<span class="separ">-</span>
+					<span>0</span>
+					<span>3</span>
+					<span class="separ">-</span>
+					<span>1</span>
+					<span>9</span>
+					<span>9</span>
+					<span>7</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="wpd__row">
+			<div class="wpd__row-left">
+				<div class="wpd__label">
+					Kraj urodzenia / <b>Країна народження</b>
+				</div>
+			</div>
+			<div class="wpd__row-right">
+				<div class="wpd__field">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="wpd__row">
+			<div class="wpd__row-left">
+				<div class="wpd__label wpd__label_p-0">
+					Obywatelstwo / <b>Громадянство</b>
+				</div>
+			</div>
+			<div class="wpd__row-right">
+				<div class="wpd__check">
+					<span></span>
+					ukraińskie / <b>українське</b>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
 
 @@include('_foot.html')
 
 </body>
+
 </html>

@@ -2,12 +2,13 @@ html, body {
     font-family: $ff;
     font-size: 16px;
     color: $bk;
-    background: #ffffff;
+    background: $gy;
     height: 100%;
 }
 body{
     display: flex;
     flex-direction: column;
+    padding: 50px;
     & > svg{
         width: 0;
         height: 0;
