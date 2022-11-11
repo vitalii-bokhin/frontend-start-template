@@ -1506,10 +1506,28 @@ figcaption {
   padding-right: 20px;
 }
 
+.wpd__row-left_p-0 {
+  padding: 0;
+}
+
 .wpd__row-right {
   float: right;
   max-width: 70%;
   width: 70%;
+}
+
+.wpd__row_m-0 {
+  margin: 0;
+}
+
+.wpd__row_25-75 .wpd__row-left {
+  max-width: 25%;
+  width: 25%;
+}
+
+.wpd__row_25-75 .wpd__row-right {
+  max-width: 75%;
+  width: 75%;
 }
 
 .wpd__label {
@@ -1547,14 +1565,20 @@ figcaption {
 
 .wpd__check {
   font-size: small;
+  padding-top: 10px;
 }
 
 .wpd__check span {
   display: inline-block;
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   border: 2px solid #a4a7b1;
   background: #f1f4ff;
+  vertical-align: middle;
+}
+
+.wpd__check_p-0 {
+  padding: 0;
 }
 
 @media (min-width: 751px) {
