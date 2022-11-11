@@ -1,7 +1,16 @@
+html, body {
+    font-family: 'DejaVu Sans', sans-serif;
+    font-size: 16px;
+    color: $bk;
+    background: $gy;
+}
+
 .wpd{
-    max-width: 70%;
-    background: #fff;
-    padding: 50px;
+    width: r(930);
+    height: r(1310);
+    background: url('../images/Screenshot_20221111_200530.jpg') no-repeat;
+    background-size: 100% auto;
+    padding: r(16) r(42);
     margin: 0 auto;
     &__head{
         @include clr;
@@ -16,43 +25,48 @@
         }
         &-right{
             float: right;
-            width: 200px;
+            width: r(268);
             text-align: center;
             &-top{
-                height: 35px;
-                line-height: 35px;
+                height: r(35);
+                padding-top: r(8);
                 border: 3px solid $bk;
             }
             &-bot{
-                height: 35px;
-                line-height: 35px;
+                height: r(31);
+                padding-top: r(8);
                 background: $gy;
             }
         }
     }
     &__subhead{
-        margin-top: 10px;
+        margin-top: r(4);
         font-weight: 700;
-        line-height: 18px;
+        line-height: r(19);
+        font-size: r(14);
     }
     &__descr{
-        font-size: smaller;
+        font-size: r(13);
+        margin-top: r(14);
+        line-height: r(10);
+        font-style: italic;
     }
     &__border{
         text-align: center;
-        margin-top: 15px;
+        margin-top: r(9);
         p{
             display: inline-block;
-            padding: 10px;
+            padding: r(10) r(20);
             border: 1px solid $bk;
+            font-size: r(10);
             font-weight: 700;
         }
     }
     &__block{
-        margin-top: 15px;
+        margin-top: r(11);
         &-head{
+            font-size: r(11);
             border-bottom: 2px solid $bk;
-            font-size: smaller;
             font-weight: 700;
         }
     }

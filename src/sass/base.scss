@@ -1,18 +1,8 @@
 html, body {
-    font-family: $ff;
+    font-family: 'DejaVu Sans', sans-serif;
     font-size: 16px;
     color: $bk;
     background: $gy;
-    height: 100%;
-}
-body{
-    display: flex;
-    flex-direction: column;
-    padding: 50px;
-    & > svg{
-        width: 0;
-        height: 0;
-    }
 }
 a:hover{
     text-decoration: none;
