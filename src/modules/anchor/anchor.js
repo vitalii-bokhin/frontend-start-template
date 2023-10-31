@@ -64,11 +64,17 @@ var Anchor;
                 }
             });
 
-            //hash anchor
+            // hash anchor
             if (window.location.hash) {
-                window.addEventListener('load', () => {
-                    this.scroll(window.location.hash.split('#')[1]);
-                });
+                if (document.readyState === 'complete') {
+                    setTimeout(() => {
+                        this.scroll(window.location.hash.split('#')[1]);
+                    }, 300);
+                } else {
+                    window.addEventListener('load', () => {
+                        this.scroll(window.location.hash.split('#')[1]);
+                    });
+                }
             }
         }
     };

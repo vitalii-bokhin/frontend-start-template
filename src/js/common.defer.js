@@ -469,6 +469,19 @@ try {
     });
 
     numberspin.animate(4200);
+
+    let spined = false;
+
+    if ($('.numberspin').length) {
+        $(window).scroll(function () {
+            if (spined) return;
+
+            if ($('.numberspin').offset().top < $(window).scrollTop() + $(window).innerHeight()) {
+                spined = true;
+                numberspin.animate(700);
+            }
+        });
+    }
 } catch (error) {
     console.log(error);
 }

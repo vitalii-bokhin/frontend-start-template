@@ -1,9 +1,55 @@
-.fadein{
+.fadein {
     visibility: hidden;
     opacity: 0;
     transition: .21s;
-    &.animated{
+
+    &.animated {
         visibility: visible;
         opacity: 1;
+    }
+}
+
+.fade-in-left {
+    transform: translateX(10%);
+}
+
+.fade-in-right {
+    transform: translateX(-10%);
+}
+
+.fade-in-top {
+    transform: translateY(10%);
+}
+
+.fade-in-bottom {
+    transform: translateY(-10%);
+}
+
+.fade-in-left,
+.fade-in-right,
+.fade-in-top,
+.fade-in-bottom {
+    visibility: hidden;
+    opacity: 0;
+    transition: .5s ease-out 0s;
+
+    &.animated {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.spin-perspective {
+    perspective: 400px;
+}
+
+.spin-in {
+    transition: .5s cubic-bezier(0.48, 2.21, 0.7, 0.5) 0s;
+    transform: rotateX(-90deg);
+    backface-visibility: hidden;
+
+    &.animated {
+        transform: rotateX(0);
     }
 }
